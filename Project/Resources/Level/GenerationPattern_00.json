@@ -1,0 +1,1559 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "BigClothGate.000",
+            "transform": {
+                "translation": [
+                    -4.0,
+                    82.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "BigClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "BigClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    2.5
+                ],
+                "size": [
+                    0.5,
+                    6.0,
+                    5.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ClothGate.000",
+            "transform": {
+                "translation": [
+                    0.0,
+                    21.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "ClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "ClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.5
+                ],
+                "size": [
+                    0.5,
+                    4.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "BigClothGate.001",
+            "transform": {
+                "translation": [
+                    6.0,
+                    115.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "BigClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "BigClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    2.5
+                ],
+                "size": [
+                    0.5,
+                    6.0,
+                    5.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "BigClothGate.002",
+            "transform": {
+                "translation": [
+                    -7.0,
+                    443.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "BigClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "BigClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    2.5
+                ],
+                "size": [
+                    0.5,
+                    6.0,
+                    5.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "BigClothGate.005",
+            "transform": {
+                "translation": [
+                    0.0,
+                    781.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "BigClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "BigClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    2.5
+                ],
+                "size": [
+                    0.5,
+                    6.0,
+                    5.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ClothGate.001",
+            "transform": {
+                "translation": [
+                    3.0,
+                    28.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "ClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "ClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.5
+                ],
+                "size": [
+                    0.5,
+                    4.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ClothGate.002",
+            "transform": {
+                "translation": [
+                    0.0,
+                    34.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "ClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "ClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.5
+                ],
+                "size": [
+                    0.5,
+                    4.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ClothGate.003",
+            "transform": {
+                "translation": [
+                    0.0,
+                    98.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "ClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "ClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.5
+                ],
+                "size": [
+                    0.5,
+                    4.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ClothGate.004",
+            "transform": {
+                "translation": [
+                    3.0,
+                    164.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "ClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "ClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.5
+                ],
+                "size": [
+                    0.5,
+                    4.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ClothGate.005",
+            "transform": {
+                "translation": [
+                    6.0,
+                    395.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "ClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "ClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.5
+                ],
+                "size": [
+                    0.5,
+                    4.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ClothGate.006",
+            "transform": {
+                "translation": [
+                    -6.0,
+                    222.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "ClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "ClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.5
+                ],
+                "size": [
+                    0.5,
+                    4.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ClothGate.007",
+            "transform": {
+                "translation": [
+                    6.0,
+                    283.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "ClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "ClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.5
+                ],
+                "size": [
+                    0.5,
+                    4.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ClothGate.008",
+            "transform": {
+                "translation": [
+                    -6.0,
+                    342.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "ClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "ClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.5
+                ],
+                "size": [
+                    0.5,
+                    4.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ClothGate.009",
+            "transform": {
+                "translation": [
+                    6.0,
+                    697.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "ClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "ClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.5
+                ],
+                "size": [
+                    0.5,
+                    4.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ClothGate.010",
+            "transform": {
+                "translation": [
+                    -6.0,
+                    697.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "ClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "ClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    1.5
+                ],
+                "size": [
+                    0.5,
+                    4.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "BigClothGate.003",
+            "transform": {
+                "translation": [
+                    7.0,
+                    443.0,
+                    3.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "BigClothGate.obj",
+            "directoryPath": "Resources/Model/ClothGate",
+            "className": "BigClothGate",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    2.5
+                ],
+                "size": [
+                    0.5,
+                    6.0,
+                    5.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.000",
+            "transform": {
+                "translation": [
+                    0.0,
+                    22.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    11.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    22.5,
+                    49.5,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    88.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.5,
+                    6.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    15.75,
+                    27.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.003",
+            "transform": {
+                "translation": [
+                    -4.0,
+                    60.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.5999999046325684,
+                    8.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    11.699999570846558,
+                    36.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.004",
+            "transform": {
+                "translation": [
+                    3.0,
+                    159.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.5999999046325684,
+                    3.5,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    11.699999570846558,
+                    15.75,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.005",
+            "transform": {
+                "translation": [
+                    1.0,
+                    171.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.5999999046325684,
+                    2.5,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    11.699999570846558,
+                    11.25,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.006",
+            "transform": {
+                "translation": [
+                    0.0,
+                    188.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    6.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    22.5,
+                    27.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.007",
+            "transform": {
+                "translation": [
+                    0.0,
+                    122.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    11.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    22.5,
+                    49.5,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.008",
+            "transform": {
+                "translation": [
+                    0.0,
+                    454.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    10.5600004196167,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    22.5,
+                    47.52000188827515,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.010",
+            "transform": {
+                "translation": [
+                    0.0,
+                    520.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.799999952316284,
+                    2.799999952316284,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    12.599999785423279,
+                    12.599999785423279,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.012",
+            "transform": {
+                "translation": [
+                    -6.0,
+                    282.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    11.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    9.0,
+                    49.5,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.013",
+            "transform": {
+                "translation": [
+                    6.0,
+                    282.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    11.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    9.0,
+                    49.5,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.015",
+            "transform": {
+                "translation": [
+                    -6.0,
+                    222.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    11.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    9.0,
+                    49.5,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.016",
+            "transform": {
+                "translation": [
+                    0.0,
+                    754.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    11.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    22.5,
+                    49.5,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.022",
+            "transform": {
+                "translation": [
+                    0.0,
+                    788.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    6.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    22.5,
+                    27.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.002",
+            "transform": {
+                "translation": [
+                    6.0,
+                    222.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    11.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    9.0,
+                    49.5,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.011",
+            "transform": {
+                "translation": [
+                    0.0,
+                    495.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.799999952316284,
+                    2.799999952316284,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    12.599999785423279,
+                    12.599999785423279,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.024",
+            "transform": {
+                "translation": [
+                    6.0,
+                    708.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    12.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    9.0,
+                    54.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.026",
+            "transform": {
+                "translation": [
+                    -6.0,
+                    708.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    12.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    9.0,
+                    54.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.017",
+            "transform": {
+                "translation": [
+                    -6.0,
+                    342.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    11.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    9.0,
+                    49.5,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.018",
+            "transform": {
+                "translation": [
+                    6.0,
+                    395.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    11.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    9.0,
+                    49.5,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.019",
+            "transform": {
+                "translation": [
+                    -6.0,
+                    395.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    11.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    9.0,
+                    49.5,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.020",
+            "transform": {
+                "translation": [
+                    6.0,
+                    342.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    11.0,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    9.0,
+                    49.5,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.021",
+            "transform": {
+                "translation": [
+                    0.0,
+                    673.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.720000267028809,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    22.5,
+                    25.74000120162964,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.014",
+            "transform": {
+                "translation": [
+                    0.0,
+                    570.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.799999952316284,
+                    15.399999618530273,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    12.599999785423279,
+                    69.29999828338623,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.027",
+            "transform": {
+                "translation": [
+                    0.0,
+                    620.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.799999952316284,
+                    2.799999952316284,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    12.599999785423279,
+                    12.599999785423279,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Ground.028",
+            "transform": {
+                "translation": [
+                    0.0,
+                    645.0,
+                    2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.799999952316284,
+                    2.799999952316284,
+                    2.0
+                ]
+            },
+            "fileName": "GroundBlock.obj",
+            "directoryPath": "Resources/Model/GroundBlock",
+            "className": "GroundBlock",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    12.599999785423279,
+                    12.599999785423279,
+                    2.0
+                ]
+            }
+        }
+    ]
+}
