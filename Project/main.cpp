@@ -7,6 +7,8 @@ using namespace NomeEngine;
 //Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
+	/// アカウント名確認
+
 	MyFramework* game = new MyGame();
 
 	game->Run();
