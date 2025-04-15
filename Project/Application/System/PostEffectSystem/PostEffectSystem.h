@@ -2,9 +2,6 @@
 #include "../../../Engine/PostEffect/PostEffect.h"
 #include "../../../Engine/base/WindowSprite/WindowSprite.h"
 
-// 前方宣言
-class Player;
-
 /// <summary>
 /// ポストエフェクトシステム
 /// </summary>
@@ -31,12 +28,6 @@ public: // メンバ関数
 public: // アクセッサ
 
 	/// <summary>
-	/// プレイヤー設定
-	/// </summary>
-	/// <param name="player"></param>
-	void SetPlayer(Player* player) { player_ = player; }
-
-	/// <summary>
 	/// レンダーターゲットテクスチャ設定
 	/// </summary>
 	/// <param name="renderTargetTexture"></param>
@@ -55,12 +46,6 @@ private: // メンバ変数
 
 	// ウインドウスプライト
 	WindowSprite* windowSprite_;
-
-	// プレイヤー
-	Player* player_;
-
-	// ラジアルブラー実行するか
-	bool runRadialBlur_;
 
 };
 

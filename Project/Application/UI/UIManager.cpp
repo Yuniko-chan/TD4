@@ -1,9 +1,6 @@
 #include "UIManager.h"
 #include "../../Engine/base/Texture/TextureManager.h"
 #include "../../Engine/2D/ImguiManager.h"
-#include "ButtonAUI.h"
-#include "ButtonBUI.h"
-#include "StickLUI.h"
 
 void UIManager::Initialize()
 {
@@ -79,16 +76,6 @@ BaseUI* UIManager::CreateUI(ClassIndex index)
 	case UIManager::kClassIndexBase:
 		result = new BaseUI();
 		break;
-	case UIManager::kClassIndexButtonA:
-		result = new ButtonAUI();
-		break;	
-	case UIManager::kClassIndexButtonB:
-		result = new ButtonBUI();
-		break;
-	case UIManager::kClassIndexIndexStickL:
-		result = new StickLUI();
-		break;
-
 	case UIManager::kClassIndexOfCount:
 	default:
 		assert(0);

@@ -8,13 +8,9 @@
 
 // 前方宣言
 class ParentNullObject;
-class Player;
-class BaseEnemy;
-class GroundBlock;
-class BaseClothGate;
 
 // variantでまとめる
-using ColliderParentObject = std::variant<ParentNullObject*, Player*, BaseEnemy*, GroundBlock*, BaseClothGate*>;
+using ColliderParentObject = std::variant<ParentNullObject*>;
 
 /// <summary>
 /// 親がないもの用

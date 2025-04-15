@@ -60,14 +60,9 @@ void GameScene::Initialize() {
 	uiManager_ = std::make_unique<UIManager>();
 	uiManager_->Initialize();
 
-	// スタートカウントダウン
-	startCountDown_ = std::make_unique<StartCountDown>();
-	startCountDown_->Initialize();
-
 	// ポストエフェクト
 	postEffectSystem_ = std::make_unique<PostEffectSystem>();
 	postEffectSystem_->Initialize();
-	postEffectSystem_->SetPlayer(static_cast<Player*>(objectManager_->GetObjectPointer("Player")));
 	postEffectSystem_->SetRenderTargetTexture(renderTargetTexture_);
 
 	// モデル描画
@@ -103,16 +98,8 @@ void GameScene::Update() {
 	spotLightManager_->Update(spotLightDatas_);
 
 	// 追従カメラ
-	if (!static_cast<GameSceneObjectManager*>(objectManager_.get())->GetLoadingObject()) {
-		followCamera_->Update();
-		camera_ = static_cast<BaseCamera>(*followCamera_.get());
-	}
-
-	// スタートカウントダウン
-	startCountDown_->Update();
-	if (!startCountDown_->GetCountdownEnded()) {
-		return;
-	}
+	followCamera_->Update();
+	camera_ = static_cast<BaseCamera>(*followCamera_.get());
 
 	// オブジェクトマネージャー
 	objectManager_->Update();
@@ -134,9 +121,6 @@ void GameScene::Update() {
 	postEffectSystem_->Update();
 
 	// ゲームが終了するか
-	if (static_cast<GameSceneObjectManager*>(objectManager_.get())->GetLevelChangeEnd()) {
-		requestSceneNo_ = kClear;
-	}
 
 }
 
@@ -200,9 +184,6 @@ void GameScene::Draw() {
 
 	// UI
 	uiManager_->Draw();
-
-	// システム
-	startCountDown_->Draw();
 
 	// 前景スプライト描画後処理
 	Sprite::PostDraw();

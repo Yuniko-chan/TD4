@@ -172,12 +172,6 @@
     <Filter Include="Engine\Physics\Spring">
       <UniqueIdentifier>{7a9cc686-8766-4211-817f-206d6be69ea8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Object\Player">
-      <UniqueIdentifier>{b293918d-2bcb-4225-ae76-acb6b9fdcf73}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Object\Player\State">
-      <UniqueIdentifier>{9fff1f53-4f9e-4c83-b3b7-78059ae992e7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\System">
       <UniqueIdentifier>{dc265678-a7c1-47a4-bfdc-6a41ffedfd1f}</UniqueIdentifier>
     </Filter>
@@ -340,59 +334,23 @@
     <Filter Include="Application\Effect">
       <UniqueIdentifier>{1faec693-bdd0-4789-84da-e1bc7cce53ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Object\Player\State\System">
-      <UniqueIdentifier>{072e4e32-ee4e-4e4e-90e7-21f4d6cbdbb2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Object\Player\Animation">
-      <UniqueIdentifier>{8574c2d4-9e57-4fc1-8577-5e6efdf6d96e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Object\Skydome">
       <UniqueIdentifier>{5e2ab7d8-fdc5-492f-bc01-9c18dd7e23a6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Object\Factory">
       <UniqueIdentifier>{517228ef-debf-45e7-8382-91aab680356b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Object\Player\Collision">
-      <UniqueIdentifier>{8629fde4-88be-4d1f-844e-adb5eb53c1fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Collision">
       <UniqueIdentifier>{1e460dad-2ee3-4eef-8f3a-2a8c85e568ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Object\ClothGate">
-      <UniqueIdentifier>{3d691f24-95dc-4b44-a40c-330a92c0b4de}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Level">
       <UniqueIdentifier>{167280ef-abed-4faa-82e2-49ff4357ffb9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Object\Enemy">
-      <UniqueIdentifier>{4db8b758-9923-4a9a-8a05-569ad1b11765}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Object\Enemy\Ghost">
-      <UniqueIdentifier>{30406f08-d111-44b4-af7a-8dd27b91304f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Object\BaseCharacter">
       <UniqueIdentifier>{99c05f84-040d-4fc2-88f8-fd0977af86e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Object\Enemy\Ghost\State">
-      <UniqueIdentifier>{0555b109-3a0d-4975-aef2-5735ae6ab108}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Object\Enemy\Ghost\State\System">
-      <UniqueIdentifier>{dc8c5704-f3f9-4141-90b0-76ea2ca312e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Object\GroundBlock">
-      <UniqueIdentifier>{5cf937f4-0e32-4d0e-a6c4-bb21b2266ed0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\System\Shadow">
       <UniqueIdentifier>{05d37b47-7e24-4dae-b750-eeab10c3b02c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Object\SideCloth">
-      <UniqueIdentifier>{bb31f4b5-cbdf-4277-9268-6a3a8b410086}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\UI\Button">
-      <UniqueIdentifier>{cb4de93d-8f2c-460c-bc34-66aeebc8f37a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\System\Start">
-      <UniqueIdentifier>{4f806038-eab7-425e-bc33-20a48683f633}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\System\PostEffectSystem">
       <UniqueIdentifier>{91acd4c9-9bf6-42cb-9c04-c472ff6ee0a0}</UniqueIdentifier>
@@ -826,68 +784,17 @@
     <ClCompile Include="Application\Effect\BillboardEffect.cpp">
       <Filter>Application\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Player\State\IPlayerState.cpp">
-      <Filter>Application\Object\Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Player\State\System\PlayerStateSystem.cpp">
-      <Filter>Application\Object\Player\State\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Player\State\System\PlayerStateFactory.cpp">
-      <Filter>Application\Object\Player\State\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Player\State\System\PlayerCommand.cpp">
-      <Filter>Application\Object\Player\State\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Player\Animation\PlayerAnimation.cpp">
-      <Filter>Application\Object\Player\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Player\Player.cpp">
-      <Filter>Application\Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Player\State\PlayerStateRoot.cpp">
-      <Filter>Application\Object\Player\State</Filter>
-    </ClCompile>
     <ClCompile Include="Application\Object\Factory\ObjectFactory.cpp">
       <Filter>Application\Object\Factory</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Factory\ObjectCreate.cpp">
       <Filter>Application\Object\Factory</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Player\Collision\PlayerCollision.cpp">
-      <Filter>Application\Object\Player\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="Application\Collision\GameSceneCollisionManager.cpp">
       <Filter>Application\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\ClothGate\ClothGate.cpp">
-      <Filter>Application\Object\ClothGate</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Player\State\PlayerStateJump.cpp">
-      <Filter>Application\Object\Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Enemy\BaseEnemy.cpp">
-      <Filter>Application\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Enemy\Ghost\Ghost.cpp">
-      <Filter>Application\Object\Enemy\Ghost</Filter>
-    </ClCompile>
     <ClCompile Include="Application\Object\BaseCharacter\BaseCharacterAnimation.cpp">
       <Filter>Application\Object\BaseCharacter</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Enemy\Ghost\State\System\GhostStateFactory.cpp">
-      <Filter>Application\Object\Enemy\Ghost\State\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Enemy\Ghost\State\IGhostState.cpp">
-      <Filter>Application\Object\Enemy\Ghost\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Enemy\Ghost\State\System\GhostStateSystem.cpp">
-      <Filter>Application\Object\Enemy\Ghost\State\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Enemy\Ghost\State\GhostStateRoot.cpp">
-      <Filter>Application\Object\Enemy\Ghost\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Enemy\Ghost\State\GhostStateSideMove.cpp">
-      <Filter>Application\Object\Enemy\Ghost\State</Filter>
     </ClCompile>
     <ClCompile Include="Application\System\Shadow\Shadow.cpp">
       <Filter>Application\System\Shadow</Filter>
@@ -895,44 +802,11 @@
     <ClCompile Include="Application\System\Shadow\ShadowManager.cpp">
       <Filter>Application\System\Shadow</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Player\State\PlayerStateDamage.cpp">
-      <Filter>Application\Object\Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\GroundBlock\GroundBlock.cpp">
-      <Filter>Application\Object\GroundBlock</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\SideCloth\SideCloth.cpp">
-      <Filter>Application\Object\SideCloth</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Player\State\PlayerStateDash.cpp">
-      <Filter>Application\Object\Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Player\State\PlayerStateFall.cpp">
-      <Filter>Application\Object\Player\State</Filter>
-    </ClCompile>
     <ClCompile Include="Application\UI\UIManager.cpp">
       <Filter>Application\UI</Filter>
     </ClCompile>
     <ClCompile Include="Application\UI\BaseUI.cpp">
       <Filter>Application\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Enemy\Ghost\State\GhostStateBlownAway.cpp">
-      <Filter>Application\Object\Enemy\Ghost\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\UI\ButtonAUI.cpp">
-      <Filter>Application\UI\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\UI\ButtonBUI.cpp">
-      <Filter>Application\UI\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\System\Start\StartCountDown.cpp">
-      <Filter>Application\System\Start</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\UI\StickLUI.cpp">
-      <Filter>Application\UI\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\GPUParticle\RunDustParticle\RunDustParticle.cpp">
-      <Filter>Application\GPUParticle</Filter>
     </ClCompile>
     <ClCompile Include="Application\System\PostEffectSystem\PostEffectSystem.cpp">
       <Filter>Application\System\PostEffectSystem</Filter>
@@ -946,18 +820,6 @@
     <ClCompile Include="externals\imgui\ImGuizmo.cpp">
       <Filter>externals\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\ClothGate\BaseClothGate.cpp">
-      <Filter>Application\Object\ClothGate</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\ClothGate\BigClothGate.cpp">
-      <Filter>Application\Object\ClothGate</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\GPUParticle\PassThroughClothParticle\PassThroughClothParticle.cpp">
-      <Filter>Application\GPUParticle</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\GPUParticle\JumpLandingParticle\JumpLandingParticle.cpp">
-      <Filter>Application\GPUParticle</Filter>
-    </ClCompile>
     <ClCompile Include="Application\OutGameObject\Curtain\Curtain.cpp">
       <Filter>Application\OutGameObject\Curtain</Filter>
     </ClCompile>
@@ -969,9 +831,6 @@
     </ClCompile>
     <ClCompile Include="Application\Framework\MyGame.cpp">
       <Filter>Application\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\GPUParticle\MissParticle\MissParticle.cpp">
-      <Filter>Application\GPUParticle</Filter>
     </ClCompile>
     <ClCompile Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.cpp">
       <Filter>Application\SceneTransition</Filter>
@@ -1527,68 +1386,17 @@
     <ClInclude Include="Application\Effect\BillboardEffect.h">
       <Filter>Application\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\IPlayerState.h">
-      <Filter>Application\Object\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\System\PlayerStateSystem.h">
-      <Filter>Application\Object\Player\State\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\System\PlayerStateFactory.h">
-      <Filter>Application\Object\Player\State\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\System\PlayerCommand.h">
-      <Filter>Application\Object\Player\State\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\Animation\PlayerAnimation.h">
-      <Filter>Application\Object\Player\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\Player.h">
-      <Filter>Application\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\PlayerStateRoot.h">
-      <Filter>Application\Object\Player\State</Filter>
-    </ClInclude>
     <ClInclude Include="Application\Object\Factory\ObjectFactory.h">
       <Filter>Application\Object\Factory</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Factory\ObjectCreate.h">
       <Filter>Application\Object\Factory</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Player\Collision\PlayerCollision.h">
-      <Filter>Application\Object\Player\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="Application\Collision\GameSceneCollisionManager.h">
       <Filter>Application\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\ClothGate\ClothGate.h">
-      <Filter>Application\Object\ClothGate</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\PlayerStateJump.h">
-      <Filter>Application\Object\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Enemy\BaseEnemy.h">
-      <Filter>Application\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Enemy\Ghost\Ghost.h">
-      <Filter>Application\Object\Enemy\Ghost</Filter>
-    </ClInclude>
     <ClInclude Include="Application\Object\BaseCharacter\BaseCharacterAnimation.h">
       <Filter>Application\Object\BaseCharacter</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Enemy\Ghost\State\IGhostState.h">
-      <Filter>Application\Object\Enemy\Ghost\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Enemy\Ghost\State\System\GhostStateFactory.h">
-      <Filter>Application\Object\Enemy\Ghost\State\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Enemy\Ghost\State\System\GhostStateSystem.h">
-      <Filter>Application\Object\Enemy\Ghost\State\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Enemy\Ghost\State\GhostStateRoot.h">
-      <Filter>Application\Object\Enemy\Ghost\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Enemy\Ghost\State\GhostStateSideMove.h">
-      <Filter>Application\Object\Enemy\Ghost\State</Filter>
     </ClInclude>
     <ClInclude Include="Application\System\Shadow\Shadow.h">
       <Filter>Application\System\Shadow</Filter>
@@ -1602,44 +1410,11 @@
     <ClInclude Include="Application\Object\Factory\CreateObjectNames.h">
       <Filter>Application\Object\Factory</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\PlayerStateDamage.h">
-      <Filter>Application\Object\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\GroundBlock\GroundBlock.h">
-      <Filter>Application\Object\GroundBlock</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\SideCloth\SideCloth.h">
-      <Filter>Application\Object\SideCloth</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\PlayerStateDash.h">
-      <Filter>Application\Object\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\PlayerStateFall.h">
-      <Filter>Application\Object\Player\State</Filter>
-    </ClInclude>
     <ClInclude Include="Application\UI\UIManager.h">
       <Filter>Application\UI</Filter>
     </ClInclude>
     <ClInclude Include="Application\UI\BaseUI.h">
       <Filter>Application\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Enemy\Ghost\State\GhostStateBlownAway.h">
-      <Filter>Application\Object\Enemy\Ghost\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\UI\ButtonAUI.h">
-      <Filter>Application\UI\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\UI\ButtonBUI.h">
-      <Filter>Application\UI\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\System\Start\StartCountDown.h">
-      <Filter>Application\System\Start</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\UI\StickLUI.h">
-      <Filter>Application\UI\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\GPUParticle\RunDustParticle\RunDustParticle.h">
-      <Filter>Application\GPUParticle</Filter>
     </ClInclude>
     <ClInclude Include="Application\System\PostEffectSystem\PostEffectSystem.h">
       <Filter>Application\System\PostEffectSystem</Filter>
@@ -1656,18 +1431,6 @@
     <ClInclude Include="externals\imgui\ImGuizmo.h">
       <Filter>externals\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\ClothGate\BaseClothGate.h">
-      <Filter>Application\Object\ClothGate</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\ClothGate\BigClothGate.h">
-      <Filter>Application\Object\ClothGate</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\GPUParticle\PassThroughClothParticle\PassThroughClothParticle.h">
-      <Filter>Application\GPUParticle</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\GPUParticle\JumpLandingParticle\JumpLandingParticle.h">
-      <Filter>Application\GPUParticle</Filter>
-    </ClInclude>
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h">
       <Filter>Application\OutGameObject\Curtain</Filter>
     </ClInclude>
@@ -1676,9 +1439,6 @@
     </ClInclude>
     <ClInclude Include="Application\Scene\SceneManager\SceneManager.h">
       <Filter>Application\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\GPUParticle\MissParticle\MissParticle.h">
-      <Filter>Application\GPUParticle</Filter>
     </ClInclude>
     <ClInclude Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.h">
       <Filter>Application\SceneTransition</Filter>
