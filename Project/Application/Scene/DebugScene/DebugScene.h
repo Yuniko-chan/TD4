@@ -5,6 +5,7 @@
 #include "../../../Engine/Physics/Cloth/Cloth.h"
 #include "../../../Engine/Physics/ClothGPU/ClothGPU.h"
 #include "../../ClothDemo/ClothDemo.h"
+#include "../../Course/Course.h"
 
 /// <summary>
 /// デバッグシーン
@@ -56,6 +57,10 @@ private: // メンバ変数
 
 	// クロスシミュレーションデモ
 	std::unique_ptr<ClothDemo> clothDemo_;
+
+	// Course
+	std::unique_ptr<Course> course_;
+	std::unique_ptr<Model> courseModel_;
 
 };
 

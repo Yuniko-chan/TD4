@@ -84,6 +84,12 @@ public: // 関数
 	/// </summary>
 	/// <returns></returns>
 	D3D12_INDEX_BUFFER_VIEW* GetIbView() { return &ibView_; }
+
+	/// <summary>
+	/// 頂点データ取得
+	/// </summary>
+	/// <returns></returns>
+	VertexData* GetVertMap() { return vertMap_; }
 	
 	/// <summary>
 	/// ピクセルシェーダ以外用のリソースに変更

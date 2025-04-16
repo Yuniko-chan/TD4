@@ -21,6 +21,18 @@ void DebugScene::Initialize()
 	skydomeData.parentName = "";
 	skydome_->Initialize(&skydomeData);
 
+	// コース
+	courseModel_.reset(Model::Create("Resources/Model/Skydome/", "skydome.obj", dxCommon_));
+	course_ = std::make_unique<Course>();
+	LevelData::MeshData courseData;
+	courseData.directoryPath = "Resources/Model/Skydome";
+	courseData.flieName = "skydome.obj";
+	courseData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+	courseData.className = "Course";
+	courseData.name = "";
+	courseData.parentName = "";
+	course_->Initialize(&courseData);
+
 	clothDemo_ = std::make_unique<ClothDemo>();
 	clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
 
@@ -79,6 +91,8 @@ void DebugScene::ImguiDraw()
 	clothDemo_->ImGuiDraw(camera_);
 
 	debugCamera_->ImGuiDraw();
+
+	course_->ImGuiDraw();
 
 }
 

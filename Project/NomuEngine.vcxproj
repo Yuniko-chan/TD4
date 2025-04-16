@@ -164,6 +164,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\ClothDemo\CollisionObject\ClothDemoPlane.cpp" />
     <ClCompile Include="Application\ClothDemo\CollisionObject\ClothDemoSphere.cpp" />
     <ClCompile Include="Application\Collision\GameSceneCollisionManager.cpp" />
+    <ClCompile Include="Application\Course\Course.cpp" />
+    <ClCompile Include="Application\Course\CourseCollisionSystem.cpp" />
     <ClCompile Include="Application\Effect\BillboardEffect.cpp" />
     <ClCompile Include="Application\Effect\EffectManager.cpp" />
     <ClCompile Include="Application\Camera\FollowCamera.cpp" />
@@ -331,6 +333,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\ClothDemo\CollisionObject\ClothDemoSphere.h" />
     <ClInclude Include="Application\Collider2D\ColliderParentObject2D.h" />
     <ClInclude Include="Application\Collision\GameSceneCollisionManager.h" />
+    <ClInclude Include="Application\Course\Course.h" />
+    <ClInclude Include="Application\Course\CourseCollisionSystem.h" />
+    <ClInclude Include="Application\Course\CoursePolygon.h" />
+    <ClInclude Include="Application\Course\CoursePolygonType.h" />
     <ClInclude Include="Application\Effect\BillboardEffect.h" />
     <ClInclude Include="Application\Camera\FollowCamera.h" />
     <ClInclude Include="Application\Collider\ColliderParentObject.h" />
