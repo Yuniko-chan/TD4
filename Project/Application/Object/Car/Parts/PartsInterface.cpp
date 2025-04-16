@@ -1,4 +1,4 @@
-#include "CarParts.h"
+#include "PartsInterface.h"
 
 void Car::IParts::Initialize(LevelData::MeshData* data)
 {

@@ -21,29 +21,33 @@ namespace Car
         /// <param name="camera">カメラ</param>
         void Draw(BaseCamera& camera) override;
 
-	};
-
-	/// <summary>
-	/// エンジンの基底
-	/// </summary>
-	class IEngine : public IParts {
-
-
+	protected:
+		// 重さ
+		float weight_ = 1.0f;
 
 	};
 
-	/// <summary>
-	/// タイヤの基底
-	/// </summary>
-	class ITire : public IParts {
+	///// <summary>
+	///// エンジンの基底
+	///// </summary>
+	//class IEngine : public IParts {
 
-	};
 
-	/// <summary>
-	/// フレームの基底
-	/// </summary>
-	class IFrame : public IParts {
 
-	};
+	//};
+
+	///// <summary>
+	///// タイヤの基底
+	///// </summary>
+	//class ITire : public IParts {
+
+	//};
+
+	///// <summary>
+	///// フレームの基底
+	///// </summary>
+	//class IFrame : public IParts {
+
+	//};
 
 }

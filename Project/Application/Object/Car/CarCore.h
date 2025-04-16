@@ -1,8 +1,9 @@
 #pragma once
 #include "../../../Engine/Object/MeshObject.h"
 #include "../../../Engine/Animation/Animation.h"
+#include "Parts/PartsInterface.h"
 
-class CarCore : public MeshObject
+class CarCore : public Car::IParts
 {
 public: // メンバ関数
 
