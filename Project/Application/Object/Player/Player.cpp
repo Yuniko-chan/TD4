@@ -19,6 +19,8 @@ void Player::Initialize(LevelData::MeshData* data)
 	playerAnimation_ = std::make_unique<PlayerAnimation>();
 	playerAnimation_->Initialize(model_);
 
+	playerCommand_ = std::make_unique<PlayerCommand>();
+
 }
 
 void Player::Update()
@@ -27,6 +29,8 @@ void Player::Update()
 	MeshObject::Update();
 	
 	playerAnimation_->Update(0);
+
+	playerCommand_->Update();
 
 	// 座標更新
 	//worldTransform_.transform_.translate += Gravity::Execute();
