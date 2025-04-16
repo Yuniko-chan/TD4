@@ -2,21 +2,19 @@
 #include "../../../Engine/Object/MeshObject.h"
 #include "../../../Engine/Animation/Animation.h"
 
-#include "PlayerSystemLists.h"
-
-class Player : public MeshObject
+class CarCore : public MeshObject
 {
 public: // メンバ関数
 
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    Player();
+    CarCore();
 
     /// <summary>
     /// デストラクタ
     /// </summary>
-    ~Player() override;
+    ~CarCore() override;
 
     /// <summary>
     /// 初期化
@@ -29,22 +27,22 @@ public: // メンバ関数
     /// </summary>
     void Update() override;
 
-    /// <summary>
-    /// 描画
-    /// </summary>
-    /// <param name="camera">カメラ</param>
-    void Draw(BaseCamera& camera) override;
+    ///// <summary>
+    ///// 描画
+    ///// </summary>
+    ///// <param name="camera">カメラ</param>
+    //void Draw(BaseCamera& camera) override;
 
-    /// <summary>
-    /// ImGui描画
-    /// </summary>
-    void ImGuiDraw() override;
+    ///// <summary>
+    ///// ImGui描画
+    ///// </summary>
+    //void ImGuiDraw() override;
 
-    /// <summary>
-    /// パーティクル描画
-    /// </summary>
-    /// <param name="camera">カメラ</param>
-    void ParticleDraw(BaseCamera& camera) override;
+    ///// <summary>
+    ///// パーティクル描画
+    ///// </summary>
+    ///// <param name="camera">カメラ</param>
+    //void ParticleDraw(BaseCamera& camera) override;
 
     /// <summary>
     /// 衝突処理
@@ -53,8 +51,6 @@ public: // メンバ関数
     /// <param name="collisionData"></param>
     void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
-private:
-    // アニメーション
-    std::unique_ptr<PlayerAnimation> playerAnimation_;
+
 
 };

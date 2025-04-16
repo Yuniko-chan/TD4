@@ -16,16 +16,20 @@ void Player::Initialize(LevelData::MeshData* data)
 	MeshObject::Initialize(data);
 	material_->SetEnableLighting(HalfLambert);
 
+	playerAnimation_ = std::make_unique<PlayerAnimation>();
+	playerAnimation_->Initialize(model_);
+
 }
 
 void Player::Update()
 {
 	// 基底
 	MeshObject::Update();
-
+	
+	playerAnimation_->Update(0);
 
 	// 座標更新
-	worldTransform_.transform_.translate += Gravity::Execute();
+	//worldTransform_.transform_.translate += Gravity::Execute();
 	worldTransform_.UpdateMatrix();
 
 }
@@ -34,12 +38,11 @@ void Player::Draw(BaseCamera& camera)
 {
 	ModelDraw::AnimObjectDesc desc;
 	desc.camera = &camera;
-	desc.localMatrixManager;
+	desc.localMatrixManager = playerAnimation_->GetLocalMatrixManager();
 	desc.material = material_.get();
 	desc.model = model_;
 	desc.worldTransform = &worldTransform_;
-	//ModelDraw::AnimObjectDraw(desc);
-
+	ModelDraw::AnimObjectDraw(desc);
 }
 
 void Player::ImGuiDraw()

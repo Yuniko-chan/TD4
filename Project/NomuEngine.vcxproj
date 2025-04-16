@@ -168,6 +168,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Effect\EffectManager.cpp" />
     <ClCompile Include="Application\Camera\FollowCamera.cpp" />
     <ClCompile Include="Application\Object\BaseCharacter\BaseCharacterAnimation.cpp" />
+    <ClCompile Include="Application\Object\Car\CarCore.cpp" />
     <ClCompile Include="Application\Object\Factory\ObjectCreate.cpp" />
     <ClCompile Include="Application\Object\Manager\ClearSceneObjectManager.cpp" />
     <ClCompile Include="Application\Object\Manager\GameSceneObjectManager.cpp" />
@@ -337,6 +338,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Collider\ColliderParentObject.h" />
     <ClInclude Include="Application\Collider\CollisionConfig.h" />
     <ClInclude Include="Application\Object\BaseCharacter\BaseCharacterAnimation.h" />
+    <ClInclude Include="Application\Object\Car\CarCore.h" />
     <ClInclude Include="Application\Object\Factory\CreateObjectIndex.h" />
     <ClInclude Include="Application\Object\Factory\CreateObjectNames.h" />
     <ClInclude Include="Application\Object\Factory\ObjectCreate.h" />
@@ -346,7 +348,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Factory\ObjectFactory.h" />
     <ClInclude Include="Application\Object\Manager\TitleSceneObjectManager.h" />
     <ClInclude Include="Application\Object\Manager\TutorialSceneObjectManager.h" />
+    <ClInclude Include="Application\Object\Player\Animation\PlayerAnimation.h" />
     <ClInclude Include="Application\Object\Player\Player.h" />
+    <ClInclude Include="Application\Object\Player\PlayerSystemLists.h" />
     <ClInclude Include="Application\OutGameObject\ClearBackGround\ClearBackGround.h" />
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />
     <ClInclude Include="Application\OutGameObject\TitleBackGround\TitleBackGround.h" />
