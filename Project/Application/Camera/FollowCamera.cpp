@@ -7,6 +7,8 @@
 #include "../../../Engine/Math/Math.h"
 #include "../../../Engine/Math/Ease.h"
 #include "../../../Engine/Input/Input.h"
+#include "../../../Engine/2D/ImguiManager.h"
+
 
 void FollowCamera::Initialize() {
 
@@ -80,6 +82,15 @@ void FollowCamera::Update(float elapsedTime) {
 	worldPositionMap_->worldPosition = { transformMatrix_.m[3][0],transformMatrix_.m[3][1], transformMatrix_.m[3][2] };
 
 
+}
+
+void FollowCamera::ImGuiDraw()
+{
+	ImGui::Begin("FollowCamera");
+	ImGui::DragFloat3("Position", &transform_.translate.x);
+	ImGui::DragFloat3("Rotate", &transform_.rotate.x);
+
+	ImGui::End();
 }
 
 void FollowCamera::SetTarget(const WorldTransform* target)

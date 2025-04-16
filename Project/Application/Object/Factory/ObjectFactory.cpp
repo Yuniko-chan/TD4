@@ -28,6 +28,11 @@ void ObjectFactory::Initialize(BaseObjectManager* objectManager)
 	// プレイヤー
 	createObjectFunctions_[kCreateObjectIndexPlayer].first = kCreateObjectNames_[kCreateObjectIndexPlayer];
 	createObjectFunctions_[kCreateObjectIndexPlayer].second = ObjectCreate::CreateObjectPlayer;
+
+	// 車のコア
+	createObjectFunctions_[kCreateObjectIndexCarCore].first = kCreateObjectNames_[kCreateObjectIndexCarCore];
+	createObjectFunctions_[kCreateObjectIndexCarCore].second = ObjectCreate::CreateObjectCarCore;
+
 }
 
 IObject* ObjectFactory::CreateObject(LevelData::ObjectData& objectData)

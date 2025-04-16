@@ -196,9 +196,12 @@ void GameScene::ImguiDraw(){
 
 	ImGui::Begin("Framerate");
 	ImGui::Text("Frame rate: %6.2f fps", ImGui::GetIO().Framerate);
+	ImGui::Checkbox("DebugCamera", &isDebugCameraActive_);
 	ImGui::End();
 
 	debugCamera_->ImGuiDraw();
+
+	followCamera_->ImGuiDraw();
 
 	objectManager_->ImGuiDraw();
 

@@ -21,6 +21,8 @@ public: // メンバ関数
 	/// </summary>
 	void Update(float elapsedTime = 0.0f) override;
 
+	void ImGuiDraw();
+
 public: // アクセッサ
 
 	/// <summary>

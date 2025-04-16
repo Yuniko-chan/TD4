@@ -13,7 +13,7 @@ void CarCore::Initialize(LevelData::MeshData* data)
 	// 基底
 	MeshObject::Initialize(data);
 	material_->SetEnableLighting(HalfLambert);
-
+	worldTransform_.transform_.translate.z = -300.0f;
 }
 
 void CarCore::Update()

@@ -38,10 +38,23 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 
 	}
 
+	std::unique_ptr<IObject> objectCarCore;
+	LevelData::MeshData meshData = {};
+	meshData.name = "CarCore";
+	meshData.className = "CarCore";
+	meshData.directoryPath = "Resources/Model/GroundBlock";
+	meshData.flieName = "GroundBlock.obj";
+	meshData.transform = {};
+	meshData.transform.scale = { 1.0f,1.0f,1.0f };
+	LevelData::ObjectData objData = meshData;
+	objectCarCore.reset(static_cast<ObjectFactory*>(objectFactory_.get())->CreateObjectPattern(objData));
+	objects_.emplace_back(objectCarCore->GetName(), std::move(objectCarCore));
+
 }
 
 void GameSceneObjectManager::Update()
 {
+	BaseObjectManager::Update();
 
 	// 影
 	ShadowUpdate();

@@ -7,5 +7,6 @@
 enum CreateObjectIndex {
 	kCreateObjectIndexSkydome, // スカイドーム
 	kCreateObjectIndexPlayer,	// プレイヤー
+	kCreateObjectIndexCarCore,
 	kCreateObjectIndexOfCount, // 数数える用
 };

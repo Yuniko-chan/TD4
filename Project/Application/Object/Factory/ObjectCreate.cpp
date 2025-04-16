@@ -20,3 +20,12 @@ IObject* ObjectCreate::CreateObjectPlayer(LevelData::ObjectData& objectData)
 	static_cast<Player*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
 	return object;
 }
+
+IObject* ObjectCreate::CreateObjectCarCore(LevelData::ObjectData& objectData)
+{
+
+	IObject* object = new CarCore();
+
+	static_cast<CarCore*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}

@@ -8,7 +8,7 @@ void Car::IParts::Initialize(LevelData::MeshData* data)
 
 }
 
-void Car::IParts::Draw(BaseCamera& camera)
-{
-	camera;
-}
+//void Car::IParts::Draw(BaseCamera& camera)
+//{
+//	MeshObject::Draw(camera);
+//}
