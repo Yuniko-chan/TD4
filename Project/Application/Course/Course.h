@@ -27,9 +27,15 @@ public: // メンバ関数
 	/// </summary>
 	void ImGuiDraw() override;
 
+	/// <summary>
+	/// 三角ポリゴン取得
+	/// </summary>
+	/// <returns></returns>
+	std::vector<CoursePolygon>* GetCoursePolygonsAdress() { return &coursePolygons_; }
+
 private: // メンバ変数
 
-	// 三角ポリゴン（頂点三つ、法線、種類）
+	// 三角ポリゴン
 	std::vector<CoursePolygon> coursePolygons_;
 
 };

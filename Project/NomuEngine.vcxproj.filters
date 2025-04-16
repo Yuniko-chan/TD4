@@ -1488,6 +1488,9 @@
     <ClInclude Include="Application\Course\CoursePolygonType.h">
       <Filter>Application\Course</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\base\DescriptorHandles.h">
+      <Filter>Engine\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

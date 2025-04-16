@@ -395,6 +395,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\Audio\AudioManager.h" />
     <ClInclude Include="Engine\base\CompileShader.h" />
     <ClInclude Include="Engine\base\Debug\CrashHandler.h" />
+    <ClInclude Include="Engine\base\DescriptorHandles.h" />
     <ClInclude Include="Engine\base\DescriptorHerpManager\DSVDescriptorHerpManager.h" />
     <ClInclude Include="Engine\base\DescriptorHerpManager\RTVDescriptorHerpManager.h" />
     <ClInclude Include="Engine\base\DescriptorHerpManager\SRVDescriptorHerpManager.h" />

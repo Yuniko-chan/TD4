@@ -1,5 +1,7 @@
 #include "CourseCollisionSystem.h"
 
+const int CourseCollisionSystem::kObjectsThatCanBeRegisteredMax_ = 8;
+
 void CourseCollisionSystem::Initialize()
 {
 }
@@ -44,18 +46,32 @@ void CourseCollisionSystem::ObjectRegistration(MeshObject* object)
 
 }
 
+void CourseCollisionSystem::SetCourse(Course* course)
+{
+
+	// コース
+	course_ = course;
+
+}
+
 void CourseCollisionSystem::DistanceJudgment(MeshObject* object)
 {
 
-
+	// オブジェクト情報
+	Vector3 objectPosition = { 0.0f,0.0f,0.0f };
 	object;
 	// コライダー取得
 
 	// コースメッシュ分回す
+	std::vector<CoursePolygon>* polygons = course_->GetCoursePolygonsAdress();
+	for (uint32_t i = 0; i < polygons->size(); ++i) {
 
-		// 距離をはかる
+	}
 
-		// 距離が近ければメッシュ登録
+	// 距離をはかる
+
+
+	// 距離が近ければメッシュ登録
 
 
 }
