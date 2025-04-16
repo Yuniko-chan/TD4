@@ -41,6 +41,12 @@ void DebugScene::Initialize()
 
 void DebugScene::Update()
 {
+#ifdef _DEBUG
+	if (input_->TriggerKey(DIK_RSHIFT)) {
+		// 行きたいシーンへ
+		requestSceneNo_ = kGame;
+	}
+#endif // _DEBUG
 
 	clothDemo_->Update();
 

@@ -853,6 +853,9 @@
     <ClCompile Include="Engine\Physics\ClothGPU\ClothGPUCollisionManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Object\Player\Player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imgui.h">
@@ -1466,6 +1469,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Physics\ClothGPU\CollisionTypeIndex.h">
       <Filter>Engine\Physics\ClothGPU\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Player\Player.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\GameObjectsList.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
