@@ -1,7 +1,9 @@
 #pragma once
 #include "../../../Engine/Math/Vector/Vector3.h"
+#include "../../../Engine/3D/Transform/WorldTransform.h"
 
-class Input;
+class GameKeyconfig;
+class Player;
 
 /// <summary>
 /// 入力の受付クラス
@@ -10,13 +12,25 @@ class PlayerCommand {
 public:
 	PlayerCommand();
 	~PlayerCommand() = default;
-	//void Initialize();
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="player"></param>
+	void Initialize(Player* player);
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
+	/// <summary>
+	/// 操作コマンド
+	/// </summary>
 	void MoveCommand();
 
 private:
 	// 入力クラス
-	Input* input_ = nullptr;
+	GameKeyconfig* keyConfig_ = nullptr;
 	// 方向
 	Vector3 moveDirect_ = {};
+	// プレイヤーのトランスフォーム
+	WorldTransform* playerTransform_ = nullptr;
 };

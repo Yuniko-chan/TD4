@@ -21,7 +21,7 @@ void Player::Initialize(LevelData::MeshData* data)
 	playerAnimation_->Initialize(model_);
 
 	playerCommand_ = std::make_unique<PlayerCommand>();
-
+	playerCommand_->Initialize(this);
 }
 
 void Player::Update()

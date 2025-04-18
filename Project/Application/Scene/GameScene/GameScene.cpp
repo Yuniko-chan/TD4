@@ -51,6 +51,10 @@ void GameScene::Initialize() {
 	objectManager_ = std::make_unique<GameSceneObjectManager>();
 	objectManager_->Initialize(kLevelIndexMain, levelDataManager_);
 
+	// キーコンフィグ
+	keyConfig_ = GameKeyconfig::GetInstance();
+	keyConfig_->Initialize();
+
 	// 追従カメラ
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
@@ -100,6 +104,9 @@ void GameScene::Update() {
 	// 追従カメラ
 	followCamera_->Update();
 	camera_ = static_cast<BaseCamera>(*followCamera_.get());
+
+	// キー入力更新
+	keyConfig_->Update();
 
 	// オブジェクトマネージャー
 	objectManager_->Update();
