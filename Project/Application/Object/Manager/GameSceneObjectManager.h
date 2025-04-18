@@ -46,6 +46,14 @@ private: // メンバ関数
 	/// </summary>
 	void ShadowUpdate();
 
+	/// <summary>
+	/// オブジェクト追加（ハードコーディング用）
+	/// </summary>
+	/// <param name="className"></param>
+	/// <param name="directory"></param>
+	/// <param name="modelName"></param>
+	void AddObject(const std::string& className, const std::string& directory, const std::string& modelName);
+
 private: // メンバ変数
 
 	// 影マネージャー

@@ -37,19 +37,9 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 		}
 
 	}
-
-	std::unique_ptr<IObject> objectCarCore;
-	LevelData::MeshData meshData = {};
-	meshData.name = "CarCore";
-	meshData.className = "CarCore";
-	meshData.directoryPath = "Resources/Model/GroundBlock";
-	meshData.flieName = "GroundBlock.obj";
-	meshData.transform = {};
-	meshData.transform.scale = { 1.0f,1.0f,1.0f };
-	LevelData::ObjectData objData = meshData;
-	objectCarCore.reset(static_cast<ObjectFactory*>(objectFactory_.get())->CreateObjectPattern(objData));
-	objects_.emplace_back(objectCarCore->GetName(), std::move(objectCarCore));
-
+	// コア作成
+	AddObject("CarCore", "Resources/Model/GroundBlock", "GroundBlock.obj");
+	AddObject("EngineParts", "Resources/Model/Ground", "Ground.obj");
 }
 
 void GameSceneObjectManager::Update()
@@ -115,4 +105,20 @@ void GameSceneObjectManager::ShadowUpdate()
 	// 更新
 	shadowManager_->Update();
 
+}
+
+void GameSceneObjectManager::AddObject(const std::string& className, const std::string& directory, const std::string& modelName)
+{
+	std::unique_ptr<IObject> object;
+	LevelData::MeshData meshData = {};
+	meshData.name = className;
+	meshData.className = className;
+	meshData.directoryPath = directory;
+	meshData.flieName = modelName;
+
+	meshData.transform = {};
+	meshData.transform.scale = { 1.0f,1.0f,1.0f };
+	LevelData::ObjectData objData = meshData;
+	object.reset(static_cast<ObjectFactory*>(objectFactory_.get())->CreateObjectPattern(objData));
+	objects_.emplace_back(object->GetName(), std::move(object));
 }

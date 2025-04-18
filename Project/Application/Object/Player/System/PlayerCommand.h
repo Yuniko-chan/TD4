@@ -1,4 +1,5 @@
 #pragma once
+#include "../../../Engine/Math/Vector/Vector3.h"
 
 class Input;
 
@@ -14,6 +15,8 @@ public:
 	void MoveCommand();
 
 private:
+	// 入力クラス
 	Input* input_ = nullptr;
-
+	// 方向
+	Vector3 moveDirect_ = {};
 };

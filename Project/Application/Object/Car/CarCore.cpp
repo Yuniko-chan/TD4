@@ -1,4 +1,5 @@
 #include "CarCore.h"
+#include "../../../Engine/2D/ImguiManager.h"
 
 CarCore::CarCore()
 {
@@ -24,6 +25,13 @@ void CarCore::Update()
 	// 座標更新
 	//worldTransform_.transform_.translate += Gravity::Execute();
 	worldTransform_.UpdateMatrix();
+}
+
+void CarCore::ImGuiDraw()
+{
+	ImGui::Begin(className_.c_str());
+
+	ImGui::End();
 }
 
 void CarCore::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)

@@ -23,4 +23,6 @@ public: //メンバ関数
 	static IObject* CreateObjectPlayer(LevelData::ObjectData& objectData);
 
 	static IObject* CreateObjectCarCore(LevelData::ObjectData& objectData);
+
+	static IObject* CreateObjectEngineParts(LevelData::ObjectData& objectData);
 };

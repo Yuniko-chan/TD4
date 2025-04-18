@@ -34,10 +34,10 @@ public: // メンバ関数
     ///// <param name="camera">カメラ</param>
     //void Draw(BaseCamera& camera) override;
 
-    ///// <summary>
-    ///// ImGui描画
-    ///// </summary>
-    //void ImGuiDraw() override;
+    /// <summary>
+    /// ImGui描画
+    /// </summary>
+    void ImGuiDraw() override;
 
     ///// <summary>
     ///// パーティクル描画
@@ -52,6 +52,8 @@ public: // メンバ関数
     /// <param name="collisionData"></param>
     void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
-
+private:
+    // パーツを配置できる四か所（メッシュオブジェクトにするかも）
+    std::list<WorldTransform> fourPoints_;
 
 };

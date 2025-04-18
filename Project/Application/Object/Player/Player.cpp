@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "../../../Engine/Physics/Gravity/Gravity.h"
 #include "../../../Engine/3D/Model/ModelDraw.h"
+#include "../../../Engine/2D/ImguiManager.h"
 
 Player::Player()
 {
@@ -51,7 +52,9 @@ void Player::Draw(BaseCamera& camera)
 
 void Player::ImGuiDraw()
 {
+	ImGui::Begin(className_.c_str());
 
+	ImGui::End();
 }
 
 void Player::ParticleDraw(BaseCamera& camera)

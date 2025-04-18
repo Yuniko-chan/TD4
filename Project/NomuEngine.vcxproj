@@ -342,6 +342,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\BaseCharacter\BaseCharacterAnimation.h" />
     <ClInclude Include="Application\Object\Car\CarCore.h" />
     <ClInclude Include="Application\Object\Car\CarLists.h" />
+    <ClInclude Include="Application\Object\Car\Parts\Block\EmptyParts.h" />
     <ClInclude Include="Application\Object\Car\Parts\Engine\EngineParts.h" />
     <ClInclude Include="Application\Object\Car\Parts\Frame\FrameParts.h" />
     <ClInclude Include="Application\Object\Car\Parts\PartsInterface.h" />

@@ -32,7 +32,9 @@ void ObjectFactory::Initialize(BaseObjectManager* objectManager)
 	// 車のコア
 	createObjectFunctions_[kCreateObjectIndexCarCore].first = kCreateObjectNames_[kCreateObjectIndexCarCore];
 	createObjectFunctions_[kCreateObjectIndexCarCore].second = ObjectCreate::CreateObjectCarCore;
-
+	// エンジン
+	createObjectFunctions_[kCreateObjectIndexCarEngine].first = kCreateObjectNames_[kCreateObjectIndexCarEngine];
+	createObjectFunctions_[kCreateObjectIndexCarEngine].second = ObjectCreate::CreateObjectEngineParts;
 }
 
 IObject* ObjectFactory::CreateObject(LevelData::ObjectData& objectData)

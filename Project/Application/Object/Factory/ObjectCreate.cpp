@@ -29,3 +29,11 @@ IObject* ObjectCreate::CreateObjectCarCore(LevelData::ObjectData& objectData)
 	static_cast<CarCore*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
 	return object;
 }
+
+IObject* ObjectCreate::CreateObjectEngineParts(LevelData::ObjectData& objectData)
+{
+	IObject* object = new EngineParts();
+
+	static_cast<EngineParts*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}
