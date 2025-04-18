@@ -27,10 +27,10 @@ public:
 	void MoveCommand();
 
 private:
-	// 入力クラス
-	GameKeyconfig* keyConfig_ = nullptr;
 	// 方向
 	Vector3 moveDirect_ = {};
 	// プレイヤーのトランスフォーム
 	WorldTransform* playerTransform_ = nullptr;
+	// 入力クラス
+	GameKeyconfig* keyConfig_ = nullptr;
 };

@@ -27,19 +27,21 @@ void PlayerCommand::MoveCommand()
 	// 初期化
 	moveDirect_ = {};
 
+	const float directValue = 1.0f;
+
 	// 前後
 	if (keyConfig_->GetConfig()->front) {
-		moveDirect_.z += 1.0f;
+		moveDirect_.z += directValue;
 	}
 	else if (keyConfig_->GetConfig()->behind) {
-		moveDirect_.z -= 1.0f;
+		moveDirect_.z -= directValue;
 	}
 	// 左右
 	if (keyConfig_->GetConfig()->left) {
-		moveDirect_.x -= 1.0f;
+		moveDirect_.x -= directValue;
 	}
 	else if (keyConfig_->GetConfig()->right) {
-		moveDirect_.x += 1.0f;
+		moveDirect_.x += directValue;
 	}
 
 	// 方向の正規化
