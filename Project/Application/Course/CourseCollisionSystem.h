@@ -12,14 +12,29 @@ class CourseCollisionSystem
 private: // メンバ定数
 
 	// 登録できるオブジェクトの数
-	static const int kObjectsThatCanBeRegisteredMax_;
+	static const int kObjectsThatCanBeRegisteredMax_ = 8;
+	
+	// ブロードフェーズで使用する、距離判定
+	static const float kDistanceJudgment_;
+	
+	//	ポリゴンエリアの分割数
+	static const int kPolygonAreasDiv_ = 4;
+	// ポリゴンエリアの原点
+	static const Vector3 kPolygonAreasOrigin_;
+	// ポリゴンエリアの長さ
+	static const Vector3 kPolygonAreasLength_;
 	
 	/// <summary>
-	///	オブジェクトデータ
+	///	オブジェクトデータ(現在OBB)
 	/// </summary>
 	struct ObjectData
 	{
-
+		// 中心
+		Vector3 center;
+		// 座標軸
+		Vector3 otientatuons[3];
+		// 座標軸方向の長さの半分
+		Vector3 size;
 	};
 
 	/// <summary>
@@ -94,6 +109,9 @@ private: // メンバ変数
 
 	// バッファ群
 	Buffers buffers_;
+
+	// エリア
+	std::vector<CoursePolygon> polygonAreas[kPolygonAreasDiv_][kPolygonAreasDiv_][kPolygonAreasDiv_];
 
 };
 
