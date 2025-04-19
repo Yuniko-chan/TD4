@@ -1,0 +1,17 @@
+#pragma once
+#include <memory>
+#include <cstdint>
+
+class IState;
+
+class StateFactory
+{
+public:
+	/// <summary>
+	/// ステート作成
+	/// </summary>
+	/// <param name="stateNum"></param>
+	/// <returns></returns>
+	virtual std::unique_ptr<IState> CreateState(uint32_t stateNum) = 0;
+
+};

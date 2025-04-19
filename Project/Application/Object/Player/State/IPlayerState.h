@@ -1,10 +1,5 @@
 #pragma once
 
-//enum class PlayerStateNumber
-//{
-//	k
-//};
-
 /// <summary>
 /// ステートの基底
 /// </summary>
