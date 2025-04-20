@@ -7,6 +7,7 @@ class IState;
 class StateFactory
 {
 public:
+	virtual ~StateFactory() = default;
 	/// <summary>
 	/// ステート作成
 	/// </summary>

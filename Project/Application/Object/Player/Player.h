@@ -57,4 +57,5 @@ private:
     // アニメーション
     std::unique_ptr<PlayerAnimation> playerAnimation_;
     std::unique_ptr<PlayerCommand> playerCommand_;
+    std::unique_ptr<PlayerStateMachine> stateMachine_;
 };

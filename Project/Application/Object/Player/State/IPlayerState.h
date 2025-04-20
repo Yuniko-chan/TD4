@@ -1,9 +1,10 @@
 #pragma once
+#include "../../State/IState.h"
 
 /// <summary>
 /// ステートの基底
 /// </summary>
-class IPlayerState
+class IPlayerState : public IState
 {
 public:
 	enum StateNumber

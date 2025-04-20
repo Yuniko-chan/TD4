@@ -22,6 +22,10 @@ void Player::Initialize(LevelData::MeshData* data)
 
 	playerCommand_ = std::make_unique<PlayerCommand>();
 	playerCommand_->Initialize(this);
+
+	// ステート
+	stateMachine_ = std::make_unique<PlayerStateMachine>();
+	stateMachine_->Initialize();
 }
 
 void Player::Update()
@@ -32,6 +36,8 @@ void Player::Update()
 	playerAnimation_->Update(0);
 
 	playerCommand_->Update();
+
+	stateMachine_->Update();
 
 	// 座標更新
 	//worldTransform_.transform_.translate += Gravity::Execute();
