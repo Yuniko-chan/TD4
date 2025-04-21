@@ -3,13 +3,14 @@
 #include "../../Engine/base/BufferResource.h"
 #include "../../Engine/base/DescriptorHerpManager/SRVDescriptorHerpManager.h"
 #include "CoursePolygonType.h"
+#include "../../Engine/2D/ImguiManager.h"
 
 // ブロードフェーズで使用する、距離判定
 const float CourseCollisionSystem::kDistanceJudgment_ = 20.0f;
 // ポリゴンエリアの原点
-const Vector3 CourseCollisionSystem::kPolygonAreasOrigin_ = { -10.0f, -10.0f, -10.0f };
+const Vector3 CourseCollisionSystem::kPolygonAreasOrigin_ = { -500.0f, -500.0f, -500.0f };
 // ポリゴンエリアの長さ
-const Vector3 CourseCollisionSystem::kPolygonAreasLength_ = { 20.0f, 20.0f, 20.0f };
+const Vector3 CourseCollisionSystem::kPolygonAreasLength_ = { 1000.0f, 1000.0f, 1000.0f };
 
 
 void CourseCollisionSystem::Initialize()
@@ -71,6 +72,7 @@ void CourseCollisionSystem::SetCourse(Course* course)
 
 	// コース
 	course_ = course;
+	assert(course_);
 
 	// ポリゴンエリアに登録
 	int32_t x0 = 0, y0 = 0, z0 = 0;
@@ -130,7 +132,48 @@ void CourseCollisionSystem::SetCourse(Course* course)
 void CourseCollisionSystem::ImGuiDraw()
 {
 
+	ImGui::Begin("CourseCollisionSystem");
+	// エリア表示モード番号
+	std::string radioButtonName = "name";
+	for (int32_t i = 0; i < kPolygonAreasDiv_; ++i) {
+		radioButtonName = "areaDisplayX_" + std::to_string(i);
+		ImGui::RadioButton(radioButtonName.c_str(), &areaDisplayX_, i); 
+		if (i != kPolygonAreasDiv_ - 1) {
+			ImGui::SameLine();
+		}
+	}
+	for (int32_t i = 0; i < kPolygonAreasDiv_; ++i) {
+		radioButtonName = "areaDisplayY_" + std::to_string(i);
+		ImGui::RadioButton(radioButtonName.c_str(), &areaDisplayY_, i);
+		if (i != kPolygonAreasDiv_ - 1) {
+			ImGui::SameLine();
+		}
+	}
+	for (int32_t i = 0; i < kPolygonAreasDiv_; ++i) {
+		radioButtonName = "areaDisplayZ_" + std::to_string(i);
+		ImGui::RadioButton(radioButtonName.c_str(), &areaDisplayZ_, i);
+		if (i != kPolygonAreasDiv_ - 1) {
+			ImGui::SameLine();
+		}
+	}
 
+	ImGui::Text("X:%d Y:%d Z:%d", areaDisplayX_, areaDisplayY_, areaDisplayZ_);
+	ImGui::Separator();
+
+	CoursePolygon polygon = {};
+	for (uint32_t i = 0; i < polygonAreas[areaDisplayX_][areaDisplayY_][areaDisplayZ_].size(); ++i) {
+
+		polygon = polygonAreas[areaDisplayX_][areaDisplayY_][areaDisplayZ_][i];
+		ImGui::Text("%d個目, 種類番号:%d", i, polygon.coursePolygonType);
+		ImGui::Text("位置0 x:%7.2f y:%7.2f z:%7.2f", polygon.positions[0].x, polygon.positions[0].y, polygon.positions[0].z);
+		ImGui::Text("位置1 x:%7.2f y:%7.2f z:%7.2f", polygon.positions[1].x, polygon.positions[1].y, polygon.positions[1].z);
+		ImGui::Text("位置2 x:%7.2f y:%7.2f z:%7.2f", polygon.positions[2].x, polygon.positions[2].y, polygon.positions[2].z);
+		ImGui::Text("法線 x:%7.2f y:%7.2f z:%7.2f", polygon.normal.x, polygon.normal.y, polygon.normal.z);
+		ImGui::Separator();
+
+	}
+
+	ImGui::End();
 
 }
 

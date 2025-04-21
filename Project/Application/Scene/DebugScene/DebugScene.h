@@ -6,6 +6,7 @@
 #include "../../../Engine/Physics/ClothGPU/ClothGPU.h"
 #include "../../ClothDemo/ClothDemo.h"
 #include "../../Course/Course.h"
+#include "../../Course/CourseCollisionSystem.h"
 
 /// <summary>
 /// デバッグシーン
@@ -61,6 +62,9 @@ private: // メンバ変数
 	// Course
 	std::unique_ptr<Course> course_;
 	std::unique_ptr<Model> courseModel_;
+
+	// CourseCollisionSystem 
+	std::unique_ptr<CourseCollisionSystem> courseCollisionSystem_;
 
 };
 

@@ -47,6 +47,10 @@ void DebugScene::Initialize()
 	preDrawParameters.environmentTextureHandle = TextureManager::Load("Resources/default/rostock_laage_airport_4k.dds", DirectXCommon::GetInstance());
 	ModelDraw::SetPreDrawParameters(preDrawParameters);
 
+	// 
+	courseCollisionSystem_ = std::make_unique<CourseCollisionSystem>();
+	courseCollisionSystem_->SetCourse(course_.get());
+
 	BaseScene::InitilaizeCheck();
 
 }
@@ -93,6 +97,8 @@ void DebugScene::ImguiDraw()
 	debugCamera_->ImGuiDraw();
 
 	course_->ImGuiDraw();
+
+	courseCollisionSystem_->ImGuiDraw();
 
 }
 

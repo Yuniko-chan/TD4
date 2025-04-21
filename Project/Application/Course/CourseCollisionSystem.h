@@ -132,5 +132,10 @@ private: // メンバ変数
 	// 現在確認しているオブジェクトが何番目か
 	uint32_t collisionCheakNum_;
 
+	// ImGui エリア表示モード番号（デバッグ）
+	int32_t areaDisplayX_;
+	int32_t areaDisplayY_;
+	int32_t areaDisplayZ_;
+
 };
 
