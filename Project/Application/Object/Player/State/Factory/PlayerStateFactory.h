@@ -9,6 +9,6 @@ public:
 	/// </summary>
 	/// <param name="stateNum"></param>
 	/// <returns></returns>
-	std::unique_ptr<IState> CreateState(uint32_t stateNum) override;
+	IState* CreateState(uint32_t stateNum) override;
 
 };

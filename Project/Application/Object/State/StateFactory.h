@@ -13,6 +13,6 @@ public:
 	/// </summary>
 	/// <param name="stateNum"></param>
 	/// <returns></returns>
-	virtual std::unique_ptr<IState> CreateState(uint32_t stateNum) = 0;
+	virtual IState* CreateState(uint32_t stateNum) = 0;
 
 };

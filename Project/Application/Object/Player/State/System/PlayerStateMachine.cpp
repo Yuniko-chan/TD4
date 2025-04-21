@@ -43,6 +43,6 @@ void PlayerStateMachine::Update()
 void PlayerStateMachine::ChangeRequest(uint32_t requestNum)
 {
 	request_ = requestNum;
-	tmpState_ = std::move(stateFactory_->CreateState(request_.value()));
+	tmpState_.reset(stateFactory_->CreateState(request_.value()));
 	//requestNum;
 }

@@ -20,6 +20,6 @@ protected:
 
 public:
 	virtual ~VehicleFactory() = default;
-	virtual std::unique_ptr<Car::IParts> CreateParts(uint32_t number);
+	virtual Car::IParts* CreateParts(uint32_t number);
 
 };

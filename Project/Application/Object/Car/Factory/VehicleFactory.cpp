@@ -1,17 +1,17 @@
 #include "VehicleFactory.h"
 #include "../CarLists.h"
 
-std::unique_ptr<Car::IParts> VehicleFactory::CreateParts(uint32_t number)
+Car::IParts* VehicleFactory::CreateParts(uint32_t number)
 {
-    std::unique_ptr<Car::IParts> newParts;
+	Car::IParts* newParts = nullptr;
 	switch (number)
 	{
 	case kEmpty:
-		newParts = std::make_unique<EmptyParts>();
+		newParts = new EmptyParts();
 		break;
 
 	case kEngine:
-		newParts = std::make_unique<EngineParts>();
+		newParts = new EngineParts();
 		break;
 
 	case kFrame:
