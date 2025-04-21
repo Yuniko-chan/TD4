@@ -54,6 +54,8 @@ private: // メンバ関数
 	/// <param name="modelName"></param>
 	void AddObject(const std::string& className, const std::string& directory, const std::string& modelName);
 
+	void OptionProcess();
+
 private: // メンバ変数
 
 	// 影マネージャー

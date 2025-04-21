@@ -3,6 +3,11 @@
 #include "../../../Engine/Animation/Animation.h"
 #include "Parts/PartsInterface.h"
 
+class Player;
+
+/// <summary>
+/// 車両のコアクラス
+/// </summary>
 class VehicleCore : public Car::IParts
 {
 public: // メンバ関数
@@ -52,10 +57,17 @@ public: // メンバ関数
     /// <param name="collisionData"></param>
     void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
+    void MoveCommand();
+
+    void SetPlayer(Player* player) { pairPlayer_ = player; }
+
 private:
     // パーツを配置できる四か所（メッシュオブジェクトにするかも）
     std::list<WorldTransform> fourPoints_;
     // パーツのリスト
     std::list<Car::IParts*> partsLists_;
+
+    // ペアになるプレイヤーポインタ
+    Player* pairPlayer_ = nullptr;
 
 };

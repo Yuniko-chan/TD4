@@ -1,6 +1,7 @@
 #include "GameSceneObjectManager.h"
 #include "../Factory/ObjectFactory.h"
 #include "../Factory/CreateObjectNames.h"
+#include "../GameObjectsList.h"
 
 void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager* levelDataManager)
 {
@@ -37,9 +38,9 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 		}
 
 	}
-	// コア作成
-	AddObject("VehicleCore", "Resources/Model/GroundBlock", "GroundBlock.obj");
-	AddObject("EngineParts", "Resources/Model/Ground", "Ground.obj");
+
+	// オプション関数（ハードコード
+	OptionProcess();
 }
 
 void GameSceneObjectManager::Update()
@@ -121,4 +122,15 @@ void GameSceneObjectManager::AddObject(const std::string& className, const std::
 	LevelData::ObjectData objData = meshData;
 	object.reset(static_cast<ObjectFactory*>(objectFactory_.get())->CreateObjectPattern(objData));
 	objects_.emplace_back(object->GetName(), std::move(object));
+}
+
+void GameSceneObjectManager::OptionProcess()
+{
+	// コア作成
+	AddObject("VehicleCore", "Resources/Model/GroundBlock", "GroundBlock.obj");
+	AddObject("EngineParts", "Resources/Model/Ground", "Ground.obj");
+
+	// 
+	VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer("VehicleCore"));
+	core->SetPlayer(static_cast<Player*>(this->GetObjectPointer("Player")));
 }
