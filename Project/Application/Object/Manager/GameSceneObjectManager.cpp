@@ -38,7 +38,7 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 
 	}
 	// コア作成
-	AddObject("CarCore", "Resources/Model/GroundBlock", "GroundBlock.obj");
+	AddObject("VehicleCore", "Resources/Model/GroundBlock", "GroundBlock.obj");
 	AddObject("EngineParts", "Resources/Model/Ground", "Ground.obj");
 }
 

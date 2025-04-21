@@ -8,7 +8,7 @@ enum CreateObjectIndex {
 	kCreateObjectIndexSkydome, // スカイドーム
 	kCreateObjectIndexPlayer,	// プレイヤー
 	// 車両関係
-	kCreateObjectIndexCarCore,	// コア
+	kCreateObjectIndexVehicleCore,	// 車両コア
 	kCreateObjectIndexCarEngine,	// エンジン
 	kCreateObjectIndexCarTire,	// タイヤ
 	kCreateObjectIndexCarFrame,	// フレーム

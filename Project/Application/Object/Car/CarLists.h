@@ -3,6 +3,9 @@
 ///
 /// インクルードパス
 /// 
-#include "CarCore.h"
+#include "VehicleCore.h"
 #include "Parts/PartsInterface.h"
+#include "Parts/Block/EmptyParts.h"
 #include "Parts/Engine/EngineParts.h"
+#include "Parts/Frame/FrameParts.h"
+#include "Parts/Tire/TireParts.h"

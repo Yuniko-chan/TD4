@@ -1,15 +1,15 @@
-#include "CarCore.h"
+#include "VehicleCore.h"
 #include "../../../Engine/2D/ImguiManager.h"
 
-CarCore::CarCore()
+VehicleCore::VehicleCore()
 {
 }
 
-CarCore::~CarCore()
+VehicleCore::~VehicleCore()
 {
 }
 
-void CarCore::Initialize(LevelData::MeshData* data)
+void VehicleCore::Initialize(LevelData::MeshData* data)
 {
 	// 基底
 	MeshObject::Initialize(data);
@@ -17,7 +17,7 @@ void CarCore::Initialize(LevelData::MeshData* data)
 	worldTransform_.transform_.translate.z = -300.0f;
 }
 
-void CarCore::Update()
+void VehicleCore::Update()
 {
 	// 基底
 	MeshObject::Update();
@@ -27,14 +27,14 @@ void CarCore::Update()
 	worldTransform_.UpdateMatrix();
 }
 
-void CarCore::ImGuiDraw()
+void VehicleCore::ImGuiDraw()
 {
 	ImGui::Begin(className_.c_str());
 
 	ImGui::End();
 }
 
-void CarCore::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
+void VehicleCore::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
 	colliderPartner, collisionData;
 }

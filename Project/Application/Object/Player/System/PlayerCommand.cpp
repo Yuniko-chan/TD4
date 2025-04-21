@@ -47,3 +47,10 @@ void PlayerCommand::MoveCommand()
 	// 方向の正規化
 	moveDirect_ = Vector3::Normalize(moveDirect_);
 }
+
+void PlayerCommand::JumpCommand()
+{
+	if (keyConfig_->GetConfig()->jumpAction) {
+
+	}
+}

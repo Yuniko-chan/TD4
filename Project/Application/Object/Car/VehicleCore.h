@@ -3,19 +3,19 @@
 #include "../../../Engine/Animation/Animation.h"
 #include "Parts/PartsInterface.h"
 
-class CarCore : public Car::IParts
+class VehicleCore : public Car::IParts
 {
 public: // メンバ関数
 
     /// <summary>
     /// コンストラクタ
     /// </summary>
-    CarCore();
+    VehicleCore();
 
     /// <summary>
     /// デストラクタ
     /// </summary>
-    ~CarCore() override;
+    ~VehicleCore() override;
 
     /// <summary>
     /// 初期化
@@ -55,5 +55,7 @@ public: // メンバ関数
 private:
     // パーツを配置できる四か所（メッシュオブジェクトにするかも）
     std::list<WorldTransform> fourPoints_;
+    // パーツのリスト
+    std::list<Car::IParts*> partsLists_;
 
 };

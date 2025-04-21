@@ -30,8 +30,8 @@ void ObjectFactory::Initialize(BaseObjectManager* objectManager)
 	createObjectFunctions_[kCreateObjectIndexPlayer].second = ObjectCreate::CreateObjectPlayer;
 
 	// 車のコア
-	createObjectFunctions_[kCreateObjectIndexCarCore].first = kCreateObjectNames_[kCreateObjectIndexCarCore];
-	createObjectFunctions_[kCreateObjectIndexCarCore].second = ObjectCreate::CreateObjectCarCore;
+	createObjectFunctions_[kCreateObjectIndexVehicleCore].first = kCreateObjectNames_[kCreateObjectIndexVehicleCore];
+	createObjectFunctions_[kCreateObjectIndexVehicleCore].second = ObjectCreate::CreateObjectVehicleCore;
 	// エンジン
 	createObjectFunctions_[kCreateObjectIndexCarEngine].first = kCreateObjectNames_[kCreateObjectIndexCarEngine];
 	createObjectFunctions_[kCreateObjectIndexCarEngine].second = ObjectCreate::CreateObjectEngineParts;

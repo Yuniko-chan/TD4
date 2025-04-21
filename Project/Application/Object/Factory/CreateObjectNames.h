@@ -10,7 +10,7 @@
 const std::array<std::string, CreateObjectIndex::kCreateObjectIndexOfCount> kCreateObjectNames_ = {
 	"Skydome",
 	"Player",
-	"CarCore",
+	"VehicleCore",
 	"EngineParts",
 	"TireParts",
 	"FrameParts",

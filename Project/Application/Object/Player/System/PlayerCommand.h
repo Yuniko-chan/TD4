@@ -25,6 +25,10 @@ public:
 	/// 操作コマンド
 	/// </summary>
 	void MoveCommand();
+	/// <summary>
+	/// ジャンプのコマンド処理
+	/// </summary>
+	void JumpCommand();
 
 private:
 	// 方向
