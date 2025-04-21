@@ -862,6 +862,9 @@
     <ClCompile Include="Application\Course\Course.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Course\CourseLoader.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imgui.h">
@@ -1490,6 +1493,9 @@
     </ClInclude>
     <ClInclude Include="Engine\base\DescriptorHandles.h">
       <Filter>Engine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Course\CourseLoader.h">
+      <Filter>Application\Course</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

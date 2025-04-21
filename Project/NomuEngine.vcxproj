@@ -166,6 +166,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Collision\GameSceneCollisionManager.cpp" />
     <ClCompile Include="Application\Course\Course.cpp" />
     <ClCompile Include="Application\Course\CourseCollisionSystem.cpp" />
+    <ClCompile Include="Application\Course\CourseLoader.cpp" />
     <ClCompile Include="Application\Effect\BillboardEffect.cpp" />
     <ClCompile Include="Application\Effect\EffectManager.cpp" />
     <ClCompile Include="Application\Camera\FollowCamera.cpp" />
@@ -366,6 +367,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\System\Shadow\ShadowManager.h" />
     <ClInclude Include="Application\UI\BaseUI.h" />
     <ClInclude Include="Application\UI\UIManager.h" />
+    <ClInclude Include="Application\Course\CourseLoader.h" />
     <ClInclude Include="Engine\2D\ImGuiManager.h" />
     <ClInclude Include="Engine\2D\SpriteForGPU.h" />
     <ClInclude Include="Engine\2D\SpriteVertex.h" />

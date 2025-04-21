@@ -1,12 +1,12 @@
 #include "DebugScene.h"
-
+#include "../../Course/CourseLoader.h"
 DebugScene::~DebugScene()
 {
 }
 
 void DebugScene::Initialize()
 {
-
+	CourseLoader::LoadCourseFile("Resources/Course", "curseExporterTest.course");
 	BaseScene::Initialize();
 
 	// スカイドーム
