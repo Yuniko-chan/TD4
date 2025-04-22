@@ -4,6 +4,8 @@
 
 #include "PlayerSystemLists.h"
 
+class VehicleCore;
+
 class Player : public MeshObject
 {
 public: // メンバ関数
@@ -53,9 +55,13 @@ public: // メンバ関数
     /// <param name="collisionData"></param>
     void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
+    void SetPair(VehicleCore* pair) { pairCore_ = pair; }
+
 private:
     // アニメーション
     std::unique_ptr<PlayerAnimation> playerAnimation_;
     std::unique_ptr<PlayerCommand> playerCommand_;
     std::unique_ptr<PlayerStateMachine> stateMachine_;
+
+    VehicleCore* pairCore_ = nullptr;
 };

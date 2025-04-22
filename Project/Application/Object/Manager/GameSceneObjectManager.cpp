@@ -132,5 +132,9 @@ void GameSceneObjectManager::OptionProcess()
 
 	// 
 	VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer("VehicleCore"));
-	core->SetPlayer(static_cast<Player*>(this->GetObjectPointer("Player")));
+	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
+
+	core->SetPlayer(player);
+	player->SetPair(core);
+
 }

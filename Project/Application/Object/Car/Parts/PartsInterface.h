@@ -1,6 +1,8 @@
 #pragma once
 #include "../../../Engine/Object/MeshObject.h"
 
+class VehicleCore;
+
 namespace Car
 {
 	/// <summary>
@@ -21,9 +23,13 @@ namespace Car
 		///// <param name="camera">カメラ</param>
 		//void Draw(BaseCamera& camera) override;
 
+		void SetParent(VehicleCore* parent) { parentCore_ = parent; }
+
 	protected:
-		// 重さ
+		// 重さparent
 		float weight_ = 1.0f;
+		// 親のコア
+		VehicleCore* parentCore_ = nullptr;
 
 	};
 
