@@ -4,6 +4,7 @@
 #include "../../../Engine/2D/ImguiManager.h"
 
 #include "../Car/VehicleCore.h"
+#include "State/IPlayerState.h"
 
 Player::Player()
 {
@@ -64,7 +65,12 @@ void Player::Draw(BaseCamera& camera)
 void Player::ImGuiDraw()
 {
 	ImGui::Begin(className_.c_str());
-
+	if (ImGui::Button("InVehicle")) {
+		stateMachine_->ChangeRequest(IPlayerState::kInVehicle);
+	}
+	if (ImGui::Button("OnFoot")) {
+		stateMachine_->ChangeRequest(IPlayerState::kOnFoot);
+	}
 	ImGui::End();
 }
 
@@ -80,10 +86,10 @@ void Player::OnCollision(ColliderParentObject colliderPartner, const CollisionDa
 
 void Player::SetParent()
 {
-	Vector3 localPosition = pairCore_->GetWorldTransformAdress()->GetWorldPosition() - worldTransform_.GetWorldPosition();
+	//Vector3 localPosition = pairCore_->GetWorldTransformAdress()->GetWorldPosition() - worldTransform_.GetWorldPosition();
 	// 親子設定
 	worldTransform_.SetParent(pairCore_->GetWorldTransformAdress());
-	worldTransform_.transform_.translate = localPosition;
+	worldTransform_.transform_.translate = Vector3(0.0f, 3.0f, 0.0f);
 }
 
 void Player::ColliderUpdate()

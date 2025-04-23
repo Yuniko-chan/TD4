@@ -19,7 +19,13 @@ void PlayerCommand::Update()
 	// 移動コマンド
 	MoveCommand();
 
-	playerTransform_->transform_.translate += moveDirect_ * kDeltaTime_;
+	// 親子処理（強引に）
+	if (playerTransform_->parent_) {
+		playerTransform_->parent_->transform_.translate += moveDirect_ * kDeltaTime_;
+	}
+	else {
+		playerTransform_->transform_.translate += moveDirect_ * kDeltaTime_;
+	}
 }
 
 void PlayerCommand::MoveCommand()
@@ -46,11 +52,4 @@ void PlayerCommand::MoveCommand()
 
 	// 方向の正規化
 	moveDirect_ = Vector3::Normalize(moveDirect_);
-}
-
-void PlayerCommand::JumpCommand()
-{
-	if (keyConfig_->GetConfig()->jumpAction) {
-
-	}
 }

@@ -8,7 +8,9 @@ void PlayerInVehicleState::Initialize()
 
 void PlayerInVehicleState::Update()
 {
+	//if (player_->GetCommand()->OnFootCommand()) {
 
+	//}
 }
 
 void PlayerInVehicleState::Exit()

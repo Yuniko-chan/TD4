@@ -64,6 +64,9 @@ private:
     /// </summary>
     void ColliderUpdate();
 
+public: // ゲッター
+
+
 private:
     // アニメーション
     std::unique_ptr<PlayerAnimation> playerAnimation_;
