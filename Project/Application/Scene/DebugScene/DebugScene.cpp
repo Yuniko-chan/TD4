@@ -6,7 +6,6 @@ DebugScene::~DebugScene()
 
 void DebugScene::Initialize()
 {
-	CourseLoader::LoadCourseFile("Resources/Course", "curseExporterTest.course");
 	BaseScene::Initialize();
 
 	// スカイドーム
@@ -46,6 +45,8 @@ void DebugScene::Initialize()
 	preDrawParameters.spotLightManager = spotLightManager_.get();
 	preDrawParameters.environmentTextureHandle = TextureManager::Load("Resources/default/rostock_laage_airport_4k.dds", DirectXCommon::GetInstance());
 	ModelDraw::SetPreDrawParameters(preDrawParameters);
+
+	CourseLoader::LoadCourseFile("Resources/Course", "curseExporterTest.course");
 
 	BaseScene::InitilaizeCheck();
 

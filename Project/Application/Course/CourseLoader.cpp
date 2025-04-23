@@ -31,12 +31,12 @@ void CourseLoader::StragedInportData(FILE* fp, CourseInportData* courseInportDat
 	for (uint32_t i = 0; i < courseInportData->verticesNum_;i++) {
 		//開始オフセット
 		size_t offset = sizeof(uint32_t)*2 + sizeof(CourseFileVertex) * size_t(i);
-		courseInportData->vertices[i];
+		//courseInportData->vertices[i];
 		memcpy(&(courseInportData->vertices[i]), buff + offset, sizeof(CourseFileVertex));
 	}
 	//テクスチャファイルネーム
 	size_t nameOffset = sizeof(uint32_t) * 2 + sizeof(CourseFileVertex) * size_t(courseInportData->verticesNum_);
 	static char name[256];
-	memcpy(&(name), buff + nameOffset, sizeof(buff)-nameOffset);
+	memcpy(&(name), buff + nameOffset, size_t(courseInportData->textureNameSize_));
 	courseInportData->textureFileName_ = name;
 }

@@ -7,7 +7,7 @@
 #include <fstream>
 
 static const uint32_t kVerticesMax = 8192;
-static const uint32_t kInportFileSize = 65536;
+static const uint32_t kInportFileSize = 65536*2;
 //コースファイル形式の頂点データ
 struct CourseFileVertex
 {
