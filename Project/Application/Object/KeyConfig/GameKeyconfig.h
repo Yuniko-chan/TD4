@@ -27,6 +27,7 @@ struct KeyConfig
 {
 	PlayerKey<bool> configs;	// 状態
 	PlayerKey<uint8_t> binds;	// バインド
+	PlayerKey<uint8_t> padBinds;	// パッドのバインド
 	Vector2 leftStick, rightStick;	// スティックの状態
 	bool isController = false;	// Controller操作か
 };

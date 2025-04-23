@@ -9,6 +9,7 @@ GameKeyconfig* GameKeyconfig::GetInstance()
 
 void GameKeyconfig::Initialize()
 {
+	//---キーマウ向けバインド---//
 	// 操作
 	playerKeyConfig_.binds.behind = DIK_S;
 	playerKeyConfig_.binds.front = DIK_W;
@@ -19,6 +20,10 @@ void GameKeyconfig::Initialize()
 	playerKeyConfig_.binds.jumpAction = DIK_SPACE;
 	playerKeyConfig_.binds.rideAction = DIK_T;
 
+	//---パッド向けキーバインド---//
+	playerKeyConfig_.padBinds.jumpAction = XINPUT_GAMEPAD_A;
+	playerKeyConfig_.padBinds.rideAction = XINPUT_GAMEPAD_B;
+
 	// 入力
 	input_ = Input::GetInstance();
 }
@@ -28,6 +33,10 @@ void GameKeyconfig::Update()
 	if (input_->GetJoystickConnected()) {
 		playerKeyConfig_.leftStick = input_->GetLeftAnalogstick();
 		playerKeyConfig_.rightStick = input_->GetRightAnalogstick();
+
+		playerKeyConfig_.configs.jumpAction = input_->TriggerJoystick(playerKeyConfig_.padBinds.jumpAction);
+		playerKeyConfig_.configs.rideAction = input_->TriggerJoystick(playerKeyConfig_.padBinds.rideAction);
+
 	}
 	else {
 		// PRESS処理
