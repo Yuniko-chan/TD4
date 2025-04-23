@@ -2,16 +2,16 @@
 struct Segment
 {
     // 原点
-    float32_t3 origin_;
+    float32_t3 origin;
 	// 終点までの差分ベクトル
-    float32_t3 diff_;
+    float32_t3 diff;
     
 };
 
 struct ObjectData
 {
     
-    float32_t3 center_;
+    float32_t3 center;
     float32_t3 otientatuons[3];
     float32_t3 size;
     
@@ -40,57 +40,47 @@ StructuredBuffer<PolygonData> gPolygonDatas : register(t0);
 
 RWStructuredBuffer<OutputData> gOutputDatas : register(u0);
 
-// 
 bool CollisionCheck(PolygonData polygonData, Segment segment)
 {
     
-    Vector3 v01 = Subtract(triangle.
-    vertices[1], triangle.
-    vertices[0]);
-    Vector3 v12 = Subtract(triangle.
-    vertices[2], triangle.
-    vertices[1]);
-    Vector3 v20 = Subtract(triangle.
-    vertices[0], triangle.
-    vertices[2]);
+    float32_t3 v01 = polygonData.positions[1] - polygonData.positions[0];
+    float32_t3 v12 = polygonData.positions[2] - polygonData.positions[1];
+    float32_t3 v20 = polygonData.positions[0] - polygonData.positions[2];
 
 	//平面を求める
-    Plane plane = { Normalize(Cross(v01, v12)), 0.0f };
-    plane.distance = plane.normal.x * v20.x + plane.normal.y * v20.y + plane.normal.z * v20.z;
+    float32_t3 planeNormal = Normalize(Cross(v01, v12));
+    float32_t planeDistance = planeNormal.x * v20.x + planeNormal.y * v20.y + planeNormal.z * v20.z;
 
 	//平面との衝突確認
 	//垂直判定のため、法線と線の内積を求める
-    float dot = Dot(plane.normal, line.diff);
+    float dotValue = dot(planeNormal, segment.diff);
 
 	//衝突していない
-    if (dot == 0.0f)
+    if (dotValue == 0.0f)
     {
         return false;
     }
 
 	//tを求める
-    float t = (plane.distance - Dot(line.origin, plane.normal)) / dot;
+    float t = (planeDistance - dot(segment.origin, planeNormal)) / dotValue;
 
     if (t < 0 || t > 1.0f)
     {
         return false;
     }
 
-    Vector3 v1p = Subtract(Add(line.origin, Multiply(t, line.diff)), triangle.
-    vertices[1]);
-    Vector3 v2p = Subtract(Add(line.origin, Multiply(t, line.diff)), triangle.
-    vertices[2]);
-    Vector3 v0p = Subtract(Add(line.origin, Multiply(t, line.diff)), triangle.
-    vertices[0]);
+    float32_t3 v1p = segment.origin + t * segment.diff - polygonData.positions[1];
+    float32_t3 v2p = segment.origin + t * segment.diff - polygonData.positions[2];
+    float32_t3 v0p = segment.origin + t * segment.diff - polygonData.positions[0];
 
-    Vector3 cross01 = Cross(v01, v1p);
-    Vector3 cross12 = Cross(v12, v2p);
-    Vector3 cross20 = Cross(v20, v0p);
+    float32_t3 cross01 = Cross(v01, v1p);
+    float32_t3 cross12 = Cross(v12, v2p);
+    float32_t3 cross20 = Cross(v20, v0p);
 
 	//三角形との衝突確認
-    if (Dot(cross01, plane.normal) >= 0.0f &&
-		Dot(cross12, plane.normal) >= 0.0f &&
-		Dot(cross20, plane.normal) >= 0.0f)
+    if (dot(cross01, planeNormal) >= 0.0f &&
+		dot(cross12, planeNormal) >= 0.0f &&
+		dot(cross20, planeNormal) >= 0.0f)
     {
         return true;
     }
@@ -100,10 +90,10 @@ bool CollisionCheck(PolygonData polygonData, Segment segment)
 }
 
 // 衝突確認 OBBの線分と三角ポリゴン
-bool CollisionConfirmation(uint32_t index)
+bool CollisionConfirmation(PolygonData polygonData)
 {
    
-    // 
+    // 答え
     bool result = false;
     
     // オブジェクトデータ
@@ -189,43 +179,41 @@ bool CollisionConfirmation(uint32_t index)
     
     // 線分求める
     Segment segments[12];
-    segments[0].origin_ = vertices[0];
-    segments[0].diff_ = vertices[1] - vertices[0];
+    segments[0].origin = vertices[0];
+    segments[0].diff = vertices[1] - vertices[0];
     
-    segments[1].origin_ = vertices[1];
-    segments[1].diff_ = vertices[3] - vertices[1];
+    segments[1].origin = vertices[1];
+    segments[1].diff = vertices[3] - vertices[1];
     
-    segments[2].origin_ = vertices[3];
-    segments[2].diff_ = vertices[2] - vertices[3];
+    segments[2].origin = vertices[3];
+    segments[2].diff = vertices[2] - vertices[3];
     
-    segments[3].origin_ = vertices[2];
-    segments[3].diff_ = vertices[0] - vertices[2];
+    segments[3].origin = vertices[2];
+    segments[3].diff = vertices[0] - vertices[2];
     
-    segments[4].origin_ = vertices[4];
-    segments[4].diff_ = vertices[5] - vertices[4];
+    segments[4].origin = vertices[4];
+    segments[4].diff = vertices[5] - vertices[4];
     
-    segments[5].origin_ = vertices[5];
-    segments[5].diff_ = vertices[7] - vertices[5];
+    segments[5].origin = vertices[5];
+    segments[5].diff = vertices[7] - vertices[5];
     
-    segments[6].origin_ = vertices[7];
-    segments[6].diff_ = vertices[6] - vertices[7];
+    segments[6].origin = vertices[7];
+    segments[6].diff = vertices[6] - vertices[7];
     
-    segments[7].origin_ = vertices[6];
-    segments[7].diff_ = vertices[4] - vertices[6];
+    segments[7].origin = vertices[6];
+    segments[7].diff = vertices[4] - vertices[6];
     
-    segments[8].origin_ = vertices[0];
-    segments[8].diff_ = vertices[4] - vertices[0];
+    segments[8].origin = vertices[0];
+    segments[8].diff = vertices[4] - vertices[0];
     
-    segments[9].origin_ = vertices[1];
-    segments[9].diff_ = vertices[5] - vertices[1];
+    segments[9].origin = vertices[1];
+    segments[9].diff = vertices[5] - vertices[1];
     
-    segments[10].origin_ = vertices[2];
-    segments[10].diff_ = vertices[6] - vertices[2];
+    segments[10].origin = vertices[2];
+    segments[10].diff = vertices[6] - vertices[2];
     
-    segments[11].origin_ = vertices[3];
-    segments[11].diff_ = vertices[7] - vertices[3];
-    
-    PolygonData polygonData = gPolygonDatas[index];
+    segments[11].origin = vertices[3];
+    segments[11].diff = vertices[7] - vertices[3];
     
     // 線分と三角形の衝突確認
     for (uint32_t i = 0; i < 12; ++i)
@@ -238,28 +226,73 @@ bool CollisionConfirmation(uint32_t index)
 
     }
     
-    
     return result;
     
 }
 
+float32_t3 Extrusion(PolygonData polygonData, uint32_t index)
+{
+    //平面とObb
+    
+    //平面を求める
+    float32_t3 v01 = polygonData.positions[1] - polygonData.positions[0];
+    float32_t3 v12 = polygonData.positions[2] - polygonData.positions[1];
+    float32_t3 v20 = polygonData.positions[0] - polygonData.positions[2];
+    
+    float32_t3 planeNormal = Normalize(Cross(v01, v12));
+    float32_t planeDistance = planeNormal.x * v20.x + planeNormal.y * v20.y + planeNormal.z * v20.z;
+    
+    float32_t r = 0.0f;
+    ObjectData object = gObjectData;
+
+    r += abs(dot(object.otientatuons[0] * object.size.x, planeNormal[index]));
+    r += abs(dot(object.otientatuons[1] * object.size.y, planeNormal[index]));
+    r += abs(dot(object.otientatuons[2] * object.size.z, planeNormal[index]));
+
+	//平面とobbの距離(怪しい)
+    float32_t3 planePos = planeNormal[index] * planeDistance[index];
+
+    float s = dot(object.center - planePos, planeNormal[index]);
+    float distance = 0.0f;
+    if (s > 0)
+    {
+        distance = r - abs(s);
+    }
+    else
+    {
+        distance = r + abs(s);
+    }
+
+    return planeNormal[index] * distance;
+
+}
 
 [numthreads(1024, 1, 1)]
 void main(uint32_t3 dispatchId : SV_DispatchThreadID)
 {
     
+    // 番号
     uint32_t index = dispatchId.x;
     
-    // 衝突確認 OBBの線分と三角ポリゴン
+    // ポリゴンデータ
+    PolygonData polygonData = gPolygonDatas[index];
     
+    // 衝突確認 OBBの線分と三角ポリゴン
+    bool collisionConfirmation = CollisionConfirmation(polygonData);
     
     // 衝突確認 OBBの中に三角の頂点があるか
     
     // 押し出し処理
-    
+    if (collisionConfirmation)
+    {
+        gOutputDatas[index].extrusion = Extrusion(index);
+    }
+    else
+    {
+        gOutputDatas[index].extrusion = float32_t3(0.0f, 0.0f, 0.0f);
+    }
     
     // 押し出し値追加
-    gOutputDatas[index].extrusion;
     gOutputDatas[index].drivingLocation = gPolygonDatas[index].coursePolygonType;
 
 }
