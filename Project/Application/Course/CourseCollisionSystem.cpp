@@ -5,13 +5,10 @@
 #include "CoursePolygonType.h"
 #include "../../Engine/2D/ImguiManager.h"
 
-// ブロードフェーズで使用する、距離判定
-const float CourseCollisionSystem::kDistanceJudgment_ = 20.0f;
 // ポリゴンエリアの原点
 const Vector3 CourseCollisionSystem::kPolygonAreasOrigin_ = { -500.0f, -500.0f, -500.0f };
 // ポリゴンエリアの長さ
 const Vector3 CourseCollisionSystem::kPolygonAreasLength_ = { 1000.0f, 1000.0f, 1000.0f };
-
 
 void CourseCollisionSystem::Initialize()
 {
@@ -42,6 +39,39 @@ void CourseCollisionSystem::Execute()
 	}
 
 	// ->キック
+	//コマンドリストをクローズ、キック
+
+	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+
+	HRESULT hr = dxCommon->GetCommadList()->Close();
+	assert(SUCCEEDED(hr));
+
+	ID3D12CommandList* commandLists[] = { dxCommon->GetCommadList() };
+	DxCommand::GetCommandQueue()->ExecuteCommandLists(1, commandLists);
+
+	//実行待ち
+	//Fenceの値を更新
+	dxCommon->SetFenceVal(dxCommon->GetFenceVal() + 1);
+	//GPUがここまでたどり着いたときに、Fenceの値を指定した値に代入するようにSignalを送る
+	DxCommand::GetCommandQueue()->Signal(dxCommon->GetFence(), dxCommon->GetFenceVal());
+
+	//Fenceの値が指定したSignal値にたどり着いているが確認する
+	//GetCompletedValueの初期値はFence作成時に渡した初期値
+	if (dxCommon->GetFence()->GetCompletedValue() < dxCommon->GetFenceVal()) {
+		//FrenceのSignalを持つためのイベントを作成する
+		HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+		assert(fenceEvent != nullptr);
+		//指定したSignalにたどりついていないので、たどりつくまで待つようにイベントを設定する
+		dxCommon->GetFence()->SetEventOnCompletion(dxCommon->GetFenceVal(), fenceEvent);
+		//イベントを待つ
+		WaitForSingleObject(fenceEvent, INFINITE);
+	}
+
+	//実行が完了したので、アロケータとコマンドリストをリセット
+	hr = dxCommon->GetCommandAllocator()->Reset();
+	assert(SUCCEEDED(hr));
+	hr = dxCommon->GetCommadList()->Reset(dxCommon->GetCommandAllocator(), nullptr);
+	assert(SUCCEEDED(hr));
 
 	// 登録分回す
 	for (std::list<MeshObject*>::iterator itr = collidingObjects_.begin();
@@ -228,7 +258,7 @@ void CourseCollisionSystem::BuffersInitialize()
 
 
 		// 押し出しと走行場所のデータ（UAV）
-		buffers_[i].outputDataBuff_ = BufferResource::CreateBufferResourceUAV(device, ((sizeof(CourseCollisionSystem::OutputData) + 0xff) & ~0xff) * kCollisionPolygonMax_);
+		buffers_[i].outputDataBuff_ = BufferResource::CreateBufferResourceMapUAV(device, ((sizeof(CourseCollisionSystem::OutputData) + 0xff) & ~0xff) * kCollisionPolygonMax_);
 		// 書き込むためのアドレスを取得
 		buffers_[i].outputDataBuff_->Map(0, nullptr, reinterpret_cast<void**>(&buffers_[i].outputDataMap_));
 		

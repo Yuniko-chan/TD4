@@ -64,3 +64,39 @@ ID3D12Resource* BufferResource::CreateBufferResourceUAV(ID3D12Device* device, co
 	return resource;
 
 }
+
+ID3D12Resource* BufferResource::CreateBufferResourceMapUAV(ID3D12Device* device, const size_t& sizeInBytes)
+{
+
+	//頂点リソース用のヒープの設定
+	D3D12_HEAP_PROPERTIES uploadHeapProperties{};
+	uploadHeapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
+	uploadHeapProperties.CreationNodeMask = 1;
+	uploadHeapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+	uploadHeapProperties.Type = D3D12_HEAP_TYPE_CUSTOM;
+	uploadHeapProperties.VisibleNodeMask = 1;
+
+	D3D12_RESOURCE_DESC resourceDesc{};
+	resourceDesc.Alignment = 0;
+	resourceDesc.DepthOrArraySize = 1;
+	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
+	resourceDesc.Format = DXGI_FORMAT_UNKNOWN;
+	resourceDesc.Height = 1;
+	resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+	resourceDesc.MipLevels = 1;
+	resourceDesc.SampleDesc = { 1,0 };
+	resourceDesc.Width = sizeInBytes;
+
+	//実際に頂点リソースを作る
+	ID3D12Resource* resource = nullptr;
+	HRESULT hr = device->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE,
+		&resourceDesc, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, nullptr,
+		IID_PPV_ARGS(&resource));
+	// リリース版警告回避
+	hr;
+	assert(SUCCEEDED(hr));
+
+	return resource;
+
+}

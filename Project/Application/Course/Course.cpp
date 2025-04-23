@@ -32,7 +32,7 @@ void Course::Initialize(LevelData::MeshData* data)
 		polygon.positions[2] = { vertexDatas[2].position.x, vertexDatas[2].position.y, vertexDatas[2].position.z };
 		polygon.normal = Vector3::Normalize(vertexDatas[0].normal + vertexDatas[1].normal + vertexDatas[2].normal);
 		polygon.coursePolygonType = CoursePolygonType::kCoursePolygonTypeRoad;
-		
+		polygon.num = i;
 		// 登録
 		coursePolygons_.push_back(polygon);
 

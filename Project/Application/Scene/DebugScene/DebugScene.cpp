@@ -49,6 +49,7 @@ void DebugScene::Initialize()
 
 	// 
 	courseCollisionSystem_ = std::make_unique<CourseCollisionSystem>();
+	courseCollisionSystem_->Initialize();
 	courseCollisionSystem_->SetCourse(course_.get());
 
 	BaseScene::InitilaizeCheck();

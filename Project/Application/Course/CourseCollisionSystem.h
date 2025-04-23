@@ -14,9 +14,6 @@ private: // メンバ定数
 	// 登録できるオブジェクトの数
 	static const uint32_t kObjectsThatCanBeRegisteredMax_ = 8;
 	
-	// ブロードフェーズで使用する、距離判定
-	static const float kDistanceJudgment_;
-	
 	//	ポリゴンエリアの分割数
 	static const uint32_t kPolygonAreasDiv_ = 4;
 	// ポリゴンエリアの原点
@@ -138,4 +135,3 @@ private: // メンバ変数
 	int32_t areaDisplayZ_;
 
 };
-
