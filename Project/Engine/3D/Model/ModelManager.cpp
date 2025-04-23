@@ -67,3 +67,10 @@ Model* ModelManager::FindModel(const std::string& fileName)
     return model;
 
 }
+
+
+void ModelManager::AppendModel(Model* model) {
+    std::unique_ptr<Model> newModel;
+    newModel.reset(model);
+    models_.push_back(std::move(newModel));
+}

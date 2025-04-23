@@ -9,7 +9,7 @@ void Course::Initialize(LevelData::MeshData* data)
 	MeshObject::Initialize(data);
 
 	// 三角ポリゴン（頂点三つ、法線、種類）
-	
+	/*
 	// メッシュデータ取得
 	Mesh* meshData = model_->GetMesh();
 	// 頂点の数取得
@@ -17,7 +17,7 @@ void Course::Initialize(LevelData::MeshData* data)
 	// 頂点のデータ
 	VertexData* baseVertexData = meshData->GetVertMap();
 	VertexData vertexDatas[3] = {};
-
+	
 	// 頂点の数 / 3分回す
 	for (uint32_t i = 0; i < vertexNum / 3;++i)
 	{
@@ -36,7 +36,7 @@ void Course::Initialize(LevelData::MeshData* data)
 		// 登録
 		coursePolygons_.push_back(polygon);
 
-	}
+	}*/
 
 }
 

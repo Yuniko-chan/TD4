@@ -95,6 +95,15 @@ public:
 		DirectXCommon* dxCommon);
 
 	/// <summary>
+	/// モデルデータ由来3Dモデル生成
+	/// </summary>
+	///<param name="modelData">モデルデータ</param>
+	///<param name="filename">ファイル名前</param>
+	/// <returns></returns>
+	static Model* CreateFromModelData(
+		Model::ModelData& modelData, const std::string& filename);
+
+	/// <summary>
 	/// デフォルトマテリアル取得
 	/// </summary>
 	/// <returns></returns>
@@ -116,6 +125,14 @@ public:
 	/// <param name="filename">ファイル名前</param>
 	/// <param name="dxCommon">DirectXCommon</param>
 	void Initialize(const std::string& directoryPath, const std::string& filename, DirectXCommon* dxCommon);
+
+
+	/// <summary>
+	/// モデルデータ由来初期化
+	/// </summary>
+	/// <param name="modelData">モデルデータ</param>
+	/// <param name="filename">ファイル名前</param>
+	void InitializeFromModelData(Model::ModelData& modelData,const std::string& filename);
 
 	/// <summary>
 	/// テクスチャハンドルの設定

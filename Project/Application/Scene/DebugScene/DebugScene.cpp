@@ -21,16 +21,18 @@ void DebugScene::Initialize()
 	skydome_->Initialize(&skydomeData);
 
 	// コース
-	courseModel_.reset(Model::Create("Resources/Model/Skydome/", "skydome.obj", dxCommon_));
+	//courseModel_.reset();
 	course_ = std::make_unique<Course>();
+	ModelManager::GetInstance()->AppendModel(CourseLoader::LoadCourseFile("Resources/Course", "curseExporterTest2.course", *(course_->GetCoursePolygonsAdress())));
 	LevelData::MeshData courseData;
-	courseData.directoryPath = "Resources/Model/Skydome";
-	courseData.flieName = "skydome.obj";
+	courseData.directoryPath = "Resources/Course";
+	courseData.flieName = "curseExporterTest2.course";
 	courseData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
 	courseData.className = "Course";
 	courseData.name = "";
 	courseData.parentName = "";
 	course_->Initialize(&courseData);
+
 
 	clothDemo_ = std::make_unique<ClothDemo>();
 	clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
@@ -45,8 +47,6 @@ void DebugScene::Initialize()
 	preDrawParameters.spotLightManager = spotLightManager_.get();
 	preDrawParameters.environmentTextureHandle = TextureManager::Load("Resources/default/rostock_laage_airport_4k.dds", DirectXCommon::GetInstance());
 	ModelDraw::SetPreDrawParameters(preDrawParameters);
-
-	CourseLoader::LoadCourseFile("Resources/Course", "curseExporterTest.course");
 
 	BaseScene::InitilaizeCheck();
 
@@ -70,6 +70,8 @@ void DebugScene::Draw()
 
 	// スカイドーム
 	skydome_->Draw(camera_);
+
+	course_->Draw(camera_);
 
 	clothDemo_->CollisionObjectDraw(&camera_);
 

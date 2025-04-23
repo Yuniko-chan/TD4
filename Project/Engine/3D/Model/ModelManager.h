@@ -40,6 +40,13 @@ public: // 関数
 		const std::string& directoryPath,
 		const std::string& fileName);
 
+	/// <summary>
+	/// モデル追加
+	/// </summary>
+	/// <param name="model">モデル</param>
+	/// <returns></returns>
+	void AppendModel(Model* model);
+
 private: // 関数
 
 	/// <summary>

@@ -2,19 +2,24 @@
 #include "../../Engine/Math/Vector/Vector2.h"
 #include "../../Engine/Math/Vector/Vector3.h"
 #include "../../Engine/Math/Vector/Vector4.h"
+#include "../../Engine/3D/Model/Model.h"
+#include "../../Engine/3D/Model/ModelLoader.h"
+
+#include "CoursePolygon.h"
 
 #include <string>
 #include <fstream>
 
 static const uint32_t kVerticesMax = 8192;
 static const uint32_t kInportFileSize = 65536*2;
+static const size_t kHeaderOfset = sizeof(uint32_t) * 2;
 //コースファイル形式の頂点データ
 struct CourseFileVertex
 {
 	Vector4 positon_;
 	Vector2 uv_;
 	Vector3 normal_;
-	uint32_t coruseAttribute_;
+	uint32_t courseAttribute_;
 };
 
 //コース用読み取りデータ
@@ -34,8 +39,9 @@ public:
 	/// </summary>
 	/// <param name="directoryPath">ディレクトリパス</param>
 	/// <param name="filename">ファイルの名前</param>
+	/// 
 	/// <returns></returns>
-	static void LoadCourseFile(const std::string& directoryPath, const std::string& filename);
+	static Model* LoadCourseFile(const std::string& directoryPath, const std::string& filename,std::vector<CoursePolygon>& course);
 
 private:
 	/// <summary>
