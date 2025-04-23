@@ -18,17 +18,9 @@ void PlayerCommand::Update()
 {
 	// 移動コマンド
 	MoveCommand();
-
-	// 親子処理（強引に）
-	if (playerTransform_->parent_) {
-		playerTransform_->parent_->transform_.translate += moveDirect_ * kDeltaTime_;
-	}
-	else {
-		playerTransform_->transform_.translate += moveDirect_ * kDeltaTime_;
-	}
 }
 
-void PlayerCommand::MoveCommand()
+bool PlayerCommand::MoveCommand()
 {
 	// 初期化
 	moveDirect_ = {};
@@ -52,4 +44,12 @@ void PlayerCommand::MoveCommand()
 
 	// 方向の正規化
 	moveDirect_ = Vector3::Normalize(moveDirect_);
+
+	// 方向入力があればtrue
+	return moveDirect_.x != 0.0f || moveDirect_.y != 0.0f || moveDirect_.z != 0.0f;
+}
+
+bool PlayerCommand::ActionCommand()
+{
+	return keyConfig_->GetConfig()->rideAction;
 }

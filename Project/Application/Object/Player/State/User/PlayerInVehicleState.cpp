@@ -1,5 +1,6 @@
 #include "PlayerInVehicleState.h"
 #include "../../Player.h"
+#include "../../../Engine/Math/DeltaTime.h"
 
 void PlayerInVehicleState::Initialize()
 {
@@ -8,9 +9,13 @@ void PlayerInVehicleState::Initialize()
 
 void PlayerInVehicleState::Update()
 {
-	//if (player_->GetCommand()->OnFootCommand()) {
+	// 切り替え
+	if (player_->GetCommand()->ActionCommand()) {
+		player_->GetStateMachine()->ChangeRequest(IPlayerState::kOnFoot);
+	}
 
-	//}
+	// 移動処理
+	player_->GetWorldTransformAdress()->parent_->transform_.translate += player_->GetCommand()->GetDirect() * kDeltaTime_;
 }
 
 void PlayerInVehicleState::Exit()

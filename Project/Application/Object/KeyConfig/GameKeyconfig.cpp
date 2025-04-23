@@ -17,7 +17,7 @@ void GameKeyconfig::Initialize()
 
 	// アクション
 	playerKeyConfig_.binds.jumpAction = DIK_SPACE;
-	playerKeyConfig_.binds.rideAction = DIK_RETURN;
+	playerKeyConfig_.binds.rideAction = DIK_T;
 
 	// 入力
 	input_ = Input::GetInstance();
@@ -30,11 +30,15 @@ void GameKeyconfig::Update()
 		playerKeyConfig_.rightStick = input_->GetRightAnalogstick();
 	}
 	else {
-
+		// PRESS処理
 		playerKeyConfig_.configs.behind = input_->PushKey(playerKeyConfig_.binds.behind);
 		playerKeyConfig_.configs.front = input_->PushKey(playerKeyConfig_.binds.front);
 		playerKeyConfig_.configs.left = input_->PushKey(playerKeyConfig_.binds.left);
 		playerKeyConfig_.configs.right = input_->PushKey(playerKeyConfig_.binds.right);
+
+		// TRIGGER処理
+		playerKeyConfig_.configs.rideAction = input_->TriggerKey(playerKeyConfig_.binds.rideAction);
+		playerKeyConfig_.configs.jumpAction = input_->TriggerKey(playerKeyConfig_.binds.jumpAction);
 	}
 
 

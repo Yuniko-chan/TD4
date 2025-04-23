@@ -22,13 +22,21 @@ public:
 	/// </summary>
 	void Update();
 
-private:
+public:
+	/// <summary>
+	/// アクションコマンド
+	/// </summary>
+	/// <returns></returns>
+	bool ActionCommand();	
 	/// <summary>
 	/// 操作コマンド
 	/// </summary>
-	void MoveCommand();
-
-	
+	bool MoveCommand();
+	/// <summary>
+	/// 方向取得
+	/// </summary>
+	/// <returns></returns>
+	Vector3 GetDirect() { return moveDirect_ * kSpeedValue; }
 
 private:
 	// 方向
@@ -37,4 +45,6 @@ private:
 	WorldTransform* playerTransform_ = nullptr;
 	// 入力クラス
 	GameKeyconfig* keyConfig_ = nullptr;
+
+	const float kSpeedValue = 5.0f;
 };

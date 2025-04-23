@@ -65,7 +65,10 @@ private:
     void ColliderUpdate();
 
 public: // ゲッター
-
+    // コマンドの取得
+    PlayerCommand* GetCommand() { return playerCommand_.get(); }
+    // ステートマシンの取得
+    PlayerStateMachine* GetStateMachine() { return stateMachine_.get(); }
 
 private:
     // アニメーション
