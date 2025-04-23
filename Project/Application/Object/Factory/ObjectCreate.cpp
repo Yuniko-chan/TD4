@@ -37,3 +37,27 @@ IObject* ObjectCreate::CreateObjectEngineParts(LevelData::ObjectData& objectData
 	static_cast<EngineParts*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
 	return object;
 }
+
+IObject* ObjectCreate::CreateObjectTireParts(LevelData::ObjectData& objectData)
+{
+	IObject* object = new TireParts();
+
+	static_cast<TireParts*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}
+
+IObject* ObjectCreate::CreateObjectArmorFrameParts(LevelData::ObjectData& objectData)
+{
+	IObject* object = new ArmorFrameParts();
+
+	static_cast<ArmorFrameParts*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}
+
+IObject* ObjectCreate::CreateObjectIParts(LevelData::ObjectData& objectData)
+{
+	IObject* object = new Car::IParts();
+
+	static_cast<Car::IParts*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}

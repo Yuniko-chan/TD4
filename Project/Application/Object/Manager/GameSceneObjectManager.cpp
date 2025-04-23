@@ -128,13 +128,26 @@ void GameSceneObjectManager::OptionProcess()
 {
 	// コア作成
 	AddObject("VehicleCore", "Resources/Model/GroundBlock", "GroundBlock.obj");
-	AddObject("EngineParts", "Resources/Model/Ground", "Ground.obj");
+	AddObject("EngineParts", "Resources/Model/GroundBlock", "GroundBlock.obj");
+	AddObject("TireParts", "Resources/Model/GroundBlock", "GroundBlock.obj");
+	AddObject("ArmorFrameParts", "Resources/Model/GroundBlock", "GroundBlock.obj");
 
 	// 
 	VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer("VehicleCore"));
 	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
+	Car::IParts* engineParts = static_cast<Car::IParts*>(this->GetObjectPointer("EngineParts"));
+	Car::IParts* tireParts = static_cast<Car::IParts*>(this->GetObjectPointer("TireParts"));
+	Car::IParts* armorParts = static_cast<Car::IParts*>(this->GetObjectPointer("ArmorFrameParts"));
 
 	core->SetPlayer(player);
 	player->SetPair(core);
+
+	// ペアレント＋トランスフォーム親子設定
+	engineParts->SetParent(core);
+	engineParts->TransformParent();
+	tireParts->SetParent(core);
+	tireParts->TransformParent();
+	armorParts->SetParent(core);
+	armorParts->TransformParent();
 
 }

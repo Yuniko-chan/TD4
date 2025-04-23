@@ -29,12 +29,20 @@ void ObjectFactory::Initialize(BaseObjectManager* objectManager)
 	createObjectFunctions_[kCreateObjectIndexPlayer].first = kCreateObjectNames_[kCreateObjectIndexPlayer];
 	createObjectFunctions_[kCreateObjectIndexPlayer].second = ObjectCreate::CreateObjectPlayer;
 
-	// 車のコア
+
+	///---USER---///
+	// 車両コア
 	createObjectFunctions_[kCreateObjectIndexVehicleCore].first = kCreateObjectNames_[kCreateObjectIndexVehicleCore];
 	createObjectFunctions_[kCreateObjectIndexVehicleCore].second = ObjectCreate::CreateObjectVehicleCore;
-	// エンジン
+	// エンジンパーツ
 	createObjectFunctions_[kCreateObjectIndexCarEngine].first = kCreateObjectNames_[kCreateObjectIndexCarEngine];
 	createObjectFunctions_[kCreateObjectIndexCarEngine].second = ObjectCreate::CreateObjectEngineParts;
+	// タイヤパーツ
+	createObjectFunctions_[kCreateObjectIndexCarTire].first = kCreateObjectNames_[kCreateObjectIndexCarTire];
+	createObjectFunctions_[kCreateObjectIndexCarTire].second = ObjectCreate::CreateObjectTireParts;
+	// アーマーパーツ
+	createObjectFunctions_[kCreateObjectIndexCarArmorFrame].first = kCreateObjectNames_[kCreateObjectIndexCarArmorFrame];
+	createObjectFunctions_[kCreateObjectIndexCarArmorFrame].second = ObjectCreate::CreateObjectArmorFrameParts;
 }
 
 IObject* ObjectFactory::CreateObject(LevelData::ObjectData& objectData)

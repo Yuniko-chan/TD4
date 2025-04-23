@@ -16,14 +16,15 @@ namespace Car
         /// </summary>
         /// <param name="data">メッシュデータ</param>
         void Initialize(LevelData::MeshData* data) override;
+		/// <summary>
+		/// 更新
+		/// </summary>
+		void Update() override;
 
-		///// <summary>
-		///// 描画
-		///// </summary>
-		///// <param name="camera">カメラ</param>
-		//void Draw(BaseCamera& camera) override;
-
+		// 親子関係
 		void SetParent(VehicleCore* parent) { parentCore_ = parent; }
+		void ParentSetting(bool isAccept, const Vector3& offset);
+		void TransformParent();
 
 	protected:
 		// 重さparent

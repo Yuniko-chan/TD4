@@ -1,13 +1,14 @@
 #pragma once
 #include "../PartsInterface.h"
 
-class TireParts : public Car::IParts
+class ArmorFrameParts : public Car::IParts
 {
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	void Initialize(LevelData::MeshData* data) override;
+
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -17,9 +18,4 @@ public:
 	/// </summary>
 	void ImGuiDraw() override;
 
-private:
-	//
-
-
 };
-

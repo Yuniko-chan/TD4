@@ -168,6 +168,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Effect\EffectManager.cpp" />
     <ClCompile Include="Application\Camera\FollowCamera.cpp" />
     <ClCompile Include="Application\Object\BaseCharacter\BaseCharacterAnimation.cpp" />
+    <ClCompile Include="Application\Object\Car\Parts\Engine\EngineParts.cpp" />
+    <ClCompile Include="Application\Object\Car\Parts\Frame\ArmorFrameParts.cpp" />
+    <ClCompile Include="Application\Object\Car\Parts\Tire\TireParts.cpp" />
     <ClCompile Include="Application\Object\Car\VehicleCore.cpp" />
     <ClCompile Include="Application\Object\Car\Factory\VehicleFactory.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\PartsInterface.cpp" />
@@ -350,7 +353,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Car\Factory\VehicleFactory.h" />
     <ClInclude Include="Application\Object\Car\Parts\Block\EmptyParts.h" />
     <ClInclude Include="Application\Object\Car\Parts\Engine\EngineParts.h" />
-    <ClInclude Include="Application\Object\Car\Parts\Frame\FrameParts.h" />
+    <ClInclude Include="Application\Object\Car\Parts\Frame\ArmorFrameParts.h" />
     <ClInclude Include="Application\Object\Car\Parts\PartsInterface.h" />
     <ClInclude Include="Application\Object\Car\Parts\Tire\TireParts.h" />
     <ClInclude Include="Application\Object\Factory\CreateObjectIndex.h" />

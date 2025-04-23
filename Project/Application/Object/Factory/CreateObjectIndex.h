@@ -11,7 +11,7 @@ enum CreateObjectIndex {
 	kCreateObjectIndexVehicleCore,	// 車両コア
 	kCreateObjectIndexCarEngine,	// エンジン
 	kCreateObjectIndexCarTire,	// タイヤ
-	kCreateObjectIndexCarFrame,	// フレーム
+	kCreateObjectIndexCarArmorFrame,	// フレーム
 
 	kCreateObjectIndexOfCount, // 数数える用
 };
