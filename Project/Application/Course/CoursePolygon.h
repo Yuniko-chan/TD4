@@ -16,7 +16,4 @@ struct CoursePolygon
 	// コースポリゴン種類
 	uint32_t coursePolygonType;
 
-	// 番号
-	uint32_t num;
-
 };

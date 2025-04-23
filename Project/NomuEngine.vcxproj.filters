@@ -385,6 +385,9 @@
     <Filter Include="Application\System\Scene">
       <UniqueIdentifier>{dafad515-fad3-46a5-9c01-09a32950a793}</UniqueIdentifier>
     </Filter>
+    <Filter Include="shaders\Cource">
+      <UniqueIdentifier>{a3472655-df3a-4018-9320-10ddfdb5a3a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -1803,6 +1806,9 @@
     </FxCompile>
     <FxCompile Include="Resources\Shaders\GPUParticle\MissParticle\MissUpdate.CS.hlsl">
       <Filter>shaders\GPUParticle\Miss</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Cource\CourceExtrusion.CS.hlsl">
+      <Filter>shaders\Cource</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
