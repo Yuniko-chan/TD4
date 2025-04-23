@@ -1,6 +1,8 @@
 #pragma once
 #include "../../State/IState.h"
 
+class Player;
+
 /// <summary>
 /// ステートの基底
 /// </summary>
@@ -10,6 +12,8 @@ public:
 	enum StateNumber
 	{
 		kRoot,	// 通常
+		kOnFoot,	// 地面を歩いている
+		kInVehicle,	// 車両に乗ってる
 		kEndNumber,	// 最後
 	};
 
@@ -28,4 +32,15 @@ public:
 	/// 終了処理
 	/// </summary>
 	virtual void Exit() = 0;
+
+	/// <summary>
+	/// 親のプレイヤー設定
+	/// </summary>
+	/// <param name="player"></param>
+	void SetPlayer(Player* player) { player_ = player; }
+
+protected:
+	// 親機
+	Player* player_ = nullptr;
+
 };

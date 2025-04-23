@@ -871,7 +871,7 @@
     <ClCompile Include="Application\Object\Player\State\System\PlayerStateMachine.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Player\State\PlayerRootState.cpp">
+    <ClCompile Include="Application\Object\Player\State\User\PlayerRootState.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Player\State\Factory\PlayerStateFactory.cpp">
@@ -887,6 +887,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Car\Parts\Frame\ArmorFrameParts.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Player\State\User\PlayerOnFootState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Player\State\User\PlayerInVehicleState.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1551,7 +1557,7 @@
     <ClInclude Include="Application\Object\Player\State\System\PlayerStateMachine.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\PlayerRootState.h">
+    <ClInclude Include="Application\Object\Player\State\User\PlayerRootState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Player\State\PlayerStatesList.h">
@@ -1570,6 +1576,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Car\Factory\VehicleFactory.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Player\State\User\PlayerOnFootState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Player\State\User\PlayerInVehicleState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Player\Collision\PlayerCollision.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

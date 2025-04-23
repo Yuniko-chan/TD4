@@ -56,6 +56,13 @@ public: // メンバ関数
     void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
     void SetPair(VehicleCore* pair) { pairCore_ = pair; }
+    void SetParent();
+
+private:
+    /// <summary>
+    /// コライダー更新
+    /// </summary>
+    void ColliderUpdate();
 
 private:
     // アニメーション

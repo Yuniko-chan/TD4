@@ -1,4 +1,5 @@
 #include "PlayerStateMachine.h"
+#include "../../Player.h"
 #include "../IPlayerState.h"
 #include "../Factory/PlayerStateFactory.h"
 
@@ -13,8 +14,7 @@ PlayerStateMachine::~PlayerStateMachine()
 void PlayerStateMachine::Initialize()
 {
 	stateFactory_ = std::make_unique<PlayerStateFactory>();
-	ChangeRequest(0);
-
+	ChangeRequest(IPlayerState::kRoot);
 }
 
 void PlayerStateMachine::Update()
@@ -26,6 +26,7 @@ void PlayerStateMachine::Update()
 			currentState_->Exit();
 		}
 		// 初期化
+		static_cast<IPlayerState*>(tmpState_.get())->SetPlayer(player_);
 		tmpState_->Initialize();
 		currentState_ = std::move(tmpState_);
 
@@ -42,7 +43,8 @@ void PlayerStateMachine::Update()
 
 void PlayerStateMachine::ChangeRequest(uint32_t requestNum)
 {
+	// リクエスト受け取り
 	request_ = requestNum;
+	// ステートの作成
 	tmpState_.reset(stateFactory_->CreateState(request_.value()));
-	//requestNum;
 }

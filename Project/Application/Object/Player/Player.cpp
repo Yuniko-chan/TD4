@@ -3,6 +3,8 @@
 #include "../../../Engine/3D/Model/ModelDraw.h"
 #include "../../../Engine/2D/ImguiManager.h"
 
+#include "../Car/VehicleCore.h"
+
 Player::Player()
 {
 }
@@ -26,6 +28,7 @@ void Player::Initialize(LevelData::MeshData* data)
 	// ステート
 	stateMachine_ = std::make_unique<PlayerStateMachine>();
 	stateMachine_->Initialize();
+	stateMachine_->SetPlayer(this);
 }
 
 void Player::Update()
@@ -42,6 +45,8 @@ void Player::Update()
 	// 座標更新
 	//worldTransform_.transform_.translate += Gravity::Execute();
 	worldTransform_.UpdateMatrix();
+
+	ColliderUpdate();
 
 }
 
@@ -71,4 +76,24 @@ void Player::ParticleDraw(BaseCamera& camera)
 void Player::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
 	colliderPartner, collisionData;
+}
+
+void Player::SetParent()
+{
+	Vector3 localPosition = pairCore_->GetWorldTransformAdress()->GetWorldPosition() - worldTransform_.GetWorldPosition();
+	// 親子設定
+	worldTransform_.SetParent(pairCore_->GetWorldTransformAdress());
+	worldTransform_.transform_.translate = localPosition;
+}
+
+void Player::ColliderUpdate()
+{
+	// コライダーの更新
+	OBB obb = std::get<OBB>(*collider_);
+	obb.center_ = worldTransform_.GetWorldPosition();
+	obb.SetOtientatuons(worldTransform_.rotateMatrix_);
+	// コライダーを設定しなおす
+	ColliderShape* shape = new ColliderShape();
+	*shape = obb;
+	collider_.reset(shape);
 }

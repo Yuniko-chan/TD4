@@ -7,8 +7,14 @@ IState* PlayerStateFactory::CreateState(uint32_t stateNum)
 
 	switch (stateNum)
 	{
-	case 0:
+	case IPlayerState::kRoot:
 		newState = new PlayerRootState();
+		break;
+	case IPlayerState::kOnFoot:
+		newState = new PlayerOnFootState();
+		break;
+	case IPlayerState::kInVehicle:
+		newState = new PlayerInVehicleState();
 		break;
 	default:
 		break;
