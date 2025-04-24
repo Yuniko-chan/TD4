@@ -14,7 +14,7 @@ PlayerStateMachine::~PlayerStateMachine()
 void PlayerStateMachine::Initialize()
 {
 	stateFactory_ = std::make_unique<PlayerStateFactory>();
-	ChangeRequest(IPlayerState::kRoot);
+	ChangeRequest(IPlayerState::kOnFoot);
 }
 
 void PlayerStateMachine::Update()

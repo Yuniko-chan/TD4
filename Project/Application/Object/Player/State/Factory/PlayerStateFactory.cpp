@@ -16,6 +16,9 @@ IState* PlayerStateFactory::CreateState(uint32_t stateNum)
 	case IPlayerState::kInVehicle:
 		newState = new PlayerInVehicleState();
 		break;
+	case IPlayerState::kRideAction:
+		newState = new PlayerRideActionState();
+		break;
 	default:
 		break;
 	}

@@ -103,3 +103,8 @@ void Player::ColliderUpdate()
 	*shape = obb;
 	collider_.reset(shape);
 }
+
+WorldTransform* Player::GetCoreTransform()
+{
+	return pairCore_->GetWorldTransformAdress();
+}

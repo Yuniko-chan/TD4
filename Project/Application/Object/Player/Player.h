@@ -70,6 +70,7 @@ public: // ゲッター
     // ステートマシンの取得
     PlayerStateMachine* GetStateMachine() { return stateMachine_.get(); }
 
+    WorldTransform* GetCoreTransform();
 private:
     // アニメーション
     std::unique_ptr<PlayerAnimation> playerAnimation_;

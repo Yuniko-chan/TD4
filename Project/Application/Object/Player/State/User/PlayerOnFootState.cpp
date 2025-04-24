@@ -11,7 +11,7 @@ void PlayerOnFootState::Update()
 {
 	// 切り替え
 	if (player_->GetCommand()->ActionCommand()) {
-		player_->GetStateMachine()->ChangeRequest(IPlayerState::kInVehicle);
+		player_->GetStateMachine()->ChangeRequest(IPlayerState::kRideAction);
 	}
 
 	// 移動処理

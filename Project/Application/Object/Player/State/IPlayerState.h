@@ -14,6 +14,7 @@ public:
 		kRoot,	// 通常
 		kOnFoot,	// 地面を歩いている
 		kInVehicle,	// 車両に乗ってる
+		kRideAction,	// 乗るアクション
 		kEndNumber,	// 最後
 	};
 
