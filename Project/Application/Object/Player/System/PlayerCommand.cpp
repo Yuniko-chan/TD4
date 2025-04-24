@@ -25,25 +25,15 @@ bool PlayerCommand::MoveCommand()
 	// 初期化
 	moveDirect_ = {};
 
-	const float directValue = 1.0f;
-
-	// 前後
-	if (keyConfig_->GetConfig()->front) {
-		moveDirect_.z += directValue;
-	}
-	else if (keyConfig_->GetConfig()->behind) {
-		moveDirect_.z -= directValue;
-	}
-	// 左右
-	if (keyConfig_->GetConfig()->left) {
-		moveDirect_.x -= directValue;
-	}
-	else if (keyConfig_->GetConfig()->right) {
-		moveDirect_.x += directValue;
-	}
+	moveDirect_.x = keyConfig_->GetLeftStick()->x;
+	moveDirect_.z = keyConfig_->GetLeftStick()->y;
 
 	// 方向の正規化
 	moveDirect_ = Vector3::Normalize(moveDirect_);
+
+	Vector2 rotate = Vector2::Normalize(Vector2(keyConfig_->GetRightStick()->x, keyConfig_->GetRightStick()->y));
+
+	playerTransform_->transform_.rotate.y += rotate.x;
 
 	// 方向入力があればtrue
 	return moveDirect_.x != 0.0f || moveDirect_.y != 0.0f || moveDirect_.z != 0.0f;

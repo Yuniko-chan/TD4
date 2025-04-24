@@ -374,6 +374,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Player\PlayerSystemLists.h" />
     <ClInclude Include="Application\Object\Player\State\Factory\PlayerStateFactory.h" />
     <ClInclude Include="Application\Object\Player\State\IPlayerState.h" />
+    <ClInclude Include="Application\Object\Player\State\User\PlayerRideActionState.h" />
     <ClInclude Include="Application\Object\Player\State\User\PlayerRootState.h" />
     <ClInclude Include="Application\Object\Player\State\PlayerStatesList.h" />
     <ClInclude Include="Application\Object\Player\State\System\PlayerStateMachine.h" />

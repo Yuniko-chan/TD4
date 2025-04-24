@@ -1587,6 +1587,9 @@
     <ClInclude Include="Application\Object\Player\Collision\PlayerCollision.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Application\Object\Player\State\User\PlayerRideActionState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

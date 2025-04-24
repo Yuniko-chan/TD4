@@ -18,6 +18,9 @@ struct PlayerKey
 	T behind;	// 後ろ
 	T left;	// 左
 	T right;	// 右
+
+	T rotateLeft;
+	T rotateRight;
 };
 
 /// <summary>
@@ -25,10 +28,11 @@ struct PlayerKey
 /// </summary>
 struct KeyConfig
 {
-	PlayerKey<bool> configs;	// 状態
-	PlayerKey<uint8_t> binds;	// バインド
-	PlayerKey<uint8_t> padBinds;	// パッドのバインド
-	Vector2 leftStick, rightStick;	// スティックの状態
+	PlayerKey<bool> configs{};	// 状態
+	PlayerKey<uint16_t> binds{};	// バインド
+	PlayerKey<uint16_t> padBinds{};	// パッドのバインド
+	Vector2 leftStick = {};	// 左スティック
+	Vector2 rightStick = {};	// 右スティックの状態
 	bool isController = false;	// Controller操作か
 };
 
@@ -58,6 +62,8 @@ public:
 	/// <returns></returns>
 	PlayerKey<bool>* GetConfig() { return &playerKeyConfig_.configs; }
 
+	Vector2* GetLeftStick() { return &playerKeyConfig_.leftStick; }
+	Vector2* GetRightStick() { return &playerKeyConfig_.rightStick; }
 private:
 	// プレイヤーのキー
 	KeyConfig playerKeyConfig_;
