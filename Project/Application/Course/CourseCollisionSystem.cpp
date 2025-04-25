@@ -13,6 +13,12 @@ const Vector3 CourseCollisionSystem::kPolygonAreasLength_ = { 1000.0f, 1000.0f, 
 void CourseCollisionSystem::Initialize()
 {
 
+	dxCommon_ = DirectXCommon::GetInstance();
+
+	// パイプライン
+	courseCollisionPipeline_ = std::make_unique<CourseCollisionPipeline>();
+	courseCollisionPipeline_->Initialize(dxCommon_->GetDevice());
+
 	// バッファ初期化
 	BuffersInitialize();
 
@@ -31,46 +37,43 @@ void CourseCollisionSystem::Execute()
 		DistanceJudgment(*itr);
 
 		// ->GPU側で押し出し距離確認
+		ExtrusionExecuteCS();
 
 		// 回数を増やす
 		collisionCheakNum_++;
-
 
 	}
 
 	// ->キック
 	//コマンドリストをクローズ、キック
-
-	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
-
-	HRESULT hr = dxCommon->GetCommadList()->Close();
+	HRESULT hr = dxCommon_->GetCommadList()->Close();
 	assert(SUCCEEDED(hr));
 
-	ID3D12CommandList* commandLists[] = { dxCommon->GetCommadList() };
+	ID3D12CommandList* commandLists[] = { dxCommon_->GetCommadList() };
 	DxCommand::GetCommandQueue()->ExecuteCommandLists(1, commandLists);
 
 	//実行待ち
 	//Fenceの値を更新
-	dxCommon->SetFenceVal(dxCommon->GetFenceVal() + 1);
+	dxCommon_->SetFenceVal(dxCommon_->GetFenceVal() + 1);
 	//GPUがここまでたどり着いたときに、Fenceの値を指定した値に代入するようにSignalを送る
-	DxCommand::GetCommandQueue()->Signal(dxCommon->GetFence(), dxCommon->GetFenceVal());
+	DxCommand::GetCommandQueue()->Signal(dxCommon_->GetFence(), dxCommon_->GetFenceVal());
 
 	//Fenceの値が指定したSignal値にたどり着いているが確認する
 	//GetCompletedValueの初期値はFence作成時に渡した初期値
-	if (dxCommon->GetFence()->GetCompletedValue() < dxCommon->GetFenceVal()) {
+	if (dxCommon_->GetFence()->GetCompletedValue() < dxCommon_->GetFenceVal()) {
 		//FrenceのSignalを持つためのイベントを作成する
 		HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
 		assert(fenceEvent != nullptr);
 		//指定したSignalにたどりついていないので、たどりつくまで待つようにイベントを設定する
-		dxCommon->GetFence()->SetEventOnCompletion(dxCommon->GetFenceVal(), fenceEvent);
+		dxCommon_->GetFence()->SetEventOnCompletion(dxCommon_->GetFenceVal(), fenceEvent);
 		//イベントを待つ
 		WaitForSingleObject(fenceEvent, INFINITE);
 	}
 
 	//実行が完了したので、アロケータとコマンドリストをリセット
-	hr = dxCommon->GetCommandAllocator()->Reset();
+	hr = dxCommon_->GetCommandAllocator()->Reset();
 	assert(SUCCEEDED(hr));
-	hr = dxCommon->GetCommadList()->Reset(dxCommon->GetCommandAllocator(), nullptr);
+	hr = dxCommon_->GetCommadList()->Reset(dxCommon_->GetCommandAllocator(), nullptr);
 	assert(SUCCEEDED(hr));
 
 	// 登録分回す
@@ -188,6 +191,29 @@ void CourseCollisionSystem::ImGuiDraw()
 
 	ImGui::End();
 
+	// CS
+	ImGui::Begin("CourseCollisionSystem_CS");
+
+	// 登録分回す
+	uint32_t count = 0;
+	for (std::list<MeshObject*>::iterator itr = collidingObjects_.begin();
+		itr != collidingObjects_.end(); ++itr) {
+
+		// オブジェクトデータ
+		ImGui::Text("%d個目", count);
+		ImGui::Text("center x:%7.2f y:%7.2f z:%7.2f", buffers_[count].objectMap_->center.x, buffers_[count].objectMap_->center.y, buffers_[count].objectMap_->center.z);
+
+		// 出力データ
+		ImGui::Text("center x:%7.2f y:%7.2f z:%7.2f", buffers_[count].outputDataMap_->extrusion.x, buffers_[count].outputDataMap_->extrusion.y, buffers_[count].objectMap_->center.z);
+		ImGui::Text("drivingLocation %7.2f", buffers_[count].outputDataMap_->drivingLocation);
+
+		ImGui::Separator();
+		count++;
+
+	}
+
+	ImGui::End();
+
 }
 
 void CourseCollisionSystem::BuffersInitialize()
@@ -277,14 +303,14 @@ void CourseCollisionSystem::DistanceJudgment(MeshObject* object)
 
 	// オブジェクト情報
 	Vector3 objectPosition = { 0.0f,0.0f,0.0f };
-	object;
+	OBB obb = std::get<OBB>(*object->GetCollider());
 
 	// オブジェクトデータ取得
-	buffers_[collisionCheakNum_].objectMap_->center = { 0.0f,0.0f,0.0f };
-	buffers_[collisionCheakNum_].objectMap_->otientatuons[0] = { 1.0f, 0.0f, 0.0f };
-	buffers_[collisionCheakNum_].objectMap_->otientatuons[1] = { 0.0f, 1.0f, 0.0f };
-	buffers_[collisionCheakNum_].objectMap_->otientatuons[2] = { 0.0f, 0.0f, 1.0f };
-	buffers_[collisionCheakNum_].objectMap_->size = { 1.0f, 1.0f, 1.0f };
+	buffers_[collisionCheakNum_].objectMap_->center = obb.center_;
+	buffers_[collisionCheakNum_].objectMap_->otientatuons[0] = obb.otientatuons_[0];
+	buffers_[collisionCheakNum_].objectMap_->otientatuons[1] = obb.otientatuons_[1];
+	buffers_[collisionCheakNum_].objectMap_->otientatuons[2] = obb.otientatuons_[2];
+	buffers_[collisionCheakNum_].objectMap_->size = obb.size_;
 
 	// オブジェクトの位置からエリアを取得
 
@@ -342,5 +368,22 @@ void CourseCollisionSystem::DistanceJudgment(MeshObject* object)
 		z[i] = tmpZ;
 
 	}
+
+}
+
+void CourseCollisionSystem::ExtrusionExecuteCS()
+{
+
+	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommadList();
+
+	courseCollisionPipeline_->SetPipelineState(commandList);
+
+	commandList->SetComputeRootConstantBufferView(0, buffers_[collisionCheakNum_].objectBuff_->GetGPUVirtualAddress());
+
+	commandList->SetComputeRootDescriptorTable(1, buffers_[collisionCheakNum_].polygonDataDescriptorHandles.handleGPU_);
+
+	commandList->SetComputeRootDescriptorTable(2, buffers_[collisionCheakNum_].outputDescriptorHandles.handleGPU_);
+
+	commandList->Dispatch(1, 1, 1);
 
 }

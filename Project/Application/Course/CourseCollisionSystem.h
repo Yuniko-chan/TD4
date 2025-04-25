@@ -2,6 +2,7 @@
 #include "../../Engine/Object/MeshObject.h"
 #include "Course.h"
 #include "../../Engine/base/DescriptorHandles.h"
+#include "CourseCollisionPipeline.h"
 
 /// <summary>
 /// コース衝突システム
@@ -112,6 +113,11 @@ private: // メンバ変数
 	/// <param name="object">オブジェクト</param>
 	void DistanceJudgment(MeshObject* object);
 
+	/// <summary>
+	/// 押し出し処理実行
+	/// </summary>
+	void ExtrusionExecuteCS();
+
 private: // メンバ変数
 
 	// コース
@@ -133,5 +139,11 @@ private: // メンバ変数
 	int32_t areaDisplayX_;
 	int32_t areaDisplayY_;
 	int32_t areaDisplayZ_;
+
+	// パイプライン
+	std::unique_ptr<CourseCollisionPipeline> courseCollisionPipeline_;
+
+	// DxCommon
+	DirectXCommon* dxCommon_;
 
 };

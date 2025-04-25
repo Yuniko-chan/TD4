@@ -388,6 +388,9 @@
     <Filter Include="shaders\Cource">
       <UniqueIdentifier>{a3472655-df3a-4018-9320-10ddfdb5a3a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Course\Demo">
+      <UniqueIdentifier>{23264b2c-9f8f-4e34-9279-ac0b7a50bffa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -856,13 +859,19 @@
     <ClCompile Include="Engine\Physics\ClothGPU\ClothGPUCollision.cpp">
       <Filter>Engine\Physics\ClothGPU\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Course\CourseCollisionSystem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Physics\ClothGPU\ClothGPUCollisionManager.cpp">
       <Filter>Engine\Physics\ClothGPU\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Course\CourseCollisionSystem.cpp">
+      <Filter>Application\Course</Filter>
+    </ClCompile>
     <ClCompile Include="Application\Course\Course.cpp">
+      <Filter>Application\Course</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Course\CourseCollisionPipeline.cpp">
+      <Filter>Application\Course</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Course\Demo\CourseDemoObject.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1476,14 +1485,8 @@
     <ClInclude Include="Engine\Physics\ClothGPU\CollisionTypeIndex.h">
       <Filter>Engine\Physics\ClothGPU\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Course\CourseCollisionSystem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Physics\ClothGPU\ClothGPUCollisionManager.h">
       <Filter>Engine\Physics\ClothGPU\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Course\Course.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Course\CoursePolygon.h">
       <Filter>Application\Course</Filter>
@@ -1493,6 +1496,18 @@
     </ClInclude>
     <ClInclude Include="Engine\base\DescriptorHandles.h">
       <Filter>Engine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Course\CourseCollisionSystem.h">
+      <Filter>Application\Course</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Course\Course.h">
+      <Filter>Application\Course</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Course\CourseCollisionPipeline.h">
+      <Filter>Application\Course</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Course\Demo\CourseDemoObject.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

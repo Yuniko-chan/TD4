@@ -22,11 +22,11 @@ void DebugScene::Initialize()
 	skydome_->Initialize(&skydomeData);
 
 	// コース
-	courseModel_.reset(Model::Create("Resources/Model/Skydome/", "skydome.obj", dxCommon_));
+	courseModel_.reset(Model::Create("Resources/default/", "plane.obj", dxCommon_));
 	course_ = std::make_unique<Course>();
 	LevelData::MeshData courseData;
-	courseData.directoryPath = "Resources/Model/Skydome";
-	courseData.flieName = "skydome.obj";
+	courseData.directoryPath = "Resources/default/";
+	courseData.flieName = "plane.obj";
 	courseData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
 	courseData.className = "Course";
 	courseData.name = "";
@@ -52,6 +52,18 @@ void DebugScene::Initialize()
 	courseCollisionSystem_->Initialize();
 	courseCollisionSystem_->SetCourse(course_.get());
 
+	// コースデモ用
+	courseDemoModel_.reset(Model::Create("Resources/default/", "ball.obj", dxCommon_));
+	courseDemoObject_ = std::make_unique<CourseDemoObject>();
+	LevelData::MeshData courseDemoData;
+	courseDemoData.directoryPath = "Resources/default/";
+	courseDemoData.flieName = "ball.obj";
+	courseDemoData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+	courseDemoData.className = "CourseDemo";
+	courseDemoData.name = "";
+	courseDemoData.parentName = "";
+	courseDemoObject_->Initialize(&courseDemoData);
+
 	BaseScene::InitilaizeCheck();
 
 }
@@ -60,6 +72,9 @@ void DebugScene::Update()
 {
 
 	clothDemo_->Update();
+
+	courseCollisionSystem_->ObjectRegistration(courseDemoObject_.get());
+	courseCollisionSystem_->Execute();
 
 	DebugCameraUpdate();
 
@@ -74,6 +89,9 @@ void DebugScene::Draw()
 
 	// スカイドーム
 	skydome_->Draw(camera_);
+
+	// コースデモ
+	courseDemoObject_->Draw(camera_);
 
 	clothDemo_->CollisionObjectDraw(&camera_);
 
