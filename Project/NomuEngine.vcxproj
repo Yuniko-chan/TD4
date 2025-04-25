@@ -389,6 +389,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Player\State\User\PlayerOnFootState.h" />
     <ClInclude Include="Application\Object\Player\System\PlayerCommand.h" />
     <ClInclude Include="Application\Object\Player\System\PlayerComponent.h" />
+    <ClInclude Include="Application\Object\Player\System\PlayerPickupManager.h" />
     <ClInclude Include="Application\Object\State\IState.h" />
     <ClInclude Include="Application\Object\State\StateFactory.h" />
     <ClInclude Include="Application\Object\State\StateMachine.h" />
