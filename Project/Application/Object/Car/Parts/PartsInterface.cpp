@@ -1,5 +1,6 @@
 #include "PartsInterface.h"
 #include "../VehicleCore.h"
+#include "../../../Engine/2D/ImguiManager.h"
 
 void Car::IParts::Initialize(LevelData::MeshData* data)
 {
@@ -30,6 +31,19 @@ void Car::IParts::TransformParent()
 	if (parentCore_) {
 		worldTransform_.SetParent(parentCore_->GetWorldTransformAdress());
 	}
+}
+
+void Car::IParts::ImGuiTransform(const float& value)
+{
+	// 座標
+	std::string name = name_ + "Translate";
+	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.translate.x, value);
+	// 回転
+	name = name_ + "Rotate";
+	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.rotate.x, value);
+	// スケール
+	name = name_ + "Scale";
+	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, value);
 }
 
 //void Car::IParts::Draw(BaseCamera& camera)

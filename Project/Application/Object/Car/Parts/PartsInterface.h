@@ -25,6 +25,11 @@ namespace Car
 		void SetParent(VehicleCore* parent) { parentCore_ = parent; }
 		void ParentSetting(bool isAccept, const Vector3& offset);
 		void TransformParent();
+	protected:
+		/// <summary>
+		/// ImGui
+		/// </summary>
+		void ImGuiTransform(const float& value);
 
 	protected:
 		// 重さparent
