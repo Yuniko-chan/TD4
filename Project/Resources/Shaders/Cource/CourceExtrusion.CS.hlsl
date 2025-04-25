@@ -38,7 +38,7 @@ ConstantBuffer<ObjectData> gObjectData : register(b0);
 
 StructuredBuffer<PolygonData> gPolygonDatas : register(t0);
 
-RWStructuredBuffer<OutputData> gOutputDatas : register(u0);
+RWStructuredBuffer<OutputData> gOutputDatas : register(u1);
 
 bool CollisionCheck(PolygonData polygonData, Segment segment)
 {
@@ -48,7 +48,7 @@ bool CollisionCheck(PolygonData polygonData, Segment segment)
     float32_t3 v20 = polygonData.positions[0] - polygonData.positions[2];
 
 	//平面を求める
-    float32_t3 planeNormal = Normalize(Cross(v01, v12));
+    float32_t3 planeNormal = normalize(cross(v01, v12));
     float32_t planeDistance = planeNormal.x * v20.x + planeNormal.y * v20.y + planeNormal.z * v20.z;
 
 	//平面との衝突確認
@@ -73,9 +73,9 @@ bool CollisionCheck(PolygonData polygonData, Segment segment)
     float32_t3 v2p = segment.origin + t * segment.diff - polygonData.positions[2];
     float32_t3 v0p = segment.origin + t * segment.diff - polygonData.positions[0];
 
-    float32_t3 cross01 = Cross(v01, v1p);
-    float32_t3 cross12 = Cross(v12, v2p);
-    float32_t3 cross20 = Cross(v20, v0p);
+    float32_t3 cross01 = cross(v01, v1p);
+    float32_t3 cross12 = cross(v12, v2p);
+    float32_t3 cross20 = cross(v20, v0p);
 
 	//三角形との衝突確認
     if (dot(cross01, planeNormal) >= 0.0f &&
@@ -239,7 +239,7 @@ float32_t3 Extrusion(PolygonData polygonData, uint32_t index)
     float32_t3 v12 = polygonData.positions[2] - polygonData.positions[1];
     float32_t3 v20 = polygonData.positions[0] - polygonData.positions[2];
     
-    float32_t3 planeNormal = Normalize(Cross(v01, v12));
+    float32_t3 planeNormal = normalize(cross(v01, v12));
     float32_t planeDistance = planeNormal.x * v20.x + planeNormal.y * v20.y + planeNormal.z * v20.z;
     
     float32_t r = 0.0f;
@@ -250,7 +250,7 @@ float32_t3 Extrusion(PolygonData polygonData, uint32_t index)
     r += abs(dot(object.otientatuons[2] * object.size.z, planeNormal[index]));
 
 	//平面とobbの距離(怪しい)
-    float32_t3 planePos = planeNormal[index] * planeDistance[index];
+    float32_t3 planePos = planeNormal * planeDistance;
 
     float s = dot(object.center - planePos, planeNormal[index]);
     float distance = 0.0f;
@@ -285,7 +285,7 @@ void main(uint32_t3 dispatchId : SV_DispatchThreadID)
     // 押し出し処理
     if (collisionConfirmation)
     {
-        gOutputDatas[index].extrusion = Extrusion(index);
+        gOutputDatas[index].extrusion = Extrusion(polygonData, index);
     }
     else
     {

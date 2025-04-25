@@ -205,9 +205,6 @@
     <Filter Include="Engine\Base\Texture">
       <UniqueIdentifier>{fa033a1d-e825-48ef-87a5-4ad59b6413b9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Base\WindowSprite">
-      <UniqueIdentifier>{7751a803-3db5-4271-b51f-b96115ac5bf4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Particle\GPUParticle">
       <UniqueIdentifier>{2cd1e320-67e1-4cd9-9ff2-442a73adeb3b}</UniqueIdentifier>
     </Filter>
@@ -390,6 +387,9 @@
     </Filter>
     <Filter Include="Application\Course\Demo">
       <UniqueIdentifier>{23264b2c-9f8f-4e34-9279-ac0b7a50bffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Base\Texture\WindowSprite">
+      <UniqueIdentifier>{7751a803-3db5-4271-b51f-b96115ac5bf4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -668,7 +668,7 @@
       <Filter>Engine\3D\Transform</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\WindowSprite\WindowSprite.cpp">
-      <Filter>Engine\Base\WindowSprite</Filter>
+      <Filter>Engine\Base\Texture\WindowSprite</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Particle\BillBoardMatrix.cpp">
       <Filter>Engine\Particle</Filter>
@@ -1246,7 +1246,7 @@
       <Filter>Engine\Animation</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\WindowSprite\WindowSprite.h">
-      <Filter>Engine\Base\WindowSprite</Filter>
+      <Filter>Engine\Base\Texture\WindowSprite</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ContactRecord\ContactRecord.h">
       <Filter>Engine\Contactrecord</Filter>

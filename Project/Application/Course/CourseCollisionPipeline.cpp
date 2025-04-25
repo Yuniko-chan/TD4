@@ -17,7 +17,7 @@ void CourseCollisionPipeline::Initialize(ID3D12Device* device)
 
 	// UAV
 	D3D12_DESCRIPTOR_RANGE descriptorRangeUAV[1] = {};
-	descriptorRangeUAV[0].BaseShaderRegister = 0;//0から始まる
+	descriptorRangeUAV[0].BaseShaderRegister = 1;//0から始まる
 	descriptorRangeUAV[0].NumDescriptors = 1;//数は一つ
 	descriptorRangeUAV[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_UAV;// UAVを使う
 	descriptorRangeUAV[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;//Offsetを自動計算

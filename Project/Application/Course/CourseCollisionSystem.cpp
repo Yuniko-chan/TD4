@@ -196,8 +196,7 @@ void CourseCollisionSystem::ImGuiDraw()
 
 	// 登録分回す
 	uint32_t count = 0;
-	for (std::list<MeshObject*>::iterator itr = collidingObjects_.begin();
-		itr != collidingObjects_.end(); ++itr) {
+	for (uint32_t i = 0; i < 1; ++i) {
 
 		// オブジェクトデータ
 		ImGui::Text("%d個目", count);
