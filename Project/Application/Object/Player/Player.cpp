@@ -37,16 +37,19 @@ void Player::Update()
 	// 基底
 	MeshObject::Update();
 	
+	// アニメーション
 	playerAnimation_->Update(0);
 
+	// コマンド処理
 	playerCommand_->Update();
 
+	// ステート処理
 	stateMachine_->Update();
 
 	// 座標更新
-	//worldTransform_.transform_.translate += Gravity::Execute();
 	worldTransform_.UpdateMatrix();
 
+	// コライダー
 	ColliderUpdate();
 
 }
@@ -65,15 +68,32 @@ void Player::Draw(BaseCamera& camera)
 void Player::ImGuiDraw()
 {
 	ImGui::Begin(className_.c_str());
-	// デバッグ用のデータ
-	debugData_.ImGuiDraw();
-	ImGui::SeparatorText("ActionButton");
-	if (ImGui::Button("InVehicle")) {
-		stateMachine_->ChangeRequest(IPlayerState::kInVehicle);
+	if(ImGui::BeginTabBar("System")) {
+		// デバッグ用のデータ
+		if (ImGui::BeginTabItem("Debug")) {
+			debugData_.ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+		// ステート
+		if (ImGui::BeginTabItem("StateButton")) {
+			if (ImGui::Button("InVehicle")) {
+				stateMachine_->ChangeRequest(IPlayerState::kInVehicle);
+			}
+			if (ImGui::Button("OnFoot")) {
+				stateMachine_->ChangeRequest(IPlayerState::kOnFoot);
+			}
+			if (ImGui::Button("Ride")) {
+				stateMachine_->ChangeRequest(IPlayerState::kRideAction);
+			}
+			if (ImGui::Button("DropOff")) {
+				stateMachine_->ChangeRequest(IPlayerState::kDropOffAction);
+			}
+			ImGui::EndTabItem();
+		}
+
+		ImGui::EndTabBar();
 	}
-	if (ImGui::Button("OnFoot")) {
-		stateMachine_->ChangeRequest(IPlayerState::kOnFoot);
-	}
+
 	ImGui::End();
 }
 

@@ -15,6 +15,7 @@ public:
 		kOnFoot,	// 地面を歩いている
 		kInVehicle,	// 車両に乗ってる
 		kRideAction,	// 乗るアクション
+		kDropOffAction,	// 降りるアクション
 		kEndNumber,	// 最後
 	};
 

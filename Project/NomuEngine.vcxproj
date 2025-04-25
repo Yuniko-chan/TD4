@@ -184,6 +184,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Player\DebugData\PlayerDebugData.cpp" />
     <ClCompile Include="Application\Object\Player\Player.cpp" />
     <ClCompile Include="Application\Object\Player\State\Factory\PlayerStateFactory.cpp" />
+    <ClCompile Include="Application\Object\Player\State\User\PlayerDropOffActionState.cpp" />
     <ClCompile Include="Application\Object\Player\State\User\PlayerInVehicleState.cpp" />
     <ClCompile Include="Application\Object\Player\State\User\PlayerOnFootState.cpp" />
     <ClCompile Include="Application\Object\Player\State\User\PlayerRideActionState.cpp" />
@@ -379,6 +380,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Player\PlayerSystemLists.h" />
     <ClInclude Include="Application\Object\Player\State\Factory\PlayerStateFactory.h" />
     <ClInclude Include="Application\Object\Player\State\IPlayerState.h" />
+    <ClInclude Include="Application\Object\Player\State\User\PlayerDropOffActionState.h" />
     <ClInclude Include="Application\Object\Player\State\User\PlayerRideActionState.h" />
     <ClInclude Include="Application\Object\Player\State\User\PlayerRootState.h" />
     <ClInclude Include="Application\Object\Player\State\PlayerStatesList.h" />
