@@ -2,3 +2,4 @@
 #include "Animation/PlayerAnimation.h"
 #include "System/PlayerCommand.h"
 #include "State/System/PlayerStateMachine.h"
+#include "DebugData/PlayerDebugData.h"

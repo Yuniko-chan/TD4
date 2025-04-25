@@ -76,6 +76,8 @@ private:
     std::unique_ptr<PlayerAnimation> playerAnimation_;
     std::unique_ptr<PlayerCommand> playerCommand_;
     std::unique_ptr<PlayerStateMachine> stateMachine_;
-
+    // デバッグ用のデータ
+    PlayerDebugData debugData_;
+    // ペア
     VehicleCore* pairCore_ = nullptr;
 };

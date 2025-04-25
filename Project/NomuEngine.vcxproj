@@ -181,6 +181,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Factory\ObjectFactory.cpp" />
     <ClCompile Include="Application\Object\Manager\TitleSceneObjectManager.cpp" />
     <ClCompile Include="Application\Object\Manager\TutorialSceneObjectManager.cpp" />
+    <ClCompile Include="Application\Object\Player\DebugData\PlayerDebugData.cpp" />
     <ClCompile Include="Application\Object\Player\Player.cpp" />
     <ClCompile Include="Application\Object\Player\State\Factory\PlayerStateFactory.cpp" />
     <ClCompile Include="Application\Object\Player\State\User\PlayerInVehicleState.cpp" />
@@ -373,7 +374,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Manager\TutorialSceneObjectManager.h" />
     <ClInclude Include="Application\Object\Player\Animation\PlayerAnimation.h" />
     <ClInclude Include="Application\Object\Player\Collision\PlayerCollision.h" />
-    <ClInclude Include="Application\Object\Player\Debug\PlayerDebugData.h" />
+    <ClInclude Include="Application\Object\Player\DebugData\PlayerDebugData.h" />
     <ClInclude Include="Application\Object\Player\Player.h" />
     <ClInclude Include="Application\Object\Player\PlayerSystemLists.h" />
     <ClInclude Include="Application\Object\Player\State\Factory\PlayerStateFactory.h" />

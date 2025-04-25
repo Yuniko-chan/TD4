@@ -65,6 +65,9 @@ void Player::Draw(BaseCamera& camera)
 void Player::ImGuiDraw()
 {
 	ImGui::Begin(className_.c_str());
+	// デバッグ用のデータ
+	debugData_.ImGuiDraw();
+	ImGui::SeparatorText("ActionButton");
 	if (ImGui::Button("InVehicle")) {
 		stateMachine_->ChangeRequest(IPlayerState::kInVehicle);
 	}
