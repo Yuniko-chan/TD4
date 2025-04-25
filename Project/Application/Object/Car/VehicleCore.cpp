@@ -1,7 +1,9 @@
 #include "VehicleCore.h"
 #include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Engine/Input/Input.h"
+
 #include "../GameObjectsList.h"
+#include "../../Collider/CollisionConfig.h"
 
 VehicleCore::VehicleCore()
 {
@@ -17,17 +19,28 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	MeshObject::Initialize(data);
 	material_->SetEnableLighting(HalfLambert);
 	worldTransform_.transform_.translate.z = -300.0f;
+
+	// 衝突マスク
+	collisionAttribute_ = kCollisionAttributeVehicleParts_;
+	collisionMask_ -= kCollisionAttributeVehicleParts_;
+
+	// コライダー
+	OBB obb = std::get<OBB>(*collider_.get());
+	obb.SetParentObject(this);
+	obb.SetCollisionAttribute(collisionAttribute_);
+	obb.SetCollisionMask(collisionMask_);
+	ColliderShape* colliderShape = new ColliderShape();
+	*colliderShape = obb;
+	collider_.reset(colliderShape);
+
 }
 
 void VehicleCore::Update()
 {
-	// 基底
-	MeshObject::Update();
 	// 移動処理
 	MoveCommand();
-	// 座標更新
-	//worldTransform_.transform_.translate += Gravity::Execute();
-	worldTransform_.UpdateMatrix();
+	// 基底
+	Car::IParts::Update();
 }
 
 void VehicleCore::ImGuiDraw()
@@ -51,6 +64,8 @@ void VehicleCore::MoveCommand()
 	if (!pairPlayer_) {
 		return;
 	}
+
+#ifdef _DEBUG
 	Input* input = Input::GetInstance();
 	if (input->PushKey(DIK_UPARROW)) {
 		worldTransform_.transform_.translate.z += 1.0f;
@@ -65,4 +80,6 @@ void VehicleCore::MoveCommand()
 	else if (input->PushKey(DIK_LEFTARROW)) {
 		worldTransform_.transform_.translate.x -= 1.0f;
 	}
+#endif // _DEBUG
+
 }

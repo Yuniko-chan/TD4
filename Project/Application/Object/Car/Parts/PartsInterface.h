@@ -31,6 +31,8 @@ namespace Car
 		/// </summary>
 		void ImGuiTransform(const float& value);
 
+		void ColliderUpdate();
+
 	protected:
 		// 重さparent
 		float weight_ = 1.0f;

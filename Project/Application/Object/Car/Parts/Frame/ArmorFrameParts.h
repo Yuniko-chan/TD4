@@ -18,4 +18,6 @@ public:
 	/// </summary>
 	void ImGuiDraw() override;
 
+	void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
+
 };

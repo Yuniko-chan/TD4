@@ -117,6 +117,8 @@ void GameSceneObjectManager::AddObject(const std::string& className, const std::
 	meshData.directoryPath = directory;
 	meshData.flieName = modelName;
 
+	meshData.collider = OBB{};
+
 	meshData.transform = {};
 	meshData.transform.scale = { 1.0f,1.0f,1.0f };
 	LevelData::ObjectData objData = meshData;

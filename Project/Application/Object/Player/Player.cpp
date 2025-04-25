@@ -3,8 +3,9 @@
 #include "../../../Engine/3D/Model/ModelDraw.h"
 #include "../../../Engine/2D/ImguiManager.h"
 
-#include "../Car/VehicleCore.h"
+#include "../../Collider/CollisionConfig.h"
 #include "State/IPlayerState.h"
+#include "../Car/VehicleCore.h"
 
 Player::Player()
 {
@@ -19,6 +20,20 @@ void Player::Initialize(LevelData::MeshData* data)
 	// 基底
 	MeshObject::Initialize(data);
 	material_->SetEnableLighting(HalfLambert);
+
+	// 衝突マスク
+	collisionAttribute_ = kCollisionAttributePlayer_;
+	collisionMask_ -= kCollisionAttributePlayer_;
+
+	// コライダー
+	OBB obb = std::get<OBB>(*collider_.get());
+	obb.SetParentObject(this);
+	obb.SetCollisionAttribute(collisionAttribute_);
+	obb.SetCollisionMask(collisionMask_);
+	ColliderShape* colliderShape = new ColliderShape();
+	*colliderShape = obb;
+	collider_.reset(colliderShape);
+
 
 	playerAnimation_ = std::make_unique<PlayerAnimation>();
 	playerAnimation_->Initialize(model_);

@@ -16,6 +16,8 @@ void Car::IParts::Update()
 	MeshObject::Update();
 	// トランスフォームの更新
 	worldTransform_.UpdateMatrix();
+	// コライダーの更新
+	ColliderUpdate();
 }
 
 void Car::IParts::ParentSetting(bool isAccept, const Vector3& offset)
@@ -44,6 +46,18 @@ void Car::IParts::ImGuiTransform(const float& value)
 	// スケール
 	name = name_ + "Scale";
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, value);
+}
+
+void Car::IParts::ColliderUpdate()
+{
+	// コライダーの更新
+	OBB obb = std::get<OBB>(*collider_);
+	obb.center_ = worldTransform_.GetWorldPosition();
+	obb.SetOtientatuons(worldTransform_.rotateMatrix_);
+	// コライダーを設定しなおす
+	ColliderShape* shape = new ColliderShape();
+	*shape = obb;
+	collider_.reset(shape);
 }
 
 //void Car::IParts::Draw(BaseCamera& camera)

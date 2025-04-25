@@ -8,9 +8,17 @@
 
 // 前方宣言
 class ParentNullObject;
+// 
+class Player;
+// 車両パーツ
+class VehicleCore;
+class TireParts;
+class ArmorFrameParts;
+class EngineParts;
 
 // variantでまとめる
-using ColliderParentObject = std::variant<ParentNullObject*>;
+using ColliderParentObject = std::variant<ParentNullObject*, Player*, VehicleCore*/*, TireParts*,
+								ArmorFrameParts*, EngineParts**/>;
 
 /// <summary>
 /// 親がないもの用
