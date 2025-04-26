@@ -375,6 +375,9 @@ void CourseCollisionSystem::ExtrusionExecuteCS()
 
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommadList();
 
+	ID3D12DescriptorHeap* ppHeaps[] = { SRVDescriptorHerpManager::descriptorHeap_.Get() };
+	commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+
 	courseCollisionPipeline_->SetPipelineState(commandList);
 
 	commandList->SetComputeRootConstantBufferView(0, buffers_[collisionCheakNum_].objectBuff_->GetGPUVirtualAddress());
