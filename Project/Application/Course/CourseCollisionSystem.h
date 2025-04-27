@@ -13,7 +13,7 @@ class CourseCollisionSystem
 private: // メンバ定数
 
 	// 登録できるオブジェクトの数
-	static const uint32_t kObjectsThatCanBeRegisteredMax_ = 1;
+	static const uint32_t kObjectsThatCanBeRegisteredMax_ = 8;
 	
 	//	ポリゴンエリアの分割数
 	static const uint32_t kPolygonAreasDiv_ = 4;

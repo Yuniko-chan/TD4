@@ -64,7 +64,7 @@ bool CollisionCheck(PolygonData polygonData, Segment segment)
 	//tを求める
     float t = (planeDistance - dot(segment.origin, planeNormal)) / dotValue;
 
-    if (t < 0 || t > 1.0f)
+    if (t < 0.0f || t > 1.0f)
     {
         return false;
     }
@@ -218,7 +218,7 @@ bool CollisionConfirmation(PolygonData polygonData)
     // 線分と三角形の衝突確認
     for (uint32_t i = 0; i < 12; ++i)
     {
-       result = CollisionCheck(polygonData, segments[i]);
+        result = CollisionCheck(polygonData, segments[i]);
         if (result)
         {
             break;
@@ -286,13 +286,15 @@ void main(uint32_t3 dispatchId : SV_DispatchThreadID)
     if (collisionConfirmation)
     {
         gOutputDatas[index].extrusion = Extrusion(polygonData, index);
+        gOutputDatas[index].drivingLocation = 1;
     }
     else
     {
         gOutputDatas[index].extrusion = float32_t3(0.0f, 0.0f, 0.0f);
+        gOutputDatas[index].drivingLocation = 2;
     }
     
     // 押し出し値追加
-    gOutputDatas[index].drivingLocation = gPolygonDatas[index].coursePolygonType;
+    //gOutputDatas[index].drivingLocation = gPolygonDatas[index].coursePolygonType;
 
 }

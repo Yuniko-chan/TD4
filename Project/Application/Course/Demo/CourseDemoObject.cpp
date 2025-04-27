@@ -9,11 +9,11 @@ void CourseDemoObject::Initialize(LevelData::MeshData* data)
 
 	// コライダー
 	OBB obb;
-	obb.center_ = { 0.0f,0.0f,0.0f };
+	obb.center_ = { 10.0f,10.0f,10.0f };
 	obb.otientatuons_[0] = { 1.0f,0.0f,0.0f };
 	obb.otientatuons_[1] = { 0.0f,1.0f,0.0f };
 	obb.otientatuons_[2] = { 0.0f,0.0f,1.0f };
-	obb.size_ = { 1.0f,1.0f,1.0f };
+	obb.size_ = { 0.1f,0.1f,0.1f };
 	ColliderShape* colliderShape = new ColliderShape();
 	*colliderShape = obb;
 	collider_.reset(colliderShape);
