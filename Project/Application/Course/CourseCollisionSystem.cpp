@@ -228,7 +228,7 @@ void CourseCollisionSystem::BuffersInitialize()
 		buffers_[i].objectBuff_ = BufferResource::CreateBufferResource(device, ((sizeof(CourseCollisionSystem::ObjectData) + 0xff) & ~0xff));
 
 		// 書き込むためのアドレスを取得
-		buffers_[i].objectBuff_->Map(0, nullptr, reinterpret_cast<void**>(&buffers_[i].objectMap_));
+		buffers_[i].objectBuff_->Map(0, nullptr, reinterpret_cast<void**>(&(buffers_[i].objectMap_)));
 		// 頂点データを初期化
 		buffers_[i].objectMap_->center = { 0.0f,0.0f,0.0f };
 		buffers_[i].objectMap_->otientatuons[0] = { 1.0f, 0.0f, 0.0f };
@@ -371,6 +371,8 @@ void CourseCollisionSystem::DistanceJudgment(MeshObject* object)
 		z[i] = tmpZ;
 
 	}
+
+	buffers_[collisionCheakNum_].objectMap_->indexMax = polygonDataMapIndex;
 
 }
 

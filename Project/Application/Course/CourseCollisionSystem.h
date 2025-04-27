@@ -36,6 +36,8 @@ private: // メンバ定数
 		Vector3 otientatuons[3];
 		// 座標軸方向の長さの半分
 		Vector3 size;
+		// 番号Max
+		uint32_t indexMax;
 	};
 
 	/// <summary>
