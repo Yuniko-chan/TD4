@@ -68,7 +68,7 @@ bool CollisionCheck(PolygonData polygonData, Segment segment)
     {
         return false;
     }
-
+    
     float32_t3 v1p = segment.origin + t * segment.diff - polygonData.positions[1];
     float32_t3 v2p = segment.origin + t * segment.diff - polygonData.positions[2];
     float32_t3 v0p = segment.origin + t * segment.diff - polygonData.positions[0];
@@ -98,6 +98,11 @@ bool CollisionConfirmation(PolygonData polygonData)
     
     // オブジェクトデータ
     ObjectData object = gObjectData;
+    object.center = float32_t3(0.0f, 0.0f, 0.0f);
+    object.otientatuons[0] = float32_t3(1.0f, 0.0f, 0.0f);
+    object.otientatuons[1] = float32_t3(0.0f, 1.0f, 0.0f);
+    object.otientatuons[2] = float32_t3(0.0f, 0.0f, 1.0f);
+    object.size = float32_t3(0.1f, 0.1f, 0.1f);
     
     // 頂点求める
     float32_t3 vertices[8];
@@ -176,6 +181,12 @@ bool CollisionConfirmation(PolygonData polygonData)
 		(object.size.x * object.otientatuons[0].z + -object.size.y * object.otientatuons[1].z +
 					 object.size.z * object.otientatuons[2].z)
                             );
+    
+    for (uint32_t j = 0; j < 8; ++j)
+    {
+        vertices[j] += object.center;
+
+    }
     
     // 線分求める
     Segment segments[12];
@@ -267,7 +278,7 @@ float32_t3 Extrusion(PolygonData polygonData, uint32_t index)
 
 }
 
-[numthreads(1024, 1, 1)]
+[numthreads(1, 1, 1)]
 void main(uint32_t3 dispatchId : SV_DispatchThreadID)
 {
     

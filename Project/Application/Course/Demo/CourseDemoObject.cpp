@@ -9,7 +9,7 @@ void CourseDemoObject::Initialize(LevelData::MeshData* data)
 
 	// コライダー
 	OBB obb;
-	obb.center_ = { 10.0f,10.0f,10.0f };
+	obb.center_ = { 0.0f,0.0f,0.0f };
 	obb.otientatuons_[0] = { 1.0f,0.0f,0.0f };
 	obb.otientatuons_[1] = { 0.0f,1.0f,0.0f };
 	obb.otientatuons_[2] = { 0.0f,0.0f,1.0f };

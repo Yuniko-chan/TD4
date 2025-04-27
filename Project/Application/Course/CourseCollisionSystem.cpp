@@ -333,9 +333,13 @@ void CourseCollisionSystem::DistanceJudgment(MeshObject* object)
 	Vector3 dividingValue = Vector3::Multiply(kPolygonAreasLength_, 1.0f / static_cast<float>(kPolygonAreasDiv_));
 
 	// 現在の値のエリア番号
-	int32_t tmpX = static_cast<uint32_t>(objectPosition.x / dividingValue.x);
-	int32_t tmpY = static_cast<uint32_t>(objectPosition.y / dividingValue.y);
-	int32_t tmpZ = static_cast<uint32_t>(objectPosition.z / dividingValue.z);
+	int32_t tmpX = static_cast<uint32_t>((objectPosition.x - kPolygonAreasOrigin_.x) / dividingValue.x);
+	int32_t tmpY = static_cast<uint32_t>((objectPosition.y - kPolygonAreasOrigin_.y) / dividingValue.y);
+	int32_t tmpZ = static_cast<uint32_t>((objectPosition.z - kPolygonAreasOrigin_.z) / dividingValue.z);
+
+	tmpX = 1;
+	tmpY = 2;
+	tmpZ = 2;
 
 	// エリアに入っているポリゴンデータをSRVに登録
 	uint32_t polygonDataMapIndex = 0;
