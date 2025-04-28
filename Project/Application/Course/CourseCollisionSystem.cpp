@@ -235,6 +235,7 @@ void CourseCollisionSystem::BuffersInitialize()
 		buffers_[i].objectMap_->otientatuonsY = { 0.0f, 1.0f, 0.0f };
 		buffers_[i].objectMap_->otientatuonsZ = { 0.0f, 0.0f, 1.0f };
 		buffers_[i].objectMap_->size = { 1.0f, 1.0f, 1.0f };
+		buffers_[i].objectMap_->indexMax = 0;
 
 		// 衝突するかもしれないポリゴンデータバッファ
 		buffers_[i].polygonDataBuff_ = BufferResource::CreateBufferResource(device, ((sizeof(CoursePolygon) + 0xff) & ~0xff) * kCollisionPolygonMax_);
@@ -315,7 +316,96 @@ void CourseCollisionSystem::DistanceJudgment(MeshObject* object)
 
 	// 頂点8個
 	const uint32_t vertexNum = 8;
-	Vector3 vertexs[vertexNum] = {};
+	// 頂点求める
+	Vector3 vertices[8];
+	const ObjectData objectData = *buffers_[collisionCheakNum_].objectMap_;
+
+	// 左 上 前
+	vertices[0] = {
+		(-objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
+			-objectData.size.z * objectData.otientatuonsZ.x),
+		(-objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
+			-objectData.size.z * objectData.otientatuonsZ.y),
+		(-objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
+			-objectData.size.z * objectData.otientatuonsZ.z)
+	};
+
+	// 左 上 後
+	vertices[1] = {
+		(-objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
+			objectData.size.z * objectData.otientatuonsZ.x),
+		(-objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
+			objectData.size.z * objectData.otientatuonsZ.y),
+		(-objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
+			objectData.size.z * objectData.otientatuonsZ.z)
+	};
+
+	// 右 上 前
+	vertices[2] = {
+		(objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
+			-objectData.size.z * objectData.otientatuonsZ.x),
+		(objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
+			-objectData.size.z * objectData.otientatuonsZ.y),
+		(objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
+			-objectData.size.z * objectData.otientatuonsZ.z)
+	};
+
+	// 右 上 後
+	vertices[3] = {
+		(objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
+			objectData.size.z * objectData.otientatuonsZ.x),
+		(objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
+			objectData.size.z * objectData.otientatuonsZ.y),
+		(objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
+			objectData.size.z * objectData.otientatuonsZ.z)
+	};
+
+	// 左 下 前
+	vertices[4] = {
+		(-objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
+			-objectData.size.z * objectData.otientatuonsZ.x),
+		(-objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
+			-objectData.size.z * objectData.otientatuonsZ.y),
+		(-objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
+			-objectData.size.z * objectData.otientatuonsZ.z)
+	};
+
+	// 左 下 後
+	vertices[5] = {
+		(-objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
+			objectData.size.z * objectData.otientatuonsZ.x),
+		(-objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
+			objectData.size.z * objectData.otientatuonsZ.y),
+		(-objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
+			objectData.size.z * objectData.otientatuonsZ.z)
+	};
+
+	// 右 下 前
+	vertices[6] = {
+		(objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
+			-objectData.size.z * objectData.otientatuonsZ.x),
+		(objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
+			-objectData.size.z * objectData.otientatuonsZ.y),
+		(objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
+			-objectData.size.z * objectData.otientatuonsZ.z)
+	};
+
+	// 右 下 後
+	vertices[7] = {
+		(objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
+			objectData.size.z * objectData.otientatuonsZ.x),
+		(objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
+			objectData.size.z * objectData.otientatuonsZ.y),
+		(objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
+			objectData.size.z * objectData.otientatuonsZ.z)
+	};
+
+	for (uint32_t i = 0; i < 8; ++i)
+	{
+		vertices[i] += objectData.center;
+
+	}
+
 	// エリア8個
 	int32_t x[vertexNum] = {};
 	int32_t y[vertexNum] = {};
@@ -323,7 +413,6 @@ void CourseCollisionSystem::DistanceJudgment(MeshObject* object)
 	
 	// 初期化
 	for (uint32_t i = 0; i < vertexNum; ++i) {
-		vertexs[i] = { 0.0f,0.0f,0.0f };
 		x[i] = -1;
 		y[i] = -1;
 		z[i] = -1;
@@ -332,18 +421,20 @@ void CourseCollisionSystem::DistanceJudgment(MeshObject* object)
 	// 割る用の値
 	Vector3 dividingValue = Vector3::Multiply(kPolygonAreasLength_, 1.0f / static_cast<float>(kPolygonAreasDiv_));
 
-	// 現在の値のエリア番号
-	int32_t tmpX = static_cast<uint32_t>((objectPosition.x - kPolygonAreasOrigin_.x) / dividingValue.x);
-	int32_t tmpY = static_cast<uint32_t>((objectPosition.y - kPolygonAreasOrigin_.y) / dividingValue.y);
-	int32_t tmpZ = static_cast<uint32_t>((objectPosition.z - kPolygonAreasOrigin_.z) / dividingValue.z);
-
-	tmpX = 1;
-	tmpY = 2;
-	tmpZ = 2;
-
 	// エリアに入っているポリゴンデータをSRVに登録
 	uint32_t polygonDataMapIndex = 0;
 	for (uint32_t i = 0; i < vertexNum; ++i) {
+
+		// 現在の値のエリア番号
+		int32_t tmpX = static_cast<uint32_t>((vertices[i].x - kPolygonAreasOrigin_.x) / dividingValue.x);
+		int32_t tmpY = static_cast<uint32_t>((vertices[i].y - kPolygonAreasOrigin_.y) / dividingValue.y);
+		int32_t tmpZ = static_cast<uint32_t>((vertices[i].z - kPolygonAreasOrigin_.z) / dividingValue.z);
+
+		// エリア範囲外
+		if (tmpX >= kPolygonAreasDiv_ || tmpY >= kPolygonAreasDiv_ || tmpZ >= kPolygonAreasDiv_ ||
+			tmpX <= -1 || tmpY <= -1 || tmpZ <= -1) {
+			continue;
+		}
 
 		// かぶり確認
 		bool fogging = false;
