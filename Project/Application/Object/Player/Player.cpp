@@ -34,17 +34,8 @@ void Player::Initialize(LevelData::MeshData* data)
 	*colliderShape = obb;
 	collider_.reset(colliderShape);
 
-
-	playerAnimation_ = std::make_unique<PlayerAnimation>();
-	playerAnimation_->Initialize(model_);
-
-	playerCommand_ = std::make_unique<PlayerCommand>();
-	playerCommand_->Initialize(this);
-
-	// ステート
-	stateMachine_ = std::make_unique<PlayerStateMachine>();
-	stateMachine_->Initialize();
-	stateMachine_->SetPlayer(this);
+	// システム
+	SystemInitialize();
 }
 
 void Player::Update()
@@ -145,6 +136,23 @@ void Player::ColliderUpdate()
 	ColliderShape* shape = new ColliderShape();
 	*shape = obb;
 	collider_.reset(shape);
+}
+
+void Player::SystemInitialize()
+{
+	playerAnimation_ = std::make_unique<PlayerAnimation>();
+	playerAnimation_->Initialize(model_);
+
+	playerCommand_ = std::make_unique<PlayerCommand>();
+	playerCommand_->Initialize(this);
+
+	// ステート
+	stateMachine_ = std::make_unique<PlayerStateMachine>();
+	stateMachine_->Initialize();
+	stateMachine_->SetPlayer(this);
+
+	pickUpManager_ = std::make_unique<PlayerPickupManager>();
+	
 }
 
 WorldTransform* Player::GetCoreTransform()

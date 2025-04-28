@@ -910,6 +910,9 @@
     <ClCompile Include="Application\Object\Player\State\User\PlayerDropOffActionState.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Object\Player\System\PlayerPickupManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imgui.h">

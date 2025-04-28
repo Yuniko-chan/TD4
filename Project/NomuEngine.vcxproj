@@ -191,6 +191,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Player\State\User\PlayerRootState.cpp" />
     <ClCompile Include="Application\Object\Player\State\System\PlayerStateMachine.cpp" />
     <ClCompile Include="Application\Object\Player\System\PlayerCommand.cpp" />
+    <ClCompile Include="Application\Object\Player\System\PlayerPickupManager.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\MotionHelper.cpp" />
     <ClCompile Include="Application\Object\Utility\Timer\FrameTimer.cpp" />
     <ClCompile Include="Application\OutGameObject\ClearBackGround\ClearBackGround.cpp" />

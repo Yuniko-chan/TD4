@@ -64,6 +64,11 @@ private:
     /// </summary>
     void ColliderUpdate();
 
+    /// <summary>
+    /// システムクラス関係の初期化
+    /// </summary>
+    void SystemInitialize();
+
 public: // ゲッター
     // コマンドの取得
     PlayerCommand* GetCommand() { return playerCommand_.get(); }
@@ -72,10 +77,11 @@ public: // ゲッター
 
     WorldTransform* GetCoreTransform();
 private:
-    // アニメーション
+    // システムクラス
     std::unique_ptr<PlayerAnimation> playerAnimation_;
     std::unique_ptr<PlayerCommand> playerCommand_;
     std::unique_ptr<PlayerStateMachine> stateMachine_;
+    std::unique_ptr<PlayerPickupManager> pickUpManager_;
     // デバッグ用のデータ
     PlayerDebugData debugData_;
     // ペア
