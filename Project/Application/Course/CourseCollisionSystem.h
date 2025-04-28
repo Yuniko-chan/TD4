@@ -54,6 +54,8 @@ private: // メンバ定数
 		Vector3 extrusion;
 		// 走行場所
 		uint32_t drivingLocation;
+		// 衝突したか
+		uint32_t collided;
 
 	};
 

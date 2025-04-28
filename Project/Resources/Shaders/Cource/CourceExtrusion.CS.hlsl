@@ -33,6 +33,7 @@ struct OutputData
     
     float32_t3 extrusion;
 	uint32_t drivingLocation;
+    uint32_t collided;
 
 };
 
@@ -300,12 +301,12 @@ void main(uint32_t3 dispatchId : SV_DispatchThreadID)
     if (collisionConfirmation)
     {
         gOutputDatas[index].extrusion = Extrusion(objectData, polygonData, index);
-        gOutputDatas[index].drivingLocation = 1;
+        gOutputDatas[index].collided = 1;
     }
     else
     {
         gOutputDatas[index].extrusion = float32_t3(0.0f, 0.0f, 0.0f);
-        gOutputDatas[index].drivingLocation = 2;
+        gOutputDatas[index].collided = 0;
     }
     
     // 押し出し値追加

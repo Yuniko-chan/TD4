@@ -204,7 +204,7 @@ void CourseCollisionSystem::ImGuiDraw()
 
 		// 出力データ
 		ImGui::Text("center x:%7.2f y:%7.2f z:%7.2f", buffers_[count].outputDataMap_[0].extrusion.x, buffers_[count].outputDataMap_[0].extrusion.y, buffers_[count].outputDataMap_[0].extrusion.z);
-		ImGui::Text("drivingLocation %d", buffers_[count].outputDataMap_[0].drivingLocation);
+		ImGui::Text("collided %d", buffers_[count].outputDataMap_[0].collided);
 
 		ImGui::Separator();
 		count++;
@@ -275,6 +275,7 @@ void CourseCollisionSystem::BuffersInitialize()
 		for (uint32_t j = 0; j < kCollisionPolygonMax_; ++j) {
 			buffers_[i].outputDataMap_[j].extrusion = { 0.0f,0.0f,0.0f };
 			buffers_[i].outputDataMap_[j].drivingLocation = static_cast<uint32_t>(kCoursePolygonTypeRoad);
+			buffers_[i].outputDataMap_[j].collided = 0;
 		}
 
 		D3D12_UNORDERED_ACCESS_VIEW_DESC uavDesc{};
