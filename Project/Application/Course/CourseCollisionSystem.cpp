@@ -180,7 +180,7 @@ void CourseCollisionSystem::ImGuiDraw()
 	for (uint32_t i = 0; i < polygonAreas[areaDisplayX_][areaDisplayY_][areaDisplayZ_].size(); ++i) {
 
 		polygon = polygonAreas[areaDisplayX_][areaDisplayY_][areaDisplayZ_][i];
-		ImGui::Text("%d個目, 種類番号:%d", i, polygon.coursePolygonType);
+		ImGui::Text("%d個目", i);
 		ImGui::Text("位置0 x:%7.2f y:%7.2f z:%7.2f", polygon.positions[0].x, polygon.positions[0].y, polygon.positions[0].z);
 		ImGui::Text("位置1 x:%7.2f y:%7.2f z:%7.2f", polygon.positions[1].x, polygon.positions[1].y, polygon.positions[1].z);
 		ImGui::Text("位置2 x:%7.2f y:%7.2f z:%7.2f", polygon.positions[2].x, polygon.positions[2].y, polygon.positions[2].z);
@@ -244,11 +244,11 @@ void CourseCollisionSystem::BuffersInitialize()
 
 		// ポリゴンデータを初期化
 		for (uint32_t j = 0; j < kCollisionPolygonMax_; ++j) {
-			buffers_[i].polygonDataMap_[j].positions[0] = { 0.0f,0.0f,0.0f };
+			buffers_[i].polygonDataMap_[j].positions[0] = { 0.0f, 0.0f, 0.0f };
 			buffers_[i].polygonDataMap_[j].positions[1] = { 0.0f, 0.0f, 0.0f };
 			buffers_[i].polygonDataMap_[j].positions[2] = { 0.0f, 0.0f, 0.0f };
 			buffers_[i].polygonDataMap_[j].normal = { 0.0f, 0.0f, 0.0f };
-			buffers_[i].polygonDataMap_[j].coursePolygonType = static_cast<uint32_t>(kCoursePolygonTypeRoad);
+			buffers_[i].polygonDataMap_[j].texcoord = { 0.0f, 0.0f };
 		}
 
 		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};

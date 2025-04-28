@@ -24,7 +24,7 @@ struct PolygonData
     
     float32_t3 positions[3];
 	float32_t3 normal;
-	uint32_t coursePolygonType;
+    float32_t2 texcoord;
     
 };
 
@@ -286,6 +286,7 @@ void main(uint32_t3 dispatchId : SV_DispatchThreadID)
     {
         gOutputDatas[index].extrusion = float32_t3(0.0f, 0.0f, 0.0f);
         gOutputDatas[index].drivingLocation = 0;
+        gOutputDatas[index].collided = 0;
         return;
     }
     
