@@ -231,9 +231,9 @@ void CourseCollisionSystem::BuffersInitialize()
 		buffers_[i].objectBuff_->Map(0, nullptr, reinterpret_cast<void**>(&(buffers_[i].objectMap_)));
 		// 頂点データを初期化
 		buffers_[i].objectMap_->center = { 0.0f,0.0f,0.0f };
-		buffers_[i].objectMap_->otientatuons[0] = { 1.0f, 0.0f, 0.0f };
-		buffers_[i].objectMap_->otientatuons[1] = { 0.0f, 1.0f, 0.0f };
-		buffers_[i].objectMap_->otientatuons[2] = { 0.0f, 0.0f, 1.0f };
+		buffers_[i].objectMap_->otientatuonsX = { 1.0f, 0.0f, 0.0f };
+		buffers_[i].objectMap_->otientatuonsY = { 0.0f, 1.0f, 0.0f };
+		buffers_[i].objectMap_->otientatuonsZ = { 0.0f, 0.0f, 1.0f };
 		buffers_[i].objectMap_->size = { 1.0f, 1.0f, 1.0f };
 
 		// 衝突するかもしれないポリゴンデータバッファ
@@ -306,9 +306,9 @@ void CourseCollisionSystem::DistanceJudgment(MeshObject* object)
 
 	// オブジェクトデータ取得
 	buffers_[collisionCheakNum_].objectMap_->center = obb.center_;
-	buffers_[collisionCheakNum_].objectMap_->otientatuons[0] = obb.otientatuons_[0];
-	buffers_[collisionCheakNum_].objectMap_->otientatuons[1] = obb.otientatuons_[1];
-	buffers_[collisionCheakNum_].objectMap_->otientatuons[2] = obb.otientatuons_[2];
+	buffers_[collisionCheakNum_].objectMap_->otientatuonsX = obb.otientatuons_[0];
+	buffers_[collisionCheakNum_].objectMap_->otientatuonsY = obb.otientatuons_[1];
+	buffers_[collisionCheakNum_].objectMap_->otientatuonsZ = obb.otientatuons_[2];
 	buffers_[collisionCheakNum_].objectMap_->size = obb.size_;
 
 	// オブジェクトの位置からエリアを取得

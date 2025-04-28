@@ -29,15 +29,20 @@ private: // メンバ定数
 	///	オブジェクトデータ(現在OBB)
 	/// </summary>
 	struct ObjectData
-	{
-		// 中心
-		Vector3 center;
-		// 座標軸
-		Vector3 otientatuons[3];
-		// 座標軸方向の長さの半分
-		Vector3 size;
+	{		
 		// 番号Max
 		uint32_t indexMax;
+		// 中心
+		Vector3 center;
+		// 座標軸方向の長さの半分
+		Vector3 size;
+		// 座標軸,パディング
+		float padding1;
+		Vector3 otientatuonsX;
+		float padding2;
+		Vector3 otientatuonsY;
+		float padding3;
+		Vector3 otientatuonsZ;
 	};
 
 	/// <summary>

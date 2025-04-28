@@ -10,11 +10,12 @@ struct Segment
 
 struct ObjectData
 {
-    
-    float32_t3 center;
-    float32_t3 otientatuons[3];
-    float32_t3 size;
     uint32_t indexMax;
+    float32_t3 center;
+    float32_t3 size;
+    float32_t3 otientatuonsX;
+    float32_t3 otientatuonsY;
+    float32_t3 otientatuonsZ;
     
 };
 
@@ -102,77 +103,77 @@ bool CollisionConfirmation(ObjectData objectData, PolygonData polygonData)
     
     // 左 上 前
     vertices[0] = (
-        (-objectData.size.x * objectData.otientatuons[0].x + objectData.size.y * objectData.otientatuons[1].x +
-					 -objectData.size.z * objectData.otientatuons[2].x),
-		(-objectData.size.x * objectData.otientatuons[0].y + objectData.size.y * objectData.otientatuons[1].y +
-					 -objectData.size.z * objectData.otientatuons[2].y),
-		(-objectData.size.x * objectData.otientatuons[0].z + objectData.size.y * objectData.otientatuons[1].z +
-					 -objectData.size.z * objectData.otientatuons[2].z)
+        (-objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
+					 -objectData.size.z * objectData.otientatuonsZ.x),
+		(-objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
+					 -objectData.size.z * objectData.otientatuonsZ.y),
+		(-objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
+					 -objectData.size.z * objectData.otientatuonsZ.z)
     );
 
     // 左 上 後
     vertices[1] = (
-        (-objectData.size.x * objectData.otientatuons[0].x + objectData.size.y * objectData.otientatuons[1].x +
-					 objectData.size.z * objectData.otientatuons[2].x),
-		(-objectData.size.x * objectData.otientatuons[0].y + objectData.size.y * objectData.otientatuons[1].y +
-					 objectData.size.z * objectData.otientatuons[2].y),
-		(-objectData.size.x * objectData.otientatuons[0].z + objectData.size.y * objectData.otientatuons[1].z +
-					 objectData.size.z * objectData.otientatuons[2].z));
+        (-objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
+					 objectData.size.z * objectData.otientatuonsZ.x),
+		(-objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
+					 objectData.size.z * objectData.otientatuonsZ.y),
+		(-objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
+					 objectData.size.z * objectData.otientatuonsZ.z));
 
     // 右 上 前
     vertices[2] = (
-        (objectData.size.x * objectData.otientatuons[0].x + objectData.size.y * objectData.otientatuons[1].x +
-					 -objectData.size.z * objectData.otientatuons[2].x),
-		(objectData.size.x * objectData.otientatuons[0].y + objectData.size.y * objectData.otientatuons[1].y +
-					 -objectData.size.z * objectData.otientatuons[2].y),
-		(objectData.size.x * objectData.otientatuons[0].z + objectData.size.y * objectData.otientatuons[1].z +
-					 -objectData.size.z * objectData.otientatuons[2].z));
+        (objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
+					 -objectData.size.z * objectData.otientatuonsZ.x),
+		(objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
+					 -objectData.size.z * objectData.otientatuonsZ.y),
+		(objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
+					 -objectData.size.z * objectData.otientatuonsZ.z));
 
     // 右 上 後
     vertices[3] = (
-        (objectData.size.x * objectData.otientatuons[0].x + objectData.size.y * objectData.otientatuons[1].x +
-					 objectData.size.z * objectData.otientatuons[2].x),
-		(objectData.size.x * objectData.otientatuons[0].y + objectData.size.y * objectData.otientatuons[1].y +
-					 objectData.size.z * objectData.otientatuons[2].y),
-		(objectData.size.x * objectData.otientatuons[0].z + objectData.size.y * objectData.otientatuons[1].z +
-					 objectData.size.z * objectData.otientatuons[2].z));
+        (objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
+					 objectData.size.z * objectData.otientatuonsZ.x),
+		(objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
+					 objectData.size.z * objectData.otientatuonsZ.y),
+		(objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
+					 objectData.size.z * objectData.otientatuonsZ.z));
 
     // 左 下 前
     vertices[4] = (
-        (-objectData.size.x * objectData.otientatuons[0].x + -objectData.size.y * objectData.otientatuons[1].x +
-					 -objectData.size.z * objectData.otientatuons[2].x),
-		(-objectData.size.x * objectData.otientatuons[0].y + -objectData.size.y * objectData.otientatuons[1].y +
-					 -objectData.size.z * objectData.otientatuons[2].y),
-		(-objectData.size.x * objectData.otientatuons[0].z + -objectData.size.y * objectData.otientatuons[1].z +
-					 -objectData.size.z * objectData.otientatuons[2].z));
+        (-objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
+					 -objectData.size.z * objectData.otientatuonsZ.x),
+		(-objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
+					 -objectData.size.z * objectData.otientatuonsZ.y),
+		(-objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
+					 -objectData.size.z * objectData.otientatuonsZ.z));
 
     // 左 下 後
     vertices[5] = (
-        (-objectData.size.x * objectData.otientatuons[0].x + -objectData.size.y * objectData.otientatuons[1].x +
-					 objectData.size.z * objectData.otientatuons[2].x),
-		(-objectData.size.x * objectData.otientatuons[0].y + -objectData.size.y * objectData.otientatuons[1].y +
-					 objectData.size.z * objectData.otientatuons[2].y),
-		(-objectData.size.x * objectData.otientatuons[0].z + -objectData.size.y * objectData.otientatuons[1].z +
-					 objectData.size.z * objectData.otientatuons[2].z));
+        (-objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
+					 objectData.size.z * objectData.otientatuonsZ.x),
+		(-objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
+					 objectData.size.z * objectData.otientatuonsZ.y),
+		(-objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
+					 objectData.size.z * objectData.otientatuonsZ.z));
 
     // 右 下 前
     vertices[6] = (
-        (objectData.size.x * objectData.otientatuons[0].x + -objectData.size.y * objectData.otientatuons[1].x +
-					 -objectData.size.z * objectData.otientatuons[2].x),
-		(objectData.size.x * objectData.otientatuons[0].y + -objectData.size.y * objectData.otientatuons[1].y +
-					 -objectData.size.z * objectData.otientatuons[2].y),
-		(objectData.size.x * objectData.otientatuons[0].z + -objectData.size.y * objectData.otientatuons[1].z +
-					 -objectData.size.z * objectData.otientatuons[2].z)
+        (objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
+					 -objectData.size.z * objectData.otientatuonsZ.x),
+		(objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
+					 -objectData.size.z * objectData.otientatuonsZ.y),
+		(objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
+					 -objectData.size.z * objectData.otientatuonsZ.z)
                             );
 
     // 右 下 後
     vertices[7] = (
-        (objectData.size.x * objectData.otientatuons[0].x + -objectData.size.y * objectData.otientatuons[1].x +
-					 objectData.size.z * objectData.otientatuons[2].x),
-		(objectData.size.x * objectData.otientatuons[0].y + -objectData.size.y * objectData.otientatuons[1].y +
-					 objectData.size.z * objectData.otientatuons[2].y),
-		(objectData.size.x * objectData.otientatuons[0].z + -objectData.size.y * objectData.otientatuons[1].z +
-					 objectData.size.z * objectData.otientatuons[2].z)
+        (objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
+					 objectData.size.z * objectData.otientatuonsZ.x),
+		(objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
+					 objectData.size.z * objectData.otientatuonsZ.y),
+		(objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
+					 objectData.size.z * objectData.otientatuonsZ.z)
                             );
     
     for (uint32_t j = 0; j < 8; ++j)
@@ -248,9 +249,9 @@ float32_t3 Extrusion(ObjectData objectData, PolygonData polygonData, uint32_t in
     
     float32_t r = 0.0f;
 
-    r += abs(dot(objectData.otientatuons[0] * objectData.size.x, planeNormal));
-    r += abs(dot(objectData.otientatuons[1] * objectData.size.y, planeNormal));
-    r += abs(dot(objectData.otientatuons[2] * objectData.size.z, planeNormal));
+    r += abs(dot(objectData.otientatuonsX * objectData.size.x, planeNormal));
+    r += abs(dot(objectData.otientatuonsY * objectData.size.y, planeNormal));
+    r += abs(dot(objectData.otientatuonsZ * objectData.size.z, planeNormal));
 
 	//平面とobbの距離(怪しい)
     float32_t3 planePos = planeNormal * planeDistance;
@@ -279,15 +280,11 @@ void main(uint32_t3 dispatchId : SV_DispatchThreadID)
     
     // オブジェクトデータ
     ObjectData objectData = gObjectData;
-    //objectData.center = (0.0f, 0.0f, 0.0f);
-    //objectData.otientatuons[0] = (1.0f, 0.0f, 0.0f);
-    //objectData.otientatuons[1] = (0.0f, 1.0f, 0.0f);
-    //objectData.otientatuons[2] = (0.0f, 0.0f, 1.0f);
-    //objectData.size = (0.1f, 0.1f, 0.1f);
-    
     // やらなくていいときにリターン
     if (index >= objectData.indexMax)
     {
+        gOutputDatas[index].extrusion = float32_t3(0.0f, 0.0f, 0.0f);
+        gOutputDatas[index].drivingLocation = 0;
         return;
     }
     
@@ -303,11 +300,12 @@ void main(uint32_t3 dispatchId : SV_DispatchThreadID)
     if (collisionConfirmation)
     {
         gOutputDatas[index].extrusion = Extrusion(objectData, polygonData, index);
+        gOutputDatas[index].drivingLocation = 1;
     }
     else
     {
-        gOutputDatas[index].extrusion = objectData.size;
-        gOutputDatas[index].drivingLocation = objectData.indexMax;
+        gOutputDatas[index].extrusion = float32_t3(0.0f, 0.0f, 0.0f);
+        gOutputDatas[index].drivingLocation = 2;
     }
     
     // 押し出し値追加
