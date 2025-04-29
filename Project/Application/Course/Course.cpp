@@ -1,6 +1,7 @@
 #include "Course.h"
 #include "CoursePolygonType.h"
 #include "../../Engine/2D/ImguiManager.h"
+#include "../../Engine/base/Texture/TextureManager.h"
 
 void Course::Initialize(LevelData::MeshData* data)
 {
@@ -36,6 +37,10 @@ void Course::Initialize(LevelData::MeshData* data)
 		coursePolygons_.push_back(polygon);
 
 	}
+
+	// コーステクスチャ
+	const std::string kCourseTextureFileName = "Resources/default/white2x2.png";
+	courseTextureHandle_ = TextureManager::Load(kCourseTextureFileName, DirectXCommon::GetInstance());
 
 }
 

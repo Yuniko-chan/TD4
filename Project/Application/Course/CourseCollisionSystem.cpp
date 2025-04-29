@@ -4,6 +4,7 @@
 #include "../../Engine/base/DescriptorHerpManager/SRVDescriptorHerpManager.h"
 #include "CoursePolygonType.h"
 #include "../../Engine/2D/ImguiManager.h"
+#include "../../Engine/base/Texture/TextureManager.h"
 
 // ポリゴンエリアの原点
 const Vector3 CourseCollisionSystem::kPolygonAreasOrigin_ = { -500.0f, -500.0f, -500.0f };
@@ -483,6 +484,8 @@ void CourseCollisionSystem::ExtrusionExecuteCS()
 	commandList->SetComputeRootDescriptorTable(1, buffers_[collisionCheakNum_].polygonDataDescriptorHandles.handleGPU_);
 
 	commandList->SetComputeRootDescriptorTable(2, buffers_[collisionCheakNum_].outputDescriptorHandles.handleGPU_);
+
+	TextureManager::GetInstance()->SetComputeRootDescriptorTable(commandList, 3, course_->GetCourseTextureHandle());
 
 	commandList->Dispatch(1, 1, 1);
 

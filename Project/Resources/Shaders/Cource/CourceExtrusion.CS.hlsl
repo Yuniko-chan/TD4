@@ -43,6 +43,8 @@ StructuredBuffer<PolygonData> gPolygonDatas : register(t0);
 
 RWStructuredBuffer<OutputData> gOutputDatas : register(u1);
 
+Texture2D<float32_t4> gCourseTexture : register(t2);
+
 bool CollisionCheck(PolygonData polygonData, Segment segment)
 {
     

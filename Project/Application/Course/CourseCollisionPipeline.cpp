@@ -6,7 +6,7 @@ void CourseCollisionPipeline::Initialize(ID3D12Device* device)
 {
 
 	// ルートパラメータ
-	D3D12_ROOT_PARAMETER rootParameters[3] = {};
+	D3D12_ROOT_PARAMETER rootParameters[4] = {};
 
 	// SRV
 	D3D12_DESCRIPTOR_RANGE descriptorRangeSRV[1] = {};
@@ -17,10 +17,16 @@ void CourseCollisionPipeline::Initialize(ID3D12Device* device)
 
 	// UAV
 	D3D12_DESCRIPTOR_RANGE descriptorRangeUAV[1] = {};
-	descriptorRangeUAV[0].BaseShaderRegister = 1;//0から始まる
+	descriptorRangeUAV[0].BaseShaderRegister = 1;//1から始まる
 	descriptorRangeUAV[0].NumDescriptors = 1;//数は一つ
 	descriptorRangeUAV[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_UAV;// UAVを使う
 	descriptorRangeUAV[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;//Offsetを自動計算
+
+	D3D12_DESCRIPTOR_RANGE descriptorRangeTexture[1] = {};
+	descriptorRangeTexture[0].BaseShaderRegister = 2;//2から始まる
+	descriptorRangeTexture[0].NumDescriptors = 1;//数は一つ
+	descriptorRangeTexture[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;// SRVを使う
+	descriptorRangeTexture[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;//Offsetを自動計算
 
 	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;   //CBVを使う
 	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL; //全てで使う
@@ -35,6 +41,11 @@ void CourseCollisionPipeline::Initialize(ID3D12Device* device)
 	rootParameters[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//全てで使う
 	rootParameters[2].DescriptorTable.pDescriptorRanges = descriptorRangeUAV;//Tableの中身の配列を指定
 	rootParameters[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeUAV);//Tableで利用する数
+
+	rootParameters[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;//DescriptorTableを使う
+	rootParameters[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//全てで使う
+	rootParameters[3].DescriptorTable.pDescriptorRanges = descriptorRangeTexture;//Tableの中身の配列を指定
+	rootParameters[3].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeTexture);//Tableで利用する数
 
 	// 共通関数に送る
 	PipelineStateCSCommonInitialize(
