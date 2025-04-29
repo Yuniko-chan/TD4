@@ -97,6 +97,50 @@ void TextureManager::SetComputeRootDescriptorTable(ID3D12GraphicsCommandList* co
 
 }
 
+void TextureManager::ChangePixelShaderResource(ID3D12GraphicsCommandList* commandList, uint32_t textureHandle)
+{
+
+	assert(commandList);
+
+	//TransitionBarrierの設定
+	D3D12_RESOURCE_BARRIER barrier{};
+	//今回のバリアはTransition
+	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	//Noneにしておく
+	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+	//バリアを張る対象のリソース。
+	barrier.Transition.pResource = textures_[textureHandle].resource.Get();
+	//遷移前（現在）のResouceState
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE;
+	//遷移後のResoureState
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	//TransitionBarrierを張る
+	commandList->ResourceBarrier(1, &barrier);
+
+}
+
+void TextureManager::ChangeNonPixelShaderResource(ID3D12GraphicsCommandList* commandList, uint32_t textureHandle)
+{
+
+	assert(commandList);
+
+	//TransitionBarrierの設定
+	D3D12_RESOURCE_BARRIER barrier{};
+	//今回のバリアはTransition
+	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	//Noneにしておく
+	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+	//バリアを張る対象のリソース。
+	barrier.Transition.pResource = textures_[textureHandle].resource.Get();
+	//遷移前（現在）のResouceState
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+	//遷移後のResoureState
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE;
+	//TransitionBarrierを張る
+	commandList->ResourceBarrier(1, &barrier);
+
+}
+
 //コンバートストリング
 std::wstring TextureManager::ConvertString(const std::string& str) {
 	if (str.empty()) {

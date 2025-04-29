@@ -91,6 +91,20 @@ public: // メンバ関数
 	/// <param name="textureHandle">テクスチャハンドル</param>
 	void SetComputeRootDescriptorTable(ID3D12GraphicsCommandList* commandList, UINT rootParamIndex, uint32_t textureHandle);
 
+	/// <summary>
+	/// ピクセルシェーダーリソースに変更
+	/// </summary>
+	/// <param name="commandList">コマンドリスト</param>
+	/// <param name="textureHandle">テクスチャハンドル</param>
+	void ChangePixelShaderResource(ID3D12GraphicsCommandList* commandList, uint32_t textureHandle);
+
+	/// <summary>
+	/// Nonピクセルシェーダーリソースに変更
+	/// </summary>
+	/// <param name="commandList">コマンドリスト</param>
+	/// <param name="textureHandle">テクスチャハンドル</param>
+	void ChangeNonPixelShaderResource(ID3D12GraphicsCommandList* commandList, uint32_t textureHandle);
+
 private: // メンバ関数
 
 	/// <summary>
