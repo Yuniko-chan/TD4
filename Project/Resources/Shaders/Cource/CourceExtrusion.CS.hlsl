@@ -274,6 +274,20 @@ float32_t3 Extrusion(ObjectData objectData, PolygonData polygonData, uint32_t in
 
 }
 
+uint32_t SetDrivingLocation(float32_t2 texcoord)
+{
+    
+    float32_t4 color = gCourseTexture[texcoord];
+    
+    if (color.r == 1.0f)
+    {
+        return 1;
+    }
+ 
+    return 0;
+    
+}
+
 [numthreads(1024, 1, 1)]
 void main(uint32_t3 dispatchId : SV_DispatchThreadID)
 {
@@ -312,7 +326,7 @@ void main(uint32_t3 dispatchId : SV_DispatchThreadID)
         gOutputDatas[index].collided = 0;
     }
     
-    // 押し出し値追加
-    //gOutputDatas[index].drivingLocation = gPolygonDatas[index].coursePolygonType;
+    // 
+    gOutputDatas[index].drivingLocation = SetDrivingLocation(polygonData.texcoord);
 
 }

@@ -206,6 +206,7 @@ void CourseCollisionSystem::ImGuiDraw()
 		// 出力データ
 		ImGui::Text("center x:%7.2f y:%7.2f z:%7.2f", buffers_[count].outputDataMap_[0].extrusion.x, buffers_[count].outputDataMap_[0].extrusion.y, buffers_[count].outputDataMap_[0].extrusion.z);
 		ImGui::Text("collided %d", buffers_[count].outputDataMap_[0].collided);
+		ImGui::Text("drivingLocation %d", buffers_[count].outputDataMap_[0].drivingLocation);
 
 		ImGui::Separator();
 		count++;
