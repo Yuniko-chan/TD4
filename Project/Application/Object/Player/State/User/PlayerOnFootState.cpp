@@ -25,7 +25,8 @@ void PlayerOnFootState::Update()
 	}
 
 	// 移動処理
-	player_->GetWorldTransformAdress()->transform_.translate += player_->GetCommand()->GetDirect() * kDeltaTime_;
+	Vector3 velocityDirection = player_->GetCommand()->GetDirect() * PlayerDebugData::sMoveData.moveSpeed;
+	player_->GetWorldTransformAdress()->transform_.translate += velocityDirection * kDeltaTime_;
 
 }
 

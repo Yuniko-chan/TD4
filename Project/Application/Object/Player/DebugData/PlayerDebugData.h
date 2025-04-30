@@ -6,7 +6,7 @@
 /// </summary>
 class PlayerDebugData
 {
-public:
+public:	// 構造体
 	struct RideActionData
 	{
 		float jumpHeight = 20.0f;
@@ -15,10 +15,20 @@ public:
 
 		void ImGuiDraw(const std::string& name, float dragValue);
 	};
+	struct MoveParamData
+	{
+		float rideSpeed = 2.0f;
+		float moveSpeed = 1.0f;
 
+		void ImGuiDraw(const std::string& name, float dragValue);
+	};
+
+public:	// 静的変数
 	// 乗り込むアクションのデータ
 	static RideActionData sRideActionData;
 	static RideActionData sDropoffActionData;
+	// 移動の速度
+	static MoveParamData sMoveData;
 
 public:
 	/// <summary>

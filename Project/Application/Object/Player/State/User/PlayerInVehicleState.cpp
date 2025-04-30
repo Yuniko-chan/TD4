@@ -15,7 +15,8 @@ void PlayerInVehicleState::Update()
 	}
 
 	// 移動処理
-	player_->GetWorldTransformAdress()->parent_->transform_.translate += player_->GetCommand()->GetDirect() * kDeltaTime_;
+	Vector3 velocityDirection = player_->GetCommand()->GetDirect() * PlayerDebugData::sMoveData.rideSpeed;
+	player_->GetWorldTransformAdress()->parent_->transform_.translate += velocityDirection * kDeltaTime_;
 }
 
 void PlayerInVehicleState::Exit()
