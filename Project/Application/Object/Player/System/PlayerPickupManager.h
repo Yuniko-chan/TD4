@@ -21,6 +21,8 @@ struct PickUpCollision {
 class PlayerPickupManager
 {
 public:
+	PlayerPickupManager();
+
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -31,9 +33,16 @@ public:
 	/// <param name="parts"></param>
 	void PickUp(Car::IParts* parts) { holdParts = parts; }
 
+	/// <summary>
+	/// 衝突処理
+	/// </summary>
+	/// <param name="colliderPartner"></param>
+	/// <param name="collisionData"></param>
+	void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
+
 private:
 	// 持ってるパーツ
 	Car::IParts* holdParts;
-
+	// 拾う用のコライダー
 	std::unique_ptr<ColliderShape> collider_;
 };

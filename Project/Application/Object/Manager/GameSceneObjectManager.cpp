@@ -130,9 +130,9 @@ void GameSceneObjectManager::OptionProcess()
 {
 	// コア作成
 	AddObject("VehicleCore", "Resources/Model/GroundBlock", "GroundBlock.obj");
-	AddObject("EngineParts", "Resources/Model/GroundBlock", "GroundBlock.obj");
-	AddObject("TireParts", "Resources/Model/GroundBlock", "GroundBlock.obj");
-	AddObject("ArmorFrameParts", "Resources/Model/GroundBlock", "GroundBlock.obj");
+	AddObject("EngineParts", "Resources/Model/Engine", "Engine.obj");
+	AddObject("TireParts", "Resources/Model/Tire", "Tire.obj");
+	AddObject("ArmorFrameParts", "Resources/Model/Frame", "Frame.obj");
 
 	// キャスト
 	VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer("VehicleCore"));
