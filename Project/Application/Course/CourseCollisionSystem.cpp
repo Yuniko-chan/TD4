@@ -45,37 +45,11 @@ void CourseCollisionSystem::Execute()
 
 	}
 
-	// ->キック
-	//コマンドリストをクローズ、キック
-	HRESULT hr = dxCommon_->GetCommadList()->Close();
-	assert(SUCCEEDED(hr));
+	// キック
+	CommadKick();
 
-	ID3D12CommandList* commandLists[] = { dxCommon_->GetCommadList() };
-	DxCommand::GetCommandQueue()->ExecuteCommandLists(1, commandLists);
-
-	//実行待ち
-	//Fenceの値を更新
-	dxCommon_->SetFenceVal(dxCommon_->GetFenceVal() + 1);
-	//GPUがここまでたどり着いたときに、Fenceの値を指定した値に代入するようにSignalを送る
-	DxCommand::GetCommandQueue()->Signal(dxCommon_->GetFence(), dxCommon_->GetFenceVal());
-
-	//Fenceの値が指定したSignal値にたどり着いているが確認する
-	//GetCompletedValueの初期値はFence作成時に渡した初期値
-	if (dxCommon_->GetFence()->GetCompletedValue() < dxCommon_->GetFenceVal()) {
-		//FrenceのSignalを持つためのイベントを作成する
-		HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-		assert(fenceEvent != nullptr);
-		//指定したSignalにたどりついていないので、たどりつくまで待つようにイベントを設定する
-		dxCommon_->GetFence()->SetEventOnCompletion(dxCommon_->GetFenceVal(), fenceEvent);
-		//イベントを待つ
-		WaitForSingleObject(fenceEvent, INFINITE);
-	}
-
-	//実行が完了したので、アロケータとコマンドリストをリセット
-	hr = dxCommon_->GetCommandAllocator()->Reset();
-	assert(SUCCEEDED(hr));
-	hr = dxCommon_->GetCommadList()->Reset(dxCommon_->GetCommandAllocator(), nullptr);
-	assert(SUCCEEDED(hr));
+	// 回数を初期化
+	collisionCheakNum_ = 0;
 
 	// 登録分回す
 	for (std::list<MeshObject*>::iterator itr = collidingObjects_.begin();
@@ -83,7 +57,11 @@ void CourseCollisionSystem::Execute()
 	
 		// ->CPU側で押し出し、回転（壁データはとらない）
 		// ->OBB登録のオブジェクトのワールドトランスフォーム更新
+		ExtrusionCalculation(*itr);
 	
+		// 回数を増やす
+		collisionCheakNum_++;
+
 	}
 
 	// 後処理
@@ -489,5 +467,99 @@ void CourseCollisionSystem::ExtrusionExecuteCS()
 	TextureManager::GetInstance()->SetComputeRootDescriptorTable(commandList, 3, course_->GetCourseTextureHandle());
 
 	commandList->Dispatch(1, 1, 1);
+
+}
+
+void CourseCollisionSystem::CommadKick()
+{
+
+	//コマンドリストをクローズ、キック
+	HRESULT hr = dxCommon_->GetCommadList()->Close();
+	assert(SUCCEEDED(hr));
+
+	ID3D12CommandList* commandLists[] = { dxCommon_->GetCommadList() };
+	DxCommand::GetCommandQueue()->ExecuteCommandLists(1, commandLists);
+
+	//実行待ち
+	//Fenceの値を更新
+	dxCommon_->SetFenceVal(dxCommon_->GetFenceVal() + 1);
+	//GPUがここまでたどり着いたときに、Fenceの値を指定した値に代入するようにSignalを送る
+	DxCommand::GetCommandQueue()->Signal(dxCommon_->GetFence(), dxCommon_->GetFenceVal());
+
+	//Fenceの値が指定したSignal値にたどり着いているが確認する
+	//GetCompletedValueの初期値はFence作成時に渡した初期値
+	if (dxCommon_->GetFence()->GetCompletedValue() < dxCommon_->GetFenceVal()) {
+		//FrenceのSignalを持つためのイベントを作成する
+		HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+		assert(fenceEvent != nullptr);
+		//指定したSignalにたどりついていないので、たどりつくまで待つようにイベントを設定する
+		dxCommon_->GetFence()->SetEventOnCompletion(dxCommon_->GetFenceVal(), fenceEvent);
+		//イベントを待つ
+		WaitForSingleObject(fenceEvent, INFINITE);
+	}
+
+	//実行が完了したので、アロケータとコマンドリストをリセット
+	hr = dxCommon_->GetCommandAllocator()->Reset();
+	assert(SUCCEEDED(hr));
+	hr = dxCommon_->GetCommadList()->Reset(dxCommon_->GetCommandAllocator(), nullptr);
+	assert(SUCCEEDED(hr));
+
+}
+
+void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
+{
+
+	// 押し出し
+	Vector3 extrusion = { 0.0f,0.0f,0.0f };
+	uint32_t extrusionCount = 0;
+	// 法線
+	Vector3 normal = { 0.0f,0.0f,0.0f };
+	uint32_t normalCount = 0;
+	// 走行場所
+	CoursePolygonType drivingLocation = CoursePolygonType::kCoursePolygonTypeRoad;
+
+	// ポリゴン数だけ回す
+	for (uint32_t i = 0; i < buffers_[collisionCheakNum_].objectMap_->indexMax; i++) {
+
+		// 出力データ
+		OutputData outputData =	buffers_[collisionCheakNum_].outputDataMap_[i];
+
+		// 衝突したか
+		if (outputData.collided) {
+			// 押し出し値加算
+			extrusion += outputData.extrusion;
+			extrusionCount++;
+
+			// 壁ではないなら
+			if (outputData.drivingLocation < CoursePolygonType::kCoursePolygonTypeWall) {
+				// 法線
+				normal += Vector3::Normalize(outputData.extrusion);
+				normalCount++;
+				// 走行場所
+				if (drivingLocation < static_cast<CoursePolygonType>(outputData.drivingLocation)) {
+					drivingLocation = static_cast<CoursePolygonType>(outputData.drivingLocation);
+				}
+
+			}
+
+		}
+
+	}
+
+	//押し出し
+	if (extrusionCount != 0) {
+
+	}
+
+	// 法線
+	if (normalCount == 0) {
+		normal = { 0.0f, 0.0f, 1.0f };
+	}
+	else {
+		normal = Vector3::Normalize(normal * (1.0f / static_cast<float>(normalCount)));
+	}
+
+	// メッシュオブジェクトに代入
+	object;
 
 }

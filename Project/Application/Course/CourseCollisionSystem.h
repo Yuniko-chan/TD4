@@ -127,6 +127,17 @@ private: // メンバ変数
 	/// </summary>
 	void ExtrusionExecuteCS();
 
+	/// <summary>
+	/// コマンドキック
+	/// </summary>
+	void CommadKick();
+
+	/// <summary>
+	/// 押し出し計算
+	/// </summary>
+	/// <param name="object">オブジェクト</param>
+	void ExtrusionCalculation(MeshObject* object);
+
 private: // メンバ変数
 
 	// コース
