@@ -25,6 +25,12 @@ namespace Car
 		void SetParent(VehicleCore* parent) { parentCore_ = parent; }
 		void ParentSetting(bool isAccept, const Vector3& offset);
 		void TransformParent();
+
+		/// <summary>
+		/// ImGui描画（パーツマネージャにまとめる用のもの
+		/// </summary>
+		virtual void ImGuiDrawParts() {};
+
 	protected:
 		/// <summary>
 		/// ImGui

@@ -54,6 +54,10 @@ void VehicleCore::ImGuiDraw()
 	ImGui::End();
 }
 
+void VehicleCore::ImGuiDrawParts()
+{
+}
+
 void VehicleCore::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
 	colliderPartner, collisionData;

@@ -34,6 +34,10 @@ void ArmorFrameParts::ImGuiDraw()
 	ImGui::End();
 }
 
+void ArmorFrameParts::ImGuiDrawParts()
+{
+}
+
 void ArmorFrameParts::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
 	colliderPartner, collisionData;

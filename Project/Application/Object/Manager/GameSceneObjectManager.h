@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Engine/Object/BaseObjectManager.h"
 #include "../../System/Shadow/ShadowManager.h"
+#include "../Car/Manager/VehiclePartsManager.h"
 
 // 前方宣言
 class Player;
@@ -39,6 +40,10 @@ public: // メンバ関数
 	/// <param name="drawLine">線描画クラス</param>
 	void Draw(BaseCamera& camera, DrawLine* drawLine) override;
 
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw() override;
 private: // メンバ関数
 
 	/// <summary>
@@ -65,6 +70,9 @@ private: // メンバ変数
 
 	// レベルデータマネージャー
 	LevelDataManager* levelDataManager_;
+
+private: // USER
+	std::unique_ptr<VehiclePartsManager> partsManager_;
 
 };
 

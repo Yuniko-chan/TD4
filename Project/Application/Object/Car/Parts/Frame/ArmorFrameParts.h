@@ -17,7 +17,10 @@ public:
 	/// ImGui
 	/// </summary>
 	void ImGuiDraw() override;
-
+	/// <summary>
+	/// 
+	/// </summary>
+	void ImGuiDrawParts() override;
 	void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
 };

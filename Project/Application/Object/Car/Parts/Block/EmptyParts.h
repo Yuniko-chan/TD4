@@ -4,5 +4,5 @@
 class EmptyParts : public Car::IParts
 {
 public:
-
+	void ImGuiDrawParts() override {};
 };

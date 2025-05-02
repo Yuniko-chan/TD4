@@ -1,7 +1,9 @@
 #pragma once
 #include "../../../Engine/Object/MeshObject.h"
 #include "../../../Engine/Animation/Animation.h"
+
 #include "Parts/PartsInterface.h"
+#include "System/VehicleStatus.h"
 
 class Player;
 
@@ -44,6 +46,11 @@ public: // メンバ関数
     /// </summary>
     void ImGuiDraw() override;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    void ImGuiDrawParts() override;
+
     ///// <summary>
     ///// パーティクル描画
     ///// </summary>
@@ -69,5 +76,6 @@ private:
 
     // ペアになるプレイヤーポインタ
     Player* pairPlayer_ = nullptr;
-
+    // ステータス
+    VehicleStatus status_ = {};
 };

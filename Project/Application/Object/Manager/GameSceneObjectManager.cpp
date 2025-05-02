@@ -74,6 +74,21 @@ void GameSceneObjectManager::Draw(BaseCamera& camera, DrawLine* drawLine)
 
 }
 
+void GameSceneObjectManager::ImGuiDraw()
+{
+	// ベース分
+	BaseObjectManager::ImGuiDraw();
+
+	// 追加分
+#ifdef _DEMO
+	
+	partsManager_->ImGuiDraw();
+
+#endif // _DEMO
+
+
+}
+
 void GameSceneObjectManager::ShadowUpdate()
 {
 
@@ -128,6 +143,8 @@ void GameSceneObjectManager::AddObject(const std::string& className, const std::
 
 void GameSceneObjectManager::OptionProcess()
 {
+	partsManager_ = std::make_unique<VehiclePartsManager>();
+
 	// コア作成
 	AddObject("VehicleCore", "Resources/Model/GroundBlock", "GroundBlock.obj");
 	AddObject("EngineParts", "Resources/Model/Engine", "Engine.obj");
@@ -151,4 +168,8 @@ void GameSceneObjectManager::OptionProcess()
 	armorParts->SetParent(core);
 	armorParts->TransformParent();
 
+	partsManager_->AddParts(core->GetName(), core);
+	partsManager_->AddParts(engineParts->GetName(), engineParts);
+	partsManager_->AddParts(tireParts->GetName(), tireParts);
+	partsManager_->AddParts(armorParts->GetName(), armorParts);
 }

@@ -34,6 +34,10 @@ void TireParts::ImGuiDraw()
 	ImGui::End();
 }
 
+void TireParts::ImGuiDrawParts()
+{
+}
+
 void TireParts::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
 	colliderPartner, collisionData;
