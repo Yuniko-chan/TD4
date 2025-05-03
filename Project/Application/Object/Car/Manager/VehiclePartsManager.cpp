@@ -1,5 +1,7 @@
 #include "VehiclePartsManager.h"
 #include "../../../Engine/2D/ImguiManager.h"
+
+#include "../Parts/PartsInterface.h"
 #include <cassert>
 
 void VehiclePartsManager::AddParts(const std::string& tag, Car::IParts* parts)
@@ -39,6 +41,10 @@ void VehiclePartsManager::DeleteParts(const std::string& tag)
 void VehiclePartsManager::ImGuiDraw()
 {
     ImGui::Begin("PartsManager");
+
+    for (std::unordered_map<std::string, Car::IParts*>::iterator it = partsLists_.begin(); it != partsLists_.end(); ++it) {
+        (*it).second->ImGuiDrawParts();
+    }
 
     ImGui::End();
 }

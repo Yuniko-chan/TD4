@@ -45,17 +45,18 @@ void VehicleCore::Update()
 
 void VehicleCore::ImGuiDraw()
 {
-	ImGui::Begin(className_.c_str());
+
+}
+
+void VehicleCore::ImGuiDrawParts()
+{
+	ImGui::SeparatorText(className_.c_str());
 	// トランスフォームに移動
 	ImGuiTransform(0.1f);
 	if (ImGui::Button("Release")) {
 		pairPlayer_ = nullptr;
 	}
-	ImGui::End();
-}
-
-void VehicleCore::ImGuiDrawParts()
-{
+	ImGui::Text("\n");
 }
 
 void VehicleCore::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)

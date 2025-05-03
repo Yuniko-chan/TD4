@@ -25,17 +25,17 @@ void ArmorFrameParts::Update()
 
 void ArmorFrameParts::ImGuiDraw()
 {
-	ImGui::Begin(name_.c_str());
-	static float moveValue = 0.1f;
-	ImGui::DragFloat("SlideValue", &moveValue, 0.01f);
-	// トランスフォーム用
-	ImGuiTransform(moveValue);
 
-	ImGui::End();
 }
 
 void ArmorFrameParts::ImGuiDrawParts()
 {
+	ImGui::SeparatorText(name_.c_str());
+	static float moveValue = 0.1f;
+	ImGui::DragFloat("SlideValue", &moveValue, 0.01f);
+	// トランスフォーム用
+	ImGuiTransform(moveValue);
+	ImGui::Text("\n");
 }
 
 void ArmorFrameParts::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)

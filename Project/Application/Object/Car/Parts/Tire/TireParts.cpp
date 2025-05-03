@@ -25,17 +25,17 @@ void TireParts::Update()
 
 void TireParts::ImGuiDraw()
 {
-	ImGui::Begin(name_.c_str());
-	static float moveValue = 0.1f;
-	ImGui::DragFloat("SlideValue", &moveValue, 0.01f);
-	// トランスフォーム用
-	ImGuiTransform(moveValue);
 
-	ImGui::End();
 }
 
 void TireParts::ImGuiDrawParts()
 {
+	ImGui::SeparatorText(name_.c_str());
+	static float moveValue = 0.1f;
+	ImGui::DragFloat("SlideValue", &moveValue, 0.01f);
+	// トランスフォーム用
+	ImGuiTransform(moveValue);
+	ImGui::Text("\n");
 }
 
 void TireParts::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
