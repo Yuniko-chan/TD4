@@ -7,7 +7,7 @@ class VehicleStatus
 public:
 
 	void SetCore(VehicleCore* core) { core_ = core; }
-
+	void ImGuiDraw();
 private:
 	VehicleCore* core_;
 

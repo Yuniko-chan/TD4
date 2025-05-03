@@ -172,6 +172,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Car\Parts\Engine\EngineParts.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Frame\ArmorFrameParts.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Tire\TireParts.cpp" />
+    <ClCompile Include="Application\Object\Car\System\VehicleStatus.cpp" />
     <ClCompile Include="Application\Object\Car\VehicleCore.cpp" />
     <ClCompile Include="Application\Object\Car\Factory\VehicleFactory.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\PartsInterface.cpp" />
@@ -358,6 +359,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Collider\CollisionConfig.h" />
     <ClInclude Include="Application\Object\BaseCharacter\BaseCharacterAnimation.h" />
     <ClInclude Include="Application\Object\Car\Manager\VehiclePartsManager.h" />
+    <ClInclude Include="Application\Object\Car\System\VehicleCaluclator.h" />
     <ClInclude Include="Application\Object\Car\System\VehicleStatus.h" />
     <ClInclude Include="Application\Object\Car\VehicleCore.h" />
     <ClInclude Include="Application\Object\Car\CarLists.h" />

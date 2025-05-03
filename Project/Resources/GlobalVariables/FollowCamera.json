@@ -3,6 +3,7 @@
         "moveRate": 1.0,
         "offsetHeight": 6.0,
         "offsetLength": -50.0,
+        "offsetMoveRate": 0.05000000074505806,
         "rotateRate": 1.0
     }
 }

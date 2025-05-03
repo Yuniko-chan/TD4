@@ -64,5 +64,6 @@ private: // メンバ変数
 	// ターゲット位置
 	Vector3 interTarget_;
 
+	float offsetMoveRate_ = 0.1f;
 };
 

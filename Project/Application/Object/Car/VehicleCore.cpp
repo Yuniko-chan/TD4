@@ -56,6 +56,13 @@ void VehicleCore::ImGuiDrawParts()
 	if (ImGui::Button("Release")) {
 		pairPlayer_ = nullptr;
 	}
+
+	if (ImGui::TreeNode("Status"))
+	{
+		status_.ImGuiDraw();
+		ImGui::TreePop();
+	}
+
 	ImGui::Text("\n");
 }
 

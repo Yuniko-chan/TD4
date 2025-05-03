@@ -20,6 +20,8 @@ void FollowCamera::Initialize() {
 	offsetLength_ = 0.0f;
 	// オフセットの高さ
 	offsetHeight_ = 0.0f;
+	// オフセットの追従レート
+	offsetMoveRate_ = 0.1f;
 	// ターゲット位置
 	interTarget_ = {0.0f,0.0f,0.0f};
 
@@ -33,6 +35,7 @@ void FollowCamera::Initialize() {
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
 	globalVariables->AddItem(groupName, "offsetLength", offsetLength_);
 	globalVariables->AddItem(groupName, "offsetHeight", offsetHeight_);
+	globalVariables->AddItem(groupName, "offsetMoveRate", offsetMoveRate_);
 
 	ApplyGlobalVariables();
 
@@ -48,10 +51,11 @@ void FollowCamera::Update(float elapsedTime) {
 	//追従対象がいれば
 	if (target_) {
 		// 追従座標の補間(Z軸を取ってくる)
-		const Vector3 kTargetPositionEnd = { 0.0f, 0.0f, target_->worldMatrix_.m[3][2] };
+		//const Vector3 kTargetPositionEnd = { 0.0f, 0.0f, target_->worldMatrix_.m[3][2] };
+		const Vector3 kTargetPositionEnd = { target_->worldMatrix_.m[3][0],target_->worldMatrix_.m[3][1] ,target_->worldMatrix_.m[3][2] };
 		// 移動レート
-		const float kMoveRate = 0.1f;
-		interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, kMoveRate);
+		//const float kMoveRate = 0.1f;
+		interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, offsetMoveRate_);
 
 		// オフセット
 		Vector3 offset = OffsetCalc();
@@ -130,5 +134,5 @@ void FollowCamera::ApplyGlobalVariables()
 
 	offsetLength_ = globalVariables->GetFloatValue(groupName, "offsetLength");
 	offsetHeight_ = globalVariables->GetFloatValue(groupName, "offsetHeight");
-
+	offsetMoveRate_ = globalVariables->GetFloatValue(groupName, "offsetMoveRate");
 }
