@@ -20,6 +20,13 @@ void Car::IParts::Update()
 	ColliderUpdate();
 }
 
+void Car::IParts::ReleaseParent()
+{
+	Vector3 worldPosition = worldTransform_.GetWorldPosition();
+	worldTransform_.SetParent(nullptr);
+	worldTransform_.transform_.translate = worldPosition;
+}
+
 void Car::IParts::ParentSetting(bool isAccept, const Vector3& offset)
 {
 	if (isAccept && parentCore_) {
@@ -38,14 +45,35 @@ void Car::IParts::TransformParent()
 void Car::IParts::ImGuiTransform(const float& value)
 {
 	// 座標
-	std::string name = name_ + "Translate";
+	std::string name = name_ + ":Translate";
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.translate.x, value);
 	// 回転
-	name = name_ + "Rotate";
+	name = name_ + ":Rotate";
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.rotate.x, value);
 	// スケール
-	name = name_ + "Scale";
+	name = name_ + ":Scale";
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, value);
+
+	ImGui::Separator();
+	ImGuiDrawChildParts();
+}
+
+void Car::IParts::ImGuiDrawChildParts()
+{
+	if (!parentCore_) {
+		return;
+	}
+	std::string name = name_ + ":Release";
+	// 解除
+	if (ImGui::Button(name.c_str())) {
+		ReleaseParent();
+	}
+	name = name_ + ":SetUp";
+	// 設定
+	if (ImGui::Button(name.c_str())) {
+		worldTransform_.transform_.translate = {};
+		this->TransformParent();
+	}
 }
 
 void Car::IParts::ColliderUpdate()

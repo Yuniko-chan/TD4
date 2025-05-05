@@ -1,11 +1,14 @@
 #pragma once
 #include "../../../Engine/Collision/BaseCollisionManager.h"
+#include "PlayerComponent.h"
 
 // パーツの基底（全ての基）
 namespace Car
 {
 	class IParts;
 }
+
+class VehiclePartsManager;
 
 struct PickUpCollision {
 	// コライダー
@@ -18,10 +21,15 @@ struct PickUpCollision {
 	uint32_t collisionMask_ = 0xffffffff;
 };
 
-class PlayerPickupManager
+class PlayerPickupManager : public PlayerComponent
 {
 public:
 	PlayerPickupManager();
+
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw();
 
 	/// <summary>
 	/// 更新
@@ -31,7 +39,7 @@ public:
 	/// 拾う処理
 	/// </summary>
 	/// <param name="parts"></param>
-	void PickUp(Car::IParts* parts) { holdParts = parts; }
+	void PickUp(Car::IParts* parts) { holdParts_ = parts; }
 
 	/// <summary>
 	/// 衝突処理
@@ -40,9 +48,19 @@ public:
 	/// <param name="collisionData"></param>
 	void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
+	/// <summary>
+	/// せったー
+	/// </summary>
+	/// <param name="manager"></param>
+	void SetPartsManager(VehiclePartsManager* manager) { partsManager_ = manager; }
+
 private:
+	// パーツのマネージャ
+	VehiclePartsManager* partsManager_ = nullptr;
 	// 持ってるパーツ
-	Car::IParts* holdParts;
+	Car::IParts* holdParts_;
 	// 拾う用のコライダー
 	std::unique_ptr<ColliderShape> collider_;
+	// 近いパーツの名前
+	std::string nearPartsName_ = "None";
 };

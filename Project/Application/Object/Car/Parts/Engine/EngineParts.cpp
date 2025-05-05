@@ -35,7 +35,6 @@ void EngineParts::ImGuiDrawParts()
 	ImGui::DragFloat("SlideValue", &moveValue, 0.01f);
 	// トランスフォーム用
 	ImGuiTransform(moveValue);
-	ImGui::DragFloat3("Translate", &worldTransform_.transform_.translate.x, moveValue);
 	ImGui::Text("\n");
 }
 

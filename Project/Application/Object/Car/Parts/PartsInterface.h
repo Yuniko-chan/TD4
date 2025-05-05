@@ -23,8 +23,12 @@ namespace Car
 
 		// 親子関係
 		void SetParent(VehicleCore* parent) { parentCore_ = parent; }
+		// 親があるか
+		bool IsParent() { return worldTransform_.parent_ ? true : false; }
+		
 		void ParentSetting(bool isAccept, const Vector3& offset);
 		void TransformParent();
+		void ReleaseParent();
 
 		/// <summary>
 		/// ImGui描画（パーツマネージャにまとめる用のもの
@@ -36,7 +40,10 @@ namespace Car
 		/// ImGui
 		/// </summary>
 		void ImGuiTransform(const float& value);
-
+		/// <summary>
+		/// 親を所持するパーツ用
+		/// </summary>
+		void ImGuiDrawChildParts();
 		void ColliderUpdate();
 
 	protected:

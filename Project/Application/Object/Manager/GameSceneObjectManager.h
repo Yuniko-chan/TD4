@@ -58,6 +58,7 @@ private: // メンバ関数
 	/// <param name="directory"></param>
 	/// <param name="modelName"></param>
 	void AddObject(const std::string& className, const std::string& directory, const std::string& modelName);
+	void AddObject(const std::string& className, const std::string& name, const std::string& directory, const std::string& modelName);
 
 	void OptionProcess();
 

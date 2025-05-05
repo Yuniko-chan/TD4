@@ -1,6 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include <string>
+#include "../../../Engine/Math/Vector/Vector3.h"
 
 namespace Car
 {
@@ -33,6 +34,7 @@ public:
 	/// </summary>
 	void ImGuiDraw();
 
+	Car::IParts* FindNearParts(const Vector3& position);
 private:
 	std::unordered_map<std::string, Car::IParts*> partsLists_;
 };

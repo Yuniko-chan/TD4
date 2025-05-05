@@ -85,6 +85,11 @@ void Player::ImGuiDraw()
 			debugData_.ImGuiDraw();
 			ImGui::EndTabItem();
 		}
+		//
+		if (ImGui::BeginTabItem("PickUp")) {
+			pickUpManager_->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
 		// ステート
 		if (ImGui::BeginTabItem("StateButton")) {
 			if (ImGui::Button("InVehicle")) {
@@ -152,7 +157,7 @@ void Player::SystemInitialize()
 	stateMachine_->SetPlayer(this);
 
 	pickUpManager_ = std::make_unique<PlayerPickupManager>();
-	
+	pickUpManager_->SetPlayer(this);
 }
 
 WorldTransform* Player::GetCoreTransform()

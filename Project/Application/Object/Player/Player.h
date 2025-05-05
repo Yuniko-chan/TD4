@@ -74,7 +74,8 @@ public: // ゲッター
     PlayerCommand* GetCommand() { return playerCommand_.get(); }
     // ステートマシンの取得
     PlayerStateMachine* GetStateMachine() { return stateMachine_.get(); }
-
+    // パーツの管理クラス取得
+    PlayerPickupManager* GetPickUpManager() { return pickUpManager_.get(); }
     WorldTransform* GetCoreTransform();
 private:
     // システムクラス
