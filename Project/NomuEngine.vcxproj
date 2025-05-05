@@ -345,6 +345,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\Math\Vector\Vector3.cpp" />
     <ClCompile Include="Engine\base\WinApp.cpp" />
     <ClCompile Include="Engine\3D\Transform\WorldTransform.cpp" />
+    <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\ClothDemo\ClothDemo.h" />
@@ -589,6 +590,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\base\WinApp.h" />
     <ClInclude Include="Engine\3D\Vertex\VertexData.h" />
     <ClInclude Include="Engine\3D\Transform\WorldTransform.h" />
+    <ClInclude Include="Application\Object\Player\System\PlayerFrontChecker.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Engine\Camera\ViewProjectionMatrix.h" />
   </ItemGroup>

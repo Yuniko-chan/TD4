@@ -1,6 +1,7 @@
 #include "PartsInterface.h"
 #include "../VehicleCore.h"
 #include "../../../Engine/2D/ImguiManager.h"
+#include "../../../Engine/Physics/Gravity/Gravity.h"
 
 void Car::IParts::Initialize(LevelData::MeshData* data)
 {
@@ -14,6 +15,8 @@ void Car::IParts::Update()
 {
 	// メッシュの更新
 	MeshObject::Update();
+	// 子専用更新（重力の適応）
+	ChildUpdate();
 	// トランスフォームの更新
 	worldTransform_.UpdateMatrix();
 	// コライダーの更新
@@ -22,6 +25,7 @@ void Car::IParts::Update()
 
 void Car::IParts::ReleaseParent()
 {
+	// トランスフォームにおける親子の解除
 	Vector3 worldPosition = worldTransform_.GetWorldPosition();
 	worldTransform_.SetParent(nullptr);
 	worldTransform_.transform_.translate = worldPosition;
@@ -29,6 +33,7 @@ void Car::IParts::ReleaseParent()
 
 void Car::IParts::ParentSetting(bool isAccept, const Vector3& offset)
 {
+	// 親子の設定
 	if (isAccept && parentCore_) {
 		worldTransform_.SetParent(parentCore_->GetWorldTransformAdress());
 		worldTransform_.transform_.translate = offset;
@@ -37,6 +42,7 @@ void Car::IParts::ParentSetting(bool isAccept, const Vector3& offset)
 
 void Car::IParts::TransformParent()
 {
+	// 親コアがあれば
 	if (parentCore_) {
 		worldTransform_.SetParent(parentCore_->GetWorldTransformAdress());
 	}
@@ -86,6 +92,25 @@ void Car::IParts::ColliderUpdate()
 	ColliderShape* shape = new ColliderShape();
 	*shape = obb;
 	collider_.reset(shape);
+}
+
+void Car::IParts::ChildUpdate()
+{
+	// 親のポインタがなければ
+	if (!parentCore_) {
+		return;
+	}
+	// 親子関係であれば早期
+	if (IsParent()) {
+		return;
+	}
+	// 仮の地面処理
+	if (worldTransform_.GetWorldPosition().y <= 0.0f) {
+		worldTransform_.transform_.translate.y = 0.0f;
+		return;
+	}
+	// 重力
+	worldTransform_.transform_.translate += Gravity::Execute();
 }
 
 //void Car::IParts::Draw(BaseCamera& camera)

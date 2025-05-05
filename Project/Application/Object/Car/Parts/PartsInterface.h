@@ -25,9 +25,11 @@ namespace Car
 		void SetParent(VehicleCore* parent) { parentCore_ = parent; }
 		// 親があるか
 		bool IsParent() { return worldTransform_.parent_ ? true : false; }
-		
+		// 親子設定
 		void ParentSetting(bool isAccept, const Vector3& offset);
+		// ワールドトランスフォームの親設定
 		void TransformParent();
+		// ワールドトランスフォームの親解除
 		void ReleaseParent();
 
 		/// <summary>
@@ -44,7 +46,16 @@ namespace Car
 		/// 親を所持するパーツ用
 		/// </summary>
 		void ImGuiDrawChildParts();
+		/// <summary>
+		/// コライダーの更新
+		/// </summary>
 		void ColliderUpdate();
+
+	protected:
+		/// <summary>
+		/// 子専用の処理
+		/// </summary>
+		void ChildUpdate();
 
 	protected:
 		// 重さparent

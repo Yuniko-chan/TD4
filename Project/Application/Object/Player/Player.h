@@ -68,7 +68,10 @@ private:
     /// システムクラス関係の初期化
     /// </summary>
     void SystemInitialize();
-
+    /// <summary>
+    /// システムクラスの更新
+    /// </summary>
+    void SystemUpdate();
 public: // ゲッター
     // コマンドの取得
     PlayerCommand* GetCommand() { return playerCommand_.get(); }
@@ -76,6 +79,10 @@ public: // ゲッター
     PlayerStateMachine* GetStateMachine() { return stateMachine_.get(); }
     // パーツの管理クラス取得
     PlayerPickupManager* GetPickUpManager() { return pickUpManager_.get(); }
+    // フロントチェックの取得
+    PlayerFrontChecker* GetFrontChecker() { return &frontChecker_; }
+
+    // コアのワールドトランスフォーム
     WorldTransform* GetCoreTransform();
 private:
     // システムクラス
@@ -85,6 +92,8 @@ private:
     std::unique_ptr<PlayerPickupManager> pickUpManager_;
     // デバッグ用のデータ
     PlayerDebugData debugData_;
+    // 前方確認
+    PlayerFrontChecker frontChecker_;
     // ペア
     VehicleCore* pairCore_ = nullptr;
 };

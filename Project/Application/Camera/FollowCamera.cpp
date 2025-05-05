@@ -106,9 +106,11 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 
 Matrix4x4 FollowCamera::GetRotateMatrix()
 {
+	// 対象がいる場合対象の回転行列を適応
 	if (target_) {
 		return Matrix4x4::Multiply(Matrix4x4::MakeRotateXYZMatrix(transform_.rotate), target_->rotateMatrix_);
 	}
+	// 無ければデフォルト
 	return Matrix4x4::MakeRotateXYZMatrix(transform_.rotate);
 
 }

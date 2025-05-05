@@ -18,7 +18,13 @@ void PlayerPickupManager::ImGuiDraw()
 	if (ImGui::Button("FindNearPart")) {
 		Car::IParts* nearParts = partsManager_->FindNearParts(player_->GetWorldTransformAdress()->GetWorldPosition());
 		if (nearParts) {
-			nearPartsName_ = nearParts->GetName();
+			const Vector3 direct = nearParts->GetWorldTransformAdress()->GetWorldPosition() - player_->GetWorldTransformAdress()->GetWorldPosition();
+			if (player_->GetFrontChecker()->FrontCheck(direct)) {
+				nearPartsName_ = "Front";
+			}
+			else {
+				nearPartsName_ = "NotFront";
+			}
 		}
 		else {
 			nearPartsName_ = "None";

@@ -43,14 +43,8 @@ void Player::Update()
 	// 基底
 	MeshObject::Update();
 	
-	// アニメーション
-	playerAnimation_->Update(0);
-
-	// コマンド処理
-	playerCommand_->Update();
-
-	// ステート処理
-	stateMachine_->Update();
+	// システム
+	SystemUpdate();
 
 	// 座標更新
 	worldTransform_.UpdateMatrix();
@@ -156,8 +150,29 @@ void Player::SystemInitialize()
 	stateMachine_->Initialize();
 	stateMachine_->SetPlayer(this);
 
+	// ピックアップ
 	pickUpManager_ = std::make_unique<PlayerPickupManager>();
 	pickUpManager_->SetPlayer(this);
+
+	// 
+	frontChecker_.SetPlayer(this);
+
+}
+
+void Player::SystemUpdate()
+{
+	// 前方管理
+	frontChecker_.Update();
+
+	// アニメーション
+	playerAnimation_->Update(0);
+
+	// コマンド処理
+	playerCommand_->Update();
+
+	// ステート処理
+	stateMachine_->Update();
+	
 }
 
 WorldTransform* Player::GetCoreTransform()
