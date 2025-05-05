@@ -106,7 +106,9 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 
 Matrix4x4 FollowCamera::GetRotateMatrix()
 {
-
+	if (target_) {
+		return Matrix4x4::Multiply(Matrix4x4::MakeRotateXYZMatrix(transform_.rotate), target_->rotateMatrix_);
+	}
 	return Matrix4x4::MakeRotateXYZMatrix(transform_.rotate);
 
 }
