@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Engine/Math/Vector/Vector3.h"
+#include "../../Engine/Math/Vector/Vector2.h"
 
 /// <summary>
 /// コースポリゴン
@@ -13,7 +14,7 @@ struct CoursePolygon
 	// 法線
 	Vector3 normal;
 
-	// コースポリゴン種類
-	uint32_t coursePolygonType;
+	// テクスチャ座標
+	Vector2 texcoord;
 
 };

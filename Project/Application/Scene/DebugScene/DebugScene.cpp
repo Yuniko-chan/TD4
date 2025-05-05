@@ -48,6 +48,23 @@ void DebugScene::Initialize()
 	preDrawParameters.environmentTextureHandle = TextureManager::Load("Resources/default/rostock_laage_airport_4k.dds", DirectXCommon::GetInstance());
 	ModelDraw::SetPreDrawParameters(preDrawParameters);
 
+	// 
+	courseCollisionSystem_ = std::make_unique<CourseCollisionSystem>();
+	courseCollisionSystem_->Initialize();
+	courseCollisionSystem_->SetCourse(course_.get());
+
+	// コースデモ用
+	courseDemoModel_.reset(Model::Create("Resources/default/", "ball.obj", dxCommon_));
+	courseDemoObject_ = std::make_unique<CourseDemoObject>();
+	LevelData::MeshData courseDemoData;
+	courseDemoData.directoryPath = "Resources/default/";
+	courseDemoData.flieName = "ball.obj";
+	courseDemoData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+	courseDemoData.className = "CourseDemo";
+	courseDemoData.name = "";
+	courseDemoData.parentName = "";
+	courseDemoObject_->Initialize(&courseDemoData);
+
 	BaseScene::InitilaizeCheck();
 
 }
@@ -56,6 +73,9 @@ void DebugScene::Update()
 {
 
 	clothDemo_->Update();
+
+	courseCollisionSystem_->ObjectRegistration(courseDemoObject_.get());
+	courseCollisionSystem_->Execute();
 
 	DebugCameraUpdate();
 
@@ -71,7 +91,8 @@ void DebugScene::Draw()
 	// スカイドーム
 	skydome_->Draw(camera_);
 
-	course_->Draw(camera_);
+	// コースデモ
+	courseDemoObject_->Draw(camera_);
 
 	clothDemo_->CollisionObjectDraw(&camera_);
 
@@ -96,6 +117,8 @@ void DebugScene::ImguiDraw()
 	debugCamera_->ImGuiDraw();
 
 	course_->ImGuiDraw();
+
+	courseCollisionSystem_->ImGuiDraw();
 
 }
 

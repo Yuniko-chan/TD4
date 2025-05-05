@@ -205,9 +205,6 @@
     <Filter Include="Engine\Base\Texture">
       <UniqueIdentifier>{fa033a1d-e825-48ef-87a5-4ad59b6413b9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Base\WindowSprite">
-      <UniqueIdentifier>{7751a803-3db5-4271-b51f-b96115ac5bf4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Particle\GPUParticle">
       <UniqueIdentifier>{2cd1e320-67e1-4cd9-9ff2-442a73adeb3b}</UniqueIdentifier>
     </Filter>
@@ -384,6 +381,15 @@
     </Filter>
     <Filter Include="Application\System\Scene">
       <UniqueIdentifier>{dafad515-fad3-46a5-9c01-09a32950a793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders\Cource">
+      <UniqueIdentifier>{a3472655-df3a-4018-9320-10ddfdb5a3a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Course\Demo">
+      <UniqueIdentifier>{23264b2c-9f8f-4e34-9279-ac0b7a50bffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Base\Texture\WindowSprite">
+      <UniqueIdentifier>{7751a803-3db5-4271-b51f-b96115ac5bf4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -662,7 +668,7 @@
       <Filter>Engine\3D\Transform</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\WindowSprite\WindowSprite.cpp">
-      <Filter>Engine\Base\WindowSprite</Filter>
+      <Filter>Engine\Base\Texture\WindowSprite</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Particle\BillBoardMatrix.cpp">
       <Filter>Engine\Particle</Filter>
@@ -853,13 +859,22 @@
     <ClCompile Include="Engine\Physics\ClothGPU\ClothGPUCollision.cpp">
       <Filter>Engine\Physics\ClothGPU\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Course\CourseCollisionSystem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Physics\ClothGPU\ClothGPUCollisionManager.cpp">
       <Filter>Engine\Physics\ClothGPU\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Course\CourseCollisionSystem.cpp">
+      <Filter>Application\Course</Filter>
+    </ClCompile>
     <ClCompile Include="Application\Course\Course.cpp">
+      <Filter>Application\Course</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Course\CourseCollisionPipeline.cpp">
+      <Filter>Application\Course</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Course\Demo\CourseDemoObject.cpp">
+      <Filter>Application\Course\Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Course\CourseTexture.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Application\Course\CourseLoader.cpp">
@@ -1240,7 +1255,7 @@
       <Filter>Engine\Animation</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\WindowSprite\WindowSprite.h">
-      <Filter>Engine\Base\WindowSprite</Filter>
+      <Filter>Engine\Base\Texture\WindowSprite</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ContactRecord\ContactRecord.h">
       <Filter>Engine\Contactrecord</Filter>
@@ -1479,14 +1494,8 @@
     <ClInclude Include="Engine\Physics\ClothGPU\CollisionTypeIndex.h">
       <Filter>Engine\Physics\ClothGPU\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Course\CourseCollisionSystem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Physics\ClothGPU\ClothGPUCollisionManager.h">
       <Filter>Engine\Physics\ClothGPU\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Course\Course.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Course\CoursePolygon.h">
       <Filter>Application\Course</Filter>
@@ -1496,6 +1505,21 @@
     </ClInclude>
     <ClInclude Include="Engine\base\DescriptorHandles.h">
       <Filter>Engine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Course\CourseCollisionSystem.h">
+      <Filter>Application\Course</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Course\Course.h">
+      <Filter>Application\Course</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Course\CourseCollisionPipeline.h">
+      <Filter>Application\Course</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Course\Demo\CourseDemoObject.h">
+      <Filter>Application\Course\Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Course\CourseTexture.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Course\CourseLoader.h">
       <Filter>Application\Course</Filter>
@@ -1812,6 +1836,9 @@
     </FxCompile>
     <FxCompile Include="Resources\Shaders\GPUParticle\MissParticle\MissUpdate.CS.hlsl">
       <Filter>shaders\GPUParticle\Miss</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Cource\CourceExtrusion.CS.hlsl">
+      <Filter>shaders\Cource</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

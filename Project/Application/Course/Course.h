@@ -33,10 +33,19 @@ public: // メンバ関数
 	/// <returns></returns>
 	std::vector<CoursePolygon>* GetCoursePolygonsAdress() { return &coursePolygons_; }
 
+	/// <summary>
+	/// コーステクスチャハンドル取得
+	/// </summary>
+	/// <returns></returns>
+	uint32_t GetCourseTextureHandle() const { return courseTextureHandle_; }
+
 private: // メンバ変数
 
 	// 三角ポリゴン
 	std::vector<CoursePolygon> coursePolygons_;
+
+	// コーステクスチャ
+	uint32_t courseTextureHandle_;
 
 };
 

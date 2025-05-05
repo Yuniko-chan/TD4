@@ -51,7 +51,8 @@ Model* CourseLoader::LoadCourseFile(const std::string& directoryPath, const std:
 			courseAttribute[i % 3] = data->vertices[i].courseAttribute_;
 			if (i%3 == 2) {
 				cData.normal = Vector3::Normalize(cData.normal);
-				cData.coursePolygonType = std::min(std::min(courseAttribute[0], courseAttribute[1]), courseAttribute[2]);
+				//cData.coursePolygonType = std::min(std::min(courseAttribute[0], courseAttribute[1]), courseAttribute[2]);
+				cData.texcoord = data->vertices[i].uv_;
 				course.push_back(cData);
 				cData.normal = {0,0,0};
 			}

@@ -27,5 +27,13 @@ public: // メンバ関数
 	/// <returns></returns>
 	static ID3D12Resource* CreateBufferResourceUAV(ID3D12Device* device, const size_t& sizeInBytes);
 
+	/// <summary>
+	/// Resource作成関数化 MapできるUAV版
+	/// </summary>
+	/// <param name="device">デバイス</param>
+	/// <param name="sizeInBytes">サイズ</param>
+	/// <returns></returns>
+	static ID3D12Resource* CreateBufferResourceMapUAV(ID3D12Device* device, const size_t& sizeInBytes);
+
 };
 

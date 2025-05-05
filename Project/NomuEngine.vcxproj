@@ -165,7 +165,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\ClothDemo\CollisionObject\ClothDemoSphere.cpp" />
     <ClCompile Include="Application\Collision\GameSceneCollisionManager.cpp" />
     <ClCompile Include="Application\Course\Course.cpp" />
+    <ClCompile Include="Application\Course\CourseCollisionPipeline.cpp" />
     <ClCompile Include="Application\Course\CourseCollisionSystem.cpp" />
+    <ClCompile Include="Application\Course\CourseTexture.cpp" />
+    <ClCompile Include="Application\Course\Demo\CourseDemoObject.cpp" />
     <ClCompile Include="Application\Course\CourseLoader.cpp" />
     <ClCompile Include="Application\Effect\BillboardEffect.cpp" />
     <ClCompile Include="Application\Effect\EffectManager.cpp" />
@@ -336,9 +339,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Collider2D\ColliderParentObject2D.h" />
     <ClInclude Include="Application\Collision\GameSceneCollisionManager.h" />
     <ClInclude Include="Application\Course\Course.h" />
+    <ClInclude Include="Application\Course\CourseCollisionPipeline.h" />
     <ClInclude Include="Application\Course\CourseCollisionSystem.h" />
     <ClInclude Include="Application\Course\CoursePolygon.h" />
     <ClInclude Include="Application\Course\CoursePolygonType.h" />
+    <ClInclude Include="Application\Course\CourseTexture.h" />
+    <ClInclude Include="Application\Course\Demo\CourseDemoObject.h" />
     <ClInclude Include="Application\Effect\BillboardEffect.h" />
     <ClInclude Include="Application\Camera\FollowCamera.h" />
     <ClInclude Include="Application\Collider\ColliderParentObject.h" />
@@ -757,6 +763,17 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\shaders\Cloth\Cloth.VS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Cource\CourceExtrusion.CS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
