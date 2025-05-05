@@ -91,6 +91,9 @@ void DebugScene::Draw()
 	// スカイドーム
 	skydome_->Draw(camera_);
 
+	//コース表示
+	course_->Draw(camera_);
+
 	// コースデモ
 	courseDemoObject_->Draw(camera_);
 
@@ -103,7 +106,7 @@ void DebugScene::Draw()
 
 	//drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
 
-	clothDemo_->Draw(&camera_);
+	//clothDemo_->Draw(&camera_);
 
 #pragma endregion
 
