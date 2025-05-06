@@ -12,6 +12,7 @@ struct PlayerKey
 {
 	T jumpAction;	// ジャンプキー
 	T rideAction;	// 乗るキー
+	T interactAction;	// 拾う・置くキー
 
 	// 方向のキー
 	T front;	// 前

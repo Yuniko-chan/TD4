@@ -62,3 +62,8 @@ bool PlayerCommand::ActionCommand()
 {
 	return keyConfig_->GetConfig()->rideAction;
 }
+
+bool PlayerCommand::InteractCommand()
+{
+	return keyConfig_->GetConfig()->interactAction;
+}

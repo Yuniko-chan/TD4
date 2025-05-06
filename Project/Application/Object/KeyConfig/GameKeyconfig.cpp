@@ -22,10 +22,12 @@ void GameKeyconfig::Initialize()
 	// アクション
 	playerKeyConfig_.binds.jumpAction = DIK_SPACE;
 	playerKeyConfig_.binds.rideAction = DIK_T;
+	playerKeyConfig_.binds.interactAction = DIK_F;
 
 	//---パッド向けキーバインド---//
 	playerKeyConfig_.padBinds.jumpAction = XINPUT_GAMEPAD_A;
 	playerKeyConfig_.padBinds.rideAction = XINPUT_GAMEPAD_B;
+	playerKeyConfig_.padBinds.interactAction = XINPUT_GAMEPAD_RIGHT_SHOULDER;
 
 	// 入力
 	input_ = Input::GetInstance();
@@ -44,6 +46,7 @@ void GameKeyconfig::Update()
 
 		playerKeyConfig_.configs.jumpAction = input_->TriggerJoystick((uint8_t)playerKeyConfig_.padBinds.jumpAction);
 		playerKeyConfig_.configs.rideAction = input_->TriggerJoystick((uint8_t)playerKeyConfig_.padBinds.rideAction);
+		playerKeyConfig_.configs.interactAction = input_->TriggerJoystick((uint8_t)playerKeyConfig_.padBinds.interactAction);
 
 	}
 	// KEYBOARDの入力
@@ -80,5 +83,6 @@ void GameKeyconfig::Update()
 		// TRIGGER処理
 		playerKeyConfig_.configs.rideAction = input_->TriggerKey((uint8_t)playerKeyConfig_.binds.rideAction);
 		playerKeyConfig_.configs.jumpAction = input_->TriggerKey((uint8_t)playerKeyConfig_.binds.jumpAction);
+		playerKeyConfig_.configs.interactAction = input_->TriggerKey((uint8_t)playerKeyConfig_.binds.interactAction);
 	}
 }

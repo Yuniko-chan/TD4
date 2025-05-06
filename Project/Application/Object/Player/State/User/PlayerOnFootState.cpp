@@ -11,6 +11,11 @@ void PlayerOnFootState::Initialize()
 
 void PlayerOnFootState::Update()
 {
+	// 拾う・落とす処理
+	if (player_->GetCommand()->InteractCommand()) {
+		player_->GetPickUpManager()->InteractParts();
+	}
+
 	// 切り替え
 	if (player_->GetCommand()->ActionCommand()) {
 		player_->GetStateMachine()->ChangeRequest(IPlayerState::kRideAction);

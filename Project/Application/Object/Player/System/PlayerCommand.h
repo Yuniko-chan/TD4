@@ -27,7 +27,13 @@ public: // ゲッター
 	/// アクションコマンド
 	/// </summary>
 	/// <returns></returns>
-	bool ActionCommand();	
+	bool ActionCommand();
+	/// <summary>
+	/// インタラクト
+	/// </summary>
+	/// <returns></returns>
+	bool InteractCommand();
+
 	/// <summary>
 	/// 操作コマンド
 	/// </summary>

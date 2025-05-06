@@ -64,3 +64,27 @@ void PlayerPickupManager::OnCollision(ColliderParentObject colliderPartner, cons
 {
 	colliderPartner, collisionData;
 }
+
+void PlayerPickupManager::InteractParts()
+{
+	if (holdParts_) {
+		// パーツの位置再設定
+		holdParts_->GetWorldTransformAdress()->transform_ = TransformHelper::DetachWithWorldTransform(holdParts_->GetWorldTransformAdress());
+		holdParts_->GetWorldTransformAdress()->SetParent(nullptr);
+		// パーツの管理を削除
+		holdParts_ = nullptr;
+	}
+	else {
+		Car::IParts* nearParts = partsManager_->FindNearParts(player_->GetWorldTransformAdress()->GetWorldPosition());
+		if (nearParts) {
+			const Vector3 direct = nearParts->GetWorldTransformAdress()->GetWorldPosition() - player_->GetWorldTransformAdress()->GetWorldPosition();
+			if (player_->GetFrontChecker()->FrontCheck(direct)) {
+				holdParts_ = nearParts;
+				const Vector3 localOffset = Vector3(0.0f, 0.0f, 2.0f);
+				holdParts_->GetWorldTransformAdress()->SetParent(player_->GetWorldTransformAdress());
+				holdParts_->GetWorldTransformAdress()->transform_.translate = localOffset;
+				holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
+			}
+		}
+	}
+}

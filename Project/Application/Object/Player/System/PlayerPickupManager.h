@@ -54,6 +54,11 @@ public:
 	/// <param name="manager"></param>
 	void SetPartsManager(VehiclePartsManager* manager) { partsManager_ = manager; }
 
+	/// <summary>
+	/// パーツに触れる処理
+	/// </summary>
+	void InteractParts();
+
 private:
 	// パーツのマネージャ
 	VehiclePartsManager* partsManager_ = nullptr;
