@@ -25,3 +25,13 @@ bool PlayerFrontChecker::FrontCheck(const Vector3& direct)
 	// リザルト
 	return (dot >= threshold) ? true : false;
 }
+
+bool PlayerFrontChecker::IsInRange(const Vector3& target)
+{
+	Vector3 xzTarget = Vector3(target.x, 0.0f, target.z);
+	Vector3 xzPlayer = Vector3(player_->GetWorldTransformAdress()->GetWorldPosition().x, 0.0f, player_->GetWorldTransformAdress()->GetWorldPosition().z);
+	Vector3 distance = xzTarget - xzPlayer;
+	float distanceValue = float(std::sqrtf(std::powf(distance.x, 2) + std::powf(distance.y, 2) + std::powf(distance.z, 2)));
+	float maxRange = PlayerDebugData::sFrontCheckData.catchRange;
+	return (distanceValue <= maxRange) ? true : false;
+}

@@ -77,9 +77,17 @@ void PlayerPickupManager::InteractParts()
 	else {
 		Car::IParts* nearParts = partsManager_->FindNearParts(player_->GetWorldTransformAdress()->GetWorldPosition());
 		if (nearParts) {
+			// 方向
 			const Vector3 direct = nearParts->GetWorldTransformAdress()->GetWorldPosition() - player_->GetWorldTransformAdress()->GetWorldPosition();
+			// 前方の閾値内か
 			if (player_->GetFrontChecker()->FrontCheck(direct)) {
+				// 最大距離より外ならつかまない
+				if (!player_->GetFrontChecker()->IsInRange(nearParts->GetWorldTransformAdress()->GetWorldPosition())) {
+					return;
+				}
+				// つかみパーツとしてポインタ取得
 				holdParts_ = nearParts;
+				// オフセットの位置に設定・親子設定
 				const Vector3 localOffset = Vector3(0.0f, 0.0f, 2.0f);
 				holdParts_->GetWorldTransformAdress()->SetParent(player_->GetWorldTransformAdress());
 				holdParts_->GetWorldTransformAdress()->transform_.translate = localOffset;
