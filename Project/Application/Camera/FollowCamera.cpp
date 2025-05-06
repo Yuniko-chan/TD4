@@ -108,6 +108,10 @@ Matrix4x4 FollowCamera::GetRotateMatrix()
 {
 	// 対象がいる場合対象の回転行列を適応
 	if (target_) {
+		// 対象に更に親がいる場合
+		if (target_->parent_) {
+			return Matrix4x4::Multiply(Matrix4x4::MakeRotateXYZMatrix(transform_.rotate), target_->parent_->rotateMatrix_);
+		}
 		return Matrix4x4::Multiply(Matrix4x4::MakeRotateXYZMatrix(transform_.rotate), target_->rotateMatrix_);
 	}
 	// 無ければデフォルト

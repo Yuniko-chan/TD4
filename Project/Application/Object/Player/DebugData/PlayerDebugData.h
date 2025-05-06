@@ -17,10 +17,20 @@ public:	// 構造体
 	};
 	struct MoveParamData
 	{
+		// 車両の速度
 		float rideSpeed = 2.0f;
+		// 移動速度
 		float moveSpeed = 1.0f;
+		// 回転係数
+		float rotateRatio = 1.0f / 45.0f;
 
 		void ImGuiDraw(const std::string& name, float dragValue);
+	};
+
+	struct FrontCheckerData
+	{
+		float frontThreshold = 0.8f;
+		float catchRange = 50.0f;
 	};
 
 public:	// 静的変数
@@ -31,7 +41,7 @@ public:	// 静的変数
 	static MoveParamData sMoveData;
 	
 	static float sFrontThreshold;
-
+	static FrontCheckerData sFrontCheckData;
 public:
 	/// <summary>
 	/// ImGui

@@ -38,6 +38,14 @@ public: // ゲッター
 	/// <returns></returns>
 	Vector3 GetDirect() { return moveDirect_ * kSpeedValue; }
 
+	/// <summary>
+	/// 回転処理
+	/// </summary>
+	void RotateCommand();
+	/// <summary>
+	/// 車両に乗っている際の回転
+	/// </summary>
+	void InVehicleRotateCommand();
 private:
 	// 方向
 	Vector3 moveDirect_ = {};

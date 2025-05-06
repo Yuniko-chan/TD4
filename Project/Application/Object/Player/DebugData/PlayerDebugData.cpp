@@ -5,6 +5,7 @@ PlayerDebugData::RideActionData PlayerDebugData::sRideActionData;
 PlayerDebugData::RideActionData PlayerDebugData::sDropoffActionData;
 PlayerDebugData::MoveParamData PlayerDebugData::sMoveData;
 float PlayerDebugData::sFrontThreshold = 0.8f;
+PlayerDebugData::FrontCheckerData PlayerDebugData::sFrontCheckData;
 
 void PlayerDebugData::ImGuiDraw()
 {

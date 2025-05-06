@@ -22,6 +22,7 @@ public:
 private:
 	// 開始点
 	Vector3 startPoint_ = {};
+	Vector3 startRotate_ = {};
 	// アニメーション用タイマー
 	FrameTimer animTimer_;
 

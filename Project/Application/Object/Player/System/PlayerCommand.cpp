@@ -25,19 +25,37 @@ bool PlayerCommand::MoveCommand()
 	// 初期化
 	moveDirect_ = {};
 	Vector3 leftStick = { keyConfig_->GetLeftStick()->x ,0.0f,keyConfig_->GetLeftStick()->y };
-	//moveDirect_.x = keyConfig_->GetLeftStick()->x;
-	//moveDirect_.z = keyConfig_->GetLeftStick()->y;
-
-	// 方向の正規化
-	moveDirect_ = Vector3::Normalize(Matrix4x4::TransformNormal(leftStick, playerTransform_->rotateMatrix_));
-
-	Vector2 rotate = Vector2::Normalize(Vector2(keyConfig_->GetRightStick()->x, keyConfig_->GetRightStick()->y));
-
-	const float rotateRatio = 1.0f / 45.0f;
-	playerTransform_->transform_.rotate.y += (rotate.x * rotateRatio);
+	moveDirect_.x = keyConfig_->GetLeftStick()->x;
+	moveDirect_.z = keyConfig_->GetLeftStick()->y;
 
 	// 方向入力があればtrue
 	return moveDirect_.x != 0.0f || moveDirect_.y != 0.0f || moveDirect_.z != 0.0f;
+}
+
+void PlayerCommand::RotateCommand()
+{
+	// 回転の適応
+	Vector3 transformDirect = Vector3::Normalize(Matrix4x4::TransformNormal(moveDirect_, playerTransform_->rotateMatrix_));
+	// 回転角
+	Vector2 rotate = Vector2::Normalize(Vector2(keyConfig_->GetRightStick()->x, keyConfig_->GetRightStick()->y));
+	// ワールドトランスフォームに適応
+	const float rotateRatio = 1.0f / 45.0f;
+	playerTransform_->transform_.rotate.y += (rotate.x * rotateRatio);
+	// 移動方向ベクトルの更新
+	moveDirect_ = Vector3::Normalize(transformDirect);
+}
+
+void PlayerCommand::InVehicleRotateCommand()
+{
+	// 回転の適応
+	Vector3 transformDirect = Vector3::Normalize(Matrix4x4::TransformNormal(moveDirect_, playerTransform_->parent_->rotateMatrix_));
+	// 回転角
+	Vector2 rotate = Vector2::Normalize(Vector2(keyConfig_->GetRightStick()->x, keyConfig_->GetRightStick()->y));
+	// ワールドトランスフォームに適応
+	const float rotateRatio = 1.0f / 45.0f;
+	playerTransform_->parent_->transform_.rotate.y += (rotate.x * rotateRatio);
+	// 移動方向ベクトルの更新
+	moveDirect_ = Vector3::Normalize(transformDirect);
 }
 
 bool PlayerCommand::ActionCommand()

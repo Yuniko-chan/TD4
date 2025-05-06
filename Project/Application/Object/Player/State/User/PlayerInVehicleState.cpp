@@ -14,6 +14,7 @@ void PlayerInVehicleState::Update()
 		player_->GetStateMachine()->ChangeRequest(IPlayerState::kOnFoot);
 	}
 
+	player_->GetCommand()->InVehicleRotateCommand();
 	// 移動処理
 	Vector3 velocityDirection = player_->GetCommand()->GetDirect() * PlayerDebugData::sMoveData.rideSpeed;
 	player_->GetWorldTransformAdress()->parent_->transform_.translate += velocityDirection * kDeltaTime_;
