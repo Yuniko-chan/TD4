@@ -4,15 +4,21 @@
 PlayerDebugData::RideActionData PlayerDebugData::sRideActionData;
 PlayerDebugData::RideActionData PlayerDebugData::sDropoffActionData;
 PlayerDebugData::MoveParamData PlayerDebugData::sMoveData;
+float PlayerDebugData::sFrontThreshold = 0.8f;
 
 void PlayerDebugData::ImGuiDraw()
 {
 	static float sDragValue = 0.1f;
 	ImGui::DragFloat("DragValue", &sDragValue, 0.1f);
-
+	// 前方閾値
+	ImGui::DragFloat("FrontThreshold", &sFrontThreshold, sDragValue);
+	// 乗るアクション
 	sRideActionData.ImGuiDraw("Ride", sDragValue);
+	// 降りるアクション
 	sDropoffActionData.ImGuiDraw("DropOff", sDragValue);
+	// 移動情報
 	sMoveData.ImGuiDraw("Move", sDragValue);
+
 }
 
 void PlayerDebugData::RideActionData::ImGuiDraw(const std::string& name, float dragValue)

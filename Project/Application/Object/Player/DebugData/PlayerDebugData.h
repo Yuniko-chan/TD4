@@ -29,6 +29,8 @@ public:	// 静的変数
 	static RideActionData sDropoffActionData;
 	// 移動の速度
 	static MoveParamData sMoveData;
+	
+	static float sFrontThreshold;
 
 public:
 	/// <summary>
