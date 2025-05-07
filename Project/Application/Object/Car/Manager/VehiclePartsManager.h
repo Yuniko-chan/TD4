@@ -52,6 +52,12 @@ public:
 	/// <param name="position"></param>
 	/// <returns></returns>
 	Car::IParts* FindNearNonCoreParts(const Vector3& position);
+	/// <summary>
+	/// 親がないコア以外のパーツ検索
+	/// </summary>
+	/// <param name="position"></param>
+	/// <returns></returns>
+	Car::IParts* FindRootNonCoreParts(const Vector3& position);
 private:
 	std::unordered_map<std::string, Car::IParts*> partsLists_;
 };
