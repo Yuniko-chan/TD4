@@ -9,35 +9,6 @@ void Course::Initialize(LevelData::MeshData* data)
 	// メッシュオブジェクト
 	MeshObject::Initialize(data);
 
-	// 三角ポリゴン（頂点三つ、法線、種類）
-	/*
-	// メッシュデータ取得
-	Mesh* meshData = model_->GetMesh();
-	// 頂点の数取得
-	uint32_t vertexNum = meshData->GetSkinningInformationMap()->num;
-	// 頂点のデータ
-	VertexData* baseVertexData = meshData->GetVertMap();
-	VertexData vertexDatas[3] = {};
-	
-	// 頂点の数 / 3分回す
-	for (uint32_t i = 0; i < vertexNum / 3;++i)
-	{
-		vertexDatas[0] = *(baseVertexData + (i * 3));
-		vertexDatas[1] = *(baseVertexData + (i * 3 + 1));
-		vertexDatas[2] = *(baseVertexData + (i * 3 + 2));
-
-		 // ポリゴン
-		CoursePolygon polygon = {};
-		polygon.positions[0] = { vertexDatas[0].position.x, vertexDatas[0].position.y, vertexDatas[0].position.z };
-		polygon.positions[1] = { vertexDatas[1].position.x, vertexDatas[1].position.y, vertexDatas[1].position.z };
-		polygon.positions[2] = { vertexDatas[2].position.x, vertexDatas[2].position.y, vertexDatas[2].position.z };
-		polygon.normal = Vector3::Normalize(vertexDatas[0].normal + vertexDatas[1].normal + vertexDatas[2].normal);
-		polygon.texcoord = (vertexDatas[0].texcoord + vertexDatas[1].texcoord + vertexDatas[2].texcoord) * (1.0f / 3.0f);
-		// 登録
-		coursePolygons_.push_back(polygon);
-
-	}*/
-
 	// コーステクスチャ
 	const std::string kCourseTextureFileName = "Resources/default/white2x2.png";
 	courseTextureHandle_ = TextureManager::Load(kCourseTextureFileName, DirectXCommon::GetInstance());
