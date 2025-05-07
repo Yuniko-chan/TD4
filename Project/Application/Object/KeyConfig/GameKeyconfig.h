@@ -10,6 +10,7 @@ class Input;
 template <typename T>
 struct PlayerKey
 {
+	// アクションキー
 	T jumpAction;	// ジャンプキー
 	T rideAction;	// 乗るキー
 	T interactAction;	// 拾う・置くキー
@@ -20,8 +21,9 @@ struct PlayerKey
 	T left;	// 左
 	T right;	// 右
 
-	T rotateLeft;
-	T rotateRight;
+	// カメラ回転キー
+	T rotateLeft;	// 左
+	T rotateRight;	// 右
 };
 
 /// <summary>
