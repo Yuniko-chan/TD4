@@ -1,4 +1,5 @@
 #include "CourseDemoObject.h"
+#include "../../../Engine/Input/Input.h"
 
 void CourseDemoObject::Initialize(LevelData::MeshData* data)
 {
@@ -23,7 +24,20 @@ void CourseDemoObject::Initialize(LevelData::MeshData* data)
 void CourseDemoObject::Update()
 {
 
+	if (Input::GetInstance()->PushKey(DIK_0)) {
+		worldTransform_.transform_.translate.z += 0.01f;
+	}
+
 	MeshObject::Update();
+
+	// コライダー
+	OBB obb = std::get<OBB>(*collider_);
+	obb.center_ = worldTransform_.GetWorldPosition();
+	obb.SetOtientatuons(worldTransform_.rotateMatrix_);
+	// サイズ更新あるならここ
+	ColliderShape* colliderShape = new ColliderShape();
+	*colliderShape = obb;
+	collider_.reset(colliderShape);
 
 }
 
