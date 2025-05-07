@@ -77,7 +77,7 @@ Car::IParts* VehiclePartsManager::FindNearCoreParts(const Vector3& position)
     Car::IParts* targetParts = nullptr;
     for (std::unordered_map<std::string, Car::IParts*>::iterator it = partsLists_.begin(); it != partsLists_.end(); ++it) {
         // コアじゃなかったらスキップ
-        if (!static_cast<VehicleCore*>((*it).second)) {
+        if ((*it).second->GetClassNameString() != "VehicleCore") {
             continue;
         }
         // 距離ベクトル
@@ -100,7 +100,7 @@ Car::IParts* VehiclePartsManager::FindNearNonCoreParts(const Vector3& position)
     Car::IParts* targetParts = nullptr;
     for (std::unordered_map<std::string, Car::IParts*>::iterator it = partsLists_.begin(); it != partsLists_.end(); ++it) {
         // コアだったらスキップ
-        if (static_cast<VehicleCore*>((*it).second)) {
+        if ((*it).second->GetClassNameString() == "VehicleCore") {
             continue;
         }
         // 距離ベクトル
@@ -123,7 +123,7 @@ Car::IParts* VehiclePartsManager::FindRootNonCoreParts(const Vector3& position)
     Car::IParts* targetParts = nullptr;
     for (std::unordered_map<std::string, Car::IParts*>::iterator it = partsLists_.begin(); it != partsLists_.end(); ++it) {
         // コアだったらスキップ
-        if (static_cast<VehicleCore*>((*it).second)) {
+        if ((*it).second->GetClassNameString() == "VehicleCore") {
             continue;
         }
         // 親がいればスキップ

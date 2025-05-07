@@ -65,5 +65,9 @@ private: // メンバ変数
 	Vector3 interTarget_;
 
 	float offsetMoveRate_ = 0.1f;
+
+	// 車両に乗っている状態の
+	Vector3 inVehicleRotate_ = {};
+	Vector3 inVehicleOffsetPosition_ = {};
 };
 

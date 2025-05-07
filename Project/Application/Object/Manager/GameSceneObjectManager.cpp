@@ -190,19 +190,19 @@ void GameSceneObjectManager::OptionProcess()
 	partsManager_->AddParts(core->GetName(), core);
 
 	// エンジン
-	engineParts->SetParent(core);
-	engineParts->TransformParent();
+	//engineParts->SetParent(core);
+	//engineParts->TransformParent();
 	partsManager_->AddParts(engineParts->GetName(), engineParts);
 
 	// アーマー
-	armorParts->SetParent(core);
-	armorParts->TransformParent();
+	//armorParts->SetParent(core);
+	//armorParts->TransformParent();
 	partsManager_->AddParts(armorParts->GetName(), armorParts);
 
 	// タイヤ
 	for (int i = 0; i < 4; i++) {
-		tireParts[i]->SetParent(core);
-		tireParts[i]->TransformParent();
+		//tireParts[i]->SetParent(core);
+		//tireParts[i]->TransformParent();
 		partsManager_->AddParts(tireParts[i]->GetName(), tireParts[i]);
 	}
 

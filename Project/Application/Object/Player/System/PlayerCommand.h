@@ -22,7 +22,7 @@ public:
 	/// </summary>
 	void Update();
 
-public: // ゲッター
+public: // 
 	/// <summary>
 	/// アクションコマンド
 	/// </summary>

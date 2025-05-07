@@ -1,5 +1,6 @@
 #include "PartsInterface.h"
 #include "../VehicleCore.h"
+#include "../Manager/VehiclePartsManager.h"
 #include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Engine/Physics/Gravity/Gravity.h"
 
@@ -29,15 +30,8 @@ void Car::IParts::ReleaseParent()
 	Vector3 worldPosition = worldTransform_.GetWorldPosition();
 	worldTransform_.SetParent(nullptr);
 	worldTransform_.transform_.translate = worldPosition;
-}
-
-void Car::IParts::ParentSetting(bool isAccept, const Vector3& offset)
-{
-	// 親子の設定
-	if (isAccept && parentCore_) {
-		worldTransform_.SetParent(parentCore_->GetWorldTransformAdress());
-		worldTransform_.transform_.translate = offset;
-	}
+	// コアの解除
+	parentCore_ = nullptr;
 }
 
 void Car::IParts::TransformParent()
@@ -46,6 +40,22 @@ void Car::IParts::TransformParent()
 	if (parentCore_) {
 		worldTransform_.SetParent(parentCore_->GetWorldTransformAdress());
 	}
+}
+
+void Car::IParts::SettingParent(VehiclePartsManager* partsManager)
+{
+	// コアがある場合
+	if (parentCore_) {
+		worldTransform_.SetParent(parentCore_->GetWorldTransformAdress());
+	}
+	else {
+		// 一番近いコアの取得
+		Car::IParts* parts = partsManager->FindNearCoreParts(worldTransform_.GetWorldPosition());
+		// ポインタの設定
+		parentCore_ = static_cast<VehicleCore*>(parts);
+		worldTransform_.SetParent(parentCore_->GetWorldTransformAdress());
+	}
+
 }
 
 void Car::IParts::ImGuiTransform(const float& value)
@@ -96,13 +106,12 @@ void Car::IParts::ColliderUpdate()
 
 void Car::IParts::ChildUpdate()
 {
-	// 親のポインタがなければ
-	if (!parentCore_) {
-		return;
-	}
-	// 親子関係であれば早期
-	if (IsParent()) {
-		return;
+	// 親ポインタがある状態
+	if (parentCore_) {
+		// 親子関係であれば早期
+		if (IsParent()) {
+			return;
+		}
 	}
 	// 仮の地面処理
 	if (worldTransform_.GetWorldPosition().y <= 0.0f) {

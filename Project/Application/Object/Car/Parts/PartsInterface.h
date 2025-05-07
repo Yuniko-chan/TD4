@@ -2,6 +2,7 @@
 #include "../../../Engine/Object/MeshObject.h"
 
 class VehicleCore;
+class VehiclePartsManager;
 
 namespace Car
 {
@@ -25,10 +26,10 @@ namespace Car
 		void SetParent(VehicleCore* parent) { parentCore_ = parent; }
 		// 親があるか
 		bool IsParent() { return worldTransform_.parent_ ? true : false; }
-		// 親子設定
-		void ParentSetting(bool isAccept, const Vector3& offset);
 		// ワールドトランスフォームの親設定
 		void TransformParent();
+		// 親の設定
+		void SettingParent(VehiclePartsManager* partsManager);
 		// ワールドトランスフォームの親解除
 		void ReleaseParent();
 
@@ -58,34 +59,10 @@ namespace Car
 		void ChildUpdate();
 
 	protected:
-		// 重さparent
+		// 重さ
 		float weight_ = 1.0f;
 		// 親のコア
 		VehicleCore* parentCore_ = nullptr;
 
 	};
-
-	///// <summary>
-	///// エンジンの基底
-	///// </summary>
-	//class IEngine : public IParts {
-
-
-
-	//};
-
-	///// <summary>
-	///// タイヤの基底
-	///// </summary>
-	//class ITire : public IParts {
-
-	//};
-
-	///// <summary>
-	///// フレームの基底
-	///// </summary>
-	//class IFrame : public IParts {
-
-	//};
-
 }

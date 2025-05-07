@@ -63,7 +63,6 @@ private:
     /// コライダー更新
     /// </summary>
     void ColliderUpdate();
-
     /// <summary>
     /// システムクラス関係の初期化
     /// </summary>
@@ -72,7 +71,7 @@ private:
     /// システムクラスの更新
     /// </summary>
     void SystemUpdate();
-public: // ゲッター
+public: // アクセッサ（プレイヤーシステム）
     // コマンドの取得
     PlayerCommand* GetCommand() { return playerCommand_.get(); }
     // ステートマシンの取得
@@ -82,8 +81,11 @@ public: // ゲッター
     // フロントチェックの取得
     PlayerFrontChecker* GetFrontChecker() { return &frontChecker_; }
 
+public: // アクセッサ（プレイヤーシステム以外）
     // コアのワールドトランスフォーム
     WorldTransform* GetCoreTransform();
+    // 
+
 private:
     // システムクラス
     std::unique_ptr<PlayerAnimation> playerAnimation_;

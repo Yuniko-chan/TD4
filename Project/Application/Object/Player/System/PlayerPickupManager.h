@@ -32,23 +32,6 @@ public:
 	void ImGuiDraw();
 
 	/// <summary>
-	/// 更新
-	/// </summary>
-	void Update();
-	/// <summary>
-	/// 拾う処理
-	/// </summary>
-	/// <param name="parts"></param>
-	void PickUp(Car::IParts* parts) { holdParts_ = parts; }
-
-	/// <summary>
-	/// 衝突処理
-	/// </summary>
-	/// <param name="colliderPartner"></param>
-	/// <param name="collisionData"></param>
-	void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
-
-	/// <summary>
 	/// せったー
 	/// </summary>
 	/// <param name="manager"></param>
@@ -58,6 +41,16 @@ public:
 	/// パーツに触れる処理
 	/// </summary>
 	void InteractParts();
+
+private:
+	/// <summary>
+	/// 手放すアクション
+	/// </summary>
+	void ReleaseAction();
+	/// <summary>
+	/// 拾うアクション
+	/// </summary>
+	void CatchAction();
 
 private:
 	// パーツのマネージャ

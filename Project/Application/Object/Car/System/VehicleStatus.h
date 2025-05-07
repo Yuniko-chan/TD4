@@ -5,13 +5,17 @@ class VehicleCore;
 class VehicleStatus
 {
 public:
-
-	void SetCore(VehicleCore* core) { core_ = core; }
+	/// <summary>
+	/// ImGui
+	/// </summary>
 	void ImGuiDraw();
-private:
-	VehicleCore* core_ = nullptr;
+public:	// アクセッサ
+	float GetSpeed() const { return speed_; }
+	float GetWeight() const { return weight_; }
+	float GetArmor() const { return armor_; }
 
-	float weight_ = 0.0f;
-	float speed_ = 0.0f;
-	float armor_ = 0.0f;
+private:
+	float weight_ = 1.0f;
+	float speed_ = 1.0f;
+	float armor_ = 1.0f;
 };

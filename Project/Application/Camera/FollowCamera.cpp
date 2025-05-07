@@ -37,6 +37,9 @@ void FollowCamera::Initialize() {
 	globalVariables->AddItem(groupName, "offsetHeight", offsetHeight_);
 	globalVariables->AddItem(groupName, "offsetMoveRate", offsetMoveRate_);
 
+	globalVariables->AddItem(groupName, "inVehicleOffsetPosition", inVehicleOffsetPosition_);
+	globalVariables->AddItem(groupName, "inVehicleRotate", inVehicleRotate_);
+
 	ApplyGlobalVariables();
 
 }
@@ -92,7 +95,7 @@ void FollowCamera::ImGuiDraw()
 {
 	ImGui::Begin("FollowCamera");
 	ImGui::DragFloat3("Position", &transform_.translate.x);
-	ImGui::DragFloat3("Rotate", &transform_.rotate.x);
+	ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f);
 
 	ImGui::End();
 }
@@ -143,4 +146,7 @@ void FollowCamera::ApplyGlobalVariables()
 	offsetLength_ = globalVariables->GetFloatValue(groupName, "offsetLength");
 	offsetHeight_ = globalVariables->GetFloatValue(groupName, "offsetHeight");
 	offsetMoveRate_ = globalVariables->GetFloatValue(groupName, "offsetMoveRate");
+
+	inVehicleOffsetPosition_ = globalVariables->GetVector3Value(groupName, "inVehicleOffsetPosition");
+	inVehicleRotate_ = globalVariables->GetVector3Value(groupName, "inVehicleRotate");
 }

@@ -56,43 +56,51 @@ void PlayerPickupManager::ImGuiDraw()
 	}
 }
 
-void PlayerPickupManager::Update()
-{
-}
-
-void PlayerPickupManager::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
-{
-	colliderPartner, collisionData;
-}
-
 void PlayerPickupManager::InteractParts()
 {
+	// 放す
 	if (holdParts_) {
-		// パーツの位置再設定
-		holdParts_->GetWorldTransformAdress()->transform_ = TransformHelper::DetachWithWorldTransform(holdParts_->GetWorldTransformAdress());
-		holdParts_->GetWorldTransformAdress()->SetParent(nullptr);
-		// パーツの管理を削除
-		holdParts_ = nullptr;
+		ReleaseAction();
 	}
+	// 掴む
 	else {
-		Car::IParts* nearParts = partsManager_->FindNearParts(player_->GetWorldTransformAdress()->GetWorldPosition());
-		if (nearParts) {
-			// 方向
-			const Vector3 direct = nearParts->GetWorldTransformAdress()->GetWorldPosition() - player_->GetWorldTransformAdress()->GetWorldPosition();
-			// 前方の閾値内か
-			if (player_->GetFrontChecker()->FrontCheck(direct)) {
-				// 最大距離より外ならつかまない
-				if (!player_->GetFrontChecker()->IsInRange(nearParts->GetWorldTransformAdress()->GetWorldPosition())) {
-					return;
-				}
-				// つかみパーツとしてポインタ取得
-				holdParts_ = nearParts;
-				// オフセットの位置に設定・親子設定
-				const Vector3 localOffset = Vector3(0.0f, 0.0f, 2.0f);
-				holdParts_->GetWorldTransformAdress()->SetParent(player_->GetWorldTransformAdress());
-				holdParts_->GetWorldTransformAdress()->transform_.translate = localOffset;
-				holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
+		CatchAction();
+	}
+}
+
+void PlayerPickupManager::ReleaseAction()
+{
+	// パーツの位置再設定
+	holdParts_->GetWorldTransformAdress()->transform_ = TransformHelper::DetachWithWorldTransform(holdParts_->GetWorldTransformAdress());
+	holdParts_->GetWorldTransformAdress()->SetParent(nullptr);
+
+	// 近くのコアにセット
+	holdParts_->SettingParent(partsManager_);
+
+	// パーツの管理を削除
+	holdParts_ = nullptr;
+}
+
+void PlayerPickupManager::CatchAction()
+{
+	// 一番近いパーツ
+	Car::IParts* nearParts = partsManager_->FindRootNonCoreParts(player_->GetWorldTransformAdress()->GetWorldPosition());
+	if (nearParts) {
+		// 方向
+		const Vector3 direct = nearParts->GetWorldTransformAdress()->GetWorldPosition() - player_->GetWorldTransformAdress()->GetWorldPosition();
+		// 前方の閾値内か
+		if (player_->GetFrontChecker()->FrontCheck(direct)) {
+			// 最大距離より外ならつかまない
+			if (!player_->GetFrontChecker()->IsInRange(nearParts->GetWorldTransformAdress()->GetWorldPosition())) {
+				return;
 			}
+			// つかみパーツとしてポインタ取得
+			holdParts_ = nearParts;
+			// オフセットの位置に設定・親子設定
+			const Vector3 localOffset = Vector3(0.0f, 0.0f, 2.0f);
+			holdParts_->GetWorldTransformAdress()->SetParent(player_->GetWorldTransformAdress());
+			holdParts_->GetWorldTransformAdress()->transform_.translate = localOffset;
+			holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
 		}
 	}
 }
