@@ -122,7 +122,7 @@ void Player::SetParent()
 	//Vector3 localPosition = pairCore_->GetWorldTransformAdress()->GetWorldPosition() - worldTransform_.GetWorldPosition();
 	// 親子設定
 	worldTransform_.SetParent(pairCore_->GetWorldTransformAdress());
-	const Vector3 localPosition = Vector3(0.0f, 3.0f, 0.0f);
+	const Vector3 localPosition = PlayerDebugData::sRideActionData.offset;
 	worldTransform_.transform_.translate = localPosition;
 }
 

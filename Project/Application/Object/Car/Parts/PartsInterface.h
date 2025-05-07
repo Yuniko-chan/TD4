@@ -6,12 +6,21 @@ class VehiclePartsManager;
 
 namespace Car
 {
+	//---パーツごとのシリアル---//
+	// エンジン
+	static int32_t sSerialEngine = 0;
+	// アーマー
+	static int32_t sSerialArmor = 0;
+	// タイヤ
+	static int32_t sSerialTire = 0;
+	// コア
+	static int32_t sSerialCore = 0;
+
 	/// <summary>
 	/// 基底パーツ
 	/// </summary>
 	class IParts : public MeshObject {
 	public:
-
         /// <summary>
         /// 初期化
         /// </summary>

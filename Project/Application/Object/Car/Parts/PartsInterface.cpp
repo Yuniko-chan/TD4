@@ -18,6 +18,14 @@ void Car::IParts::Update()
 	MeshObject::Update();
 	// 子専用更新（重力の適応）
 	ChildUpdate();
+	// 一周したときの対策
+	const float kOnelap = 6.24f;
+	if (worldTransform_.transform_.rotate.y >= kOnelap) {
+		worldTransform_.transform_.rotate.y -= kOnelap;
+	}
+	else if (worldTransform_.transform_.rotate.y <= -kOnelap) {
+		worldTransform_.transform_.rotate.y += kOnelap;
+	}
 	// トランスフォームの更新
 	worldTransform_.UpdateMatrix();
 	// コライダーの更新
@@ -54,6 +62,8 @@ void Car::IParts::SettingParent(VehiclePartsManager* partsManager)
 		// ポインタの設定
 		parentCore_ = static_cast<VehicleCore*>(parts);
 		worldTransform_.SetParent(parentCore_->GetWorldTransformAdress());
+		// 子として登録
+		parentCore_->AddChild(this);
 	}
 
 }

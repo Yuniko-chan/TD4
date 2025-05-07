@@ -43,11 +43,6 @@ void VehicleCore::Update()
 	Car::IParts::Update();
 }
 
-void VehicleCore::ImGuiDraw()
-{
-
-}
-
 void VehicleCore::ImGuiDrawParts()
 {
 	ImGui::SeparatorText(className_.c_str());
@@ -55,6 +50,29 @@ void VehicleCore::ImGuiDrawParts()
 	ImGuiTransform(0.1f);
 	if (ImGui::Button("Release")) {
 		pairPlayer_ = nullptr;
+	}
+
+	if (ImGui::TreeNode("Childs")) {
+		static float sAddValue = 2.0f;
+		ImGui::DragFloat("StaticAddValue", &sAddValue, 0.01f);
+		for (std::list<Car::IParts*>::iterator it = partsLists_.begin();
+			it != partsLists_.end(); ++it) {
+			ImGui::SeparatorText((*it)->GetName().c_str());
+			std::string name = (*it)->GetName() + "Translate";
+			ImGui::DragFloat3(name.c_str(), &(*it)->GetWorldTransformAdress()->transform_.translate.x, 0.1f);
+			if (ImGui::Button("AddX")) {
+				(*it)->GetWorldTransformAdress()->transform_.translate.x += sAddValue;
+			}
+			if (ImGui::Button("AddY")) {
+				(*it)->GetWorldTransformAdress()->transform_.translate.y += sAddValue;
+			}
+			if (ImGui::Button("AddZ")) {
+				(*it)->GetWorldTransformAdress()->transform_.translate.z += sAddValue;
+			}
+			ImGui::Text("\n");
+		}
+
+		ImGui::TreePop();
 	}
 
 	if (ImGui::TreeNode("Status"))

@@ -35,27 +35,10 @@ public: // メンバ関数
     /// </summary>
     void Update() override;
 
-    ///// <summary>
-    ///// 描画
-    ///// </summary>
-    ///// <param name="camera">カメラ</param>
-    //void Draw(BaseCamera& camera) override;
-
     /// <summary>
-    /// ImGui描画
-    /// </summary>
-    void ImGuiDraw() override;
-
-    /// <summary>
-    /// 
+    /// ImGuiパーツ用
     /// </summary>
     void ImGuiDrawParts() override;
-
-    ///// <summary>
-    ///// パーティクル描画
-    ///// </summary>
-    ///// <param name="camera">カメラ</param>
-    //void ParticleDraw(BaseCamera& camera) override;
 
     /// <summary>
     /// 衝突処理
@@ -67,6 +50,12 @@ public: // メンバ関数
     void MoveCommand();
 
     void SetPlayer(Player* player) { pairPlayer_ = player; }
+
+    /// <summary>
+    /// 子の追加
+    /// </summary>
+    /// <param name="child"></param>
+    void AddChild(Car::IParts* child) { partsLists_.push_back(child); }
 
 private:
     // パーツを配置できる四か所（メッシュオブジェクトにするかも）

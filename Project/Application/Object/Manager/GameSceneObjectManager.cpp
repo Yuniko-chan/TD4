@@ -3,6 +3,8 @@
 #include "../Factory/CreateObjectNames.h"
 #include "../GameObjectsList.h"
 
+#include "../../../Engine/2D/ImguiManager.h"
+
 void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager* levelDataManager)
 {
 
@@ -83,6 +85,31 @@ void GameSceneObjectManager::ImGuiDraw()
 #ifdef _DEMO
 	
 	partsManager_->ImGuiDraw();
+
+	ImGui::Begin("GameObjectManager");
+
+	if (ImGui::Button("タイヤ追加")) {
+		std::string name = "Tire" + std::to_string(Car::sSerialTire);
+		AddObject("TireParts", name.c_str(), "Resources/Model/Tire", "Tire.obj");
+		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+		Car::sSerialTire++;
+	}
+
+	if (ImGui::Button("フレーム追加")) {
+		std::string name = "ArmorFrame" + std::to_string(Car::sSerialArmor);
+		AddObject("ArmorFrameParts", name.c_str(), "Resources/Model/Frame", "Frame.obj");
+		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+		Car::sSerialTire++;
+	}
+
+	if (ImGui::Button("エンジン追加")) {
+		std::string name = "Engine" + std::to_string(Car::sSerialTire);
+		AddObject("EngineParts", name.c_str(), "Resources/Model/Engine", "Engine.obj");
+		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+		Car::sSerialTire++;
+	}
+
+	ImGui::End();
 
 #endif // _DEMO
 
@@ -165,23 +192,23 @@ void GameSceneObjectManager::OptionProcess()
 
 	// コア作成
 	AddObject("VehicleCore", "Resources/Model/Frame", "Frame.obj");
-	AddObject("EngineParts", "Resources/Model/Engine", "Engine.obj");
-	AddObject("TireParts", "Tire1", "Resources/Model/Tire", "Tire.obj");
-	AddObject("TireParts", "Tire2", "Resources/Model/Tire", "Tire.obj");
-	AddObject("TireParts", "Tire3", "Resources/Model/Tire", "Tire.obj");
-	AddObject("TireParts", "Tire4", "Resources/Model/Tire", "Tire.obj");
-	AddObject("ArmorFrameParts", "Resources/Model/Frame", "Frame.obj");
+	//AddObject("EngineParts", "Resources/Model/Engine", "Engine.obj");
+	//AddObject("TireParts", "Tire1", "Resources/Model/Tire", "Tire.obj");
+	//AddObject("TireParts", "Tire2", "Resources/Model/Tire", "Tire.obj");
+	//AddObject("TireParts", "Tire3", "Resources/Model/Tire", "Tire.obj");
+	//AddObject("TireParts", "Tire4", "Resources/Model/Tire", "Tire.obj");
+	//AddObject("ArmorFrameParts", "Resources/Model/Frame", "Frame.obj");
 
 	// キャスト
 	VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer("VehicleCore"));
 	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
-	Car::IParts* engineParts = static_cast<Car::IParts*>(this->GetObjectPointer("EngineParts"));
-	Car::IParts* tireParts[4] = {};
-	tireParts[0] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire1"));
-	tireParts[1] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire2"));
-	tireParts[2] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire3"));
-	tireParts[3] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire4"));
-	Car::IParts* armorParts = static_cast<Car::IParts*>(this->GetObjectPointer("ArmorFrameParts"));
+	//Car::IParts* engineParts = static_cast<Car::IParts*>(this->GetObjectPointer("EngineParts"));
+	//Car::IParts* tireParts[4] = {};
+	//tireParts[0] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire1"));
+	//tireParts[1] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire2"));
+	//tireParts[2] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire3"));
+	//tireParts[3] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire4"));
+	//Car::IParts* armorParts = static_cast<Car::IParts*>(this->GetObjectPointer("ArmorFrameParts"));
 
 	// ペアレント＋トランスフォーム親子設定
 	core->SetPlayer(player);
@@ -189,21 +216,21 @@ void GameSceneObjectManager::OptionProcess()
 	player->GetPickUpManager()->SetPartsManager(partsManager_.get());
 	partsManager_->AddParts(core->GetName(), core);
 
-	// エンジン
-	//engineParts->SetParent(core);
-	//engineParts->TransformParent();
-	partsManager_->AddParts(engineParts->GetName(), engineParts);
+	//// エンジン
+	////engineParts->SetParent(core);
+	////engineParts->TransformParent();
+	//partsManager_->AddParts(engineParts->GetName(), engineParts);
 
-	// アーマー
-	//armorParts->SetParent(core);
-	//armorParts->TransformParent();
-	partsManager_->AddParts(armorParts->GetName(), armorParts);
+	//// アーマー
+	////armorParts->SetParent(core);
+	////armorParts->TransformParent();
+	//partsManager_->AddParts(armorParts->GetName(), armorParts);
 
-	// タイヤ
-	for (int i = 0; i < 4; i++) {
-		//tireParts[i]->SetParent(core);
-		//tireParts[i]->TransformParent();
-		partsManager_->AddParts(tireParts[i]->GetName(), tireParts[i]);
-	}
+	//// タイヤ
+	//for (int i = 0; i < 4; i++) {
+	//	//tireParts[i]->SetParent(core);
+	//	//tireParts[i]->TransformParent();
+	//	partsManager_->AddParts(tireParts[i]->GetName(), tireParts[i]);
+	//}
 
 }

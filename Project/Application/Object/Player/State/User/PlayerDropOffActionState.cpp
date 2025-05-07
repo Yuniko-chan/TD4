@@ -9,7 +9,8 @@ void PlayerDropOffActionState::Initialize()
 	animationTimer_.Start(PlayerDebugData::sDropoffActionData.actionFrame);
 	// 開始点設定
 	easePoint_.first = player_->GetWorldTransformAdress()->GetWorldPosition();
-	easePoint_.second = player_->GetCoreTransform()->GetWorldPosition() + PlayerDebugData::sDropoffActionData.offset;
+	Vector3 rotateOffset = Matrix4x4::TransformNormal(PlayerDebugData::sDropoffActionData.offset, Matrix4x4::MakeRotateYMatrix(player_->GetCoreTransform()->transform_.rotate.y));
+	easePoint_.second = player_->GetCoreTransform()->GetWorldPosition() + rotateOffset;
 }
 
 void PlayerDropOffActionState::Update()

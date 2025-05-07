@@ -11,7 +11,7 @@ public:	// 構造体
 	{
 		float jumpHeight = 20.0f;
 		float actionFrame = 60.0f;
-		Vector3 offset = { 0.0f,3.0f,0.0f };
+		Vector3 offset = { 0.0f,1.95f,0.0f };
 
 		void ImGuiDraw(const std::string& name, float dragValue);
 	};

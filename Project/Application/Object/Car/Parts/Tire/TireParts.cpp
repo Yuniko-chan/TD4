@@ -5,7 +5,7 @@ void TireParts::Initialize(LevelData::MeshData* data)
 {
 	Car::IParts::Initialize(data);
 
-	worldTransform_.transform_.translate = Vector3(-2.0f, 0.0f, 0.0f);
+	//worldTransform_.transform_.translate = Vector3(-2.0f, 0.0f, 0.0f);
 
 	//// コライダー
 	//OBB obb = std::get<OBB>(*collider_.get());

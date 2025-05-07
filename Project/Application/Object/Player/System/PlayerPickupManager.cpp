@@ -72,6 +72,8 @@ void PlayerPickupManager::ReleaseAction()
 {
 	// パーツの位置再設定
 	holdParts_->GetWorldTransformAdress()->transform_ = TransformHelper::DetachWithWorldTransform(holdParts_->GetWorldTransformAdress());
+	holdParts_->GetWorldTransformAdress()->transform_.translate = {};
+	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
 	holdParts_->GetWorldTransformAdress()->SetParent(nullptr);
 
 	// 近くのコアにセット

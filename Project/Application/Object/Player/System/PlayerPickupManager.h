@@ -42,6 +42,12 @@ public:
 	/// </summary>
 	void InteractParts();
 
+	/// <summary>
+	/// パーツを保持しているか
+	/// </summary>
+	/// <returns></returns>
+	bool IsPartsHold() { return holdParts_ ? true : false; }
+
 private:
 	/// <summary>
 	/// 手放すアクション
