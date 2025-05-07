@@ -69,10 +69,10 @@ bool CollisionCheck(PolygonData polygonData, Segment segment)
 	//tを求める
     float t = (planeDistance - dot(segment.origin, planeNormal)) / dotValue;
 
-    if (t < 0.0f || t > 1.0f)
-    {
-        return false;
-    }
+    //if (t < 0.0f || t > 1.0f)
+    //{
+    //    return false;
+    //}
     
     float32_t3 v1p = segment.origin + t * segment.diff - polygonData.positions[1];
     float32_t3 v2p = segment.origin + t * segment.diff - polygonData.positions[2];
@@ -270,7 +270,20 @@ float32_t3 Extrusion(ObjectData objectData, PolygonData polygonData, uint32_t in
         distance = r + abs(s);
     }
     
-    return planeNormal * distance;
+    // 衝突確認
+    // ここオリジン値変更するかも
+    Segment segment;
+    segment.origin = objectData.center;
+    segment.diff = planeNormal * distance;
+    
+    if (abs(s) - r < 0.0f && CollisionCheck(polygonData, segment))
+    {
+        return planeNormal * distance;
+    }
+    else
+    {
+        return float32_t3(0.0f, 0.0f, 0.0f);
+    }
 
 }
 
@@ -279,7 +292,7 @@ uint32_t SetDrivingLocation(float32_t2 texcoord)
     
     float32_t4 color = gCourseTexture[texcoord];
     
-    if (color.r == 1.0f)
+    if (color.r == 0.0f)
     {
         return 1;
     }
@@ -310,20 +323,33 @@ void main(uint32_t3 dispatchId : SV_DispatchThreadID)
     PolygonData polygonData = gPolygonDatas[index];
     
     // 衝突確認 OBBの線分と三角ポリゴン
-    bool collisionConfirmation = CollisionConfirmation(objectData, polygonData);
+    //bool collisionConfirmation = CollisionConfirmation(objectData, polygonData);
     
-    // 衝突確認 OBBの中に三角の頂点があるか
+    //// 衝突確認 OBBの中に三角の頂点があるか
     
-    // 押し出し処理
-    if (collisionConfirmation)
-    {
-        gOutputDatas[index].extrusion = Extrusion(objectData, polygonData, index);
-        gOutputDatas[index].collided = 1;
-    }
-    else
+    //// 押し出し処理
+    //if (collisionConfirmation)
+    //{
+    //    gOutputDatas[index].extrusion = Extrusion(objectData, polygonData, index);
+    //    gOutputDatas[index].collided = 1;
+    //}
+    //else
+    //{
+    //    gOutputDatas[index].extrusion = float32_t3(0.0f, 0.0f, 0.0f);
+    //    gOutputDatas[index].collided = 0;
+    //}
+    
+    float32_t3 result = Extrusion(objectData, polygonData, index);
+    
+    if (result.x == 0.0f && result.y == 0.0f && result.z == 0.0f)
     {
         gOutputDatas[index].extrusion = float32_t3(0.0f, 0.0f, 0.0f);
         gOutputDatas[index].collided = 0;
+    }
+    else
+    {
+        gOutputDatas[index].extrusion = result;
+        gOutputDatas[index].collided = 1;
     }
     
     // 

@@ -514,6 +514,7 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 	Vector3 extrusion = { 0.0f,0.0f,0.0f };
 	Vector3 extrusionPlus = { 0.0f,0.0f,0.0f };
 	Vector3 extrusionMinus = { 0.0f,0.0f,0.0f };
+	uint32_t extrusionCount = 0;
 	// 法線
 	Vector3 normal = { 0.0f,0.0f,0.0f };
 	uint32_t normalCount = 0;
@@ -530,41 +531,44 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 		if (outputData.collided == 1) {
 			// 押し出し値
 
-			//x
-			if (outputData.extrusion.x <= 0.0f) {
-				if (extrusionMinus.x > outputData.extrusion.x) {
-					extrusionMinus.x = outputData.extrusion.x;
-				}
-			}
-			else {
-				if (extrusionPlus.x < outputData.extrusion.x) {
-					extrusionPlus.x = outputData.extrusion.x;
-				}
-			}
+			////x
+			//if (outputData.extrusion.x <= 0.0f) {
+			//	if (extrusionMinus.x > outputData.extrusion.x) {
+			//		extrusionMinus.x = outputData.extrusion.x;
+			//	}
+			//}
+			//else {
+			//	if (extrusionPlus.x < outputData.extrusion.x) {
+			//		extrusionPlus.x = outputData.extrusion.x;
+			//	}
+			//}
 
-			//y
-			if (outputData.extrusion.y <= 0.0f) {
-				if (extrusionMinus.y > outputData.extrusion.y) {
-					extrusionMinus.y = outputData.extrusion.y;
-				}
-			}
-			else {
-				if (extrusionPlus.y < outputData.extrusion.y) {
-					extrusionPlus.y = outputData.extrusion.y;
-				}
-			}
+			////y
+			//if (outputData.extrusion.y <= 0.0f) {
+			//	if (extrusionMinus.y > outputData.extrusion.y) {
+			//		extrusionMinus.y = outputData.extrusion.y;
+			//	}
+			//}
+			//else {
+			//	if (extrusionPlus.y < outputData.extrusion.y) {
+			//		extrusionPlus.y = outputData.extrusion.y;
+			//	}
+			//}
 
-			//z
-			if (outputData.extrusion.z <= 0.0f) {
-				if (extrusionMinus.z > outputData.extrusion.z) {
-					extrusionMinus.z = outputData.extrusion.z;
-				}
-			}
-			else {
-				if (extrusionPlus.z < outputData.extrusion.z) {
-					extrusionPlus.z = outputData.extrusion.z;
-				}
-			}
+			////z
+			//if (outputData.extrusion.z <= 0.0f) {
+			//	if (extrusionMinus.z > outputData.extrusion.z) {
+			//		extrusionMinus.z = outputData.extrusion.z;
+			//	}
+			//}
+			//else {
+			//	if (extrusionPlus.z < outputData.extrusion.z) {
+			//		extrusionPlus.z = outputData.extrusion.z;
+			//	}
+			//}
+
+			extrusion += outputData.extrusion;
+			extrusionCount++;
 
 			// 壁ではないなら
 			if (outputData.drivingLocation < CoursePolygonType::kCoursePolygonTypeWall) {
@@ -586,41 +590,48 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 
 	// x
 	// プラスとマイナス両方に動いた
-	if (extrusionPlus.x != 0.0f && extrusionMinus.x != 0.0f) {
-		extrusion.x = extrusionPlus.x + extrusionMinus.x;
-	}
-	// プラスに動いた
-	else if (extrusionPlus.x != 0.0f) {
-		extrusion.x = extrusionPlus.x;
-	}
-	else {
-		extrusion.x = extrusionMinus.x;
-	}
+	//if (extrusionPlus.x != 0.0f && extrusionMinus.x != 0.0f) {
+	//	extrusion.x = extrusionPlus.x + extrusionMinus.x;
+	//}
+	//// プラスに動いた
+	//else if (extrusionPlus.x != 0.0f) {
+	//	extrusion.x = extrusionPlus.x;
+	//}
+	//else {
+	//	extrusion.x = extrusionMinus.x;
+	//}
 
-	// y
-	// プラスとマイナス両方に動いた
-	if (extrusionPlus.y != 0.0f && extrusionMinus.y != 0.0f) {
-		extrusion.y = extrusionPlus.y + extrusionMinus.y;
-	}
-	// プラスに動いた
-	else if (extrusionPlus.y != 0.0f) {
-		extrusion.y = extrusionPlus.y;
-	}
-	else {
-		extrusion.y = extrusionMinus.y;
-	}
+	//// y
+	//// プラスとマイナス両方に動いた
+	//if (extrusionPlus.y != 0.0f && extrusionMinus.y != 0.0f) {
+	//	extrusion.y = extrusionPlus.y + extrusionMinus.y;
+	//}
+	//// プラスに動いた
+	//else if (extrusionPlus.y != 0.0f) {
+	//	extrusion.y = extrusionPlus.y;
+	//}
+	//else {
+	//	extrusion.y = extrusionMinus.y;
+	//}
 
-	// z
-	// プラスとマイナス両方に動いた
-	if (extrusionPlus.z != 0.0f && extrusionMinus.z != 0.0f) {
-		extrusion.z = extrusionPlus.z + extrusionMinus.z;
-	}
-	// プラスに動いた
-	else if (extrusionPlus.z != 0.0f) {
-		extrusion.z = extrusionPlus.z;
+	//// z
+	//// プラスとマイナス両方に動いた
+	//if (extrusionPlus.z != 0.0f && extrusionMinus.z != 0.0f) {
+	//	extrusion.z = extrusionPlus.z + extrusionMinus.z;
+	//}
+	//// プラスに動いた
+	//else if (extrusionPlus.z != 0.0f) {
+	//	extrusion.z = extrusionPlus.z;
+	//}
+	//else {
+	//	extrusion.z = extrusionMinus.z;
+	//}
+
+	if (extrusionCount == 0) {
+		extrusion = { 0.0f, 0.0f, 0.0f };
 	}
 	else {
-		extrusion.z = extrusionMinus.z;
+		extrusion = extrusion * (1.0f / static_cast<float>(extrusionCount));
 	}
 
 	// 法線
