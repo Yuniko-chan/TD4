@@ -73,6 +73,7 @@ void DebugScene::Update()
 
 	clothDemo_->Update();
 
+	courseDemoObject_->Update();
 	courseCollisionSystem_->ObjectRegistration(courseDemoObject_.get());
 	courseCollisionSystem_->Execute();
 
@@ -92,6 +93,8 @@ void DebugScene::Draw()
 
 	// コースデモ
 	courseDemoObject_->Draw(camera_);
+
+	course_->Draw(camera_);
 
 	clothDemo_->CollisionObjectDraw(&camera_);
 

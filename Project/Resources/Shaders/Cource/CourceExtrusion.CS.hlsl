@@ -248,7 +248,7 @@ float32_t3 Extrusion(ObjectData objectData, PolygonData polygonData, uint32_t in
     float32_t3 v20 = polygonData.positions[0] - polygonData.positions[2];
     
     float32_t3 planeNormal = normalize(cross(v01, v12));
-    float32_t planeDistance = planeNormal.x * v20.x + planeNormal.y * v20.y + planeNormal.z * v20.z;
+    float32_t planeDistance = dot(polygonData.positions[0], planeNormal);
     
     float32_t r = 0.0f;
 
@@ -259,9 +259,9 @@ float32_t3 Extrusion(ObjectData objectData, PolygonData polygonData, uint32_t in
 	//平面とobbの距離(怪しい)
     float32_t3 planePos = planeNormal * planeDistance;
 
-    float s = dot(objectData.center - planePos, planeNormal);
-    float distance = 0.0f;
-    if (s > 0)
+    float32_t s = dot(objectData.center - planePos, planeNormal);
+    float32_t distance = 0.0f;
+    if (s > 0.0f)
     {
         distance = r - abs(s);
     }
@@ -269,7 +269,7 @@ float32_t3 Extrusion(ObjectData objectData, PolygonData polygonData, uint32_t in
     {
         distance = r + abs(s);
     }
-
+    
     return planeNormal * distance;
 
 }

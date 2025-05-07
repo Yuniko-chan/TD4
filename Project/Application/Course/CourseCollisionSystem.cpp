@@ -5,6 +5,7 @@
 #include "CoursePolygonType.h"
 #include "../../Engine/2D/ImguiManager.h"
 #include "../../Engine/base/Texture/TextureManager.h"
+#include "Demo/CourseDemoObject.h"
 
 // ポリゴンエリアの原点
 const Vector3 CourseCollisionSystem::kPolygonAreasOrigin_ = { -500.0f, -500.0f, -500.0f };
@@ -631,6 +632,9 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 	}
 
 	// メッシュオブジェクトに代入
-	object;
+	// object;
+	object->GetWorldTransformAdress()->transform_.translate += extrusion;
+	object->GetWorldTransformAdress()->direction_ = normal;
+	object->GetWorldTransformAdress()->UpdateMatrix();
 
 }
