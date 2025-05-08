@@ -177,6 +177,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Car\Factory\VehicleFactory.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\PartsInterface.cpp" />
     <ClCompile Include="Application\Object\Factory\ObjectCreate.cpp" />
+    <ClCompile Include="Application\Object\GlobalParameterManager.cpp" />
     <ClCompile Include="Application\Object\KeyConfig\GameKeyconfig.cpp" />
     <ClCompile Include="Application\Object\Manager\ClearSceneObjectManager.cpp" />
     <ClCompile Include="Application\Object\Manager\GameSceneObjectManager.cpp" />
@@ -375,6 +376,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Factory\CreateObjectNames.h" />
     <ClInclude Include="Application\Object\Factory\ObjectCreate.h" />
     <ClInclude Include="Application\Object\GameObjectsList.h" />
+    <ClInclude Include="Application\Object\GlobalParameterManager.h" />
     <ClInclude Include="Application\Object\KeyConfig\GameKeyconfig.h" />
     <ClInclude Include="Application\Object\Manager\ClearSceneObjectManager.h" />
     <ClInclude Include="Application\Object\Manager\GameSceneObjectManager.h" />
@@ -404,6 +406,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Utility\Calc\MotionHelper.h" />
     <ClInclude Include="Application\Object\Utility\Calc\TransformHelper.h" />
     <ClInclude Include="Application\Object\Utility\Common\GameObjectName.h" />
+    <ClInclude Include="Application\Object\Utility\Common\SingletonModule.h" />
     <ClInclude Include="Application\Object\Utility\Timer\FrameTimer.h" />
     <ClInclude Include="Application\OutGameObject\ClearBackGround\ClearBackGround.h" />
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />

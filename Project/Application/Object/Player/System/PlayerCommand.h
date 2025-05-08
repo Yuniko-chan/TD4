@@ -42,7 +42,7 @@ public: //
 	/// 方向取得
 	/// </summary>
 	/// <returns></returns>
-	Vector3 GetDirect() { return moveDirect_ * kSpeedValue; }
+	Vector3 GetDirect() { return moveDirect_; }
 
 	/// <summary>
 	/// 回転処理
@@ -59,6 +59,4 @@ private:
 	WorldTransform* playerTransform_ = nullptr;
 	// 入力クラス
 	GameKeyconfig* keyConfig_ = nullptr;
-
-	const float kSpeedValue = 5.0f;
 };
