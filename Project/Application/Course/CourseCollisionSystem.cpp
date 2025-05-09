@@ -512,9 +512,10 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 
 	// 押し出し
 	Vector3 extrusion = { 0.0f,0.0f,0.0f };
-	Vector3 extrusionPlus = { 0.0f,0.0f,0.0f };
-	Vector3 extrusionMinus = { 0.0f,0.0f,0.0f };
-	uint32_t extrusionCount = 0;
+	Vector3 extrusionWall = { 0.0f,0.0f,0.0f };
+	Vector3 extrusionRoad = { 0.0f,0.0f,0.0f };
+	uint32_t extrusionWallCount = 0;
+	uint32_t extrusionRoadCount = 0;
 	// 法線
 	Vector3 normal = { 0.0f,0.0f,0.0f };
 	uint32_t normalCount = 0;
@@ -529,13 +530,11 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 
 		// 衝突したか
 		if (outputData.collided == 1) {
-			// 押し出し値
-
-			extrusion += outputData.extrusion;
-			extrusionCount++;
-
 			// 壁ではないなら
 			if (outputData.drivingLocation < CoursePolygonType::kCoursePolygonTypeWall) {
+				// 押し出し値
+				extrusionRoad += outputData.extrusion;
+				extrusionRoadCount++;
 				// 法線
 				normal += Vector3::Normalize(outputData.extrusion);
 				normalCount++;
@@ -545,6 +544,10 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 				}
 
 			}
+			else {
+				extrusionWall += outputData.extrusion;
+				extrusionWallCount++;
+			}
 
 		}
 
@@ -552,11 +555,11 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 
 	//押し出し
 
-	if (extrusionCount == 0) {
-		extrusion = { 0.0f, 0.0f, 0.0f };
+	if (extrusionRoadCount > 0) {
+		extrusion += extrusionRoad * (1.0f / static_cast<float>(extrusionRoadCount));
 	}
-	else {
-		extrusion = extrusion * (1.0f / static_cast<float>(extrusionCount));
+	if (extrusionWallCount > 0) {
+		extrusion += extrusionWall * (1.0f / static_cast<float>(extrusionWallCount));
 	}
 
 	// 法線
