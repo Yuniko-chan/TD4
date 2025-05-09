@@ -8,15 +8,9 @@ public:
 		kTextureIndexOfCount
 	};
 
-	// UI一覧
+	// パーティクル一覧
 	enum ParticleIndex {
 		kUIIndexOfCount
-	};
-
-	// クラス一覧
-	enum ClassIndex {
-		kClassIndexBase, // ベース
-		kClassIndexOfCount
 	};
 
 public:

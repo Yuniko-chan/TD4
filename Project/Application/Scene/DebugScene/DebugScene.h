@@ -6,6 +6,7 @@
 #include "../../../Engine/Physics/ClothGPU/ClothGPU.h"
 #include "../../ClothDemo/ClothDemo.h"
 
+#include "../../Particle/ParticleManager.h"
 /// <summary>
 /// デバッグシーン
 /// </summary>
@@ -56,6 +57,8 @@ private: // メンバ変数
 
 	// クロスシミュレーションデモ
 	std::unique_ptr<ClothDemo> clothDemo_;
+
+	std::unique_ptr<ParticleManager> ParticleManager_;
 
 };
 

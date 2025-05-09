@@ -58,7 +58,7 @@ void DebugScene::Draw()
 	// スカイドーム
 	skydome_->Draw(camera_);
 
-	clothDemo_->CollisionObjectDraw(&camera_);
+	//clothDemo_->CollisionObjectDraw(&camera_);
 
 	ModelDraw::PostDraw();
 
@@ -67,7 +67,7 @@ void DebugScene::Draw()
 
 	//drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
 
-	clothDemo_->Draw(&camera_);
+	//clothDemo_->Draw(&camera_);
 
 #pragma endregion
 
