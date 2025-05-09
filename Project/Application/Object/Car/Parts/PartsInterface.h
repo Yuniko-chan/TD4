@@ -1,8 +1,12 @@
 #pragma once
 #include "../../../Engine/Object/MeshObject.h"
 
+// パーツコア
 class VehicleCore;
+// パーツ管理クラス
 class VehiclePartsManager;
+// 隣接させるシステム
+class VehicleConnecter;
 
 namespace Car
 {
@@ -72,6 +76,8 @@ namespace Car
 		float weight_ = 1.0f;
 		// 親のコア
 		VehicleCore* parentCore_ = nullptr;
+		// 死亡フラグ
+		bool isDead_ = false;
 
 	};
 }
