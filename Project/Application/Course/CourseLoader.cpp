@@ -48,13 +48,18 @@ Model* CourseLoader::LoadCourseFile(const std::string& directoryPath, const std:
 			cData.positions[i % 3].y = data->vertices[i].positon_.y;
 			cData.positions[i % 3].z = data->vertices[i].positon_.z;
 			cData.normal += data->vertices[i].normal_;
+			cData.texcoord += data->vertices[i].uv_;
 			courseAttribute[i % 3] = data->vertices[i].courseAttribute_;
 			if (i%3 == 2) {
 				cData.normal = Vector3::Normalize(cData.normal);
 				//cData.coursePolygonType = std::min(std::min(courseAttribute[0], courseAttribute[1]), courseAttribute[2]);
-				cData.texcoord = data->vertices[i].uv_;
+				//cData.texcoord = data->vertices[i].uv_;
+				cData.texcoord = cData.texcoord * (1.0f / 3.0f);
+				// texcoordのｙがマイナスになっているため
+				cData.texcoord.y *= -1.0f;
 				course.push_back(cData);
 				cData.normal = {0,0,0};
+				cData.texcoord = { 0,0 };
 			}
 		}
 

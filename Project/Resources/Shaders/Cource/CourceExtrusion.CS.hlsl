@@ -141,14 +141,23 @@ float32_t3 Extrusion(ObjectData objectData, PolygonData polygonData, uint32_t in
 uint32_t SetDrivingLocation(float32_t2 texcoord)
 {
     
-    float32_t4 color = gCourseTexture[texcoord];
+    
+    uint x = 0;
+    uint y = 0;
+    gCourseTexture.GetDimensions(x, y);
+    
+    float32_t2 newTexcoord = float32_t2(texcoord.x * x, texcoord.y * y);
+    
+    float32_t4 color = gCourseTexture[newTexcoord];
     
     if (color.r == 0.0f)
     {
-        return 1;
+        // 黒ければ道
+        return 0;
     }
  
-    return 0;
+    // 白ければ壁
+    return 2;
     
 }
 

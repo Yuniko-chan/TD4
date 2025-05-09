@@ -23,10 +23,10 @@ void DebugScene::Initialize()
 	// コース
 	//courseModel_.reset();
 	course_ = std::make_unique<Course>();
-	ModelManager::GetInstance()->AppendModel(CourseLoader::LoadCourseFile("Resources/Course", "curseExporterTest2.course", *(course_->GetCoursePolygonsAdress())));
+	ModelManager::GetInstance()->AppendModel(CourseLoader::LoadCourseFile("Resources/Course", "courseWallTest2.course", *(course_->GetCoursePolygonsAdress())));
 	LevelData::MeshData courseData;
 	courseData.directoryPath = "Resources/Course";
-	courseData.flieName = "curseExporterTest2.course";
+	courseData.flieName = "courseWallTest2.course";
 	courseData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
 	courseData.className = "Course";
 	courseData.name = "";
