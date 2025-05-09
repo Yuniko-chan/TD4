@@ -570,7 +570,9 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 	// メッシュオブジェクトに代入
 	// object;
 	object->GetWorldTransformAdress()->transform_.translate += extrusion;
-	object->GetWorldTransformAdress()->direction_ = normal;
+	if (normalCount != 0) {
+		object->GetWorldTransformAdress()->direction_ = normal;
+	}
 	object->GetWorldTransformAdress()->UpdateMatrix();
 
 }

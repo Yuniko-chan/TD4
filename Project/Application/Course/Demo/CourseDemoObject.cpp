@@ -19,7 +19,7 @@ void CourseDemoObject::Initialize(LevelData::MeshData* data)
 	*colliderShape = obb;
 	collider_.reset(colliderShape);
 
-	//worldTransform_.usedDirection_ = true;
+	worldTransform_.usedDirection_ = true;
 
 }
 
