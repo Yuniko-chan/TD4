@@ -41,6 +41,8 @@ void VehicleCore::Update()
 {
 	// 移動処理
 	MoveCommand();
+	// 接続管理
+	constructionSystem_->Update();
 	// 基底
 	Car::IParts::Update();
 }

@@ -3,7 +3,7 @@
 Vector3 PartsOffsetCalculator::GetOffset(VehicleConstructionSystem::Direction direct, int depth)
 {
     const float kOffset = 2.0f;
-	const float kOffsetValue = kOffset + (depth + 1);
+	const float kOffsetValue = kOffset * (depth);
 	Vector3 result = {};
 	switch (direct)
 	{

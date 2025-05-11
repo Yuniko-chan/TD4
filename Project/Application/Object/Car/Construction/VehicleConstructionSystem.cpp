@@ -9,25 +9,48 @@ void VehicleConstructionSystem::Initialize(VehicleCore* core)
 
 void VehicleConstructionSystem::Update()
 {
-
-	for (std::list<std::pair<int, Car::IParts*>>::iterator it = leftD_.begin(); it != leftD_.end(); ++it) {
-		if ((*it).second->GetIsDelete()) {
-
+	bool dele = false;
+	for (std::list<std::pair<int, Car::IParts*>>::iterator it = leftD_.begin(); it != leftD_.end();) {
+		if ((*it).second->GetIsDelete() || dele) {
+			(*it).second->ReleaseParent();
+			it = leftD_.erase(it);
+			dele = true;
+		}
+		else {
+			++it;
 		}
 	}
-	for (std::list<std::pair<int, Car::IParts*>>::iterator it = rightD_.begin(); it != rightD_.end(); ++it) {
-		if ((*it).second->GetIsDelete()) {
-
+	dele = false;
+	for (std::list<std::pair<int, Car::IParts*>>::iterator it = rightD_.begin(); it != rightD_.end();) {
+		if ((*it).second->GetIsDelete() || dele) {
+			(*it).second->ReleaseParent();
+			it = rightD_.erase(it);
+			dele = true;
+		}
+		else {
+			++it;
 		}
 	}
-	for (std::list<std::pair<int, Car::IParts*>>::iterator it = forwardD_.begin(); it != forwardD_.end(); ++it) {
-		if ((*it).second->GetIsDelete()) {
-
+	dele = false;
+	for (std::list<std::pair<int, Car::IParts*>>::iterator it = forwardD_.begin(); it != forwardD_.end();) {
+		if ((*it).second->GetIsDelete() || dele) {
+			(*it).second->ReleaseParent();
+			it = forwardD_.erase(it);
+			dele = true;
+		}
+		else {
+			++it;
 		}
 	}
-	for (std::list<std::pair<int, Car::IParts*>>::iterator it = backForwardD_.begin(); it != backForwardD_.end(); ++it) {
-		if ((*it).second->GetIsDelete()) {
-
+	dele = false;
+	for (std::list<std::pair<int, Car::IParts*>>::iterator it = backForwardD_.begin(); it != backForwardD_.end();) {
+		if ((*it).second->GetIsDelete() || dele) {
+			(*it).second->ReleaseParent();
+			it = backForwardD_.erase(it);
+			dele = true;
+		}
+		else {
+			++it;
 		}
 	}
 

@@ -97,7 +97,8 @@ void Car::IParts::ImGuiDrawChildParts()
 	std::string name = name_ + ":Release";
 	// 解除
 	if (ImGui::Button(name.c_str())) {
-		ReleaseParent();
+		isDelete_ = true;
+		//ReleaseParent();
 	}
 	name = name_ + ":SetUp";
 	// 設定
