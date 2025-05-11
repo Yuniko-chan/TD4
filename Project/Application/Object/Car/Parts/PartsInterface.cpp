@@ -1,6 +1,7 @@
 #include "PartsInterface.h"
 #include "../VehicleCore.h"
 #include "../Manager/VehiclePartsManager.h"
+
 #include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Engine/Physics/Gravity/Gravity.h"
 
@@ -10,6 +11,7 @@ void Car::IParts::Initialize(LevelData::MeshData* data)
 	MeshObject::Initialize(data);
 	material_->SetEnableLighting(HalfLambert);
 
+	connector_ = std::make_unique<VehicleConnector>();
 }
 
 void Car::IParts::Update()
@@ -61,9 +63,12 @@ void Car::IParts::SettingParent(VehiclePartsManager* partsManager)
 		Car::IParts* parts = partsManager->FindNearCoreParts(worldTransform_.GetWorldPosition());
 		// ポインタの設定
 		parentCore_ = static_cast<VehicleCore*>(parts);
-		worldTransform_.SetParent(parentCore_->GetWorldTransformAdress());
-		// 子として登録
-		parentCore_->AddChild(this);
+
+		parentCore_->GetConstructionSystem()->Attach(this);
+
+		//worldTransform_.SetParent(parentCore_->GetWorldTransformAdress());
+		//// 子として登録
+		//parentCore_->AddChild(this);
 	}
 
 }
@@ -116,12 +121,12 @@ void Car::IParts::ColliderUpdate()
 
 void Car::IParts::ChildUpdate()
 {
-	// 親ポインタがある状態
-	if (parentCore_) {
-		// 親子関係であれば早期
-		if (IsParent()) {
-			return;
-		}
+	//// 親ポインタがある状態
+	//if (parentCore_) {
+	//}
+	// 親子関係であれば早期
+	if (IsParent()) {
+		return;
 	}
 	// 仮の地面処理
 	if (worldTransform_.GetWorldPosition().y <= 0.0f) {

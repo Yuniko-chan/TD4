@@ -4,6 +4,7 @@
 
 #include "Parts/PartsInterface.h"
 #include "System/VehicleStatus.h"
+#include "Construction/VehicleConstructionSystem.h"
 
 class Player;
 
@@ -49,7 +50,6 @@ public: // メンバ関数
 
     void MoveCommand();
 
-    void SetPlayer(Player* player) { pairPlayer_ = player; }
 
     /// <summary>
     /// 子の追加
@@ -57,11 +57,23 @@ public: // メンバ関数
     /// <param name="child"></param>
     void AddChild(Car::IParts* child) { partsLists_.push_back(child); }
 
+public: // アクセッサ
+    //---ゲッター---//
+    // パーツ構築システム
+    VehicleConstructionSystem* GetConstructionSystem() { return constructionSystem_.get(); }
+
+    //---セッター---//
+    // プレイヤー
+    void SetPlayer(Player* player) { pairPlayer_ = player; }
+
 private:
     // パーツを配置できる四か所（メッシュオブジェクトにするかも）
     std::list<WorldTransform> fourPoints_;
     // パーツのリスト
     std::list<Car::IParts*> partsLists_;
+
+    // パーツ構築システム
+    std::unique_ptr<VehicleConstructionSystem> constructionSystem_;
 
     // ペアになるプレイヤーポインタ
     Player* pairPlayer_ = nullptr;

@@ -1,12 +1,13 @@
 #pragma once
 #include "../../../Engine/Object/MeshObject.h"
+#include "System/VehicleConnector.h"
+
+#include <memory>
 
 // パーツコア
 class VehicleCore;
 // パーツ管理クラス
 class VehiclePartsManager;
-// 隣接させるシステム
-class VehicleConnecter;
 
 namespace Car
 {
@@ -34,9 +35,6 @@ namespace Car
 		/// 更新
 		/// </summary>
 		void Update() override;
-
-		// 親子関係
-		void SetParent(VehicleCore* parent) { parentCore_ = parent; }
 		// 親があるか
 		bool IsParent() { return worldTransform_.parent_ ? true : false; }
 		// ワールドトランスフォームの親設定
@@ -51,6 +49,16 @@ namespace Car
 		/// </summary>
 		virtual void ImGuiDrawParts() {};
 
+	public:	// アクセッサ
+		//---ゲッター---//
+		// コネクター
+		VehicleConnector* GetConnector() { return connector_.get(); }
+		// 消すフラグ
+		bool GetIsDelete() { return isDelete_; }
+
+		//---セッター---//
+		// 親子関係
+		void SetParent(VehicleCore* parent) { parentCore_ = parent; }
 	protected:
 		/// <summary>
 		/// ImGui
@@ -77,7 +85,8 @@ namespace Car
 		// 親のコア
 		VehicleCore* parentCore_ = nullptr;
 		// 死亡フラグ
-		bool isDead_ = false;
-
+		bool isDelete_ = false;
+		// 接続システム
+		std::unique_ptr<VehicleConnector> connector_;
 	};
 }

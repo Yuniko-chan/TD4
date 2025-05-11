@@ -9,6 +9,9 @@ namespace Car { class IParts; }
 class VehicleConnector
 {
 public:
+	~VehicleConnector() = default;
+	VehicleConnector() {};
+public:
 	// 接続方向
 	enum Direction {
 		forward,	// 前
@@ -26,6 +29,7 @@ public:
 		bool isAvailable = true;	// 空か
 	};
 	
+	void Update();
 
 private:
 	// 隣接パーツ

@@ -33,6 +33,8 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	*colliderShape = obb;
 	collider_.reset(colliderShape);
 
+	constructionSystem_ = std::make_unique<VehicleConstructionSystem>();
+	constructionSystem_->Initialize(this);
 }
 
 void VehicleCore::Update()
