@@ -149,14 +149,14 @@ void Player::SystemInitialize()
 	// ステート
 	stateMachine_ = std::make_unique<PlayerStateMachine>();
 	stateMachine_->Initialize();
-	stateMachine_->SetPlayer(this);
+	stateMachine_->SetOwner(this);
 
 	// ピックアップ
 	pickUpManager_ = std::make_unique<PlayerPickupManager>();
-	pickUpManager_->SetPlayer(this);
+	pickUpManager_->SetOwner(this);
 
 	// 
-	frontChecker_.SetPlayer(this);
+	frontChecker_.SetOwner(this);
 
 }
 

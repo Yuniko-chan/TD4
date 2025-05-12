@@ -1,6 +1,6 @@
 #pragma once
 #include "../../../Engine/Collision/BaseCollisionManager.h"
-#include "PlayerComponent.h"
+#include "../../Utility/Common/OwnerComponent.h"
 
 // パーツの基底（全ての基）
 namespace Car
@@ -9,6 +9,7 @@ namespace Car
 }
 
 class VehiclePartsManager;
+class Player;
 
 struct PickUpCollision {
 	// コライダー
@@ -21,7 +22,7 @@ struct PickUpCollision {
 	uint32_t collisionMask_ = 0xffffffff;
 };
 
-class PlayerPickupManager : public PlayerComponent
+class PlayerPickupManager : public OwnerComponent<Player>
 {
 public:
 	PlayerPickupManager();

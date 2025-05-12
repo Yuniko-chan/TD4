@@ -1,11 +1,12 @@
 #pragma once
 #include "../../../State/StateMachine.h"
+#include "../../../Utility/Common/OwnerComponent.h"
 #include <memory>
 
 class IPlayerState;
 class Player;
 
-class PlayerStateMachine : public StateMachine
+class PlayerStateMachine : public StateMachine, public OwnerComponent<Player>
 {
 public:
 	PlayerStateMachine();
@@ -25,9 +26,4 @@ public:
 	/// <param name="requestNum"></param>
 	void ChangeRequest(uint32_t requestNum) override;
 
-public:
-	void SetPlayer(Player* player) { player_ = player; }
-private:
-	// プレイヤー
-	Player* player_ = nullptr;
 };

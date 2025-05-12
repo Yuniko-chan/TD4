@@ -1,9 +1,11 @@
 #pragma once
-#include "PlayerComponent.h"
+#include "../../Utility/Common/OwnerComponent.h"
 
 #include "../../../Engine/Math/Vector/Vector3.h"
 
-class PlayerFrontChecker : public PlayerComponent
+class Player;
+
+class PlayerFrontChecker : public OwnerComponent<Player>
 {
 public:
 

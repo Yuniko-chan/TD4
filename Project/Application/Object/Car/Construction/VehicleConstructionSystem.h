@@ -1,5 +1,5 @@
 #pragma once
-
+#include "../../Utility/Common/OwnerComponent.h"
 #include <list>
 #include <string>
 #include <utility>
@@ -10,7 +10,7 @@ class VehicleCore;
 /// <summary>
 /// 車両構築システム（コア用）（パーツ管理など）
 /// </summary>
-class VehicleConstructionSystem
+class VehicleConstructionSystem : public OwnerComponent<Car::IParts>
 {
 private:
 	static const int kMaxDepth = 5;
@@ -35,10 +35,7 @@ public:
 	/// </summary>
 	/// <param name="parts"></param>
 	void Attach(Car::IParts* parts);
-	/// <summary>
-	/// 解除処理
-	/// </summary>
-	void Release();
+
 private:
 	/// <summary>
 	/// 接続
@@ -46,24 +43,18 @@ private:
 	/// <param name="parts"></param>
 	void Attach(Car::IParts* parts, Direction direct);
 
+	Car::IParts* FindPreNumber(std::list<std::pair<int, Car::IParts*>>* directLists, int32_t number);
+
 private:
 	// システム用のコア
 	VehicleCore* core_ = nullptr;
-
-	// ４方向ディレクト
-	//std::map<std::string, std::pair<int, Car::IParts*>> fourDirection_;
-
 	// 左
-	//std::array<std::pair<int, Car::IParts*>, kMaxDepth> leftD_;
 	std::list<std::pair<int, Car::IParts*>> leftD_;
 	// 右
-	//std::array<std::pair<int, Car::IParts*>, kMaxDepth> rightD_;
 	std::list<std::pair<int, Car::IParts*>> rightD_;
 	// 前
-	//std::array<std::pair<int, Car::IParts*>, kMaxDepth> forwardD_;
 	std::list<std::pair<int, Car::IParts*>> forwardD_;
 	// 後ろ
-	//std::array<std::pair<int, Car::IParts*>, kMaxDepth> backforwardD_;
 	std::list<std::pair<int, Car::IParts*>> backForwardD_;
 
 };

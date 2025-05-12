@@ -20,6 +20,7 @@ void PlayerOnFootState::Update()
 	if (player_->GetCommand()->ActionCommand()) {
 		player_->GetStateMachine()->ChangeRequest(IPlayerState::kRideAction);
 	}
+	// 車体に乗ってなければの処理
 	if (!player_->GetWorldTransformAdress()->parent_) {
 		if (player_->GetWorldTransformAdress()->GetWorldPosition().y <= 0) {
 			player_->GetWorldTransformAdress()->transform_.translate.y = 0.0f;

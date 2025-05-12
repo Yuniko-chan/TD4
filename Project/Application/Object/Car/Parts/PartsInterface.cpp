@@ -12,6 +12,7 @@ void Car::IParts::Initialize(LevelData::MeshData* data)
 	material_->SetEnableLighting(HalfLambert);
 
 	connector_ = std::make_unique<VehicleConnector>();
+	connector_->SetOwner(this);
 }
 
 void Car::IParts::Update()

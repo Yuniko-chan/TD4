@@ -93,6 +93,7 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts)
 void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 {
 	int number = 0;
+	Car::IParts* preParts = nullptr;
 	PartsOffsetCalculator calculator;
 
 	switch (direct)
@@ -102,7 +103,10 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 		number++;
 		leftD_.push_back({ number ,parts });
 
-		
+		if (number > 1) {
+			preParts = FindPreNumber(&leftD_, number);
+			parts->GetConnector()->AddParents(preParts);
+		}
 
 		break;
 	case VehicleConstructionSystem::kRight:
@@ -129,4 +133,17 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 	parts->GetWorldTransformAdress()->SetParent(core_->GetWorldTransformAdress());
 	parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, number);
 
+}
+
+Car::IParts* VehicleConstructionSystem::FindPreNumber(std::list<std::pair<int, Car::IParts*>>* directLists, int32_t number)
+{
+	for (std::list<std::pair<int, Car::IParts*>>::iterator it = directLists->begin(); it != directLists->end();) {
+		// 該当番号が見つかれば
+		if ((*it).first == number) {
+			return (*it).second;
+		}
+		++it;
+	}
+
+	return nullptr;
 }

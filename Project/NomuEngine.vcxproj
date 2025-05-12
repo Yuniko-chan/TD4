@@ -405,7 +405,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Player\State\User\PlayerInVehicleState.h" />
     <ClInclude Include="Application\Object\Player\State\User\PlayerOnFootState.h" />
     <ClInclude Include="Application\Object\Player\System\PlayerCommand.h" />
-    <ClInclude Include="Application\Object\Player\System\PlayerComponent.h" />
     <ClInclude Include="Application\Object\Player\System\PlayerPickupManager.h" />
     <ClInclude Include="Application\Object\State\IState.h" />
     <ClInclude Include="Application\Object\State\StateFactory.h" />
@@ -414,6 +413,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Utility\Calc\TransformHelper.h" />
     <ClInclude Include="Application\Object\Utility\Common\GameObjectName.h" />
     <ClInclude Include="Application\Object\Utility\Common\SingletonModule.h" />
+    <ClInclude Include="Application\Object\Utility\Common\OwnerComponent.h" />
     <ClInclude Include="Application\Object\Utility\Timer\FrameTimer.h" />
     <ClInclude Include="Application\OutGameObject\ClearBackGround\ClearBackGround.h" />
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />

@@ -1590,9 +1590,6 @@
     <ClInclude Include="Application\Object\KeyConfig\GameKeyconfig.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Player\System\PlayerComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Application\Object\Player\State\IPlayerState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -1681,6 +1678,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Car\Parts\System\PartsOffsetCalculator.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Utility\Common\OwnerComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

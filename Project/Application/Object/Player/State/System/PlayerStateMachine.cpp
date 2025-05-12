@@ -26,7 +26,7 @@ void PlayerStateMachine::Update()
 			currentState_->Exit();
 		}
 		// 初期化
-		static_cast<IPlayerState*>(tmpState_.get())->SetPlayer(player_);
+		static_cast<IPlayerState*>(tmpState_.get())->SetPlayer(owner_);
 		tmpState_->Initialize();
 		currentState_ = std::move(tmpState_);
 
