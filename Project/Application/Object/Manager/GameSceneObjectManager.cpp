@@ -99,14 +99,14 @@ void GameSceneObjectManager::ImGuiDraw()
 		std::string name = "ArmorFrame" + std::to_string(Car::sSerialArmor);
 		AddObject("ArmorFrameParts", name.c_str(), "Resources/Model/Frame", "Frame.obj");
 		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-		Car::sSerialTire++;
+		Car::sSerialArmor++;
 	}
 
 	if (ImGui::Button("エンジン追加")) {
-		std::string name = "Engine" + std::to_string(Car::sSerialTire);
+		std::string name = "Engine" + std::to_string(Car::sSerialEngine);
 		AddObject("EngineParts", name.c_str(), "Resources/Model/Engine", "Engine.obj");
 		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-		Car::sSerialTire++;
+		Car::sSerialEngine++;
 	}
 
 	ImGui::End();
