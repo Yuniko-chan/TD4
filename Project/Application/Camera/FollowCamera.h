@@ -21,6 +21,8 @@ public: // メンバ関数
 	/// </summary>
 	void Update(float elapsedTime = 0.0f) override;
 
+	void ImGuiDraw();
+
 public: // アクセッサ
 
 	/// <summary>
@@ -62,5 +64,10 @@ private: // メンバ変数
 	// ターゲット位置
 	Vector3 interTarget_;
 
+	float offsetMoveRate_ = 0.1f;
+
+	// 車両に乗っている状態の
+	Vector3 inVehicleRotate_ = {};
+	Vector3 inVehicleOffsetPosition_ = {};
 };
 

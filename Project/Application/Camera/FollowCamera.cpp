@@ -7,6 +7,8 @@
 #include "../../../Engine/Math/Math.h"
 #include "../../../Engine/Math/Ease.h"
 #include "../../../Engine/Input/Input.h"
+#include "../../../Engine/2D/ImguiManager.h"
+
 
 void FollowCamera::Initialize() {
 
@@ -18,6 +20,8 @@ void FollowCamera::Initialize() {
 	offsetLength_ = 0.0f;
 	// オフセットの高さ
 	offsetHeight_ = 0.0f;
+	// オフセットの追従レート
+	offsetMoveRate_ = 0.1f;
 	// ターゲット位置
 	interTarget_ = {0.0f,0.0f,0.0f};
 
@@ -31,6 +35,10 @@ void FollowCamera::Initialize() {
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
 	globalVariables->AddItem(groupName, "offsetLength", offsetLength_);
 	globalVariables->AddItem(groupName, "offsetHeight", offsetHeight_);
+	globalVariables->AddItem(groupName, "offsetMoveRate", offsetMoveRate_);
+
+	globalVariables->AddItem(groupName, "inVehicleOffsetPosition", inVehicleOffsetPosition_);
+	globalVariables->AddItem(groupName, "inVehicleRotate", inVehicleRotate_);
 
 	ApplyGlobalVariables();
 
@@ -46,10 +54,11 @@ void FollowCamera::Update(float elapsedTime) {
 	//追従対象がいれば
 	if (target_) {
 		// 追従座標の補間(Z軸を取ってくる)
-		const Vector3 kTargetPositionEnd = { 0.0f, 0.0f, target_->worldMatrix_.m[3][2] };
+		//const Vector3 kTargetPositionEnd = { 0.0f, 0.0f, target_->worldMatrix_.m[3][2] };
+		const Vector3 kTargetPositionEnd = { target_->worldMatrix_.m[3][0],target_->worldMatrix_.m[3][1] ,target_->worldMatrix_.m[3][2] };
 		// 移動レート
-		const float kMoveRate = 0.1f;
-		interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, kMoveRate);
+		//const float kMoveRate = 0.1f;
+		interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, offsetMoveRate_);
 
 		// オフセット
 		Vector3 offset = OffsetCalc();
@@ -82,6 +91,15 @@ void FollowCamera::Update(float elapsedTime) {
 
 }
 
+void FollowCamera::ImGuiDraw()
+{
+	ImGui::Begin("FollowCamera");
+	ImGui::DragFloat3("Position", &transform_.translate.x);
+	ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f);
+
+	ImGui::End();
+}
+
 void FollowCamera::SetTarget(const WorldTransform* target)
 {
 
@@ -91,7 +109,15 @@ void FollowCamera::SetTarget(const WorldTransform* target)
 
 Matrix4x4 FollowCamera::GetRotateMatrix()
 {
-
+	// 対象がいる場合対象の回転行列を適応
+	if (target_) {
+		// 対象に更に親がいる場合
+		if (target_->parent_) {
+			return Matrix4x4::Multiply(Matrix4x4::MakeRotateXYZMatrix(transform_.rotate), target_->parent_->rotateMatrix_);
+		}
+		return Matrix4x4::Multiply(Matrix4x4::MakeRotateXYZMatrix(transform_.rotate), target_->rotateMatrix_);
+	}
+	// 無ければデフォルト
 	return Matrix4x4::MakeRotateXYZMatrix(transform_.rotate);
 
 }
@@ -119,5 +145,8 @@ void FollowCamera::ApplyGlobalVariables()
 
 	offsetLength_ = globalVariables->GetFloatValue(groupName, "offsetLength");
 	offsetHeight_ = globalVariables->GetFloatValue(groupName, "offsetHeight");
+	offsetMoveRate_ = globalVariables->GetFloatValue(groupName, "offsetMoveRate");
 
+	inVehicleOffsetPosition_ = globalVariables->GetVector3Value(groupName, "inVehicleOffsetPosition");
+	inVehicleRotate_ = globalVariables->GetVector3Value(groupName, "inVehicleRotate");
 }
