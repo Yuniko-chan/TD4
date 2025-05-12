@@ -34,8 +34,8 @@ void DebugScene::Initialize()
 	course_->Initialize(&courseData);
 
 
-	clothDemo_ = std::make_unique<ClothDemo>();
-	clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
+	//clothDemo_ = std::make_unique<ClothDemo>();
+	//clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
 
 	isDebugCameraActive_ = true;
 
@@ -72,7 +72,7 @@ void DebugScene::Initialize()
 void DebugScene::Update()
 {
 
-	clothDemo_->Update();
+	//clothDemo_->Update();
 
 	courseDemoObject_->Update();
 	courseCollisionSystem_->ObjectRegistration(courseDemoObject_.get());
@@ -100,7 +100,7 @@ void DebugScene::Draw()
 
 	course_->Draw(camera_);
 
-	clothDemo_->CollisionObjectDraw(&camera_);
+	//clothDemo_->CollisionObjectDraw(&camera_);
 
 	ModelDraw::PostDraw();
 
@@ -118,7 +118,7 @@ void DebugScene::Draw()
 void DebugScene::ImguiDraw()
 {
 
-	clothDemo_->ImGuiDraw(camera_);
+	//clothDemo_->ImGuiDraw(camera_);
 
 	debugCamera_->ImGuiDraw();
 

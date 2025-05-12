@@ -175,6 +175,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Camera\FollowCamera.cpp" />
     <ClCompile Include="Application\Object\BaseCharacter\BaseCharacterAnimation.cpp" />
     <ClCompile Include="Application\Object\Factory\ObjectCreate.cpp" />
+    <ClCompile Include="Application\Object\Gimmick\IronBall\ConicalPendulumIronBall.cpp" />
     <ClCompile Include="Application\Object\Manager\ClearSceneObjectManager.cpp" />
     <ClCompile Include="Application\Object\Manager\GameSceneObjectManager.cpp" />
     <ClCompile Include="Application\Object\Factory\ObjectFactory.cpp" />
@@ -353,6 +354,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Factory\CreateObjectIndex.h" />
     <ClInclude Include="Application\Object\Factory\CreateObjectNames.h" />
     <ClInclude Include="Application\Object\Factory\ObjectCreate.h" />
+    <ClInclude Include="Application\Object\Gimmick\IronBall\ConicalPendulumIronBall.h" />
+    <ClInclude Include="Application\Object\Gimmick\IronBall\ConicalPendulumIronBallData.h" />
     <ClInclude Include="Application\Object\Manager\ClearSceneObjectManager.h" />
     <ClInclude Include="Application\Object\Manager\GameSceneObjectManager.h" />
     <ClInclude Include="Application\Object\Factory\ObjectFactory.h" />
