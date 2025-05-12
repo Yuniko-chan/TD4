@@ -102,27 +102,37 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 		number = (int)leftD_.size();
 		number++;
 		leftD_.push_back({ number ,parts });
-
 		if (number > 1) {
 			preParts = FindPreNumber(&leftD_, number);
 			parts->GetConnector()->AddParents(preParts);
 		}
-
 		break;
 	case VehicleConstructionSystem::kRight:
 		number = (int)rightD_.size();
 		number++;
 		rightD_.push_back({ number ,parts });
+		if (number > 1) {
+			preParts = FindPreNumber(&rightD_, number);
+			parts->GetConnector()->AddParents(preParts);
+		}
 		break;
 	case VehicleConstructionSystem::kForward:
 		number = (int)forwardD_.size();
 		number++;
 		forwardD_.push_back({ number ,parts });
+		if (number > 1) {
+			preParts = FindPreNumber(&forwardD_, number);
+			parts->GetConnector()->AddParents(preParts);
+		}
 		break;
 	case VehicleConstructionSystem::kBackForward:
 		number = (int)backForwardD_.size();
 		number++;
 		backForwardD_.push_back({ number ,parts });
+		if (number > 1) {
+			preParts = FindPreNumber(&backForwardD_, number);
+			parts->GetConnector()->AddParents(preParts);
+		}
 		break;
 	default:
 		break;

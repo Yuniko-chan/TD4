@@ -35,6 +35,10 @@ void TireParts::ImGuiDrawParts()
 	ImGui::DragFloat("SlideValue", &moveValue, 0.01f);
 	// トランスフォーム用
 	ImGuiTransform(moveValue);
+	// コネクター
+	if (connector_->IsParent()) {
+		ImGui::Text("Parent");
+	}
 	ImGui::Text("\n");
 }
 

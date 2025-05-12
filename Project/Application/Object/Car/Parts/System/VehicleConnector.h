@@ -37,9 +37,10 @@ public:
 
 	// 深度地設定
 	void SetDepth(int32_t depth) { depth_ = depth; }
+
+	bool IsParent() { return !parents_.empty(); }
+
 private:
-	// 自機のポインタ
-	Car::IParts* thisPtr_ = nullptr;
 	// 隣接パーツ
 	std::list<Car::IParts*> parents_;
 	std::list<Car::IParts*> childrens_;
