@@ -2,9 +2,11 @@
 
 Vector3 PartsOffsetCalculator::GetOffset(VehicleConstructionSystem::Direction direct, int depth)
 {
+	// オフセット用の値
     const float kOffset = 2.0f;
 	const float kOffsetValue = kOffset * (depth);
 	Vector3 result = {};
+	// 方向ごと
 	switch (direct)
 	{
 	case VehicleConstructionSystem::kLeft:

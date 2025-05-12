@@ -35,6 +35,10 @@ public:
 	/// </summary>
 	/// <param name="parts"></param>
 	void Attach(Car::IParts* parts);
+	/// <summary>
+	/// 解除処理
+	/// </summary>
+	void Release();
 private:
 	/// <summary>
 	/// 接続

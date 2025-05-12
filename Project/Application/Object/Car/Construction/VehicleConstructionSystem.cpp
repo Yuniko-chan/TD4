@@ -58,11 +58,13 @@ void VehicleConstructionSystem::Update()
 
 void VehicleConstructionSystem::Attach(Car::IParts* parts)
 {
+
+	Matrix4x4 yRotate = Matrix4x4::MakeRotateYMatrix(core_->GetWorldTransformAdress()->transform_.rotate.y);
 	// ベクトル
-	Vector3 left = Vector3::Normalize(Vector3(-1.0f, 0.0f, 0.0f));
-	Vector3 right = Vector3::Normalize(Vector3(1.0f, 0.0f, 0.0f));
-	Vector3 forward = Vector3::Normalize(Vector3(1.0f, 0.0f, 0.0f));
-	Vector3 backForward = Vector3::Normalize(Vector3(-1.0f, 0.0f, 0.0f));
+	Vector3 left = Matrix4x4::TransformNormal(Vector3::Normalize(Vector3(-1.0f, 0.0f, 0.0f)), yRotate);
+	Vector3 right = Matrix4x4::TransformNormal(Vector3::Normalize(Vector3(1.0f, 0.0f, 0.0f)), yRotate);
+	Vector3 forward = Matrix4x4::TransformNormal(Vector3::Normalize(Vector3(0.0f, 0.0f, 1.0f)), yRotate);
+	Vector3 backForward = Matrix4x4::TransformNormal(Vector3::Normalize(Vector3(0.0f, 0.0f, -1.0f)), yRotate);
 	Vector3 toDirect = parts->GetWorldTransformAdress()->GetWorldPosition() - core_->GetWorldTransformAdress()->GetWorldPosition();
 	toDirect = Vector3::Normalize({ toDirect.x,0.0f,toDirect.z });
 	// 方向の内積
