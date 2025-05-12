@@ -1,8 +1,19 @@
 {
     "FollowCamera": {
+        "inVehicleOffsetPosition": [
+            0.0,
+            6.0,
+            -50.0
+        ],
+        "inVehicleRotate": [
+            0.10000000149011612,
+            0.0,
+            0.0
+        ],
         "moveRate": 1.0,
-        "offsetHeight": 6.0,
-        "offsetLength": -50.0,
+        "offsetHeight": 5.0,
+        "offsetLength": -45.0,
+        "offsetMoveRate": 0.05000000074505806,
         "rotateRate": 1.0
     }
 }

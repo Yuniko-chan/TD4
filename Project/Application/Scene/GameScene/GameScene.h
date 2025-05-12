@@ -15,6 +15,7 @@
 #include "../../Collision/GameSceneCollisionManager.h"
 #include "../../UI/UIManager.h"
 #include "../../System/PostEffectSystem/PostEffectSystem.h"
+#include "../../Object/KeyConfig/GameKeyconfig.h"
 
 /// <summary>
 /// ゲームシーン
@@ -89,4 +90,6 @@ private:
 	// ポストエフェクトシステム
 	std::unique_ptr<PostEffectSystem> postEffectSystem_ = nullptr;
 
+	// キー入力管理
+	GameKeyconfig* keyConfig_;
 };

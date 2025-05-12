@@ -20,5 +20,18 @@ public: //メンバ関数
 	/// <returns>オブジェクト</returns>
 	static IObject* CreateObjectSkydome(LevelData::ObjectData& objectData);
 
-};
+	static IObject* CreateObjectPlayer(LevelData::ObjectData& objectData);
 
+public:	// USER
+
+	static IObject* CreateObjectVehicleCore(LevelData::ObjectData& objectData);
+
+	static IObject* CreateObjectEngineParts(LevelData::ObjectData& objectData);
+
+	static IObject* CreateObjectTireParts(LevelData::ObjectData& objectData);
+
+	static IObject* CreateObjectArmorFrameParts(LevelData::ObjectData& objectData);
+
+	static IObject* CreateObjectIParts(LevelData::ObjectData& objectData);
+
+};
