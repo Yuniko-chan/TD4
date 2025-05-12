@@ -33,10 +33,6 @@ void DebugScene::Initialize()
 	courseData.parentName = "";
 	course_->Initialize(&courseData);
 
-
-	//clothDemo_ = std::make_unique<ClothDemo>();
-	//clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
-
 	isDebugCameraActive_ = true;
 
 	// モデル描画
@@ -65,6 +61,22 @@ void DebugScene::Initialize()
 	courseDemoData.parentName = "";
 	courseDemoObject_->Initialize(&courseDemoData);
 
+	// 円錐振り子
+	conicalPendulumIronBallModel_.reset(Model::Create("Resources/default/", "ball.obj", dxCommon_));
+	conicalPendulumIronBall_ = std::make_unique<ConicalPendulumIronBall>();
+	LevelData::MeshData conicalPendulumIronData;
+	conicalPendulumIronData.directoryPath = "Resources/default/";
+	conicalPendulumIronData.flieName = "ball.obj";
+	conicalPendulumIronData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+	conicalPendulumIronData.className = "ConicalPendulumIronBall";
+	conicalPendulumIronData.name = "";
+	conicalPendulumIronData.parentName = "";
+	Sphere conicalPendulumIronCollider;
+	conicalPendulumIronCollider.center_ = { 0.0f,0.0f,0.0f };
+	conicalPendulumIronCollider.radius_ = 1.0f;
+	conicalPendulumIronData.collider = conicalPendulumIronCollider;
+	conicalPendulumIronBall_->Initialize(&conicalPendulumIronData);
+
 	BaseScene::InitilaizeCheck();
 
 }
@@ -78,11 +90,11 @@ void DebugScene::Update()
 	}
 #endif // _DEBUG
 
-	//clothDemo_->Update();
-
 	courseDemoObject_->Update();
 	courseCollisionSystem_->ObjectRegistration(courseDemoObject_.get());
 	courseCollisionSystem_->Execute();
+
+	conicalPendulumIronBall_->Update();
 
 	DebugCameraUpdate();
 
@@ -99,23 +111,18 @@ void DebugScene::Draw()
 	skydome_->Draw(camera_);
 
 	//コース表示
-	course_->Draw(camera_);
+	//course_->Draw(camera_);
 
 	// コースデモ
-	courseDemoObject_->Draw(camera_);
+	//courseDemoObject_->Draw(camera_);
 
-	course_->Draw(camera_);
-
-	//clothDemo_->CollisionObjectDraw(&camera_);
+	conicalPendulumIronBall_->Draw(camera_);
 
 	ModelDraw::PostDraw();
 
 #pragma region 線描画
 
-
 	//drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
-
-	//clothDemo_->Draw(&camera_);
 
 #pragma endregion
 
@@ -123,8 +130,6 @@ void DebugScene::Draw()
 
 void DebugScene::ImguiDraw()
 {
-
-	//clothDemo_->ImGuiDraw(camera_);
 
 	debugCamera_->ImGuiDraw();
 

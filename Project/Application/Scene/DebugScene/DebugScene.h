@@ -8,6 +8,7 @@
 #include "../../Course/Course.h"
 #include "../../Course/CourseCollisionSystem.h"
 #include "../../Course/Demo/CourseDemoObject.h"
+#include "../../Object/Gimmick/IronBall/ConicalPendulumIronBall.h"
 
 /// <summary>
 /// デバッグシーン
@@ -57,9 +58,6 @@ private: // メンバ変数
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Model> skydomeModel_;
 
-	// クロスシミュレーションデモ
-	std::unique_ptr<ClothDemo> clothDemo_;
-
 	// Course
 	std::unique_ptr<Course> course_;
 	std::unique_ptr<Model> courseModel_;
@@ -67,9 +65,13 @@ private: // メンバ変数
 	// CourseCollisionSystem 
 	std::unique_ptr<CourseCollisionSystem> courseCollisionSystem_;
 
-
+	// コースとぶつけるオブジェクト
 	std::unique_ptr<CourseDemoObject> courseDemoObject_;
 	std::unique_ptr<Model> courseDemoModel_;
+
+	// 円錐振り子
+	std::unique_ptr<ConicalPendulumIronBall> conicalPendulumIronBall_;
+	std::unique_ptr<Model> conicalPendulumIronBallModel_;
 
 };
 

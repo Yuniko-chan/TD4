@@ -12,6 +12,16 @@ class ConicalPendulumIronBall :
 public: // 関数
 
     /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    ConicalPendulumIronBall();
+
+    /// <summary>
+    /// デストラクタ
+    /// </summary>
+    ~ConicalPendulumIronBall() override;
+
+    /// <summary>
     /// 初期化
     /// </summary>
     /// <param name="data">メッシュデータ</param>
@@ -29,6 +39,13 @@ public: // 関数
     /// 更新処理
     /// </summary>
     void Update() override;
+
+    /// <summary>
+    /// 衝突処理
+    /// </summary>
+    /// <param name="colliderPartner"></param>
+    /// <param name="collisionData"></param>
+    void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
 private: // 関数
 

@@ -3,6 +3,15 @@
 #include <numbers>
 #include <cmath>
 #include "../../../../Engine/Math/DeltaTime.h"
+#include "../../../Collider/CollisionConfig.h"
+
+ConicalPendulumIronBall::ConicalPendulumIronBall()
+{
+}
+
+ConicalPendulumIronBall::~ConicalPendulumIronBall()
+{
+}
 
 void ConicalPendulumIronBall::Initialize(LevelData::MeshData* data)
 {
@@ -12,9 +21,9 @@ void ConicalPendulumIronBall::Initialize(LevelData::MeshData* data)
 
     // 円錐振り子初期化(デバッグ用、最終的には引数でとってくる)
     ConicalPendulumIronBallData debugConicalPendulumIronBallData;
-    debugConicalPendulumIronBallData.anchor = { 0.0f,1.0f,0.0f };
+    debugConicalPendulumIronBallData.anchor = { 0.0f,10.0f,0.0f };
     debugConicalPendulumIronBallData.halfApexAngle = 0.7f;
-    debugConicalPendulumIronBallData.length = 0.8f;
+    debugConicalPendulumIronBallData.length = 8.0f;
     ConicalPendulumInitialize(debugConicalPendulumIronBallData);
 
 }
@@ -44,8 +53,26 @@ void ConicalPendulumIronBall::Update()
 
 }
 
+void ConicalPendulumIronBall::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
+{
+    colliderPartner, collisionData;
+}
+
 void ConicalPendulumIronBall::ColliderInitialize(ColliderShape collider)
 {
+
+    // 衝突マスク
+    collisionAttribute_ = kColisionAttributeGimmick;
+    collisionMask_ -= kColisionAttributeGimmick;
+
+    // コライダー
+    Sphere sphere = std::get<Sphere>(collider);
+    sphere.SetParentObject(this);
+    sphere.SetCollisionAttribute(collisionAttribute_);
+    sphere.SetCollisionMask(collisionMask_);
+    ColliderShape* colliderShape = new ColliderShape();
+    *colliderShape = sphere;
+    collider_.reset(colliderShape);
 
 }
 
