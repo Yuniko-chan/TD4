@@ -9,51 +9,23 @@ void VehicleConstructionSystem::Initialize(VehicleCore* core)
 
 void VehicleConstructionSystem::Update()
 {
-	bool dele = false;
-	for (std::list<std::pair<int, Car::IParts*>>::iterator it = leftD_.begin(); it != leftD_.end();) {
-		if ((*it).second->GetIsDelete() || dele) {
-			(*it).second->ReleaseParent();
-			it = leftD_.erase(it);
-			dele = true;
-		}
-		else {
-			++it;
-		}
-	}
-	dele = false;
-	for (std::list<std::pair<int, Car::IParts*>>::iterator it = rightD_.begin(); it != rightD_.end();) {
-		if ((*it).second->GetIsDelete() || dele) {
-			(*it).second->ReleaseParent();
-			it = rightD_.erase(it);
-			dele = true;
-		}
-		else {
-			++it;
-		}
-	}
-	dele = false;
-	for (std::list<std::pair<int, Car::IParts*>>::iterator it = forwardD_.begin(); it != forwardD_.end();) {
-		if ((*it).second->GetIsDelete() || dele) {
-			(*it).second->ReleaseParent();
-			it = forwardD_.erase(it);
-			dele = true;
-		}
-		else {
-			++it;
-		}
-	}
-	dele = false;
-	for (std::list<std::pair<int, Car::IParts*>>::iterator it = backForwardD_.begin(); it != backForwardD_.end();) {
-		if ((*it).second->GetIsDelete() || dele) {
-			(*it).second->ReleaseParent();
-			it = backForwardD_.erase(it);
-			dele = true;
-		}
-		else {
-			++it;
+	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
+		if ((*it).second->GetIsDelete()) {
+			it = partsMapping_.erase(it);
 		}
 	}
 
+	//bool dele = false;
+	//for (std::list<std::pair<int, Car::IParts*>>::iterator it = leftD_.begin(); it != leftD_.end();) {
+	//	if ((*it).second->GetIsDelete() || dele) {
+	//		(*it).second->ReleaseParent();
+	//		it = leftD_.erase(it);
+	//		dele = true;
+	//	}
+	//	else {
+	//		++it;
+	//	}
+	//}
 }
 
 void VehicleConstructionSystem::Attach(Car::IParts* parts)
@@ -92,56 +64,86 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts)
 
 void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 {
-	int number = 0;
+	const int kMaxGrid = 10;
 	Car::IParts* preParts = nullptr;
 	PartsOffsetCalculator calculator;
+	// 親の設定
+	core_->AddChild(parts);
+	parts->GetWorldTransformAdress()->SetParent(core_->GetWorldTransformAdress());
 
 	switch (direct)
 	{
 	case VehicleConstructionSystem::kLeft:
-		number = (int)leftD_.size();
-		number++;
-		leftD_.push_back({ number ,parts });
-		if (number > 1) {
-			preParts = FindPreNumber(&leftD_, number);
-			parts->GetConnector()->AddParents(preParts);
+		for (int i = 1; i <= kMaxGrid; ++i) {
+			// 無ければ
+			if (partsMapping_.find(Vector2Int(-i, 0)) == partsMapping_.end()) {
+				parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, i);
+				partsMapping_.emplace(Vector2Int(-i, 0), parts);
+				if (i > 1) {
+					preParts = partsMapping_.find(Vector2Int(-i, 0))->second;
+					parts->GetConnector()->AddParents(preParts);
+				}
+				else {
+					parts->GetConnector()->AddParents(core_);
+				}
+				break;
+			}
 		}
 		break;
 	case VehicleConstructionSystem::kRight:
-		number = (int)rightD_.size();
-		number++;
-		rightD_.push_back({ number ,parts });
-		if (number > 1) {
-			preParts = FindPreNumber(&rightD_, number);
-			parts->GetConnector()->AddParents(preParts);
+		for (int i = 1; i <= kMaxGrid; ++i) {
+			// 無ければ
+			if (partsMapping_.find(Vector2Int(i, 0)) == partsMapping_.end()) {
+				parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, i);
+				partsMapping_.emplace(Vector2Int(i, 0), parts);
+				if (i > 1) {
+					preParts = partsMapping_.find(Vector2Int(i, 0))->second;
+					parts->GetConnector()->AddParents(preParts);
+				}
+				else {
+					parts->GetConnector()->AddParents(core_);
+				}
+				break;
+			}
 		}
 		break;
 	case VehicleConstructionSystem::kForward:
-		number = (int)forwardD_.size();
-		number++;
-		forwardD_.push_back({ number ,parts });
-		if (number > 1) {
-			preParts = FindPreNumber(&forwardD_, number);
-			parts->GetConnector()->AddParents(preParts);
+		for (int i = 1; i <= kMaxGrid; ++i) {
+			// 無ければ
+			if (partsMapping_.find(Vector2Int(0, i)) == partsMapping_.end()) {
+				parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, i);
+				partsMapping_.emplace(Vector2Int(0, i), parts);
+				if (i > 1) {
+					preParts = partsMapping_.find(Vector2Int(0, i))->second;
+					parts->GetConnector()->AddParents(preParts);
+				}
+				else {
+					parts->GetConnector()->AddParents(core_);
+				}
+				break;
+			}
 		}
 		break;
 	case VehicleConstructionSystem::kBackForward:
-		number = (int)backForwardD_.size();
-		number++;
-		backForwardD_.push_back({ number ,parts });
-		if (number > 1) {
-			preParts = FindPreNumber(&backForwardD_, number);
-			parts->GetConnector()->AddParents(preParts);
+		for (int i = 1; i <= kMaxGrid; ++i) {
+			// 無ければ
+			if (partsMapping_.find(Vector2Int(0, -i)) == partsMapping_.end()) {
+				parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, i);
+				partsMapping_.emplace(Vector2Int(0, -i), parts);
+				if (i > 1) {
+					preParts = partsMapping_.find(Vector2Int(0, -i))->second;
+					parts->GetConnector()->AddParents(preParts);
+				}
+				else {
+					parts->GetConnector()->AddParents(core_);
+				}
+				break;
+			}
 		}
 		break;
 	default:
 		break;
 	}
-	// 親の設定
-	core_->AddChild(parts);
-	//parts->SetParent(core_);
-	parts->GetWorldTransformAdress()->SetParent(core_->GetWorldTransformAdress());
-	parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, number);
 
 }
 

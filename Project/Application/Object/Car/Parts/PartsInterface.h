@@ -59,6 +59,8 @@ namespace Car
 		//---セッター---//
 		// 親子関係
 		void SetParent(VehicleCore* parent) { parentCore_ = parent; }
+		// 消す
+		void SetIsDelete(bool isDelete) { isDelete_ = isDelete; }
 	protected:
 		/// <summary>
 		/// ImGui

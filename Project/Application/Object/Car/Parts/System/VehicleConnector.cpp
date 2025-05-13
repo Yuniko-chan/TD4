@@ -3,8 +3,9 @@
 
 void VehicleConnector::Update()
 {
-	for (std::list<Car::IParts*>::iterator it = parents_.begin(); it != parents_.end(); ++it) {
-		//(*it)->get
+	// 親がなければ
+	if (parents_.empty()) {
+		owner_->SetIsDelete(true);
 	}
 
 }

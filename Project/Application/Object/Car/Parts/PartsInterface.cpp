@@ -128,6 +128,8 @@ void Car::IParts::ChildUpdate()
 	//}
 	// 親子関係であれば早期
 	if (IsParent()) {
+		// 親がある場合コネクターの更新を入れる
+		//connector_->Update();
 		return;
 	}
 	// 仮の地面処理
