@@ -397,6 +397,9 @@
     <Filter Include="Application\Object\Gimmick\IronBall">
       <UniqueIdentifier>{5a8be157-66cd-40ac-82f3-1cd3834e4854}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Object\Gimmick\Cannon">
+      <UniqueIdentifier>{82a8c903-ffee-44da-a64c-a9a3075cee8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -978,6 +981,9 @@
     </ClCompile>
     <ClCompile Include="Application\Object\Gimmick\IronBall\PendulumIronBall.cpp">
       <Filter>Application\Object\Gimmick\IronBall</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Gimmick\Cannon\Cannon.cpp">
+      <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1763,6 +1769,12 @@
     </ClInclude>
     <ClInclude Include="Application\Object\Gimmick\IronBall\PendulumIronBallData.h">
       <Filter>Application\Object\Gimmick\IronBall</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\Cannon\Cannon.h">
+      <Filter>Application\Object\Gimmick\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\IronBall\CannonData.h">
+      <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

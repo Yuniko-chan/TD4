@@ -186,6 +186,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Car\Factory\VehicleFactory.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\PartsInterface.cpp" />
     <ClCompile Include="Application\Object\Factory\ObjectCreate.cpp" />
+    <ClCompile Include="Application\Object\Gimmick\Cannon\Cannon.cpp" />
     <ClCompile Include="Application\Object\Gimmick\IronBall\PendulumIronBall.cpp" />
     <ClCompile Include="Application\Object\GlobalParameterManager.cpp" />
     <ClCompile Include="Application\Object\KeyConfig\GameKeyconfig.cpp" />
@@ -399,6 +400,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Factory\CreateObjectNames.h" />
     <ClInclude Include="Application\Object\Factory\ObjectCreate.h" />
     <ClInclude Include="Application\Object\GameObjectsList.h" />
+    <ClInclude Include="Application\Object\Gimmick\Cannon\Cannon.h" />
+    <ClInclude Include="Application\Object\Gimmick\IronBall\CannonData.h" />
     <ClInclude Include="Application\Object\Gimmick\IronBall\PendulumIronBall.h" />
     <ClInclude Include="Application\Object\Gimmick\IronBall\PendulumIronBallData.h" />
     <ClInclude Include="Application\Object\GlobalParameterManager.h" />
