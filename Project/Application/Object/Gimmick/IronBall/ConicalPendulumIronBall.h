@@ -41,6 +41,12 @@ public: // 関数
     void Update() override;
 
     /// <summary>
+    /// 描画
+    /// </summary>
+    /// <param name="camera">カメラ</param>
+    void Draw(BaseCamera& camera) override;
+
+    /// <summary>
     /// 衝突処理
     /// </summary>
     /// <param name="colliderPartner"></param>
@@ -66,6 +72,16 @@ private: // 関数
     /// </summary>
     void ConicalPendulumUpdate();
 
+    /// <summary>
+    /// 紐初期化
+    /// </summary>
+    void StringInitialize();
+
+    /// <summary>
+    /// 紐更新
+    /// </summary>
+    void StringUpdate();
+
 private: // 変数
 
     // アンカー
@@ -78,6 +94,16 @@ private: // 変数
     float angle_;
     // 各速度
     float angularVelocity_;
+
+    // 紐描画
+    // ファイル名前
+    std::string stringFileName_;
+    // モデル
+    Model* stringModel_ = nullptr;
+    // マテリアル
+    std::unique_ptr<Material> stringMaterial_;
+    // トランスフォーム
+    WorldTransform stringWorldTransform_;
 
 };
 

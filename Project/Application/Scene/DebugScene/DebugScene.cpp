@@ -62,11 +62,11 @@ void DebugScene::Initialize()
 	courseDemoObject_->Initialize(&courseDemoData);
 
 	// 円錐振り子
-	conicalPendulumIronBallModel_.reset(Model::Create("Resources/default/", "ball.obj", dxCommon_));
+	conicalPendulumIronBallModel_.reset(Model::Create("Resources/Model/Gimmick/IronBall/", "IronBall.obj", dxCommon_));
 	conicalPendulumIronBall_ = std::make_unique<ConicalPendulumIronBall>();
 	LevelData::MeshData conicalPendulumIronData;
-	conicalPendulumIronData.directoryPath = "Resources/default/";
-	conicalPendulumIronData.flieName = "ball.obj";
+	conicalPendulumIronData.directoryPath = "Resources/Model/Gimmick/IronBall/";
+	conicalPendulumIronData.flieName = "IronBall.obj";
 	conicalPendulumIronData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
 	conicalPendulumIronData.className = "ConicalPendulumIronBall";
 	conicalPendulumIronData.name = "";

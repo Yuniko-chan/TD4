@@ -4,6 +4,8 @@
 #include <cmath>
 #include "../../../../Engine/Math/DeltaTime.h"
 #include "../../../Collider/CollisionConfig.h"
+#include "../../../../Engine/3D/Model/ModelManager.h"
+#include "../../../../Engine/3D/Model/ModelDraw.h"
 
 ConicalPendulumIronBall::ConicalPendulumIronBall()
 {
@@ -26,6 +28,9 @@ void ConicalPendulumIronBall::Initialize(LevelData::MeshData* data)
     debugConicalPendulumIronBallData.length = 8.0f;
     ConicalPendulumInitialize(debugConicalPendulumIronBallData);
 
+    // 紐初期化
+    StringInitialize();
+
 }
 
 void ConicalPendulumIronBall::Initialize(LevelData::MeshData* data, const ConicalPendulumIronBallData& conicalPendulumIronBallData)
@@ -36,6 +41,9 @@ void ConicalPendulumIronBall::Initialize(LevelData::MeshData* data, const Conica
     
     // 円錐振り子初期化
     ConicalPendulumInitialize(conicalPendulumIronBallData);
+
+    // 紐初期化
+    StringInitialize();
 
 }
 
@@ -50,6 +58,29 @@ void ConicalPendulumIronBall::Update()
 
     // 行列更新
     worldTransform_.UpdateMatrix();
+
+    // 紐更新
+    StringUpdate();
+
+}
+
+void ConicalPendulumIronBall::Draw(BaseCamera& camera)
+{
+
+    MeshObject::Draw(camera);
+
+    if (stringMaterial_->GetMaterialMap()->color.w == 0.0f) {
+        return;
+    }
+
+    ModelDraw::NormalObjectDesc desc;
+
+    desc.model = stringModel_;
+    desc.material = stringMaterial_.get();
+    desc.camera = &camera;
+    desc.worldTransform = &stringWorldTransform_;
+
+    ModelDraw::NormalObjectDraw(desc);
 
 }
 
@@ -107,5 +138,33 @@ void ConicalPendulumIronBall::ConicalPendulumUpdate()
     worldTransform_.transform_.translate.x = anchor_.x + std::cosf(angle_) * radius;
     worldTransform_.transform_.translate.y = anchor_.y - height;
     worldTransform_.transform_.translate.z = anchor_.z - std::sinf(angle_) * radius;
+
+}
+
+void ConicalPendulumIronBall::StringInitialize()
+{
+
+    // 紐描画
+    // ファイル名前
+    stringFileName_ = "IronBallString.obj";
+    // モデル
+    stringModel_ = ModelManager::GetInstance()->GetModel(directoryPath_, stringFileName_);
+    // マテリアル
+    stringMaterial_.reset(Material::Create());
+    // トランスフォーム
+    stringWorldTransform_.Initialize(true);
+    stringWorldTransform_.usedDirection_ = true;
+    stringWorldTransform_.transform_.translate = anchor_;
+    stringWorldTransform_.transform_.scale.z = length_ / 2.0f;
+    stringWorldTransform_.UpdateMatrix();
+
+}
+
+void ConicalPendulumIronBall::StringUpdate()
+{
+
+    // 向きを更新
+    stringWorldTransform_.direction_ = Vector3::Normalize(worldTransform_.GetWorldPosition() - anchor_);
+    stringWorldTransform_.UpdateMatrix();
 
 }
