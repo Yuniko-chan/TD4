@@ -13,7 +13,7 @@ struct Vector2Int {
 	/// 長さ取得
 	/// </summary>
 	/// <returns></returns>
-	int GetLength() {
+	int GetLength() const{
 		return int(std::abs(x) + std::abs(y));
 	}
 

@@ -46,6 +46,8 @@ private:
 	/// <param name="parts"></param>
 	void Attach(Car::IParts* parts, Direction direct);
 
+	void Attach(Car::IParts* parts, const Vector2Int& key);
+
 	//void AddMapping(const Vector2Int& id);
 
 	Car::IParts* FindPreNumber(std::list<std::pair<int, Car::IParts*>>* directLists, int32_t number);
