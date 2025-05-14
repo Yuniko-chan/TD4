@@ -42,8 +42,10 @@ public:
 	void AddChildren(Car::IParts* part) { childrens_.push_back(part); }
 	// 親の削除
 	void DeleteParent(Car::IParts* part) { parents_.remove(part); }
+	void ReleaseParent(Car::IParts* part);
 	// 子の削除
 	void DeleteChildren(Car::IParts* part) { childrens_.remove(part); }
+	void ReleaseChildren(Car::IParts* part);
 
 	// 深度値取得
 	int32_t GetDepth() const { return depth_; }
