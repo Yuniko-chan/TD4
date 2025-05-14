@@ -11,7 +11,8 @@ void VehicleConstructionSystem::Update()
 {
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
 		if ((*it).second->GetIsDelete()) {
-			(*it).second->ReleaseParent();
+			UnRegistParts((*it).first, (*it).second);
+			//(*it).second->ReleaseParent();
 			it = partsMapping_.erase(it);
 		}
 	}
@@ -76,7 +77,8 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 				// 消すフラグを初期化
 				parts->SetIsDelete(false);
 				// マッピング
-				partsMapping_.emplace(mappingKey, parts);
+				RegistParts(mappingKey, parts);
+				//partsMapping_.emplace(mappingKey, parts);
 				// 仮の処理
 				if (i > 1) {
 					i--;
@@ -104,7 +106,8 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 				// 消すフラグを初期化
 				parts->SetIsDelete(false);
 				// マッピング
-				partsMapping_.emplace(mappingKey, parts);
+				RegistParts(mappingKey, parts);
+				//partsMapping_.emplace(mappingKey, parts);
 				// 仮の処理
 				if (i > 1) {
 					i--;
@@ -132,17 +135,9 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 				// 消すフラグを初期化
 				parts->SetIsDelete(false);
 				// マッピング
-				partsMapping_.emplace(mappingKey, parts);
-				// 仮の処理
-				if (i > 1) {
-					i--;
-					mappingKey = { 0,i };
-					preParts = partsMapping_.find(mappingKey)->second;
-					parts->GetConnector()->AddParents(preParts);
-				}
-				else {
-					parts->GetConnector()->AddParents(core_);
-				}
+				RegistParts(mappingKey, parts);
+				//partsMapping_.emplace(mappingKey, parts);
+				parts->GetConnector()->AddParents(core_);
 				break;
 			}
 		}
@@ -160,16 +155,8 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 				// 消すフラグを初期化
 				parts->SetIsDelete(false);
 				// マッピング
-				partsMapping_.emplace(mappingKey, parts);
-				// 仮の処理
-				if (i > 1) {
-					i--;
-					mappingKey = { 0,-i };
-					//std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.find(mappingKey);
-					preParts = partsMapping_.find(mappingKey)->second;
-					parts->GetConnector()->AddParents(preParts);
-				}
-				else {
+				RegistParts(mappingKey, parts);
+				if (mappingKey.GetLength() <= 1) {
 					parts->GetConnector()->AddParents(core_);
 				}
 				break;
@@ -191,4 +178,84 @@ Car::IParts* VehicleConstructionSystem::FindPreNumber(std::list<std::pair<int, C
 	}
 
 	return nullptr;
+}
+
+void VehicleConstructionSystem::RegistParts(const Vector2Int& id, Car::IParts* parts)
+{
+	// リストに登録
+	partsMapping_.emplace(id, parts);
+	// 隣接検索
+	std::list<Car::IParts*> adjoinParts;
+	Vector2Int findID = {};
+	findID = Vector2Int(id.x + 1, id.y);
+	if (partsMapping_.contains(findID)) {
+		adjoinParts.push_back(partsMapping_.find(findID)->second);
+	}
+	findID = Vector2Int(id.x - 1, id.y);
+	if (partsMapping_.contains(findID)) {
+		adjoinParts.push_back(partsMapping_.find(findID)->second);
+	}
+	findID = Vector2Int(id.x, id.y + 1);
+	if (partsMapping_.contains(findID)) {
+		adjoinParts.push_back(partsMapping_.find(findID)->second);
+	}
+	findID = Vector2Int(id.x, id.y - 1);
+	if (partsMapping_.contains(findID)) {
+		adjoinParts.push_back(partsMapping_.find(findID)->second);
+	}
+	// 子・親の登録
+	for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
+		// 対象の深度値
+		int32_t targetDepth = (*it)->GetConnector()->GetDepth();
+		// 子に追加
+		if (parts->GetConnector()->GetDepth() < targetDepth) {
+			parts->GetConnector()->AddChildren(*it);
+		}
+		// 親に追加
+		else if (parts->GetConnector()->GetDepth() > targetDepth) {
+			parts->GetConnector()->AddParents(*it);
+		}
+	}
+
+}
+
+void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts* parts)
+{
+	// パーツ解除処理
+	parts->ReleaseParent();
+	// リストから削除
+	//partsMapping_.erase(partsMapping_.find(id));
+	// 隣接を検索
+	std::list<Car::IParts*> adjoinParts;
+	Vector2Int findID = {};
+	findID = Vector2Int(id.x + 1, id.y);
+	if (partsMapping_.contains(findID)) {
+		adjoinParts.push_back(partsMapping_.find(findID)->second);
+	}
+	findID = Vector2Int(id.x - 1, id.y);
+	if (partsMapping_.contains(findID)) {
+		adjoinParts.push_back(partsMapping_.find(findID)->second);
+	}
+	findID = Vector2Int(id.x, id.y + 1);
+	if (partsMapping_.contains(findID)) {
+		adjoinParts.push_back(partsMapping_.find(findID)->second);
+	}
+	findID = Vector2Int(id.x, id.y - 1);
+	if (partsMapping_.contains(findID)) {
+		adjoinParts.push_back(partsMapping_.find(findID)->second);
+	}
+
+	// 子・親の解除処理
+	for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
+		// 対象の深度値
+		int32_t targetDepth = (*it)->GetConnector()->GetDepth();
+		// 子に追加
+		if (parts->GetConnector()->GetDepth() < targetDepth) {
+			parts->GetConnector()->DeleteChildren(*it);
+		}
+		// 親に追加
+		else if (parts->GetConnector()->GetDepth() > targetDepth) {
+			parts->GetConnector()->DeleteParent(*it);
+		}
+	}
 }

@@ -45,6 +45,8 @@ public:
 	// 子の削除
 	void DeleteChildren(Car::IParts* part) { childrens_.remove(part); }
 
+	// 深度値取得
+	int32_t GetDepth() const { return depth_; }
 	// 深度地設定
 	void SetDepth(int32_t depth) { depth_ = depth; }
 	void SetKey(const Vector2& key) { debugKey_ = key; }

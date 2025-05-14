@@ -16,6 +16,15 @@ struct Vector2Int {
 		if (x != other.x) return x < other.x;
 		return y < other.y;
 	}
+
+	/// <summary>
+	/// 長さ取得
+	/// </summary>
+	/// <returns></returns>
+	int GetLength() {
+		return int(std::abs(x) + std::abs(y));
+	}
+
 };
 
 /// <summary>
@@ -57,6 +66,18 @@ private:
 	//void AddMapping(const Vector2Int& id);
 
 	Car::IParts* FindPreNumber(std::list<std::pair<int, Car::IParts*>>* directLists, int32_t number);
+
+	/// <summary>
+	/// パーツの登録処理
+	/// </summary>
+	/// <param name="parts"></param>
+	void RegistParts(const Vector2Int& id, Car::IParts* parts);
+	/// <summary>
+	/// パーツの解除処理
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="parts"></param>
+	void UnRegistParts(const Vector2Int& id, Car::IParts* parts);
 
 private:
 	// システム用のコア
