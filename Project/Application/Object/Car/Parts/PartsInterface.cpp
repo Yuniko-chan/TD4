@@ -43,6 +43,8 @@ void Car::IParts::ReleaseParent()
 	worldTransform_.transform_.translate = worldPosition;
 	// コアの解除
 	parentCore_ = nullptr;
+	// コネクターのリセット
+	connector_->Reset();
 }
 
 void Car::IParts::TransformParent()
@@ -87,6 +89,11 @@ void Car::IParts::ImGuiTransform(const float& value)
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, value);
 
 	ImGui::Separator();
+	// 接続処理確認
+	if (connector_) {
+		connector_->ImGuiDraw();
+	}
+
 	ImGuiDrawChildParts();
 }
 
@@ -129,7 +136,7 @@ void Car::IParts::ChildUpdate()
 	// 親子関係であれば早期
 	if (IsParent()) {
 		// 親がある場合コネクターの更新を入れる
-		//connector_->Update();
+		connector_->Update();
 		return;
 	}
 	// 仮の地面処理

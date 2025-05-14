@@ -11,21 +11,10 @@ void VehicleConstructionSystem::Update()
 {
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
 		if ((*it).second->GetIsDelete()) {
+			(*it).second->ReleaseParent();
 			it = partsMapping_.erase(it);
 		}
 	}
-
-	//bool dele = false;
-	//for (std::list<std::pair<int, Car::IParts*>>::iterator it = leftD_.begin(); it != leftD_.end();) {
-	//	if ((*it).second->GetIsDelete() || dele) {
-	//		(*it).second->ReleaseParent();
-	//		it = leftD_.erase(it);
-	//		dele = true;
-	//	}
-	//	else {
-	//		++it;
-	//	}
-	//}
 }
 
 void VehicleConstructionSystem::Attach(Car::IParts* parts)
@@ -64,6 +53,7 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts)
 
 void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 {
+	Vector2Int mappingKey = {};
 	const int kMaxGrid = 10;
 	Car::IParts* preParts = nullptr;
 	PartsOffsetCalculator calculator;
@@ -75,12 +65,23 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 	{
 	case VehicleConstructionSystem::kLeft:
 		for (int i = 1; i <= kMaxGrid; ++i) {
+			mappingKey = { -i,0 };
 			// 無ければ
-			if (partsMapping_.find(Vector2Int(-i, 0)) == partsMapping_.end()) {
+			if (partsMapping_.find(mappingKey) == partsMapping_.end()) {
 				parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, i);
-				partsMapping_.emplace(Vector2Int(-i, 0), parts);
+				// 深度
+				parts->GetConnector()->SetDepth(i);
+				// キー
+				parts->GetConnector()->SetKey(Vector2((float)mappingKey.x, (float)mappingKey.y));
+				// 消すフラグを初期化
+				parts->SetIsDelete(false);
+				// マッピング
+				partsMapping_.emplace(mappingKey, parts);
+				// 仮の処理
 				if (i > 1) {
-					preParts = partsMapping_.find(Vector2Int(-i, 0))->second;
+					i--;
+					mappingKey = { -i,0 };
+					preParts = partsMapping_.find(mappingKey)->second;
 					parts->GetConnector()->AddParents(preParts);
 				}
 				else {
@@ -92,12 +93,23 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 		break;
 	case VehicleConstructionSystem::kRight:
 		for (int i = 1; i <= kMaxGrid; ++i) {
+			mappingKey = { i,0 };
 			// 無ければ
-			if (partsMapping_.find(Vector2Int(i, 0)) == partsMapping_.end()) {
+			if (partsMapping_.find(mappingKey) == partsMapping_.end()) {
 				parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, i);
-				partsMapping_.emplace(Vector2Int(i, 0), parts);
+				// 深度
+				parts->GetConnector()->SetDepth(i);
+				// キー
+				parts->GetConnector()->SetKey(Vector2((float)mappingKey.x, (float)mappingKey.y));
+				// 消すフラグを初期化
+				parts->SetIsDelete(false);
+				// マッピング
+				partsMapping_.emplace(mappingKey, parts);
+				// 仮の処理
 				if (i > 1) {
-					preParts = partsMapping_.find(Vector2Int(i, 0))->second;
+					i--;
+					mappingKey = { -i,0 };
+					preParts = partsMapping_.find(mappingKey)->second;
 					parts->GetConnector()->AddParents(preParts);
 				}
 				else {
@@ -109,12 +121,23 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 		break;
 	case VehicleConstructionSystem::kForward:
 		for (int i = 1; i <= kMaxGrid; ++i) {
+			mappingKey = Vector2Int(0, i);
 			// 無ければ
-			if (partsMapping_.find(Vector2Int(0, i)) == partsMapping_.end()) {
+			if (partsMapping_.find(mappingKey) == partsMapping_.end()) {
 				parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, i);
-				partsMapping_.emplace(Vector2Int(0, i), parts);
+				// 深度
+				parts->GetConnector()->SetDepth(i);
+				// キー
+				parts->GetConnector()->SetKey(Vector2((float)mappingKey.x, (float)mappingKey.y));
+				// 消すフラグを初期化
+				parts->SetIsDelete(false);
+				// マッピング
+				partsMapping_.emplace(mappingKey, parts);
+				// 仮の処理
 				if (i > 1) {
-					preParts = partsMapping_.find(Vector2Int(0, i))->second;
+					i--;
+					mappingKey = { 0,i };
+					preParts = partsMapping_.find(mappingKey)->second;
 					parts->GetConnector()->AddParents(preParts);
 				}
 				else {
@@ -126,12 +149,24 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 		break;
 	case VehicleConstructionSystem::kBackForward:
 		for (int i = 1; i <= kMaxGrid; ++i) {
+			mappingKey = Vector2Int(0, -i);
 			// 無ければ
-			if (partsMapping_.find(Vector2Int(0, -i)) == partsMapping_.end()) {
+			if (partsMapping_.find(mappingKey) == partsMapping_.end()) {
 				parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, i);
-				partsMapping_.emplace(Vector2Int(0, -i), parts);
+				// 深度
+				parts->GetConnector()->SetDepth(i);
+				// キー
+				parts->GetConnector()->SetKey(Vector2((float)mappingKey.x, (float)mappingKey.y));
+				// 消すフラグを初期化
+				parts->SetIsDelete(false);
+				// マッピング
+				partsMapping_.emplace(mappingKey, parts);
+				// 仮の処理
 				if (i > 1) {
-					preParts = partsMapping_.find(Vector2Int(0, -i))->second;
+					i--;
+					mappingKey = { 0,-i };
+					//std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.find(mappingKey);
+					preParts = partsMapping_.find(mappingKey)->second;
 					parts->GetConnector()->AddParents(preParts);
 				}
 				else {
@@ -140,8 +175,6 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
 				break;
 			}
 		}
-		break;
-	default:
 		break;
 	}
 

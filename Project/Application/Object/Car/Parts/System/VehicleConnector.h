@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Engine/3D/Transform/WorldTransform.h"
 #include "../../../Utility/Common/OwnerComponent.h"
+#include "../../../Engine/Math/Vector/Vector2.h"
 #include <list>
 #include <array>
 
@@ -20,11 +21,20 @@ public:
 		bool isConnected = false;	// 接続されているか
 		bool isAvailable = true;	// 空か
 	};
-	
+
 	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update();
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw();
+
+	void Reset() {
+		parents_.clear();
+		childrens_.clear();
+	}
 
 	// 親の追加
 	void AddParents(Car::IParts* part) { parents_.push_back(part); }
@@ -37,6 +47,7 @@ public:
 
 	// 深度地設定
 	void SetDepth(int32_t depth) { depth_ = depth; }
+	void SetKey(const Vector2& key) { debugKey_ = key; }
 
 	bool IsParent() { return !parents_.empty(); }
 
@@ -46,6 +57,8 @@ private:
 	std::list<Car::IParts*> childrens_;
 	// 深度値
 	int32_t depth_ = 0;
+	// デバッグ用
+	Vector2 debugKey_ = {};
 	// 空スロットチェック
 	//std::array<ConnectionSlot, Direction::MaxSize> connectSlot_;
 
