@@ -4,3 +4,4 @@
 
 // 以下ギミック
 #include "Gimmick/IronBall/ConicalPendulumIronBall.h"
+#include "Gimmick/IronBall/PendulumIronBall.h"

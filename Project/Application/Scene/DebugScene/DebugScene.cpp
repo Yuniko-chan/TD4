@@ -61,21 +61,21 @@ void DebugScene::Initialize()
 	courseDemoData.parentName = "";
 	courseDemoObject_->Initialize(&courseDemoData);
 
-	// 円錐振り子
-	conicalPendulumIronBallModel_.reset(Model::Create("Resources/Model/Gimmick/IronBall/", "IronBall.obj", dxCommon_));
-	conicalPendulumIronBall_ = std::make_unique<ConicalPendulumIronBall>();
-	LevelData::MeshData conicalPendulumIronData;
-	conicalPendulumIronData.directoryPath = "Resources/Model/Gimmick/IronBall/";
-	conicalPendulumIronData.flieName = "IronBall.obj";
-	conicalPendulumIronData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
-	conicalPendulumIronData.className = "ConicalPendulumIronBall";
-	conicalPendulumIronData.name = "";
-	conicalPendulumIronData.parentName = "";
-	Sphere conicalPendulumIronCollider;
-	conicalPendulumIronCollider.center_ = { 0.0f,0.0f,0.0f };
-	conicalPendulumIronCollider.radius_ = 1.0f;
-	conicalPendulumIronData.collider = conicalPendulumIronCollider;
-	conicalPendulumIronBall_->Initialize(&conicalPendulumIronData);
+	// 振り子
+	pendulumIronBallModel_.reset(Model::Create("Resources/Model/Gimmick/IronBall/", "IronBall.obj", dxCommon_));
+	pendulumIronBall_ = std::make_unique<PendulumIronBall>();
+	LevelData::MeshData pendulumIronData;
+	pendulumIronData.directoryPath = "Resources/Model/Gimmick/IronBall/";
+	pendulumIronData.flieName = "IronBall.obj";
+	pendulumIronData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+	pendulumIronData.className = "PendulumIronBall";
+	pendulumIronData.name = "";
+	pendulumIronData.parentName = "";
+	Sphere pendulumIronCollider;
+	pendulumIronCollider.center_ = { 0.0f,0.0f,0.0f };
+	pendulumIronCollider.radius_ = 1.0f;
+	pendulumIronData.collider = pendulumIronCollider;
+	pendulumIronBall_->Initialize(&pendulumIronData);
 
 	BaseScene::InitilaizeCheck();
 
@@ -94,7 +94,7 @@ void DebugScene::Update()
 	courseCollisionSystem_->ObjectRegistration(courseDemoObject_.get());
 	courseCollisionSystem_->Execute();
 
-	conicalPendulumIronBall_->Update();
+	pendulumIronBall_->Update();
 
 	DebugCameraUpdate();
 
@@ -116,7 +116,7 @@ void DebugScene::Draw()
 	// コースデモ
 	//courseDemoObject_->Draw(camera_);
 
-	conicalPendulumIronBall_->Draw(camera_);
+	pendulumIronBall_->Draw(camera_);
 
 	ModelDraw::PostDraw();
 

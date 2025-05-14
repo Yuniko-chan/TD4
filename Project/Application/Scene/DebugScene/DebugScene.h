@@ -9,6 +9,7 @@
 #include "../../Course/CourseCollisionSystem.h"
 #include "../../Course/Demo/CourseDemoObject.h"
 #include "../../Object/Gimmick/IronBall/ConicalPendulumIronBall.h"
+#include "../../Object/Gimmick/IronBall/PendulumIronBall.h"
 
 /// <summary>
 /// デバッグシーン
@@ -70,8 +71,8 @@ private: // メンバ変数
 	std::unique_ptr<Model> courseDemoModel_;
 
 	// 円錐振り子
-	std::unique_ptr<ConicalPendulumIronBall> conicalPendulumIronBall_;
-	std::unique_ptr<Model> conicalPendulumIronBallModel_;
+	std::unique_ptr<PendulumIronBall> pendulumIronBall_;
+	std::unique_ptr<Model> pendulumIronBallModel_;
 
 };
 

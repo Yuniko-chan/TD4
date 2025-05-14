@@ -976,6 +976,9 @@
     <ClCompile Include="Application\Object\Gimmick\IronBall\ConicalPendulumIronBall.cpp">
       <Filter>Application\Object\Gimmick\IronBall</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Object\Gimmick\IronBall\PendulumIronBall.cpp">
+      <Filter>Application\Object\Gimmick\IronBall</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imgui.h">
@@ -1753,6 +1756,12 @@
       <Filter>Application\Object\Gimmick\IronBall</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Gimmick\IronBall\ConicalPendulumIronBall.h">
+      <Filter>Application\Object\Gimmick\IronBall</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\IronBall\PendulumIronBall.h">
+      <Filter>Application\Object\Gimmick\IronBall</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\IronBall\PendulumIronBallData.h">
       <Filter>Application\Object\Gimmick\IronBall</Filter>
     </ClInclude>
   </ItemGroup>
