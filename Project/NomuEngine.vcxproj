@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -175,6 +175,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Car\Parts\System\PartsOffsetCalculator.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\System\VehicleConnector.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Tire\TireParts.cpp" />
+    <ClCompile Include="Application\Object\Car\System\Physics\DriveSystem.cpp" />
+    <ClCompile Include="Application\Object\Car\System\Physics\VehicleEngine.cpp" />
     <ClCompile Include="Application\Object\Car\System\VehicleStatus.cpp" />
     <ClCompile Include="Application\Object\Car\VehicleCore.cpp" />
     <ClCompile Include="Application\Object\Car\Factory\VehicleFactory.cpp" />
@@ -369,8 +371,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Car\Parts\System\PartsOffsetCalculator.h" />
     <ClInclude Include="Application\Object\Car\Parts\System\VehicleConnector.h" />
     <ClInclude Include="Application\Object\Car\Physics\DriveSystem.h" />
+    <ClInclude Include="Application\Object\Car\Physics\System\VehicleEngine.h" />
+    <ClInclude Include="Application\Object\Car\System\Physics\DriveSystem.h" />
+    <ClInclude Include="Application\Object\Car\System\Physics\VehicleCaluclator.h" />
+    <ClInclude Include="Application\Object\Car\System\Physics\VehicleEngine.h" />
     <ClInclude Include="Application\Object\Car\System\VehicleCaluclator.h" />
     <ClInclude Include="Application\Object\Car\System\VehicleStatus.h" />
+    <ClInclude Include="Application\Object\Car\System\VehicleSystems.h" />
     <ClInclude Include="Application\Object\Car\VehicleCore.h" />
     <ClInclude Include="Application\Object\Car\CarLists.h" />
     <ClInclude Include="Application\Object\Car\Factory\VehicleFactory.h" />

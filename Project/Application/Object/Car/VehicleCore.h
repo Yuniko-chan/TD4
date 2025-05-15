@@ -3,7 +3,7 @@
 #include "../../../Engine/Animation/Animation.h"
 
 #include "Parts/PartsInterface.h"
-#include "System/VehicleStatus.h"
+#include "System/VehicleSystems.h"
 #include "Construction/VehicleConstructionSystem.h"
 
 class Player;
@@ -74,6 +74,8 @@ private:
 
     // パーツ構築システム
     std::unique_ptr<VehicleConstructionSystem> constructionSystem_;
+    // 運転関係
+    std::unique_ptr<DriveSystem> driveSystem_;
 
     // ペアになるプレイヤーポインタ
     Player* pairPlayer_ = nullptr;

@@ -35,6 +35,9 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 
 	constructionSystem_ = std::make_unique<VehicleConstructionSystem>();
 	constructionSystem_->Initialize(this);
+
+	driveSystem_ = std::make_unique<DriveSystem>();
+	driveSystem_->SetOwner(this);
 }
 
 void VehicleCore::Update()
