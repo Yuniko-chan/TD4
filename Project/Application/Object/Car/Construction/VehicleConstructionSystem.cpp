@@ -265,10 +265,9 @@ void VehicleConstructionSystem::RegistParts(const Vector2Int& id, Car::IParts* p
 
 void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts* parts)
 {
-	// リストから削除
-	//partsMapping_.erase(partsMapping_.find(id));
 	// 隣接を検索
 	std::list<Car::IParts*> adjoinParts;
+	// IDから探す
 	Vector2Int findID = {};
 	findID = Vector2Int(id.x + 1, id.y);
 	if (partsMapping_.contains(findID)) {
@@ -291,15 +290,13 @@ void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts*
 	for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
 		// 対象の深度値
 		int32_t targetDepth = (*it)->GetConnector()->GetDepth();
-		// 親の方で子から削除
+		// 自分が子である場合
 		if (parts->GetConnector()->GetDepth() > targetDepth) {
-			//parts->GetConnector()->DeleteChildren(*it);
-			// 対象から自機を消す
 			(*it)->GetConnector()->DeleteChildren(parts);
 		}
-		// 子への処理（親設定の解除と子供の新しい処理）
+		// 自分が親である場合
 		else if (parts->GetConnector()->GetDepth() < targetDepth) {
-			//parts->GetConnector()->ReleaseParent(*it);
+			// 
 			(*it)->GetConnector()->ReleaseParent(parts);
 		}
 	}

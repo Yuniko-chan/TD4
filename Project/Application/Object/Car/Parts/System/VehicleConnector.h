@@ -61,6 +61,11 @@ public:
 
 	bool IsParent() { return !parents_.empty(); }
 
+	/// <summary>
+	/// 子の整理
+	/// </summary>
+	void OrganizeChildren();
+
 private:
 	// 隣接パーツ
 	std::list<Car::IParts*> parents_;
