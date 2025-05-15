@@ -37,9 +37,15 @@ public:
 	}
 
 	// 親の追加
-	void AddParents(Car::IParts* part) { parents_.push_back(part); }
+	void AddParents(Car::IParts* part) {
+		parents_.push_back(part); 
+		parents_.unique();
+	}
 	// 子の追加
-	void AddChildren(Car::IParts* part) { childrens_.push_back(part); }
+	void AddChildren(Car::IParts* part) {
+		childrens_.push_back(part);
+		childrens_.unique();
+	}
 	// 親の削除
 	void DeleteParent(Car::IParts* part) { parents_.remove(part); }
 	void ReleaseParent(Car::IParts* part);

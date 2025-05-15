@@ -14,7 +14,13 @@ EulerTransform TransformHelper::DetachWithWorldTransform(WorldTransform* child)
     EulerTransform result = {};
     result.scale = child->transform_.scale;
     result.translate = child->GetWorldPosition();
-    result.rotate = child->transform_.rotate + child->parent_->transform_.rotate;
+    // 親がいれば
+    if (child->parent_) {
+        result.rotate = child->transform_.rotate + child->parent_->transform_.rotate;
+    }
+    else {
+        result.rotate = child->transform_.rotate;
+    }
     return EulerTransform(result);
 }
 

@@ -91,7 +91,11 @@ void Car::IParts::ImGuiTransform(const float& value)
 	ImGui::Separator();
 	// 接続処理確認
 	if (connector_) {
-		connector_->ImGuiDraw();
+		name = name_ + ":Connector";
+		if (ImGui::TreeNode(name.c_str())) {
+			connector_->ImGuiDraw();
+			ImGui::TreePop();
+		}
 	}
 
 	ImGuiDrawChildParts();
@@ -102,17 +106,21 @@ void Car::IParts::ImGuiDrawChildParts()
 	if (!parentCore_) {
 		return;
 	}
-	std::string name = name_ + ":Release";
-	// 解除
-	if (ImGui::Button(name.c_str())) {
-		isDelete_ = true;
-		//ReleaseParent();
-	}
-	name = name_ + ":SetUp";
-	// 設定
-	if (ImGui::Button(name.c_str())) {
-		worldTransform_.transform_.translate = {};
-		this->TransformParent();
+	std::string name = name_ + ":ChildData";
+	if (ImGui::TreeNode(name.c_str())) {
+		name = name_ + ":Release";
+		// 解除
+		if (ImGui::Button(name.c_str())) {
+			isDelete_ = true;
+			//ReleaseParent();
+		}
+		name = name_ + ":SetUp";
+		// 設定
+		if (ImGui::Button(name.c_str())) {
+			worldTransform_.transform_.translate = {};
+			this->TransformParent();
+		}
+		ImGui::TreePop();
 	}
 }
 
