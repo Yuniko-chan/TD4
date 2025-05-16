@@ -10,7 +10,7 @@ void DebugScene::Initialize()
 	BaseScene::Initialize();
 
 	// スカイドーム
-	skydomeModel_.reset(Model::Create("Resources/Model/Skydome/", "skydome.obj", dxCommon_));
+	/*skydomeModel_.reset(Model::Create("Resources/Model/Skydome/", "skydome.obj", dxCommon_));
 	skydome_ = std::make_unique<Skydome>();
 	LevelData::MeshData skydomeData;
 	skydomeData.directoryPath = "Resources/Model/Skydome";
@@ -19,10 +19,10 @@ void DebugScene::Initialize()
 	skydomeData.className = "skydome";
 	skydomeData.name = "";
 	skydomeData.parentName = "";
-	skydome_->Initialize(&skydomeData);
+	skydome_->Initialize(&skydomeData);*/
 
-	clothDemo_ = std::make_unique<ClothDemo>();
-	clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
+	//clothDemo_ = std::make_unique<ClothDemo>();
+	//clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
 
 	isDebugCameraActive_ = true;
 
@@ -42,7 +42,7 @@ void DebugScene::Initialize()
 void DebugScene::Update()
 {
 
-	clothDemo_->Update();
+	//clothDemo_->Update();
 
 	DebugCameraUpdate();
 
@@ -56,7 +56,7 @@ void DebugScene::Draw()
 	ModelDraw::PreDraw(dxCommon_->GetCommadList());
 
 	// スカイドーム
-	skydome_->Draw(camera_);
+	//skydome_->Draw(camera_);
 
 	//clothDemo_->CollisionObjectDraw(&camera_);
 
@@ -76,7 +76,7 @@ void DebugScene::Draw()
 void DebugScene::ImguiDraw()
 {
 
-	clothDemo_->ImGuiDraw(camera_);
+	//clothDemo_->ImGuiDraw(camera_);
 
 	debugCamera_->ImGuiDraw();
 
