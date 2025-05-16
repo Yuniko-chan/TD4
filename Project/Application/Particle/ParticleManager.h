@@ -59,7 +59,6 @@ public:
 			GraphicsPipelineState::sPipelineState_[GraphicsPipelineState::kPipelineStateIndexGPUParticle].Get(),"test");
 		particles_[0]->SetEmitter(kEmitter,true);
 
-
 	}
 private:
 	std::array<std::unique_ptr<GPUParticle>, ParticleIndex::kUIIndexOfCount> particles_;
