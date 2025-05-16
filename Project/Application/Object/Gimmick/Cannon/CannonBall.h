@@ -9,6 +9,14 @@ class CannonBall :
     public MeshObject
 {
 
+private: // 定数
+
+    // 生存時間
+    static const float kLifeTime_;
+
+    // 落下加速度
+    static const float kFallingAcceleration_;
+
 public: // 関数
 
     /// <summary>
@@ -41,6 +49,12 @@ public: // 関数
     void Update() override;
 
     /// <summary>
+    /// 描画
+    /// </summary>
+    /// <param name="camera">カメラ</param>
+    void Draw(BaseCamera& camera) override;
+
+    /// <summary>
     /// 衝突処理
     /// </summary>
     /// <param name="colliderPartner"></param>
@@ -52,6 +66,12 @@ public: // 関数
     /// </summary>
     /// <param name="cannonBallData">大砲の弾</param>
     void Reset(const CannonBallData& cannonBallData);
+
+    /// <summary>
+    /// 動作しているか取得
+    /// </summary>
+    /// <returns></returns>
+    bool GetIsWorking() { return isWorking_; }
 
 private: // 関数
 
@@ -76,5 +96,8 @@ private: // 変数
 
     // 動作しているか
     bool isWorking_;
+
+    // 生存時間経過
+    float lifetimeElapsed_;
 
 };

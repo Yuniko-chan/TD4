@@ -1,5 +1,12 @@
 #include "CannonBall.h"
 #include "../../../Collider/CollisionConfig.h"
+#include "../../../../Engine/Math/DeltaTime.h"
+
+// 生存時間
+const float CannonBall::kLifeTime_ = 2.0f;
+
+// 落下加速度
+const float CannonBall::kFallingAcceleration_ = 0.01f;
 
 CannonBall::CannonBall()
 {
@@ -45,6 +52,24 @@ void CannonBall::Update()
 		// 弾移動
 		worldTransform_.transform_.translate += velocity_;
 		worldTransform_.UpdateMatrix();
+
+		// 生存時間
+		lifetimeElapsed_ += kDeltaTime_;
+		if (lifetimeElapsed_ >= kLifeTime_) {
+			// 動作終了
+			isWorking_ = false;
+		}
+
+	}
+
+}
+
+void CannonBall::Draw(BaseCamera& camera)
+{
+
+	// 動作中表示
+	if (isWorking_) {
+		MeshObject::Draw(camera);
 	}
 
 }
@@ -61,12 +86,17 @@ void CannonBall::Reset(const CannonBallData& cannonBallData)
 	velocity_ = { 0.0f,0.0f,0.0f };
 	// 加速度
 	acceleration_ = Vector3::Multiply(cannonBallData.direction, cannonBallData.speed);
+	acceleration_.y -= kFallingAcceleration_;
+
 	// 位置
 	worldTransform_.transform_.translate = cannonBallData.position;
 	worldTransform_.UpdateMatrix();
 
 	// 動作している
 	isWorking_ = true;
+
+	// 生存時間経過
+	lifetimeElapsed_ = 0.0f;
 
 }
 

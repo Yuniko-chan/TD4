@@ -118,5 +118,11 @@ private: // 変数
     // 大砲の弾
     std::unique_ptr<CannonBall>  cannonBall_;
 
+    // 発射向き
+    Vector3 firingDirection_;
+
+    // 発射速度
+    float firingSpeed_;
+
 };
 

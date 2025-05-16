@@ -17,6 +17,8 @@ void Cannon::Initialize(LevelData::MeshData* data)
     CannonData cannonData;
     cannonData.cooltimeMax = 3.0f;
     cannonData.rotate = { 0.0f,0.0f,0.0f };
+    cannonData.firingDirection = Vector3::Normalize(Vector3{ 0.0f,2.0f,1.0f });
+    cannonData.firingSpeed = 0.02f;
 
     // 初期化
     Initialize(data, cannonData);
@@ -120,6 +122,12 @@ void Cannon::CannonInitialize(const CannonData& cannonData)
     worldTransform_.transform_.rotate = cannonData.rotate;
     worldTransform_.UpdateMatrix();
 
+    // 発射向き
+    firingDirection_ = cannonData.firingDirection;
+
+    // 発射速度
+    firingSpeed_ = cannonData.firingSpeed;
+
 }
 
 void Cannon::CannonUpdate()
@@ -136,17 +144,18 @@ void Cannon::CannonUpdate()
 void Cannon::CooltimeUpdate()
 {
 
-    // クールタイム経過
-    cooltimeElapsed_ += kDeltaTime_;
-
     // クールタイム終了か
-    if (cooltimeElapsed_ >= cooltimeMax_) {
+    if (cooltimeElapsed_ >= cooltimeMax_ && !cannonBall_->GetIsWorking()) {
         // クールタイム初期化
         cooltimeElapsed_ = 0.0f;
         // 発射するか
         isFiring_ = true;
     }
     else {
+        if (cooltimeElapsed_ < cooltimeMax_ && !cannonBall_->GetIsWorking()) {
+            // クールタイム経過
+            cooltimeElapsed_ += kDeltaTime_;
+        }
         isFiring_ = false;
     }
 
@@ -162,9 +171,9 @@ void Cannon::BulletFiring()
 
     // 大砲の弾、リセット
     CannonBallData data;
-    data.direction = { 0.0f,0.0f,1.0f };
+    data.direction = firingDirection_;
     data.position = worldTransform_.GetWorldPosition();
-    data.speed = 0.02f;
+    data.speed = firingSpeed_;
     cannonBall_->Reset(data);
 
 }
@@ -181,9 +190,15 @@ void Cannon::CannonBallInitialize()
     data.className = "CannonBall";
     data.name = "";
     data.parentName = "";
+    Sphere collider;
+    collider.center_ = { 0.0f,0.0f,0.0f };
+    collider.radius_ = 1.0f;
+    data.collider = collider;
+
     CannonBallData cannonBallData;
     cannonBallData.direction = { 0.0f,0.0f,1.0f };
     cannonBallData.speed = 0.01f;
+
     cannonBall_->Initialize(&data, cannonBallData);
 
 }

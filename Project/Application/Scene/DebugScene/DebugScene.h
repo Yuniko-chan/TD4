@@ -10,6 +10,8 @@
 #include "../../Course/Demo/CourseDemoObject.h"
 #include "../../Object/Gimmick/IronBall/ConicalPendulumIronBall.h"
 #include "../../Object/Gimmick/IronBall/PendulumIronBall.h"
+#include "../../Object/Gimmick/Cannon/Cannon.h"
+
 #include "../../Object/Player/Player.h"
 
 /// <summary>
@@ -78,6 +80,10 @@ private: // メンバ変数
 	// プレイヤー
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Model> playerModel_;
+
+	// 大砲
+	std::unique_ptr<Cannon> cannon_;
+	std::unique_ptr<Model> cannonModel_;
 
 };
 
