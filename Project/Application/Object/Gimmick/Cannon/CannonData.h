@@ -9,10 +9,7 @@ struct CannonData
     // クールタイム値
     float cooltimeMax;
 
-    // 狙い撃ち状態か
-    bool isLockOnSnip;
-
-    // 回転速度
-    float rotationSpeed;
+    // 回転値
+    Vector3 rotate;
 
 };

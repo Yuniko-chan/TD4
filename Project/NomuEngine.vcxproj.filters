@@ -985,6 +985,9 @@
     <ClCompile Include="Application\Object\Gimmick\Cannon\Cannon.cpp">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Object\Gimmick\Cannon\CannonBall.cpp">
+      <Filter>Application\Object\Gimmick\Cannon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imgui.h">
@@ -1773,7 +1776,13 @@
     <ClInclude Include="Application\Object\Gimmick\Cannon\Cannon.h">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\IronBall\CannonData.h">
+    <ClInclude Include="Application\Object\Gimmick\Cannon\CannonData.h">
+      <Filter>Application\Object\Gimmick\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\Cannon\cannonBallData.h">
+      <Filter>Application\Object\Gimmick\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\Cannon\CannonBall.h">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClInclude>
   </ItemGroup>

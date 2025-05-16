@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../../Engine/Object/MeshObject.h"
-#include "../IronBall/CannonData.h"
+#include "CannonData.h"
+#include "CannonBall.h"
 
 /// <summary>
 /// 大砲
@@ -85,6 +86,21 @@ private: // 関数
     /// </summary>
     void CannonUpdate();
 
+    /// <summary>
+    /// クールタイム更新
+    /// </summary>
+    void CooltimeUpdate();
+
+    /// <summary>
+    /// 弾発射
+    /// </summary>
+    void BulletFiring();
+
+    /// <summary>
+    /// 大砲の弾初期化
+    /// </summary>
+    void CannonBallInitialize();
+
 private: // 変数
 
     // 撃つ状態か
@@ -96,17 +112,11 @@ private: // 変数
     // クールタイム値
     float cooltimeMax_;
 
-    // 狙い撃ち状態か
-    bool isLockOnSnip_;
+    // 撃つ
+    bool isFiring_;
 
-    // 向き
-    Vector3 direction_;
-
-    // 合わせる向き
-    Vector3 directionToMatch_;
-
-    // 回転速度
-    float rotationSpeed_;
+    // 大砲の弾
+    std::unique_ptr<CannonBall>  cannonBall_;
 
 };
 

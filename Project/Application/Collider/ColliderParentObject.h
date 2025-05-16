@@ -20,10 +20,11 @@ class EngineParts;
 class ConicalPendulumIronBall;
 class PendulumIronBall;
 class Cannon;
+class CannonBall;
 
 // variantでまとめる
 using ColliderParentObject = std::variant<ParentNullObject*, Player*, VehicleCore*, 
-	ConicalPendulumIronBall*, PendulumIronBall*, Cannon*,
+	ConicalPendulumIronBall*, PendulumIronBall*, Cannon*, CannonBall*
 	/*, TireParts*,	ArmorFrameParts*, EngineParts**/>;
 
 /// <summary>
