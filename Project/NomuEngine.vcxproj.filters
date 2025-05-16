@@ -1542,6 +1542,7 @@
     <None Include="Resources\Shaders\GPUParticle\MissParticle\Miss.CS.hlsli">
       <Filter>shaders\GPUParticle\Miss</Filter>
     </None>
+    <None Include="Resources\Shaders\GPUParticle\testparticle\test.CS.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc">
@@ -1786,5 +1787,8 @@
     <FxCompile Include="Resources\Shaders\GPUParticle\MissParticle\MissUpdate.CS.hlsl">
       <Filter>shaders\GPUParticle\Miss</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shaders\GPUParticle\testparticle\testEmit.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\testparticle\testInitialize.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\testparticle\testUpdate.CS.hlsl" />
   </ItemGroup>
 </Project>

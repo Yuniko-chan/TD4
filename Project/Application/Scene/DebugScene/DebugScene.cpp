@@ -24,6 +24,11 @@ void DebugScene::Initialize()
 	//clothDemo_ = std::make_unique<ClothDemo>();
 	//clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
 
+	ParticleManager_ = std::make_unique<ParticleManager>();
+	ParticleManager_->Initialize();
+
+	ParticleManager_->CreateParticle<GPUParticle>();
+
 	isDebugCameraActive_ = true;
 
 	// モデル描画
@@ -43,6 +48,8 @@ void DebugScene::Update()
 {
 
 	//clothDemo_->Update();
+
+	ParticleManager_->Update();
 
 	DebugCameraUpdate();
 
@@ -70,6 +77,8 @@ void DebugScene::Draw()
 	//clothDemo_->Draw(&camera_);
 
 #pragma endregion
+
+	ParticleManager_->Draw(camera_);
 
 }
 

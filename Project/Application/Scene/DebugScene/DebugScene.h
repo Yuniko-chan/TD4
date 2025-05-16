@@ -6,6 +6,7 @@
 #include "../../../Engine/Physics/ClothGPU/ClothGPU.h"
 #include "../../ClothDemo/ClothDemo.h"
 
+#include "../../../Engine/GPUParticle/GPUParticle.h"
 #include "../../Particle/ParticleManager.h"
 /// <summary>
 /// デバッグシーン
