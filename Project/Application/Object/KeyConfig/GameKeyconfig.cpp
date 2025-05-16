@@ -1,12 +1,6 @@
 #include "GameKeyconfig.h"
 #include "../../../Engine/Input/Input.h"
 
-GameKeyconfig* GameKeyconfig::GetInstance()
-{
-	static GameKeyconfig instance;
-	return &instance;
-}
-
 void GameKeyconfig::Initialize()
 {
 	//---キーマウ向けバインド---//
@@ -24,10 +18,17 @@ void GameKeyconfig::Initialize()
 	playerKeyConfig_.binds.rideAction = DIK_T;
 	playerKeyConfig_.binds.interactAction = DIK_F;
 
+	// アクセル・ブレーキ
+	playerKeyConfig_.binds.accel = DIK_UPARROW;
+	playerKeyConfig_.binds.brake = DIK_DOWNARROW;
+
 	//---パッド向けキーバインド---//
 	playerKeyConfig_.padBinds.jumpAction = XINPUT_GAMEPAD_A;
 	playerKeyConfig_.padBinds.rideAction = XINPUT_GAMEPAD_B;
 	playerKeyConfig_.padBinds.interactAction = XINPUT_GAMEPAD_RIGHT_SHOULDER;
+
+	playerKeyConfig_.padBinds.accel = XINPUT_GAMEPAD_X;
+	playerKeyConfig_.padBinds.brake = XINPUT_GAMEPAD_Y;
 
 	// 入力
 	input_ = Input::GetInstance();
@@ -47,6 +48,8 @@ void GameKeyconfig::Update()
 		playerKeyConfig_.configs.jumpAction = input_->TriggerJoystick((uint8_t)playerKeyConfig_.padBinds.jumpAction);
 		playerKeyConfig_.configs.rideAction = input_->TriggerJoystick((uint8_t)playerKeyConfig_.padBinds.rideAction);
 		playerKeyConfig_.configs.interactAction = input_->TriggerJoystick((uint8_t)playerKeyConfig_.padBinds.interactAction);
+		playerKeyConfig_.configs.accel = input_->TriggerJoystick((uint8_t)playerKeyConfig_.padBinds.accel);
+		playerKeyConfig_.configs.brake = input_->TriggerJoystick((uint8_t)playerKeyConfig_.padBinds.brake);
 
 	}
 	// KEYBOARDの入力
@@ -58,6 +61,8 @@ void GameKeyconfig::Update()
 		playerKeyConfig_.configs.right = input_->PushKey((uint8_t)playerKeyConfig_.binds.right);
 		playerKeyConfig_.configs.rotateLeft = input_->PushKey((uint8_t)playerKeyConfig_.binds.rotateLeft);
 		playerKeyConfig_.configs.rotateRight = input_->PushKey((uint8_t)playerKeyConfig_.binds.rotateRight);
+		playerKeyConfig_.configs.accel = input_->PushKey((uint8_t)playerKeyConfig_.binds.accel);
+		playerKeyConfig_.configs.brake = input_->PushKey((uint8_t)playerKeyConfig_.binds.brake);
 		//---スティックに変換---//
 		// 左
 		if (playerKeyConfig_.configs.behind) {
