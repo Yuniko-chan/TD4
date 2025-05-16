@@ -52,6 +52,9 @@ public: //
 	/// 車両に乗っている際の回転
 	/// </summary>
 	void InVehicleRotateCommand();
+
+	// キー
+	GameKeyconfig* GetKeyConfig() { return keyConfig_; }
 private:
 	// 方向
 	Vector3 moveDirect_ = {};

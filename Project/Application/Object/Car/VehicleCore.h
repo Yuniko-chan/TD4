@@ -48,9 +48,6 @@ public: // メンバ関数
     /// <param name="collisionData"></param>
     void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
-    void MoveCommand();
-
-
     /// <summary>
     /// 子の追加
     /// </summary>
@@ -61,14 +58,14 @@ public: // アクセッサ
     //---ゲッター---//
     // パーツ構築システム
     VehicleConstructionSystem* GetConstructionSystem() { return constructionSystem_.get(); }
+    // 運転システム
+    DriveSystem* GetDriveSystem() { return driveSystem_.get(); }
 
     //---セッター---//
     // プレイヤー
     void SetPlayer(Player* player) { pairPlayer_ = player; }
 
 private:
-    // パーツを配置できる四か所（メッシュオブジェクトにするかも）
-    std::list<WorldTransform> fourPoints_;
     // パーツのリスト
     std::list<Car::IParts*> partsLists_;
 

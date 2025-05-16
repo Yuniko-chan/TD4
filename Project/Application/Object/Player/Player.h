@@ -84,8 +84,8 @@ public: // アクセッサ（プレイヤーシステム）
 public: // アクセッサ（プレイヤーシステム以外）
     // コアのワールドトランスフォーム
     WorldTransform* GetCoreTransform();
-    // 
-
+    // コア
+    VehicleCore* GetCore() { return pairCore_; }
 private:
     // システムクラス
     std::unique_ptr<PlayerAnimation> playerAnimation_;

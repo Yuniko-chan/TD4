@@ -38,12 +38,13 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 
 	driveSystem_ = std::make_unique<DriveSystem>();
 	driveSystem_->SetOwner(this);
+	driveSystem_->SetTransform(&worldTransform_);
 }
 
 void VehicleCore::Update()
 {
-	// 移動処理
-	MoveCommand();
+	// 運転・移動処理
+	driveSystem_->Update();
 	// 接続管理
 	constructionSystem_->Update();
 	// 基底
@@ -94,29 +95,4 @@ void VehicleCore::ImGuiDrawParts()
 void VehicleCore::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
 	colliderPartner, collisionData;
-}
-
-void VehicleCore::MoveCommand()
-{
-	if (!pairPlayer_) {
-		return;
-	}
-
-#ifdef _DEBUG
-	Input* input = Input::GetInstance();
-	if (input->PushKey(DIK_UPARROW)) {
-		worldTransform_.transform_.translate.z += 1.0f;
-	}
-	else if (input->PushKey(DIK_DOWNARROW)) {
-		worldTransform_.transform_.translate.z -= 1.0f;
-	}
-
-	if (input->PushKey(DIK_RIGHTARROW)) {
-		worldTransform_.transform_.translate.x += 1.0f;
-	}
-	else if (input->PushKey(DIK_LEFTARROW)) {
-		worldTransform_.transform_.translate.x -= 1.0f;
-	}
-#endif // _DEBUG
-
 }
