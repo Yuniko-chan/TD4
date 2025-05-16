@@ -10,6 +10,7 @@
 #include "../../Course/Demo/CourseDemoObject.h"
 #include "../../Object/Gimmick/IronBall/ConicalPendulumIronBall.h"
 #include "../../Object/Gimmick/IronBall/PendulumIronBall.h"
+#include "../../Object/Player/Player.h"
 
 /// <summary>
 /// デバッグシーン
@@ -73,6 +74,10 @@ private: // メンバ変数
 	// 円錐振り子
 	std::unique_ptr<PendulumIronBall> pendulumIronBall_;
 	std::unique_ptr<Model> pendulumIronBallModel_;
+
+	// プレイヤー
+	std::unique_ptr<Player> player_;
+	std::unique_ptr<Model> playerModel_;
 
 };
 

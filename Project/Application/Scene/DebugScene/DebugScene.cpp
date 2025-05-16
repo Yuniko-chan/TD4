@@ -77,6 +77,23 @@ void DebugScene::Initialize()
 	pendulumIronData.collider = pendulumIronCollider;
 	pendulumIronBall_->Initialize(&pendulumIronData);
 
+	// プレイヤー
+	playerModel_.reset(Model::Create("Resources/Model/Tire", "Core.gltf", dxCommon_));
+	player_ = std::make_unique<Player>();
+	LevelData::MeshData playerData;
+	playerData.directoryPath = "Resources/Model/Tire";
+	playerData.flieName = "Core.gltf";
+	playerData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+	playerData.className = "Player";
+	playerData.name = "";
+	playerData.parentName = "";
+	OBB playerCollider;
+	playerCollider.center_ = { 0.0f,0.0f,0.0f };
+	playerCollider.size_ = { 1.0f,1.0f,1.0f };
+	playerCollider.SetOtientatuons(Matrix4x4::MakeIdentity4x4());
+	playerData.collider = playerCollider;
+	player_->Initialize(&playerData);
+
 	BaseScene::InitilaizeCheck();
 
 }
@@ -95,6 +112,8 @@ void DebugScene::Update()
 	courseCollisionSystem_->Execute();
 
 	pendulumIronBall_->Update();
+
+	player_->Update();
 
 	DebugCameraUpdate();
 
@@ -115,6 +134,8 @@ void DebugScene::Draw()
 
 	// コースデモ
 	//courseDemoObject_->Draw(camera_);
+
+	player_->Draw(camera_);
 
 	pendulumIronBall_->Draw(camera_);
 
