@@ -1,5 +1,7 @@
 #include "VehicleEngine.h"
 #include "../../../Engine/Math/Ease.h"
+#include "../../../Engine/2D/ImguiManager.h"
+#include "../../../Engine/3D/Transform/WorldTransform.h"
 
 void VehicleEngine::Update()
 {
@@ -14,10 +16,12 @@ void VehicleEngine::Update()
 		// 加速量上昇
 		if (accelInputCounter_ % timming == 0 && isAccel_) {
 			consecutiveReceptions_++;
+			accelInputCounter_ = 0;
 		}
 		// 加速量低下
-		else if(accelInputCounter_ % timming == 0 && !isAccel_){
+		else if(accelInputCounter_ % 5 == 0 && !isAccel_){
 			consecutiveReceptions_--;
+			accelInputCounter_ = 0;
 		}
 
 		// 最大値に
@@ -35,11 +39,19 @@ void VehicleEngine::Update()
 	// エンジンが回転していない場合
 	else {
 		// 速度が残っている場合
-		if (speedRatio_ != 0.0f) {
-			const float decreValue = 0.01f;
+		if (speedRatio_ == 0.0f) {
+
+		}
+		else {
+			const float decreValue = 0.05f;
 			speedRatio_ = Ease::Easing(Ease::EaseName::Lerp, speedRatio_, 0.0f, decreValue);
 		}
 	}
+	
+	// 向きに併せるためのベクトル
+	Vector3 newDirection = Matrix4x4::TransformNormal(Vector3(0.0f, 0.0f, 1.0f), Matrix4x4::MakeRotateYMatrix(moveDirect_.y));
+	// 加速度の計算
+	acceleration_ = newDirection * speedRatio_;
 
 	//// ブレーキが踏まれているか
 	//if (isDecel_ || consecutiveReceptions_ < 0) {
@@ -66,4 +78,22 @@ void VehicleEngine::EngineAccept(GameKeyconfig* keyConfig)
 {
 	isAccel_ = keyConfig->GetConfig()->accel;
 	isDecel_ = keyConfig->GetConfig()->brake;
+	
+	controlDirect_ = keyConfig->GetLeftStick()->x;
+
+}
+
+void VehicleEngine::ImGuiDraw()
+{
+	ImGui::Checkbox("IsAccel", &isAccel_);
+	ImGui::Checkbox("IsDecel", &isDecel_);
+
+	int con = this->accelInputCounter_;
+	ImGui::InputInt("AccelInput", &con);
+	con = this->decelInputCounter_;
+	ImGui::InputInt("DecelInput", &con);
+	con = this->consecutiveReceptions_;
+	ImGui::InputInt("ConsecutiveRecept", &con);
+	ImGui::DragFloat("SpeedRatio", &speedRatio_);
+
 }

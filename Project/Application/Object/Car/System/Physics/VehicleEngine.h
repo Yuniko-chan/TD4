@@ -22,12 +22,19 @@ public:
 	/// </summary>
 	void EngineAccept(GameKeyconfig* keyConfig);
 
+	/// <summary>
+	/// デバッグ用の
+	/// </summary>
+	void ImGuiDraw();
+
 public: // アクセッサ
 	//---セッター---//
 	void SetDirection(const Vector3& direct) { moveDirect_ = direct; }
 	//---ゲッター---//
 	Vector3 GetDirection() { return moveDirect_; }
 	float GetSpeedRatio() const { return speedRatio_; }
+	Vector3 GetAcceleration() { return acceleration_; }
+
 private:
 	// 受付連続回数
 	int16_t consecutiveReceptions_ = 0;
@@ -43,4 +50,7 @@ private:
 
 	// 移動方向
 	Vector3 moveDirect_ = {};
+	float controlDirect_ = 0.0f;
+	// 加速度
+	Vector3 acceleration_ = {};
 };

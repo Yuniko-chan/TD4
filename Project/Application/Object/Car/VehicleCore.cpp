@@ -56,6 +56,16 @@ void VehicleCore::ImGuiDrawParts()
 	ImGui::SeparatorText(className_.c_str());
 	// トランスフォームに移動
 	ImGuiTransform(0.1f);
+	if (ImGui::BeginTabBar("System")) {
+		// ステート
+		if (ImGui::BeginTabItem("Engine")) {
+			this->driveSystem_->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+
+		ImGui::EndTabBar();
+	}
+
 	if (ImGui::Button("Release")) {
 		pairPlayer_ = nullptr;
 	}

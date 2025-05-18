@@ -27,9 +27,14 @@ public:
 	// 親の設定
 	void SetTransform(WorldTransform* core) { coreTransform_ = core; }
 
+	void ImGuiDraw();
+
 private:
 	// 運転用のエンジン
 	std::unique_ptr<VehicleEngine> driveEngine_;
 	// トランスフォーム
 	WorldTransform* coreTransform_ = nullptr;
+
+	// 速度ベクトル
+	Vector3 velocity_ = {};
 };
