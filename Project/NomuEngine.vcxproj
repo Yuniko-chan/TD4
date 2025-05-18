@@ -201,6 +201,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Player\State\System\PlayerStateMachine.cpp" />
     <ClCompile Include="Application\Object\Player\System\PlayerCommand.cpp" />
     <ClCompile Include="Application\Object\Player\System\PlayerPickupManager.cpp" />
+    <ClCompile Include="Application\Object\Terrain\TerrainObject.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\MotionHelper.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\TransformHelper.cpp" />
     <ClCompile Include="Application\Object\Utility\Timer\FrameTimer.cpp" />
@@ -420,6 +421,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\State\IState.h" />
     <ClInclude Include="Application\Object\State\StateFactory.h" />
     <ClInclude Include="Application\Object\State\StateMachine.h" />
+    <ClInclude Include="Application\Object\Terrain\TerrainObject.h" />
     <ClInclude Include="Application\Object\Utility\Calc\MotionHelper.h" />
     <ClInclude Include="Application\Object\Utility\Calc\TransformHelper.h" />
     <ClInclude Include="Application\Object\Utility\Common\GameObjectName.h" />

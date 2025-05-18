@@ -15,9 +15,10 @@ class VehicleCore;
 class TireParts;
 class ArmorFrameParts;
 class EngineParts;
+class TerrainObject;
 
 // variantでまとめる
-using ColliderParentObject = std::variant<ParentNullObject*, Player*, VehicleCore*/*, TireParts*,
+using ColliderParentObject = std::variant<ParentNullObject*, Player*, VehicleCore*, TerrainObject*/*, TireParts*,
 								ArmorFrameParts*, EngineParts**/>;
 
 /// <summary>
