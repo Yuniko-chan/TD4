@@ -53,4 +53,6 @@ private:
 	float controlDirect_ = 0.0f;
 	// 加速度
 	Vector3 acceleration_ = {};
+	// ハンドリングの向き
+	Vector3 handringDirect_ = {};
 };

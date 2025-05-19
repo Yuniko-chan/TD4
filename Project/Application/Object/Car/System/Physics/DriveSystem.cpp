@@ -17,7 +17,7 @@ void DriveSystem::Update()
 	// 速度の計算
 	velocity_ += driveEngine_->GetAcceleration() * kDeltaTime_;
 	// 減速
-	velocity_ = velocity_ * 0.95f;
+	velocity_ = velocity_ * 0.75f;
 
 	// 移動計算
 	coreTransform_->transform_.translate += velocity_ * kDeltaTime_;

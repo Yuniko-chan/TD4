@@ -3,11 +3,13 @@
 #include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Engine/3D/Transform/WorldTransform.h"
 
+#include "../../../Player/DebugData/PlayerDebugData.h"
+
 void VehicleEngine::Update()
 {
 	// フレームカウント
 	const int timming = 10;
-	const int maxReception = 30;
+	const int maxReception = 10;
 
 	// アクセルキーか受付連続値があれば
 	if (isAccel_ || consecutiveReceptions_ > 0) {
@@ -31,7 +33,7 @@ void VehicleEngine::Update()
 	}
 
 	// スピード用のレシオ計算
-	const float minusRate = 2.0f / 5.0f;
+	const float minusRate = 3.0f;
 	// エンジンが回転している場合
 	if (consecutiveReceptions_ != 0) {
 		speedRatio_ = (float)consecutiveReceptions_ * (minusRate);
@@ -49,9 +51,9 @@ void VehicleEngine::Update()
 	}
 	
 	// 向きに併せるためのベクトル
-	Vector3 newDirection = Matrix4x4::TransformNormal(Vector3(0.0f, 0.0f, 1.0f), Matrix4x4::MakeRotateYMatrix(moveDirect_.y));
+	Vector3 newDirection = Matrix4x4::TransformNormal(Vector3(handringDirect_), Matrix4x4::MakeRotateYMatrix(moveDirect_.y));
 	// 加速度の計算
-	acceleration_ = newDirection * speedRatio_;
+	acceleration_ = newDirection * (speedRatio_ * PlayerDebugData::sMoveData.rideSpeed);
 
 	//// ブレーキが踏まれているか
 	//if (isDecel_ || consecutiveReceptions_ < 0) {
@@ -81,6 +83,9 @@ void VehicleEngine::EngineAccept(GameKeyconfig* keyConfig)
 	
 	controlDirect_ = keyConfig->GetLeftStick()->x;
 
+	this->handringDirect_.x = Ease::Easing(Ease::EaseName::Lerp, -1.0f, 1.0f, (controlDirect_ + 1.0f) / 2.0f);
+	handringDirect_.z = 1.0f;
+	handringDirect_ = Vector3::Normalize(handringDirect_);
 }
 
 void VehicleEngine::ImGuiDraw()
@@ -95,5 +100,7 @@ void VehicleEngine::ImGuiDraw()
 	con = this->consecutiveReceptions_;
 	ImGui::InputInt("ConsecutiveRecept", &con);
 	ImGui::DragFloat("SpeedRatio", &speedRatio_);
-
+	// ハンドル角
+	ImGui::DragFloat("LeftstickX", &controlDirect_);
+	ImGui::DragFloat3("Handle", &handringDirect_.x);
 }
