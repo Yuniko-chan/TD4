@@ -17,8 +17,8 @@ void Cannon::Initialize(LevelData::MeshData* data)
     CannonData cannonData;
     cannonData.cooltimeMax = 3.0f;
     cannonData.rotate = { 0.0f,0.0f,0.0f };
-    cannonData.firingDirection = Vector3::Normalize(Vector3{ 0.0f,2.0f,1.0f });
-    cannonData.firingSpeed = 0.02f;
+    cannonData.firingDirection = Vector3::Normalize(Vector3{ 0.0f,1.0f,2.0f });
+    cannonData.firingSpeed = 1.0f;
 
     // 初期化
     Initialize(data, cannonData);

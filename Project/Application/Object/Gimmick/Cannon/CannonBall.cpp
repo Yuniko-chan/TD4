@@ -6,7 +6,7 @@
 const float CannonBall::kLifeTime_ = 2.0f;
 
 // 落下加速度
-const float CannonBall::kFallingAcceleration_ = 0.01f;
+const float CannonBall::kFallingAcceleration_ = -0.01f;
 
 CannonBall::CannonBall()
 {
@@ -22,7 +22,7 @@ void CannonBall::Initialize(LevelData::MeshData* data)
 	CannonBallData cannonBallData;
 	cannonBallData.direction = { 0.0f,0.0f,1.0f };
 	cannonBallData.position = { 0.0f,0.0f,0.0f };
-	cannonBallData.speed = 0.02f;
+	cannonBallData.speed = 1.0f;
 
 	Initialize(data, cannonBallData);
 }
@@ -83,10 +83,9 @@ void CannonBall::Reset(const CannonBallData& cannonBallData)
 {
 
 	// 速度
-	velocity_ = { 0.0f,0.0f,0.0f };
+	velocity_ = Vector3::Multiply(cannonBallData.direction, cannonBallData.speed);
 	// 加速度
-	acceleration_ = Vector3::Multiply(cannonBallData.direction, cannonBallData.speed);
-	acceleration_.y -= kFallingAcceleration_;
+	acceleration_.y = kFallingAcceleration_;
 
 	// 位置
 	worldTransform_.transform_.translate = cannonBallData.position;
