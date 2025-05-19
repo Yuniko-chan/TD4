@@ -34,6 +34,7 @@ public: // アクセッサ
 	Vector3 GetDirection() { return moveDirect_; }
 	float GetSpeedRatio() const { return speedRatio_; }
 	Vector3 GetAcceleration() { return acceleration_; }
+	float GetEuler() { return eulerY_; }
 
 private:
 	// 受付連続回数
@@ -55,4 +56,6 @@ private:
 	Vector3 acceleration_ = {};
 	// ハンドリングの向き
 	Vector3 handringDirect_ = {};
+
+	float eulerY_ = 0.0f;
 };

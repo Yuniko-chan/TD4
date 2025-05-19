@@ -19,6 +19,8 @@ public:
 	/// </summary>
 	void Update();
 
+	void RotateUpdate();
+
 	/// <summary>
 	/// 入力受付
 	/// </summary>

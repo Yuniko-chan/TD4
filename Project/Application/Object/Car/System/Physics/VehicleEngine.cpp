@@ -83,7 +83,7 @@ void VehicleEngine::EngineAccept(GameKeyconfig* keyConfig)
 	
 	controlDirect_ = keyConfig->GetLeftStick()->x;
 
-	this->handringDirect_.x = Ease::Easing(Ease::EaseName::Lerp, -1.0f, 1.0f, (controlDirect_ + 1.0f) / 2.0f);
+	handringDirect_.x = Ease::Easing(Ease::EaseName::Lerp, -1.0f, 1.0f, (controlDirect_ + 1.0f) / 2.0f);
 	handringDirect_.z = 1.0f;
 	handringDirect_ = Vector3::Normalize(handringDirect_);
 }

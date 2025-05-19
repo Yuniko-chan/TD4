@@ -17,7 +17,7 @@ void PlayerInVehicleState::Update()
 		player_->GetStateMachine()->ChangeRequest(IPlayerState::kDropOffAction);
 	}
 
-	player_->GetCommand()->InVehicleRotateCommand();
+	//player_->GetCommand()->InVehicleRotateCommand();
 	// 移動処理
 	//Vector3 velocityDirection = player_->GetCommand()->GetDirect() * PlayerDebugData::sMoveData.rideSpeed;
 	// 車両への入力処理

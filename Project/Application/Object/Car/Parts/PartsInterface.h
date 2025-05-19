@@ -90,5 +90,8 @@ namespace Car
 		bool isDelete_ = false;
 		// 接続システム
 		std::unique_ptr<VehicleConnector> connector_;
+		// HP
+		int32_t hitPoint_ = 1;
+		
 	};
 }

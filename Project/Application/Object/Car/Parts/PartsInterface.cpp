@@ -33,6 +33,12 @@ void Car::IParts::Update()
 	worldTransform_.UpdateMatrix();
 	// コライダーの更新
 	ColliderUpdate();
+
+	// HPがなくなり次第Deleteフラグをセット
+	if (hitPoint_ <= 0) {
+		isDelete_ = true;
+	}
+
 }
 
 void Car::IParts::ReleaseParent()
@@ -111,7 +117,8 @@ void Car::IParts::ImGuiDrawChildParts()
 		name = name_ + ":Release";
 		// 解除
 		if (ImGui::Button(name.c_str())) {
-			isDelete_ = true;
+			//isDelete_ = true;
+			hitPoint_ = 0;
 			//ReleaseParent();
 		}
 		name = name_ + ":SetUp";
