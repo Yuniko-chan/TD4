@@ -988,6 +988,9 @@
     <ClCompile Include="Application\Object\Gimmick\Cannon\CannonBall.cpp">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Object\Gimmick\Cannon\CannonExplosion.cpp">
+      <Filter>Application\Object\Gimmick\Cannon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imgui.h">
@@ -1783,6 +1786,12 @@
       <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Gimmick\Cannon\CannonBall.h">
+      <Filter>Application\Object\Gimmick\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\Cannon\CannonExplosionData.h">
+      <Filter>Application\Object\Gimmick\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\Cannon\CannonExplosion.h">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClInclude>
   </ItemGroup>

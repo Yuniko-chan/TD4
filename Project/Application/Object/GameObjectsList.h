@@ -7,3 +7,4 @@
 #include "Gimmick/IronBall/PendulumIronBall.h"
 #include "Gimmick/Cannon/Cannon.h"
 #include "Gimmick/Cannon/CannonBall.h"
+#include "Gimmick/Cannon/CannonExplosion.h"

@@ -3,7 +3,7 @@
 #include "../../../../Engine/Math/DeltaTime.h"
 
 // 生存時間
-const float CannonBall::kLifeTime_ = 2.0f;
+const float CannonBall::kLifeTime_ = 1.0f;
 
 // 落下加速度
 const float CannonBall::kFallingAcceleration_ = -0.01f;
@@ -39,6 +39,9 @@ void CannonBall::Initialize(LevelData::MeshData* data, const CannonBallData& can
 	// 初期化では動作させない
 	isWorking_ = false;
 
+	// 爆発初期化
+	ExplosionInitialize();
+
 }
 
 void CannonBall::Update()
@@ -57,10 +60,12 @@ void CannonBall::Update()
 		lifetimeElapsed_ += kDeltaTime_;
 		if (lifetimeElapsed_ >= kLifeTime_) {
 			// 動作終了
-			isWorking_ = false;
+			Explosion();
 		}
 
 	}
+
+	cannonExplosion_->Update();
 
 }
 
@@ -72,11 +77,32 @@ void CannonBall::Draw(BaseCamera& camera)
 		MeshObject::Draw(camera);
 	}
 
+	// 爆発
+	cannonExplosion_->Draw(camera);
+
 }
 
 void CannonBall::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
 	colliderPartner, collisionData;
+}
+
+void CannonBall::CollisionListRegister(BaseCollisionManager* collisionManager)
+{
+
+	MeshObject::CollisionListRegister(collisionManager);
+
+	cannonExplosion_->CollisionListRegister(collisionManager);
+
+}
+
+void CannonBall::CollisionListRegister(BaseCollisionManager* collisionManager, ColliderDebugDraw* colliderDebugDraw)
+{
+
+	MeshObject::CollisionListRegister(collisionManager, colliderDebugDraw);
+
+	cannonExplosion_->CollisionListRegister(collisionManager, colliderDebugDraw);
+
 }
 
 void CannonBall::Reset(const CannonBallData& cannonBallData)
@@ -131,5 +157,49 @@ void CannonBall::ColliderUpdate()
 	*colliderShape = sphere;
 
 	collider_.reset(colliderShape);
+
+}
+
+void CannonBall::Explosion()
+{
+
+	// 活動終了
+	isWorking_ = false;
+
+	// 大砲の弾、リセット
+	CannonExplosionData cannonExplosionData;
+	cannonExplosionData.explosionRadiusMax = 1.0f;
+	cannonExplosionData.explosionTime_ = 1.0f;
+	cannonExplosionData.timeToReachRadiusMax = 0.5f;
+	cannonExplosionData.position = worldTransform_.GetWorldPosition();
+
+	cannonExplosion_->Reset(cannonExplosionData);
+
+}
+
+void CannonBall::ExplosionInitialize()
+{
+
+	cannonExplosion_ = std::make_unique<CannonExplosion>();
+	LevelData::MeshData data;
+	data.directoryPath = "Resources/default/";
+	data.flieName = "ball.obj";
+	data.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+	data.transform.translate = worldTransform_.GetWorldPosition();
+	data.className = "CannonExplosion";
+	data.name = "";
+	data.parentName = "";
+	Sphere collider;
+	collider.center_ = { 0.0f,0.0f,0.0f };
+	collider.radius_ = 1.0f;
+	data.collider = collider;
+
+	CannonExplosionData cannonExplosionData;
+	cannonExplosionData.explosionRadiusMax = 1.0f;
+	cannonExplosionData.explosionTime_ = 1.0f;
+	cannonExplosionData.timeToReachRadiusMax = 0.5f;
+	cannonExplosionData.position = worldTransform_.GetWorldPosition();
+
+	cannonExplosion_->Initialize(&data, cannonExplosionData);
 
 }

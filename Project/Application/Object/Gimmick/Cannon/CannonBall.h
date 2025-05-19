@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../../Engine/Object/MeshObject.h"
 #include "cannonBallData.h"
+#include "CannonExplosion.h"
 
 /// <summary>
 /// 大砲の弾
@@ -62,6 +63,19 @@ public: // 関数
     void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
     /// <summary>
+    /// コライダー登録
+    /// </summary>
+    /// <param name="collisionManager">衝突マネージャー</param>
+    void CollisionListRegister(BaseCollisionManager* collisionManager);
+
+    /// <summary>
+    /// コライダー登録
+    /// </summary>
+    /// <param name="collisionManager">衝突マネージャー</param>
+    /// <param name="colliderDebugDraw">衝突デバッグ描画</param>
+    void CollisionListRegister(BaseCollisionManager* collisionManager, ColliderDebugDraw* colliderDebugDraw);
+
+    /// <summary>
     /// リセット
     /// </summary>
     /// <param name="cannonBallData">大砲の弾</param>
@@ -86,6 +100,16 @@ private: // 関数
     /// </summary>
     void ColliderUpdate(); 
 
+    /// <summary>
+    /// 死亡（爆発）
+    /// </summary>
+    void Explosion();
+
+    /// <summary>
+    /// 爆発初期化
+    /// </summary>
+    void ExplosionInitialize();
+
 private: // 変数
 
     // 速度
@@ -99,5 +123,8 @@ private: // 変数
 
     // 生存時間経過
     float lifetimeElapsed_;
+
+    // 爆発
+    std::unique_ptr<CannonExplosion> cannonExplosion_;
 
 };
