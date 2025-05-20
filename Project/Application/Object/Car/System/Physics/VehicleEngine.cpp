@@ -53,7 +53,8 @@ void VehicleEngine::Update()
 	// 向きに併せるためのベクトル
 	Vector3 newDirection = Matrix4x4::TransformNormal(Vector3(handringDirect_), Matrix4x4::MakeRotateYMatrix(moveDirect_.y));
 	// 加速度の計算
-	acceleration_ = newDirection * (speedRatio_ * PlayerDebugData::sMoveData.rideSpeed);
+	const float rideSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue("Player", "RideSpeed");
+	acceleration_ = newDirection * (speedRatio_ * rideSpeedFactor);
 
 	//// ブレーキが踏まれているか
 	//if (isDecel_ || consecutiveReceptions_ < 0) {

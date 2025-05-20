@@ -33,7 +33,8 @@ void PlayerOnFootState::Update()
 	// 移動用の回転処理
 	player_->GetCommand()->RotateCommand();
 	// 移動処理
-	Vector3 velocityDirection = player_->GetCommand()->GetDirect() * PlayerDebugData::sMoveData.moveSpeed;
+	const float walkSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue("Player", "WalkSpeed");
+	Vector3 velocityDirection = player_->GetCommand()->GetDirect() * walkSpeedFactor;
 	player_->GetWorldTransformAdress()->transform_.translate += velocityDirection * kDeltaTime_;
 
 }

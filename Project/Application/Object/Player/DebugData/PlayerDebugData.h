@@ -1,5 +1,6 @@
 #pragma once
 #include "../../../Engine/Math/Vector/Vector3.h"
+#include "../../../Engine/GlobalVariables/GlobalVariables.h"
 
 /// <summary>
 /// プロト用の静的変数パラメータを管理しておくクラス
@@ -34,14 +35,14 @@ public:	// 構造体
 	};
 
 public:	// 静的変数
-	// 乗り込むアクションのデータ
-	static RideActionData sRideActionData;
-	static RideActionData sDropoffActionData;
-	// 移動の速度
-	static MoveParamData sMoveData;
-	
-	static float sFrontThreshold;
-	static FrontCheckerData sFrontCheckData;
+	//// 乗り込むアクションのデータ
+	//static RideActionData sRideActionData;
+	//static RideActionData sDropoffActionData;
+	//// 移動の速度
+	//static MoveParamData sMoveData;
+	//
+	//static float sFrontThreshold;
+	//static FrontCheckerData sFrontCheckData;
 public:
 	/// <summary>
 	/// ImGui

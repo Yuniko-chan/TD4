@@ -10,16 +10,18 @@ void PlayerRideActionState::Initialize()
 	startPoint_ = player_->GetWorldTransformAdress()->GetWorldPosition();
 	startRotate_ = player_->GetWorldTransformAdress()->transform_.rotate;
 
-	animTimer_.Start(PlayerDebugData::sRideActionData.actionFrame);
+	animTimer_.Start(GlobalVariables::GetInstance()->GetFloatValue("Player", "RideActionFrame"));
 }
 
 void PlayerRideActionState::Update()
 {
 	animTimer_.Update();
 	if (animTimer_.IsActive()) {
+		Vector3 offset = GlobalVariables::GetInstance()->GetVector3Value("Player", "RideOffset");
+		float height = GlobalVariables::GetInstance()->GetFloatValue("Player", "RideHeight");
 		player_->GetWorldTransformAdress()->transform_.translate = MotionHelper::CurveBezier(startPoint_,
-			player_->GetCoreTransform()->GetWorldPosition() + PlayerDebugData::sRideActionData.offset,
-			animTimer_.GetElapsedFrame(), PlayerDebugData::sRideActionData.jumpHeight);
+			player_->GetCoreTransform()->GetWorldPosition() + offset,
+			animTimer_.GetElapsedFrame(), height);
 
 		Vector3 endRotate = player_->GetCoreTransform()->transform_.rotate;
 		player_->GetWorldTransformAdress()->transform_.rotate = Ease::Easing(Ease::EaseName::Lerp,

@@ -122,8 +122,8 @@ void Player::SetParent()
 	//Vector3 localPosition = pairCore_->GetWorldTransformAdress()->GetWorldPosition() - worldTransform_.GetWorldPosition();
 	// 親子設定
 	worldTransform_.SetParent(pairCore_->GetWorldTransformAdress());
-	const Vector3 localPosition = PlayerDebugData::sRideActionData.offset;
-	worldTransform_.transform_.translate = localPosition;
+	const Vector3 offset = GlobalVariables::GetInstance()->GetVector3Value("Player", "RideOffset");
+	worldTransform_.transform_.translate = offset;
 }
 
 void Player::ColliderUpdate()
