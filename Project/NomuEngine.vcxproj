@@ -427,6 +427,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Utility\Common\GameObjectName.h" />
     <ClInclude Include="Application\Object\Utility\Common\SingletonModule.h" />
     <ClInclude Include="Application\Object\Utility\Common\OwnerComponent.h" />
+    <ClInclude Include="Application\Object\Utility\GlobalParameterStructs.h" />
     <ClInclude Include="Application\Object\Utility\Math\Vector2Int.h" />
     <ClInclude Include="Application\Object\Utility\Timer\FrameTimer.h" />
     <ClInclude Include="Application\OutGameObject\ClearBackGround\ClearBackGround.h" />

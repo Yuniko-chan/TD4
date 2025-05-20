@@ -1725,6 +1725,9 @@
     <ClInclude Include="Application\Object\Terrain\TerrainObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Application\Object\Utility\GlobalParameterStructs.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

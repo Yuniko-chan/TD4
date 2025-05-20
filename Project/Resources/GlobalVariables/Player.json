@@ -1,0 +1,22 @@
+{
+    "Player": {
+        "DropOffActionFrame": 15.0,
+        "DropOffHeight": 8.0,
+        "DropOffOffset": [
+            3.0,
+            0.0,
+            0.0
+        ],
+        "FrontCatchRange": 50.0,
+        "FrontThreshold": 0.800000011920929,
+        "RideActionFrame": 15.0,
+        "RideHeight": 12.5,
+        "RideOffset": [
+            0.0,
+            1.9500000476837158,
+            0.0
+        ],
+        "RideSpeed": 15.0,
+        "WalkSpeed": 10.0
+    }
+}

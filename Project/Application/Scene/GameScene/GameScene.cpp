@@ -25,6 +25,10 @@ void GameScene::Initialize() {
 	ModelCreate();
 	TextureLoad();
 
+	// パラメータマネージャ
+	parameterManager_ = GlobalParameterManager::GetInstance();
+	parameterManager_->Initialize();
+
 	// ビュープロジェクション
 	const EulerTransform baseCameraTransform = {
 		1.0f, 1.0f, 1.0f,
@@ -95,6 +99,8 @@ void GameScene::Update() {
 		resetScene_ = false;
 		return;
 	}
+	// パラメータ
+	parameterManager_->Update();
 
 	//光源
 	directionalLight_->Update(directionalLightData_);

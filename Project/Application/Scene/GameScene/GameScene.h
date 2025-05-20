@@ -16,6 +16,7 @@
 #include "../../UI/UIManager.h"
 #include "../../System/PostEffectSystem/PostEffectSystem.h"
 #include "../../Object/KeyConfig/GameKeyconfig.h"
+#include "../../Object/GlobalParameterManager.h"
 
 /// <summary>
 /// ゲームシーン
@@ -91,5 +92,7 @@ private:
 	std::unique_ptr<PostEffectSystem> postEffectSystem_ = nullptr;
 
 	// キー入力管理
-	GameKeyconfig* keyConfig_;
+	GameKeyconfig* keyConfig_ = nullptr;
+	// 外部パラメータ変数をまとめておくクラス
+	GlobalParameterManager* parameterManager_ = nullptr;
 };
