@@ -33,18 +33,15 @@ void VehicleEngine::Update(const Vector3& steerDirect)
 	}
 
 	// スピード用のレシオ計算
-	const float plusRate = 3.0f;
+	const float kPlusRate = 3.0f;
 	// エンジンが回転している場合
 	if (consecutiveReceptions_ != 0) {
-		speedRatio_ = (float)consecutiveReceptions_ * (plusRate);
+		speedRatio_ = (float)consecutiveReceptions_ * (kPlusRate);
 	}
 	// エンジンが回転していない場合
 	else {
 		// 速度が残っている場合
-		if (speedRatio_ == 0.0f) {
-
-		}
-		else {
+		if (speedRatio_ != 0.0f) {
 			const float decreValue = 0.05f;
 			speedRatio_ = Ease::Easing(Ease::EaseName::Lerp, speedRatio_, 0.0f, decreValue);
 		}

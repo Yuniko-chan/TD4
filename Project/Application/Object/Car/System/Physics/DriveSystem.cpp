@@ -56,6 +56,8 @@ void DriveSystem::ImGuiDraw()
 {
 	// 速度
 	ImGui::DragFloat3("Velocity", &velocity_.x);
+	// ハンドル
+	handling_->ImGuiDraw();
 	// エンジン
 	driveEngine_->ImGuiDraw();
 }
