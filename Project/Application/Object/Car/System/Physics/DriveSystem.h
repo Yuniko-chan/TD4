@@ -22,7 +22,7 @@ public:
 	/// <summary>
 	/// 入力受付
 	/// </summary>
-	void InputAccept(GameKeyconfig* keyConfig, const Vector3& direct);
+	void InputAccept(GameKeyconfig* keyConfig);
 
 	// 親の設定
 	void SetTransform(WorldTransform* core) { coreTransform_ = core; }

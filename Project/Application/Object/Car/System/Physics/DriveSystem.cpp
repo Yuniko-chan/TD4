@@ -29,23 +29,21 @@ void DriveSystem::Update()
 	VehicleCaluclator calc;
 	velocity_ = calc.SnapToZero(velocity_, kEpsilon);
 
-	if (velocity_ != Vector3(0.0f, 0.0f, 0.0f)) {
-		Vector3 direct = Vector3::Normalize(velocity_);
-		coreTransform_->transform_.rotate.y = std::atan2f(direct.x, direct.z);
-	}
-	else {
-		coreTransform_->transform_.rotate.y = 0.0f;
-	}
+	//if (velocity_ != Vector3(0.0f, 0.0f, 0.0f)) {
+	//	Vector3 direct = Vector3::Normalize(velocity_);
+	//	coreTransform_->transform_.rotate.y = std::atan2f(direct.x, direct.z);
+	//}
+	//else {
+	//	coreTransform_->transform_.rotate.y = 0.0f;
+	//}
 	
 	// 移動計算
 	coreTransform_->transform_.translate += 
 		calc.RotateVector(velocity_,coreTransform_->transform_.rotate.y) * kDeltaTime_;
 }
 
-void DriveSystem::InputAccept(GameKeyconfig* keyConfig, const Vector3& direct)
+void DriveSystem::InputAccept(GameKeyconfig* keyConfig)
 {
-	// エンジンの設定
-	driveEngine_->SetDirection(direct);
 	// エンジンの受付
 	driveEngine_->EngineAccept(keyConfig);
 	// ハンドルの入力受付

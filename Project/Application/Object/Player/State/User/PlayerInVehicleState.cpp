@@ -21,7 +21,7 @@ void PlayerInVehicleState::Update()
 	// 移動処理
 	//Vector3 velocityDirection = player_->GetCommand()->GetDirect() * PlayerDebugData::sMoveData.rideSpeed;
 	// 車両への入力処理
-	player_->GetCore()->GetDriveSystem()->InputAccept(player_->GetCommand()->GetKeyConfig(), player_->GetWorldTransformAdress()->transform_.rotate);
+	player_->GetCore()->GetDriveSystem()->InputAccept(player_->GetCommand()->GetKeyConfig());
 }
 
 void PlayerInVehicleState::Exit()

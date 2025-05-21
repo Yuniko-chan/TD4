@@ -12,25 +12,53 @@ void VehicleEngine::Update(const Vector3& steerDirect)
 	const int maxReception = 10;
 
 	// アクセルキーか受付連続値があれば
-	if (isAccel_ || consecutiveReceptions_ > 0) {
+	if ((isAccel_ || isDecel_) || consecutiveReceptions_ != 0) {
 		accelInputCounter_++;
 
-		// 加速量上昇
-		if (accelInputCounter_ % timming == 0 && isAccel_) {
+		inputCounter_++;
+	}
+
+	// 加速減速
+	if (inputCounter_ % timming == 0) {
+		if (isAccel_) {
 			consecutiveReceptions_++;
-			accelInputCounter_ = 0;
 		}
-		// 加速量低下
-		else if(accelInputCounter_ % 5 == 0 && !isAccel_){
+		else if (isDecel_) {
 			consecutiveReceptions_--;
-			accelInputCounter_ = 0;
 		}
 
-		// 最大値に
-		if (consecutiveReceptions_ > maxReception) {
-			consecutiveReceptions_ = maxReception;
-		}
+		inputCounter_ = 0;
 	}
+	else if (!(isAccel_ || isDecel_) && (inputCounter_ % 5 == 0)) {
+		if (consecutiveReceptions_ > 0) {
+			consecutiveReceptions_--;
+		}
+		else if (consecutiveReceptions_ < 0) {
+			consecutiveReceptions_++;
+		}
+		
+		inputCounter_ = 0;
+	}
+
+	// 制限処理
+	consecutiveReceptions_ = (int16_t)std::clamp((int)consecutiveReceptions_, -maxReception, maxReception);
+
+	//{
+	//	// 加速量上昇
+	//	if (accelInputCounter_ % timming == 0 && isAccel_) {
+	//		consecutiveReceptions_++;
+	//		accelInputCounter_ = 0;
+	//	}
+	//	// 加速量低下
+	//	else if(accelInputCounter_ % 5 == 0 && !isAccel_){
+	//		consecutiveReceptions_--;
+	//		accelInputCounter_ = 0;
+	//	}
+	//	// 最大値に
+	//	if (consecutiveReceptions_ > maxReception) {
+	//		consecutiveReceptions_ = maxReception;
+	//	}
+	//}
 
 	// スピード用のレシオ計算
 	const float kPlusRate = 3.0f;

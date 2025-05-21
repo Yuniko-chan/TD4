@@ -36,6 +36,7 @@ void VehicleHandling::Update()
 		else if (isRight_) {
 			consecutiveReceptions_++;
 		}
+		inputCounter_ = 0;
 	}
 	// 減少
 	else if (!IsInput() && (inputCounter_ % 5 == 0)) {
