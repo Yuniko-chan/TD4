@@ -190,6 +190,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Gimmick\Cannon\CannonBall.cpp" />
     <ClCompile Include="Application\Object\Gimmick\Cannon\CannonExplosion.cpp" />
     <ClCompile Include="Application\Object\Gimmick\IronBall\PendulumIronBall.cpp" />
+    <ClCompile Include="Application\Object\Gimmick\Minigun\Minigun.cpp" />
+    <ClCompile Include="Application\Object\Gimmick\Minigun\MinigunBullet.cpp" />
     <ClCompile Include="Application\Object\GlobalParameterManager.cpp" />
     <ClCompile Include="Application\Object\KeyConfig\GameKeyconfig.cpp" />
     <ClCompile Include="Application\Object\Gimmick\IronBall\ConicalPendulumIronBall.cpp" />
@@ -410,6 +412,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Gimmick\Cannon\CannonExplosionData.h" />
     <ClInclude Include="Application\Object\Gimmick\IronBall\PendulumIronBall.h" />
     <ClInclude Include="Application\Object\Gimmick\IronBall\PendulumIronBallData.h" />
+    <ClInclude Include="Application\Object\Gimmick\Minigun\Minigun.h" />
+    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunBullet.h" />
+    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunBulletData.h" />
+    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunData.h" />
     <ClInclude Include="Application\Object\GlobalParameterManager.h" />
     <ClInclude Include="Application\Object\KeyConfig\GameKeyconfig.h" />
     <ClInclude Include="Application\Object\Gimmick\IronBall\ConicalPendulumIronBall.h" />

@@ -11,6 +11,7 @@
 #include "../../Object/Gimmick/IronBall/ConicalPendulumIronBall.h"
 #include "../../Object/Gimmick/IronBall/PendulumIronBall.h"
 #include "../../Object/Gimmick/Cannon/Cannon.h"
+#include "../../Object/Gimmick/Minigun/Minigun.h"
 
 #include "../../Object/Player/Player.h"
 
@@ -73,17 +74,9 @@ private: // メンバ変数
 	std::unique_ptr<CourseDemoObject> courseDemoObject_;
 	std::unique_ptr<Model> courseDemoModel_;
 
-	// 円錐振り子
-	std::unique_ptr<PendulumIronBall> pendulumIronBall_;
-	std::unique_ptr<Model> pendulumIronBallModel_;
-
-	// プレイヤー
-	std::unique_ptr<Player> player_;
-	std::unique_ptr<Model> playerModel_;
-
-	// 大砲
-	std::unique_ptr<Cannon> cannon_;
-	std::unique_ptr<Model> cannonModel_;
+	// ミニガン
+	std::unique_ptr<Minigun> minigun_;
+	std::unique_ptr<Model> minigunModel_;
 
 };
 

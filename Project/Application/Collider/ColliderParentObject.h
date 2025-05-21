@@ -22,10 +22,13 @@ class PendulumIronBall;
 class Cannon;
 class CannonBall;
 class CannonExplosion;
+class Minigun;
+class MinigunBullet;
 
 // variantでまとめる
 using ColliderParentObject = std::variant<ParentNullObject*, Player*, VehicleCore*, 
-	ConicalPendulumIronBall*, PendulumIronBall*, Cannon*, CannonBall*, CannonExplosion*
+	ConicalPendulumIronBall*, PendulumIronBall*, Cannon*, CannonBall*, CannonExplosion*, 
+	Minigun*, MinigunBullet*
 	/*, TireParts*,	ArmorFrameParts*, EngineParts**/>;
 
 /// <summary>

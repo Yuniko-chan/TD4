@@ -400,6 +400,9 @@
     <Filter Include="Application\Object\Gimmick\Cannon">
       <UniqueIdentifier>{82a8c903-ffee-44da-a64c-a9a3075cee8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Object\Gimmick\Minigun">
+      <UniqueIdentifier>{73da7592-2bca-4df7-a040-cd34b1d220e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -990,6 +993,12 @@
     </ClCompile>
     <ClCompile Include="Application\Object\Gimmick\Cannon\CannonExplosion.cpp">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Gimmick\Minigun\Minigun.cpp">
+      <Filter>Application\Object\Gimmick\Minigun</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Gimmick\Minigun\MinigunBullet.cpp">
+      <Filter>Application\Object\Gimmick\Minigun</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1793,6 +1802,18 @@
     </ClInclude>
     <ClInclude Include="Application\Object\Gimmick\Cannon\CannonExplosion.h">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\Minigun\Minigun.h">
+      <Filter>Application\Object\Gimmick\Minigun</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunBullet.h">
+      <Filter>Application\Object\Gimmick\Minigun</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunData.h">
+      <Filter>Application\Object\Gimmick\Minigun</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunBulletData.h">
+      <Filter>Application\Object\Gimmick\Minigun</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

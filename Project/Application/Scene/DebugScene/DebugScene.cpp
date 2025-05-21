@@ -61,55 +61,22 @@ void DebugScene::Initialize()
 	courseDemoData.parentName = "";
 	courseDemoObject_->Initialize(&courseDemoData);
 
-	// 振り子
-	pendulumIronBallModel_.reset(Model::Create("Resources/Model/Gimmick/IronBall/", "IronBall.obj", dxCommon_));
-	pendulumIronBall_ = std::make_unique<PendulumIronBall>();
-	LevelData::MeshData pendulumIronData;
-	pendulumIronData.directoryPath = "Resources/Model/Gimmick/IronBall/";
-	pendulumIronData.flieName = "IronBall.obj";
-	pendulumIronData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
-	pendulumIronData.className = "PendulumIronBall";
-	pendulumIronData.name = "";
-	pendulumIronData.parentName = "";
-	Sphere pendulumIronCollider;
-	pendulumIronCollider.center_ = { 0.0f,0.0f,0.0f };
-	pendulumIronCollider.radius_ = 1.0f;
-	pendulumIronData.collider = pendulumIronCollider;
-	pendulumIronBall_->Initialize(&pendulumIronData);
-
-	// プレイヤー
-	playerModel_.reset(Model::Create("Resources/Model/Tire", "Core.gltf", dxCommon_));
-	player_ = std::make_unique<Player>();
-	LevelData::MeshData playerData;
-	playerData.directoryPath = "Resources/Model/Tire";
-	playerData.flieName = "Core.gltf";
-	playerData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
-	playerData.className = "Player";
-	playerData.name = "";
-	playerData.parentName = "";
-	OBB playerCollider;
-	playerCollider.center_ = { 0.0f,0.0f,0.0f };
-	playerCollider.size_ = { 1.0f,1.0f,1.0f };
-	playerCollider.SetOtientatuons(Matrix4x4::MakeIdentity4x4());
-	playerData.collider = playerCollider;
-	player_->Initialize(&playerData);
-
-	// 大砲
-	cannonModel_.reset(Model::Create("Resources/Model/Gimmick/IronBall/", "IronBall.obj", dxCommon_));
-	cannon_ = std::make_unique<Cannon>();
-	LevelData::MeshData cannonData;
-	cannonData.directoryPath = "Resources/Model/Gimmick/IronBall/";
-	cannonData.flieName = "IronBall.obj";
-	cannonData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
-	cannonData.className = "Cannon";
-	cannonData.name = "";
-	cannonData.parentName = "";
-	OBB cannonCollider;
-	cannonCollider.center_ = { 0.0f,0.0f,0.0f };
-	cannonCollider.size_ = { 1.0f,1.0f,1.0f };
-	cannonCollider.SetOtientatuons(Matrix4x4::MakeIdentity4x4());
-	cannonData.collider = cannonCollider;
-	cannon_->Initialize(&cannonData);
+	// ミニガン
+	minigunModel_.reset(Model::Create("Resources/Model/Gimmick/IronBall/", "IronBall.obj", dxCommon_));
+	minigun_ = std::make_unique<Minigun>();
+	LevelData::MeshData minigunData;
+	minigunData.directoryPath = "Resources/Model/Gimmick/IronBall/";
+	minigunData.flieName = "IronBall.obj";
+	minigunData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+	minigunData.className = "Minigun";
+	minigunData.name = "";
+	minigunData.parentName = "";
+	OBB minigunCollider;
+	minigunCollider.center_ = { 0.0f,0.0f,0.0f };
+	minigunCollider.size_ = { 1.0f,1.0f,1.0f };
+	minigunCollider.SetOtientatuons(Matrix4x4::MakeIdentity4x4());
+	minigunData.collider = minigunCollider;
+	minigun_->Initialize(&minigunData);
 
 	BaseScene::InitilaizeCheck();
 
@@ -127,12 +94,8 @@ void DebugScene::Update()
 	courseDemoObject_->Update();
 	courseCollisionSystem_->ObjectRegistration(courseDemoObject_.get());
 	courseCollisionSystem_->Execute();
-
-	pendulumIronBall_->Update();
-
-	player_->Update();
 	
-	cannon_->Update();
+	minigun_->Update();
 
 	DebugCameraUpdate();
 
@@ -154,17 +117,13 @@ void DebugScene::Draw()
 	// コースデモ
 	//courseDemoObject_->Draw(camera_);
 
-	//player_->Draw(camera_);
-
-	//pendulumIronBall_->Draw(camera_);
-
-	cannon_->Draw(camera_);
+	minigun_->Draw(camera_);
 
 	ModelDraw::PostDraw();
 
 #pragma region 線描画
 
-	//drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
+	drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
 
 #pragma endregion
 

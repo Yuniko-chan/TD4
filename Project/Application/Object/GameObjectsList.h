@@ -8,3 +8,5 @@
 #include "Gimmick/Cannon/Cannon.h"
 #include "Gimmick/Cannon/CannonBall.h"
 #include "Gimmick/Cannon/CannonExplosion.h"
+#include "Gimmick/Minigun/Minigun.h"
+#include "Gimmick/Minigun/MinigunBullet.h"
