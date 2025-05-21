@@ -8,22 +8,26 @@ DriveSystem::DriveSystem()
 {
 	// エンジン
 	driveEngine_ = std::make_unique<VehicleEngine>();
+	// ハンドル
+	handling_ = std::make_unique<VehicleHandling>();
 }
 
 void DriveSystem::Update()
 {
+	// ハンドル処理
+	handling_->Update();
 	// エンジン処理
-	driveEngine_->Update();
+	driveEngine_->Update(handling_->GetSteerDirect());
 
 	// 速度の計算
 	velocity_ += driveEngine_->GetAcceleration() * kDeltaTime_;
 	// 減速
-	velocity_ = velocity_ * 0.75f;
+	const float velocityDecrement = 0.75f;
+	velocity_ = velocity_ * velocityDecrement;
 	const float kEpsilon = 0.0001f;
-	if (std::fabsf(velocity_.x) < kEpsilon) velocity_.x = 0.0f;
-	if (std::fabsf(velocity_.y) < kEpsilon) velocity_.y = 0.0f;
-	if (std::fabsf(velocity_.z) < kEpsilon) velocity_.z = 0.0f;
-
+	// 0に調節
+	VehicleCaluclator calc;
+	velocity_ = calc.SnapToZero(velocity_, kEpsilon);
 
 	if (velocity_ != Vector3(0.0f, 0.0f, 0.0f)) {
 		Vector3 direct = Vector3::Normalize(velocity_);
@@ -34,10 +38,8 @@ void DriveSystem::Update()
 	}
 	
 	// 移動計算
-	coreTransform_->transform_.translate += velocity_ * kDeltaTime_;
-	//coreTransform_->transform_.rotate.y = driveEngine_->GetEuler();
-	// 初期化
-	driveEngine_->SetDirection(Vector3(0.0f, 0.0f, 0.0f));
+	coreTransform_->transform_.translate += 
+		calc.RotateVector(velocity_,coreTransform_->transform_.rotate.y) * kDeltaTime_;
 }
 
 void DriveSystem::InputAccept(GameKeyconfig* keyConfig, const Vector3& direct)
@@ -46,6 +48,8 @@ void DriveSystem::InputAccept(GameKeyconfig* keyConfig, const Vector3& direct)
 	driveEngine_->SetDirection(direct);
 	// エンジンの受付
 	driveEngine_->EngineAccept(keyConfig);
+	// ハンドルの入力受付
+	handling_->HandleInput(keyConfig->GetLeftStick()->x);
 }
 
 void DriveSystem::ImGuiDraw()

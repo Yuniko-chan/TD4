@@ -5,7 +5,7 @@
 
 #include "../../../Player/DebugData/PlayerDebugData.h"
 
-void VehicleEngine::Update()
+void VehicleEngine::Update(const Vector3& steerDirect)
 {
 	// フレームカウント
 	const int timming = 10;
@@ -33,10 +33,10 @@ void VehicleEngine::Update()
 	}
 
 	// スピード用のレシオ計算
-	const float minusRate = 3.0f;
+	const float plusRate = 3.0f;
 	// エンジンが回転している場合
 	if (consecutiveReceptions_ != 0) {
-		speedRatio_ = (float)consecutiveReceptions_ * (minusRate);
+		speedRatio_ = (float)consecutiveReceptions_ * (plusRate);
 	}
 	// エンジンが回転していない場合
 	else {
@@ -51,7 +51,7 @@ void VehicleEngine::Update()
 	}
 	
 	// 向きに併せるためのベクトル
-	Vector3 newDirection = Matrix4x4::TransformNormal(Vector3(handringDirect_), Matrix4x4::MakeRotateYMatrix(moveDirect_.y));
+	Vector3 newDirection = Vector3::Normalize(steerDirect);
 	// 加速度の計算
 	const float rideSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue("Player", "RideSpeed");
 	acceleration_ = newDirection * (speedRatio_ * rideSpeedFactor);

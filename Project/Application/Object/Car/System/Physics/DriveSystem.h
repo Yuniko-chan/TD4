@@ -19,8 +19,6 @@ public:
 	/// </summary>
 	void Update();
 
-	void RotateUpdate();
-
 	/// <summary>
 	/// 入力受付
 	/// </summary>
@@ -34,6 +32,8 @@ public:
 private:
 	// 運転用のエンジン
 	std::unique_ptr<VehicleEngine> driveEngine_;
+	// ハンドルシステム
+	std::unique_ptr<VehicleHandling> handling_;
 	// トランスフォーム
 	WorldTransform* coreTransform_ = nullptr;
 
