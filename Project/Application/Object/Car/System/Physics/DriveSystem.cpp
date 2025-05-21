@@ -29,6 +29,7 @@ void DriveSystem::Update()
 	VehicleCaluclator calc;
 	velocity_ = calc.SnapToZero(velocity_, kEpsilon);
 
+	Vector3 frontVector = Matrix4x4::TransformNormal(Vector3(0.0f, 0.0f, 1.0f), Matrix4x4::MakeRotateYMatrix(coreTransform_->transform_.rotate.y));
 	//if (velocity_ != Vector3(0.0f, 0.0f, 0.0f)) {
 	//	Vector3 direct = Vector3::Normalize(velocity_);
 	//	coreTransform_->transform_.rotate.y = std::atan2f(direct.x, direct.z);
@@ -37,6 +38,17 @@ void DriveSystem::Update()
 	//	coreTransform_->transform_.rotate.y = 0.0f;
 	//}
 	
+	if (Vector3::Dot(frontVector, Vector3::Normalize(velocity_)) > 0.0f &&
+		velocity_ != Vector3(0.0f, 0.0f, 0.0f)) {
+		Vector3 direct = Vector3::Normalize(velocity_);
+		coreTransform_->transform_.rotate.y = std::atan2f(direct.x, direct.z);
+	}
+	else if (Vector3::Dot(frontVector, Vector3::Normalize(velocity_)) <= 0.0f &&
+		velocity_ != Vector3(0.0f, 0.0f, 0.0f)) {
+		Vector3 direct = Vector3::Normalize(velocity_);
+		coreTransform_->transform_.rotate.y = std::atan2f(-direct.x, -direct.z);
+	}
+
 	// 移動計算
 	coreTransform_->transform_.translate += 
 		calc.RotateVector(velocity_,coreTransform_->transform_.rotate.y) * kDeltaTime_;

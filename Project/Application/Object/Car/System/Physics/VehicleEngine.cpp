@@ -43,23 +43,6 @@ void VehicleEngine::Update(const Vector3& steerDirect)
 	// 制限処理
 	consecutiveReceptions_ = (int16_t)std::clamp((int)consecutiveReceptions_, -maxReception, maxReception);
 
-	//{
-	//	// 加速量上昇
-	//	if (accelInputCounter_ % timming == 0 && isAccel_) {
-	//		consecutiveReceptions_++;
-	//		accelInputCounter_ = 0;
-	//	}
-	//	// 加速量低下
-	//	else if(accelInputCounter_ % 5 == 0 && !isAccel_){
-	//		consecutiveReceptions_--;
-	//		accelInputCounter_ = 0;
-	//	}
-	//	// 最大値に
-	//	if (consecutiveReceptions_ > maxReception) {
-	//		consecutiveReceptions_ = maxReception;
-	//	}
-	//}
-
 	// スピード用のレシオ計算
 	const float kPlusRate = 3.0f;
 	// エンジンが回転している場合
@@ -81,18 +64,6 @@ void VehicleEngine::Update(const Vector3& steerDirect)
 	const float rideSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue("Player", "RideSpeed");
 	acceleration_ = newDirection * (speedRatio_ * rideSpeedFactor);
 
-	//// ブレーキが踏まれているか
-	//if (isDecel_ || consecutiveReceptions_ < 0) {
-	//	decelInputCounter_++;
-
-	//	// 減速処理
-	//	if (decelInputCounter_ % timming == 0 && isDecel_) {
-	//		consecutiveReceptions_--;
-	//	}
-	//	else if (accelInputCounter_ % timming == 0 && !isDecel_) {
-	//		consecutiveReceptions_++;
-	//	}
-	//}
 }
 
 void VehicleEngine::Reset()
