@@ -943,7 +943,7 @@
     <ClCompile Include="Application\Object\Car\System\Physics\DriveSystem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Car\System\Physics\VehicleCaluclator.cpp">
+    <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Terrain\TerrainObject.cpp">
@@ -1710,7 +1710,7 @@
     <ClInclude Include="Application\Object\Car\System\Physics\VehicleEngine.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\Physics\VehicleCaluclator.h">
+    <ClInclude Include="Application\Object\Utility\Calc\VehicleCaluclator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Car\System\Physics\DriveSystem.h">

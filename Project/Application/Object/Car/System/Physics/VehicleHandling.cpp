@@ -1,4 +1,6 @@
 #include "VehicleHandling.h"
+#include "../VehicleSystems.h"
+
 #include "../../../Engine/Math/Ease.h"
 #include "../../../Engine/2D/ImguiManager.h"
 

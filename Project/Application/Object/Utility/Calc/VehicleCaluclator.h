@@ -20,4 +20,12 @@ public:
 	Vector3 SnapToZero(const Vector3& vector, const float epsilon);
 
 	Vector3 RotateVector(const Vector3& velocity, const float euler);
+	/// <summary>
+	/// 指数関数補間
+	/// </summary>
+	/// <param name="current"></param>
+	/// <param name="end"></param>
+	/// <param name="decay"></param>
+	/// <returns></returns>
+	static Vector3 ExponentialInterpolate(const Vector3& current, const Vector3& end, float decay);
 };

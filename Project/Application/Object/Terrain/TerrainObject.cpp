@@ -24,7 +24,7 @@ void TerrainObject::Initialize(LevelData::MeshData* data)
 	collider_.reset(colliderShape);
 
 	worldTransform_.transform_.translate.y = -3.0f;
-	worldTransform_.transform_.scale = { 10.0f,1.0f,10.0f };
+	worldTransform_.transform_.scale = { 50.0f,1.0f,50.0f };
 
 }
 

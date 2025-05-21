@@ -176,7 +176,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Car\Parts\System\VehicleConnector.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Tire\TireParts.cpp" />
     <ClCompile Include="Application\Object\Car\System\Physics\DriveSystem.cpp" />
-    <ClCompile Include="Application\Object\Car\System\Physics\VehicleCaluclator.cpp" />
+    <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp" />
     <ClCompile Include="Application\Object\Car\System\Physics\VehicleEngine.cpp" />
     <ClCompile Include="Application\Object\Car\System\Physics\VehicleHandling.cpp" />
     <ClCompile Include="Application\Object\Car\System\VehicleStatus.cpp" />
@@ -379,7 +379,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Car\System\Physics\User\AutoDriver.h" />
     <ClInclude Include="Application\Object\Car\System\Physics\User\InterfaceDriver.h" />
     <ClInclude Include="Application\Object\Car\System\Physics\User\UserDriver.h" />
-    <ClInclude Include="Application\Object\Car\System\Physics\VehicleCaluclator.h" />
+    <ClInclude Include="Application\Object\Utility\Calc\VehicleCaluclator.h" />
     <ClInclude Include="Application\Object\Car\System\Physics\VehicleEngine.h" />
     <ClInclude Include="Application\Object\Car\System\Physics\VehicleHandling.h" />
     <ClInclude Include="Application\Object\Car\System\VehicleCaluclator.h" />
