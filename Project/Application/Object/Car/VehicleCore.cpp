@@ -4,6 +4,7 @@
 
 #include "../GameObjectsList.h"
 #include "../../Collider/CollisionConfig.h"
+#include "../Utility/Calc/TransformHelper.h"
 
 VehicleCore::VehicleCore()
 {
@@ -18,6 +19,8 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	// 基底
 	MeshObject::Initialize(data);
 	material_->SetEnableLighting(HalfLambert);
+	// ベクトルで向きを決めるように
+	worldTransform_.usedDirection_ = true;
 	worldTransform_.transform_.translate.z = 0.0f;
 
 	// 衝突マスク
@@ -43,9 +46,6 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 
 void VehicleCore::Update()
 {
-	// 前方
-	frontVector_ = Matrix4x4::TransformNormal(Vector3(0.0f, 0.0f, 1.0f),
-		Matrix4x4::MakeRotateYMatrix(worldTransform_.transform_.rotate.y));
 	// 運転・移動処理
 	driveSystem_->Update();
 	// 接続管理
@@ -59,6 +59,14 @@ void VehicleCore::Update()
 void VehicleCore::ImGuiDrawParts()
 {
 	ImGui::SeparatorText(className_.c_str());
+	static Vector3 angle = Vector3(worldTransform_.direction_);
+
+	if (ImGui::Button("Rot")) {
+		float rad = TransformHelper::CalculateXZVectorToRotateRadian(worldTransform_.direction_, Vector3(1.0f, 0.0f, 0.0f));
+		angle = TransformHelper::XZRotateDirection(worldTransform_.direction_, rad);
+	}
+	ImGui::DragFloat3("Angle", &angle.x);
+
 	// トランスフォームに移動
 	ImGuiTransform(0.1f);
 	if (ImGui::BeginTabBar("System")) {

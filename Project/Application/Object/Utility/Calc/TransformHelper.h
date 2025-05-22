@@ -1,5 +1,6 @@
 #pragma once
 #include "../../../Engine/3D/Transform/WorldTransform.h"
+#include "../../../Engine/Math/Vector/Vector2.h"
 
 /// <summary>
 /// トランスフォーム関係の計算関数クラス
@@ -32,4 +33,11 @@ public:
 	/// <returns></returns>
 	static Vector3 XZRotateDirection(const Vector3& direct, float& theta);
 
+	/// <summary>
+	/// XZベクトルの回転角を求める関数
+	/// </summary>
+	/// <param name="from"></param>
+	/// <param name="to"></param>
+	/// <returns></returns>
+	static float CalculateXZVectorToRotateRadian(const Vector3& from, const Vector3& to);
 };

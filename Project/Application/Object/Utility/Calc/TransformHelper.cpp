@@ -47,3 +47,24 @@ Vector3 TransformHelper::XZRotateDirection(const Vector3& direct, float& theta)
 
     return Vector3(Vector3::Normalize(result));
 }
+
+float TransformHelper::CalculateXZVectorToRotateRadian(const Vector3& from, const Vector3& to)
+{
+    Vector2 from2 = Vector2(from.x, from.z);
+    Vector2 to2 = Vector2(to.x, to.z);
+    from2 = Vector2::Normalize(from2);
+    to2 = Vector2::Normalize(to2);
+
+    float cos = Vector2::Dot(from2, to2);
+    float rad = std::acosf(cos);
+
+    //float angle = rad / (3.14f * 180.0f);
+
+    float cross = Vector2::Cross(from2, to2);
+
+    if (cross < 0) {
+        return rad * (-1.0f);
+    }
+
+    return rad;
+}
