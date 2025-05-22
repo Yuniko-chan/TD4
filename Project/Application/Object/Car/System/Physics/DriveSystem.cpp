@@ -17,10 +17,11 @@ void DriveSystem::Update()
 	// ハンドル処理
 	handling_->Update();
 	// エンジン処理
-	driveEngine_->Update(handling_->GetSteerDirect());
+	driveEngine_->Update();
 
 	// 速度の計算
-	velocity_ += driveEngine_->GetAcceleration() * kDeltaTime_;
+	Vector3 acc = Vector3(0.0f, 0.0f, 1.0f) * driveEngine_->GetSpeedRatio();
+	velocity_ += acc * kDeltaTime_;
 	// 減速
 	const float velocityDecrement = 0.75f;
 	velocity_ = velocity_ * velocityDecrement;

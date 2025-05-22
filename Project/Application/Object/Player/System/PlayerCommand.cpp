@@ -45,6 +45,29 @@ void PlayerCommand::RotateCommand()
 	moveDirect_ = Vector3::Normalize(transformDirect);
 }
 
+void PlayerCommand::VectorRotate()
+{
+	theta_ = 0.0f;
+
+	if (keyConfig_->GetRightStick()->x > 0) {
+		theta_ -= 0.01f;
+	}
+	else if (keyConfig_->GetRightStick()->x < 0) {
+		theta_ += 0.01f;
+	}
+
+	float cosT = std::cosf(theta_);
+	float sinT = std::sinf(theta_);
+
+	Vector3 direct = {
+		playerTransform_->direction_.x * cosT - playerTransform_->direction_.z * sinT,
+		playerTransform_->direction_.y,
+		playerTransform_->direction_.x * sinT + playerTransform_->direction_.z * cosT,
+	};
+	
+	playerTransform_->direction_ = Vector3::Normalize(direct);
+}
+
 void PlayerCommand::InVehicleRotateCommand()
 {
 	// 回転の適応

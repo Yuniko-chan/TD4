@@ -1,5 +1,6 @@
 #include "VehicleHandling.h"
 #include "../VehicleSystems.h"
+#include "../../VehicleCore.h"
 
 #include "../../../Engine/Math/Ease.h"
 #include "../../../Engine/2D/ImguiManager.h"
@@ -13,12 +14,10 @@ void VehicleHandling::HandleInput(const float inputX)
 	// 右
 	if (inputX > 0) {
 		isRight_ = true;
-		isDirection_ = kRight;
 	}
 	// 左
 	else if (inputX < 0) {
 		isLeft_ = true;
-		isDirection_ = kLeft;
 	}
 }
 
@@ -28,8 +27,10 @@ void VehicleHandling::Update()
 	if (IsInput() || consecutiveReceptions_ != 0) {
 		++inputCounter_;
 	}
+	const int duration = 6;
+
 	// 増加
-	if (inputCounter_ % 10 == 0) {
+	if (inputCounter_ % duration == 0) {
 		if (isLeft_) {
 			consecutiveReceptions_--;
 		}
@@ -39,7 +40,7 @@ void VehicleHandling::Update()
 		inputCounter_ = 0;
 	}
 	// 減少
-	else if (!IsInput() && (inputCounter_ % 5 == 0)) {
+	else if (!IsInput() && (inputCounter_ % (duration / 2) == 0)) {
 		if (consecutiveReceptions_ > 0) {
 			consecutiveReceptions_--;
 		}
@@ -54,13 +55,14 @@ void VehicleHandling::Update()
 	consecutiveReceptions_ = (int16_t)std::clamp((int)consecutiveReceptions_, -kMaxCount, kMaxCount);
 
 	float t = (float)std::abs((int)consecutiveReceptions_) / kMaxCount;
+	const float limitDirect = 0.75f;
 	// プラス方向（右
 	if (consecutiveReceptions_ > 0) {
-		steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, 0.0f, 1.0f, t);
+		steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, 0.0f, limitDirect, t);
 	}
 	// マイナス方向（左
 	else if (consecutiveReceptions_ < 0) {
-		steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, 0.0f, -1.0f, t);
+		steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, 0.0f, -limitDirect, t);
 	}
 	else {
 		steerDirection_.x = 0.0f;

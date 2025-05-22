@@ -48,6 +48,12 @@ public: //
 	/// 回転処理
 	/// </summary>
 	void RotateCommand();
+
+	/// <summary>
+	/// ベクトルでの回転
+	/// </summary>
+	void VectorRotate();
+
 	/// <summary>
 	/// 車両に乗っている際の回転
 	/// </summary>
@@ -62,4 +68,7 @@ private:
 	WorldTransform* playerTransform_ = nullptr;
 	// 入力クラス
 	GameKeyconfig* keyConfig_ = nullptr;
+
+	// 角度
+	float theta_ = 0.0f;
 };

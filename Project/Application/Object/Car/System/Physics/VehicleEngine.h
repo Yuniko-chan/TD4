@@ -10,7 +10,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(const Vector3& steerDirect);
+	void Update();
 
 	/// <summary>
 	/// 初期化
@@ -39,15 +39,11 @@ private:
 	// 受付連続回数
 	int16_t consecutiveReceptions_ = 0;
 	// 加速入力
-	int32_t accelInputCounter_ = 0;
 	bool isAccel_ = false;
 	// 減速入力
-	int32_t decelInputCounter_ = 0;
 	bool isDecel_ = false;
-
 	// 入力カウント
 	int32_t inputCounter_ = 0;
-
 	// 速度
 	float speedRatio_ = 0.0f;
 

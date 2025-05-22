@@ -32,6 +32,7 @@ void PlayerOnFootState::Update()
 
 	// 移動用の回転処理
 	player_->GetCommand()->RotateCommand();
+	player_->GetCommand()->VectorRotate();
 	// 移動処理
 	const float walkSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue("Player", "WalkSpeed");
 	Vector3 velocityDirection = player_->GetCommand()->GetDirect() * walkSpeedFactor;

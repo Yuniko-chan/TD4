@@ -66,6 +66,8 @@ public: // アクセッサ
     void SetPlayer(Player* player) { pairPlayer_ = player; }
 
 private:
+    // 前方ベクトル
+    Vector3 frontVector_ = Vector3(0.0f, 0.0f, 1.0f);
     // パーツのリスト
     std::list<Car::IParts*> partsLists_;
 

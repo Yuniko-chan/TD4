@@ -5,7 +5,7 @@
 
 #include "../../../Player/DebugData/PlayerDebugData.h"
 
-void VehicleEngine::Update(const Vector3& steerDirect)
+void VehicleEngine::Update()
 {
 	// フレームカウント
 	const int timming = 10;
@@ -13,8 +13,6 @@ void VehicleEngine::Update(const Vector3& steerDirect)
 
 	// アクセルキーか受付連続値があれば
 	if ((isAccel_ || isDecel_) || consecutiveReceptions_ != 0) {
-		accelInputCounter_++;
-
 		inputCounter_++;
 	}
 
@@ -59,11 +57,16 @@ void VehicleEngine::Update(const Vector3& steerDirect)
 	}
 	
 	// 向きに併せるためのベクトル
-	Vector3 newDirection = Vector3::Normalize(steerDirect);
+	//Vector3 newDirection = Vector3::Normalize(steerDirect);
 	// 加速度の計算
 	const float rideSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue("Player", "RideSpeed");
-	acceleration_ = newDirection * (speedRatio_ * rideSpeedFactor);
-
+	//acceleration_ = (speedRatio_ * rideSpeedFactor);
+	if (speedRatio_ != 0.0f) {
+		speedRatio_ *= rideSpeedFactor;
+	}
+	else {
+		speedRatio_ = 0.0f;
+	}
 }
 
 void VehicleEngine::Reset()
@@ -87,17 +90,18 @@ void VehicleEngine::EngineAccept(GameKeyconfig* keyConfig)
 
 void VehicleEngine::ImGuiDraw()
 {
-	ImGui::Checkbox("IsAccel", &isAccel_);
-	ImGui::Checkbox("IsDecel", &isDecel_);
 
-	int con = this->accelInputCounter_;
-	ImGui::InputInt("AccelInput", &con);
-	con = this->decelInputCounter_;
-	ImGui::InputInt("DecelInput", &con);
-	con = this->consecutiveReceptions_;
-	ImGui::InputInt("ConsecutiveRecept", &con);
-	ImGui::DragFloat("SpeedRatio", &speedRatio_);
-	// ハンドル角
-	ImGui::DragFloat("LeftstickX", &controlDirect_);
-	ImGui::DragFloat3("Handle", &handringDirect_.x);
+	if (ImGui::TreeNode("EngineInfo")) {
+		ImGui::Checkbox("IsAccel", &isAccel_);
+		ImGui::Checkbox("IsDecel", &isDecel_);
+		int con = this->consecutiveReceptions_;
+		ImGui::InputInt("ConsecutiveRecept", &con);
+		ImGui::DragFloat("SpeedRatio", &speedRatio_);
+		// ハンドル角
+		ImGui::DragFloat("LeftstickX", &controlDirect_);
+		ImGui::DragFloat3("Handle", &handringDirect_.x);
+
+		ImGui::TreePop();
+	}
+
 }

@@ -33,7 +33,7 @@ void Player::Initialize(LevelData::MeshData* data)
 	ColliderShape* colliderShape = new ColliderShape();
 	*colliderShape = obb;
 	collider_.reset(colliderShape);
-
+	worldTransform_.usedDirection_ = true;
 	// システム
 	SystemInitialize();
 }
@@ -72,6 +72,9 @@ void Player::ImGuiDraw()
 	ImGui::DragFloat3("Translate", &worldTransform_.transform_.translate.x, 0.1f);
 	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
+	// べく
+	ImGui::Checkbox("IsDirect", &worldTransform_.usedDirection_);
+	ImGui::DragFloat3("Front", &worldTransform_.direction_.x);
 
 	if(ImGui::BeginTabBar("System")) {
 		// デバッグ用のデータ

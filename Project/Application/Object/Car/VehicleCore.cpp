@@ -43,12 +43,17 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 
 void VehicleCore::Update()
 {
+	// 前方
+	frontVector_ = Matrix4x4::TransformNormal(Vector3(0.0f, 0.0f, 1.0f),
+		Matrix4x4::MakeRotateYMatrix(worldTransform_.transform_.rotate.y));
 	// 運転・移動処理
 	driveSystem_->Update();
 	// 接続管理
 	constructionSystem_->Update();
 	// 基底
 	Car::IParts::Update();
+
+	
 }
 
 void VehicleCore::ImGuiDrawParts()

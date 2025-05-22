@@ -33,3 +33,17 @@ float TransformHelper::Vector3Distance(const Vector3& v1, const Vector3& v2)
     float distanceValue = (std::sqrtf(std::powf(distance.x, 2)) + std::sqrtf(std::powf(distance.y, 2)) + std::sqrtf(std::powf(distance.z, 2)));
     return distanceValue;
 }
+
+Vector3 TransformHelper::XZRotateDirection(const Vector3& direct, float& theta)
+{
+    float cosT = std::cosf(theta);
+    float sinT = std::sinf(theta);
+
+    Vector3 result = {
+        direct.x * cosT - direct.z * sinT,
+        direct.y,
+        direct.x * sinT + direct.z * cosT,
+    };
+
+    return Vector3(Vector3::Normalize(result));
+}
