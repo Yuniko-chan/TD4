@@ -1,5 +1,6 @@
 #include "DriveSystem.h"
 #include "../../VehicleCore.h"
+#include "../../../Utility/Calc/TransformHelper.h"
 #include "../../../KeyConfig/GameKeyconfig.h"
 #include "../../../Engine/Math/DeltaTime.h"
 #include "../../../Engine/2D/ImguiManager.h"
@@ -61,7 +62,9 @@ void DriveSystem::Update()
 	if (velocity_ == Vector3(0.0f, 0.0f, 0.0f)) {
 		return;
 	}
-	coreTransform_->transform_.translate += velocity_ * kDeltaTime_;
+	float eulerY = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, Vector3(0.0f, 0.0f, 1.0f));
+	coreTransform_->transform_.translate += 
+		calc.RotateVector(velocity_, eulerY) * kDeltaTime_;
 }
 
 void DriveSystem::InputAccept(GameKeyconfig* keyConfig)
