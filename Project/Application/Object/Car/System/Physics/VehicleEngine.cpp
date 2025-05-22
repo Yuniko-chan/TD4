@@ -56,17 +56,13 @@ void VehicleEngine::Update()
 		}
 	}
 	
-	// 向きに併せるためのベクトル
-	//Vector3 newDirection = Vector3::Normalize(steerDirect);
 	// 加速度の計算
 	const float rideSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue("Player", "RideSpeed");
-	//acceleration_ = (speedRatio_ * rideSpeedFactor);
-	if (speedRatio_ != 0.0f) {
-		speedRatio_ *= rideSpeedFactor;
+	currentSpeed_ = speedRatio_ * rideSpeedFactor;
+	if (std::fabsf(currentSpeed_) <= 0.001f) {
+		currentSpeed_ = 0.0f;
 	}
-	else {
-		speedRatio_ = 0.0f;
-	}
+
 }
 
 void VehicleEngine::Reset()

@@ -20,39 +20,43 @@ void DriveSystem::Update()
 	driveEngine_->Update();
 
 	// 速度の計算
-	Vector3 acc = Vector3(0.0f, 0.0f, 1.0f) * driveEngine_->GetSpeedRatio();
+	Vector3 acc = Vector3(0.0f, 0.0f, 1.0f) * driveEngine_->GetCurrentSpeed();
 	velocity_ += acc * kDeltaTime_;
 	// 減速
 	const float velocityDecrement = 0.75f;
 	velocity_ = velocity_ * velocityDecrement;
-	const float kEpsilon = 0.0001f;
+	const float kEpsilon = 0.001f;
 	// 0に調節
 	VehicleCaluclator calc;
 	velocity_ = calc.SnapToZero(velocity_, kEpsilon);
 
-	Vector3 frontVector = Matrix4x4::TransformNormal(Vector3(0.0f, 0.0f, 1.0f), Matrix4x4::MakeRotateYMatrix(coreTransform_->transform_.rotate.y));
-	//if (velocity_ != Vector3(0.0f, 0.0f, 0.0f)) {
+	//Vector3 frontVector = Matrix4x4::TransformNormal(Vector3(0.0f, 0.0f, 1.0f), Matrix4x4::MakeRotateYMatrix(coreTransform_->transform_.rotate.y));
+	////if (velocity_ != Vector3(0.0f, 0.0f, 0.0f)) {
+	////	Vector3 direct = Vector3::Normalize(velocity_);
+	////	coreTransform_->transform_.rotate.y = std::atan2f(direct.x, direct.z);
+	////}
+	////else {
+	////	coreTransform_->transform_.rotate.y = 0.0f;
+	////}
+	//
+	//if (Vector3::Dot(frontVector, Vector3::Normalize(velocity_)) > 0.0f &&
+	//	velocity_ != Vector3(0.0f, 0.0f, 0.0f)) {
 	//	Vector3 direct = Vector3::Normalize(velocity_);
 	//	coreTransform_->transform_.rotate.y = std::atan2f(direct.x, direct.z);
 	//}
-	//else {
-	//	coreTransform_->transform_.rotate.y = 0.0f;
+	//else if (Vector3::Dot(frontVector, Vector3::Normalize(velocity_)) <= 0.0f &&
+	//	velocity_ != Vector3(0.0f, 0.0f, 0.0f)) {
+	//	Vector3 direct = Vector3::Normalize(velocity_);
+	//	coreTransform_->transform_.rotate.y = std::atan2f(-direct.x, -direct.z);
 	//}
-	
-	if (Vector3::Dot(frontVector, Vector3::Normalize(velocity_)) > 0.0f &&
-		velocity_ != Vector3(0.0f, 0.0f, 0.0f)) {
-		Vector3 direct = Vector3::Normalize(velocity_);
-		coreTransform_->transform_.rotate.y = std::atan2f(direct.x, direct.z);
-	}
-	else if (Vector3::Dot(frontVector, Vector3::Normalize(velocity_)) <= 0.0f &&
-		velocity_ != Vector3(0.0f, 0.0f, 0.0f)) {
-		Vector3 direct = Vector3::Normalize(velocity_);
-		coreTransform_->transform_.rotate.y = std::atan2f(-direct.x, -direct.z);
-	}
 
-	// 移動計算
-	coreTransform_->transform_.translate += 
-		calc.RotateVector(velocity_,coreTransform_->transform_.rotate.y) * kDeltaTime_;
+	//// 移動計算
+	//coreTransform_->transform_.translate += 
+	//	calc.RotateVector(velocity_,coreTransform_->transform_.rotate.y) * kDeltaTime_;
+	if (velocity_ == Vector3(0.0f, 0.0f, 0.0f)) {
+		return;
+	}
+	coreTransform_->transform_.translate += velocity_ * kDeltaTime_;
 }
 
 void DriveSystem::InputAccept(GameKeyconfig* keyConfig)
