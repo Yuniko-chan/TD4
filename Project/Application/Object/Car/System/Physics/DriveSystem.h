@@ -14,6 +14,8 @@ public:
 	// デストラクタ
 	~DriveSystem() = default;
 
+	void Initialize();
+
 	/// <summary>
 	/// 更新
 	/// </summary>

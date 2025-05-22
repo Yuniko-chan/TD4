@@ -12,6 +12,11 @@ DriveSystem::DriveSystem()
 	handling_ = std::make_unique<VehicleHandling>();
 }
 
+void DriveSystem::Initialize()
+{
+	handling_->SetOwner(owner_);
+}
+
 void DriveSystem::Update()
 {
 	// ハンドル処理

@@ -42,6 +42,8 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	driveSystem_ = std::make_unique<DriveSystem>();
 	driveSystem_->SetOwner(this);
 	driveSystem_->SetTransform(&worldTransform_);
+
+	driveSystem_->Initialize();
 }
 
 void VehicleCore::Update()

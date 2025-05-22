@@ -1,6 +1,7 @@
 #include "VehicleHandling.h"
 #include "../VehicleSystems.h"
 #include "../../VehicleCore.h"
+#include "../../../Utility/Calc/TransformHelper.h"
 
 #include "../../../Engine/Math/Ease.h"
 #include "../../../Engine/2D/ImguiManager.h"
@@ -71,6 +72,14 @@ void VehicleHandling::Update()
 
 	// 正規化
 	steerDirection_ = Vector3::Normalize(steerDirection_);
+	if (IsInput()) {
+		float radian = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, steerDirection_);
+
+		radian /= 60.0f;
+
+		owner_->GetWorldTransformAdress()->direction_ = TransformHelper::XZRotateDirection(owner_->GetWorldTransformAdress()->direction_, radian);
+	}
+
 }
 
 void VehicleHandling::ImGuiDraw()
