@@ -15,6 +15,11 @@ public: // メンバ変数
 	float z;
 
 public: // メンバ関数
+	/// <summary>
+	/// 前方ベクトル
+	/// </summary>
+	/// <returns></returns>
+	static Vector3 FrontVector() { return Vector3(0.0f, 0.0f, 1.0f); }
 
 	/// <summary>
 	/// 加算

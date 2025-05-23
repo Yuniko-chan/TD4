@@ -15,14 +15,6 @@ public:
 	VehicleConnector() {};
 public:
 	/// <summary>
-	/// 接続可能かチェックスロット
-	/// </summary>
-	struct ConnectionSlot {
-		bool isConnected = false;	// 接続されているか
-		bool isAvailable = true;	// 空か
-	};
-
-	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update();
@@ -30,12 +22,13 @@ public:
 	/// ImGui
 	/// </summary>
 	void ImGuiDraw();
-
+	/// <summary>
+	/// リセット
+	/// </summary>
 	void Reset() {
 		parents_.clear();
 		childrens_.clear();
 	}
-
 	// 親の追加
 	void AddParents(Car::IParts* part) {
 		parents_.push_back(part); 
@@ -52,13 +45,13 @@ public:
 	// 子の削除
 	void DeleteChildren(Car::IParts* part) { childrens_.remove(part); }
 	void ReleaseChildren(Car::IParts* part);
-
+public:	// アクセッサ
 	// 深度値取得
 	int32_t GetDepth() const { return depth_; }
 	// 深度地設定
 	void SetDepth(int32_t depth) { depth_ = depth; }
 	void SetKey(const Vector2& key) { debugKey_ = key; }
-
+	// 親があるか
 	bool IsParent() { return !parents_.empty(); }
 
 	/// <summary>
@@ -74,9 +67,6 @@ private:
 	int32_t depth_ = 0;
 	// デバッグ用
 	Vector2 debugKey_ = {};
-	// 空スロットチェック
-	//std::array<ConnectionSlot, Direction::MaxSize> connectSlot_;
-
 	// 親ポインタ（座標構築用）
 	WorldTransform* coreTransform_ = nullptr;
 };
