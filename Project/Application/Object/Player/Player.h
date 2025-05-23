@@ -56,7 +56,9 @@ public: // メンバ関数
     /// <param name="collisionData"></param>
     void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
-    void SetParent();
+    void SettingParent();
+    // 親の確認
+    bool IsParent() { return worldTransform_.parent_ ? true : false; }
 
 private:
     /// <summary>

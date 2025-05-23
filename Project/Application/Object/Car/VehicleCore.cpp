@@ -61,14 +61,6 @@ void VehicleCore::Update()
 void VehicleCore::ImGuiDrawParts()
 {
 	ImGui::SeparatorText(className_.c_str());
-	static Vector3 angle = Vector3(worldTransform_.direction_);
-
-	if (ImGui::Button("Rot")) {
-		float rad = TransformHelper::CalculateXZVectorToRotateRadian(worldTransform_.direction_, Vector3(1.0f, 0.0f, 0.0f));
-		angle = TransformHelper::XZRotateDirection(worldTransform_.direction_, rad);
-	}
-	ImGui::DragFloat3("Angle", &angle.x);
-
 	// トランスフォームに移動
 	ImGuiTransform(0.1f);
 	if (ImGui::BeginTabBar("System")) {

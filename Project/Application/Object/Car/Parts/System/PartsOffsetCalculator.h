@@ -7,6 +7,5 @@ class PartsOffsetCalculator
 {
 public:
 	// オフセット計算
-	Vector3 GetOffset(VehicleConstructionSystem::Direction direct, int depth);
 	Vector3 GetOffset(const Vector2Int& id);
 };

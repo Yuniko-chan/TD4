@@ -120,7 +120,7 @@ void Player::OnCollision(ColliderParentObject colliderPartner, const CollisionDa
 	colliderPartner, collisionData;
 }
 
-void Player::SetParent()
+void Player::SettingParent()
 {
 	//Vector3 localPosition = pairCore_->GetWorldTransformAdress()->GetWorldPosition() - worldTransform_.GetWorldPosition();
 	// 親子設定

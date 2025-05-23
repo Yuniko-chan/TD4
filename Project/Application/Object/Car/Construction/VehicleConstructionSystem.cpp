@@ -83,106 +83,6 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts)
 	}
 }
 
-void VehicleConstructionSystem::Attach(Car::IParts* parts, Direction direct)
-{
-	Vector2Int mappingKey = {};
-	const int kMaxGrid = 10;
-	//Car::IParts* preParts = nullptr;
-	PartsOffsetCalculator calculator;
-	// 親の設定
-	core_->AddChild(parts);
-	parts->GetWorldTransformAdress()->SetParent(core_->GetWorldTransformAdress());
-
-	switch (direct)
-	{
-	case VehicleConstructionSystem::kLeft:
-		for (int i = 1; i <= kMaxGrid; ++i) {
-			mappingKey = { -i,0 };
-			// 無ければ
-			if (partsMapping_.find(mappingKey) == partsMapping_.end()) {
-				parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, i);
-				// 深度
-				parts->GetConnector()->SetDepth(i);
-				// キー
-				parts->GetConnector()->SetKey(Vector2((float)mappingKey.x, (float)mappingKey.y));
-				// 消すフラグを初期化
-				parts->SetIsDelete(false);
-				// マッピング
-				RegistParts(mappingKey, parts);
-				if (mappingKey.GetLength() <= 1) {
-					parts->GetConnector()->AddParents(core_);
-				}
-				break;
-			}
-		}
-		break;
-	case VehicleConstructionSystem::kRight:
-		for (int i = 1; i <= kMaxGrid; ++i) {
-			mappingKey = { i,0 };
-			// 無ければ
-			if (partsMapping_.find(mappingKey) == partsMapping_.end()) {
-				parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, i);
-				// 深度
-				parts->GetConnector()->SetDepth(i);
-				// キー
-				parts->GetConnector()->SetKey(Vector2((float)mappingKey.x, (float)mappingKey.y));
-				// 消すフラグを初期化
-				parts->SetIsDelete(false);
-				// マッピング
-				RegistParts(mappingKey, parts);
-				if (mappingKey.GetLength() <= 1) {
-					parts->GetConnector()->AddParents(core_);
-				}
-				break;
-			}
-		}
-		break;
-	case VehicleConstructionSystem::kForward:
-		for (int i = 1; i <= kMaxGrid; ++i) {
-			mappingKey = Vector2Int(0, i);
-			// 無ければ
-			if (partsMapping_.find(mappingKey) == partsMapping_.end()) {
-				parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, i);
-				// 深度
-				parts->GetConnector()->SetDepth(i);
-				// キー
-				parts->GetConnector()->SetKey(Vector2((float)mappingKey.x, (float)mappingKey.y));
-				// 消すフラグを初期化
-				parts->SetIsDelete(false);
-				// マッピング
-				RegistParts(mappingKey, parts);
-				if (mappingKey.GetLength() <= 1) {
-					parts->GetConnector()->AddParents(core_);
-				}
-				break;
-			}
-		}
-		break;
-	case VehicleConstructionSystem::kBackForward:
-		for (int i = 1; i <= kMaxGrid; ++i) {
-			mappingKey = Vector2Int(0, -i);
-			// 無ければ
-			if (partsMapping_.find(mappingKey) == partsMapping_.end()) {
-				parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(direct, i);
-				// 深度
-				parts->GetConnector()->SetDepth(i);
-				// キー
-				parts->GetConnector()->SetKey(Vector2((float)mappingKey.x, (float)mappingKey.y));
-				// 消すフラグを初期化
-				parts->SetIsDelete(false);
-				// マッピング
-				RegistParts(mappingKey, parts);
-				if (mappingKey.GetLength() <= 1) {
-					parts->GetConnector()->AddParents(core_);
-				}
-				break;
-			}
-		}
-		break;
-	}
-
-}
-
 void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key)
 {
 	// 計算器
@@ -260,7 +160,8 @@ void VehicleConstructionSystem::RegistParts(const Vector2Int& id, Car::IParts* p
 			(*it)->GetConnector()->AddChildren(parts);
 		}
 	}
-
+	// カウント追加
+	this->AddCount(parts->GetClassNameString());
 }
 
 void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts* parts)
@@ -303,5 +204,42 @@ void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts*
 
 	// パーツ解除処理
 	parts->ReleaseParent();
+	// カウントから削除
+	DeleteCount(parts->GetClassNameString());
+}
 
+void VehicleConstructionSystem::AddCount(std::string name)
+{
+	if (name == "TireParts") {
+		counts_.tire++;
+	}
+	else if (name == "ArmorFrameParts") {
+		counts_.armor++;
+	}
+	else if (name == "EngineParts") {
+		counts_.engine++;
+	}
+}
+
+void VehicleConstructionSystem::DeleteCount(std::string name)
+{
+	if (name == "TireParts") {
+		counts_.tire--;
+	}
+	else if (name == "ArmorFrameParts") {
+		counts_.armor--;
+	}
+	else if (name == "EngineParts") {
+		counts_.engine--;
+	}
+
+	if (counts_.tire < 0) {
+		counts_.tire = 0;
+	}
+	if (counts_.armor < 0) {
+		counts_.armor = 0;
+	}
+	if (counts_.engine < 0) {
+		counts_.engine = 0;
+	}
 }
