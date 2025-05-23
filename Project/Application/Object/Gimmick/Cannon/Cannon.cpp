@@ -120,6 +120,8 @@ void Cannon::CannonInitialize(const CannonData& cannonData)
 
     // 回転
     worldTransform_.transform_.rotate = cannonData.rotate;
+    worldTransform_.usedDirection_ = true;
+    worldTransform_.direction_ = cannonData.firingDirection;
     worldTransform_.UpdateMatrix();
 
     // 発射向き

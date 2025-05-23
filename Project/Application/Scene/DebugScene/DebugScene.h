@@ -76,8 +76,8 @@ private: // メンバ変数
 	std::unique_ptr<Model> courseDemoModel_;
 
 	// 障害物
-	std::unique_ptr<Obstacle> obstacle_;
-	std::unique_ptr<Model> obstacleModel_;
+	std::unique_ptr<Cannon> objG_;
+	std::unique_ptr<Model> objModel_;
 
 };
 
