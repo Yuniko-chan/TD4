@@ -37,6 +37,8 @@ void DebugScene::Initialize()
 				0 // 射出許可
 		}
 	);
+	
+	ParticleManager_->CreateParticle<GPUParticle>();
 
 	isDebugCameraActive_ = true;
 

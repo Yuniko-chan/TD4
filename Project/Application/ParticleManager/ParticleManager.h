@@ -13,7 +13,7 @@ public:
 
 	// パーティクル一覧
 	enum ParticleIndex {
-		a,
+		RunDust,
 		kUIIndexOfCount
 	};
 
