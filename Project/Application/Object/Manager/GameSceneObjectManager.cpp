@@ -190,18 +190,17 @@ void GameSceneObjectManager::OptionProcess()
 {
 	partsManager_ = std::make_unique<VehiclePartsManager>();
 
+	AddObject("TerrainObject", "Resources/Model/Ground", "Ground.obj");
+
 	// コア作成
 	AddObject("VehicleCore", "Resources/Model/Frame", "Frame.obj");
+	
 	//AddObject("EngineParts", "Resources/Model/Engine", "Engine.obj");
 	//AddObject("TireParts", "Tire1", "Resources/Model/Tire", "Tire.obj");
 	//AddObject("TireParts", "Tire2", "Resources/Model/Tire", "Tire.obj");
 	//AddObject("TireParts", "Tire3", "Resources/Model/Tire", "Tire.obj");
 	//AddObject("TireParts", "Tire4", "Resources/Model/Tire", "Tire.obj");
 	//AddObject("ArmorFrameParts", "Resources/Model/Frame", "Frame.obj");
-
-	// キャスト
-	VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer("VehicleCore"));
-	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
 	//Car::IParts* engineParts = static_cast<Car::IParts*>(this->GetObjectPointer("EngineParts"));
 	//Car::IParts* tireParts[4] = {};
 	//tireParts[0] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire1"));
@@ -209,6 +208,24 @@ void GameSceneObjectManager::OptionProcess()
 	//tireParts[2] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire3"));
 	//tireParts[3] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire4"));
 	//Car::IParts* armorParts = static_cast<Car::IParts*>(this->GetObjectPointer("ArmorFrameParts"));
+	//// エンジン
+	////engineParts->SetParent(core);
+	////engineParts->TransformParent();
+	//partsManager_->AddParts(engineParts->GetName(), engineParts);
+	//// アーマー
+	////armorParts->SetParent(core);
+	////armorParts->TransformParent();
+	//partsManager_->AddParts(armorParts->GetName(), armorParts);
+	//// タイヤ
+	//for (int i = 0; i < 4; i++) {
+	//	//tireParts[i]->SetParent(core);
+	//	//tireParts[i]->TransformParent();
+	//	partsManager_->AddParts(tireParts[i]->GetName(), tireParts[i]);
+	//}
+
+	// キャスト
+	VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer("VehicleCore"));
+	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
 
 	// ペアレント＋トランスフォーム親子設定
 	core->SetPlayer(player);
@@ -216,21 +233,5 @@ void GameSceneObjectManager::OptionProcess()
 	player->GetPickUpManager()->SetPartsManager(partsManager_.get());
 	partsManager_->AddParts(core->GetName(), core);
 
-	//// エンジン
-	////engineParts->SetParent(core);
-	////engineParts->TransformParent();
-	//partsManager_->AddParts(engineParts->GetName(), engineParts);
-
-	//// アーマー
-	////armorParts->SetParent(core);
-	////armorParts->TransformParent();
-	//partsManager_->AddParts(armorParts->GetName(), armorParts);
-
-	//// タイヤ
-	//for (int i = 0; i < 4; i++) {
-	//	//tireParts[i]->SetParent(core);
-	//	//tireParts[i]->TransformParent();
-	//	partsManager_->AddParts(tireParts[i]->GetName(), tireParts[i]);
-	//}
 
 }

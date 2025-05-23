@@ -15,6 +15,7 @@ class VehicleCore;
 class TireParts;
 class ArmorFrameParts;
 class EngineParts;
+class TerrainObject;
 
 // ギミック
 class ConicalPendulumIronBall;
@@ -29,7 +30,7 @@ class Obstacle;
 // variantでまとめる
 using ColliderParentObject = std::variant<ParentNullObject*, Player*, VehicleCore*, 
 	ConicalPendulumIronBall*, PendulumIronBall*, Cannon*, CannonBall*, CannonExplosion*, 
-	Minigun*, MinigunBullet*, Obstacle*
+	Minigun*, MinigunBullet*, Obstacle*, TerrainObject*
 	/*, TireParts*,	ArmorFrameParts*, EngineParts**/>;
 
 /// <summary>

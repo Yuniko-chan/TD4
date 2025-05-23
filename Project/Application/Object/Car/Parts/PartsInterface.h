@@ -59,6 +59,8 @@ namespace Car
 		//---セッター---//
 		// 親子関係
 		void SetParent(VehicleCore* parent) { parentCore_ = parent; }
+		// 消す
+		void SetIsDelete(bool isDelete) { isDelete_ = isDelete; }
 	protected:
 		/// <summary>
 		/// ImGui
@@ -88,5 +90,8 @@ namespace Car
 		bool isDelete_ = false;
 		// 接続システム
 		std::unique_ptr<VehicleConnector> connector_;
+		// HP
+		int32_t hitPoint_ = 1;
+		
 	};
 }

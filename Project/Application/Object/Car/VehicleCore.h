@@ -3,7 +3,7 @@
 #include "../../../Engine/Animation/Animation.h"
 
 #include "Parts/PartsInterface.h"
-#include "System/VehicleStatus.h"
+#include "System/VehicleSystems.h"
 #include "Construction/VehicleConstructionSystem.h"
 
 class Player;
@@ -48,9 +48,6 @@ public: // メンバ関数
     /// <param name="collisionData"></param>
     void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
-    void MoveCommand();
-
-
     /// <summary>
     /// 子の追加
     /// </summary>
@@ -61,19 +58,23 @@ public: // アクセッサ
     //---ゲッター---//
     // パーツ構築システム
     VehicleConstructionSystem* GetConstructionSystem() { return constructionSystem_.get(); }
+    // 運転システム
+    DriveSystem* GetDriveSystem() { return driveSystem_.get(); }
 
     //---セッター---//
     // プレイヤー
     void SetPlayer(Player* player) { pairPlayer_ = player; }
 
 private:
-    // パーツを配置できる四か所（メッシュオブジェクトにするかも）
-    std::list<WorldTransform> fourPoints_;
+    // 前方ベクトル
+    Vector3 frontVector_ = Vector3(0.0f, 0.0f, 1.0f);
     // パーツのリスト
     std::list<Car::IParts*> partsLists_;
 
     // パーツ構築システム
     std::unique_ptr<VehicleConstructionSystem> constructionSystem_;
+    // 運転関係
+    std::unique_ptr<DriveSystem> driveSystem_;
 
     // ペアになるプレイヤーポインタ
     Player* pairPlayer_ = nullptr;

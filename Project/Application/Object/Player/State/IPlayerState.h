@@ -1,5 +1,6 @@
 #pragma once
 #include "../../State/IState.h"
+#include "../../../Engine/GlobalVariables/GlobalVariables.h"
 
 class Player;
 

@@ -152,6 +152,7 @@ public: // オーバーロード
 	/// <param name="v"></param>
 	void operator*=(float v);
 
+	bool operator==(const Vector3& v) const;
 };
 
 inline void to_json(nlohmann::json& json, const Vector3& value) {

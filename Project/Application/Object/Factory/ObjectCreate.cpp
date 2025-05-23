@@ -61,3 +61,11 @@ IObject* ObjectCreate::CreateObjectIParts(LevelData::ObjectData& objectData)
 	static_cast<Car::IParts*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
 	return object;
 }
+
+IObject* ObjectCreate::CreateObjectTerrain(LevelData::ObjectData& objectData)
+{
+	IObject* object = new TerrainObject;
+
+	static_cast<TerrainObject*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}
