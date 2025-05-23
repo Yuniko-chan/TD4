@@ -34,4 +34,7 @@ public:	// USER
 
 	static IObject* CreateObjectIParts(LevelData::ObjectData& objectData);
 
+	static IObject* CreateObjectWall(LevelData::ObjectData& objectData);
+
+	static IObject* CreateObjectCourse(LevelData::ObjectData& objectData);
 };

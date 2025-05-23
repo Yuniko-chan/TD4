@@ -988,6 +988,9 @@
     <ClCompile Include="Application\Object\Gimmick\Cannon\CannonBall.cpp">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Object\Wall\Wall.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imgui.h">
@@ -1784,6 +1787,9 @@
     </ClInclude>
     <ClInclude Include="Application\Object\Gimmick\Cannon\CannonBall.h">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Wall\Wall.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

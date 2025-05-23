@@ -41,6 +41,7 @@ private: // 定数
 		"GameScene",
 		"GenerationPattern_00",
 		"GenerationPattern_01",
+		"courseExporterTest",
 	};
 
 private: // 変数

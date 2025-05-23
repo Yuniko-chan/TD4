@@ -1,5 +1,6 @@
 #include "DebugScene.h"
 #include "../../Course/CourseLoader.h"
+#include "../../Object/Manager/GameSceneObjectManager.h"
 DebugScene::~DebugScene()
 {
 }
@@ -20,6 +21,10 @@ void DebugScene::Initialize()
 	skydomeData.parentName = "";
 	skydome_->Initialize(&skydomeData);
 
+	// オブジェクトマネージャー
+	objectManager_ = std::make_unique<GameSceneObjectManager>();
+	objectManager_->Initialize(kLevelIndexDebug, levelDataManager_);
+
 	// コース
 	//courseModel_.reset();
 	course_ = std::make_unique<Course>();
@@ -32,7 +37,7 @@ void DebugScene::Initialize()
 	courseData.name = "";
 	courseData.parentName = "";
 	course_->Initialize(&courseData);
-
+	
 	isDebugCameraActive_ = true;
 
 	// モデル描画
