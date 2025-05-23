@@ -7,7 +7,7 @@
 #include "../../ClothDemo/ClothDemo.h"
 
 #include "../../../Engine/GPUParticle/GPUParticle.h"
-#include "../../Particle/ParticleManager.h"
+#include "../../ParticleManager/ParticleManager.h"
 /// <summary>
 /// デバッグシーン
 /// </summary>
@@ -53,8 +53,8 @@ public: //メンバ関数
 private: // メンバ変数
 
 	// スカイドーム
-	//std::unique_ptr<Skydome> skydome_;
-	//std::unique_ptr<Model> skydomeModel_;
+	std::unique_ptr<Skydome> skydome_;
+	std::unique_ptr<Model> skydomeModel_;
 
 	// クロスシミュレーションデモ
 	//std::unique_ptr<ClothDemo> clothDemo_;

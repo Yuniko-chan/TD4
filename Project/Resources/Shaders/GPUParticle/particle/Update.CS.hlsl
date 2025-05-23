@@ -1,4 +1,4 @@
-#include "test.CS.hlsli"
+#include "CS.hlsli"
 #include "../../RandomGenerator/RandomGenerator.hlsli"
 
 RWStructuredBuffer<Particle> gParticles : register(u0);

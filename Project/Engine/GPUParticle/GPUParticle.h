@@ -78,6 +78,7 @@ public:
 	/// <param name="isEmitSet">エミッター情報をセットするか</param>
 	virtual void SetEmitter(const EmitterCS& emitter, bool isEmitSet = true);
 
+	const std::string GetName() { return particleName_; };
 protected:
 
 	/// <summary>

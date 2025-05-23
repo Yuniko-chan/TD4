@@ -853,7 +853,10 @@
     <ClCompile Include="Engine\Physics\ClothGPU\ClothGPUCollisionManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Particle\ParticleManager.cpp">
+    <ClCompile Include="Application\ParticleManager\ParticleManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Particle\RunDustParticle\RunDustParticle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1470,7 +1473,10 @@
     <ClInclude Include="Engine\Physics\ClothGPU\CollisionTypeIndex.h">
       <Filter>Engine\Physics\ClothGPU\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Particle\ParticleManager.h">
+    <ClInclude Include="Application\ParticleManager\ParticleManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Particle\RunDustParticle\RunDustParticle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1542,7 +1548,7 @@
     <None Include="Resources\Shaders\GPUParticle\MissParticle\Miss.CS.hlsli">
       <Filter>shaders\GPUParticle\Miss</Filter>
     </None>
-    <None Include="Resources\Shaders\GPUParticle\testparticle\test.CS.hlsli" />
+    <None Include="Resources\Shaders\GPUParticle\particle\CS.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc">
@@ -1787,8 +1793,8 @@
     <FxCompile Include="Resources\Shaders\GPUParticle\MissParticle\MissUpdate.CS.hlsl">
       <Filter>shaders\GPUParticle\Miss</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\GPUParticle\testparticle\testEmit.CS.hlsl" />
-    <FxCompile Include="Resources\Shaders\GPUParticle\testparticle\testInitialize.CS.hlsl" />
-    <FxCompile Include="Resources\Shaders\GPUParticle\testparticle\testUpdate.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\particle\Emit.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\particle\Initialize.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\particle\Update.CS.hlsl" />
   </ItemGroup>
 </Project>

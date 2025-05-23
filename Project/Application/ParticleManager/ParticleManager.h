@@ -2,6 +2,8 @@
 #include "../../../Engine/GPUParticle/GPUParticle.h"
 #include "../../../Engine/Scene/BaseScene/BaseScene.h"
 
+#include "../Particle/RunDustParticle/RunDustParticle.h"
+
 class ParticleManager {
 public:
 	// テクスチャ一覧
@@ -46,7 +48,7 @@ public:
 			true				// 射出許可
 		}) 
 {
-		T* result = new T;
+		GPUParticle* result = new T;
 
 		// DirectXCommon
 		DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
@@ -56,7 +58,7 @@ public:
 			dxCommon_->GetDevice(),
 			dxCommon_->GetCommadListLoad(),
 			GraphicsPipelineState::sRootSignature_[GraphicsPipelineState::kPipelineStateIndexGPUParticle].Get(),
-			GraphicsPipelineState::sPipelineState_[GraphicsPipelineState::kPipelineStateIndexGPUParticle].Get(),"test");
+			GraphicsPipelineState::sPipelineState_[GraphicsPipelineState::kPipelineStateIndexGPUParticle].Get(),result->GetName().c_str());
 		particles_[0]->SetEmitter(kEmitter,true);
 
 	}

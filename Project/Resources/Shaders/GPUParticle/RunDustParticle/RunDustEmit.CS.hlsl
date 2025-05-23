@@ -42,11 +42,11 @@ void main( uint32_t3 DTid : SV_DispatchThreadID )
 				
 				int32_t particleIndex = gFreeList[freeListIndex];
 
-				gParticles[particleIndex].scale = float32_t3(1.0f, 1.0f, 1.0f) * generator.Generate1d() * 0.5f;
+                gParticles[particleIndex].scale = float32_t3(1.0f, 1.0f, 1.0f) * generator.Generate1d() * 0.5f;
 				gParticles[particleIndex].translate = gEmitter.translate;
 				gParticles[particleIndex].translate.x += generator.Generate1d() * 2.0f * gEmitter.radius - gEmitter.radius;
 				gParticles[particleIndex].translate.z += generator.Generate1d() * 2.0f * gEmitter.radius - gEmitter.radius;
-				gParticles[particleIndex].color.rgb = float32_t3(0.0f, 0.0f, 0.0f);
+				gParticles[particleIndex].color.rgb = float32_t3(1.0f, 1.0f, 1.0f);
 				gParticles[particleIndex].color.a = 1.0f;
 				gParticles[particleIndex].lifeTime = 1.0f;
 				float32_t speed = 0.1f;

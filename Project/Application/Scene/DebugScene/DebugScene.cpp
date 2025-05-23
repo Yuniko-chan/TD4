@@ -10,7 +10,7 @@ void DebugScene::Initialize()
 	BaseScene::Initialize();
 
 	// スカイドーム
-	/*skydomeModel_.reset(Model::Create("Resources/Model/Skydome/", "skydome.obj", dxCommon_));
+	skydomeModel_.reset(Model::Create("Resources/Model/Skydome/", "skydome.obj", dxCommon_));
 	skydome_ = std::make_unique<Skydome>();
 	LevelData::MeshData skydomeData;
 	skydomeData.directoryPath = "Resources/Model/Skydome";
@@ -19,7 +19,7 @@ void DebugScene::Initialize()
 	skydomeData.className = "skydome";
 	skydomeData.name = "";
 	skydomeData.parentName = "";
-	skydome_->Initialize(&skydomeData);*/
+	skydome_->Initialize(&skydomeData);
 
 	//clothDemo_ = std::make_unique<ClothDemo>();
 	//clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
@@ -27,7 +27,16 @@ void DebugScene::Initialize()
 	ParticleManager_ = std::make_unique<ParticleManager>();
 	ParticleManager_->Initialize();
 
-	ParticleManager_->CreateParticle<GPUParticle>();
+	ParticleManager_->CreateParticle<RunDustParticle>(
+		{
+				Vector3{0.0f, 0.0f, 0.0f}, // 位置
+				1.0f, // 射出半径
+				10, // 射出数
+				0.1f, // 射出間隔
+				0.0f, // 射出間隔調整時間
+				0 // 射出許可
+		}
+	);
 
 	isDebugCameraActive_ = true;
 
@@ -63,7 +72,7 @@ void DebugScene::Draw()
 	ModelDraw::PreDraw(dxCommon_->GetCommadList());
 
 	// スカイドーム
-	//skydome_->Draw(camera_);
+	skydome_->Draw(camera_);
 
 	//clothDemo_->CollisionObjectDraw(&camera_);
 

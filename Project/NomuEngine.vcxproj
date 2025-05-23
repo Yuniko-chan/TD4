@@ -177,7 +177,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\OutGameObject\ClearBackGround\ClearBackGround.cpp" />
     <ClCompile Include="Application\OutGameObject\Curtain\Curtain.cpp" />
     <ClCompile Include="Application\OutGameObject\TitleBackGround\TitleBackGround.cpp" />
-    <ClCompile Include="Application\Particle\ParticleManager.cpp" />
+    <ClCompile Include="Application\ParticleManager\ParticleManager.cpp" />
+    <ClCompile Include="Application\Particle\RunDustParticle\RunDustParticle.cpp" />
     <ClCompile Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.cpp" />
     <ClCompile Include="Application\Scene\DebugScene\DebugScene.cpp" />
     <ClCompile Include="Application\Scene\SceneManager\SceneManager.cpp" />
@@ -348,7 +349,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\OutGameObject\ClearBackGround\ClearBackGround.h" />
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />
     <ClInclude Include="Application\OutGameObject\TitleBackGround\TitleBackGround.h" />
-    <ClInclude Include="Application\Particle\ParticleManager.h" />
+    <ClInclude Include="Application\ParticleManager\ParticleManager.h" />
+    <ClInclude Include="Application\Particle\RunDustParticle\RunDustParticle.h" />
     <ClInclude Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.h" />
     <ClInclude Include="Application\Scene\DebugScene\DebugScene.h" />
     <ClInclude Include="Application\Scene\SceneManager\SceneManager.h" />
@@ -595,7 +597,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="Resources\Shaders\GPUParticle\testparticle\test.CS.hlsli">
+    <None Include="Resources\Shaders\GPUParticle\particle\CS.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -856,17 +858,17 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\GPUParticle\testparticle\testEmit.CS.hlsl">
+    <FxCompile Include="Resources\Shaders\GPUParticle\particle\Emit.CS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\GPUParticle\testparticle\testInitialize.CS.hlsl">
+    <FxCompile Include="Resources\Shaders\GPUParticle\particle\Initialize.CS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\GPUParticle\testparticle\testUpdate.CS.hlsl">
+    <FxCompile Include="Resources\Shaders\GPUParticle\particle\Update.CS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
