@@ -1,5 +1,6 @@
 #pragma once
 #include "../../../Engine/Math/Vector/Vector2.h"
+#include "../Utility/Common/SingletonModule.h"
 
 class Input;
 
@@ -14,6 +15,9 @@ struct PlayerKey
 	T jumpAction;	// ジャンプキー
 	T rideAction;	// 乗るキー
 	T interactAction;	// 拾う・置くキー
+
+	T accel;	// アクセル
+	T brake;	// ブレーキ
 
 	// 方向のキー
 	T front;	// 前
@@ -39,16 +43,8 @@ struct KeyConfig
 	bool isController = false;	// Controller操作か
 };
 
-class GameKeyconfig
+class GameKeyconfig : public SingletonModule<GameKeyconfig>
 {
-public: // シングルトン
-	static GameKeyconfig* GetInstance();
-
-	GameKeyconfig() = default;
-	~GameKeyconfig() = default;
-	GameKeyconfig(const GameKeyconfig&) = delete;
-	const GameKeyconfig& operator=(const GameKeyconfig&) = delete;
-
 public:
 	/// <summary>
 	/// 初期化

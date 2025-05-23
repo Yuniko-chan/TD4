@@ -1,5 +1,6 @@
 #include "PlayerInVehicleState.h"
 #include "../../Player.h"
+#include "../../../Car/VehicleCore.h"
 #include "../../../Engine/Math/DeltaTime.h"
 
 void PlayerInVehicleState::Initialize()
@@ -16,10 +17,11 @@ void PlayerInVehicleState::Update()
 		player_->GetStateMachine()->ChangeRequest(IPlayerState::kDropOffAction);
 	}
 
-	player_->GetCommand()->InVehicleRotateCommand();
+	//player_->GetCommand()->InVehicleRotateCommand();
 	// 移動処理
-	Vector3 velocityDirection = player_->GetCommand()->GetDirect() * PlayerDebugData::sMoveData.rideSpeed;
-	player_->GetWorldTransformAdress()->parent_->transform_.translate += velocityDirection * kDeltaTime_;
+	//Vector3 velocityDirection = player_->GetCommand()->GetDirect() * PlayerDebugData::sMoveData.rideSpeed;
+	// 車両への入力処理
+	player_->GetCore()->GetDriveSystem()->InputAccept(player_->GetCommand()->GetKeyConfig());
 }
 
 void PlayerInVehicleState::Exit()

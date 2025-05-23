@@ -33,6 +33,12 @@ void Car::IParts::Update()
 	worldTransform_.UpdateMatrix();
 	// コライダーの更新
 	ColliderUpdate();
+
+	// HPがなくなり次第Deleteフラグをセット
+	if (hitPoint_ <= 0) {
+		isDelete_ = true;
+	}
+
 }
 
 void Car::IParts::ReleaseParent()
@@ -43,6 +49,8 @@ void Car::IParts::ReleaseParent()
 	worldTransform_.transform_.translate = worldPosition;
 	// コアの解除
 	parentCore_ = nullptr;
+	// コネクターのリセット
+	connector_->Reset();
 }
 
 void Car::IParts::TransformParent()
@@ -87,6 +95,15 @@ void Car::IParts::ImGuiTransform(const float& value)
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, value);
 
 	ImGui::Separator();
+	// 接続処理確認
+	if (connector_) {
+		name = name_ + ":Connector";
+		if (ImGui::TreeNode(name.c_str())) {
+			connector_->ImGuiDraw();
+			ImGui::TreePop();
+		}
+	}
+
 	ImGuiDrawChildParts();
 }
 
@@ -95,17 +112,22 @@ void Car::IParts::ImGuiDrawChildParts()
 	if (!parentCore_) {
 		return;
 	}
-	std::string name = name_ + ":Release";
-	// 解除
-	if (ImGui::Button(name.c_str())) {
-		isDelete_ = true;
-		//ReleaseParent();
-	}
-	name = name_ + ":SetUp";
-	// 設定
-	if (ImGui::Button(name.c_str())) {
-		worldTransform_.transform_.translate = {};
-		this->TransformParent();
+	std::string name = name_ + ":ChildData";
+	if (ImGui::TreeNode(name.c_str())) {
+		name = name_ + ":Release";
+		// 解除
+		if (ImGui::Button(name.c_str())) {
+			//isDelete_ = true;
+			hitPoint_ = 0;
+			//ReleaseParent();
+		}
+		name = name_ + ":SetUp";
+		// 設定
+		if (ImGui::Button(name.c_str())) {
+			worldTransform_.transform_.translate = {};
+			this->TransformParent();
+		}
+		ImGui::TreePop();
 	}
 }
 
@@ -128,6 +150,8 @@ void Car::IParts::ChildUpdate()
 	//}
 	// 親子関係であれば早期
 	if (IsParent()) {
+		// 親がある場合コネクターの更新を入れる
+		connector_->Update();
 		return;
 	}
 	// 仮の地面処理

@@ -18,7 +18,7 @@ bool PlayerFrontChecker::FrontCheck(const Vector3& direct)
 	Vector3 newDirect = Vector3(direct.x, 0.0f, direct.z);
 	const Vector3 targetDirect = Vector3::Normalize(newDirect);
 	// 閾値
-	const float threshold = PlayerDebugData::sFrontThreshold;
+	const float threshold = GlobalVariables::GetInstance()->GetFloatValue("Player","FrontThreshold");
 	// 内積チェック
 	float dot = Vector3::Dot(Vector3::Normalize(frontVector_), targetDirect);
 
@@ -32,6 +32,6 @@ bool PlayerFrontChecker::IsInRange(const Vector3& target)
 	Vector3 xzPlayer = Vector3(owner_->GetWorldTransformAdress()->GetWorldPosition().x, 0.0f, owner_->GetWorldTransformAdress()->GetWorldPosition().z);
 	Vector3 distance = xzTarget - xzPlayer;
 	float distanceValue = float(std::sqrtf(std::powf(distance.x, 2) + std::powf(distance.y, 2) + std::powf(distance.z, 2)));
-	float maxRange = PlayerDebugData::sFrontCheckData.catchRange;
+	const float maxRange = GlobalVariables::GetInstance()->GetFloatValue("Player", "FrontCatchRange");
 	return (distanceValue <= maxRange) ? true : false;
 }

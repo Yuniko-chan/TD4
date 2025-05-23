@@ -43,6 +43,11 @@ void ObjectFactory::Initialize(BaseObjectManager* objectManager)
 	// アーマーパーツ
 	createObjectFunctions_[kCreateObjectIndexCarArmorFrame].first = kCreateObjectNames_[kCreateObjectIndexCarArmorFrame];
 	createObjectFunctions_[kCreateObjectIndexCarArmorFrame].second = ObjectCreate::CreateObjectArmorFrameParts;
+
+	// 地形
+	createObjectFunctions_[kCreateObjectIndexTerrain].first = kCreateObjectNames_[kCreateObjectIndexTerrain];
+	createObjectFunctions_[kCreateObjectIndexTerrain].second = ObjectCreate::CreateObjectTerrain;
+
 }
 
 IObject* ObjectFactory::CreateObject(LevelData::ObjectData& objectData)

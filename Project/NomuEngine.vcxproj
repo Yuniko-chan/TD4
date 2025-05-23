@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -181,6 +181,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Car\Parts\System\PartsOffsetCalculator.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\System\VehicleConnector.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Tire\TireParts.cpp" />
+    <ClCompile Include="Application\Object\Car\System\Physics\DriveSystem.cpp" />
+    <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp" />
+    <ClCompile Include="Application\Object\Car\System\Physics\VehicleEngine.cpp" />
+    <ClCompile Include="Application\Object\Car\System\Physics\VehicleHandling.cpp" />
     <ClCompile Include="Application\Object\Car\System\VehicleStatus.cpp" />
     <ClCompile Include="Application\Object\Car\VehicleCore.cpp" />
     <ClCompile Include="Application\Object\Car\Factory\VehicleFactory.cpp" />
@@ -212,6 +216,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Player\State\System\PlayerStateMachine.cpp" />
     <ClCompile Include="Application\Object\Player\System\PlayerCommand.cpp" />
     <ClCompile Include="Application\Object\Player\System\PlayerPickupManager.cpp" />
+    <ClCompile Include="Application\Object\Terrain\TerrainObject.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\MotionHelper.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\TransformHelper.cpp" />
     <ClCompile Include="Application\Object\Utility\Timer\FrameTimer.cpp" />
@@ -391,8 +396,17 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Car\Parts\System\PartsOffsetCalculator.h" />
     <ClInclude Include="Application\Object\Car\Parts\System\VehicleConnector.h" />
     <ClInclude Include="Application\Object\Car\Physics\DriveSystem.h" />
+    <ClInclude Include="Application\Object\Car\Physics\System\VehicleEngine.h" />
+    <ClInclude Include="Application\Object\Car\System\Physics\DriveSystem.h" />
+    <ClInclude Include="Application\Object\Car\System\Physics\User\AutoDriver.h" />
+    <ClInclude Include="Application\Object\Car\System\Physics\User\InterfaceDriver.h" />
+    <ClInclude Include="Application\Object\Car\System\Physics\User\UserDriver.h" />
+    <ClInclude Include="Application\Object\Utility\Calc\VehicleCaluclator.h" />
+    <ClInclude Include="Application\Object\Car\System\Physics\VehicleEngine.h" />
+    <ClInclude Include="Application\Object\Car\System\Physics\VehicleHandling.h" />
     <ClInclude Include="Application\Object\Car\System\VehicleCaluclator.h" />
     <ClInclude Include="Application\Object\Car\System\VehicleStatus.h" />
+    <ClInclude Include="Application\Object\Car\System\VehicleSystems.h" />
     <ClInclude Include="Application\Object\Car\VehicleCore.h" />
     <ClInclude Include="Application\Object\Car\CarLists.h" />
     <ClInclude Include="Application\Object\Car\Factory\VehicleFactory.h" />
@@ -447,11 +461,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\State\IState.h" />
     <ClInclude Include="Application\Object\State\StateFactory.h" />
     <ClInclude Include="Application\Object\State\StateMachine.h" />
+    <ClInclude Include="Application\Object\Terrain\TerrainObject.h" />
     <ClInclude Include="Application\Object\Utility\Calc\MotionHelper.h" />
     <ClInclude Include="Application\Object\Utility\Calc\TransformHelper.h" />
     <ClInclude Include="Application\Object\Utility\Common\GameObjectName.h" />
     <ClInclude Include="Application\Object\Utility\Common\SingletonModule.h" />
     <ClInclude Include="Application\Object\Utility\Common\OwnerComponent.h" />
+    <ClInclude Include="Application\Object\Utility\GlobalParameterStructs.h" />
+    <ClInclude Include="Application\Object\Utility\Math\Vector2Int.h" />
     <ClInclude Include="Application\Object\Utility\Timer\FrameTimer.h" />
     <ClInclude Include="Application\OutGameObject\ClearBackGround\ClearBackGround.h" />
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />

@@ -1,6 +1,9 @@
 #pragma once
 #include "../../Utility/Common/OwnerComponent.h"
+#include "../../Utility/Math/Vector2Int.h"
 #include <list>
+#include <unordered_map>
+#include <map>
 #include <string>
 #include <utility>
 
@@ -43,7 +46,23 @@ private:
 	/// <param name="parts"></param>
 	void Attach(Car::IParts* parts, Direction direct);
 
+	void Attach(Car::IParts* parts, const Vector2Int& key);
+
+	//void AddMapping(const Vector2Int& id);
+
 	Car::IParts* FindPreNumber(std::list<std::pair<int, Car::IParts*>>* directLists, int32_t number);
+
+	/// <summary>
+	/// パーツの登録処理
+	/// </summary>
+	/// <param name="parts"></param>
+	void RegistParts(const Vector2Int& id, Car::IParts* parts);
+	/// <summary>
+	/// パーツの解除処理
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="parts"></param>
+	void UnRegistParts(const Vector2Int& id, Car::IParts* parts);
 
 private:
 	// システム用のコア
@@ -57,4 +76,7 @@ private:
 	// 後ろ
 	std::list<std::pair<int, Car::IParts*>> backForwardD_;
 
+	// 
+	std::map<Vector2Int, Car::IParts*> partsMapping_;
+	//std::unordered_map<std::pair<int, Vector2>, Car::IParts*>;
 };

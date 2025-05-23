@@ -48,10 +48,19 @@ public: //
 	/// 回転処理
 	/// </summary>
 	void RotateCommand();
+
+	/// <summary>
+	/// ベクトルでの回転
+	/// </summary>
+	void VectorRotate();
+
 	/// <summary>
 	/// 車両に乗っている際の回転
 	/// </summary>
 	void InVehicleRotateCommand();
+
+	// キー
+	GameKeyconfig* GetKeyConfig() { return keyConfig_; }
 private:
 	// 方向
 	Vector3 moveDirect_ = {};
@@ -59,4 +68,7 @@ private:
 	WorldTransform* playerTransform_ = nullptr;
 	// 入力クラス
 	GameKeyconfig* keyConfig_ = nullptr;
+
+	// 角度
+	float theta_ = 0.0f;
 };
