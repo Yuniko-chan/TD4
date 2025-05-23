@@ -42,6 +42,10 @@ void FollowCamera::Initialize() {
 
 	ApplyGlobalVariables();
 
+	offset_ = Vector3(0.0f, offsetHeight_, offsetLength_);
+	usedDirection_ = true;
+
+	ChangeRequest(AngleMode::kPlayer, float(30.0f));
 }
 
 void FollowCamera::Update(float elapsedTime) {
@@ -49,7 +53,41 @@ void FollowCamera::Update(float elapsedTime) {
 #ifdef _DEMO
 	ApplyGlobalVariables();
 #endif // _DEMO
+	
 
+	if (modeRequest_) {
+		// モード設定
+		mode_ = modeRequest_.value();
+		switch (mode_)
+		{
+		case FollowCamera::AngleMode::kPlayer:
+			startPoint_ = Vector3(0.0f, offsetHeight_, offsetLength_);
+			endPoint_ = Vector3(0.0f, playerOffsetHeight_, playerOffsetLength_);
+			startDirection_ = Vector3(0.0f, 0.0f, 1.0f);
+			endDirection_ = Vector3(0.0f, -1.0f, 0.0f);
+			break;
+		case FollowCamera::AngleMode::kVehicle:
+			startPoint_ = Vector3(0.0f, playerOffsetHeight_, playerOffsetLength_);
+			endPoint_ = Vector3(0.0f, offsetHeight_, offsetLength_);
+			startDirection_ = Vector3(0.0f, -1.0f, 0.0f);
+			endDirection_ = Vector3(0.0f, 0.0f, 1.0f);
+			break;
+		default:
+			break;
+		}
+		modeRequest_ = std::nullopt;
+	}
+
+	// 遷移
+	if (transitionTimer_.IsActive()) {
+		offset_ = Ease::Easing(Ease::EaseName::Lerp, startPoint_, endPoint_, transitionTimer_.GetElapsedFrame());
+		rotateDirection_ = Ease::Easing(Ease::EaseName::Lerp, startDirection_, endDirection_, transitionTimer_.GetElapsedFrame());
+		if (transitionTimer_.IsEnd()) {
+			transitionTimer_.End();
+		}
+	}
+	// タイマー更新
+	transitionTimer_.Update();
 
 	//追従対象がいれば
 	if (target_) {
@@ -75,6 +113,8 @@ void FollowCamera::Update(float elapsedTime) {
 		ShakeUpdate(elapsedTime);
 	}
 
+	// 正規化
+	rotateDirection_ = Vector3::Normalize(rotateDirection_);
 	// マッピング
 	Matrix4x4 scaleMatrix = Matrix4x4::MakeScaleMatrix(transform_.scale);
 	Matrix4x4 rotateMatrix = GetRotateMatrix();
@@ -96,10 +136,24 @@ void FollowCamera::ImGuiDraw()
 	ImGui::Begin("FollowCamera");
 	ImGui::DragFloat3("Position", &transform_.translate.x);
 	ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f);
+	ImGui::DragFloat3("Offset", &offset_.x, 0.01f);
 	ImGui::DragFloat3("RotateVector", &rotateDirection_.x, 0.01f);
 	ImGui::Checkbox("UseDirection", &usedDirection_);
-
+	if (ImGui::Button("Change")) {
+		if (mode_ == AngleMode::kPlayer) {
+			modeRequest_ = AngleMode::kVehicle;
+		}
+		else {
+			modeRequest_ = AngleMode::kPlayer;
+		}
+	}
 	ImGui::End();
+}
+
+void FollowCamera::ChangeRequest(AngleMode mode, float frame)
+{
+	modeRequest_ = mode;
+	transitionTimer_.Start(frame);
 }
 
 void FollowCamera::SetTarget(const WorldTransform* target)
@@ -113,16 +167,13 @@ Matrix4x4 FollowCamera::GetRotateMatrix()
 {
 	// 対象がいる場合対象の回転行列を適応
 	if (target_) {
-		// 対象に更に親がいる場合
-		if (target_->parent_) {
-			return Matrix4x4::Multiply(Matrix4x4::MakeRotateXYZMatrix(transform_.rotate), target_->rotateMatrix_);
-		}
-
+		// 
 		if (usedDirection_) {
-			// 方向のベクトル取得→ベクトルから回転行列
-			//Vector3 targetWorld = { target_->worldMatrix_.m[2][0],target_->worldMatrix_.m[2][2] ,target_->worldMatrix_.m[2][2] };
-			//Vector3 toVector = targetWorld - transform_.translate;
-			return Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, Vector3::Normalize(target_->direction_));
+			// 自分の回転
+			Matrix4x4 from = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, Vector3::Normalize(rotateDirection_));
+			// 対象の回転
+			Matrix4x4 to = target_->rotateMatrix_;
+			return Matrix4x4::Multiply(from,to);
 		}
 
 		return Matrix4x4::Multiply(Matrix4x4::MakeRotateXYZMatrix(transform_.rotate), target_->rotateMatrix_);
@@ -142,7 +193,7 @@ Vector3 FollowCamera::OffsetCalc()
 {
 
 	//追従対象からカメラまでのオフセット
-	Vector3 offset = { 0.0f, offsetHeight_, offsetLength_ };
+	Vector3 offset = offset_;
 
 	Matrix4x4 rotateMatrix = GetRotateMatrix();
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Engine/3D/Transform/WorldTransform.h"
 #include "../../../Engine/Camera/BaseCamera.h"
+#include "../Object/Utility/Timer/FrameTimer.h"
 
 /// <summary>
 /// 追従カメラ
@@ -14,6 +15,7 @@ public:
 	{
 		kPlayer,
 		kVehicle,
+		kEmpty,
 	};
 
 public: // メンバ関数
@@ -29,6 +31,12 @@ public: // メンバ関数
 	void Update(float elapsedTime = 0.0f) override;
 
 	void ImGuiDraw();
+
+	/// <summary>
+	/// 変更リクエスト
+	/// </summary>
+	/// <param name="mode"></param>
+	void ChangeRequest(AngleMode mode, float frame);
 
 public: // アクセッサ
 
@@ -80,6 +88,23 @@ private: // メンバ変数
 	// 方向ベクトル
 	bool usedDirection_ = false;
 	Vector3 rotateDirection_ = Vector3(0.0f, 0.0f, 1.0f);
+
+	float playerOffsetLength_ = -50.0f;
+	float playerOffsetHeight_ = 0.0f;
+
+	Vector3 startPoint_ = {};
+	Vector3 endPoint_ = {};
+	Vector3 startDirection_ = {};
+	Vector3 endDirection_ = {};
+
+	Vector3 offset_ = {};
+
+	// 状態
+	AngleMode mode_ = AngleMode::kVehicle;
+	// 切り替えリクエスト
+	std::optional<AngleMode> modeRequest_ = std::nullopt;
+	// 遷移タイマー
+	FrameTimer transitionTimer_;
 
 };
 
