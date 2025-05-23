@@ -112,6 +112,9 @@ void DebugScene::Update()
 	}
 #endif // _DEBUG
 
+	// オブジェクトマネージャー
+	objectManager_->Update();
+
 	courseDemoObject_->Update();
 	courseCollisionSystem_->ObjectRegistration(courseDemoObject_.get());
 	courseCollisionSystem_->Execute();
@@ -133,6 +136,8 @@ void DebugScene::Draw()
 
 	// スカイドーム
 	skydome_->Draw(camera_);
+
+	objectManager_->Draw(camera_, drawLine_);
 
 	//コース表示
 	//course_->Draw(camera_);
