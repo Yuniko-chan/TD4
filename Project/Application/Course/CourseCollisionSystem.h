@@ -3,12 +3,27 @@
 #include "Course.h"
 #include "../../Engine/base/DescriptorHandles.h"
 #include "CourseCollisionPipeline.h"
+#include <variant>
+
+// 前方宣言
+class Player;
+class VehicleCore;
+class TireParts;
+class ArmorFrameParts;
+class EngineParts;
+class CourseDemoObject;
 
 /// <summary>
 /// コース衝突システム
 /// </summary>
 class CourseCollisionSystem
 {
+
+private: // メンバ定数
+
+	// 衝突するオブジェクト
+	using CollisionCarObject = std::variant<VehicleCore*, TireParts*, ArmorFrameParts*, EngineParts*>;
+	using CollisionObject = std::variant<Player*, CourseDemoObject*, CollisionCarObject>;
 
 private: // メンバ定数
 
@@ -96,7 +111,7 @@ public: // メンバ関数
 	/// コースとぶつかるオブジェクト登録
 	/// </summary>
 	/// <param name="object">オブジェクトのポインタ</param>
-	void ObjectRegistration(MeshObject* object);
+	void ObjectRegistration(CollisionObject object);
 
 	/// <summary>
 	/// コース設定
@@ -120,7 +135,7 @@ private: // メンバ変数
 	/// 距離判定
 	/// </summary>
 	/// <param name="object">オブジェクト</param>
-	void DistanceJudgment(MeshObject* object);
+	void DistanceJudgment(CollisionObject object);
 
 	/// <summary>
 	/// 押し出し処理実行
@@ -133,10 +148,10 @@ private: // メンバ変数
 	void CommadKick();
 
 	/// <summary>
-	/// 押し出し計算
+	/// 単独押し出し計算
 	/// </summary>
 	/// <param name="object">オブジェクト</param>
-	void ExtrusionCalculation(MeshObject* object);
+	void AloneExtrusionCalculation(CollisionObject object);
 
 private: // メンバ変数
 
@@ -144,7 +159,7 @@ private: // メンバ変数
 	Course* course_;
 
 	// コースとぶつかるオブジェクト
-	std::list<MeshObject*> collidingObjects_;
+	std::list<CollisionObject> collidingObjects_;
 
 	// バッファ群
 	Buffers buffers_[kObjectsThatCanBeRegisteredMax_];
@@ -165,5 +180,8 @@ private: // メンバ変数
 
 	// DxCommon
 	DirectXCommon* dxCommon_;
+
+	// カートに属しているパーツ&&衝突しているパーツの番号保存
+	std::list<uint32_t> belongsToCartPartsNumbers_;
 
 };

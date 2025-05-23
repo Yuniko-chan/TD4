@@ -7,6 +7,9 @@
 #include "../../Engine/base/Texture/TextureManager.h"
 #include "Demo/CourseDemoObject.h"
 
+#include "../Object/Player/Player.h"
+#include "../Object/Car/CarLists.h"
+
 // ポリゴンエリアの原点
 const Vector3 CourseCollisionSystem::kPolygonAreasOrigin_ = { -500.0f, -500.0f, -500.0f };
 // ポリゴンエリアの長さ
@@ -33,7 +36,7 @@ void CourseCollisionSystem::Execute()
 	collisionCheakNum_ = 0;
 
 	// 登録分回す
-	for (std::list<MeshObject*>::iterator itr = collidingObjects_.begin();
+	for (std::list<CollisionObject>::iterator itr = collidingObjects_.begin();
 		itr != collidingObjects_.end();++itr) {
 		// CPU側でOBBとの距離判定をとる->メッシュ登録
 		DistanceJudgment(*itr);
@@ -53,12 +56,41 @@ void CourseCollisionSystem::Execute()
 	collisionCheakNum_ = 0;
 
 	// 登録分回す
-	for (std::list<MeshObject*>::iterator itr = collidingObjects_.begin();
+	for (std::list<CollisionObject>::iterator itr = collidingObjects_.begin();
 		itr != collidingObjects_.end(); ++itr) {
-	
-		// ->CPU側で押し出し、回転（壁データはとらない）
-		// ->OBB登録のオブジェクトのワールドトランスフォーム更新
-		ExtrusionCalculation(*itr);
+
+		bool belongToCart = 
+			std::visit([&](auto x) {
+			// 型
+			using T = std::decay_t<decltype(x)>;
+			// プレイヤー
+			if constexpr (std::is_same_v<T, Player*>) {
+				return false;
+			}
+			else if constexpr (std::is_same_v<T, CourseDemoObject*>) {
+				return false;
+			}
+			// プレイヤーじゃない
+			else {
+				CollisionCarObject collisionCarObject = x;
+				bool belongToCartXX = 
+					std::visit([&](auto xx) {
+					return xx->IsParent();
+					}, collisionCarObject);
+				return belongToCartXX;
+			}
+			}, *itr);
+		
+
+		// カートに属しているか
+		if (belongToCart) {
+
+		}
+		else {
+			// ->CPU側で押し出し、回転（壁データはとらない）
+			// ->OBB登録のオブジェクトのワールドトランスフォーム更新
+			AloneExtrusionCalculation(*itr);
+		}
 	
 		// 回数を増やす
 		collisionCheakNum_++;
@@ -72,7 +104,7 @@ void CourseCollisionSystem::Execute()
 
 }
 
-void CourseCollisionSystem::ObjectRegistration(MeshObject* object)
+void CourseCollisionSystem::ObjectRegistration(CollisionObject object)
 {
 
 	// オブジェクトリストに登録
@@ -280,12 +312,33 @@ void CourseCollisionSystem::BuffersInitialize()
 
 }
 
-void CourseCollisionSystem::DistanceJudgment(MeshObject* object)
+void CourseCollisionSystem::DistanceJudgment(CollisionObject object)
 {
 
 	// オブジェクト情報
 	Vector3 objectPosition = { 0.0f,0.0f,0.0f };
-	OBB obb = std::get<OBB>(*object->GetCollider());
+
+	// obb取得
+	OBB obb = std::visit([&](auto x) {
+		// 型
+		using T = std::decay_t<decltype(x)>;
+		// プレイヤー
+		if constexpr (std::is_same_v<T, Player*>) {
+			return std::get<OBB>(*x->GetCollider());
+		}
+		else if constexpr (std::is_same_v<T, CourseDemoObject*>) {
+			return std::get<OBB>(*x->GetCollider());
+		}
+		// プレイヤーじゃない
+		else {
+			CollisionCarObject collisionCarObject = x;
+			OBB obbXX = std::visit([&](auto xx) {
+				return std::get<OBB>(*xx->GetCollider());
+				}, collisionCarObject);
+			return obbXX;
+		}
+		}, object);
+
 
 	// オブジェクトデータ取得
 	buffers_[collisionCheakNum_].objectMap_->center = obb.center_;
@@ -507,7 +560,7 @@ void CourseCollisionSystem::CommadKick()
 
 }
 
-void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
+void CourseCollisionSystem::AloneExtrusionCalculation(CollisionObject object)
 {
 
 	// 押し出し
@@ -571,11 +624,35 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 	}
 
 	// メッシュオブジェクトに代入
-	// object;
-	object->GetWorldTransformAdress()->transform_.translate += extrusion;
-	if (normalCount != 0) {
-		object->GetWorldTransformAdress()->direction_ = normal;
-	}
-	object->GetWorldTransformAdress()->UpdateMatrix();
+	std::visit([&](auto x) {
+		// 型
+		using T = std::decay_t<decltype(x)>;
+		// プレイヤー
+		if constexpr (std::is_same_v<T, Player*>) {
+			x->GetWorldTransformAdress()->transform_.translate += extrusion;
+			if (normalCount != 0) {
+				x->GetWorldTransformAdress()->direction_ = normal;
+			}
+			x->GetWorldTransformAdress()->UpdateMatrix();
+		}
+		else if constexpr (std::is_same_v<T, CourseDemoObject*>) {
+			x->GetWorldTransformAdress()->transform_.translate += extrusion;
+			if (normalCount != 0) {
+				x->GetWorldTransformAdress()->direction_ = normal;
+			}
+			x->GetWorldTransformAdress()->UpdateMatrix();
+		}
+		// プレイヤーじゃない
+		else {
+			CollisionCarObject collisionCarObject = x;
+			std::visit([&](auto xx) {
+				xx->GetWorldTransformAdress()->transform_.translate += extrusion;
+				if (normalCount != 0) {
+					xx->GetWorldTransformAdress()->direction_ = normal;
+				}
+				xx->GetWorldTransformAdress()->UpdateMatrix();
+				}, collisionCarObject);
+		}
+		}, object);
 
 }
