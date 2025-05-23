@@ -10,3 +10,4 @@
 #include "Gimmick/Cannon/CannonExplosion.h"
 #include "Gimmick/Minigun/Minigun.h"
 #include "Gimmick/Minigun/MinigunBullet.h"
+#include "Gimmick/Obstacle/Obstacle.h"

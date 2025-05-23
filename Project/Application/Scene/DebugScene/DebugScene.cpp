@@ -62,21 +62,21 @@ void DebugScene::Initialize()
 	courseDemoObject_->Initialize(&courseDemoData);
 
 	// ミニガン
-	minigunModel_.reset(Model::Create("Resources/Model/Gimmick/IronBall/", "IronBall.obj", dxCommon_));
-	minigun_ = std::make_unique<Minigun>();
-	LevelData::MeshData minigunData;
-	minigunData.directoryPath = "Resources/Model/Gimmick/IronBall/";
-	minigunData.flieName = "IronBall.obj";
-	minigunData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
-	minigunData.className = "Minigun";
-	minigunData.name = "";
-	minigunData.parentName = "";
-	OBB minigunCollider;
-	minigunCollider.center_ = { 0.0f,0.0f,0.0f };
-	minigunCollider.size_ = { 1.0f,1.0f,1.0f };
-	minigunCollider.SetOtientatuons(Matrix4x4::MakeIdentity4x4());
-	minigunData.collider = minigunCollider;
-	minigun_->Initialize(&minigunData);
+	obstacleModel_.reset(Model::Create("Resources/Model/Gimmick/IronBall/", "IronBall.obj", dxCommon_));
+	obstacle_ = std::make_unique<Obstacle>();
+	LevelData::MeshData obstacleData;
+	obstacleData.directoryPath = "Resources/Model/Gimmick/IronBall/";
+	obstacleData.flieName = "IronBall.obj";
+	obstacleData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+	obstacleData.className = "Obstacle";
+	obstacleData.name = "";
+	obstacleData.parentName = "";
+	OBB obstacleCollider;
+	obstacleCollider.center_ = { 0.0f,0.0f,0.0f };
+	obstacleCollider.size_ = { 1.0f,1.0f,1.0f };
+	obstacleCollider.SetOtientatuons(Matrix4x4::MakeIdentity4x4());
+	obstacleData.collider = obstacleCollider;
+	obstacle_->Initialize(&obstacleData);
 
 	BaseScene::InitilaizeCheck();
 
@@ -95,7 +95,7 @@ void DebugScene::Update()
 	courseCollisionSystem_->ObjectRegistration(courseDemoObject_.get());
 	courseCollisionSystem_->Execute();
 	
-	minigun_->Update();
+	obstacle_->Update();
 
 	DebugCameraUpdate();
 
@@ -117,7 +117,7 @@ void DebugScene::Draw()
 	// コースデモ
 	//courseDemoObject_->Draw(camera_);
 
-	minigun_->Draw(camera_);
+	obstacle_->Draw(camera_);
 
 	ModelDraw::PostDraw();
 

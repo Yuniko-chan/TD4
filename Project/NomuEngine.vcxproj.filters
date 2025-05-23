@@ -403,6 +403,9 @@
     <Filter Include="Application\Object\Gimmick\Minigun">
       <UniqueIdentifier>{73da7592-2bca-4df7-a040-cd34b1d220e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Object\Gimmick\Obstacle">
+      <UniqueIdentifier>{45a7f8fe-9d95-4b7f-8e59-7ff19e398ce8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -999,6 +1002,9 @@
     </ClCompile>
     <ClCompile Include="Application\Object\Gimmick\Minigun\MinigunBullet.cpp">
       <Filter>Application\Object\Gimmick\Minigun</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Gimmick\Obstacle\Obstacle.cpp">
+      <Filter>Application\Object\Gimmick\Obstacle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1814,6 +1820,12 @@
     </ClInclude>
     <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunBulletData.h">
       <Filter>Application\Object\Gimmick\Minigun</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\Obstacle\ObstacleData.h">
+      <Filter>Application\Object\Gimmick\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\Obstacle\Obstacle.h">
+      <Filter>Application\Object\Gimmick\Obstacle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

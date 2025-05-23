@@ -12,6 +12,7 @@
 #include "../../Object/Gimmick/IronBall/PendulumIronBall.h"
 #include "../../Object/Gimmick/Cannon/Cannon.h"
 #include "../../Object/Gimmick/Minigun/Minigun.h"
+#include "../../Object/Gimmick/Obstacle/Obstacle.h"
 
 #include "../../Object/Player/Player.h"
 
@@ -74,9 +75,9 @@ private: // メンバ変数
 	std::unique_ptr<CourseDemoObject> courseDemoObject_;
 	std::unique_ptr<Model> courseDemoModel_;
 
-	// ミニガン
-	std::unique_ptr<Minigun> minigun_;
-	std::unique_ptr<Model> minigunModel_;
+	// 障害物
+	std::unique_ptr<Obstacle> obstacle_;
+	std::unique_ptr<Model> obstacleModel_;
 
 };
 
