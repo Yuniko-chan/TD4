@@ -1,6 +1,7 @@
 #include "PartsInterface.h"
 #include "../VehicleCore.h"
 #include "../Manager/VehiclePartsManager.h"
+#include "../../../Collider/CollisionConfig.h"
 
 #include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Engine/Physics/Gravity/Gravity.h"
@@ -10,6 +11,10 @@ void Car::IParts::Initialize(LevelData::MeshData* data)
 	// 基底
 	MeshObject::Initialize(data);
 	material_->SetEnableLighting(HalfLambert);
+
+	// 衝突マスク
+	collisionAttribute_ = kCollisionAttributeVehicleParts_;
+	collisionMask_ -= kCollisionAttributeVehicleParts_;
 
 	connector_ = std::make_unique<VehicleConnector>();
 	connector_->SetOwner(this);
