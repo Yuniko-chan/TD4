@@ -55,6 +55,8 @@ namespace Car
 		VehicleConnector* GetConnector() { return connector_.get(); }
 		// 消すフラグ
 		bool GetIsDelete() { return isDelete_; }
+		//// 親があるか（ポインタで取得可能なように）
+		//VehicleCore* GetParent() { return parentCore_; }
 
 		//---セッター---//
 		// 親子関係

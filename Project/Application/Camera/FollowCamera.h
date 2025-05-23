@@ -8,6 +8,13 @@
 class FollowCamera :
 	public BaseCamera
 {
+public:
+	// カメラ画角モード
+	enum class AngleMode
+	{
+		kPlayer,
+		kVehicle,
+	};
 
 public: // メンバ関数
 
@@ -69,5 +76,10 @@ private: // メンバ変数
 	// 車両に乗っている状態の
 	Vector3 inVehicleRotate_ = {};
 	Vector3 inVehicleOffsetPosition_ = {};
+
+	// 方向ベクトル
+	bool usedDirection_ = false;
+	Vector3 rotateDirection_ = Vector3(0.0f, 0.0f, 1.0f);
+
 };
 

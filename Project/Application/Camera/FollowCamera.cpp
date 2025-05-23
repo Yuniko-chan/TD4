@@ -96,6 +96,8 @@ void FollowCamera::ImGuiDraw()
 	ImGui::Begin("FollowCamera");
 	ImGui::DragFloat3("Position", &transform_.translate.x);
 	ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f);
+	ImGui::DragFloat3("RotateVector", &rotateDirection_.x, 0.01f);
+	ImGui::Checkbox("UseDirection", &usedDirection_);
 
 	ImGui::End();
 }
@@ -115,7 +117,21 @@ Matrix4x4 FollowCamera::GetRotateMatrix()
 		if (target_->parent_) {
 			return Matrix4x4::Multiply(Matrix4x4::MakeRotateXYZMatrix(transform_.rotate), target_->rotateMatrix_);
 		}
+
+		if (usedDirection_) {
+			// 方向のベクトル取得→ベクトルから回転行列
+			//Vector3 targetWorld = { target_->worldMatrix_.m[2][0],target_->worldMatrix_.m[2][2] ,target_->worldMatrix_.m[2][2] };
+			//Vector3 toVector = targetWorld - transform_.translate;
+			return Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, Vector3::Normalize(target_->direction_));
+		}
+
 		return Matrix4x4::Multiply(Matrix4x4::MakeRotateXYZMatrix(transform_.rotate), target_->rotateMatrix_);
+	}
+	if (usedDirection_) {
+		// 回転行列作成
+		// 正規化
+		rotateDirection_ = Vector3::Normalize(rotateDirection_);
+		return Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, this->rotateDirection_);
 	}
 	// 無ければデフォルト
 	return Matrix4x4::MakeRotateXYZMatrix(transform_.rotate);
