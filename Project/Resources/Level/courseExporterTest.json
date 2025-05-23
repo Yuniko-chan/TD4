@@ -1,140 +1,140 @@
 {
     "name": "scene",
-  "objects": [
-    {
-      "type": "MESH",
-      "name": "Player",
-      "transform": {
-        "translation": [
-          0.0,
-          -50.0,
-          4.0
-        ],
-        "rotation": [
-          -0.0,
-          0.0,
-          0.0
-        ],
-        "scaling": [
-          1.0,
-          1.0,
-          1.0
-        ]
-      },
-      "fileName": "Player.gltf",
-      "directoryPath": "Resources/Model/Player",
-      "className": "Player",
-      "collider": {
-        "type": "BOX",
-        "center": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "size": [
-          1.2000000476837158,
-          1.2000000476837158,
-          2.0
-        ]
-      }
-    },
-    {
-      "type": "MESH",
-      "name": "course_test",
-      "transform": {
-        "translation": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rotation": [
-          -0.0,
-          0.0,
-          0.0
-        ],
-        "scaling": [
-          1.0,
-          1.0,
-          1.0
-        ]
-      },
-      "fileName": "courseExporterTest.course",
-      "directoryPath": "Resources/Course/",
-      "className": "Course"
-    },
-    {
-      "type": "MESH",
-      "name": "Wall",
-      "transform": {
-        "translation": [
-          3.144087553024292,
-          21.82179069519043,
-          0.0
-        ],
-        "rotation": [
-          -0.0,
-          0.0,
-          0.0
-        ],
-        "scaling": [
-          1.0,
-          1.0,
-          1.0
-        ]
-      },
-      "fileName": "GroundBlock.obj",
-      "directoryPath": "Resources/Model/GroundBlock",
-      "className": "Wall",
-      "collider": {
-        "type": "BOX",
-        "center": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "size": [
-          2.0,
-          47.599998474121094,
-          18.59000015258789
-        ]
-      }
-    },
-    {
-      "type": "MESH",
-      "name": "Wall.001",
-      "transform": {
-        "translation": [
-          -2.736520528793335,
-          21.82179069519043,
-          0.0
-        ],
-        "rotation": [
-          -0.0,
-          0.0,
-          0.0
-        ],
-        "scaling": [
-          1.0,
-          1.0,
-          1.0
-        ]
-      },
-      "fileName": "GroundBlock.obj",
-      "directoryPath": "Resources/Model/GroundBlock",
-      "className": "Wall",
-      "collider": {
-        "type": "BOX",
-        "center": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "size": [
-          2.0,
-          47.599998474121094,
-          18.59000015258789
-        ]
-      }
-    }
-  ]
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "course_test",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "courseExporterTest.course",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "Wall",
+            "transform": {
+                "translation": [
+                    3.144087553024292,
+                    21.82179069519043,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    24.042722702026367,
+                    10.029997825622559
+                ]
+            },
+            "fileName": "Box.obj",
+            "directoryPath": "Resources/Model/Box",
+            "className": "Wall",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    48.085445404052734,
+                    20.059995651245117
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Wall.001",
+            "transform": {
+                "translation": [
+                    -3.526325225830078,
+                    21.82179069519043,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    24.042722702026367,
+                    10.029997825622559
+                ]
+            },
+            "fileName": "Box.obj",
+            "directoryPath": "Resources/Model/Box",
+            "className": "Wall",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    48.085445404052734,
+                    20.059995651245117
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Player",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Player.gltf",
+            "directoryPath": "Resources/Model/Player",
+            "className": "Player",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            }
+        }
+    ]
 }
