@@ -27,6 +27,9 @@ void CourseCollisionSystem::Initialize()
 	// バッファ初期化
 	BuffersInitialize();
 
+	// コア
+	vehicleCore_ = nullptr;
+
 }
 
 void CourseCollisionSystem::Execute()
@@ -59,6 +62,7 @@ void CourseCollisionSystem::Execute()
 	for (std::list<CollisionObject>::iterator itr = collidingObjects_.begin();
 		itr != collidingObjects_.end(); ++itr) {
 
+		// カートに属しているか
 		bool belongToCart = 
 			std::visit([&](auto x) {
 			// 型
@@ -67,12 +71,19 @@ void CourseCollisionSystem::Execute()
 			if constexpr (std::is_same_v<T, Player*>) {
 				return false;
 			}
+			// デモオブジェクト
 			else if constexpr (std::is_same_v<T, CourseDemoObject*>) {
 				return false;
 			}
 			// プレイヤーじゃない
 			else {
 				CollisionCarObject collisionCarObject = x;
+				// コアか
+				if (std::holds_alternative<VehicleCore*>(collisionCarObject)) {
+					// コアに代入
+					vehicleCore_ = std::get<VehicleCore*>(x);
+					return true;
+				}
 				bool belongToCartXX = 
 					std::visit([&](auto xx) {
 					return xx->IsParent();
@@ -84,23 +95,30 @@ void CourseCollisionSystem::Execute()
 
 		// カートに属しているか
 		if (belongToCart) {
-
+			// 登録
+			belongsToCartPartsNumbers_.push_back(collisionCheakNum_);
 		}
+		// 個人勢
 		else {
 			// ->CPU側で押し出し、回転（壁データはとらない）
 			// ->OBB登録のオブジェクトのワールドトランスフォーム更新
 			AloneExtrusionCalculation(*itr);
 		}
-	
 		// 回数を増やす
 		collisionCheakNum_++;
 
 	}
 
-	// 後処理
+	// カートに属している勢
+	CartExtrusionCalculation();
 
+	// 後処理
 	// 登録したオブジェクトリストをクリア
 	collidingObjects_.clear();
+	// カートに属しているパーツ&&衝突しているパーツの番号保存
+	belongsToCartPartsNumbers_.clear();
+	// コアをヌルに
+	vehicleCore_ = nullptr;
 
 }
 
@@ -326,6 +344,7 @@ void CourseCollisionSystem::DistanceJudgment(CollisionObject object)
 		if constexpr (std::is_same_v<T, Player*>) {
 			return std::get<OBB>(*x->GetCollider());
 		}
+		// デモオブジェクト
 		else if constexpr (std::is_same_v<T, CourseDemoObject*>) {
 			return std::get<OBB>(*x->GetCollider());
 		}
@@ -572,8 +591,6 @@ void CourseCollisionSystem::AloneExtrusionCalculation(CollisionObject object)
 	// 法線
 	Vector3 normal = { 0.0f,0.0f,0.0f };
 	uint32_t normalCount = 0;
-	// 走行場所
-	CoursePolygonType drivingLocation = CoursePolygonType::kCoursePolygonTypeRoad;
 
 	// ポリゴン数だけ回す
 	for (uint32_t i = 0; i < buffers_[collisionCheakNum_].objectMap_->indexMax; i++) {
@@ -591,10 +608,6 @@ void CourseCollisionSystem::AloneExtrusionCalculation(CollisionObject object)
 				// 法線
 				normal += Vector3::Normalize(outputData.extrusion);
 				normalCount++;
-				// 走行場所
-				if (drivingLocation < static_cast<CoursePolygonType>(outputData.drivingLocation)) {
-					drivingLocation = static_cast<CoursePolygonType>(outputData.drivingLocation);
-				}
 
 			}
 			else {
@@ -635,6 +648,7 @@ void CourseCollisionSystem::AloneExtrusionCalculation(CollisionObject object)
 			}
 			x->GetWorldTransformAdress()->UpdateMatrix();
 		}
+		// デモオブジェクト
 		else if constexpr (std::is_same_v<T, CourseDemoObject*>) {
 			x->GetWorldTransformAdress()->transform_.translate += extrusion;
 			if (normalCount != 0) {
@@ -654,5 +668,87 @@ void CourseCollisionSystem::AloneExtrusionCalculation(CollisionObject object)
 				}, collisionCarObject);
 		}
 		}, object);
+
+}
+
+void CourseCollisionSystem::CartExtrusionCalculation()
+{
+
+	// コアがない
+	if (!vehicleCore_) {
+		return;
+	}
+
+	// 押し出し
+	Vector3 extrusion = { 0.0f,0.0f,0.0f };
+	Vector3 extrusionWall = { 0.0f,0.0f,0.0f };
+	Vector3 extrusionRoad = { 0.0f,0.0f,0.0f };
+	uint32_t extrusionWallCount = 0;
+	uint32_t extrusionRoadCount = 0;
+	// 法線
+	Vector3 normal = { 0.0f,0.0f,0.0f };
+	uint32_t normalCount = 0;
+	// 走行場所
+	CoursePolygonType drivingLocation = CoursePolygonType::kCoursePolygonTypeRoad;
+
+	// カートに属しているパーツ&&衝突しているパーツの番号分回す
+	for (std::list<uint32_t>::iterator itr = belongsToCartPartsNumbers_.begin();
+		itr != belongsToCartPartsNumbers_.end(); ++itr) {
+
+		// ポリゴン数だけ回す
+		for (uint32_t i = 0; i < buffers_[*itr].objectMap_->indexMax; i++) {
+
+			// 出力データ
+			OutputData outputData = buffers_[*itr].outputDataMap_[i];
+
+			// 衝突したか
+			if (outputData.collided == 1) {
+				// 壁ではないなら
+				if (outputData.drivingLocation < CoursePolygonType::kCoursePolygonTypeWall) {
+					// 押し出し値
+					extrusionRoad += outputData.extrusion;
+					extrusionRoadCount++;
+					// 法線
+					normal += Vector3::Normalize(outputData.extrusion);
+					normalCount++;
+					// 走行場所
+					if (drivingLocation < static_cast<CoursePolygonType>(outputData.drivingLocation)) {
+						drivingLocation = static_cast<CoursePolygonType>(outputData.drivingLocation);
+					}
+
+				}
+				else {
+					extrusionWall += outputData.extrusion;
+					extrusionWallCount++;
+				}
+
+			}
+		}
+
+	}
+
+	//押し出し
+
+	if (extrusionRoadCount > 0) {
+		extrusion += extrusionRoad * (1.0f / static_cast<float>(extrusionRoadCount));
+	}
+	if (extrusionWallCount > 0) {
+		extrusion += extrusionWall * (1.0f / static_cast<float>(extrusionWallCount));
+	}
+
+	// 法線
+	if (normalCount == 0) {
+		normal = { 0.0f, 0.0f, 1.0f };
+	}
+	else {
+		normal = Vector3::Normalize(normal * (1.0f / static_cast<float>(normalCount)));
+	}
+
+	// コアに代入
+	vehicleCore_->GetWorldTransformAdress()->transform_.translate += extrusion;
+	if (normalCount != 0) {
+		vehicleCore_->GetWorldTransformAdress()->direction_ = normal;
+	}
+	vehicleCore_->GetWorldTransformAdress()->UpdateMatrix();
 
 }

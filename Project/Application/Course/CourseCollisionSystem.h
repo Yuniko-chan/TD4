@@ -153,6 +153,11 @@ private: // メンバ変数
 	/// <param name="object">オブジェクト</param>
 	void AloneExtrusionCalculation(CollisionObject object);
 
+	/// <summary>
+	/// カート押し出し計算
+	/// </summary>
+	void CartExtrusionCalculation();
+
 private: // メンバ変数
 
 	// コース
@@ -183,5 +188,8 @@ private: // メンバ変数
 
 	// カートに属しているパーツ&&衝突しているパーツの番号保存
 	std::list<uint32_t> belongsToCartPartsNumbers_;
+
+	// コア
+	VehicleCore* vehicleCore_;
 
 };
