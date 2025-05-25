@@ -16,10 +16,6 @@ void FollowCamera::Initialize() {
 
 	BaseCamera::Update();
 
-	// オフセットの長さ
-	offsetLength_ = 0.0f;
-	// オフセットの高さ
-	offsetHeight_ = 0.0f;
 	// オフセットの追従レート
 	offsetMoveRate_ = 0.1f;
 	// ターゲット位置
@@ -33,8 +29,6 @@ void FollowCamera::Initialize() {
 	const char* groupName = "FollowCamera";
 	//グループを追加
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
-	globalVariables->AddItem(groupName, "offsetLength", offsetLength_);
-	globalVariables->AddItem(groupName, "offsetHeight", offsetHeight_);
 	globalVariables->AddItem(groupName, "offsetMoveRate", offsetMoveRate_);
 
 	globalVariables->AddItem(groupName, "inVehicleOffset", inVehicleOffset_);
@@ -45,7 +39,7 @@ void FollowCamera::Initialize() {
 
 	ApplyGlobalVariables();
 
-	offset_ = Vector3(0.0f, offsetHeight_, offsetLength_);
+	offset_ = Vector3(onFootOffset_);
 	usedDirection_ = true;
 
 	ChangeRequest(AngleMode::kPlayer, float(30.0f));
@@ -213,8 +207,6 @@ void FollowCamera::ApplyGlobalVariables()
 	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
 	const char* groupName = "FollowCamera";
 
-	offsetLength_ = globalVariables->GetFloatValue(groupName, "offsetLength");
-	offsetHeight_ = globalVariables->GetFloatValue(groupName, "offsetHeight");
 	offsetMoveRate_ = globalVariables->GetFloatValue(groupName, "offsetMoveRate");
 
 	inVehicleOffset_ = globalVariables->GetVector3Value(groupName, "inVehicleOffset");

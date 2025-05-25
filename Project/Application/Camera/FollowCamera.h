@@ -70,12 +70,6 @@ private: // メンバ変数
 	//追従対象
 	const WorldTransform* target_ = nullptr;
 
-	// オフセットの長さ
-	float offsetLength_ = -10.0f;
-	
-	// オフセットの高さ
-	float offsetHeight_ = 3.0f;
-
 	// ターゲット位置
 	Vector3 interTarget_;
 
@@ -93,9 +87,7 @@ private: // メンバ変数
 	bool usedDirection_ = false;
 	Vector3 rotateDirection_ = Vector3(0.0f, 0.0f, 1.0f);
 
-	float playerOffsetLength_ = -50.0f;
-	float playerOffsetHeight_ = 0.0f;
-
+	// 遷移用の
 	Vector3 startPoint_ = {};
 	Vector3 endPoint_ = {};
 	Vector3 startDirection_ = {};

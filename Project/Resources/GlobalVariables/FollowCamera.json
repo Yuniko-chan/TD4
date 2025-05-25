@@ -11,8 +11,6 @@
             1.0
         ],
         "moveRate": 1.0,
-        "offsetHeight": 5.0,
-        "offsetLength": -45.0,
         "offsetMoveRate": 0.05000000074505806,
         "onFootOffset": [
             0.0,
