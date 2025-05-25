@@ -37,8 +37,11 @@ void FollowCamera::Initialize() {
 	globalVariables->AddItem(groupName, "offsetHeight", offsetHeight_);
 	globalVariables->AddItem(groupName, "offsetMoveRate", offsetMoveRate_);
 
-	globalVariables->AddItem(groupName, "inVehicleOffsetPosition", inVehicleOffsetPosition_);
-	globalVariables->AddItem(groupName, "inVehicleRotate", inVehicleRotate_);
+	globalVariables->AddItem(groupName, "inVehicleOffset", inVehicleOffset_);
+	globalVariables->AddItem(groupName, "inVehicleRotation", inVehicleRotation_);
+
+	globalVariables->AddItem(groupName, "onFootRotation", onFootRotation_);
+	globalVariables->AddItem(groupName, "onFootOffset", onFootOffset_);
 
 	ApplyGlobalVariables();
 
@@ -61,16 +64,16 @@ void FollowCamera::Update(float elapsedTime) {
 		switch (mode_)
 		{
 		case FollowCamera::AngleMode::kPlayer:
-			startPoint_ = Vector3(0.0f, offsetHeight_, offsetLength_);
-			endPoint_ = Vector3(0.0f, playerOffsetHeight_, playerOffsetLength_);
-			startDirection_ = Vector3(0.0f, 0.0f, 1.0f);
-			endDirection_ = Vector3(0.0f, -1.0f, 0.0f);
+			startPoint_ = Vector3(inVehicleOffset_);
+			endPoint_ = Vector3(onFootOffset_);
+			startDirection_ = Vector3(inVehicleRotation_);
+			endDirection_ = Vector3(onFootRotation_);
 			break;
 		case FollowCamera::AngleMode::kVehicle:
-			startPoint_ = Vector3(0.0f, playerOffsetHeight_, playerOffsetLength_);
-			endPoint_ = Vector3(0.0f, offsetHeight_, offsetLength_);
-			startDirection_ = Vector3(0.0f, -1.0f, 0.0f);
-			endDirection_ = Vector3(0.0f, 0.0f, 1.0f);
+			startPoint_ = Vector3(onFootOffset_);
+			endPoint_ = Vector3(inVehicleOffset_);
+			startDirection_ = Vector3(onFootRotation_);
+			endDirection_ = Vector3(inVehicleRotation_);
 			break;
 		default:
 			break;
@@ -214,6 +217,9 @@ void FollowCamera::ApplyGlobalVariables()
 	offsetHeight_ = globalVariables->GetFloatValue(groupName, "offsetHeight");
 	offsetMoveRate_ = globalVariables->GetFloatValue(groupName, "offsetMoveRate");
 
-	inVehicleOffsetPosition_ = globalVariables->GetVector3Value(groupName, "inVehicleOffsetPosition");
-	inVehicleRotate_ = globalVariables->GetVector3Value(groupName, "inVehicleRotate");
+	inVehicleOffset_ = globalVariables->GetVector3Value(groupName, "inVehicleOffset");
+	inVehicleRotation_ = globalVariables->GetVector3Value(groupName, "inVehicleRotation");
+
+	onFootOffset_ = globalVariables->GetVector3Value(groupName, "onFootOffset");
+	onFootRotation_ = globalVariables->GetVector3Value(groupName, "onFootRotation");
 }

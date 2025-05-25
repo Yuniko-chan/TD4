@@ -82,8 +82,12 @@ private: // メンバ変数
 	float offsetMoveRate_ = 0.1f;
 
 	// 車両に乗っている状態の
-	Vector3 inVehicleRotate_ = {};
-	Vector3 inVehicleOffsetPosition_ = {};
+	Vector3 inVehicleRotation_ = {};
+	Vector3 inVehicleOffset_ = {};
+
+	// 降りてる時の
+	Vector3 onFootRotation_ = {};
+	Vector3 onFootOffset_ = {};
 
 	// 方向ベクトル
 	bool usedDirection_ = false;
