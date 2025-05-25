@@ -75,4 +75,8 @@ private:
 	std::map<Vector2Int, Car::IParts*> partsMapping_;
 	// パーツの数
 	PartsType counts_;
+public: // アクセッサ
+	// 総数
+	PartsType GetStatus() { return counts_; }
+
 };

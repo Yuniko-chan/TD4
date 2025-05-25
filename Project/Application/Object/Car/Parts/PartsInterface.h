@@ -63,6 +63,8 @@ namespace Car
 		void SetParent(VehicleCore* parent) { parentCore_ = parent; }
 		// 消す
 		void SetIsDelete(bool isDelete) { isDelete_ = isDelete; }
+		// HP
+		void SetHP(int32_t hp) { hitPoint_ = hp; }
 	protected:
 		/// <summary>
 		/// ImGui

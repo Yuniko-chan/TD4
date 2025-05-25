@@ -103,6 +103,14 @@ void VehicleCore::ImGuiDrawParts()
 	if (ImGui::TreeNode("Status"))
 	{
 		status_.ImGuiDraw();
+
+		int armor = constructionSystem_->GetStatus().armor;
+		int tire = constructionSystem_->GetStatus().tire;
+		int en = constructionSystem_->GetStatus().engine;
+		ImGui::InputInt("ArmorC", &armor);
+		ImGui::InputInt("TireC", &tire);
+		ImGui::InputInt("EngineC", &en);
+
 		ImGui::TreePop();
 	}
 

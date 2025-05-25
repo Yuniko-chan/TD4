@@ -14,6 +14,7 @@ void VehicleConstructionSystem::Update()
 		if ((*it).second->GetIsDelete()) {
 			UnRegistParts((*it).first, (*it).second);
 			//(*it).second->ReleaseParent();
+			DeleteCount((*it).second->GetClassNameString());
 			it = partsMapping_.erase(it);
 			break;
 		}
@@ -90,6 +91,8 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 
 	// 親の設定
 	core_->AddChild(parts);
+	// HPのリセット処理
+	parts->SetHP(1);
 	// 親子関係
 	parts->GetWorldTransformAdress()->SetParent(core_->GetWorldTransformAdress());
 	// オフセット
@@ -204,8 +207,8 @@ void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts*
 
 	// パーツ解除処理
 	parts->ReleaseParent();
-	// カウントから削除
-	DeleteCount(parts->GetClassNameString());
+	//// カウントから削除
+	//DeleteCount(parts->GetClassNameString());
 }
 
 void VehicleConstructionSystem::AddCount(std::string name)
