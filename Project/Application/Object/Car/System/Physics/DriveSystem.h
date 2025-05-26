@@ -25,21 +25,18 @@ public:
 	/// 入力受付
 	/// </summary>
 	void InputAccept(GameKeyconfig* keyConfig);
-
-	// 親の設定
-	void SetTransform(WorldTransform* core) { coreTransform_ = core; }
 	/// <summary>
 	/// ImGui
 	/// </summary>
 	void ImGuiDraw();
+private:
+	void VelocityUpdate();
 
 private:
 	// 運転用のエンジン
 	std::unique_ptr<VehicleEngine> driveEngine_;
 	// ハンドルシステム
 	std::unique_ptr<VehicleHandling> handling_;
-	// トランスフォーム
-	WorldTransform* coreTransform_ = nullptr;
 	// 速度ベクトル
 	Vector3 velocity_ = {};
 };

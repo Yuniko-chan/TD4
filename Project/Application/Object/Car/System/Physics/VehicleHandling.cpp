@@ -22,7 +22,7 @@ void VehicleHandling::HandleInput(const float inputX)
 	}
 }
 
-void VehicleHandling::Update()
+void VehicleHandling::PreUpdate()
 {
 	// カウント
 	if (IsInput() || consecutiveReceptions_ != 0) {
@@ -72,14 +72,37 @@ void VehicleHandling::Update()
 
 	// 正規化
 	steerDirection_ = Vector3::Normalize(steerDirection_);
+
+}
+
+void VehicleHandling::PostUpdate(const Vector3& velocity)
+{
+	// 速度が無く動いていなかったら
+	float length = Vector3::Length(velocity);
+	const float threshold = 0.001f;
+	// 閾値より速度ベクトルの大きさがなければ早期
+	if (std::fabsf(length) <= threshold) {
+		return;
+	}
+
+	// 入力があれば向きの調整処理
 	if (IsInput()) {
+
+		// 右
+		if (steerDirection_.x > 0) {
+
+		}
+		// 左
+		else if (steerDirection_.x < 0) {
+
+		}
+
 		float radian = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, steerDirection_);
 
 		radian /= 60.0f;
 
 		owner_->GetWorldTransformAdress()->direction_ = TransformHelper::XZRotateDirection(owner_->GetWorldTransformAdress()->direction_, radian);
 	}
-
 }
 
 void VehicleHandling::ImGuiDraw()

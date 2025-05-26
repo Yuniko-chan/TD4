@@ -36,13 +36,13 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	*colliderShape = obb;
 	collider_.reset(colliderShape);
 
+	// パーツ構築クラス
 	constructionSystem_ = std::make_unique<VehicleConstructionSystem>();
 	constructionSystem_->Initialize(this);
 
+	// 運転クラス
 	driveSystem_ = std::make_unique<DriveSystem>();
 	driveSystem_->SetOwner(this);
-	driveSystem_->SetTransform(&worldTransform_);
-
 	driveSystem_->Initialize();
 }
 
@@ -54,8 +54,6 @@ void VehicleCore::Update()
 	constructionSystem_->Update();
 	// 基底
 	Car::IParts::Update();
-
-	
 }
 
 void VehicleCore::ImGuiDrawParts()
