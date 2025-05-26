@@ -19,6 +19,25 @@ void VehicleConstructionSystem::Update()
 			break;
 		}
 	}
+	// 各方向の数取得
+	directions_ = {};
+	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
+		if ((*it).first.x > 0) {
+			directions_.right++;
+		}
+		else if ((*it).first.x < 0) {
+			directions_.left++;
+		}
+
+		if ((*it).first.y > 0)
+		{
+			directions_.forward++;
+		}
+		else if ((*it).first.y < 0) {
+			directions_.backForward++;
+		}
+	}
+
 }
 
 void VehicleConstructionSystem::Attach(Car::IParts* parts)

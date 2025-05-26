@@ -22,6 +22,12 @@ private:
 		int16_t armor;
 		int16_t engine;
 	};
+	struct DirectionType {
+		int16_t forward;
+		int16_t backForward;
+		int16_t left;
+		int16_t right;
+	};
 
 public:
 	/// <summary>
@@ -75,8 +81,10 @@ private:
 	std::map<Vector2Int, Car::IParts*> partsMapping_;
 	// パーツの数
 	PartsType counts_;
+	// パーツの方角ごとの数
+	DirectionType directions_;
 public: // アクセッサ
 	// 総数
 	PartsType GetStatus() { return counts_; }
-
+	DirectionType* GetDirections() { return &directions_; }
 };

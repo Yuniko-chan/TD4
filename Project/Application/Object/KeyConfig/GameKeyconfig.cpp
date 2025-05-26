@@ -25,7 +25,7 @@ void GameKeyconfig::Initialize()
 	//---パッド向けキーバインド---//
 	playerKeyConfig_.padBinds.jumpAction = JoystickButton::kJoystickButtonY;
 	playerKeyConfig_.padBinds.rideAction = JoystickButton::kJoystickButtonX;
-	playerKeyConfig_.padBinds.interactAction = JoystickButton::kJoystickButtonRST;
+	playerKeyConfig_.padBinds.interactAction = JoystickButton::kJoystickButtonLB;
 
 	playerKeyConfig_.padBinds.accel = JoystickButton::kJoystickButtonA;
 	playerKeyConfig_.padBinds.brake = JoystickButton::kJoystickButtonB;
