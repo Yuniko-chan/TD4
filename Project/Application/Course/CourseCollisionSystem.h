@@ -3,15 +3,16 @@
 #include "Course.h"
 #include "../../Engine/base/DescriptorHandles.h"
 #include "CourseCollisionPipeline.h"
+#include "../../Engine/Object/BaseObjectManager.h"
 #include <variant>
 
 // 前方宣言
+class CourseDemoObject;
 class Player;
 class VehicleCore;
 class TireParts;
 class ArmorFrameParts;
 class EngineParts;
-class CourseDemoObject;
 
 /// <summary>
 /// コース衝突システム
@@ -25,10 +26,8 @@ private: // メンバ定数
 	using CollisionCarObject = std::variant<VehicleCore*, TireParts*, ArmorFrameParts*, EngineParts*>;
 	using CollisionObject = std::variant<Player*, CourseDemoObject*, CollisionCarObject>;
 
-private: // メンバ定数
-
 	// 登録できるオブジェクトの数
-	static const uint32_t kObjectsThatCanBeRegisteredMax_ = 8;
+	static const uint32_t kObjectsThatCanBeRegisteredMax_ = 32;
 	
 	//	ポリゴンエリアの分割数
 	static const uint32_t kPolygonAreasDiv_ = 4;
@@ -95,6 +94,10 @@ private: // メンバ定数
 
 	};
 
+	// 衝突するオブジェクトキーワード
+	static const uint32_t kCollidingObjectKeywordsMax_ = 6;
+	static const std::array<std::string, kCollidingObjectKeywordsMax_> kCollidingObjectKeywords_;
+
 public: // メンバ関数
 
 	/// <summary>
@@ -112,6 +115,12 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="object">オブジェクトのポインタ</param>
 	void ObjectRegistration(CollisionObject object);
+
+	/// <summary>
+	/// コースとぶつかるオブジェクト登録
+	/// </summary>
+	/// <param name="objectManager">オブジェクトマネージャー</param>
+	void ObjectRegistration(BaseObjectManager* objectManager);
 
 	/// <summary>
 	/// コース設定

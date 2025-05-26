@@ -17,6 +17,7 @@
 #include "../../System/PostEffectSystem/PostEffectSystem.h"
 #include "../../Object/KeyConfig/GameKeyconfig.h"
 #include "../../Object/GlobalParameterManager.h"
+#include "../../Course/CourseCollisionSystem.h"
 
 /// <summary>
 /// ゲームシーン
@@ -95,4 +96,7 @@ private:
 	GameKeyconfig* keyConfig_ = nullptr;
 	// 外部パラメータ変数をまとめておくクラス
 	GlobalParameterManager* parameterManager_ = nullptr;
+
+	std::unique_ptr<CourseCollisionSystem> courseCollisionSystem_;
+
 };

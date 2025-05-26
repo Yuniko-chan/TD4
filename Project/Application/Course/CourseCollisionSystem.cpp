@@ -15,6 +15,18 @@ const Vector3 CourseCollisionSystem::kPolygonAreasOrigin_ = { -500.0f, -500.0f, 
 // ポリゴンエリアの長さ
 const Vector3 CourseCollisionSystem::kPolygonAreasLength_ = { 1000.0f, 1000.0f, 1000.0f };
 
+// 衝突するオブジェクトキーワード
+const std::array<std::string, CourseCollisionSystem::kCollidingObjectKeywordsMax_> 
+CourseCollisionSystem::kCollidingObjectKeywords_ = 
+{
+	"CourseDemo", // コースデモオブジェクト
+	"Player", // プレイヤー
+	"VehicleCore", // ベーシックコア
+	"Tire", // タイヤ
+	"ArmorFrame", // フレーム
+	"Engine" // エンジン
+};
+
 void CourseCollisionSystem::Initialize()
 {
 
@@ -127,6 +139,56 @@ void CourseCollisionSystem::ObjectRegistration(CollisionObject object)
 
 	// オブジェクトリストに登録
 	collidingObjects_.push_back(object);
+
+}
+
+void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
+{
+
+	// オブジェクト取得
+	std::list<BaseObjectManager::ObjectPair>* objects = objectManager->GetObjects();
+
+	// オブジェクト
+	for (std::list<BaseObjectManager::ObjectPair>::iterator itr = objects->begin();
+		itr != objects->end(); ++itr) {
+
+		// キーワード検索
+		for (uint32_t i = 0; i < kCollidingObjectKeywordsMax_; ++i) {
+			// キーワードに引っかかるか
+			if (itr->first.find(kCollidingObjectKeywords_[i]) != std::string::npos) {
+				// オブジェクトリストに登録
+				switch (i)
+				{
+				case 0:
+					collidingObjects_.push_back(static_cast<CourseDemoObject*>(itr->second.get()));
+					break;
+				case 1:
+					collidingObjects_.push_back(static_cast<Player*>(itr->second.get()));
+					break;
+				case 2:
+					collidingObjects_.push_back(static_cast<VehicleCore*>(itr->second.get()));
+					break;
+				case 3:
+					collidingObjects_.push_back(static_cast<TireParts*>(itr->second.get()));
+					break;
+				case 4:
+					collidingObjects_.push_back(static_cast<ArmorFrameParts*>(itr->second.get()));
+					break;
+				case 5:
+					collidingObjects_.push_back(static_cast<EngineParts*>(itr->second.get()));
+					break;
+				default:
+					break;
+				}
+
+				// キーワード検索から抜ける
+				break;
+
+			}
+
+		}
+
+	}
 
 }
 

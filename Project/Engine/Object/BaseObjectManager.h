@@ -16,6 +16,11 @@
 class BaseObjectManager
 {
 
+public:
+
+	// 名前とオブジェクトデータのペア
+	using ObjectPair = std::pair<std::string, std::unique_ptr<IObject>>;
+
 public: //virtual
 
 	/// <summary>
@@ -64,6 +69,12 @@ public: //virtualではない
 	IObject* GetObjectPointer(const std::string name);
 
 	/// <summary>
+	/// オブジェクトたちを取得
+	/// </summary>
+	/// <returns></returns>
+	std::list<ObjectPair>* GetObjects() { return &objects_; }
+
+	/// <summary>
 	/// コライダー登録
 	/// </summary>
 	/// <param name="collisionManager">衝突マネージャー</param>
@@ -83,9 +94,6 @@ public: //virtualではない
 	IObject* AddObject(LevelData::ObjectData& data);
 
 protected:
-
-	// 名前とオブジェクトデータのペア
-	using ObjectPair = std::pair<std::string, std::unique_ptr<IObject>>;
 
 	// オブジェクト
 	std::list<ObjectPair> objects_{};
