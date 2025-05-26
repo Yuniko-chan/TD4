@@ -1,0 +1,96 @@
+{
+    "name": "scene",
+    "objects": [
+      {
+        "type": "MESH",
+        "name": "course_test",
+        "transform": {
+          "translation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            -0.0,
+            0.0,
+            0.0
+          ],
+          "scaling": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "fileName": "Resources/Course/curseExporterTest",
+        "className": "Course"
+      },
+        {
+            "type": "EMPTY",
+            "name": "wall.001",
+            "transform": {
+                "translation": [
+                    2.5553743839263916,
+                    19.391233444213867,
+                    0.07167989015579224
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    41.599998474121094,
+                    7.21999979019165
+                ]
+            }
+        },
+        {
+            "type": "EMPTY",
+            "name": "wall",
+            "transform": {
+                "translation": [
+                    -3.4485504627227783,
+                    19.391233444213867,
+                    0.07167989015579224
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    41.599998474121094,
+                    7.21999979019165
+                ]
+            }
+        }
+    ]
+}

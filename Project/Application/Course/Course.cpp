@@ -2,10 +2,12 @@
 #include "CoursePolygonType.h"
 #include "../../Engine/2D/ImguiManager.h"
 #include "../../Engine/base/Texture/TextureManager.h"
+#include "../../Engine/3D/Model/ModelManager.h"
+#include "CourseLoader.h"
 
 void Course::Initialize(LevelData::MeshData* data)
 {
-
+	ModelManager::GetInstance()->AppendModel(CourseLoader::LoadCourseFile(data->directoryPath, data->flieName, *(GetCoursePolygonsAdress())));
 	// メッシュオブジェクト
 	MeshObject::Initialize(data);
 

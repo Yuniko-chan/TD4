@@ -1,10 +1,13 @@
 #pragma once
+#include "../../Utility/Common/OwnerComponent.h"
 
 class VehicleCore;
 
-class VehicleStatus
+class VehicleStatus : public OwnerComponent<VehicleCore>
 {
 public:
+	void Update();
+
 	/// <summary>
 	/// ImGui
 	/// </summary>

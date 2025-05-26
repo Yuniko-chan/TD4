@@ -44,6 +44,14 @@ void ObjectFactory::Initialize(BaseObjectManager* objectManager)
 	createObjectFunctions_[kCreateObjectIndexCarArmorFrame].first = kCreateObjectNames_[kCreateObjectIndexCarArmorFrame];
 	createObjectFunctions_[kCreateObjectIndexCarArmorFrame].second = ObjectCreate::CreateObjectArmorFrameParts;
 
+	//壁
+	createObjectFunctions_[kCreateObjectIndexWall].first = kCreateObjectNames_[kCreateObjectIndexWall];
+	createObjectFunctions_[kCreateObjectIndexWall].second = ObjectCreate::CreateObjectWall;
+
+	//コース
+	createObjectFunctions_[kCreateObjectIndexCourse].first = kCreateObjectNames_[kCreateObjectIndexCourse];
+	createObjectFunctions_[kCreateObjectIndexCourse].second = ObjectCreate::CreateObjectCourse;
+
 	// 地形
 	createObjectFunctions_[kCreateObjectIndexTerrain].first = kCreateObjectNames_[kCreateObjectIndexTerrain];
 	createObjectFunctions_[kCreateObjectIndexTerrain].second = ObjectCreate::CreateObjectTerrain;

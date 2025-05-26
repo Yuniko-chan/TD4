@@ -27,11 +27,14 @@ class Minigun;
 class MinigunBullet;
 class Obstacle;
 
+//フィールド
+class Wall;
+
 // variantでまとめる
 using ColliderParentObject = std::variant<ParentNullObject*, Player*, VehicleCore*, 
 	ConicalPendulumIronBall*, PendulumIronBall*, Cannon*, CannonBall*, CannonExplosion*, 
 	Minigun*, MinigunBullet*, Obstacle*, TerrainObject*
-	, TireParts*,	ArmorFrameParts*, EngineParts*>;
+	, TireParts*, ArmorFrameParts*, EngineParts*, Wall* > ;
 
 /// <summary>
 /// 親がないもの用

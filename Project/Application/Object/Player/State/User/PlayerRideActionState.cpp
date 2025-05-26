@@ -8,9 +8,10 @@
 void PlayerRideActionState::Initialize()
 {
 	startPoint_ = player_->GetWorldTransformAdress()->GetWorldPosition();
-	startRotate_ = player_->GetWorldTransformAdress()->transform_.rotate;
-
-	animTimer_.Start(GlobalVariables::GetInstance()->GetFloatValue("Player", "RideActionFrame"));
+	startRotate_ = player_->GetWorldTransformAdress()->direction_;
+	float frame = GlobalVariables::GetInstance()->GetFloatValue("Player", "RideActionFrame");
+	animTimer_.Start(frame);
+	player_->GetCamera()->ChangeRequest(FollowCamera::AngleMode::kVehicle, frame);
 }
 
 void PlayerRideActionState::Update()
@@ -23,8 +24,8 @@ void PlayerRideActionState::Update()
 			player_->GetCoreTransform()->GetWorldPosition() + offset,
 			animTimer_.GetElapsedFrame(), height);
 
-		Vector3 endRotate = player_->GetCoreTransform()->transform_.rotate;
-		player_->GetWorldTransformAdress()->transform_.rotate = Ease::Easing(Ease::EaseName::Lerp,
+		Vector3 endRotate = player_->GetCoreTransform()->direction_;
+		player_->GetWorldTransformAdress()->direction_ = Ease::Easing(Ease::EaseName::Lerp,
 			startRotate_, endRotate, animTimer_.GetElapsedFrame());
 	}
 	if (animTimer_.IsEnd()) {

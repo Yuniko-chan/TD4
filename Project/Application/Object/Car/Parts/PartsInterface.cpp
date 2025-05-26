@@ -11,6 +11,8 @@ void Car::IParts::Initialize(LevelData::MeshData* data)
 	// 基底
 	MeshObject::Initialize(data);
 	material_->SetEnableLighting(HalfLambert);
+	// 方向フラグ
+	worldTransform_.usedDirection_ = true;
 
 	// 衝突マスク
 	collisionAttribute_ = kCollisionAttributeVehicleParts_;
@@ -26,15 +28,8 @@ void Car::IParts::Update()
 	MeshObject::Update();
 	// 子専用更新（重力の適応）
 	ChildUpdate();
-	// 一周したときの対策
-	const float kOnelap = 6.24f;
-	if (worldTransform_.transform_.rotate.y >= kOnelap) {
-		worldTransform_.transform_.rotate.y -= kOnelap;
-	}
-	else if (worldTransform_.transform_.rotate.y <= -kOnelap) {
-		worldTransform_.transform_.rotate.y += kOnelap;
-	}
 	// トランスフォームの更新
+	worldTransform_.direction_ = Vector3::Normalize(worldTransform_.direction_);
 	worldTransform_.UpdateMatrix();
 	// コライダーの更新
 	ColliderUpdate();
@@ -77,14 +72,9 @@ void Car::IParts::SettingParent(VehiclePartsManager* partsManager)
 		Car::IParts* parts = partsManager->FindNearCoreParts(worldTransform_.GetWorldPosition());
 		// ポインタの設定
 		parentCore_ = static_cast<VehicleCore*>(parts);
-
+		// 親に設定
 		parentCore_->GetConstructionSystem()->Attach(this);
-
-		//worldTransform_.SetParent(parentCore_->GetWorldTransformAdress());
-		//// 子として登録
-		//parentCore_->AddChild(this);
 	}
-
 }
 
 void Car::IParts::ImGuiTransform(const float& value)
@@ -98,6 +88,13 @@ void Car::IParts::ImGuiTransform(const float& value)
 	// スケール
 	name = name_ + ":Scale";
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, value);
+	// 方向
+	name = name_ + ":Direction";
+	ImGui::DragFloat3(name.c_str(), &worldTransform_.direction_.x, value);
+	worldTransform_.direction_ = Vector3::Normalize(worldTransform_.direction_);
+	// 方向ベクトルを使用するか
+	name = name_ + ":UseDirection";
+	ImGui::Checkbox(name.c_str(), &worldTransform_.usedDirection_);
 
 	ImGui::Separator();
 	// 接続処理確認
@@ -150,16 +147,13 @@ void Car::IParts::ColliderUpdate()
 
 void Car::IParts::ChildUpdate()
 {
-	//// 親ポインタがある状態
-	//if (parentCore_) {
-	//}
-	// 親子関係であれば早期
+	// 親があれば
 	if (IsParent()) {
 		// 親がある場合コネクターの更新を入れる
 		connector_->Update();
 		return;
 	}
-	// 仮の地面処理
+	// 仮の地面処理（後で消す）
 	if (worldTransform_.GetWorldPosition().y <= 0.0f) {
 		worldTransform_.transform_.translate.y = 0.0f;
 		return;
@@ -167,8 +161,3 @@ void Car::IParts::ChildUpdate()
 	// 重力
 	worldTransform_.transform_.translate += Gravity::Execute();
 }
-
-//void Car::IParts::Draw(BaseCamera& camera)
-//{
-//	MeshObject::Draw(camera);
-//}

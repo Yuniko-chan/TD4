@@ -61,13 +61,29 @@ void VehicleCore::Update()
 void VehicleCore::ImGuiDrawParts()
 {
 	ImGui::SeparatorText(className_.c_str());
-	static Vector3 angle = Vector3(worldTransform_.direction_);
+	if (ImGui::TreeNode("Status"))
+	{
+		status_.ImGuiDraw();
 
-	if (ImGui::Button("Rot")) {
-		float rad = TransformHelper::CalculateXZVectorToRotateRadian(worldTransform_.direction_, Vector3(1.0f, 0.0f, 0.0f));
-		angle = TransformHelper::XZRotateDirection(worldTransform_.direction_, rad);
+		int armor = constructionSystem_->GetStatus().armor;
+		int tire = constructionSystem_->GetStatus().tire;
+		int en = constructionSystem_->GetStatus().engine;
+		ImGui::InputInt("ArmorC", &armor);
+		ImGui::InputInt("TireC", &tire);
+		ImGui::InputInt("EngineC", &en);
+		int st = constructionSystem_->GetDirections()->backForward;
+		ImGui::InputInt("Back", &st);
+		st = constructionSystem_->GetDirections()->forward;
+		ImGui::InputInt("Forward", &st);
+		st = constructionSystem_->GetDirections()->left;
+		ImGui::InputInt("left", &st);
+		st = constructionSystem_->GetDirections()->right;
+		ImGui::InputInt("right", &st);
+
+
+		ImGui::TreePop();
 	}
-	ImGui::DragFloat3("Angle", &angle.x);
+
 
 	// トランスフォームに移動
 	ImGuiTransform(0.1f);
@@ -108,11 +124,6 @@ void VehicleCore::ImGuiDrawParts()
 		ImGui::TreePop();
 	}
 
-	if (ImGui::TreeNode("Status"))
-	{
-		status_.ImGuiDraw();
-		ImGui::TreePop();
-	}
 
 	ImGui::Text("\n");
 }

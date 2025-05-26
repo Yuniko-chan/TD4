@@ -23,12 +23,12 @@ void GameKeyconfig::Initialize()
 	playerKeyConfig_.binds.brake = DIK_DOWNARROW;
 
 	//---パッド向けキーバインド---//
-	playerKeyConfig_.padBinds.jumpAction = XINPUT_GAMEPAD_A;
-	playerKeyConfig_.padBinds.rideAction = XINPUT_GAMEPAD_B;
-	playerKeyConfig_.padBinds.interactAction = XINPUT_GAMEPAD_RIGHT_SHOULDER;
+	playerKeyConfig_.padBinds.jumpAction = JoystickButton::kJoystickButtonY;
+	playerKeyConfig_.padBinds.rideAction = JoystickButton::kJoystickButtonX;
+	playerKeyConfig_.padBinds.interactAction = JoystickButton::kJoystickButtonLB;
 
-	playerKeyConfig_.padBinds.accel = XINPUT_GAMEPAD_X;
-	playerKeyConfig_.padBinds.brake = XINPUT_GAMEPAD_Y;
+	playerKeyConfig_.padBinds.accel = JoystickButton::kJoystickButtonA;
+	playerKeyConfig_.padBinds.brake = JoystickButton::kJoystickButtonB;
 
 	// 入力
 	input_ = Input::GetInstance();
@@ -42,15 +42,20 @@ void GameKeyconfig::Update()
 
 	// PADの入力
 	if (input_->GetJoystickConnected()) {
+		// スティック
 		playerKeyConfig_.leftStick = input_->GetLeftAnalogstick();
+		playerKeyConfig_.leftStick.y *= -1.0f;
 		playerKeyConfig_.rightStick = input_->GetRightAnalogstick();
 
+		// 単押し
 		playerKeyConfig_.configs.jumpAction = input_->TriggerJoystick((uint8_t)playerKeyConfig_.padBinds.jumpAction);
 		playerKeyConfig_.configs.rideAction = input_->TriggerJoystick((uint8_t)playerKeyConfig_.padBinds.rideAction);
 		playerKeyConfig_.configs.interactAction = input_->TriggerJoystick((uint8_t)playerKeyConfig_.padBinds.interactAction);
-		playerKeyConfig_.configs.accel = input_->TriggerJoystick((uint8_t)playerKeyConfig_.padBinds.accel);
-		playerKeyConfig_.configs.brake = input_->TriggerJoystick((uint8_t)playerKeyConfig_.padBinds.brake);
-
+		
+		// 長押し
+		playerKeyConfig_.configs.accel = input_->PushJoystick((uint8_t)playerKeyConfig_.padBinds.accel);
+		playerKeyConfig_.configs.brake = input_->PushJoystick((uint8_t)playerKeyConfig_.padBinds.brake);
+		
 	}
 	// KEYBOARDの入力
 	else {

@@ -64,7 +64,8 @@ void VehicleConnector::ReleaseParent(Car::IParts* part)
 		}
 		// 子がいない為切り替え先がないため解除
 		else {
-			owner_->ReleaseParent();
+			owner_->SetHP(0);
+			//owner_->ReleaseParent();
 		}
 	}
 
@@ -123,6 +124,7 @@ void VehicleConnector::OrganizeChildren()
 
 	}
 	else {
-		owner_->ReleaseParent();
+		owner_->SetHP(0);
+		//owner_->ReleaseParent();
 	}
 }
