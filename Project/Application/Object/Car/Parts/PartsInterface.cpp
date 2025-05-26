@@ -105,8 +105,6 @@ void Car::IParts::ImGuiTransform(const float& value)
 			ImGui::TreePop();
 		}
 	}
-
-	ImGuiDrawChildParts();
 }
 
 void Car::IParts::ImGuiDrawChildParts()
@@ -115,14 +113,14 @@ void Car::IParts::ImGuiDrawChildParts()
 		return;
 	}
 	std::string name = name_ + ":ChildData";
+	name = name_ + ":Release";
+	// 解除
+	if (ImGui::Button(name.c_str())) {
+		//isDelete_ = true;
+		hitPoint_ = 0;
+		//ReleaseParent();
+	}
 	if (ImGui::TreeNode(name.c_str())) {
-		name = name_ + ":Release";
-		// 解除
-		if (ImGui::Button(name.c_str())) {
-			//isDelete_ = true;
-			hitPoint_ = 0;
-			//ReleaseParent();
-		}
 		name = name_ + ":SetUp";
 		// 設定
 		if (ImGui::Button(name.c_str())) {

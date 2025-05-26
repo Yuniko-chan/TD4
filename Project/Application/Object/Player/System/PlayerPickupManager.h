@@ -1,6 +1,9 @@
 #pragma once
 #include "../../../Engine/Collision/BaseCollisionManager.h"
 #include "../../Utility/Common/OwnerComponent.h"
+#include "../../Utility/Timer/FrameTimer.h"
+
+#include <optional>
 
 // パーツの基底（全ての基）
 namespace Car
@@ -26,7 +29,10 @@ class PlayerPickupManager : public OwnerComponent<Player>
 {
 public:
 	PlayerPickupManager();
-
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update();
 	/// <summary>
 	/// ImGui
 	/// </summary>
@@ -59,6 +65,16 @@ private:
 	/// </summary>
 	void CatchAction();
 
+	/// <summary>
+	/// 拾うのに成功処理
+	/// </summary>
+	/// <param name="parts"></param>
+	void OnCatchSuccess(Car::IParts* parts);
+	/// <summary>
+	/// 拾うのに失敗処理
+	/// </summary>
+	void OnCatchFailure();
+
 private:
 	// パーツのマネージャ
 	VehiclePartsManager* partsManager_ = nullptr;
@@ -68,4 +84,6 @@ private:
 	std::unique_ptr<ColliderShape> collider_;
 	// 近いパーツの名前
 	std::string nearPartsName_ = "None";
+	// 間隔タイマー
+	std::optional<FrameTimer> interactDuration_;
 };

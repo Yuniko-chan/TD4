@@ -168,6 +168,9 @@ void Player::SystemUpdate()
 	// 前方管理
 	frontChecker_.Update();
 
+	// 拾うマネージャ
+	pickUpManager_->Update();
+
 	// アニメーション
 	playerAnimation_->Update(0);
 

@@ -7,6 +7,11 @@
 class FrameTimer
 {
 public:
+	FrameTimer();
+	FrameTimer(float endFrame);
+	~FrameTimer() = default;
+
+public:
 	/// <summary>
 	/// 開始
 	/// </summary>
