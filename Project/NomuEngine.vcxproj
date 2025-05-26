@@ -220,6 +220,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Utility\Calc\MotionHelper.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\TransformHelper.cpp" />
     <ClCompile Include="Application\Object\Utility\Timer\FrameTimer.cpp" />
+    <ClCompile Include="Application\Object\Wall\Wall.cpp" />
     <ClCompile Include="Application\OutGameObject\ClearBackGround\ClearBackGround.cpp" />
     <ClCompile Include="Application\OutGameObject\Curtain\Curtain.cpp" />
     <ClCompile Include="Application\OutGameObject\TitleBackGround\TitleBackGround.cpp" />
@@ -469,6 +470,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Utility\GlobalParameterStructs.h" />
     <ClInclude Include="Application\Object\Utility\Math\Vector2Int.h" />
     <ClInclude Include="Application\Object\Utility\Timer\FrameTimer.h" />
+    <ClInclude Include="Application\Object\Wall\Wall.h" />
     <ClInclude Include="Application\OutGameObject\ClearBackGround\ClearBackGround.h" />
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />
     <ClInclude Include="Application\OutGameObject\TitleBackGround\TitleBackGround.h" />

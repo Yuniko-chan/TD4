@@ -11,5 +11,7 @@ enum LevelIndex {
 	kLevelIndexGenerationPattern_00, // 生成パターン_00
 	kLevelIndexGenerationPattern_01, // 生成パターン_01
 
+	kLevelIndexDebug,//テスト
+
 	kLevelIndexOfCount // 数を数える用
 };

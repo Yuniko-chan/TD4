@@ -14,5 +14,7 @@ const std::array<std::string, CreateObjectIndex::kCreateObjectIndexOfCount> kCre
 	"EngineParts",
 	"TireParts",
 	"ArmorFrameParts",
+	"Wall",
+	"Course",
 	"TerrainObject",
 };
