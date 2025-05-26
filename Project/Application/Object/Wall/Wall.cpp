@@ -12,6 +12,9 @@ Wall::~Wall()
 
 void Wall::Initialize(LevelData::MeshData* data)
 {
+#ifdef _DEBUG
+    isVisible_ = true;
+#endif // _DEBUG
 
     
     // 初期化
