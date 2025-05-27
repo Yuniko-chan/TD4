@@ -120,6 +120,7 @@ void Car::IParts::ImGuiDrawChildParts()
 		hitPoint_ = 0;
 		//ReleaseParent();
 	}
+	name = name_ + ":ChildData";
 	if (ImGui::TreeNode(name.c_str())) {
 		name = name_ + ":SetUp";
 		// 設定

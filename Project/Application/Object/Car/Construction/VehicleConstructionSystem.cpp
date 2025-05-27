@@ -3,6 +3,8 @@
 #include "../Parts/System/PartsOffsetCalculator.h"
 #include "../../Utility/Calc/TransformHelper.h"
 
+#include "../../../Engine/2D/ImguiManager.h"
+
 void VehicleConstructionSystem::Initialize(VehicleCore* core)
 {
 	core_ = core;
@@ -38,6 +40,33 @@ void VehicleConstructionSystem::Update()
 		}
 	}
 
+}
+
+void VehicleConstructionSystem::ImGuiDraw()
+{
+	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin();
+		it != partsMapping_.end(); ++it) {
+		ImGui::SeparatorText((*it).second->GetName().c_str());
+		std::string name = (*it).second->GetName() + "Data";
+		if (ImGui::TreeNode(name.c_str())) {
+			// 座標表示
+			name = (*it).second->GetName() + "Translate";
+			EulerTransform t = (*it).second->GetWorldTransformAdress()->transform_;
+			ImGui::DragFloat3(name.c_str(), &t.translate.x, 0.01f);
+			// 配列キー
+			name = (*it).second->GetName() + "Key";
+			Vector2Int key = (*it).first;
+			ImGui::InputInt2(name.c_str(), &key.x);
+
+			ImGui::TreePop();
+		}
+
+		// 解除ボタン
+		name = (*it).second->GetName() + "Release";
+		if (ImGui::Button(name.c_str())) {
+			(*it).second->SetHP(0);
+		}
+	}
 }
 
 void VehicleConstructionSystem::Attach(Car::IParts* parts)
@@ -108,8 +137,6 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 	// 計算器
 	PartsOffsetCalculator calculator;
 
-	// 親の設定
-	core_->AddChild(parts);
 	// HPのリセット処理
 	parts->SetHP(1);
 	// 親子関係

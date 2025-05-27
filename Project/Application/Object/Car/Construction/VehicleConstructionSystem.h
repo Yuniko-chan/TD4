@@ -40,6 +40,12 @@ public:
 	/// 更新
 	/// </summary>
 	void Update();
+
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw();
+
 	/// <summary>
 	/// 方向判断まで
 	/// </summary>
@@ -52,7 +58,6 @@ private:
 	/// </summary>
 	/// <param name="parts"></param>
 	void Attach(Car::IParts* parts, const Vector2Int& key);
-
 	/// <summary>
 	/// 検索
 	/// </summary>

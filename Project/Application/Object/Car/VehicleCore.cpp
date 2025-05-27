@@ -81,47 +81,36 @@ void VehicleCore::ImGuiDrawParts()
 
 		ImGui::TreePop();
 	}
-
-
+	ImGui::BeginChild("Tab", ImVec2(400, 300), true, ImGuiWindowFlags_None);
 	// トランスフォームに移動
 	ImGuiTransform(0.1f);
+
+	ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 0.75f));
+	ImGui::BeginChild("SystemBlock", ImVec2(300, 200), true);
 	if (ImGui::BeginTabBar("System")) {
 		// ステート
 		if (ImGui::BeginTabItem("Engine")) {
 			this->driveSystem_->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
+		// パーツ管理
+		if (ImGui::BeginTabItem("パーツ管理")) {
+			constructionSystem_->ImGuiDraw();
+
+			ImGui::EndTabItem();
+		}
 
 		ImGui::EndTabBar();
 	}
+	ImGui::EndChild();
+	ImGui::PopStyleColor();
+
+	ImGui::EndChild();
+
 
 	if (ImGui::Button("Release")) {
 		pairPlayer_ = nullptr;
 	}
-
-	if (ImGui::TreeNode("Childs")) {
-		static float sAddValue = 2.0f;
-		ImGui::DragFloat("StaticAddValue", &sAddValue, 0.01f);
-		for (std::list<Car::IParts*>::iterator it = partsLists_.begin();
-			it != partsLists_.end(); ++it) {
-			ImGui::SeparatorText((*it)->GetName().c_str());
-			std::string name = (*it)->GetName() + "Translate";
-			ImGui::DragFloat3(name.c_str(), &(*it)->GetWorldTransformAdress()->transform_.translate.x, 0.1f);
-			if (ImGui::Button("AddX")) {
-				(*it)->GetWorldTransformAdress()->transform_.translate.x += sAddValue;
-			}
-			if (ImGui::Button("AddY")) {
-				(*it)->GetWorldTransformAdress()->transform_.translate.y += sAddValue;
-			}
-			if (ImGui::Button("AddZ")) {
-				(*it)->GetWorldTransformAdress()->transform_.translate.z += sAddValue;
-			}
-			ImGui::Text("\n");
-		}
-
-		ImGui::TreePop();
-	}
-
 
 	ImGui::Text("\n");
 }

@@ -48,12 +48,6 @@ public: // メンバ関数
     /// <param name="collisionData"></param>
     void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
-    /// <summary>
-    /// 子の追加
-    /// </summary>
-    /// <param name="child"></param>
-    void AddChild(Car::IParts* child) { partsLists_.push_back(child); }
-
 public: // アクセッサ
     //---ゲッター---//
     // パーツ構築システム
@@ -66,9 +60,6 @@ public: // アクセッサ
     void SetPlayer(Player* player) { pairPlayer_ = player; }
 
 private:
-    // パーツのリスト
-    std::list<Car::IParts*> partsLists_;
-
     // パーツ構築システム
     std::unique_ptr<VehicleConstructionSystem> constructionSystem_;
     // 運転関係
