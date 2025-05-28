@@ -28,6 +28,7 @@ void VehicleHandling::PreUpdate()
 	if (IsInput() || consecutiveReceptions_ != 0) {
 		++inputCounter_;
 	}
+	// 間隔
 	const int duration = 6;
 
 	// 増加
@@ -56,7 +57,7 @@ void VehicleHandling::PreUpdate()
 	consecutiveReceptions_ = (int16_t)std::clamp((int)consecutiveReceptions_, -kMaxCount, kMaxCount);
 
 	float t = (float)std::abs((int)consecutiveReceptions_) / kMaxCount;
-	const float limitDirect = 0.75f;
+	const float limitDirect = 1.0f;	// 最大角度（-1~1,0,1):(-0.5|0.5,0,0.5)
 	// プラス方向（右
 	if (consecutiveReceptions_ > 0) {
 		steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, 0.0f, limitDirect, t);
@@ -75,7 +76,7 @@ void VehicleHandling::PreUpdate()
 
 }
 
-void VehicleHandling::PostUpdate(const Vector3& velocity)
+void VehicleHandling::PostUpdate(const Vector3& velocity, float leftWheel, float rightWheel)
 {
 	// 速度が無く動いていなかったら
 	float length = Vector3::Length(velocity);
@@ -90,11 +91,26 @@ void VehicleHandling::PostUpdate(const Vector3& velocity)
 
 		// 右
 		if (steerDirection_.x > 0) {
+			// タイヤが左寄りか
+			if (leftWheel > rightWheel) {
+				
+			}
+			// 右寄りか
+			else if (leftWheel < rightWheel) {
 
+			}
+			// 
+			else {
+
+			}
 		}
 		// 左
 		else if (steerDirection_.x < 0) {
 
+		}
+
+		if (leftWheel == 0 && rightWheel == 0 && (std::fabsf(steerDirection_.x) != 0.0f)) {
+			steerDirection_.x *= 0.1f;
 		}
 
 		float radian = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, steerDirection_);

@@ -30,7 +30,7 @@ void DriveSystem::Update()
 
 	//---角度の設定---//
 	// ハンドル操作の更新（旋回の適応など）
-	handling_->PostUpdate(velocity_);
+	handling_->PostUpdate(velocity_, (float)status_->GetLeftWheel(), (float)status_->GetRightWheel());
 	// 角度
 	float eulerY = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, Vector3::FrontVector());
 	

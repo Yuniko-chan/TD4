@@ -21,7 +21,7 @@ public:
 	/// 後の更新ｎ
 	/// </summary>
 	/// <param name="velocity"></param>
-	void PostUpdate(const Vector3& velocity);
+	void PostUpdate(const Vector3& velocity, float leftWheel, float rightWheel);
 	/// <summary>
 	/// ImGui
 	/// </summary>
