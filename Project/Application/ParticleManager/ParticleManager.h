@@ -14,6 +14,7 @@ public:
 	// パーティクル一覧
 	enum ParticleIndex {
 		RunDust,
+		GPU,
 		kUIIndexOfCount
 	};
 
@@ -53,15 +54,16 @@ public:
 		// DirectXCommon
 		DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
 
-		particles_[0].reset(result);
-		particles_[0]->Initialize(
+		particles_[number].reset(result);
+		particles_[number]->Initialize(
 			dxCommon_->GetDevice(),
 			dxCommon_->GetCommadListLoad(),
 			GraphicsPipelineState::sRootSignature_[GraphicsPipelineState::kPipelineStateIndexGPUParticle].Get(),
 			GraphicsPipelineState::sPipelineState_[GraphicsPipelineState::kPipelineStateIndexGPUParticle].Get(),result->GetName().c_str());
-		particles_[0]->SetEmitter(kEmitter,true);
-
+		particles_[number]->SetEmitter(kEmitter,true);
+		number++;
 	}
 private:
 	std::array<std::unique_ptr<GPUParticle>, ParticleIndex::kUIIndexOfCount> particles_;
+	int number = 0;
 };
