@@ -19,6 +19,19 @@ void ParticleManager::Draw(BaseCamera& camera)
 	}
 }
 
+void ParticleManager::StopEmission(std::string particleName)
+{
+	// キーが存在するかを確認してからアクセスする
+	auto it = particleInfo_.find(particleName);
+	if (it != particleInfo_.end()) {
+
+		particles_[particleInfo_[particleName].indexNumber]->SetEmitter();
+	}
+	else {
+		//std::cout << particleName << " は見つかりませんでした。" << std::endl;
+	}
+}
+
 void ParticleManager::ImGuiDraw()
 {
 

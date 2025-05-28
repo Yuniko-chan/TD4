@@ -13,17 +13,4 @@ void RunDustParticle::Initialize(
 
 	// 初期化
 	GPUParticle::Initialize(device, commandList, rootSignature, pipelineState, name);
-
-	// エミッタ設定
-	const EmitterCS kEmitter =
-	{
-			Vector3{0.0f, 0.0f, 0.0f}, // 位置
-			1.0f, // 射出半径
-			10, // 射出数
-			0.1f, // 射出間隔
-			0.0f, // 射出間隔調整時間
-			true // 射出許可
-	};
-	SetEmitter(kEmitter);
-
 }

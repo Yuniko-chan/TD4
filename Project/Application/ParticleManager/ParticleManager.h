@@ -3,9 +3,12 @@
 #include "../../../Engine/Scene/BaseScene/BaseScene.h"
 
 #include "../Particle/RunDustParticle/RunDustParticle.h"
-
 class ParticleManager {
 public:
+	struct ParticleData {
+		int indexNumber = 0;
+		bool active = true;
+	};
 	// テクスチャ一覧
 	enum TextureIndex {
 		kTextureIndexOfCount
@@ -34,6 +37,8 @@ public:
 	/// </summary>
 	void Draw(BaseCamera& camera);
 
+	void StopEmission(std::string particleName);
+
 	/// <summary>
 	/// Imgui描画
 	/// </summary>
@@ -55,21 +60,21 @@ public:
 		// DirectXCommon
 		DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
 
-		indexList_[particleName] = number;
+		particleInfo_[particleName].indexNumber = number;
 
-		particles_[indexList_[particleName]].reset(result);
-		particles_[indexList_[particleName]]->Initialize(
+		particles_[particleInfo_[particleName].indexNumber].reset(result);
+		particles_[particleInfo_[particleName].indexNumber]->Initialize(
 			dxCommon_->GetDevice(),
 			dxCommon_->GetCommadListLoad(),
 			GraphicsPipelineState::sRootSignature_[GraphicsPipelineState::kPipelineStateIndexGPUParticle].Get(),
 			GraphicsPipelineState::sPipelineState_[GraphicsPipelineState::kPipelineStateIndexGPUParticle].Get(), particleName);
-		particles_[indexList_[particleName]]->SetEmitter(kEmitter,true);
+		particles_[particleInfo_[particleName].indexNumber]->SetEmitter(kEmitter,true);
 
 		number++;
 	}
 private:
 	std::array<std::unique_ptr<GPUParticle>, ParticleIndex::kUIIndexOfCount> particles_;
 
-	std::unordered_map<std::string, int> indexList_;
+	std::unordered_map<std::string, ParticleData> particleInfo_;
 	int number = 0;
 };
