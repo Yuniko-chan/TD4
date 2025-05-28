@@ -74,10 +74,17 @@ void GameScene::Initialize() {
 	postEffectSystem_->Initialize();
 	postEffectSystem_->SetRenderTargetTexture(renderTargetTexture_);
 
+	// コース
+	Course* course = static_cast<Course*>(objectManager_->GetObjectPointer("course_test"));
+
 	// コース衝突システム
 	courseCollisionSystem_ = std::make_unique<CourseCollisionSystem>();
 	courseCollisionSystem_->Initialize();
-	courseCollisionSystem_->SetCourse(static_cast<Course*>(objectManager_->GetObjectPointer("course_test")));
+	courseCollisionSystem_->SetCourse(course);
+
+	// コースデバッグ描画
+	courseDebugDraw_ = std::make_unique<CourseDebugDraw>();
+	courseDebugDraw_->Initialize(course);
 
 	// モデル描画
 	ModelDraw::PreDrawParameters preDrawParameters;
@@ -132,6 +139,9 @@ void GameScene::Update() {
 
 	courseCollisionSystem_->ObjectRegistration(objectManager_.get());
 	courseCollisionSystem_->Execute();
+
+	// コースデバッグ描画
+	courseDebugDraw_->DrawMap(drawLine_);
 
 	// デバッグカメラ
 	DebugCameraUpdate();
@@ -230,6 +240,8 @@ void GameScene::ImguiDraw(){
 	PostEffect::GetInstance()->ImGuiDraw();
 
 	uiManager_->ImGuiDraw();
+
+	courseDebugDraw_->ImGuiDraw();
 
 }
 
