@@ -1,6 +1,6 @@
 #pragma once
 #include "../../../Engine/Math/Vector/Vector3.h"
-#include "../../../Utility/Common/OwnerComponent.h"
+#include "../../Utility/Common/OwnerComponent.h"
 #include <cstdint>
 
 class VehicleCore;

@@ -5,9 +5,9 @@
 
 #include "../../../Engine/2D/ImguiManager.h"
 
-void VehicleConstructionSystem::Initialize(VehicleCore* core)
+void VehicleConstructionSystem::Initialize()
 {
-	core_ = core;
+
 }
 
 void VehicleConstructionSystem::Update()
@@ -60,9 +60,9 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts)
 	// 距離
 	float distance = TransformHelper::Vector3Distance(
 		parts->GetWorldTransformAdress()->GetWorldPosition(),
-		core_->GetWorldTransformAdress()->GetWorldPosition());
+		owner_->GetWorldTransformAdress()->GetWorldPosition());
 	// 対象セット
-	std::pair<Vector2Int, Car::IParts*> futureParts = { Vector2Int(0,0),core_ };
+	std::pair<Vector2Int, Car::IParts*> futureParts = { Vector2Int(0,0),owner_ };
 
 	// 既に付いているパーツの検索
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin();
@@ -126,7 +126,7 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 	// HPのリセット処理
 	parts->SetHP(1);
 	// 親子関係
-	parts->GetWorldTransformAdress()->SetParent(core_->GetWorldTransformAdress());
+	parts->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
 	// オフセット
 	parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(key);
 	// 深度
@@ -138,7 +138,7 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 	// マッピング
 	RegistParts(key, parts);
 	if (parts->GetConnector()->GetDepth() <= 1) {
-		parts->GetConnector()->AddParents(core_);
+		parts->GetConnector()->AddParents(owner_);
 	}
 
 }

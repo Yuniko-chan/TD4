@@ -41,13 +41,15 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 
 	// パーツ構築クラス
 	constructionSystem_ = std::make_unique<VehicleConstructionSystem>();
-	constructionSystem_->Initialize(this);
+	constructionSystem_->SetOwner(this);
+	constructionSystem_->Initialize();
 	constructionSystem_->SetStatusManager(statusSystem_.get());
 
 	// 運転クラス
 	driveSystem_ = std::make_unique<DriveSystem>();
 	driveSystem_->SetOwner(this);
 	driveSystem_->Initialize();
+	driveSystem_->SetStatusManager(statusSystem_.get());
 }
 
 void VehicleCore::Update()

@@ -1,10 +1,11 @@
 #pragma once
 #include "../../../Engine/3D/Transform/WorldTransform.h"
-#include "../../../Utility/Common/OwnerComponent.h"
-#include "../../System/VehicleSystems.h"
+#include "../../Utility/Common/OwnerComponent.h"
+#include "../System/VehicleSystems.h"
 #include <memory>
 
 class VehicleCore;
+class VehicleStatus;
 
 class DriveSystem : public OwnerComponent<VehicleCore>
 {
@@ -42,6 +43,16 @@ private:
 	std::unique_ptr<VehicleEngine> driveEngine_;
 	// ハンドルシステム
 	std::unique_ptr<VehicleHandling> handling_;
+	// ステータス情報
+	VehicleStatus* status_ = nullptr;
 	// 速度ベクトル
 	Vector3 velocity_ = {};
+
+public:	// アクセッサ
+	//---セッター---//
+	void SetStatusManager(VehicleStatus* status) { status_ = status; }
+
+	//---ゲッター---//
+
+
 };

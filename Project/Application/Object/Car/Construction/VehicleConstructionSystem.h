@@ -14,14 +14,14 @@ class VehicleStatus;
 /// <summary>
 /// 車両構築システム（コア用）（パーツ管理など）
 /// </summary>
-class VehicleConstructionSystem : public OwnerComponent<Car::IParts>
+class VehicleConstructionSystem : public OwnerComponent<VehicleCore>
 {
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	/// <param name="core"></param>
-	void Initialize(VehicleCore* core);
+	void Initialize();
 
 	/// <summary>
 	/// 更新
@@ -65,8 +65,6 @@ private:
 	void UnRegistParts(const Vector2Int& id, Car::IParts* parts);
 
 private:
-	// システム用のコア
-	VehicleCore* core_ = nullptr;
 	// ステータス
 	VehicleStatus* status_ = nullptr;
 	// パーツのリスト
