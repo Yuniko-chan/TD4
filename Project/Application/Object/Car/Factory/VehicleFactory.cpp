@@ -7,7 +7,7 @@ Car::IParts* VehicleFactory::CreateParts(uint32_t number)
 	switch (number)
 	{
 	case kEmpty:
-		newParts = new EmptyParts();
+
 		break;
 
 	case kEngine:
@@ -15,11 +15,11 @@ Car::IParts* VehicleFactory::CreateParts(uint32_t number)
 		break;
 
 	case kFrame:
-
+		newParts = new ArmorFrameParts();
 		break;
 
 	case kTire:
-
+		newParts = new TireParts();
 		break;
 
 	default:

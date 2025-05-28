@@ -5,7 +5,7 @@
 
 void PlayerInVehicleState::Initialize()
 {
-	player_->SetParent();
+	player_->SettingParent();
 	// 回転角初期化
 	player_->GetWorldTransformAdress()->transform_.rotate = {};
 }

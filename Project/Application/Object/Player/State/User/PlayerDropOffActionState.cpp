@@ -6,7 +6,9 @@
 void PlayerDropOffActionState::Initialize()
 {
 	// アニメーション開始
-	animationTimer_.Start(GlobalVariables::GetInstance()->GetFloatValue("Player", "DropOffActionFrame"));
+	float frame = GlobalVariables::GetInstance()->GetFloatValue("Player", "DropOffActionFrame");
+	animationTimer_.Start(frame);
+	player_->GetCamera()->ChangeRequest(FollowCamera::AngleMode::kPlayer, frame);
 	// 開始点設定
 	easePoint_.first = player_->GetWorldTransformAdress()->GetWorldPosition();
 	Vector3 offset = GlobalVariables::GetInstance()->GetVector3Value("Player", "DropOffOffset");

@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Engine/Object/MeshObject.h"
 #include "../../../Engine/Animation/Animation.h"
+#include "../../Camera/FollowCamera.h"
 
 #include "PlayerSystemLists.h"
 
@@ -55,8 +56,9 @@ public: // メンバ関数
     /// <param name="collisionData"></param>
     void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
-    void SetPair(VehicleCore* pair) { pairCore_ = pair; }
-    void SetParent();
+    void SettingParent();
+    // 親の確認
+    bool IsParent() { return worldTransform_.parent_ ? true : false; }
 
 private:
     /// <summary>
@@ -82,10 +84,17 @@ public: // アクセッサ（プレイヤーシステム）
     PlayerFrontChecker* GetFrontChecker() { return &frontChecker_; }
 
 public: // アクセッサ（プレイヤーシステム以外）
+    //---ゲッター---//
     // コアのワールドトランスフォーム
     WorldTransform* GetCoreTransform();
     // コア
     VehicleCore* GetCore() { return pairCore_; }
+    // カメラ
+    FollowCamera* GetCamera() { return followCamera_; }
+
+    //---セッター---//
+    void SetPair(VehicleCore* pair) { pairCore_ = pair; }
+    void SetCamera(FollowCamera* camera) { followCamera_ = camera; }
 private:
     // システムクラス
     std::unique_ptr<PlayerAnimation> playerAnimation_;
@@ -98,4 +107,6 @@ private:
     PlayerFrontChecker frontChecker_;
     // ペア
     VehicleCore* pairCore_ = nullptr;
+    // カメラ
+    FollowCamera* followCamera_ = nullptr;
 };

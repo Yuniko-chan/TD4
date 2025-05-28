@@ -2,6 +2,8 @@
 
 #include "../Skydome/Skydome.h"
 #include "../GameObjectsList.h"
+#include "../Wall/Wall.h"
+#include "../../Course/Course.h"
 
 IObject* ObjectCreate::CreateObjectSkydome(LevelData::ObjectData& objectData)
 {
@@ -67,5 +69,21 @@ IObject* ObjectCreate::CreateObjectTerrain(LevelData::ObjectData& objectData)
 	IObject* object = new TerrainObject;
 
 	static_cast<TerrainObject*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}
+
+IObject* ObjectCreate::CreateObjectWall(LevelData::ObjectData& objectData)
+{
+	IObject* object = new Wall();
+
+	static_cast<Wall*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}
+
+IObject* ObjectCreate::CreateObjectCourse(LevelData::ObjectData& objectData)
+{
+	IObject* object = new Course();
+
+	static_cast<Course*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
 	return object;
 }

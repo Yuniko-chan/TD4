@@ -9,6 +9,7 @@
 #include "../../../Engine/base/WindowSprite/WindowSprite.h"
 #include "../../Object/Manager/GameSceneObjectManager.h"
 #include "../../Object/Factory/ObjectFactory.h"
+#include "../../Object/Player/Player.h"
 #include "../../../Engine/Physics/ClothGPU/ClothGPU.h"
 
 GameScene::~GameScene()
@@ -63,7 +64,7 @@ void GameScene::Initialize() {
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
 	followCamera_->SetTarget(objectManager_->GetObjectPointer("Player")->GetWorldTransformAdress());
-
+	static_cast<Player*>(objectManager_->GetObjectPointer("Player"))->SetCamera(followCamera_.get());
 	// UIマネージャー
 	uiManager_ = std::make_unique<UIManager>();
 	uiManager_->Initialize();
