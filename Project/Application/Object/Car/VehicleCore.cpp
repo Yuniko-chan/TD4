@@ -36,9 +36,13 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	*colliderShape = obb;
 	collider_.reset(colliderShape);
 
+	// ステータスクラス
+	statusSystem_ = std::make_unique<VehicleStatus>();
+
 	// パーツ構築クラス
 	constructionSystem_ = std::make_unique<VehicleConstructionSystem>();
 	constructionSystem_->Initialize(this);
+	constructionSystem_->SetStatusManager(statusSystem_.get());
 
 	// 運転クラス
 	driveSystem_ = std::make_unique<DriveSystem>();
@@ -48,10 +52,10 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 
 void VehicleCore::Update()
 {
-	// 運転・移動処理
-	driveSystem_->Update();
 	// 接続管理
 	constructionSystem_->Update();
+	// 運転・移動処理
+	driveSystem_->Update();
 	// 基底
 	Car::IParts::Update();
 }
@@ -61,23 +65,8 @@ void VehicleCore::ImGuiDrawParts()
 	ImGui::SeparatorText(className_.c_str());
 	if (ImGui::TreeNode("Status"))
 	{
-		status_.ImGuiDraw();
-
-		int armor = constructionSystem_->GetStatus().armor;
-		int tire = constructionSystem_->GetStatus().tire;
-		int en = constructionSystem_->GetStatus().engine;
-		ImGui::InputInt("ArmorC", &armor);
-		ImGui::InputInt("TireC", &tire);
-		ImGui::InputInt("EngineC", &en);
-		int st = constructionSystem_->GetDirections()->backForward;
-		ImGui::InputInt("Back", &st);
-		st = constructionSystem_->GetDirections()->forward;
-		ImGui::InputInt("Forward", &st);
-		st = constructionSystem_->GetDirections()->left;
-		ImGui::InputInt("left", &st);
-		st = constructionSystem_->GetDirections()->right;
-		ImGui::InputInt("right", &st);
-
+		// ステータス
+		statusSystem_->ImGuiDraw();
 
 		ImGui::TreePop();
 	}

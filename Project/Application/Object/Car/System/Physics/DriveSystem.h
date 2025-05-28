@@ -21,6 +21,11 @@ public:
 	/// 更新
 	/// </summary>
 	void Update();
+
+
+	void PreUpdate();
+	//void PostUpdate();
+
 	/// <summary>
 	/// 入力受付
 	/// </summary>

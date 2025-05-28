@@ -40,6 +40,11 @@ void DriveSystem::Update()
 		calc.RotateVector(velocity_, eulerY) * kDeltaTime_;
 }
 
+void DriveSystem::PreUpdate()
+{
+
+}
+
 void DriveSystem::InputAccept(GameKeyconfig* keyConfig)
 {
 	// エンジンの受付

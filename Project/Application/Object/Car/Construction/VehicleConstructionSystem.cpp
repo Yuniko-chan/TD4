@@ -14,32 +14,18 @@ void VehicleConstructionSystem::Update()
 {
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
 		if ((*it).second->GetIsDelete()) {
+			// 解除処理
 			UnRegistParts((*it).first, (*it).second);
-			//(*it).second->ReleaseParent();
-			DeleteCount((*it).second->GetClassNameString());
+			// ステータス側からも削除
+			status_->ApplyPartRemove((*it).second->GetClassNameString(), (*it).first);
+			//DeleteCount((*it).second->GetClassNameString());
 			it = partsMapping_.erase(it);
 			break;
 		}
 	}
-	// 各方向の数取得
-	directions_ = {};
-	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
-		if ((*it).first.x > 0) {
-			directions_.right++;
-		}
-		else if ((*it).first.x < 0) {
-			directions_.left++;
-		}
 
-		if ((*it).first.y > 0)
-		{
-			directions_.forward++;
-		}
-		else if ((*it).first.y < 0) {
-			directions_.backForward++;
-		}
-	}
-
+	// マップから
+	status_->StatusUpdate(&partsMapping_);
 }
 
 void VehicleConstructionSystem::ImGuiDraw()
@@ -210,7 +196,8 @@ void VehicleConstructionSystem::RegistParts(const Vector2Int& id, Car::IParts* p
 		}
 	}
 	// カウント追加
-	this->AddCount(parts->GetClassNameString());
+	status_->ApplyPartAdd(parts->GetClassNameString(), id);
+	//this->AddCount(parts->GetClassNameString());
 }
 
 void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts* parts)
@@ -255,40 +242,4 @@ void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts*
 	parts->ReleaseParent();
 	//// カウントから削除
 	//DeleteCount(parts->GetClassNameString());
-}
-
-void VehicleConstructionSystem::AddCount(std::string name)
-{
-	if (name == "TireParts") {
-		counts_.tire++;
-	}
-	else if (name == "ArmorFrameParts") {
-		counts_.armor++;
-	}
-	else if (name == "EngineParts") {
-		counts_.engine++;
-	}
-}
-
-void VehicleConstructionSystem::DeleteCount(std::string name)
-{
-	if (name == "TireParts") {
-		counts_.tire--;
-	}
-	else if (name == "ArmorFrameParts") {
-		counts_.armor--;
-	}
-	else if (name == "EngineParts") {
-		counts_.engine--;
-	}
-
-	if (counts_.tire < 0) {
-		counts_.tire = 0;
-	}
-	if (counts_.armor < 0) {
-		counts_.armor = 0;
-	}
-	if (counts_.engine < 0) {
-		counts_.engine = 0;
-	}
 }

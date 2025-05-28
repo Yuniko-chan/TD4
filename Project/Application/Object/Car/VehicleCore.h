@@ -64,9 +64,9 @@ private:
     std::unique_ptr<VehicleConstructionSystem> constructionSystem_;
     // 運転関係
     std::unique_ptr<DriveSystem> driveSystem_;
+    // 車両のステータス
+    std::unique_ptr<VehicleStatus> statusSystem_;
 
     // ペアになるプレイヤーポインタ
     Player* pairPlayer_ = nullptr;
-    // ステータス
-    VehicleStatus status_ = {};
 };
