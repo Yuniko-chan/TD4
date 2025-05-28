@@ -9,9 +9,6 @@ struct CannonData
     // クールタイム値
     float cooltimeMax;
 
-    // 回転値
-    Vector3 rotate;
-
     // 発射向き
     Vector3 firingDirection;
 
