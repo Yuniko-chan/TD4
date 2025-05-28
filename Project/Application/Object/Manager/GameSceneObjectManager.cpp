@@ -87,24 +87,26 @@ void GameSceneObjectManager::ImGuiDraw()
 	partsManager_->ImGuiDraw();
 
 	ImGui::Begin("GameObjectManager");
+	static Vector3 spownPoint = Vector3(0, 0, 0);
+	ImGui::DragFloat3("SpownPoint", &spownPoint.x, 0.01f);
 
 	if (ImGui::Button("タイヤ追加")) {
 		std::string name = "Tire" + std::to_string(Car::sSerialTire);
-		AddObject("TireParts", name.c_str(), "Resources/Model/Tire", "Tire.obj");
+		AddObject("TireParts", name.c_str(), "Resources/Model/Tire", "Tire.obj", spownPoint);
 		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
 		Car::sSerialTire++;
 	}
 
 	if (ImGui::Button("フレーム追加")) {
 		std::string name = "ArmorFrame" + std::to_string(Car::sSerialArmor);
-		AddObject("ArmorFrameParts", name.c_str(), "Resources/Model/Frame", "Frame.obj");
+		AddObject("ArmorFrameParts", name.c_str(), "Resources/Model/Frame", "Frame.obj", spownPoint);
 		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
 		Car::sSerialArmor++;
 	}
 
 	if (ImGui::Button("エンジン追加")) {
 		std::string name = "Engine" + std::to_string(Car::sSerialEngine);
-		AddObject("EngineParts", name.c_str(), "Resources/Model/Engine", "Engine.obj");
+		AddObject("EngineParts", name.c_str(), "Resources/Model/Engine", "Engine.obj", spownPoint);
 		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
 		Car::sSerialEngine++;
 	}
@@ -180,6 +182,25 @@ void GameSceneObjectManager::AddObject(const std::string& className, const std::
 	meshData.collider = OBB{};
 
 	meshData.transform = {};
+	meshData.transform.scale = { 1.0f,1.0f,1.0f };
+	LevelData::ObjectData objData = meshData;
+	object.reset(static_cast<ObjectFactory*>(objectFactory_.get())->CreateObjectPattern(objData));
+	objects_.emplace_back(object->GetName(), std::move(object));
+}
+
+void GameSceneObjectManager::AddObject(const std::string& className, const std::string& name, const std::string& directory, const std::string& modelName, const Vector3& position)
+{
+	std::unique_ptr<IObject> object;
+	LevelData::MeshData meshData = {};
+	meshData.name = name;
+	meshData.className = className;
+	meshData.directoryPath = directory;
+	meshData.flieName = modelName;
+
+	meshData.collider = OBB{};
+
+	meshData.transform = {};
+	meshData.transform.translate = position;
 	meshData.transform.scale = { 1.0f,1.0f,1.0f };
 	LevelData::ObjectData objData = meshData;
 	object.reset(static_cast<ObjectFactory*>(objectFactory_.get())->CreateObjectPattern(objData));
