@@ -11,6 +11,7 @@
 #include "../../../Engine/Collision2D/Collision2DDebugDraw.h"
 
 #include "../../Camera/FollowCamera.h"
+#include "../../Camera/GameCameraManager.h"
 #include "../../Effect/EffectManager.h"
 #include "../../Collision/GameSceneCollisionManager.h"
 #include "../../UI/UIManager.h"
@@ -81,6 +82,9 @@ private:
 
 	// 追加カメラ
 	std::unique_ptr<FollowCamera> followCamera_;
+
+	// カメラマネージャ
+	std::unique_ptr<GameCameraManager> cameraManager_;
 
 	// エフェクトマネージャー
 	EffectManager* effectManager_ = nullptr;

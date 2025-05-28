@@ -130,7 +130,7 @@ void FollowCamera::Update(float elapsedTime) {
 
 void FollowCamera::ImGuiDraw()
 {
-	ImGui::Begin("FollowCamera");
+	ImGui::SeparatorText("FollowCamera");
 	ImGui::DragFloat3("Position", &transform_.translate.x);
 	ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Offset", &offset_.x, 0.01f);
@@ -144,7 +144,6 @@ void FollowCamera::ImGuiDraw()
 			modeRequest_ = AngleMode::kPlayer;
 		}
 	}
-	ImGui::End();
 }
 
 void FollowCamera::ChangeRequest(AngleMode mode, float frame)
