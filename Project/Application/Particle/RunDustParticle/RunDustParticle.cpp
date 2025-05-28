@@ -7,15 +7,12 @@ void RunDustParticle::Initialize(
 	ID3D12PipelineState* pipelineState,
 	const std::string& name)
 {
-	//いつか消したい
-	name;
 	// テクスチャ名前
 	const std::string kTextureFilename = "Note_1.png";
 	textureFilename_ = kTextureFilename;
 
 	// 初期化
-	const std::string kName = "RunDust";
-	GPUParticle::Initialize(device, commandList, rootSignature, pipelineState, kName);
+	GPUParticle::Initialize(device, commandList, rootSignature, pipelineState, name);
 
 	// エミッタ設定
 	const EmitterCS kEmitter =

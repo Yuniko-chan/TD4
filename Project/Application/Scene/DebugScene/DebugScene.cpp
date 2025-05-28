@@ -27,7 +27,7 @@ void DebugScene::Initialize()
 	ParticleManager_ = std::make_unique<ParticleManager>();
 	ParticleManager_->Initialize();
 
-	ParticleManager_->CreateParticle<RunDustParticle>(
+	ParticleManager_->CreateParticle<RunDustParticle>("RunDust",
 		{
 				Vector3{0.0f, 0.0f, 0.0f}, // 位置
 				1.0f, // 射出半径
@@ -38,7 +38,7 @@ void DebugScene::Initialize()
 		}
 	);
 	
-	ParticleManager_->CreateParticle<GPUParticle>();
+	ParticleManager_->CreateParticle<GPUParticle>("");
 
 	isDebugCameraActive_ = true;
 

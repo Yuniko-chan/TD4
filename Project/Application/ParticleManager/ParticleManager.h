@@ -39,7 +39,8 @@ public:
 	/// </summary>
 	void ImGuiDraw();
 	template <typename T>
-	void CreateParticle(EmitterCS kEmitter =
+	void CreateParticle(std::string particleName, 
+		EmitterCS kEmitter =
 		{
 			{ 0.0f,0.0f,0.0f},	// 位置
 			1.0f,				// 射出半径
@@ -54,16 +55,21 @@ public:
 		// DirectXCommon
 		DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
 
-		particles_[number].reset(result);
-		particles_[number]->Initialize(
+		indexList_[particleName] = number;
+
+		particles_[indexList_[particleName]].reset(result);
+		particles_[indexList_[particleName]]->Initialize(
 			dxCommon_->GetDevice(),
 			dxCommon_->GetCommadListLoad(),
 			GraphicsPipelineState::sRootSignature_[GraphicsPipelineState::kPipelineStateIndexGPUParticle].Get(),
-			GraphicsPipelineState::sPipelineState_[GraphicsPipelineState::kPipelineStateIndexGPUParticle].Get(),result->GetName().c_str());
-		particles_[number]->SetEmitter(kEmitter,true);
+			GraphicsPipelineState::sPipelineState_[GraphicsPipelineState::kPipelineStateIndexGPUParticle].Get(), particleName);
+		particles_[indexList_[particleName]]->SetEmitter(kEmitter,true);
+
 		number++;
 	}
 private:
 	std::array<std::unique_ptr<GPUParticle>, ParticleIndex::kUIIndexOfCount> particles_;
+
+	std::unordered_map<std::string, int> indexList_;
 	int number = 0;
 };
