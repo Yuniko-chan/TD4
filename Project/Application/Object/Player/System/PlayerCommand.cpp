@@ -1,6 +1,7 @@
 #include "PlayerCommand.h"
 #include "../Player.h"
 #include "../../KeyConfig/GameKeyconfig.h"
+#include "../../Utility/Calc/TransformHelper.h"
 #include "../../../Engine/Math/DeltaTime.h"
 
 PlayerCommand::PlayerCommand()
@@ -39,7 +40,8 @@ void PlayerCommand::RotateCommand()
 	// 回転角
 	Vector2 rotate = Vector2::Normalize(Vector2(keyConfig_->GetRightStick()->x, keyConfig_->GetRightStick()->y));
 	// ワールドトランスフォームに適応
-	const float rotateRatio = 1.0f / 45.0f;
+	const float rotateSpeed = GlobalVariables::GetInstance()->GetFloatValue("Player", "CameraRotateSpeed");
+	const float rotateRatio = 1.0f / rotateSpeed;
 	playerTransform_->transform_.rotate.y += (rotate.x * rotateRatio);
 	// 移動方向ベクトルの更新
 	moveDirect_ = Vector3::Normalize(transformDirect);
@@ -48,23 +50,18 @@ void PlayerCommand::RotateCommand()
 void PlayerCommand::VectorRotate()
 {
 	theta_ = 0.0f;
+	// 回転速度計算
+	const float rotateSpeed = GlobalVariables::GetInstance()->GetFloatValue("Player", "CameraRotateSpeed");
+	const float rotateRatio = 1.0f / rotateSpeed;
 
 	if (keyConfig_->GetRightStick()->x > 0) {
-		theta_ -= 0.01f;
+		theta_ -= rotateRatio;
 	}
 	else if (keyConfig_->GetRightStick()->x < 0) {
-		theta_ += 0.01f;
+		theta_ += rotateRatio;
 	}
-
-	float cosT = std::cosf(theta_);
-	float sinT = std::sinf(theta_);
-
-	Vector3 direct = {
-		playerTransform_->direction_.x * cosT - playerTransform_->direction_.z * sinT,
-		playerTransform_->direction_.y,
-		playerTransform_->direction_.x * sinT + playerTransform_->direction_.z * cosT,
-	};
-	
+	// X-Z平面上に回転
+	Vector3 direct = TransformHelper::XZRotation(playerTransform_->direction_, theta_);
 	playerTransform_->direction_ = Vector3::Normalize(direct);
 }
 

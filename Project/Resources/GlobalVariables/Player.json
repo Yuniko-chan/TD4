@@ -1,5 +1,6 @@
 {
     "Player": {
+        "CameraRotateSpeed": 30.0,
         "DropOffActionFrame": 15.0,
         "DropOffHeight": 8.0,
         "DropOffOffset": [

@@ -41,6 +41,8 @@ namespace ParameterStructs {
 		float walkSpeedFactor = 0.0f;
 		// 走りの速度
 		float dashSpeedFactor = 0.0f;
+		// 割り算
+		float cameraRotateSpeed = 30.0f;
 
 	};
 

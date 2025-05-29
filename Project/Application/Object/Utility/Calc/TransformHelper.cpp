@@ -68,3 +68,18 @@ float TransformHelper::CalculateXZVectorToRotateRadian(const Vector3& from, cons
 
     return rad;
 }
+
+Vector3 TransformHelper::XZRotation(const Vector3& direct, float& theta)
+{
+    // θ
+    float cosT = std::cosf(theta);
+    float sinT = std::sinf(theta);
+    // 回転
+    Vector3 result = {
+        direct.x * cosT - direct.z * sinT,
+        direct.y,
+        direct.x * sinT + direct.z * cosT,
+    };
+    // 返り値
+    return result;
+}

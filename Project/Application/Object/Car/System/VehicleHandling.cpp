@@ -91,26 +91,43 @@ void VehicleHandling::PostUpdate(const Vector3& velocity, float leftWheel, float
 
 		// 右
 		if (steerDirection_.x > 0) {
-			// タイヤが左寄りか
-			if (leftWheel > rightWheel) {
-				
+			if (rightWheel > 0) {
+				steerDirection_.x *= 1.1f;
 			}
-			// 右寄りか
-			else if (leftWheel < rightWheel) {
+			//// 右 ー 左＞右
+			//if (leftWheel > rightWheel) {
+			//	steerDirection_.x *= 0.75f;
+			//}
+			//// 右 ー 右＞左
+			//else if (leftWheel < rightWheel) {
+			//	steerDirection_.x = 1.25f;
+			//}
+			//// 右 ー 一致
+			//else {
 
-			}
-			// 
-			else {
-
-			}
+			//}
 		}
 		// 左
 		else if (steerDirection_.x < 0) {
+			if (leftWheel > 0) {
+				steerDirection_.x *= 1.1f;
+			}
+			//// 左 ー 左＞右
+			//if (leftWheel > rightWheel) {
+			//	steerDirection_.x = 1.25f;
+			//}
+			//// 左 ー 右＞左
+			//else if (leftWheel < rightWheel) {
+			//	steerDirection_.x *= 0.75f;
+			//}
+			//// 左 ー 一致
+			//else {
 
+			//}
 		}
 
 		if (leftWheel == 0 && rightWheel == 0 && (std::fabsf(steerDirection_.x) != 0.0f)) {
-			steerDirection_.x *= 0.1f;
+			steerDirection_.x *= (1.0f / 30.0f);
 		}
 
 		float radian = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, steerDirection_);
