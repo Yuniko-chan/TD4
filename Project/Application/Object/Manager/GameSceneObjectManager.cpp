@@ -2,6 +2,7 @@
 #include "../Factory/ObjectFactory.h"
 #include "../Factory/CreateObjectNames.h"
 #include "../GameObjectsList.h"
+#include "../Car/Preset/VehiclePaths.h"
 
 #include "../../../Engine/2D/ImguiManager.h"
 
@@ -87,6 +88,12 @@ void GameSceneObjectManager::ImGuiDraw()
 	partsManager_->ImGuiDraw();
 
 	ImGui::Begin("GameObjectManager");
+	static char buffer[256];
+	ImGui::InputText("PresetName", buffer, 256);
+
+	if (ImGui::Button("プリセット生成")) {
+		VehiclePreset(buffer);
+	}
 	static Vector3 spownPoint = Vector3(0, 0, 0);
 	ImGui::DragFloat3("SpownPoint", &spownPoint.x, 0.01f);
 
@@ -214,45 +221,53 @@ void GameSceneObjectManager::OptionProcess()
 	AddObject("TerrainObject", "Resources/Model/Ground", "Ground.obj");
 
 	// コア作成
-	AddObject("VehicleCore", "Resources/Model/Frame", "Frame.obj");
+	//AddObject("VehicleCore", "Resources/Model/Frame", "Frame.obj");
 	
-	//AddObject("EngineParts", "Resources/Model/Engine", "Engine.obj");
-	//AddObject("TireParts", "Tire1", "Resources/Model/Tire", "Tire.obj");
-	//AddObject("TireParts", "Tire2", "Resources/Model/Tire", "Tire.obj");
-	//AddObject("TireParts", "Tire3", "Resources/Model/Tire", "Tire.obj");
-	//AddObject("TireParts", "Tire4", "Resources/Model/Tire", "Tire.obj");
-	//AddObject("ArmorFrameParts", "Resources/Model/Frame", "Frame.obj");
-	//Car::IParts* engineParts = static_cast<Car::IParts*>(this->GetObjectPointer("EngineParts"));
-	//Car::IParts* tireParts[4] = {};
-	//tireParts[0] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire1"));
-	//tireParts[1] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire2"));
-	//tireParts[2] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire3"));
-	//tireParts[3] = static_cast<Car::IParts*>(this->GetObjectPointer("Tire4"));
-	//Car::IParts* armorParts = static_cast<Car::IParts*>(this->GetObjectPointer("ArmorFrameParts"));
-	//// エンジン
-	////engineParts->SetParent(core);
-	////engineParts->TransformParent();
-	//partsManager_->AddParts(engineParts->GetName(), engineParts);
-	//// アーマー
-	////armorParts->SetParent(core);
-	////armorParts->TransformParent();
-	//partsManager_->AddParts(armorParts->GetName(), armorParts);
-	//// タイヤ
-	//for (int i = 0; i < 4; i++) {
-	//	//tireParts[i]->SetParent(core);
-	//	//tireParts[i]->TransformParent();
-	//	partsManager_->AddParts(tireParts[i]->GetName(), tireParts[i]);
-	//}
-
 	// キャスト
-	VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer("VehicleCore"));
-	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
+	//VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer("VehicleCore"));
+	//Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
 
+	// ペアレント＋トランスフォーム親子設定
+	//core->SetPlayer(player);
+	//player->SetPair(core);
+	//player->GetPickUpManager()->SetPartsManager(partsManager_.get());
+	//partsManager_->AddParts(core->GetName(), core);
+
+	//VehiclePreset("Test");
+}
+
+void GameSceneObjectManager::VehiclePreset(const std::string& presetName)
+{
+	std::string name = presetName + "Core";
+	AddObject("VehicleCore", name.c_str(), sVehiclePaths[0].first, sVehiclePaths[0].second);
+	VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer(name));
+	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
 	// ペアレント＋トランスフォーム親子設定
 	core->SetPlayer(player);
 	player->SetPair(core);
 	player->GetPickUpManager()->SetPartsManager(partsManager_.get());
 	partsManager_->AddParts(core->GetName(), core);
+
+
+	name = presetName + "Engine";
+	AddObject("EngineParts", name.c_str(), sVehiclePaths[1].first, sVehiclePaths[1].second);
+	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+	core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(0, -1));
+
+	name = presetName + "Tire1";
+	AddObject("TireParts", name.c_str(), sVehiclePaths[2].first, sVehiclePaths[2].second);
+	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+	core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(1, 0));
+	
+	name = presetName + "Tire2";
+	AddObject("TireParts", name.c_str(), sVehiclePaths[2].first, sVehiclePaths[2].second);
+	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+	core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(-1, 0));
+
+	name = presetName + "Armor";
+	AddObject("ArmorFrameParts", name.c_str(), sVehiclePaths[3].first, sVehiclePaths[3].second);
+	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+	core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(0, -2));
 
 
 }

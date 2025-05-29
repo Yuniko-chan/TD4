@@ -118,6 +118,16 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts)
 	}
 }
 
+void VehicleConstructionSystem::AnyDocking(Car::IParts* parts, const Vector2Int& key)
+{
+	// 既にあればスキップ
+	if (partsMapping_.contains(key)) {
+		return;
+	}
+
+	Attach(parts, key);
+}
+
 void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key)
 {
 	// 計算器

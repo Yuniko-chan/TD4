@@ -402,6 +402,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Car\Parts\System\VehicleConnector.h" />
     <ClInclude Include="Application\Object\Car\Physics\DriveSystem.h" />
     <ClInclude Include="Application\Object\Car\Physics\System\VehicleEngine.h" />
+    <ClInclude Include="Application\Object\Car\Preset\VehiclePaths.h" />
+    <ClInclude Include="Application\Object\Car\Preset\VehiclePresetCreator.h" />
     <ClInclude Include="Application\Object\Car\System\DriveSystem.h" />
     <ClInclude Include="Application\Object\Car\System\User\AutoDriver.h" />
     <ClInclude Include="Application\Object\Car\System\User\InterfaceDriver.h" />

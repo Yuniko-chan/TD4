@@ -63,6 +63,8 @@ private: // メンバ関数
 
 	void OptionProcess();
 
+	void VehiclePreset(const std::string& presetName);
+
 private: // メンバ変数
 
 	// 影マネージャー
