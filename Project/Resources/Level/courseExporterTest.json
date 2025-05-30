@@ -135,6 +135,119 @@
                     2.0
                 ]
             }
+        },
+        {
+            "type": "MESH",
+            "name": "ironball",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    5.813091278076172
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "SPHERE",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "radius": 2
+            },
+            "gimmick": {
+                "type": "IRONBALL",
+                "length": 5.0,
+                "angle": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "大砲_円柱.007",
+            "transform": {
+                "translation": [
+                    -13.130254745483398,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "大砲_円柱.001",
+            "transform": {
+                "translation": [
+                    -19.074378967285156,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    3.141592502593994,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
         }
     ]
 }

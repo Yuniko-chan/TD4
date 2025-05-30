@@ -19,5 +19,10 @@ enum CreateObjectIndex {
 	// 地形
 	kCreateObjectIndexTerrain,
 
+	///ギミック
+	kCreateObjectIndexIronBall,
+	kCreateObjectIndexCannon,
+
+
 	kCreateObjectIndexOfCount, // 数数える用
 };

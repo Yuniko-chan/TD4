@@ -54,7 +54,7 @@ void GameScene::Initialize() {
 
 	// オブジェクトマネージャー
 	objectManager_ = std::make_unique<GameSceneObjectManager>();
-	objectManager_->Initialize(kLevelIndexMain, levelDataManager_);
+	objectManager_->Initialize(kLevelIndexDebug, levelDataManager_);
 
 	// キーコンフィグ
 	keyConfig_ = GameKeyconfig::GetInstance();

@@ -11,9 +11,19 @@ const std::array<std::string,
 	LevelData::ObjectDataIndex::kObjectDataIndexOfCount> 
 	LevelDataLoader::kObjectTypeNames_ = { "MESH", "CAMERA", "LIGHT"};
 
+const std::array<std::string,
+	LevelData::GimmickDataIndex::kGimmickDataIndexCount>
+	LevelDataLoader::kGimmickTypeNames_ = { "IRONBALL","CANNON"};
+
+
+
 std::array<std::function<void(LevelData*, nlohmann::json&)>,
 	LevelData::ObjectDataIndex::kObjectDataIndexOfCount> 
 	LevelDataLoader::objectTypeFunctions_ = {};
+
+std::array<std::function<void(nlohmann::json&, LevelData::GimmickData*)>,
+	LevelData::GimmickDataIndex::kGimmickDataIndexCount>
+	LevelDataLoader::gimmickTypeFunctions_ = {};
 
 void LevelDataLoader::Initialize()
 {
@@ -23,6 +33,8 @@ void LevelDataLoader::Initialize()
 	objectTypeFunctions_[LevelData::ObjectDataIndex::kObjectDataIndexCamaera] = LevelDataLoader::CameraLoad;
 	objectTypeFunctions_[LevelData::ObjectDataIndex::kObjectDataIndexLight] = LevelDataLoader::LightLoad;
 
+	gimmickTypeFunctions_[LevelData::GimmickDataIndex::kGimmickDataIndexIronBall] = LevelDataLoader::IronBallLoad;
+	gimmickTypeFunctions_[LevelData::GimmickDataIndex::kGimmickDataIndexCannon] = LevelDataLoader::CannonLoad;
 }
 
 LevelData* LevelDataLoader::Load(const std::string& fileName)
@@ -167,7 +179,12 @@ void LevelDataLoader::ScanningChildren(LevelData* levelData, nlohmann::json& par
 
 void LevelDataLoader::MeshLoad(LevelData* levelData, nlohmann::json& object)
 {
-	
+	//ギミックの判定
+	if (object.contains("gimmick")) {
+		GimmickLoad(levelData,object);
+		return;
+	}
+
 	// 要素の追加
 	levelData->objectsData_.emplace_back(LevelData::MeshData{});
 
@@ -243,6 +260,94 @@ void LevelDataLoader::LightLoad(LevelData* levelData, nlohmann::json& object)
 	// トランスフォーム
 	objectData.transform = TransformLoad(object);
 
+}
+
+
+void LevelDataLoader::GimmickLoad(LevelData* levelData, nlohmann::json& object)
+{
+
+	// 要素の追加
+	levelData->objectsData_.emplace_back(LevelData::GimmickData{});
+
+	// 今追加した要素の参照を得る
+	LevelData::GimmickData& objectData = std::get<LevelData::GimmickData>(levelData->objectsData_.back());
+
+	// 名前
+	objectData.meshData.name = object["name"];
+
+	// トランスフォーム
+	objectData.meshData.transform = TransformLoad(object);
+
+	// ファイルの名前があるならとってくる
+	if (object.contains("fileName")) {
+		// ファイル名
+		objectData.meshData.flieName = object["fileName"];
+	}
+
+	// ディレクトリパスがあるならとってくる
+	if (object.contains("directoryPath")) {
+		// ファイル名
+		objectData.meshData.directoryPath = object["directoryPath"];
+	}
+
+	// クラスの名前があるならとってくる
+	/*if (object.contains("className")) {
+		// ファイル名
+		objectData.meshData.className = object["className"];
+	}*/
+
+	// クラスの名前があるならとってくる
+	if (object.contains("parentName")) {
+		// ファイル名
+		objectData.meshData.parentName = object["parentName"];
+	}
+
+	// コライダーがあるならとってくる
+	if (object.contains("collider")) {
+		objectData.meshData.collider = ColliderLoad(object, objectData.meshData.transform);
+	}
+	
+	//各タイプごとの読み込み
+	// 種別を取得
+	nlohmann::json& gimmick = object["gimmick"];
+	std::string type = gimmick["type"].get<std::string>();
+	for (uint32_t i = 0; i < LevelData::GimmickDataIndex::kGimmickDataIndexCount; ++i) {
+		if (type.compare(kGimmickTypeNames_[i]) == 0) {
+			// それぞれの関数へ
+			gimmickTypeFunctions_[i](gimmick,&objectData);
+			
+			break;
+		}
+	}
+}
+
+void LevelDataLoader::IronBallLoad(nlohmann::json& object, LevelData::GimmickData* objectData) {
+	LevelData::IronBallData& gimmickData = std::get<LevelData::IronBallData>(objectData->gimmickSeparateData);
+	
+	//クラス名
+	objectData->meshData.className = "PendulumIronBall";
+	objectData->meshData.directoryPath = "Resources/Model/Gimmick/IronBall/";
+	objectData->meshData.flieName = "IronBall.obj";
+
+	//データ
+	gimmickData.anchor = objectData->meshData.transform.translate;
+	gimmickData.length = object["length"];
+	gimmickData.angle = object["angle"];
+}
+
+void LevelDataLoader::CannonLoad(nlohmann::json& object, LevelData::GimmickData* objectData) {
+	objectData->gimmickSeparateData = CannonData{};
+	CannonData& gimmickData = std::get<CannonData>(objectData->gimmickSeparateData);
+	//クラス名
+	objectData->meshData.className = "Cannon";
+	objectData->meshData.directoryPath = "Resources/Model/Gimmick/Cannon/";
+	objectData->meshData.flieName = "Cannon.obj";
+
+	//データ
+	gimmickData.rotate = objectData->meshData.transform.rotate;
+	gimmickData.cooltimeMax = object["cooltime"];
+	gimmickData.firingSpeed = object["firingSpeed"];
+	gimmickData.firingDirection = Matrix4x4::Transform(Vector3{0,0,1.0f},Matrix4x4::MakeRotateXYZMatrix(objectData->meshData.transform.rotate));
 }
 
 EulerTransform LevelDataLoader::TransformLoad(nlohmann::json& object)
