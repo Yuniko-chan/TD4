@@ -23,9 +23,9 @@ void GameKeyconfig::Initialize()
 	playerKeyConfig_.binds.brake = DIK_DOWNARROW;
 
 	//---パッド向けキーバインド---//
-	playerKeyConfig_.padBinds.jumpAction = JoystickButton::kJoystickButtonY;
-	playerKeyConfig_.padBinds.rideAction = JoystickButton::kJoystickButtonX;
-	playerKeyConfig_.padBinds.interactAction = JoystickButton::kJoystickButtonLB;
+	//playerKeyConfig_.padBinds.jumpAction = JoystickButton::kJoystickButtonY;
+	playerKeyConfig_.padBinds.rideAction = JoystickButton::kJoystickButtonY;
+	playerKeyConfig_.padBinds.interactAction = JoystickButton::kJoystickButtonX;
 
 	playerKeyConfig_.padBinds.accel = JoystickButton::kJoystickButtonA;
 	playerKeyConfig_.padBinds.brake = JoystickButton::kJoystickButtonB;
