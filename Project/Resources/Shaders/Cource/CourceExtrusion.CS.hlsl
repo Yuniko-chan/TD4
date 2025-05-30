@@ -56,7 +56,7 @@ bool CollisionCheck(PolygonData polygonData, Segment segment)
 
 	//平面を求める
     float32_t3 planeNormal = normalize(cross(v01, v12));
-    float32_t planeDistance = planeNormal.x * v20.x + planeNormal.y * v20.y + planeNormal.z * v20.z;
+    float32_t planeDistance = dot(polygonData.positions0, planeNormal);
 
 	//平面との衝突確認
 	//垂直判定のため、法線と線の内積を求める
@@ -129,7 +129,103 @@ float32_t3 Extrusion(ObjectData objectData, PolygonData polygonData, uint32_t in
     segment.origin = objectData.center;
     segment.diff = planeNormal * distance;
     
-    if (abs(s) - r < 0.0f && CollisionCheck(polygonData, segment))
+    	// 頂点求める
+    float32_t3 vertices[8];
+
+	// 左 上 前
+    vertices[0] = (
+        (-objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
+			-objectData.size.z * objectData.otientatuonsZ.x),
+		(-objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
+			-objectData.size.z * objectData.otientatuonsZ.y),
+		(-objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
+			-objectData.size.z * objectData.otientatuonsZ.z)
+	);
+
+	// 左 上 後
+    vertices[1] = (
+        (-objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
+			objectData.size.z * objectData.otientatuonsZ.x),
+		(-objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
+			objectData.size.z * objectData.otientatuonsZ.y),
+		(-objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
+			objectData.size.z * objectData.otientatuonsZ.z)
+	);
+
+	// 右 上 前
+    vertices[2] = (
+        (objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
+			-objectData.size.z * objectData.otientatuonsZ.x),
+		(objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
+			-objectData.size.z * objectData.otientatuonsZ.y),
+		(objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
+			-objectData.size.z * objectData.otientatuonsZ.z)
+	);
+
+	// 右 上 後
+    vertices[3] = (
+        (objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
+			objectData.size.z * objectData.otientatuonsZ.x),
+		(objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
+			objectData.size.z * objectData.otientatuonsZ.y),
+		(objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
+			objectData.size.z * objectData.otientatuonsZ.z)
+	);
+
+	// 左 下 前
+    vertices[4] = (
+        (-objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
+			-objectData.size.z * objectData.otientatuonsZ.x),
+		(-objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
+			-objectData.size.z * objectData.otientatuonsZ.y),
+		(-objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
+			-objectData.size.z * objectData.otientatuonsZ.z)
+	);
+
+	// 左 下 後
+    vertices[5] = (
+        (-objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
+			objectData.size.z * objectData.otientatuonsZ.x),
+		(-objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
+			objectData.size.z * objectData.otientatuonsZ.y),
+		(-objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
+			objectData.size.z * objectData.otientatuonsZ.z)
+	);
+
+	// 右 下 前
+    vertices[6] = (
+        (objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
+			-objectData.size.z * objectData.otientatuonsZ.x),
+		(objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
+			-objectData.size.z * objectData.otientatuonsZ.y),
+		(objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
+			-objectData.size.z * objectData.otientatuonsZ.z)
+	);
+
+	// 右 下 後
+    vertices[7] = (
+         (objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
+			objectData.size.z * objectData.otientatuonsZ.x),
+		(objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
+			objectData.size.z * objectData.otientatuonsZ.y),
+		(objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
+			objectData.size.z * objectData.otientatuonsZ.z)
+	);
+    
+    bool collisionCheck = false;
+    
+    for (uint32_t i = 0; i < 8; ++i)
+    {   
+        segment.origin = objectData.center + vertices[i];
+        collisionCheck = CollisionCheck(polygonData, segment);
+        if (collisionCheck)
+        {
+            break;
+        }
+        
+    }
+    
+    if (abs(s) - r < 0.0f && collisionCheck)
     {
         return planeNormal * distance;
     }
