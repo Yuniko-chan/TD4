@@ -37,7 +37,7 @@ private: // メンバ定数
 	static const Vector3 kPolygonAreasLength_;
 
 	// 衝突するポリゴンの上限
-	static const uint32_t kCollisionPolygonMax_ = 64;
+	static const uint32_t kCollisionPolygonMax_ = 1024;
 	
 	/// <summary>
 	///	オブジェクトデータ(現在OBB)
@@ -50,12 +50,9 @@ private: // メンバ定数
 		Vector3 center;
 		// 座標軸方向の長さの半分
 		Vector3 size;
-		// 座標軸,パディング
-		float padding1;
+		// 座標軸
 		Vector3 otientatuonsX;
-		float padding2;
 		Vector3 otientatuonsY;
-		float padding3;
 		Vector3 otientatuonsZ;
 	};
 

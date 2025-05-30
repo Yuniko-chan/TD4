@@ -44,9 +44,16 @@ Model* CourseLoader::LoadCourseFile(const std::string& directoryPath, const std:
 			modelData.vertices.push_back(vData);
 			
 			//coursepolygone
-			cData.positions[i % 3].x = data->vertices[i].positon_.x;
-			cData.positions[i % 3].y = data->vertices[i].positon_.y;
-			cData.positions[i % 3].z = data->vertices[i].positon_.z;
+			if (i % 3 == 0) {
+				cData.position0 = { data->vertices[i].positon_.x, data->vertices[i].positon_.y, data->vertices[i].positon_.z };
+			}
+			else if (i % 3 == 1) {
+				cData.position1 = { data->vertices[i].positon_.x, data->vertices[i].positon_.y, data->vertices[i].positon_.z };
+			}
+			else {
+				cData.position2 = { data->vertices[i].positon_.x, data->vertices[i].positon_.y, data->vertices[i].positon_.z };
+			}
+
 			cData.normal += data->vertices[i].normal_;
 			cData.texcoord += data->vertices[i].uv_;
 			courseAttribute[i % 3] = data->vertices[i].courseAttribute_;

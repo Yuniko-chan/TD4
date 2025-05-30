@@ -22,7 +22,9 @@ struct ObjectData
 struct PolygonData
 {
     
-    float32_t3 positions[3];
+    float32_t3 positions0;
+    float32_t3 positions1;
+    float32_t3 positions2;
 	float32_t3 normal;
     float32_t2 texcoord;
     
@@ -48,9 +50,9 @@ Texture2D<float32_t4> gCourseTexture : register(t2);
 bool CollisionCheck(PolygonData polygonData, Segment segment)
 {
     
-    float32_t3 v01 = polygonData.positions[1] - polygonData.positions[0];
-    float32_t3 v12 = polygonData.positions[2] - polygonData.positions[1];
-    float32_t3 v20 = polygonData.positions[0] - polygonData.positions[2];
+    float32_t3 v01 = polygonData.positions1 - polygonData.positions0;
+    float32_t3 v12 = polygonData.positions2 - polygonData.positions1;
+    float32_t3 v20 = polygonData.positions0 - polygonData.positions2;
 
 	//平面を求める
     float32_t3 planeNormal = normalize(cross(v01, v12));
@@ -69,9 +71,9 @@ bool CollisionCheck(PolygonData polygonData, Segment segment)
 	//tを求める
     float t = (planeDistance - dot(segment.origin, planeNormal)) / dotValue;
     
-    float32_t3 v1p = segment.origin + t * segment.diff - polygonData.positions[1];
-    float32_t3 v2p = segment.origin + t * segment.diff - polygonData.positions[2];
-    float32_t3 v0p = segment.origin + t * segment.diff - polygonData.positions[0];
+    float32_t3 v1p = segment.origin + t * segment.diff - polygonData.positions1;
+    float32_t3 v2p = segment.origin + t * segment.diff - polygonData.positions2;
+    float32_t3 v0p = segment.origin + t * segment.diff - polygonData.positions0;
 
     float32_t3 cross01 = cross(v01, v1p);
     float32_t3 cross12 = cross(v12, v2p);
@@ -94,12 +96,12 @@ float32_t3 Extrusion(ObjectData objectData, PolygonData polygonData, uint32_t in
     //平面とObb
     
     //平面を求める
-    float32_t3 v01 = polygonData.positions[1] - polygonData.positions[0];
-    float32_t3 v12 = polygonData.positions[2] - polygonData.positions[1];
-    float32_t3 v20 = polygonData.positions[0] - polygonData.positions[2];
+    float32_t3 v01 = polygonData.positions1 - polygonData.positions0;
+    float32_t3 v12 = polygonData.positions2 - polygonData.positions1;
+    float32_t3 v20 = polygonData.positions0 - polygonData.positions2;
     
     float32_t3 planeNormal = normalize(cross(v01, v12));
-    float32_t planeDistance = dot(polygonData.positions[0], planeNormal);
+    float32_t planeDistance = dot(polygonData.positions0, planeNormal);
     
     float32_t r = 0.0f;
 

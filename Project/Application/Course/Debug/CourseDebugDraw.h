@@ -33,8 +33,10 @@ private: // 関数
 	/// ポリゴン描画マッピング
 	/// </summary>
 	/// <param name="drawLine">線描画</param>
-	/// <param name="positions">位置3点</param>
-	void DrawMapPolygon(DrawLine* drawLine, const Vector3 positions[3]);
+	/// <param name="positions0">位置0</param>
+	/// <param name="positions1">位置1</param>
+	/// <param name="positions2">位置2</param>
+	void DrawMapPolygon(DrawLine* drawLine, const Vector3& position0, const Vector3& position1, const Vector3& position2);
 
 private: // 変数
 

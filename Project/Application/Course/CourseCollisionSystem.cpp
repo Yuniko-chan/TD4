@@ -216,9 +216,9 @@ void CourseCollisionSystem::SetCourse(Course* course)
 		CoursePolygon polygon = (*polygons)[i];
 
 		// 頂点位置、原点調整
-		Vector3 vertex0 = polygon.positions[0] - kPolygonAreasOrigin_ - worldPosition;
-		Vector3 vertex1 = polygon.positions[1] - kPolygonAreasOrigin_ - worldPosition;
-		Vector3 vertex2 = polygon.positions[2] - kPolygonAreasOrigin_ - worldPosition;
+		Vector3 vertex0 = polygon.position0 - kPolygonAreasOrigin_ + worldPosition;
+		Vector3 vertex1 = polygon.position1 - kPolygonAreasOrigin_ + worldPosition;
+		Vector3 vertex2 = polygon.position2 - kPolygonAreasOrigin_ + worldPosition;
 
 		// 重心
 		Vector3 centerOfGravity = (vertex0 + vertex1 + vertex2) * (1.0f / 3.0f);
@@ -273,9 +273,9 @@ void CourseCollisionSystem::ImGuiDraw()
 
 		polygon = polygonAreas[areaDisplayX_][areaDisplayY_][areaDisplayZ_][i];
 		ImGui::Text("%d個目", i);
-		ImGui::Text("位置0 x:%7.2f y:%7.2f z:%7.2f", polygon.positions[0].x, polygon.positions[0].y, polygon.positions[0].z);
-		ImGui::Text("位置1 x:%7.2f y:%7.2f z:%7.2f", polygon.positions[1].x, polygon.positions[1].y, polygon.positions[1].z);
-		ImGui::Text("位置2 x:%7.2f y:%7.2f z:%7.2f", polygon.positions[2].x, polygon.positions[2].y, polygon.positions[2].z);
+		ImGui::Text("位置0 x:%7.2f y:%7.2f z:%7.2f", polygon.position0.x, polygon.position0.y, polygon.position0.z);
+		ImGui::Text("位置1 x:%7.2f y:%7.2f z:%7.2f", polygon.position1.x, polygon.position1.y, polygon.position1.z);
+		ImGui::Text("位置2 x:%7.2f y:%7.2f z:%7.2f", polygon.position2.x, polygon.position2.y, polygon.position2.z);
 		ImGui::Text("法線 x:%7.2f y:%7.2f z:%7.2f", polygon.normal.x, polygon.normal.y, polygon.normal.z);
 		ImGui::Separator();
 
@@ -337,9 +337,9 @@ void CourseCollisionSystem::BuffersInitialize()
 
 		// ポリゴンデータを初期化
 		for (uint32_t j = 0; j < kCollisionPolygonMax_; ++j) {
-			buffers_[i].polygonDataMap_[j].positions[0] = { 0.0f, 0.0f, 0.0f };
-			buffers_[i].polygonDataMap_[j].positions[1] = { 0.0f, 0.0f, 0.0f };
-			buffers_[i].polygonDataMap_[j].positions[2] = { 0.0f, 0.0f, 0.0f };
+			buffers_[i].polygonDataMap_[j].position0 = { 0.0f, 0.0f, 0.0f };
+			buffers_[i].polygonDataMap_[j].position1 = { 0.0f, 0.0f, 0.0f };
+			buffers_[i].polygonDataMap_[j].position2 = { 0.0f, 0.0f, 0.0f };
 			buffers_[i].polygonDataMap_[j].normal = { 0.0f, 0.0f, 0.0f };
 			buffers_[i].polygonDataMap_[j].texcoord = { 0.0f, 0.0f };
 		}
@@ -542,9 +542,9 @@ void CourseCollisionSystem::DistanceJudgment(CollisionObject object)
 	for (uint32_t i = 0; i < vertexNum; ++i) {
 
 		// 現在の値のエリア番号
-		int32_t tmpX = static_cast<uint32_t>((vertices[i].x - kPolygonAreasOrigin_.x) / dividingValue.x);
-		int32_t tmpY = static_cast<uint32_t>((vertices[i].y - kPolygonAreasOrigin_.y) / dividingValue.y);
-		int32_t tmpZ = static_cast<uint32_t>((vertices[i].z - kPolygonAreasOrigin_.z) / dividingValue.z);
+		int32_t tmpX = static_cast<int32_t>((vertices[i].x - kPolygonAreasOrigin_.x) / dividingValue.x);
+		int32_t tmpY = static_cast<int32_t>((vertices[i].y - kPolygonAreasOrigin_.y) / dividingValue.y);
+		int32_t tmpZ = static_cast<int32_t>((vertices[i].z - kPolygonAreasOrigin_.z) / dividingValue.z);
 
 		// エリア範囲外
 		if (tmpX >= kPolygonAreasDiv_ || tmpY >= kPolygonAreasDiv_ || tmpZ >= kPolygonAreasDiv_ ||
@@ -555,7 +555,7 @@ void CourseCollisionSystem::DistanceJudgment(CollisionObject object)
 		// かぶり確認
 		bool fogging = false;
 		for (uint32_t j = 0; j < i; ++j) {
-			if (tmpX == x[i] && tmpY == y[i] && tmpZ == z[i]) {
+			if (tmpX == x[j] && tmpY == y[j] && tmpZ == z[j]) {
 				fogging = true;
 				break;
 			}
@@ -691,12 +691,14 @@ void CourseCollisionSystem::AloneExtrusionCalculation(CollisionObject object)
 	}
 
 	// 法線
-	if (normalCount == 0) {
+	if (normalCount == 0 || Vector3::Length(normal) == 0.0f) {
 		normal = { 0.0f, 0.0f, 1.0f };
 	}
 	else {
 		normal = Vector3::Normalize(normal * (1.0f / static_cast<float>(normalCount)));
 	}
+
+	normal = { 0.0f, 0.0f, 1.0f };
 
 	// メッシュオブジェクトに代入
 	std::visit([&](auto x) {

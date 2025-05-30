@@ -25,7 +25,7 @@ void CourseDebugDraw::DrawMap(DrawLine* drawLine)
 	for (uint32_t i = 0; i < polygons->size(); ++i) {
 	
 		// ポリゴンマッピング
-		DrawMapPolygon(drawLine, (*polygons)[i].positions);
+		DrawMapPolygon(drawLine, (*polygons)[i].position0, (*polygons)[i].position1, (*polygons)[i].position2);
 	
 	}
 
@@ -42,23 +42,23 @@ void CourseDebugDraw::ImGuiDraw()
 
 }
 
-void CourseDebugDraw::DrawMapPolygon(DrawLine* drawLine, const Vector3 positions[3])
+void CourseDebugDraw::DrawMapPolygon(DrawLine* drawLine, const Vector3& position0, const Vector3& position1, const Vector3& position2)
 {
 
 	LineForGPU lineForGPU = {};
 	lineForGPU.color[0] = { 1.0f,1.0f,1.0f,1.0f };
 	lineForGPU.color[1] = { 1.0f,1.0f,1.0f,1.0f };
 
-	lineForGPU.position[0] = positions[0];
-	lineForGPU.position[1] = positions[1];
+	lineForGPU.position[0] = position0;
+	lineForGPU.position[1] = position1;
 	drawLine->Map(lineForGPU);
 
-	lineForGPU.position[0] = positions[1];
-	lineForGPU.position[1] = positions[2];
+	lineForGPU.position[0] = position1;
+	lineForGPU.position[1] = position2;
 	drawLine->Map(lineForGPU);
 
-	lineForGPU.position[0] = positions[2];
-	lineForGPU.position[1] = positions[0];
+	lineForGPU.position[0] = position2;
+	lineForGPU.position[1] = position0;
 	drawLine->Map(lineForGPU);
 
 }
