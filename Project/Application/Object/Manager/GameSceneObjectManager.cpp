@@ -239,7 +239,8 @@ void GameSceneObjectManager::OptionProcess()
 void GameSceneObjectManager::VehiclePreset(const std::string& presetName)
 {
 	std::string name = presetName + "Core";
-	AddObject("VehicleCore", name.c_str(), sVehiclePaths[0].first, sVehiclePaths[0].second);
+	AddObject("VehicleCore", name.c_str(),
+		sVehiclePaths[VehicleDatas::kCore].first, sVehiclePaths[VehicleDatas::kCore].second);
 	VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer(name));
 	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
 	// ペアレント＋トランスフォーム親子設定
@@ -250,24 +251,31 @@ void GameSceneObjectManager::VehiclePreset(const std::string& presetName)
 
 
 	name = presetName + "Engine";
-	AddObject("EngineParts", name.c_str(), sVehiclePaths[1].first, sVehiclePaths[1].second);
+	AddObject("EngineParts", name.c_str(),
+		sVehiclePaths[VehicleDatas::kEngine].first, sVehiclePaths[VehicleDatas::kEngine].second);
 	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
 	core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(0, -1));
 
+
+
 	name = presetName + "Tire1";
-	AddObject("TireParts", name.c_str(), sVehiclePaths[2].first, sVehiclePaths[2].second);
+	AddObject("TireParts", name.c_str(),
+		sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
 	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
 	core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(1, 0));
 	
 	name = presetName + "Tire2";
-	AddObject("TireParts", name.c_str(), sVehiclePaths[2].first, sVehiclePaths[2].second);
+	AddObject("TireParts", name.c_str(),
+		sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
 	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
 	core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(-1, 0));
 
+
+
 	name = presetName + "Armor";
-	AddObject("ArmorFrameParts", name.c_str(), sVehiclePaths[3].first, sVehiclePaths[3].second);
+	AddObject("ArmorFrameParts", name.c_str(),
+		sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
 	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
 	core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(0, -2));
-
 
 }

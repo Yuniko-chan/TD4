@@ -18,6 +18,12 @@ void PlayerOnFootState::Update()
 
 	// 乗り入力
 	if (player_->GetCommand()->ActionCommand() && !player_->GetPickUpManager()->IsPartsHold()) {
+		// コアなければ
+		if (!player_->GetCore()) {
+			return;
+		}
+
+
 		player_->GetStateMachine()->ChangeRequest(IPlayerState::kRideAction);
 	}
 	// 乗ってなければの処理
