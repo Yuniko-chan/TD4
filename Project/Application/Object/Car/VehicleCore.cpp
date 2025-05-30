@@ -1,6 +1,7 @@
 #include "VehicleCore.h"
-#include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Engine/Input/Input.h"
+#include "../../../Engine/2D/ImguiManager.h"
+#include "../../../Engine/3D/Model/ModelDraw.h"
 
 #include "../GameObjectsList.h"
 #include "../../Collider/CollisionConfig.h"
@@ -50,6 +51,9 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	driveSystem_->SetOwner(this);
 	driveSystem_->Initialize();
 	driveSystem_->SetStatusManager(statusSystem_.get());
+
+	animation_ = std::make_unique<VehicleAnimation>();
+	animation_->Initialize(model_);
 }
 
 void VehicleCore::Update()
@@ -58,8 +62,21 @@ void VehicleCore::Update()
 	constructionSystem_->Update();
 	// 運転・移動処理
 	driveSystem_->Update();
+	// アニメーション
+	animation_->Update(0);
 	// 基底
 	Car::IParts::Update();
+}
+
+void VehicleCore::Draw(BaseCamera& camera)
+{
+	ModelDraw::AnimObjectDesc desc;
+	desc.camera = &camera;
+	desc.localMatrixManager = animation_->GetLocalMatrixManager();
+	desc.material = material_.get();
+	desc.model = model_;
+	desc.worldTransform = &worldTransform_;
+	ModelDraw::AnimObjectDraw(desc);
 }
 
 void VehicleCore::ImGuiDrawParts()
@@ -79,6 +96,11 @@ void VehicleCore::ImGuiDrawParts()
 	ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 0.75f));
 	ImGui::BeginChild("SystemBlock", ImVec2(300, 200), true);
 	if (ImGui::BeginTabBar("System")) {
+		if (ImGui::BeginTabItem("Animation")) {
+			animation_->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+
 		// ステート
 		if (ImGui::BeginTabItem("Engine")) {
 			this->driveSystem_->ImGuiDraw();

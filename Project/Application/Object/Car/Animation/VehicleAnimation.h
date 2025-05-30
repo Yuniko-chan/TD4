@@ -10,6 +10,10 @@ public:
 	/// <param name="model"></param>
 	void Initialize(Model* model) override;
 
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw();
 private:
 
 

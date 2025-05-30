@@ -37,6 +37,12 @@ public: // メンバ関数
     void Update() override;
 
     /// <summary>
+    /// 描画
+    /// </summary>
+    /// <param name="camera"></param>
+    void Draw(BaseCamera& camera) override;
+
+    /// <summary>
     /// ImGuiパーツ用
     /// </summary>
     void ImGuiDrawParts() override;
@@ -66,6 +72,8 @@ private:
     std::unique_ptr<DriveSystem> driveSystem_;
     // 車両のステータス
     std::unique_ptr<VehicleStatus> statusSystem_;
+    // アニメーション
+    std::unique_ptr<VehicleAnimation> animation_;
 
     // ペアになるプレイヤーポインタ
     Player* pairPlayer_ = nullptr;
