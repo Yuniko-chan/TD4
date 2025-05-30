@@ -34,7 +34,7 @@ void DebugScene::Initialize()
 				10, // 射出数
 				0.1f, // 射出間隔
 				0.0f, // 射出間隔調整時間
-				0 // 射出許可
+				true // 射出許可
 		}
 	);
 	
@@ -66,6 +66,12 @@ void DebugScene::Update()
 
 	ImguiDraw();
 
+	ImGui::Begin("ParticleManagerStopEmissionTest");
+	if (ImGui::Button("Button")) {
+		
+	}
+	ImGui::End();
+ParticleManager_->StopEmission("RunDust");
 }
 
 void DebugScene::Draw()

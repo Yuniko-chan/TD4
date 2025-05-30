@@ -78,6 +78,12 @@ public:
 	/// <param name="isEmitSet">エミッター情報をセットするか</param>
 	virtual void SetEmitter(const EmitterCS& emitter, bool isEmitSet = true);
 
+	/// <summary>
+	/// エミッターの発射許可を切り替える
+	/// </summary>
+	/// <returns></returns>
+	void ChangeEmission(bool flag);
+
 	const std::string GetName() { return particleName_; };
 protected:
 
