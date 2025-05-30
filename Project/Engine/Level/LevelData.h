@@ -7,6 +7,10 @@
 #include "../Collider/Collider.h"
 #include "../Collider/ColliderShape.h"
 
+
+#include "../../Application/Object/Gimmick/IronBall/PendulumIronBallData.h"
+#include "../../Application/Object/Gimmick/Cannon/CannonData.h"
+
 /// <summary>
 /// レベルデータ
 /// </summary>
@@ -23,6 +27,12 @@ public: // サブクラス
 		kObjectDataIndexCamaera, // カメラ
 		kObjectDataIndexLight, // ライト
 		kObjectDataIndexOfCount // 数数える用
+	};
+
+	enum GimmickDataIndex {
+		kGimmickDataIndexIronBall,
+		kGimmickDataIndexCannon,
+		kGimmickDataIndexCount
 	};
 
 	/// <summary>
@@ -73,8 +83,36 @@ public: // サブクラス
 		EulerTransform transform;
 	};
 
+	//ギミック
+
+	/// <summary>
+	/// 鉄球タイプ
+	/// </summary>
+	struct IronBallData
+	{
+		// アンカー
+		Vector3 anchor;
+		// 紐の長さ
+		float length;
+		// 円推の頂角の半分
+		float angle;
+	};
+
+
+
+	//ギミックごとの個別データ
+	using GimmickSeparateData = std::variant<IronBallData,CannonData>;
+
+	struct GimmickData {
+		//メッシュデータ
+		MeshData meshData;
+
+		//ギミックデータ
+		GimmickSeparateData gimmickSeparateData;
+	};
+
 	// 項目をまとめる
-	using ObjectData = std::variant<MeshData, CameraData, LightData>;
+	using ObjectData = std::variant<MeshData, CameraData, LightData,GimmickData>;
 
 public: // 変数
 

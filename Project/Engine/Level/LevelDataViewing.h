@@ -56,6 +56,12 @@ private: // オブジェクトタイプごとの表示処理
 	/// <param name="objectData"></param>
 	static void ObjectViewing(LevelData::LightData* objectData);
 
+	/// <summary>
+	/// ギミックデータ表示
+	/// </summary>
+	/// <param name="objectData"></param>
+	static void ObjectViewing(LevelData::GimmickData* objectData);
+
 private: // オブジェクトタイプごとの表示処理で使う関数
 
 	/// <summary>

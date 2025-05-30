@@ -17,4 +17,7 @@ const std::array<std::string, CreateObjectIndex::kCreateObjectIndexOfCount> kCre
 	"Wall",
 	"Course",
 	"TerrainObject",
+	//ギミック
+	"PendulumIronBall",
+	"Cannon",
 };

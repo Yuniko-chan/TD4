@@ -56,6 +56,12 @@ void ObjectFactory::Initialize(BaseObjectManager* objectManager)
 	createObjectFunctions_[kCreateObjectIndexTerrain].first = kCreateObjectNames_[kCreateObjectIndexTerrain];
 	createObjectFunctions_[kCreateObjectIndexTerrain].second = ObjectCreate::CreateObjectTerrain;
 
+	///ギミック
+	createObjectFunctions_[kCreateObjectIndexIronBall].first = kCreateObjectNames_[kCreateObjectIndexIronBall];
+	createObjectFunctions_[kCreateObjectIndexIronBall].second = ObjectCreate::CreateObjectIronBall;
+
+	createObjectFunctions_[kCreateObjectIndexCannon].first = kCreateObjectNames_[kCreateObjectIndexCannon];
+	createObjectFunctions_[kCreateObjectIndexCannon].second = ObjectCreate::CreateObjectCannon;
 }
 
 IObject* ObjectFactory::CreateObject(LevelData::ObjectData& objectData)
@@ -71,6 +77,20 @@ IObject* ObjectFactory::CreateObject(LevelData::ObjectData& objectData)
 
 		for (uint32_t i = 0; i < kCreateObjectIndexOfCount; ++i) {
 			if (data.className == createObjectFunctions_[i].first) {
+				object = createObjectFunctions_[i].second(objectData);
+			}
+
+		}
+
+	}
+
+	//ギミック
+	if (std::holds_alternative<LevelData::GimmickData>(objectData)) {
+
+		LevelData::GimmickData data = std::get<LevelData::GimmickData>(objectData);
+
+		for (uint32_t i = 0; i < kCreateObjectIndexOfCount; ++i) {
+			if (data.meshData.className == createObjectFunctions_[i].first) {
 				object = createObjectFunctions_[i].second(objectData);
 			}
 
@@ -101,6 +121,21 @@ IObject* ObjectFactory::CreateObjectPattern(LevelData::ObjectData& objectData)
 		}
 
 	}
+
+	//ギミック
+	if (std::holds_alternative<LevelData::GimmickData>(objectData)) {
+
+		LevelData::GimmickData data = std::get<LevelData::GimmickData>(objectData);
+
+		for (uint32_t i = 0; i < kCreateObjectIndexOfCount; ++i) {
+			if (data.meshData.className == createObjectFunctions_[i].first) {
+				object = createObjectFunctions_[i].second(objectData);
+			}
+
+		}
+
+	}
+
 
 	return object;
 

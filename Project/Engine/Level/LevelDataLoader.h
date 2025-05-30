@@ -26,6 +26,11 @@ private: // 定数
 	static const std::array<std::string, 
 		LevelData::ObjectDataIndex::kObjectDataIndexOfCount> kObjectTypeNames_;
 
+	//ギミックの種類
+	static const std::array<std::string,
+		LevelData::GimmickDataIndex::kGimmickDataIndexCount> kGimmickTypeNames_;
+
+
 private: // 変数 
 
 	// オブジェクト走査でそれぞれのタイプを読み込むための関数群
@@ -34,6 +39,14 @@ private: // 変数
 	// 引数2 nlohmann::json&
 	static std::array<std::function<void(LevelData*, nlohmann::json&)>,
 		LevelData::ObjectDataIndex::kObjectDataIndexOfCount> objectTypeFunctions_;
+
+	// 各ギミックを読み込むための関数群
+	// 返り値 無し
+	// 引数1 LevelData*
+	// 引数2 nlohmann::json&
+	// 引数2 LevelDataの子要素のGimmickData*
+	static std::array<std::function<void(nlohmann::json&,LevelData::GimmickData*)>,
+		LevelData::GimmickDataIndex::kGimmickDataIndexCount> gimmickTypeFunctions_;
 
 public: //関数
 
@@ -96,6 +109,17 @@ private: // オブジェクトタイプごとの読み込み
 	/// <param name="object">オブジェクト</param>
 	static void LightLoad(LevelData* levelData, nlohmann::json& object);
 
+	/// <summary>
+	/// ギミックの読み込み
+	/// </summary>
+	/// <param name="levelData">レベルデータ</param>
+	/// <param name="object">オブジェクト</param>
+	static void GimmickLoad(LevelData* levelData, nlohmann::json& object);
+
+	//各ギミックの読み込み
+	static void IronBallLoad(nlohmann::json&, LevelData::GimmickData*);
+	static void CannonLoad(nlohmann::json&, LevelData::GimmickData*);
+
 private: // オブジェクトタイプごとの読み込みで使う関数
 
 	/// <summary>
@@ -112,6 +136,7 @@ private: // オブジェクトタイプごとの読み込みで使う関数
 	/// <param name="transform">トランスフォーム</param>
 	/// <returns>コライダー</returns>
 	static ColliderShape ColliderLoad(nlohmann::json& object, const EulerTransform& transform);
+
 
 };
 
