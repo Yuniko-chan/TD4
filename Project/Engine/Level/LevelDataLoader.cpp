@@ -344,7 +344,6 @@ void LevelDataLoader::CannonLoad(nlohmann::json& object, LevelData::GimmickData*
 	objectData->meshData.flieName = "Cannon.obj";
 
 	//データ
-	gimmickData.rotate = objectData->meshData.transform.rotate;
 	gimmickData.cooltimeMax = object["cooltime"];
 	gimmickData.firingSpeed = object["firingSpeed"];
 	gimmickData.firingDirection = Matrix4x4::Transform(Vector3{0,0,1.0f},Matrix4x4::MakeRotateXYZMatrix(objectData->meshData.transform.rotate));
