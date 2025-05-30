@@ -18,7 +18,7 @@ namespace VehicleDatas
 
 using PathPair = std::pair<std::string, std::string>;
 const static std::array<PathPair, VehicleDatas::PartIndex::kSize> sVehiclePaths = {
-	PathPair{"Resources/Model/Frame","Frame.obj"},
+	PathPair{"Resources/Model/Core","Core.gltf"},
 	PathPair{"Resources/Model/Engine","Engine.obj"},
 	PathPair{"Resources/Model/Tire","Tire.obj"},
 	PathPair{"Resources/Model/Frame","Frame.obj"},
