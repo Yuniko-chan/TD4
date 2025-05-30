@@ -42,4 +42,5 @@ public:	// USER
 	//gimmick
 	static IObject* CreateObjectIronBall(LevelData::ObjectData& objectData);
 	static IObject* CreateObjectCannon(LevelData::ObjectData& objectData);
+	static IObject* CreateObjectMinigun(LevelData::ObjectData& objectData);
 };

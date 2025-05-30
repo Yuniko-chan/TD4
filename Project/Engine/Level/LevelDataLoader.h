@@ -119,6 +119,7 @@ private: // オブジェクトタイプごとの読み込み
 	//各ギミックの読み込み
 	static void IronBallLoad(nlohmann::json&, LevelData::GimmickData*);
 	static void CannonLoad(nlohmann::json&, LevelData::GimmickData*);
+	static void MinigunLoad(nlohmann::json&, LevelData::GimmickData*);
 
 private: // オブジェクトタイプごとの読み込みで使う関数
 

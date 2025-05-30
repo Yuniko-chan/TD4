@@ -13,7 +13,7 @@ const std::array<std::string,
 
 const std::array<std::string,
 	LevelData::GimmickDataIndex::kGimmickDataIndexCount>
-	LevelDataLoader::kGimmickTypeNames_ = { "IRONBALL","CANNON"};
+	LevelDataLoader::kGimmickTypeNames_ = { "IRONBALL","CANNON","MINIGUN"};
 
 
 
@@ -35,6 +35,7 @@ void LevelDataLoader::Initialize()
 
 	gimmickTypeFunctions_[LevelData::GimmickDataIndex::kGimmickDataIndexIronBall] = LevelDataLoader::IronBallLoad;
 	gimmickTypeFunctions_[LevelData::GimmickDataIndex::kGimmickDataIndexCannon] = LevelDataLoader::CannonLoad;
+	gimmickTypeFunctions_[LevelData::GimmickDataIndex::kGimmickDataIndexMinigun] = LevelDataLoader::MinigunLoad;
 }
 
 LevelData* LevelDataLoader::Load(const std::string& fileName)
@@ -347,6 +348,22 @@ void LevelDataLoader::CannonLoad(nlohmann::json& object, LevelData::GimmickData*
 	gimmickData.cooltimeMax = object["cooltime"];
 	gimmickData.firingSpeed = object["firingSpeed"];
 	gimmickData.firingDirection = Matrix4x4::Transform(Vector3{0,0,1.0f},Matrix4x4::MakeRotateXYZMatrix(objectData->meshData.transform.rotate));
+}
+
+void LevelDataLoader::MinigunLoad(nlohmann::json& object, LevelData::GimmickData* objectData) {
+	objectData->gimmickSeparateData = MinigunData{};
+	MinigunData& gimmickData = std::get<MinigunData>(objectData->gimmickSeparateData);
+	//クラス名
+	objectData->meshData.className = "Minigun";
+	objectData->meshData.directoryPath = "Resources/Model/Gimmick/Gatling/";
+	objectData->meshData.flieName = "Gatling.gltf";
+
+	//データ
+	if (false) {
+		gimmickData.direction = object["cooltime"];
+		//gimmickData.firingSpeed = object["firingSpeed"];
+	}
+	gimmickData.direction = Matrix4x4::Transform(Vector3{ 0,0,1.0f }, Matrix4x4::MakeRotateXYZMatrix(objectData->meshData.transform.rotate));
 }
 
 EulerTransform LevelDataLoader::TransformLoad(nlohmann::json& object)

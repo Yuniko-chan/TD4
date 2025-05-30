@@ -10,6 +10,7 @@
 
 #include "../../Application/Object/Gimmick/IronBall/PendulumIronBallData.h"
 #include "../../Application/Object/Gimmick/Cannon/CannonData.h"
+#include "../../Application/Object/Gimmick/Minigun/MinigunData.h"
 
 /// <summary>
 /// レベルデータ
@@ -32,6 +33,7 @@ public: // サブクラス
 	enum GimmickDataIndex {
 		kGimmickDataIndexIronBall,
 		kGimmickDataIndexCannon,
+		kGimmickDataIndexMinigun,
 		kGimmickDataIndexCount
 	};
 
@@ -101,7 +103,7 @@ public: // サブクラス
 
 
 	//ギミックごとの個別データ
-	using GimmickSeparateData = std::variant<IronBallData,CannonData>;
+	using GimmickSeparateData = std::variant<IronBallData,CannonData,MinigunData>;
 
 	struct GimmickData {
 		//メッシュデータ
