@@ -217,6 +217,7 @@ void GameSceneObjectManager::AddObject(const std::string& className, const std::
 void GameSceneObjectManager::OptionProcess()
 {
 	partsManager_ = std::make_unique<VehiclePartsManager>();
+	pickupPointManager_ = std::make_unique<PickupPointManager>();
 
 	AddObject("TerrainObject", "Resources/Model/Ground", "Ground.obj");
 

@@ -2,6 +2,7 @@
 #include "../../../Engine/Object/BaseObjectManager.h"
 #include "../../System/Shadow/ShadowManager.h"
 #include "../Car/Manager/VehiclePartsManager.h"
+#include "../Car/Manager/PickupPointManager.h"
 
 // 前方宣言
 class Player;
@@ -76,7 +77,9 @@ private: // メンバ変数
 	LevelDataManager* levelDataManager_;
 
 private: // USER
+	// パーツマネージャー
 	std::unique_ptr<VehiclePartsManager> partsManager_;
-
+	// 拾う場所のマネージャー
+	std::unique_ptr<PickupPointManager> pickupPointManager_;
 };
 

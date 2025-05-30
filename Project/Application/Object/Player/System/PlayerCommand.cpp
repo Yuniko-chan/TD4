@@ -28,7 +28,8 @@ bool PlayerCommand::MoveCommand()
 	Vector3 leftStick = { keyConfig_->GetLeftStick()->x ,0.0f,keyConfig_->GetLeftStick()->y };
 	moveDirect_.x = keyConfig_->GetLeftStick()->x;
 	moveDirect_.z = keyConfig_->GetLeftStick()->y;
-
+	// 正規化
+	moveDirect_ = Vector3::Normalize(moveDirect_);
 	// 方向入力があればtrue
 	return moveDirect_.x != 0.0f || moveDirect_.y != 0.0f || moveDirect_.z != 0.0f;
 }
@@ -62,6 +63,17 @@ void PlayerCommand::VectorRotate()
 	}
 	// X-Z平面上に回転
 	Vector3 direct = TransformHelper::XZRotation(playerTransform_->direction_, theta_);
+	playerTransform_->direction_ = Vector3::Normalize(direct);
+}
+
+void PlayerCommand::StickMoveCommand()
+{
+	Vector2 rotate = Vector2::Normalize(Vector2(keyConfig_->GetLeftStick()->x, keyConfig_->GetLeftStick()->y));
+	// 向き
+	Vector3 direct = Vector3(rotate.x, 0.0f, rotate.y);
+	if (direct == Vector3(0.0f, 0.0f, 0.0f)) {
+		direct.z = 1.0f;
+	}
 	playerTransform_->direction_ = Vector3::Normalize(direct);
 }
 

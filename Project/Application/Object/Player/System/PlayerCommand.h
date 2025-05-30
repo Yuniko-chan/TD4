@@ -55,6 +55,11 @@ public: //
 	void VectorRotate();
 
 	/// <summary>
+	/// 
+	/// </summary>
+	void StickMoveCommand();
+
+	/// <summary>
 	/// 車両に乗っている際の回転
 	/// </summary>
 	void InVehicleRotateCommand();
