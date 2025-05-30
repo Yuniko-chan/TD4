@@ -34,6 +34,20 @@ void GameCameraManager::ImGuiDraw()
 {
 	ImGui::Begin("CameraManager");
 
+	static char changeName[256];
+	ImGui::InputText("ChangeCamera", changeName, 256);
+
+	// 変更受付
+	if (ImGui::Button("Change")) {
+		std::string sName = changeName;
+		if (sName == "Follow") {
+			SetRequest(ActiveCamera::kFollow);
+		}
+		if (sName == "Overhead") {
+			SetRequest(ActiveCamera::kOverhead);
+		}
+	}
+
 	// 追従
 	ImGui::BeginChild("Follow", ImVec2(300, 150), true);
 
@@ -43,6 +57,8 @@ void GameCameraManager::ImGuiDraw()
 
 	// 俯瞰
 	ImGui::BeginChild("Overhead", ImVec2(300, 150), true);
+
+	static_cast<OverheadCamera*>(FindCamera("Overhead"))->ImGuiDraw();
 
 	ImGui::EndChild();
 

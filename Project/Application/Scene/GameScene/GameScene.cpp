@@ -64,6 +64,7 @@ void GameScene::Initialize() {
 	cameraManager_ = std::make_unique<GameCameraManager>();
 	cameraManager_->Initialize();
 	static_cast<FollowCamera*>(cameraManager_->FindCamera("Follow"))->SetTarget(objectManager_->GetObjectPointer("Player")->GetWorldTransformAdress());
+	static_cast<OverheadCamera*>(cameraManager_->FindCamera("Overhead"))->SetTarget(objectManager_->GetObjectPointer("Player")->GetWorldTransformAdress());
 	static_cast<Player*>(objectManager_->GetObjectPointer("Player"))->SetCamera(static_cast<FollowCamera*>(cameraManager_->FindCamera("Follow")));
 	//// 追従カメラ
 	//followCamera_ = std::make_unique<FollowCamera>();
