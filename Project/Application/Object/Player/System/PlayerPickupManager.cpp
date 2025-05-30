@@ -3,6 +3,7 @@
 #include "../Player.h"
 #include "../../Car/Parts/PartsInterface.h"
 #include "../../Car/Manager/VehiclePartsManager.h"
+#include "../../Car/Manager/PickupPointManager.h"
 #include "../../Utility/Calc/TransformHelper.h"
 
 #include "../../../Engine/2D/ImguiManager.h"

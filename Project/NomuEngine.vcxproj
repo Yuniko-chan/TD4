@@ -186,6 +186,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Car\Parts\System\VehicleConnector.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Tire\TireParts.cpp" />
     <ClCompile Include="Application\Object\Car\PickupPoint\InterfacePickupPoint.cpp" />
+    <ClCompile Include="Application\Object\Car\PickupPoint\User\ArmorPickupPoint.cpp" />
+    <ClCompile Include="Application\Object\Car\PickupPoint\User\EnginePickupPoint.cpp" />
+    <ClCompile Include="Application\Object\Car\PickupPoint\User\TirePickupPoint.cpp" />
     <ClCompile Include="Application\Object\Car\System\DriveSystem.cpp" />
     <ClCompile Include="Application\Object\Player\Animation\PlayerAnimation.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp" />
@@ -409,6 +412,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Car\Physics\DriveSystem.h" />
     <ClInclude Include="Application\Object\Car\Physics\System\VehicleEngine.h" />
     <ClInclude Include="Application\Object\Car\PickupPoint\InterfacePickupPoint.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\PickupPointLists.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\User\ArmorPickupPoint.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\User\EnginePickupPoint.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\User\TirePickupPoint.h" />
     <ClInclude Include="Application\Object\Car\Preset\VehiclePaths.h" />
     <ClInclude Include="Application\Object\Car\Preset\VehiclePresetCreator.h" />
     <ClInclude Include="Application\Object\Car\System\DriveSystem.h" />

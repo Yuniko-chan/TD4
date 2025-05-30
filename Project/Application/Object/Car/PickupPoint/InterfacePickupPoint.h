@@ -4,6 +4,14 @@
 class IPickupPoint : public MeshObject
 {
 public:
+	enum PickupType {
+		kNone,
+		kEngine,
+		kTire,
+		kArmor,
+	};
+
+public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -14,7 +22,10 @@ public:
 	/// </summary>
 	void Update() override;
 
+	// アクセッサ
+	int32_t GetType() { return type_; }
 
-private:
-
+protected:
+	// タイプ
+	int32_t type_ = kNone;
 };

@@ -12,6 +12,7 @@ namespace Car
 }
 
 class VehiclePartsManager;
+class PickupPointManager;
 class Player;
 
 struct PickUpCollision {
@@ -43,6 +44,7 @@ public:
 	/// </summary>
 	/// <param name="manager"></param>
 	void SetPartsManager(VehiclePartsManager* manager) { partsManager_ = manager; }
+	void SetPickupPointManager(PickupPointManager* manager) { pickupPointManager_ = manager; }
 
 	/// <summary>
 	/// パーツに触れる処理
@@ -78,6 +80,8 @@ private:
 private:
 	// パーツのマネージャ
 	VehiclePartsManager* partsManager_ = nullptr;
+	// 拾える場所
+	PickupPointManager* pickupPointManager_ = nullptr;
 	// 持ってるパーツ
 	Car::IParts* holdParts_;
 	// 拾う用のコライダー

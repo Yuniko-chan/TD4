@@ -22,4 +22,6 @@ void IPickupPoint::Update()
 	// メッシュの更新
 	MeshObject::Update();
 
+	// 座標更新
+	worldTransform_.UpdateMatrix();
 }

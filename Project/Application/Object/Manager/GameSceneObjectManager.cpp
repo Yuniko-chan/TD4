@@ -42,6 +42,9 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 
 	}
 
+	// プレイヤーの設定などなど
+	PlayerInitialize();
+
 	// オプション関数（ハードコード
 	OptionProcess();
 }
@@ -214,11 +217,18 @@ void GameSceneObjectManager::AddObject(const std::string& className, const std::
 	objects_.emplace_back(object->GetName(), std::move(object));
 }
 
-void GameSceneObjectManager::OptionProcess()
+void GameSceneObjectManager::PlayerInitialize()
 {
 	partsManager_ = std::make_unique<VehiclePartsManager>();
 	pickupPointManager_ = std::make_unique<PickupPointManager>();
 
+	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
+	player->GetPickUpManager()->SetPartsManager(partsManager_.get());
+	player->GetPickUpManager()->SetPickupPointManager(pickupPointManager_.get());
+}
+
+void GameSceneObjectManager::OptionProcess()
+{
 	AddObject("TerrainObject", "Resources/Model/Ground", "Ground.obj");
 
 	// コア作成
@@ -226,7 +236,6 @@ void GameSceneObjectManager::OptionProcess()
 	
 	// キャスト
 	//VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer("VehicleCore"));
-	//Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
 
 	// ペアレント＋トランスフォーム親子設定
 	//core->SetPlayer(player);
@@ -247,7 +256,6 @@ void GameSceneObjectManager::VehiclePreset(const std::string& presetName)
 	// ペアレント＋トランスフォーム親子設定
 	core->SetPlayer(player);
 	player->SetPair(core);
-	player->GetPickUpManager()->SetPartsManager(partsManager_.get());
 	partsManager_->AddParts(core->GetName(), core);
 
 

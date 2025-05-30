@@ -2,6 +2,7 @@
 #include "../../../Engine/Object/MeshObject.h"
 #include "../../../Engine/Animation/Animation.h"
 #include "../../Camera/FollowCamera.h"
+#include "../../Camera/GameCameraManager.h"
 
 #include "PlayerSystemLists.h"
 
@@ -91,10 +92,11 @@ public: // アクセッサ（プレイヤーシステム以外）
     VehicleCore* GetCore() { return pairCore_; }
     // カメラ
     FollowCamera* GetCamera() { return followCamera_; }
-
+    GameCameraManager* GetCameraManager() { return cameraManager_; }
     //---セッター---//
     void SetPair(VehicleCore* pair) { pairCore_ = pair; }
     void SetCamera(FollowCamera* camera) { followCamera_ = camera; }
+    void SetCameraManager(GameCameraManager* cameraManager) { cameraManager_ = cameraManager; }
 private:
     // システムクラス
     std::unique_ptr<PlayerAnimation> playerAnimation_;
@@ -109,4 +111,6 @@ private:
     VehicleCore* pairCore_ = nullptr;
     // カメラ
     FollowCamera* followCamera_ = nullptr;
+    // カメラ管理クラス
+    GameCameraManager* cameraManager_ = nullptr;
 };

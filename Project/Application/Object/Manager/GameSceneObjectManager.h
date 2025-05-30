@@ -62,6 +62,8 @@ private: // メンバ関数
 	void AddObject(const std::string& className, const std::string& name, const std::string& directory, const std::string& modelName);
 	void AddObject(const std::string& className, const std::string& name, const std::string& directory, const std::string& modelName, const Vector3& position);
 
+	// プレイヤー専用の初期化処理
+	void PlayerInitialize();
 	void OptionProcess();
 
 	void VehiclePreset(const std::string& presetName);
