@@ -231,6 +231,9 @@ void GameSceneObjectManager::OptionProcess()
 {
 	AddObject("TerrainObject", "Resources/Model/Ground", "Ground.obj");
 
+	AddObject("EnginePickupPoint", sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
+	AddObject("TirePickupPoint", sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
+	AddObject("ArmorPickupPoint", sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
 	// コア作成
 	//AddObject("VehicleCore", "Resources/Model/Frame", "Frame.obj");
 	

@@ -13,6 +13,10 @@ enum CreateObjectIndex {
 	kCreateObjectIndexCarTire,	// タイヤ
 	kCreateObjectIndexCarArmorFrame,	// フレーム
 
+	kCreateObjectIndexEnginePoint,	// エンジン箇所
+	kCreateObjectIndexTirePoint,	// タイヤ箇所
+	kCreateObjectIndexArmorPoint,		// アーマー箇所
+
 	// 地形
 	kCreateObjectIndexTerrain,
 

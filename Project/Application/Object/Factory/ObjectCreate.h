@@ -35,4 +35,10 @@ public:	// USER
 	static IObject* CreateObjectIParts(LevelData::ObjectData& objectData);
 
 	static IObject* CreateObjectTerrain(LevelData::ObjectData& objectData);
+
+	static IObject* CreateObjectEnginePoint(LevelData::ObjectData& objectData);
+
+	static IObject* CreateObjectTirePoint(LevelData::ObjectData& objectData);
+	
+	static IObject* CreateObjectArmorPoint(LevelData::ObjectData& objectData);
 };

@@ -1,6 +1,7 @@
 #pragma once
 #include "Player/Player.h"
 #include "Car/CarLists.h"
+#include "Car/PickupPoint/PickupPointLists.h"
 #include "Terrain/TerrainObject.h"
 
 // 以下ギミック

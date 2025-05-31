@@ -69,3 +69,27 @@ IObject* ObjectCreate::CreateObjectTerrain(LevelData::ObjectData& objectData)
 	static_cast<TerrainObject*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
 	return object;
 }
+
+IObject* ObjectCreate::CreateObjectEnginePoint(LevelData::ObjectData& objectData)
+{
+	IObject* object = new EnginePickupPoint();
+
+	static_cast<EnginePickupPoint*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}
+
+IObject* ObjectCreate::CreateObjectTirePoint(LevelData::ObjectData& objectData)
+{
+	IObject* object = new TirePickupPoint();
+
+	static_cast<TirePickupPoint*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}
+
+IObject* ObjectCreate::CreateObjectArmorPoint(LevelData::ObjectData& objectData)
+{
+	IObject* object = new ArmorPickupPoint();
+
+	static_cast<ArmorPickupPoint*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}
