@@ -52,6 +52,13 @@ private: // メンバ関数
 	/// </summary>
 	void ShadowUpdate();
 
+
+	// プレイヤー専用の初期化処理
+	void PlayerInitialize();
+	void OptionProcess();
+
+	void VehiclePreset(const std::string& presetName);
+public:
 	/// <summary>
 	/// オブジェクト追加（ハードコーディング用）
 	/// </summary>
@@ -62,11 +69,9 @@ private: // メンバ関数
 	void AddObject(const std::string& className, const std::string& name, const std::string& directory, const std::string& modelName);
 	void AddObject(const std::string& className, const std::string& name, const std::string& directory, const std::string& modelName, const Vector3& position);
 
-	// プレイヤー専用の初期化処理
-	void PlayerInitialize();
-	void OptionProcess();
-
-	void VehiclePreset(const std::string& presetName);
+public:
+	// パーツ用のマネージャークラス取得
+	VehiclePartsManager* GetPartsManager() { return partsManager_.get(); }
 
 private: // メンバ変数
 

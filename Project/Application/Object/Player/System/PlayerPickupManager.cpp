@@ -119,16 +119,35 @@ void PlayerPickupManager::ReleaseAction()
 
 void PlayerPickupManager::CatchAction()
 {
-	// 一番近いパーツ
-	Car::IParts* nearParts = partsManager_->FindRootNonCoreParts(owner_->GetWorldTransformAdress()->GetWorldPosition());
-	// エラー回避用
-	if (nearParts) {
-		// 失敗
-		OnCatchFailure();
-
-		// 成功
-		OnCatchSuccess(nearParts);
+	// falseなら受付失敗
+	if (!pickupPointManager_->IsAccept(owner_->GetWorldTransformAdress()->GetWorldPosition())) {
+		return;
 	}
+	// パーツ取得
+	Car::IParts* nearParts = pickupPointManager_->AttemptPartAcquisition();
+	// 拾う処理
+	PickUp(nearParts);
+	// 一番近いパーツ
+	//Car::IParts* nearParts = partsManager_->FindRootNonCoreParts(owner_->GetWorldTransformAdress()->GetWorldPosition());
+	// エラー回避用
+	//if (nearParts) {
+	//	// 失敗
+	//	OnCatchFailure();
+
+	//	// 成功
+	//	OnCatchSuccess(nearParts);
+	//}
+}
+
+void PlayerPickupManager::PickUp(Car::IParts* parts)
+{
+	// つかみパーツとしてポインタ取得
+	holdParts_ = parts;
+	// オフセットの位置に設定・親子設定
+	const Vector3 localOffset = Vector3(0.0f, 0.0f, 2.0f);
+	holdParts_->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
+	holdParts_->GetWorldTransformAdress()->transform_.translate = localOffset;
+	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
 }
 
 void PlayerPickupManager::OnCatchSuccess(Car::IParts* parts)

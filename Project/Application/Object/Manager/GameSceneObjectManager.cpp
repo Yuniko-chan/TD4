@@ -219,8 +219,11 @@ void GameSceneObjectManager::AddObject(const std::string& className, const std::
 
 void GameSceneObjectManager::PlayerInitialize()
 {
+	// パーツ
 	partsManager_ = std::make_unique<VehiclePartsManager>();
+	// ピックアップ
 	pickupPointManager_ = std::make_unique<PickupPointManager>();
+	pickupPointManager_->SetObjectManager(this);
 
 	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
 	player->GetPickUpManager()->SetPartsManager(partsManager_.get());
@@ -231,9 +234,14 @@ void GameSceneObjectManager::OptionProcess()
 {
 	AddObject("TerrainObject", "Resources/Model/Ground", "Ground.obj");
 
-	AddObject("EnginePickupPoint", sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
-	AddObject("TirePickupPoint", sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
+	AddObject("EnginePickupPoint", sVehiclePaths[VehicleDatas::kEngine].first, sVehiclePaths[VehicleDatas::kEngine].second);
+	AddObject("TirePickupPoint", sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
 	AddObject("ArmorPickupPoint", sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
+	
+	pickupPointManager_->AddPickupPoint("EnginePickupPoint", static_cast<IPickupPoint*>(this->GetObjectPointer("EnginePickupPoint")));
+	pickupPointManager_->AddPickupPoint("TirePickupPoint", static_cast<IPickupPoint*>(this->GetObjectPointer("TirePickupPoint")));
+	pickupPointManager_->AddPickupPoint("ArmorPickupPoint", static_cast<IPickupPoint*>(this->GetObjectPointer("ArmorPickupPoint")));
+
 	// コア作成
 	//AddObject("VehicleCore", "Resources/Model/Frame", "Frame.obj");
 	

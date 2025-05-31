@@ -67,6 +67,8 @@ private:
 	/// </summary>
 	void CatchAction();
 
+	void PickUp(Car::IParts* parts);
+
 	/// <summary>
 	/// 拾うのに成功処理
 	/// </summary>
