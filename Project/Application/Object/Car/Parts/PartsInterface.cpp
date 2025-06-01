@@ -6,6 +6,11 @@
 #include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Engine/Physics/Gravity/Gravity.h"
 
+int32_t Car::SerialNumberGenerate::sSerialArmor = 0;
+int32_t Car::SerialNumberGenerate::sSerialEngine = 0;
+int32_t Car::SerialNumberGenerate::sSerialTire = 0;
+int32_t Car::SerialNumberGenerate::sSerialCore = 0;
+
 void Car::IParts::Initialize(LevelData::MeshData* data)
 {
 	// 基底

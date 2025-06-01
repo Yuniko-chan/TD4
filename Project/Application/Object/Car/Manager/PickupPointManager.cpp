@@ -53,20 +53,20 @@ Car::IParts* PickupPointManager::GenerateParts(int32_t partNum)
 	switch (partNum)
 	{
 	case IPickupPoint::kEngine:
-		Car::sSerialEngine++;
-		objectName = "Engine" + std::to_string(Car::sSerialEngine);
+		Car::SerialNumberGenerate::sSerialEngine++;
+		objectName = "Engine" + std::to_string(Car::SerialNumberGenerate::sSerialEngine);
 		static_cast<GameSceneObjectManager*>(objectManager_)->AddObject("EngineParts", objectName, sVehiclePaths[VehicleDatas::kEngine].first, sVehiclePaths[VehicleDatas::kEngine].second);
 
 		break;
 	case IPickupPoint::kTire:
-		Car::sSerialTire++;
-		objectName = "Tire" + std::to_string(Car::sSerialTire);
+		objectName = "Tire" + std::to_string(Car::SerialNumberGenerate::sSerialTire);
+		Car::SerialNumberGenerate::sSerialTire++;
 		static_cast<GameSceneObjectManager*>(objectManager_)->AddObject("TireParts", objectName, sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
 
 		break;
 	case IPickupPoint::kArmor:
-		Car::sSerialArmor++;
-		objectName = "Armor" + std::to_string(Car::sSerialArmor);
+		Car::SerialNumberGenerate::sSerialArmor++;
+		objectName = "Armor" + std::to_string(Car::SerialNumberGenerate::sSerialArmor);
 		static_cast<GameSceneObjectManager*>(objectManager_)->AddObject("ArmorFrameParts", objectName, sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
 
 		break;

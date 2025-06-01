@@ -125,8 +125,9 @@ void VehicleHandling::PostUpdate(const Vector3& velocity, float leftWheel, float
 
 			//}
 		}
+		//else if(leftWheel == 0 && rightWheel == 0 && ())
 
-		if (leftWheel == 0 && rightWheel == 0 && (std::fabsf(steerDirection_.x) != 0.0f)) {
+		else if (leftWheel == 0 && rightWheel == 0 && (std::fabsf(steerDirection_.x) != 0.0f)) {
 			steerDirection_.x *= (1.0f / 30.0f);
 		}
 

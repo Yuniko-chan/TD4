@@ -12,15 +12,19 @@ class VehiclePartsManager;
 
 namespace Car
 {
-	//---パーツごとのシリアル---//
-	// エンジン
-	static int32_t sSerialEngine = 0;
-	// アーマー
-	static int32_t sSerialArmor = 0;
-	// タイヤ
-	static int32_t sSerialTire = 0;
-	// コア
-	static int32_t sSerialCore = 0;
+	class SerialNumberGenerate {
+	public:
+		//---パーツごとのシリアル---//
+		// エンジン
+		static int32_t sSerialEngine;
+		// アーマー
+		static int32_t sSerialArmor;
+		// タイヤ
+		static int32_t sSerialTire;
+		// コア
+		static int32_t sSerialCore;
+
+	};
 
 	/// <summary>
 	/// 基底パーツ

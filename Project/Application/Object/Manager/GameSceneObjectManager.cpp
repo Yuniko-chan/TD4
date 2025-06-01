@@ -101,24 +101,24 @@ void GameSceneObjectManager::ImGuiDraw()
 	ImGui::DragFloat3("SpownPoint", &spownPoint.x, 0.01f);
 
 	if (ImGui::Button("タイヤ追加")) {
-		std::string name = "Tire" + std::to_string(Car::sSerialTire);
+		std::string name = "Tire" + std::to_string(Car::SerialNumberGenerate::sSerialTire);
 		AddObject("TireParts", name.c_str(), "Resources/Model/Tire", "Tire.obj", spownPoint);
 		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-		Car::sSerialTire++;
+		Car::SerialNumberGenerate::sSerialTire++;
 	}
 
 	if (ImGui::Button("フレーム追加")) {
-		std::string name = "ArmorFrame" + std::to_string(Car::sSerialArmor);
+		std::string name = "ArmorFrame" + std::to_string(Car::SerialNumberGenerate::sSerialArmor);
 		AddObject("ArmorFrameParts", name.c_str(), "Resources/Model/Frame", "Frame.obj", spownPoint);
 		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-		Car::sSerialArmor++;
+		Car::SerialNumberGenerate::sSerialArmor++;
 	}
 
 	if (ImGui::Button("エンジン追加")) {
-		std::string name = "Engine" + std::to_string(Car::sSerialEngine);
+		std::string name = "Engine" + std::to_string(Car::SerialNumberGenerate::sSerialEngine);
 		AddObject("EngineParts", name.c_str(), "Resources/Model/Engine", "Engine.obj", spownPoint);
 		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-		Car::sSerialEngine++;
+		Car::SerialNumberGenerate::sSerialEngine++;
 	}
 
 	ImGui::End();
@@ -278,13 +278,15 @@ void GameSceneObjectManager::VehiclePreset(const std::string& presetName)
 
 
 
-	name = presetName + "Tire1";
+	name = presetName + "Tire" + std::to_string(Car::SerialNumberGenerate::sSerialTire);
+	Car::SerialNumberGenerate::sSerialTire++;
 	AddObject("TireParts", name.c_str(),
 		sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
 	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
 	core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(1, 0));
 	
-	name = presetName + "Tire2";
+	name = presetName + "Tire" + std::to_string(Car::SerialNumberGenerate::sSerialTire);
+	Car::SerialNumberGenerate::sSerialTire++;
 	AddObject("TireParts", name.c_str(),
 		sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
 	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
