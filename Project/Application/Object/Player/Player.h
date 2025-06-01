@@ -91,11 +91,9 @@ public: // アクセッサ（プレイヤーシステム以外）
     // コア
     VehicleCore* GetCore() { return pairCore_; }
     // カメラ
-    FollowCamera* GetCamera() { return followCamera_; }
     GameCameraManager* GetCameraManager() { return cameraManager_; }
     //---セッター---//
     void SetPair(VehicleCore* pair) { pairCore_ = pair; }
-    void SetCamera(FollowCamera* camera) { followCamera_ = camera; }
     void SetCameraManager(GameCameraManager* cameraManager) { cameraManager_ = cameraManager; }
 private:
     // システムクラス
@@ -109,8 +107,6 @@ private:
     PlayerFrontChecker frontChecker_;
     // ペア
     VehicleCore* pairCore_ = nullptr;
-    // カメラ
-    FollowCamera* followCamera_ = nullptr;
     // カメラ管理クラス
     GameCameraManager* cameraManager_ = nullptr;
 };

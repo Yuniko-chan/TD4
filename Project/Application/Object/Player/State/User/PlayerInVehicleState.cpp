@@ -8,6 +8,7 @@ void PlayerInVehicleState::Initialize()
 	player_->SettingParent();
 	// 回転角初期化
 	player_->GetWorldTransformAdress()->transform_.rotate = {};
+	player_->GetWorldTransformAdress()->direction_ = Vector3(0.0f, 0.0f, 1.0f);
 }
 
 void PlayerInVehicleState::Update()

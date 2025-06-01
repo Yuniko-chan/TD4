@@ -11,7 +11,6 @@ void PlayerRideActionState::Initialize()
 	startRotate_ = player_->GetWorldTransformAdress()->direction_;
 	float frame = GlobalVariables::GetInstance()->GetFloatValue("Player", "RideActionFrame");
 	animTimer_.Start(frame);
-	//player_->GetCamera()->ChangeRequest(FollowCamera::AngleMode::kVehicle, frame);
 
 	player_->GetCameraManager()->SetRequest(ActiveCamera::kFollow);
 
