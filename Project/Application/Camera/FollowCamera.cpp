@@ -42,8 +42,6 @@ void FollowCamera::Initialize() {
 	offset_ = Vector3(onFootOffset_);
 	usedDirection_ = true;
 
-	ChangeRequest(AngleMode::kPlayer, float(30.0f));
-
 	cameraTransform_ = &transform_;
 
 	// 開始点
@@ -63,40 +61,6 @@ void FollowCamera::Update(float elapsedTime) {
 	
 	// 遷移用の受付
 	TransitionUpdate();
-
-	//if (modeRequest_) {
-	//	// モード設定
-	//	mode_ = modeRequest_.value();
-	//	switch (mode_)
-	//	{
-	//	case FollowCamera::AngleMode::kPlayer:
-	//		startPoint_ = Vector3(inVehicleOffset_);
-	//		endPoint_ = Vector3(onFootOffset_);
-	//		startDirection_ = Vector3(inVehicleRotation_);
-	//		endDirection_ = Vector3(onFootRotation_);
-	//		break;
-	//	case FollowCamera::AngleMode::kVehicle:
-	//		startPoint_ = Vector3(onFootOffset_);
-	//		endPoint_ = Vector3(inVehicleOffset_);
-	//		startDirection_ = Vector3(onFootRotation_);
-	//		endDirection_ = Vector3(inVehicleRotation_);
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//	modeRequest_ = std::nullopt;
-	//}
-
-	//// 遷移
-	//if (transitionTimer_.IsActive()) {
-	//	offset_ = Ease::Easing(Ease::EaseName::Lerp, startPoint_, endPoint_, transitionTimer_.GetElapsedFrame());
-	//	rotateDirection_ = Ease::Easing(Ease::EaseName::Lerp, startDirection_, endDirection_, transitionTimer_.GetElapsedFrame());
-	//	if (transitionTimer_.IsEnd()) {
-	//		transitionTimer_.End();
-	//	}
-	//}
-	//// タイマー更新
-	//transitionTimer_.Update();
 
 	//追従対象がいれば
 	if (target_) {
@@ -152,20 +116,6 @@ void FollowCamera::ImGuiDraw()
 	ImGui::DragFloat3("Offset", &offset_.x, 0.01f);
 	ImGui::DragFloat3("RotateVector", &rotateDirection_.x, 0.01f);
 	ImGui::Checkbox("UseDirection", &usedDirection_);
-	if (ImGui::Button("Change")) {
-		if (mode_ == AngleMode::kPlayer) {
-			modeRequest_ = AngleMode::kVehicle;
-		}
-		else {
-			modeRequest_ = AngleMode::kPlayer;
-		}
-	}
-}
-
-void FollowCamera::ChangeRequest(AngleMode mode, float frame)
-{
-	modeRequest_ = mode;
-	transitionTimer_.Start(frame);
 }
 
 void FollowCamera::SetTarget(const WorldTransform* target)
