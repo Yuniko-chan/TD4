@@ -77,6 +77,7 @@ public: // メンバ関数
 	/// </summary>
 	void ImGuiDraw();
 
+	void DisEnable();
 private: // メンバ関数
 
 	/// <summary>

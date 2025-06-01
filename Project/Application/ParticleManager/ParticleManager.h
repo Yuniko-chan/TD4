@@ -36,7 +36,10 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw(BaseCamera& camera);
-
+	/// <summary>
+	/// パーティクルの生成を止める
+	/// </summary>
+	/// <param name="particleName">生成時に付けた名前</param>
 	void StopEmission(std::string particleName);
 
 	/// <summary>
