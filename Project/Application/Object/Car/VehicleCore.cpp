@@ -54,6 +54,9 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 
 	animation_ = std::make_unique<VehicleAnimation>();
 	animation_->Initialize(model_);
+
+	hpHandler_.SetOwner(this);
+	hpHandler_.Initialize();
 }
 
 void VehicleCore::Update()

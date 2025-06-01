@@ -50,7 +50,7 @@ void VehicleConstructionSystem::ImGuiDraw()
 		// 解除ボタン
 		name = (*it).second->GetName() + "Release";
 		if (ImGui::Button(name.c_str())) {
-			(*it).second->SetHP(0);
+			(*it).second->GetHPHandler()->SetHP(0);
 		}
 	}
 }
@@ -134,7 +134,7 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 	PartsOffsetCalculator calculator;
 
 	// HPのリセット処理
-	parts->SetHP(1);
+	parts->GetHPHandler()->Initialize();
 	// 親子関係
 	parts->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
 	// オフセット

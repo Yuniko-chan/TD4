@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Engine/Object/MeshObject.h"
 #include "System/VehicleConnector.h"
+#include "System/PartHPHandler.h"
 
 #include <memory>
 
@@ -55,6 +56,8 @@ namespace Car
 		VehicleConnector* GetConnector() { return connector_.get(); }
 		// 消すフラグ
 		bool GetIsDelete() { return isDelete_; }
+
+		PartHPHandler* GetHPHandler() { return &hpHandler_; }
 		//// 親があるか（ポインタで取得可能なように）
 		//VehicleCore* GetParent() { return parentCore_; }
 
@@ -63,8 +66,7 @@ namespace Car
 		void SetParent(VehicleCore* parent) { parentCore_ = parent; }
 		// 消す
 		void SetIsDelete(bool isDelete) { isDelete_ = isDelete; }
-		// HP
-		void SetHP(int32_t hp) { hitPoint_ = hp; }
+
 	protected:
 		/// <summary>
 		/// ImGui
@@ -94,8 +96,7 @@ namespace Car
 		bool isDelete_ = false;
 		// 接続システム
 		std::unique_ptr<VehicleConnector> connector_;
-		// HP
-		int32_t hitPoint_ = 1;
-		
+		// HP管理クラス
+		PartHPHandler hpHandler_;
 	};
 }

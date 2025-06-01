@@ -183,6 +183,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Car\Manager\VehiclePartsManager.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Engine\EngineParts.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Frame\ArmorFrameParts.cpp" />
+    <ClCompile Include="Application\Object\Car\Parts\System\PartHPHandler.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\System\PartsOffsetCalculator.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\System\VehicleConnector.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Tire\TireParts.cpp" />
@@ -409,6 +410,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Car\Construction\VehicleConstructionSystem.h" />
     <ClInclude Include="Application\Object\Car\Manager\PickupPointManager.h" />
     <ClInclude Include="Application\Object\Car\Manager\VehiclePartsManager.h" />
+    <ClInclude Include="Application\Object\Car\Parts\System\PartHPHandler.h" />
     <ClInclude Include="Application\Object\Car\Parts\System\PartsOffsetCalculator.h" />
     <ClInclude Include="Application\Object\Car\Parts\System\VehicleConnector.h" />
     <ClInclude Include="Application\Object\Car\Physics\DriveSystem.h" />

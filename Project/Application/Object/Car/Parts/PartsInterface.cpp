@@ -20,6 +20,9 @@ void Car::IParts::Initialize(LevelData::MeshData* data)
 
 	connector_ = std::make_unique<VehicleConnector>();
 	connector_->SetOwner(this);
+
+	hpHandler_.SetOwner(this);
+	hpHandler_.Initialize();
 }
 
 void Car::IParts::Update()
@@ -34,10 +37,13 @@ void Car::IParts::Update()
 	// コライダーの更新
 	ColliderUpdate();
 
-	// HPがなくなり次第Deleteフラグをセット
-	if (hitPoint_ <= 0) {
-		isDelete_ = true;
-	}
+	// HP更新
+	hpHandler_.Update();
+
+	//// HPがなくなり次第Deleteフラグをセット
+	//if (hitPoint_ <= 0) {
+	//	isDelete_ = true;
+	//}
 
 }
 
@@ -116,9 +122,8 @@ void Car::IParts::ImGuiDrawChildParts()
 	name = name_ + ":Release";
 	// 解除
 	if (ImGui::Button(name.c_str())) {
-		//isDelete_ = true;
-		hitPoint_ = 0;
-		//ReleaseParent();
+		// 倒す処理
+		hpHandler_.OnHit(20);
 	}
 	name = name_ + ":ChildData";
 	if (ImGui::TreeNode(name.c_str())) {
