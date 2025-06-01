@@ -2,12 +2,13 @@
 #include "../../../Engine/3D/Transform/WorldTransform.h"
 #include "../../../Engine/Camera/BaseCamera.h"
 #include "../Object/Utility/Timer/FrameTimer.h"
+#include "Transition/TransitionCameraModule.h"
 
 /// <summary>
 /// 俯瞰カメラ
 /// </summary>
 class OverheadCamera :
-	public BaseCamera
+	public BaseCamera, public TransitionCameraModule
 {
 public: // メンバ関数
 
@@ -22,6 +23,14 @@ public: // メンバ関数
 	void Update(float elapsedTime = 0.0f) override;
 
 	void ImGuiDraw();
+
+	//void RequestSwitch();
+
+private:
+
+	void ApplyGlobalVariable();
+
+	void TransitionUpdate() override;
 
 public: // アクセッサ
 
@@ -57,4 +66,6 @@ private: // メンバ関数
 	// 回転向きのベクトル
 	Vector3 rotateDirection_ = Vector3(0.0f, 0.0f, 1.0f);
 
+	float offsetMoveRate_ = 0.0f;
+	Vector3 start_ = {};
 };

@@ -30,10 +30,12 @@ public:
 	// 変更
 	void SetRequest(ActiveCamera request) { request_ = request; }
 
+	void Acception();
+
 private:
 	// カメラのマップ
 	std::map<std::string, std::unique_ptr<BaseCamera>> cameras_;
 	// 選択中のカメラ
-	ActiveCamera activeCamera_ = ActiveCamera::kFollow;
+	ActiveCamera activeCamera_ = ActiveCamera::kOverhead;
 	std::optional<ActiveCamera> request_ = std::nullopt;
 };

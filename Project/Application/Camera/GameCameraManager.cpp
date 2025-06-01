@@ -1,6 +1,7 @@
 #include "GameCameraManager.h"
 #include "CameraLists.h"
 #include "../../Engine/2D/ImguiManager.h"
+#include "../../Engine/GlobalVariables/GlobalVariables.h"
 
 void GameCameraManager::Initialize()
 {
@@ -20,6 +21,7 @@ void GameCameraManager::Update(float elapsedTime)
 	// リクエストの受付
 	if (request_) {
 		activeCamera_ = request_.value();
+		Acception();
 		request_ = std::nullopt;
 	}
 
@@ -95,4 +97,23 @@ BaseCamera* GameCameraManager::GetActiveCamera()
 	}
 	// なければnull
 	return nullptr;
+}
+
+void GameCameraManager::Acception()
+{
+	//const float changeFrame = 60.0f;
+	// 選択中のカメラを返すように
+	switch (activeCamera_)
+	{
+	case ActiveCamera::kDebug:
+		FindCamera("Debug");
+		break;
+	case ActiveCamera::kFollow:
+		static_cast<FollowCamera*>(FindCamera("Follow"))->Accept(GlobalVariables::GetInstance()->GetFloatValue("Player", "RideActionFrame"));
+		break;
+	case ActiveCamera::kOverhead:
+		static_cast<OverheadCamera*>(FindCamera("Overhead"))->Accept(GlobalVariables::GetInstance()->GetFloatValue("Player", "DropOffActionFrame"));
+		break;
+	}
+
 }

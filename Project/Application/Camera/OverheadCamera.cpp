@@ -13,17 +13,39 @@ void OverheadCamera::Initialize()
 
 	usedDirection_ = true;
 
+
+	cameraTransform_ = &transform_;
+
+	const char* groupName = "FollowCamera";
+	// オフセット
+	offset_ = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootOffset");
+	// 開始点
+	from_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleOffset");
+	from_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleRotation");
+	// 終着点
+	to_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootOffset");
+	to_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootRotation");
+
 }
 
 void OverheadCamera::Update(float elapsedTime)
 {
+#ifdef _DEMO
+
+	ApplyGlobalVariable();
+
+#endif // _DEMO
+
+	// 遷移更新
+	TransitionUpdate();
+
 	//追従対象がいれば
 	if (target_) {
 		// 追従座標の補間(Z軸を取ってくる)
 		//const Vector3 kTargetPositionEnd = { 0.0f, 0.0f, target_->worldMatrix_.m[3][2] };
 		const Vector3 kTargetPositionEnd = { target_->worldMatrix_.m[3][0],target_->worldMatrix_.m[3][1] ,target_->worldMatrix_.m[3][2] };
 		// 前後で追従レートの変化を付ける
-		interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, 0.15f);
+		interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, offsetMoveRate_);
 
 		// オフセット
 		Vector3 offset = OffsetCalc();
@@ -64,6 +86,25 @@ void OverheadCamera::ImGuiDraw()
 	ImGui::DragFloat3("Offset", &offset_.x, 0.01f);
 	ImGui::DragFloat3("RotateVector", &rotateDirection_.x, 0.01f);
 	ImGui::Checkbox("UseDirection", &usedDirection_);
+
+}
+
+void OverheadCamera::ApplyGlobalVariable()
+{
+	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
+	const char* groupName = "FollowCamera";
+
+	offsetMoveRate_ = globalVariables->GetFloatValue(groupName, "offsetMoveRate");
+
+}
+
+void OverheadCamera::TransitionUpdate()
+{
+	TransitionCameraModule::TransitionUpdate();
+
+	if (transitionTimer_.IsActive()) {
+		rotateDirection_ = cameraDirection_;
+	}
 
 }
 

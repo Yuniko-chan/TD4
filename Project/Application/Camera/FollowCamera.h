@@ -2,12 +2,13 @@
 #include "../../../Engine/3D/Transform/WorldTransform.h"
 #include "../../../Engine/Camera/BaseCamera.h"
 #include "../Object/Utility/Timer/FrameTimer.h"
+#include "Transition/TransitionCameraModule.h"
 
 /// <summary>
 /// 追従カメラ
 /// </summary>
 class FollowCamera :
-	public BaseCamera
+	public BaseCamera, public TransitionCameraModule
 {
 public:
 	// カメラ画角モード
@@ -64,6 +65,9 @@ private: // メンバ関数
 	/// 調整項目の適用
 	/// </summary>
 	void ApplyGlobalVariables();
+
+private:
+	void TransitionUpdate() override;
 
 private: // メンバ変数
 

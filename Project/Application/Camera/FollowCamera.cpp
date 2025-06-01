@@ -43,6 +43,16 @@ void FollowCamera::Initialize() {
 	usedDirection_ = true;
 
 	ChangeRequest(AngleMode::kPlayer, float(30.0f));
+
+	cameraTransform_ = &transform_;
+
+	// 開始点
+	from_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootOffset");
+	from_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootRotation");
+	// 終着点
+	to_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleOffset");
+	to_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleRotation");
+
 }
 
 void FollowCamera::Update(float elapsedTime) {
@@ -51,40 +61,42 @@ void FollowCamera::Update(float elapsedTime) {
 	ApplyGlobalVariables();
 #endif // _DEMO
 	
+	// 遷移用の受付
+	TransitionUpdate();
 
-	if (modeRequest_) {
-		// モード設定
-		mode_ = modeRequest_.value();
-		switch (mode_)
-		{
-		case FollowCamera::AngleMode::kPlayer:
-			startPoint_ = Vector3(inVehicleOffset_);
-			endPoint_ = Vector3(onFootOffset_);
-			startDirection_ = Vector3(inVehicleRotation_);
-			endDirection_ = Vector3(onFootRotation_);
-			break;
-		case FollowCamera::AngleMode::kVehicle:
-			startPoint_ = Vector3(onFootOffset_);
-			endPoint_ = Vector3(inVehicleOffset_);
-			startDirection_ = Vector3(onFootRotation_);
-			endDirection_ = Vector3(inVehicleRotation_);
-			break;
-		default:
-			break;
-		}
-		modeRequest_ = std::nullopt;
-	}
+	//if (modeRequest_) {
+	//	// モード設定
+	//	mode_ = modeRequest_.value();
+	//	switch (mode_)
+	//	{
+	//	case FollowCamera::AngleMode::kPlayer:
+	//		startPoint_ = Vector3(inVehicleOffset_);
+	//		endPoint_ = Vector3(onFootOffset_);
+	//		startDirection_ = Vector3(inVehicleRotation_);
+	//		endDirection_ = Vector3(onFootRotation_);
+	//		break;
+	//	case FollowCamera::AngleMode::kVehicle:
+	//		startPoint_ = Vector3(onFootOffset_);
+	//		endPoint_ = Vector3(inVehicleOffset_);
+	//		startDirection_ = Vector3(onFootRotation_);
+	//		endDirection_ = Vector3(inVehicleRotation_);
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//	modeRequest_ = std::nullopt;
+	//}
 
-	// 遷移
-	if (transitionTimer_.IsActive()) {
-		offset_ = Ease::Easing(Ease::EaseName::Lerp, startPoint_, endPoint_, transitionTimer_.GetElapsedFrame());
-		rotateDirection_ = Ease::Easing(Ease::EaseName::Lerp, startDirection_, endDirection_, transitionTimer_.GetElapsedFrame());
-		if (transitionTimer_.IsEnd()) {
-			transitionTimer_.End();
-		}
-	}
-	// タイマー更新
-	transitionTimer_.Update();
+	//// 遷移
+	//if (transitionTimer_.IsActive()) {
+	//	offset_ = Ease::Easing(Ease::EaseName::Lerp, startPoint_, endPoint_, transitionTimer_.GetElapsedFrame());
+	//	rotateDirection_ = Ease::Easing(Ease::EaseName::Lerp, startDirection_, endDirection_, transitionTimer_.GetElapsedFrame());
+	//	if (transitionTimer_.IsEnd()) {
+	//		transitionTimer_.End();
+	//	}
+	//}
+	//// タイマー更新
+	//transitionTimer_.Update();
 
 	//追従対象がいれば
 	if (target_) {
@@ -169,19 +181,22 @@ Matrix4x4 FollowCamera::GetRotateMatrix()
 	if (target_) {
 		// 
 		if (usedDirection_) {
-			// 対象に親がいれば
-			if (target_->parent_) {
-				// 自分の回転
-				Matrix4x4 from = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, Vector3::Normalize(rotateDirection_));
-				// 対象の回転
-				Matrix4x4 to = target_->parent_->rotateMatrix_;
-				return Matrix4x4::Multiply(from, to);
-			}
-			// 自分の回転
-			Matrix4x4 from = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, Vector3::Normalize(rotateDirection_));
-			// 対象の回転
-			Matrix4x4 to = target_->rotateMatrix_;
-			return Matrix4x4::Multiply(from,to);
+			//// 対象に親がいれば
+			//if (target_->parent_) {
+			//	// 自分の回転
+			//	Matrix4x4 from = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, Vector3::Normalize(rotateDirection_));
+			//	// 対象の回転
+			//	Matrix4x4 to = target_->parent_->rotateMatrix_;
+			//	return Matrix4x4::Multiply(from, to);
+			//}
+			//// 自分の回転
+			//Matrix4x4 from = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, Vector3::Normalize(rotateDirection_));
+			//// 対象の回転
+			//Matrix4x4 to = target_->rotateMatrix_;
+			//return Matrix4x4::Multiply(from,to);
+			rotateDirection_ = Vector3::Normalize(rotateDirection_);
+			return Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, this->rotateDirection_);
+
 		}
 
 		return Matrix4x4::Multiply(Matrix4x4::MakeRotateXYZMatrix(transform_.rotate), target_->rotateMatrix_);
@@ -225,4 +240,13 @@ void FollowCamera::ApplyGlobalVariables()
 
 	onFootOffset_ = globalVariables->GetVector3Value(groupName, "onFootOffset");
 	onFootRotation_ = globalVariables->GetVector3Value(groupName, "onFootRotation");
+}
+
+void FollowCamera::TransitionUpdate()
+{
+	TransitionCameraModule::TransitionUpdate();
+	// 遷移中なら向きをモジュール側の値に
+	if (transitionTimer_.IsActive()) {
+		rotateDirection_ = cameraDirection_;
+	}
 }
