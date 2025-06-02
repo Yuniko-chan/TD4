@@ -4,6 +4,7 @@
 #include "../../Car/Parts/PartsInterface.h"
 #include "../../Car/Manager/VehiclePartsManager.h"
 #include "../../Car/Manager/PickupPointManager.h"
+#include "../../Car/PickupPoint/InterfacePickupPoint.h"
 #include "../../Utility/Calc/TransformHelper.h"
 
 #include "../../../Engine/2D/ImguiManager.h"
@@ -131,12 +132,42 @@ void PlayerPickupManager::CatchAction()
 	if (!pickupPointManager_->IsAccept(owner_->GetWorldTransformAdress()->GetWorldPosition())) {
 		return;
 	}
-	// パーツ取得
-	Car::IParts* nearParts = pickupPointManager_->AttemptPartAcquisition();
-	// 拾う処理
-	PickUp(nearParts);
+	// 一番近いポイント（生成箇所）
+	IPickupPoint* nearPoint = pickupPointManager_->FindNearPoint(owner_->GetWorldTransformAdress()->GetWorldPosition());
 	// 一番近いパーツ
-	//Car::IParts* nearParts = partsManager_->FindRootNonCoreParts(owner_->GetWorldTransformAdress()->GetWorldPosition());
+	Car::IParts* nearParts = partsManager_->FindRootNonCoreParts(owner_->GetWorldTransformAdress()->GetWorldPosition());
+	// 両方あれば
+	if (nearParts && nearPoint) {
+		float toPoint = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
+			nearPoint->GetWorldTransformAdress()->GetWorldPosition());
+		float toPart = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
+			nearParts->GetWorldTransformAdress()->GetWorldPosition());
+
+		// ポイントの方が近ければ
+		if (toPoint < toPart) {
+			// パーツ取得
+			nearParts = pickupPointManager_->AttemptPartAcquisition();
+			// 拾う処理
+			PickUp(nearParts);
+		}
+		// パーツの方が近ければ
+		else {
+			OnCatchSuccess(nearParts);
+		}
+
+	}
+	// パーツしかなければ
+	else if (nearParts) {
+		OnCatchSuccess(nearParts);
+	}
+	// ポイントしかなければ
+	else if (nearPoint) {
+		// パーツ取得
+		nearParts = pickupPointManager_->AttemptPartAcquisition();
+		// 拾う処理
+		PickUp(nearParts);
+	}
+
 	// エラー回避用
 	//if (nearParts) {
 	//	// 失敗
