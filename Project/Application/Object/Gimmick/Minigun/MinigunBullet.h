@@ -67,6 +67,11 @@ private: // 関数
     /// <param name="collider">コライダー</param>
     void ColliderInitialize(ColliderShape collider) override;
 
+    /// <summary>
+    /// コライダーの更新
+    /// </summary>
+    void ColliderUpdate();
+
 private: // 変数
 
     // 経過時間

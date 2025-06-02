@@ -2,6 +2,7 @@
 #include "../../../../Engine/Object/MeshObject.h"
 #include "MinigunData.h"
 #include "MinigunBullet.h"
+#include "MinigunAnimation.h"
 
 /// <summary>
 /// ミニガン
@@ -91,6 +92,9 @@ private: // 変数
 
     // 経過時間
     float elapsedTime_;
+
+    // アニメーション
+    std::unique_ptr<MinigunAnimation> animation_;
 
 };
 
