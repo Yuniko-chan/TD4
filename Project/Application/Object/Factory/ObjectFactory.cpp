@@ -44,6 +44,16 @@ void ObjectFactory::Initialize(BaseObjectManager* objectManager)
 	createObjectFunctions_[kCreateObjectIndexCarArmorFrame].first = kCreateObjectNames_[kCreateObjectIndexCarArmorFrame];
 	createObjectFunctions_[kCreateObjectIndexCarArmorFrame].second = ObjectCreate::CreateObjectArmorFrameParts;
 
+	// エンジンポイント
+	createObjectFunctions_[kCreateObjectIndexEnginePoint].first = kCreateObjectNames_[kCreateObjectIndexEnginePoint];
+	createObjectFunctions_[kCreateObjectIndexEnginePoint].second = ObjectCreate::CreateObjectEnginePoint;
+	// タイヤポイント
+	createObjectFunctions_[kCreateObjectIndexTirePoint].first = kCreateObjectNames_[kCreateObjectIndexTirePoint];
+	createObjectFunctions_[kCreateObjectIndexTirePoint].second = ObjectCreate::CreateObjectTirePoint;
+	// アーマーポイント
+	createObjectFunctions_[kCreateObjectIndexArmorPoint].first = kCreateObjectNames_[kCreateObjectIndexArmorPoint];
+	createObjectFunctions_[kCreateObjectIndexArmorPoint].second = ObjectCreate::CreateObjectArmorPoint;
+
 	//壁
 	createObjectFunctions_[kCreateObjectIndexWall].first = kCreateObjectNames_[kCreateObjectIndexWall];
 	createObjectFunctions_[kCreateObjectIndexWall].second = ObjectCreate::CreateObjectWall;

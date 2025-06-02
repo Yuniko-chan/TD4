@@ -37,6 +37,12 @@ public: // メンバ関数
     void Update() override;
 
     /// <summary>
+    /// 描画
+    /// </summary>
+    /// <param name="camera"></param>
+    void Draw(BaseCamera& camera) override;
+
+    /// <summary>
     /// ImGuiパーツ用
     /// </summary>
     void ImGuiDrawParts() override;
@@ -47,12 +53,6 @@ public: // メンバ関数
     /// <param name="colliderPartner"></param>
     /// <param name="collisionData"></param>
     void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
-
-    /// <summary>
-    /// 子の追加
-    /// </summary>
-    /// <param name="child"></param>
-    void AddChild(Car::IParts* child) { partsLists_.push_back(child); }
 
 public: // アクセッサ
     //---ゲッター---//
@@ -66,16 +66,15 @@ public: // アクセッサ
     void SetPlayer(Player* player) { pairPlayer_ = player; }
 
 private:
-    // パーツのリスト
-    std::list<Car::IParts*> partsLists_;
-
     // パーツ構築システム
     std::unique_ptr<VehicleConstructionSystem> constructionSystem_;
     // 運転関係
     std::unique_ptr<DriveSystem> driveSystem_;
+    // 車両のステータス
+    std::unique_ptr<VehicleStatus> statusSystem_;
+    // アニメーション
+    std::unique_ptr<VehicleAnimation> animation_;
 
     // ペアになるプレイヤーポインタ
     Player* pairPlayer_ = nullptr;
-    // ステータス
-    VehicleStatus status_ = {};
 };

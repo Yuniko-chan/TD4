@@ -31,6 +31,7 @@ void ArmorFrameParts::ImGuiDraw()
 void ArmorFrameParts::ImGuiDrawParts()
 {
 	ImGui::SeparatorText(name_.c_str());
+	ImGuiDrawChildParts();
 	static float moveValue = 0.1f;
 	ImGui::DragFloat("SlideValue", &moveValue, 0.01f);
 	// トランスフォーム用

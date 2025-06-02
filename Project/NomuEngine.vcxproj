@@ -158,6 +158,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\Camera\GameCameraManager.cpp" />
+    <ClCompile Include="Application\Camera\OverheadCamera.cpp" />
+    <ClCompile Include="Application\Camera\Transition\TransitionCameraModule.cpp" />
     <ClCompile Include="Application\ClothDemo\ClothDemo.cpp" />
     <ClCompile Include="Application\ClothDemo\CollisionObject\ClothDemoCapsule.cpp" />
     <ClCompile Include="Application\ClothDemo\CollisionObject\ClothDemoObject.cpp" />
@@ -174,17 +177,25 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Effect\EffectManager.cpp" />
     <ClCompile Include="Application\Camera\FollowCamera.cpp" />
     <ClCompile Include="Application\Object\BaseCharacter\BaseCharacterAnimation.cpp" />
+    <ClCompile Include="Application\Object\Car\Animation\VehicleAnimation.cpp" />
     <ClCompile Include="Application\Object\Car\Construction\VehicleConstructionSystem.cpp" />
+    <ClCompile Include="Application\Object\Car\Manager\PickupPointManager.cpp" />
     <ClCompile Include="Application\Object\Car\Manager\VehiclePartsManager.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Engine\EngineParts.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Frame\ArmorFrameParts.cpp" />
+    <ClCompile Include="Application\Object\Car\Parts\System\PartHPHandler.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\System\PartsOffsetCalculator.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\System\VehicleConnector.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Tire\TireParts.cpp" />
-    <ClCompile Include="Application\Object\Car\System\Physics\DriveSystem.cpp" />
+    <ClCompile Include="Application\Object\Car\PickupPoint\InterfacePickupPoint.cpp" />
+    <ClCompile Include="Application\Object\Car\PickupPoint\User\ArmorPickupPoint.cpp" />
+    <ClCompile Include="Application\Object\Car\PickupPoint\User\EnginePickupPoint.cpp" />
+    <ClCompile Include="Application\Object\Car\PickupPoint\User\TirePickupPoint.cpp" />
+    <ClCompile Include="Application\Object\Car\System\DriveSystem.cpp" />
+    <ClCompile Include="Application\Object\Player\Animation\PlayerAnimation.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp" />
-    <ClCompile Include="Application\Object\Car\System\Physics\VehicleEngine.cpp" />
-    <ClCompile Include="Application\Object\Car\System\Physics\VehicleHandling.cpp" />
+    <ClCompile Include="Application\Object\Car\System\VehicleEngine.cpp" />
+    <ClCompile Include="Application\Object\Car\System\VehicleHandling.cpp" />
     <ClCompile Include="Application\Object\Car\System\VehicleStatus.cpp" />
     <ClCompile Include="Application\Object\Car\VehicleCore.cpp" />
     <ClCompile Include="Application\Object\Car\Factory\VehicleFactory.cpp" />
@@ -373,6 +384,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\Camera\CameraLists.h" />
+    <ClInclude Include="Application\Camera\GameCameraManager.h" />
+    <ClInclude Include="Application\Camera\OverheadCamera.h" />
+    <ClInclude Include="Application\Camera\Transition\TransitionCameraModule.h" />
     <ClInclude Include="Application\ClothDemo\ClothDemo.h" />
     <ClInclude Include="Application\ClothDemo\CollisionObject\ClothDemoCapsule.h" />
     <ClInclude Include="Application\ClothDemo\CollisionObject\ClothDemoObject.h" />
@@ -392,19 +407,29 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Collider\ColliderParentObject.h" />
     <ClInclude Include="Application\Collider\CollisionConfig.h" />
     <ClInclude Include="Application\Object\BaseCharacter\BaseCharacterAnimation.h" />
+    <ClInclude Include="Application\Object\Car\Animation\VehicleAnimation.h" />
     <ClInclude Include="Application\Object\Car\Construction\VehicleConstructionSystem.h" />
+    <ClInclude Include="Application\Object\Car\Manager\PickupPointManager.h" />
     <ClInclude Include="Application\Object\Car\Manager\VehiclePartsManager.h" />
+    <ClInclude Include="Application\Object\Car\Parts\System\PartHPHandler.h" />
     <ClInclude Include="Application\Object\Car\Parts\System\PartsOffsetCalculator.h" />
     <ClInclude Include="Application\Object\Car\Parts\System\VehicleConnector.h" />
     <ClInclude Include="Application\Object\Car\Physics\DriveSystem.h" />
     <ClInclude Include="Application\Object\Car\Physics\System\VehicleEngine.h" />
-    <ClInclude Include="Application\Object\Car\System\Physics\DriveSystem.h" />
-    <ClInclude Include="Application\Object\Car\System\Physics\User\AutoDriver.h" />
-    <ClInclude Include="Application\Object\Car\System\Physics\User\InterfaceDriver.h" />
-    <ClInclude Include="Application\Object\Car\System\Physics\User\UserDriver.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\InterfacePickupPoint.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\PickupPointLists.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\User\ArmorPickupPoint.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\User\EnginePickupPoint.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\User\TirePickupPoint.h" />
+    <ClInclude Include="Application\Object\Car\Preset\VehiclePaths.h" />
+    <ClInclude Include="Application\Object\Car\Preset\VehiclePresetCreator.h" />
+    <ClInclude Include="Application\Object\Car\System\DriveSystem.h" />
+    <ClInclude Include="Application\Object\Car\System\User\AutoDriver.h" />
+    <ClInclude Include="Application\Object\Car\System\User\InterfaceDriver.h" />
+    <ClInclude Include="Application\Object\Car\System\User\UserDriver.h" />
     <ClInclude Include="Application\Object\Utility\Calc\VehicleCaluclator.h" />
-    <ClInclude Include="Application\Object\Car\System\Physics\VehicleEngine.h" />
-    <ClInclude Include="Application\Object\Car\System\Physics\VehicleHandling.h" />
+    <ClInclude Include="Application\Object\Car\System\VehicleEngine.h" />
+    <ClInclude Include="Application\Object\Car\System\VehicleHandling.h" />
     <ClInclude Include="Application\Object\Car\System\VehicleCaluclator.h" />
     <ClInclude Include="Application\Object\Car\System\VehicleStatus.h" />
     <ClInclude Include="Application\Object\Car\System\VehicleSystems.h" />

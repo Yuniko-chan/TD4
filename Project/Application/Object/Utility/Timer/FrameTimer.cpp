@@ -1,6 +1,18 @@
 #include "FrameTimer.h"
 #include <algorithm>
 
+FrameTimer::FrameTimer()
+{
+	// 開始
+	Start();
+}
+
+FrameTimer::FrameTimer(float endFrame)
+{
+	// 開始
+	Start(endFrame);
+}
+
 void FrameTimer::Start(float endFrame)
 {
 	// 初期化

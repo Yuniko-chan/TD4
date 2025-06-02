@@ -1,15 +1,31 @@
 #pragma once
 #include "../../../Engine/Math/Vector/Vector3.h"
-#include "../../../Utility/Common/OwnerComponent.h"
+#include "../../Utility/Common/OwnerComponent.h"
 #include <cstdint>
 
 class VehicleCore;
+class VehicleStatus;
 
 class VehicleHandling : public OwnerComponent<VehicleCore>
 {
 public:
+	/// <summary>
+	/// ハンドルの入力
+	/// </summary>
+	/// <param name="inputX"></param>
 	void HandleInput(const float inputX);
-	void Update();
+	/// <summary>
+	/// 前の更新
+	/// </summary>
+	void PreUpdate();
+	/// <summary>
+	/// 後の更新ｎ
+	/// </summary>
+	/// <param name="velocity"></param>
+	void PostUpdate(const Vector3& velocity, VehicleStatus* status);
+	/// <summary>
+	/// ImGui
+	/// </summary>
 	void ImGuiDraw();
 	// ステアの向き
 	Vector3 GetSteerDirect() { return steerDirection_; }

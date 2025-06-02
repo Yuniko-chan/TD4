@@ -1,6 +1,7 @@
 #include "VehicleCore.h"
-#include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Engine/Input/Input.h"
+#include "../../../Engine/2D/ImguiManager.h"
+#include "../../../Engine/3D/Model/ModelDraw.h"
 
 #include "../GameObjectsList.h"
 #include "../../Collider/CollisionConfig.h"
@@ -36,26 +37,49 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	*colliderShape = obb;
 	collider_.reset(colliderShape);
 
-	constructionSystem_ = std::make_unique<VehicleConstructionSystem>();
-	constructionSystem_->Initialize(this);
+	// ステータスクラス
+	statusSystem_ = std::make_unique<VehicleStatus>();
 
+	// パーツ構築クラス
+	constructionSystem_ = std::make_unique<VehicleConstructionSystem>();
+	constructionSystem_->SetOwner(this);
+	constructionSystem_->Initialize();
+	constructionSystem_->SetStatusManager(statusSystem_.get());
+
+	// 運転クラス
 	driveSystem_ = std::make_unique<DriveSystem>();
 	driveSystem_->SetOwner(this);
-	driveSystem_->SetTransform(&worldTransform_);
-
 	driveSystem_->Initialize();
+	driveSystem_->SetStatusManager(statusSystem_.get());
+
+	animation_ = std::make_unique<VehicleAnimation>();
+	animation_->Initialize(model_);
+
+	hpHandler_.SetOwner(this);
+	hpHandler_.Initialize();
 }
 
 void VehicleCore::Update()
 {
-	// 運転・移動処理
-	driveSystem_->Update();
 	// 接続管理
 	constructionSystem_->Update();
+	// 運転・移動処理
+	driveSystem_->Update();
+	// アニメーション
+	animation_->Update(0);
 	// 基底
 	Car::IParts::Update();
+}
 
-	
+void VehicleCore::Draw(BaseCamera& camera)
+{
+	ModelDraw::AnimObjectDesc desc;
+	desc.camera = &camera;
+	desc.localMatrixManager = animation_->GetLocalMatrixManager();
+	desc.material = material_.get();
+	desc.model = model_;
+	desc.worldTransform = &worldTransform_;
+	ModelDraw::AnimObjectDraw(desc);
 }
 
 void VehicleCore::ImGuiDrawParts()
@@ -63,67 +87,46 @@ void VehicleCore::ImGuiDrawParts()
 	ImGui::SeparatorText(className_.c_str());
 	if (ImGui::TreeNode("Status"))
 	{
-		status_.ImGuiDraw();
-
-		int armor = constructionSystem_->GetStatus().armor;
-		int tire = constructionSystem_->GetStatus().tire;
-		int en = constructionSystem_->GetStatus().engine;
-		ImGui::InputInt("ArmorC", &armor);
-		ImGui::InputInt("TireC", &tire);
-		ImGui::InputInt("EngineC", &en);
-		int st = constructionSystem_->GetDirections()->backForward;
-		ImGui::InputInt("Back", &st);
-		st = constructionSystem_->GetDirections()->forward;
-		ImGui::InputInt("Forward", &st);
-		st = constructionSystem_->GetDirections()->left;
-		ImGui::InputInt("left", &st);
-		st = constructionSystem_->GetDirections()->right;
-		ImGui::InputInt("right", &st);
-
+		// ステータス
+		statusSystem_->ImGuiDraw();
 
 		ImGui::TreePop();
 	}
-
-
+	ImGui::BeginChild("Tab", ImVec2(400, 300), true, ImGuiWindowFlags_None);
 	// トランスフォームに移動
 	ImGuiTransform(0.1f);
+
+	ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 0.75f));
+	ImGui::BeginChild("SystemBlock", ImVec2(300, 200), true);
 	if (ImGui::BeginTabBar("System")) {
+		if (ImGui::BeginTabItem("Animation")) {
+			animation_->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+
 		// ステート
 		if (ImGui::BeginTabItem("Engine")) {
 			this->driveSystem_->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
+		// パーツ管理
+		if (ImGui::BeginTabItem("パーツ管理")) {
+			constructionSystem_->ImGuiDraw();
+
+			ImGui::EndTabItem();
+		}
 
 		ImGui::EndTabBar();
 	}
+	ImGui::EndChild();
+	ImGui::PopStyleColor();
+
+	ImGui::EndChild();
+
 
 	if (ImGui::Button("Release")) {
 		pairPlayer_ = nullptr;
 	}
-
-	if (ImGui::TreeNode("Childs")) {
-		static float sAddValue = 2.0f;
-		ImGui::DragFloat("StaticAddValue", &sAddValue, 0.01f);
-		for (std::list<Car::IParts*>::iterator it = partsLists_.begin();
-			it != partsLists_.end(); ++it) {
-			ImGui::SeparatorText((*it)->GetName().c_str());
-			std::string name = (*it)->GetName() + "Translate";
-			ImGui::DragFloat3(name.c_str(), &(*it)->GetWorldTransformAdress()->transform_.translate.x, 0.1f);
-			if (ImGui::Button("AddX")) {
-				(*it)->GetWorldTransformAdress()->transform_.translate.x += sAddValue;
-			}
-			if (ImGui::Button("AddY")) {
-				(*it)->GetWorldTransformAdress()->transform_.translate.y += sAddValue;
-			}
-			if (ImGui::Button("AddZ")) {
-				(*it)->GetWorldTransformAdress()->transform_.translate.z += sAddValue;
-			}
-			ImGui::Text("\n");
-		}
-
-		ImGui::TreePop();
-	}
-
 
 	ImGui::Text("\n");
 }

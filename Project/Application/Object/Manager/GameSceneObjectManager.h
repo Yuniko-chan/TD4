@@ -2,6 +2,7 @@
 #include "../../../Engine/Object/BaseObjectManager.h"
 #include "../../System/Shadow/ShadowManager.h"
 #include "../Car/Manager/VehiclePartsManager.h"
+#include "../Car/Manager/PickupPointManager.h"
 
 // 前方宣言
 class Player;
@@ -51,6 +52,13 @@ private: // メンバ関数
 	/// </summary>
 	void ShadowUpdate();
 
+
+	// プレイヤー専用の初期化処理
+	void PlayerInitialize();
+	void OptionProcess();
+
+	void VehiclePreset(const std::string& presetName);
+public:
 	/// <summary>
 	/// オブジェクト追加（ハードコーディング用）
 	/// </summary>
@@ -59,8 +67,11 @@ private: // メンバ関数
 	/// <param name="modelName"></param>
 	void AddObject(const std::string& className, const std::string& directory, const std::string& modelName);
 	void AddObject(const std::string& className, const std::string& name, const std::string& directory, const std::string& modelName);
+	void AddObject(const std::string& className, const std::string& name, const std::string& directory, const std::string& modelName, const Vector3& position);
 
-	void OptionProcess();
+public:
+	// パーツ用のマネージャークラス取得
+	VehiclePartsManager* GetPartsManager() { return partsManager_.get(); }
 
 private: // メンバ変数
 
@@ -73,7 +84,9 @@ private: // メンバ変数
 	LevelDataManager* levelDataManager_;
 
 private: // USER
+	// パーツマネージャー
 	std::unique_ptr<VehiclePartsManager> partsManager_;
-
+	// 拾う場所のマネージャー
+	std::unique_ptr<PickupPointManager> pickupPointManager_;
 };
 

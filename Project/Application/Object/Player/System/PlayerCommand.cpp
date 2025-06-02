@@ -1,6 +1,7 @@
 #include "PlayerCommand.h"
 #include "../Player.h"
 #include "../../KeyConfig/GameKeyconfig.h"
+#include "../../Utility/Calc/TransformHelper.h"
 #include "../../../Engine/Math/DeltaTime.h"
 
 PlayerCommand::PlayerCommand()
@@ -27,7 +28,8 @@ bool PlayerCommand::MoveCommand()
 	Vector3 leftStick = { keyConfig_->GetLeftStick()->x ,0.0f,keyConfig_->GetLeftStick()->y };
 	moveDirect_.x = keyConfig_->GetLeftStick()->x;
 	moveDirect_.z = keyConfig_->GetLeftStick()->y;
-
+	// 正規化
+	moveDirect_ = Vector3::Normalize(moveDirect_);
 	// 方向入力があればtrue
 	return moveDirect_.x != 0.0f || moveDirect_.y != 0.0f || moveDirect_.z != 0.0f;
 }
@@ -39,7 +41,8 @@ void PlayerCommand::RotateCommand()
 	// 回転角
 	Vector2 rotate = Vector2::Normalize(Vector2(keyConfig_->GetRightStick()->x, keyConfig_->GetRightStick()->y));
 	// ワールドトランスフォームに適応
-	const float rotateRatio = 1.0f / 45.0f;
+	const float rotateSpeed = GlobalVariables::GetInstance()->GetFloatValue("Player", "CameraRotateSpeed");
+	const float rotateRatio = 1.0f / rotateSpeed;
 	playerTransform_->transform_.rotate.y += (rotate.x * rotateRatio);
 	// 移動方向ベクトルの更新
 	moveDirect_ = Vector3::Normalize(transformDirect);
@@ -48,23 +51,29 @@ void PlayerCommand::RotateCommand()
 void PlayerCommand::VectorRotate()
 {
 	theta_ = 0.0f;
+	// 回転速度計算
+	const float rotateSpeed = GlobalVariables::GetInstance()->GetFloatValue("Player", "CameraRotateSpeed");
+	const float rotateRatio = 1.0f / rotateSpeed;
 
 	if (keyConfig_->GetRightStick()->x > 0) {
-		theta_ -= 0.01f;
+		theta_ -= rotateRatio;
 	}
 	else if (keyConfig_->GetRightStick()->x < 0) {
-		theta_ += 0.01f;
+		theta_ += rotateRatio;
 	}
+	// X-Z平面上に回転
+	Vector3 direct = TransformHelper::XZRotation(playerTransform_->direction_, theta_);
+	playerTransform_->direction_ = Vector3::Normalize(direct);
+}
 
-	float cosT = std::cosf(theta_);
-	float sinT = std::sinf(theta_);
-
-	Vector3 direct = {
-		playerTransform_->direction_.x * cosT - playerTransform_->direction_.z * sinT,
-		playerTransform_->direction_.y,
-		playerTransform_->direction_.x * sinT + playerTransform_->direction_.z * cosT,
-	};
-	
+void PlayerCommand::StickMoveCommand()
+{
+	Vector2 rotate = Vector2::Normalize(Vector2(keyConfig_->GetLeftStick()->x, keyConfig_->GetLeftStick()->y));
+	// 向き
+	Vector3 direct = Vector3(rotate.x, 0.0f, rotate.y);
+	if (direct == Vector3(0.0f, 0.0f, 0.0f)) {
+		direct.z = 1.0f;
+	}
 	playerTransform_->direction_ = Vector3::Normalize(direct);
 }
 

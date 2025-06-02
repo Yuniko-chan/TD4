@@ -1,7 +1,7 @@
 #include "DriveSystem.h"
-#include "../../VehicleCore.h"
-#include "../../../Utility/Calc/TransformHelper.h"
-#include "../../../KeyConfig/GameKeyconfig.h"
+#include "../VehicleCore.h"
+#include "../../Utility/Calc/TransformHelper.h"
+#include "../../KeyConfig/GameKeyconfig.h"
 #include "../../../Engine/Math/DeltaTime.h"
 #include "../../../Engine/2D/ImguiManager.h"
 
@@ -20,28 +20,29 @@ void DriveSystem::Initialize()
 
 void DriveSystem::Update()
 {
+	//---それぞれのシステム処理---//
 	// ハンドル処理
-	handling_->Update();
+	handling_->PreUpdate();
 	// エンジン処理
 	driveEngine_->Update();
-	// 速度の計算
-	Vector3 acc = Vector3::FrontVector() * driveEngine_->GetCurrentSpeed();
-	velocity_ += acc * kDeltaTime_;
-	// 減速
-	const float velocityDecrement = 0.75f;
-	const float kEpsilon = 0.001f;
-	velocity_ = velocity_ * velocityDecrement;
-	// 0に調節
-	VehicleCaluclator calc;
-	velocity_ = calc.SnapToZero(velocity_, kEpsilon);
-	// 速度が無ければ
-	if (velocity_ == Vector3::FrontVector()) {
-		return;
-	}
+	// 速度処理
+	VelocityUpdate();
+
+	//---角度の設定---//
+	// ハンドル操作の更新（旋回の適応など）
+	handling_->PostUpdate(velocity_, status_);
 	// 角度
 	float eulerY = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, Vector3::FrontVector());
-	coreTransform_->transform_.translate += 
+	
+	// 座標計算
+	VehicleCaluclator calc;
+	owner_->GetWorldTransformAdress()->transform_.translate +=
 		calc.RotateVector(velocity_, eulerY) * kDeltaTime_;
+}
+
+void DriveSystem::PreUpdate()
+{
+
 }
 
 void DriveSystem::InputAccept(GameKeyconfig* keyConfig)
@@ -60,4 +61,21 @@ void DriveSystem::ImGuiDraw()
 	handling_->ImGuiDraw();
 	// エンジン
 	driveEngine_->ImGuiDraw();
+}
+
+void DriveSystem::VelocityUpdate()
+{
+	//---速度の設定---//
+	// 速度の計算
+	Vector3 acceleration = Vector3::FrontVector() * driveEngine_->GetCurrentSpeed();
+	velocity_ += acceleration * kDeltaTime_;
+
+	const float velocityDecrement = 0.75f;	// 減速値
+	const float kEpsilon = 0.001f;	// 切り捨て値
+	// 減速
+	velocity_ = velocity_ * velocityDecrement;
+	// 0に調節
+	VehicleCaluclator calc;
+	velocity_ = calc.SnapToZero(velocity_, kEpsilon);
+
 }

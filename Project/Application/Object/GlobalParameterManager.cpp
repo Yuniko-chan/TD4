@@ -34,6 +34,7 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	player_.frontCheck.threshold = globalVariables_->GetFloatValue(groupName, "FrontThreshold");
 	player_.frontCheck.catchRange = globalVariables_->GetFloatValue(groupName, "FrontCatchRange");
 
+	player_.cameraRotateSpeed = globalVariables_->GetFloatValue(groupName, "CameraRotateSpeed");
 }
 
 void GlobalParameterManager::AddItems()
@@ -56,5 +57,7 @@ void GlobalParameterManager::AddItems()
 	globalVariables_->AddItem(groupName, "RideSpeed", float(player_.rideSpeedFactor));
 	globalVariables_->AddItem(groupName, "WalkSpeed", float(player_.walkSpeedFactor));
 
+	// カメラ
+	globalVariables_->AddItem(groupName, "CameraRotateSpeed", float(player_.cameraRotateSpeed));
 
 }

@@ -3,41 +3,56 @@
 #include "../Parts/System/PartsOffsetCalculator.h"
 #include "../../Utility/Calc/TransformHelper.h"
 
-void VehicleConstructionSystem::Initialize(VehicleCore* core)
+#include "../../../Engine/2D/ImguiManager.h"
+
+void VehicleConstructionSystem::Initialize()
 {
-	core_ = core;
+
 }
 
 void VehicleConstructionSystem::Update()
 {
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
 		if ((*it).second->GetIsDelete()) {
+			// 解除処理
 			UnRegistParts((*it).first, (*it).second);
-			//(*it).second->ReleaseParent();
-			DeleteCount((*it).second->GetClassNameString());
+			// ステータス側からも削除
+			status_->ApplyPartRemove((*it).second->GetClassNameString(), (*it).first);
+			//DeleteCount((*it).second->GetClassNameString());
 			it = partsMapping_.erase(it);
 			break;
 		}
 	}
-	// 各方向の数取得
-	directions_ = {};
-	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
-		if ((*it).first.x > 0) {
-			directions_.right++;
-		}
-		else if ((*it).first.x < 0) {
-			directions_.left++;
+
+	// マップから
+	status_->StatusUpdate(&partsMapping_);
+}
+
+void VehicleConstructionSystem::ImGuiDraw()
+{
+	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin();
+		it != partsMapping_.end(); ++it) {
+		ImGui::SeparatorText((*it).second->GetName().c_str());
+		std::string name = (*it).second->GetName() + "Data";
+		if (ImGui::TreeNode(name.c_str())) {
+			// 座標表示
+			name = (*it).second->GetName() + "Translate";
+			EulerTransform t = (*it).second->GetWorldTransformAdress()->transform_;
+			ImGui::DragFloat3(name.c_str(), &t.translate.x, 0.01f);
+			// 配列キー
+			name = (*it).second->GetName() + "Key";
+			Vector2Int key = (*it).first;
+			ImGui::InputInt2(name.c_str(), &key.x);
+
+			ImGui::TreePop();
 		}
 
-		if ((*it).first.y > 0)
-		{
-			directions_.forward++;
-		}
-		else if ((*it).first.y < 0) {
-			directions_.backForward++;
+		// 解除ボタン
+		name = (*it).second->GetName() + "Release";
+		if (ImGui::Button(name.c_str())) {
+			(*it).second->GetHPHandler()->SetHP(0);
 		}
 	}
-
 }
 
 void VehicleConstructionSystem::Attach(Car::IParts* parts)
@@ -45,9 +60,9 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts)
 	// 距離
 	float distance = TransformHelper::Vector3Distance(
 		parts->GetWorldTransformAdress()->GetWorldPosition(),
-		core_->GetWorldTransformAdress()->GetWorldPosition());
+		owner_->GetWorldTransformAdress()->GetWorldPosition());
 	// 対象セット
-	std::pair<Vector2Int, Car::IParts*> futureParts = { Vector2Int(0,0),core_ };
+	std::pair<Vector2Int, Car::IParts*> futureParts = { Vector2Int(0,0),owner_ };
 
 	// 既に付いているパーツの検索
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin();
@@ -103,17 +118,25 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts)
 	}
 }
 
+void VehicleConstructionSystem::AnyDocking(Car::IParts* parts, const Vector2Int& key)
+{
+	// 既にあればスキップ
+	if (partsMapping_.contains(key)) {
+		return;
+	}
+
+	Attach(parts, key);
+}
+
 void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key)
 {
 	// 計算器
 	PartsOffsetCalculator calculator;
 
-	// 親の設定
-	core_->AddChild(parts);
 	// HPのリセット処理
-	parts->SetHP(1);
+	parts->GetHPHandler()->Initialize();
 	// 親子関係
-	parts->GetWorldTransformAdress()->SetParent(core_->GetWorldTransformAdress());
+	parts->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
 	// オフセット
 	parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(key);
 	// 深度
@@ -125,7 +148,7 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 	// マッピング
 	RegistParts(key, parts);
 	if (parts->GetConnector()->GetDepth() <= 1) {
-		parts->GetConnector()->AddParents(core_);
+		parts->GetConnector()->AddParents(owner_);
 	}
 
 }
@@ -183,7 +206,8 @@ void VehicleConstructionSystem::RegistParts(const Vector2Int& id, Car::IParts* p
 		}
 	}
 	// カウント追加
-	this->AddCount(parts->GetClassNameString());
+	status_->ApplyPartAdd(parts->GetClassNameString(), id);
+	//this->AddCount(parts->GetClassNameString());
 }
 
 void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts* parts)
@@ -228,40 +252,4 @@ void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts*
 	parts->ReleaseParent();
 	//// カウントから削除
 	//DeleteCount(parts->GetClassNameString());
-}
-
-void VehicleConstructionSystem::AddCount(std::string name)
-{
-	if (name == "TireParts") {
-		counts_.tire++;
-	}
-	else if (name == "ArmorFrameParts") {
-		counts_.armor++;
-	}
-	else if (name == "EngineParts") {
-		counts_.engine++;
-	}
-}
-
-void VehicleConstructionSystem::DeleteCount(std::string name)
-{
-	if (name == "TireParts") {
-		counts_.tire--;
-	}
-	else if (name == "ArmorFrameParts") {
-		counts_.armor--;
-	}
-	else if (name == "EngineParts") {
-		counts_.engine--;
-	}
-
-	if (counts_.tire < 0) {
-		counts_.tire = 0;
-	}
-	if (counts_.armor < 0) {
-		counts_.armor = 0;
-	}
-	if (counts_.engine < 0) {
-		counts_.engine = 0;
-	}
 }

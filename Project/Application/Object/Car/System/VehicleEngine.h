@@ -1,6 +1,6 @@
 #pragma once
-#include "../../../Utility/Timer/FrameTimer.h"
-#include "../../../KeyConfig/GameKeyconfig.h"
+#include "../../Utility/Timer/FrameTimer.h"
+#include "../../KeyConfig/GameKeyconfig.h"
 #include "../../../Engine/Math/Vector/Vector3.h"
 #include <cstdint>
 

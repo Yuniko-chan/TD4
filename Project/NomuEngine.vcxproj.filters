@@ -1009,10 +1009,10 @@
     <ClCompile Include="Application\Object\Gimmick\Obstacle\Obstacle.cpp">
       <Filter>Application\Object\Gimmick\Obstacle</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Car\System\Physics\VehicleEngine.cpp">
+    <ClCompile Include="Application\Object\Car\System\VehicleEngine.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Car\System\Physics\DriveSystem.cpp">
+    <ClCompile Include="Application\Object\Car\System\DriveSystem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp">
@@ -1021,7 +1021,40 @@
     <ClCompile Include="Application\Object\Terrain\TerrainObject.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Car\System\Physics\VehicleHandling.cpp">
+    <ClCompile Include="Application\Object\Car\System\VehicleHandling.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Camera\OverheadCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Camera\GameCameraManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Car\PickupPoint\InterfacePickupPoint.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Car\Manager\PickupPointManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Player\Animation\PlayerAnimation.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Car\Animation\VehicleAnimation.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Car\PickupPoint\User\ArmorPickupPoint.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Car\PickupPoint\User\EnginePickupPoint.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Car\PickupPoint\User\TirePickupPoint.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Camera\Transition\TransitionCameraModule.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Car\Parts\System\PartHPHandler.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1854,22 +1887,22 @@
     <ClInclude Include="Application\Object\Car\System\VehicleSystems.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\Physics\VehicleEngine.h">
+    <ClInclude Include="Application\Object\Car\System\VehicleEngine.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Utility\Calc\VehicleCaluclator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\Physics\DriveSystem.h">
+    <ClInclude Include="Application\Object\Car\System\DriveSystem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\Physics\User\UserDriver.h">
+    <ClInclude Include="Application\Object\Car\System\User\UserDriver.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\Physics\User\AutoDriver.h">
+    <ClInclude Include="Application\Object\Car\System\User\AutoDriver.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\Physics\User\InterfaceDriver.h">
+    <ClInclude Include="Application\Object\Car\System\User\InterfaceDriver.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Terrain\TerrainObject.h">
@@ -1878,7 +1911,49 @@
     <ClInclude Include="Application\Object\Utility\GlobalParameterStructs.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\Physics\VehicleHandling.h">
+    <ClInclude Include="Application\Object\Car\System\VehicleHandling.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Camera\OverheadCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Camera\GameCameraManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Camera\CameraLists.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Car\Preset\VehiclePresetCreator.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Car\Preset\VehiclePaths.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Car\PickupPoint\InterfacePickupPoint.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Car\Manager\PickupPointManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Car\Animation\VehicleAnimation.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Car\PickupPoint\User\EnginePickupPoint.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Car\PickupPoint\User\TirePickupPoint.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Car\PickupPoint\User\ArmorPickupPoint.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Car\PickupPoint\PickupPointLists.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Camera\Transition\TransitionCameraModule.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Car\Parts\System\PartHPHandler.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,0 +1,20 @@
+#pragma once
+#include "../../BaseCharacter/BaseCharacterAnimation.h"
+
+class VehicleAnimation : public BaseCharacterAnimation
+{
+public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="model"></param>
+	void Initialize(Model* model) override;
+
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw();
+private:
+
+
+};

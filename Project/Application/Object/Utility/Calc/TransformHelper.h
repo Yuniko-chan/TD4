@@ -40,4 +40,6 @@ public:
 	/// <param name="to"></param>
 	/// <returns></returns>
 	static float CalculateXZVectorToRotateRadian(const Vector3& from, const Vector3& to);
+
+	static Vector3 XZRotation(const Vector3& direct, float& theta);
 };

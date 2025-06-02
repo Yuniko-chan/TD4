@@ -2,22 +2,14 @@
 #include "../../../Engine/3D/Transform/WorldTransform.h"
 #include "../../../Engine/Camera/BaseCamera.h"
 #include "../Object/Utility/Timer/FrameTimer.h"
+#include "Transition/TransitionCameraModule.h"
 
 /// <summary>
 /// 追従カメラ
 /// </summary>
 class FollowCamera :
-	public BaseCamera
+	public BaseCamera, public TransitionCameraModule
 {
-public:
-	// カメラ画角モード
-	enum class AngleMode
-	{
-		kPlayer,
-		kVehicle,
-		kEmpty,
-	};
-
 public: // メンバ関数
 
 	/// <summary>
@@ -31,12 +23,6 @@ public: // メンバ関数
 	void Update(float elapsedTime = 0.0f) override;
 
 	void ImGuiDraw();
-
-	/// <summary>
-	/// 変更リクエスト
-	/// </summary>
-	/// <param name="mode"></param>
-	void ChangeRequest(AngleMode mode, float frame);
 
 public: // アクセッサ
 
@@ -65,6 +51,9 @@ private: // メンバ関数
 	/// </summary>
 	void ApplyGlobalVariables();
 
+private:
+	void TransitionUpdate() override;
+
 private: // メンバ変数
 
 	//追従対象
@@ -87,20 +76,7 @@ private: // メンバ変数
 	bool usedDirection_ = false;
 	Vector3 rotateDirection_ = Vector3(0.0f, 0.0f, 1.0f);
 
-	// 遷移用の
-	Vector3 startPoint_ = {};
-	Vector3 endPoint_ = {};
-	Vector3 startDirection_ = {};
-	Vector3 endDirection_ = {};
-
 	Vector3 offset_ = {};
-
-	// 状態
-	AngleMode mode_ = AngleMode::kVehicle;
-	// 切り替えリクエスト
-	std::optional<AngleMode> modeRequest_ = std::nullopt;
-	// 遷移タイマー
-	FrameTimer transitionTimer_;
 
 };
 

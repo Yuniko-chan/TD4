@@ -8,12 +8,14 @@ void PlayerDropOffActionState::Initialize()
 	// アニメーション開始
 	float frame = GlobalVariables::GetInstance()->GetFloatValue("Player", "DropOffActionFrame");
 	animationTimer_.Start(frame);
-	player_->GetCamera()->ChangeRequest(FollowCamera::AngleMode::kPlayer, frame);
 	// 開始点設定
 	easePoint_.first = player_->GetWorldTransformAdress()->GetWorldPosition();
 	Vector3 offset = GlobalVariables::GetInstance()->GetVector3Value("Player", "DropOffOffset");
-	Vector3 rotateOffset = Matrix4x4::TransformNormal(offset, Matrix4x4::MakeRotateYMatrix(player_->GetCoreTransform()->transform_.rotate.y));
+	// コアのベクトルから
+	Vector3 rotateOffset = Matrix4x4::TransformNormal(offset, Matrix4x4::DirectionToDirection(Vector3(0.0f,0.0f,1.0f),player_->GetCoreTransform()->direction_));
 	easePoint_.second = player_->GetCoreTransform()->GetWorldPosition() + rotateOffset;
+
+	player_->GetCameraManager()->SetRequest(ActiveCamera::kOverhead);
 }
 
 void PlayerDropOffActionState::Update()

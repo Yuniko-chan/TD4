@@ -60,11 +60,17 @@ void GameScene::Initialize() {
 	keyConfig_ = GameKeyconfig::GetInstance();
 	keyConfig_->Initialize();
 
-	// 追従カメラ
-	followCamera_ = std::make_unique<FollowCamera>();
-	followCamera_->Initialize();
-	followCamera_->SetTarget(objectManager_->GetObjectPointer("Player")->GetWorldTransformAdress());
-	static_cast<Player*>(objectManager_->GetObjectPointer("Player"))->SetCamera(followCamera_.get());
+	// カメラのマネージャー
+	cameraManager_ = std::make_unique<GameCameraManager>();
+	cameraManager_->Initialize();
+	static_cast<FollowCamera*>(cameraManager_->FindCamera("Follow"))->SetTarget(objectManager_->GetObjectPointer("Player")->GetWorldTransformAdress());
+	static_cast<OverheadCamera*>(cameraManager_->FindCamera("Overhead"))->SetTarget(objectManager_->GetObjectPointer("Player")->GetWorldTransformAdress());
+	static_cast<Player*>(objectManager_->GetObjectPointer("Player"))->SetCameraManager(cameraManager_.get());
+	//// 追従カメラ
+	//followCamera_ = std::make_unique<FollowCamera>();
+	//followCamera_->Initialize();
+	//followCamera_->SetTarget(objectManager_->GetObjectPointer("Player")->GetWorldTransformAdress());
+	//static_cast<Player*>(objectManager_->GetObjectPointer("Player"))->SetCamera(followCamera_.get());
 	// UIマネージャー
 	uiManager_ = std::make_unique<UIManager>();
 	uiManager_->Initialize();
@@ -108,9 +114,12 @@ void GameScene::Update() {
 	pointLightManager_->Update(pointLightDatas_);
 	spotLightManager_->Update(spotLightDatas_);
 
-	// 追従カメラ
-	followCamera_->Update();
-	camera_ = static_cast<BaseCamera>(*followCamera_.get());
+	// カメラ
+	//followCamera_->Update();
+	//camera_ = static_cast<BaseCamera>(*followCamera_.get());
+
+	cameraManager_->Update();
+	camera_ = *cameraManager_->GetActiveCamera();
 
 	// キー入力更新
 	keyConfig_->Update();
@@ -215,8 +224,8 @@ void GameScene::ImguiDraw(){
 
 	debugCamera_->ImGuiDraw();
 
-	followCamera_->ImGuiDraw();
-
+	//followCamera_->ImGuiDraw();
+	cameraManager_->ImGuiDraw();
 	objectManager_->ImGuiDraw();
 
 	PostEffect::GetInstance()->ImGuiDraw();

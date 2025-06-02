@@ -18,6 +18,12 @@ void PlayerOnFootState::Update()
 
 	// 乗り入力
 	if (player_->GetCommand()->ActionCommand() && !player_->GetPickUpManager()->IsPartsHold()) {
+		// コアなければ
+		if (!player_->GetCore()) {
+			return;
+		}
+
+
 		player_->GetStateMachine()->ChangeRequest(IPlayerState::kRideAction);
 	}
 	// 乗ってなければの処理
@@ -31,11 +37,19 @@ void PlayerOnFootState::Update()
 	}
 
 	// 移動用の回転処理
-	player_->GetCommand()->RotateCommand();
-	player_->GetCommand()->VectorRotate();
+	//player_->GetCommand()->RotateCommand();
+	//player_->GetCommand()->VectorRotate();
+	
+	player_->GetCommand()->StickMoveCommand();
+	//player_->GetCommand()->MoveCommand();
 	// 移動処理
 	const float walkSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue("Player", "WalkSpeed");
 	Vector3 velocityDirection = player_->GetCommand()->GetDirect() * walkSpeedFactor;
+	// 零なら加算しない
+	if (velocityDirection == Vector3(0.0f, 0.0f, 0.0f)) {
+		return;
+	}
+
 	player_->GetWorldTransformAdress()->transform_.translate += velocityDirection * kDeltaTime_;
 
 }

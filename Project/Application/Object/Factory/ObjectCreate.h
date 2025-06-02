@@ -39,6 +39,12 @@ public:	// USER
 	static IObject* CreateObjectCourse(LevelData::ObjectData& objectData);
 	static IObject* CreateObjectTerrain(LevelData::ObjectData& objectData);
 
+	static IObject* CreateObjectEnginePoint(LevelData::ObjectData& objectData);
+
+	static IObject* CreateObjectTirePoint(LevelData::ObjectData& objectData);
+	
+	static IObject* CreateObjectArmorPoint(LevelData::ObjectData& objectData);
+
 	//gimmick
 	static IObject* CreateObjectIronBall(LevelData::ObjectData& objectData);
 	static IObject* CreateObjectCannon(LevelData::ObjectData& objectData);
