@@ -62,6 +62,9 @@ void MinigunBullet::Update()
     worldTransform_.transform_.translate += velocity_;
     worldTransform_.UpdateMatrix();
 
+    // コライダー更新
+    ColliderUpdate();
+
 }
 
 void MinigunBullet::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
@@ -83,6 +86,26 @@ void MinigunBullet::ColliderInitialize(ColliderShape collider)
     sphere.SetCollisionMask(collisionMask_);
     ColliderShape* colliderShape = new ColliderShape();
     *colliderShape = sphere;
+    collider_.reset(colliderShape);
+
+}
+
+void MinigunBullet::ColliderUpdate()
+{
+
+    Sphere sphere = std::get<Sphere>(*collider_.get());
+
+    sphere.center_ = worldTransform_.GetWorldPosition();
+
+    // モデルサイズに合わせる
+    const float kModelMagnification = 3.5f;
+
+    sphere.radius_ = worldTransform_.transform_.scale.x * kModelMagnification;
+
+    ColliderShape* colliderShape = new ColliderShape();
+
+    *colliderShape = sphere;
+
     collider_.reset(colliderShape);
 
 }

@@ -1,6 +1,7 @@
 #include "Minigun.h"
 #include "../../../Collider/CollisionConfig.h"
 #include "../../../../Engine/Math/DeltaTime.h"
+#include "../../../../Engine/3D/Model/ModelDraw.h"
 
 // 発射間隔
 const float Minigun::kFiringInterval_ = 0.2f;
@@ -37,14 +38,16 @@ void Minigun::Initialize(LevelData::MeshData* data, const MinigunData minigunDat
     // 弾の初期化
     bullets_.clear();
 
-    // 位置
-    //worldTransform_.transform_.translate = data->transform.translate;
-
 	// 向き
 	worldTransform_.direction_ = minigunData.direction;
     worldTransform_.usedDirection_ = false;
 
     worldTransform_.UpdateMatrix();
+
+
+    // アニメーション
+    animation_ = std::make_unique<MinigunAnimation>();
+    animation_->Initialize(model_);
 
 }
 
@@ -76,13 +79,22 @@ void Minigun::Update()
         bullet->Update();
     }
 
+    // アニメーション
+    animation_->Update(0);
+
 }
 
 void Minigun::Draw(BaseCamera& camera)
 {
 
     // 本体
-    MeshObject::Draw(camera);
+    ModelDraw::AnimObjectDesc desc;
+    desc.camera = &camera;
+    desc.localMatrixManager = animation_->GetLocalMatrixManager();
+    desc.material = material_.get();
+    desc.model = model_;
+    desc.worldTransform = &worldTransform_;
+    ModelDraw::AnimObjectDraw(desc);
 
     // 弾の描画
     for (MinigunBullet* bullet : bullets_) {
@@ -148,7 +160,7 @@ void Minigun::Fire()
     LevelData::MeshData data;
     data.directoryPath = "Resources/Model/Gimmick/IronBall/";
     data.flieName = "IronBall.obj";
-    data.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+    data.transform = { 0.1f,0.1f,0.1f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
     data.className = "MinigunBullet";
     data.name = "";
     data.parentName = "";
