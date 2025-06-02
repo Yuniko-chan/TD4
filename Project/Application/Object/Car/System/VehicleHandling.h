@@ -4,6 +4,7 @@
 #include <cstdint>
 
 class VehicleCore;
+class VehicleStatus;
 
 class VehicleHandling : public OwnerComponent<VehicleCore>
 {
@@ -21,7 +22,7 @@ public:
 	/// 後の更新ｎ
 	/// </summary>
 	/// <param name="velocity"></param>
-	void PostUpdate(const Vector3& velocity, float leftWheel, float rightWheel);
+	void PostUpdate(const Vector3& velocity, VehicleStatus* status);
 	/// <summary>
 	/// ImGui
 	/// </summary>

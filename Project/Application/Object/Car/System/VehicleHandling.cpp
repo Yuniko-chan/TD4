@@ -53,11 +53,11 @@ void VehicleHandling::PreUpdate()
 	}
 
 	// カウントを最大値内に制限
-	const int kMaxCount = 30;
+	const int kMaxCount = 45;
 	consecutiveReceptions_ = (int16_t)std::clamp((int)consecutiveReceptions_, -kMaxCount, kMaxCount);
 
 	float t = (float)std::abs((int)consecutiveReceptions_) / kMaxCount;
-	const float limitDirect = 1.0f;	// 最大角度（-1~1,0,1):(-0.5|0.5,0,0.5)
+	const float limitDirect = 2.0f;	// 最大角度（-1~1,0,1):(-0.5|0.5,0,0.5)
 	// プラス方向（右
 	if (consecutiveReceptions_ > 0) {
 		steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, 0.0f, limitDirect, t);
@@ -76,7 +76,7 @@ void VehicleHandling::PreUpdate()
 
 }
 
-void VehicleHandling::PostUpdate(const Vector3& velocity, float leftWheel, float rightWheel)
+void VehicleHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 {
 	// 速度が無く動いていなかったら
 	float length = Vector3::Length(velocity);
@@ -86,46 +86,29 @@ void VehicleHandling::PostUpdate(const Vector3& velocity, float leftWheel, float
 		return;
 	}
 
+	// タイヤの数、左右
+	int rightWheel = status->GetRightWheel();
+	int leftWheel = status->GetLeftWheel();
+	int tireCount = status->GetTire();
+	const int kMax = 5;
 	// 入力があれば向きの調整処理
 	if (IsInput()) {
 
 		// 右
-		if (steerDirection_.x > 0) {
-			if (rightWheel > 0) {
-				steerDirection_.x *= 1.1f;
-			}
-			//// 右 ー 左＞右
-			//if (leftWheel > rightWheel) {
-			//	steerDirection_.x *= 0.75f;
-			//}
-			//// 右 ー 右＞左
-			//else if (leftWheel < rightWheel) {
-			//	steerDirection_.x = 1.25f;
-			//}
-			//// 右 ー 一致
-			//else {
-
-			//}
+		if (isRight_&& rightWheel > 0) {
+			int value = std::min(rightWheel, kMax);
+			float ratio = Ease::Easing(Ease::EaseName::Lerp, 0.75f, 1.25f, (float)value / kMax);
+			steerDirection_.x *= ratio;
 		}
 		// 左
-		else if (steerDirection_.x < 0) {
-			if (leftWheel > 0) {
-				steerDirection_.x *= 1.1f;
-			}
-			//// 左 ー 左＞右
-			//if (leftWheel > rightWheel) {
-			//	steerDirection_.x = 1.25f;
-			//}
-			//// 左 ー 右＞左
-			//else if (leftWheel < rightWheel) {
-			//	steerDirection_.x *= 0.75f;
-			//}
-			//// 左 ー 一致
-			//else {
-
-			//}
+		else if (isLeft_ && leftWheel > 0) {
+			int value = std::min(leftWheel, kMax);
+			float ratio = Ease::Easing(Ease::EaseName::Lerp, 0.75f, 1.25f, (float)value / kMax);
+			steerDirection_.x *= ratio;
 		}
-		//else if(leftWheel == 0 && rightWheel == 0 && ())
+		else if (leftWheel == 0 && rightWheel == 0 && tireCount > 0) {
+
+		}
 
 		else if (leftWheel == 0 && rightWheel == 0 && (std::fabsf(steerDirection_.x) != 0.0f)) {
 			steerDirection_.x *= (1.0f / 30.0f);
