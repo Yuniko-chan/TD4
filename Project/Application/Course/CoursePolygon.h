@@ -9,8 +9,10 @@ struct CoursePolygon
 {
 
 	// 位置3つ
-	Vector3 positions[3];
-
+	Vector3 position0;
+	Vector3 position1;
+	Vector3 position2;
+	
 	// 法線
 	Vector3 normal;
 

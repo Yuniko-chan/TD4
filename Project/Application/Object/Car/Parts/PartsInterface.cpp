@@ -148,6 +148,7 @@ void Car::IParts::ColliderUpdate()
 	OBB obb = std::get<OBB>(*collider_);
 	obb.center_ = worldTransform_.GetWorldPosition();
 	obb.SetOtientatuons(worldTransform_.rotateMatrix_);
+	obb.size_ = worldTransform_.transform_.scale;
 	// コライダーを設定しなおす
 	ColliderShape* shape = new ColliderShape();
 	*shape = obb;
