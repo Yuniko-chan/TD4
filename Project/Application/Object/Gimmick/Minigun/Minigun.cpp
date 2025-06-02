@@ -19,8 +19,7 @@ void Minigun::Initialize(LevelData::MeshData* data)
     // ミニガンデータ
     MinigunData minigunData;
     minigunData.direction = { 0.0f,0.0f,1.0f };
-    minigunData.position = { 0.0f,0.0f,0.0f };
-
+   
     // 初期化
     Initialize(data, minigunData);
 
@@ -39,7 +38,7 @@ void Minigun::Initialize(LevelData::MeshData* data, const MinigunData minigunDat
     bullets_.clear();
 
     // 位置
-    worldTransform_.transform_.translate = minigunData.position;
+    //worldTransform_.transform_.translate = data->transform.translate;
 
 	// 向き
 	worldTransform_.direction_ = minigunData.direction;

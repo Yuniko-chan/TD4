@@ -132,3 +132,12 @@ IObject* ObjectCreate::CreateObjectCannon(LevelData::ObjectData& objectData)
 	static_cast<Cannon*>(object)->Initialize(&std::get<LevelData::GimmickData>(objectData).meshData,data);
 	return object;
 }
+
+IObject* ObjectCreate::CreateObjectMinigun(LevelData::ObjectData& objectData)
+{
+	IObject* object = new Minigun();
+	MinigunData& data = std::get<MinigunData>(std::get<LevelData::GimmickData>(objectData).gimmickSeparateData);
+
+	static_cast<Minigun*>(object)->Initialize(&std::get<LevelData::GimmickData>(objectData).meshData, data);
+	return object;
+}

@@ -23,4 +23,5 @@ const std::array<std::string, CreateObjectIndex::kCreateObjectIndexOfCount> kCre
 	//ギミック
 	"PendulumIronBall",
 	"Cannon",
+	"Minigun",
 };
