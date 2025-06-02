@@ -31,6 +31,8 @@ public:
 	Vector3 GetSteerDirect() { return steerDirection_; }
 	// 入力があるか
 	bool IsInput() { return (isRight_ || isLeft_); }
+
+	void SetVehicleDirection(const Vector3& direct) { vehicleDirection_ = direct; }
 private:
 	// 右
 	bool isRight_ = false;
@@ -42,5 +44,7 @@ private:
 	int16_t consecutiveReceptions_ = 0;
 	// ステア方向
 	Vector3 steerDirection_ = {};
-
+	Vector3 executeDirection_ = {};
+	// 車体の向き
+	Vector3 vehicleDirection_ = {};
 };

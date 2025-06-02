@@ -143,8 +143,6 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 	parts->GetConnector()->SetDepth(key.GetLength());
 	// キー
 	parts->GetConnector()->SetKey(Vector2((float)key.x, (float)key.y));
-	// 消すフラグを初期化
-	parts->SetIsDelete(false);
 	// マッピング
 	RegistParts(key, parts);
 	if (parts->GetConnector()->GetDepth() <= 1) {
