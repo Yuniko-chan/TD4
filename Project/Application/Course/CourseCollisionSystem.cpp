@@ -21,7 +21,7 @@ CourseCollisionSystem::kCollidingObjectKeywords_ =
 {
 	"CourseDemo", // コースデモオブジェクト
 	"Player", // プレイヤー
-	"VehicleCore", // ベーシックコア
+	"Core", // ベーシックコア
 	"Tire", // タイヤ
 	"ArmorFrame", // フレーム
 	"Engine" // エンジン
