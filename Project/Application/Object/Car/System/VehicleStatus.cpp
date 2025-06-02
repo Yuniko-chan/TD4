@@ -41,11 +41,13 @@ void VehicleStatus::ImGuiDraw()
 	// パーツ
 	ImGui::SeparatorText("Parts");
 	int print = partsTypes_.tire;
-	ImGui::InputInt("Tire", &print);
 
-	// それぞれの方向のタイヤ数
-	ImGui::InputInt("WheelLeft", &wheelLeft_);
-	ImGui::InputInt("WheelRight", &wheelRight_);
+	// タイヤ数
+	ImGui::InputInt("総タイヤ", &print);
+	ImGui::InputInt("左タイヤ", &wheelLeft_);
+	ImGui::InputInt("右タイヤ", &wheelRight_);
+	ImGui::InputInt("前タイヤ", &wheelFront_);
+	ImGui::InputInt("後タイヤ", &wheelReal_);
 
 
 	print = partsTypes_.armor;
@@ -78,6 +80,12 @@ void VehicleStatus::ApplyPartAdd(std::string name, Vector2Int key)
 		else if (key.x < 0) {
 			wheelLeft_++;
 		}
+		else if (key.y > 0) {
+			wheelFront_++;
+		}
+		else if (key.y < 0) {
+			wheelReal_++;
+		}
 	}
 	else if (name == "ArmorFrameParts") {
 		partsTypes_.armor++;
@@ -98,7 +106,12 @@ void VehicleStatus::ApplyPartRemove(std::string name, Vector2Int key)
 		else if (key.x < 0) {
 			wheelLeft_--;
 		}
-
+		else if (key.y > 0) {
+			wheelFront_--;
+		}
+		else if (key.y < 0) {
+			wheelReal_--;
+		}
 	}
 	else if (name == "ArmorFrameParts") {
 		partsTypes_.armor--;

@@ -54,6 +54,8 @@ private:
 	DirectionType directionTypes_;
 	// 回転用の数（X:左,Y：右）
 	Vector2Int handlingWheel_ = {};
-	int wheelLeft_ = 0;
-	int wheelRight_ = 0;
+	int wheelLeft_ = 0;	// 左
+	int wheelRight_ = 0;	// 右
+	int wheelReal_ = 0;	// 後方
+	int wheelFront_ = 0;	// 前方
 };
