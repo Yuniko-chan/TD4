@@ -93,6 +93,14 @@ void PlayerPickupManager::InteractParts()
 
 void PlayerPickupManager::ReleaseAction()
 {
+	// コアがなければ
+	if (!owner_->GetCore()) {
+		holdParts_->GetWorldTransformAdress()->transform_ = TransformHelper::DetachWithWorldTransform(holdParts_->GetWorldTransformAdress());
+		holdParts_->GetWorldTransformAdress()->SetParent(nullptr);
+		holdParts_ = nullptr;
+		return;
+	}
+
 	// 距離取得
 	float toDistance = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(), owner_->GetCoreTransform()->GetWorldPosition());
 	const float limit = 50.0f;
