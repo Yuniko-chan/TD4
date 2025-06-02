@@ -59,6 +59,9 @@ void CannonExplosion::Update()
 
     worldTransform_.UpdateMatrix();
 
+    // コライダー更新
+    ColliderUpdate();
+
 }
 
 void CannonExplosion::Draw(BaseCamera& camera)
