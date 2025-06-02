@@ -9,6 +9,20 @@ struct Vector2Int {
 		return y < other.y;
 	}
 
+	bool operator==(const Vector2Int& other) const {
+		if (x == other.x && y == other.y) {
+			return true;
+		}
+		return false;
+	}
+
+	bool operator!=(const Vector2Int& other) const {
+		if (x != other.x || y != other.y) {
+			return true;
+		}
+		return false;
+	}
+
 	/// <summary>
 	/// 長さ取得
 	/// </summary>
