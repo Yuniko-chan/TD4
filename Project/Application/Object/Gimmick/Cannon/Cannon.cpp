@@ -36,6 +36,9 @@ void Cannon::Initialize(LevelData::MeshData* data, const CannonData& cannonData)
     // 大砲の弾初期化
     CannonBallInitialize();
 
+    // マテリアル
+    material_->SetEnableLighting(BlinnPhongReflection);
+
 }
 
 void Cannon::Update()

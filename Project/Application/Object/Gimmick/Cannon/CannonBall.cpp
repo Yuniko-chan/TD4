@@ -65,6 +65,9 @@ void CannonBall::Update()
 
 	}
 
+	// コライダー更新
+	ColliderUpdate();
+
 	cannonExplosion_->Update();
 
 }
