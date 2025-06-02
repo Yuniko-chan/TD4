@@ -137,6 +137,11 @@ void CourseCollisionSystem::Execute()
 void CourseCollisionSystem::ObjectRegistration(CollisionObject object)
 {
 
+	// オブジェクト登録数制限
+	if (collidingObjects_.size() >= kObjectsThatCanBeRegisteredMax_) {
+		return;
+	}
+
 	// オブジェクトリストに登録
 	collidingObjects_.push_back(object);
 
@@ -186,6 +191,11 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 
 			}
 
+		}
+
+		// オブジェクト登録数制限
+		if (collidingObjects_.size() >= kObjectsThatCanBeRegisteredMax_) {
+			break;
 		}
 
 	}
@@ -601,7 +611,7 @@ void CourseCollisionSystem::ExtrusionExecuteCS()
 
 	TextureManager::GetInstance()->SetComputeRootDescriptorTable(commandList, 3, course_->GetCourseTextureHandle());
 
-	commandList->Dispatch(1, 1, 1);
+	commandList->Dispatch((buffers_[collisionCheakNum_].objectMap_->indexMax / 1024) + 1, 1, 1);
 
 }
 
