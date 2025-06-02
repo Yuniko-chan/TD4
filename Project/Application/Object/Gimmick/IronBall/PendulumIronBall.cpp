@@ -62,6 +62,9 @@ void PendulumIronBall::Update()
     // 紐更新
     StringUpdate();
 
+    // コライダー更新
+    ColliderUpdate();
+
 }
 
 void PendulumIronBall::Draw(BaseCamera& camera)
@@ -103,6 +106,26 @@ void PendulumIronBall::ColliderInitialize(ColliderShape collider)
     sphere.SetCollisionMask(collisionMask_);
     ColliderShape* colliderShape = new ColliderShape();
     *colliderShape = sphere;
+    collider_.reset(colliderShape);
+
+}
+
+void PendulumIronBall::ColliderUpdate()
+{
+
+    Sphere sphere = std::get<Sphere>(*collider_.get());
+
+    sphere.center_ = worldTransform_.GetWorldPosition();
+
+    // モデルサイズに合わせる
+    const float kModelMagnification = 3.5f;
+
+    sphere.radius_ = worldTransform_.transform_.scale.x * kModelMagnification;
+
+    ColliderShape* colliderShape = new ColliderShape();
+
+    *colliderShape = sphere;
+
     collider_.reset(colliderShape);
 
 }
