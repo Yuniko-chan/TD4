@@ -189,6 +189,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\System\Shadow\Shadow.cpp" />
     <ClCompile Include="Application\System\Shadow\ShadowManager.cpp" />
     <ClCompile Include="Application\UI\BaseUI.cpp" />
+    <ClCompile Include="Application\UI\ManualUI.cpp" />
     <ClCompile Include="Application\UI\UIManager.cpp" />
     <ClCompile Include="Engine\2D\ImGuiManager.cpp" />
     <ClCompile Include="Engine\3D\Line\DrawLine.cpp" />
@@ -363,6 +364,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\System\Shadow\Shadow.h" />
     <ClInclude Include="Application\System\Shadow\ShadowManager.h" />
     <ClInclude Include="Application\UI\BaseUI.h" />
+    <ClInclude Include="Application\UI\ManualUI.h" />
     <ClInclude Include="Application\UI\UIManager.h" />
     <ClInclude Include="Engine\2D\ImGuiManager.h" />
     <ClInclude Include="Engine\2D\SpriteForGPU.h" />

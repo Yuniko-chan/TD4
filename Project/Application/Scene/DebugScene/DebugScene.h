@@ -8,6 +8,8 @@
 
 #include "../../../Engine/GPUParticle/GPUParticle.h"
 #include "../../ParticleManager/ParticleManager.h"
+#include "../../UI/UIManager.h"
+
 /// <summary>
 /// デバッグシーン
 /// </summary>
@@ -60,6 +62,7 @@ private: // メンバ変数
 	//std::unique_ptr<ClothDemo> clothDemo_;
 
 	std::unique_ptr<ParticleManager> ParticleManager_;
+	std::unique_ptr<UIManager> UIManager_;
 
 };
 

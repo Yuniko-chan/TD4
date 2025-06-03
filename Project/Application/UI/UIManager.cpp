@@ -76,6 +76,9 @@ BaseUI* UIManager::CreateUI(ClassIndex index)
 	case UIManager::kClassIndexBase:
 		result = new BaseUI();
 		break;
+	case UIManager::manualUIClass:
+		result = new ManualUI();
+		break;
 	case UIManager::kClassIndexOfCount:
 	default:
 		assert(0);
