@@ -297,3 +297,10 @@ bool Vector3::operator==(const Vector3& v) const
 	return (v1.x == v.x && v1.y == v.y && v1.z == v.z);
 
 }
+
+bool Vector3::operator!=(const Vector3& v) const
+{
+	Vector3 v1 = *this;
+
+	return (v1.x != v.x || v1.y != v.y || v1.z != v.z);
+}
