@@ -17,11 +17,11 @@ void Obstacle::Initialize(LevelData::MeshData* data)
 
 }
 
-void Obstacle::Initialize(LevelData::MeshData* data, const ObstacleData minigunData)
+void Obstacle::Initialize(LevelData::MeshData* data, const ObstacleData obstacleData)
 {
 
 	// 障害物
-	minigunData;
+    obstacleData;
 
 	// 初期化
 	MeshObject::Initialize(data);
