@@ -30,9 +30,9 @@ public: // 関数
     /// <summary>
     /// 初期化
     /// </summary>
-    /// <param name="data">メッシュデータ</param>
+    /// <param name="obstacleData">メッシュデータ</param>
     void Initialize(LevelData::MeshData* data,
-        const ObstacleData minigunData);
+        const ObstacleData obstacleData);
 
     /// <summary>
     /// 更新処理
