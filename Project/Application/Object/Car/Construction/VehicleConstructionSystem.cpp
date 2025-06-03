@@ -64,7 +64,7 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts)
 	// 対象セット
 	std::pair<Vector2Int, Car::IParts*> futureParts = { Vector2Int(0,0),owner_ };
 
-	// 既に付いているパーツの検索
+	// 各パーツとの距離比較検索
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin();
 		it != partsMapping_.end(); ++it) {
 		float newDistace = TransformHelper::Vector3Distance(
