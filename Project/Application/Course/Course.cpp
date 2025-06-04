@@ -12,7 +12,7 @@ void Course::Initialize(LevelData::MeshData* data)
 	MeshObject::Initialize(data);
 
 	// コーステクスチャ
-	const std::string kCourseTextureFileName = "Resources/Course/courseTexture.png";
+	const std::string kCourseTextureFileName = "Resources/Course/roadAttribute_.png";
 	courseTextureHandle_ = TextureManager::Load(kCourseTextureFileName, DirectXCommon::GetInstance());
 
 }
