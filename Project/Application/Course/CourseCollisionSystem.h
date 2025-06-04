@@ -30,7 +30,7 @@ private: // メンバ定数
 	static const uint32_t kObjectsThatCanBeRegisteredMax_ = 32;
 	
 	//	ポリゴンエリアの分割数
-	static const uint32_t kPolygonAreasDiv_ = 4;
+	static const uint32_t kPolygonAreasDiv_ = 1;
 	// ポリゴンエリアの原点
 	static const Vector3 kPolygonAreasOrigin_;
 	// ポリゴンエリアの長さ
