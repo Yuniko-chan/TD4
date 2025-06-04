@@ -2,6 +2,37 @@
 #include "../../../GameObjectsList.h"
 #include "../../Parts/PartsInterface.h"
 
+// 通常ダメ―ジ
+int16_t PartCollisionHandler::usuallyDamage_ = 1;
+// ミニガンダメ―ジ
+int16_t PartCollisionHandler::MinigunDamage_ = 1;
+
+void PartCollisionHandler::Initialize()
+{
+    // ダメ―ジ
+    usuallyDamage_ = 1;
+    MinigunDamage_ = 1;
+}
+
+void PartCollisionHandler::Execute(Car::IParts* part, ColliderParentObject colliderPartner)
+{
+
+    // ギミックオブジェクト取得
+    GimmickObject gimmickObject = CheckGimmick(colliderPartner);
+
+    if (!std::holds_alternative<Obstacle*>(gimmickObject)) {
+        OnCollisionGimmick(part, gimmickObject);
+    }
+    else {
+        // null確認
+        Obstacle* obstacle = std::get<Obstacle*>(colliderPartner);
+        if (obstacle) {
+            OnCollisionGimmick(part, gimmickObject);
+        }
+    }
+
+}
+
 PartCollisionHandler::GimmickObject PartCollisionHandler::CheckGimmick(ColliderParentObject colliderPartner)
 {
 
@@ -41,11 +72,10 @@ void PartCollisionHandler::OnCollisionGimmick(Car::IParts* part, GimmickObject c
 {
 
     // ダメージ取得
-    int16_t damage = 0;
-
-    std::visit([&](auto x) {
-        damage = x->GetDamage();
-        }, colliderPartner);
+    int16_t damage = usuallyDamage_;
+    if (std::holds_alternative<MinigunBullet*>(colliderPartner)) {
+        damage = MinigunDamage_;
+    }
 
     part->GetHPHandler()->OnHit(damage);
 
