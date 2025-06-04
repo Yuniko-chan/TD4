@@ -62,7 +62,7 @@
         },
         {
             "type": "MESH",
-            "name": "course_test",
+            "name": "course_test_1",
             "transform": {
                 "translation": [
                     0.0,
@@ -310,7 +310,7 @@
         },
         {
             "type": "MESH",
-            "name": "course_test_平面_平面.001",
+            "name": "course_test",
             "transform": {
                 "translation": [
                     0.0,
