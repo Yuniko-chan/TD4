@@ -67,13 +67,12 @@ private:
 	/// </summary>
 	void CatchAction();
 
-	void PickUp(Car::IParts* parts);
-
 	/// <summary>
 	/// 拾うのに成功処理
 	/// </summary>
 	/// <param name="parts"></param>
 	void OnPartCatchSuccess(Car::IParts* parts);
+
 	/// <summary>
 	/// 拾うのに失敗処理
 	/// </summary>

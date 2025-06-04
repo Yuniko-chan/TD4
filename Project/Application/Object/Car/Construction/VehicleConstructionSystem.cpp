@@ -55,7 +55,7 @@ void VehicleConstructionSystem::ImGuiDraw()
 	}
 }
 
-void VehicleConstructionSystem::Attach(Car::IParts* parts)
+bool VehicleConstructionSystem::Attach(Car::IParts* parts)
 {
 	// 距離
 	float distance = TransformHelper::Vector3Distance(
@@ -92,36 +92,38 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts)
 	float rightDot = Vector3::Dot(right, toDirect);
 	float forwardDot = Vector3::Dot(forward, toDirect);
 	float backForwardDot = Vector3::Dot(backForward, toDirect);
+	Vector2Int newKey = Vector2Int();
 	// 左
 	if ((leftDot >= rightDot) && (leftDot >= forwardDot) && (leftDot >= backForwardDot)) {
-		if (!partsMapping_.contains(Vector2Int(futureParts.first.x - 1, futureParts.first.y))) {
-			Attach(parts, Vector2Int(futureParts.first.x - 1, futureParts.first.y));
-		}
+		newKey = Vector2Int(futureParts.first.x - 1, futureParts.first.y);
 	}
 	// 右
 	else if ((rightDot >= leftDot) && (rightDot >= forwardDot) && (rightDot >= backForwardDot)) {
-		if (!partsMapping_.contains(Vector2Int(futureParts.first.x + 1, futureParts.first.y))) {
-			Attach(parts, Vector2Int(futureParts.first.x + 1, futureParts.first.y));
-		}
+		newKey = Vector2Int(futureParts.first.x + 1, futureParts.first.y);
 	}
 	// 前
 	else if ((forwardDot >= leftDot) && (forwardDot >= rightDot) && (forwardDot >= backForwardDot)) {
-		if (!partsMapping_.contains(Vector2Int(futureParts.first.x, futureParts.first.y + 1))) {
-			Attach(parts, Vector2Int(futureParts.first.x, futureParts.first.y + 1));
-		}
+		newKey = Vector2Int(futureParts.first.x, futureParts.first.y + 1);
 	}
 	// 手前
 	else if ((backForwardDot >= leftDot) && (backForwardDot >= rightDot) && (backForwardDot >= forwardDot)) {
-		if (!partsMapping_.contains(Vector2Int(futureParts.first.x, futureParts.first.y - 1))) {
-			Attach(parts, Vector2Int(futureParts.first.x, futureParts.first.y - 1));
-		}
+		newKey = Vector2Int(futureParts.first.x, futureParts.first.y - 1);
 	}
+
+	// 一致するものがなければ＆＆0,0でなければ
+	if (!partsMapping_.contains(newKey) && newKey != Vector2Int(0, 0)) {
+		Attach(parts, Vector2Int(newKey));
+		return true;
+	}
+
+	// 見つからなかった場合失敗
+	return false;
 }
 
 void VehicleConstructionSystem::AnyDocking(Car::IParts* parts, const Vector2Int& key)
 {
 	// 既にあればスキップ
-	if (partsMapping_.contains(key)) {
+	if (partsMapping_.contains(key) || key == Vector2Int(0,0)) {
 		return;
 	}
 
