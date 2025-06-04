@@ -212,7 +212,9 @@ void CourseCollisionSystem::SetCourse(Course* course)
 	assert(course_);
 
 	// ポリゴンエリアに登録
-	int32_t x = 0, y = 0, z = 0;
+	int32_t x0 = 0, y0 = 0, z0 = 0;
+	int32_t x1 = 0, y1 = 0, z1 = 0;
+	int32_t x2 = 0, y2 = 0, z2 = 0;
 
 	// 割る用の値
 	Vector3 dividingValue = Vector3::Multiply(kPolygonAreasLength_, 1.0f / static_cast<float>(kPolygonAreasDiv_));
@@ -236,14 +238,28 @@ void CourseCollisionSystem::SetCourse(Course* course)
 		Vector3 centerOfGravity = (vertex0 + vertex1 + vertex2) * (1.0f / 3.0f);
 
 		// エリア番号
-		x = static_cast<uint32_t>(centerOfGravity.x / dividingValue.x);
-		y = static_cast<uint32_t>(centerOfGravity.y / dividingValue.y);
-		z = static_cast<uint32_t>(centerOfGravity.z / dividingValue.z);
+		x0 = static_cast<uint32_t>(vertex0.x / dividingValue.x);
+		y0 = static_cast<uint32_t>(vertex0.y / dividingValue.y);
+		z0 = static_cast<uint32_t>(vertex0.z / dividingValue.z);
+
+		x1 = static_cast<uint32_t>(vertex1.x / dividingValue.x);
+		y1 = static_cast<uint32_t>(vertex1.y / dividingValue.y);
+		z1 = static_cast<uint32_t>(vertex1.z / dividingValue.z);
+
+		x2 = static_cast<uint32_t>(vertex2.x / dividingValue.x);
+		y2 = static_cast<uint32_t>(vertex2.y / dividingValue.y);
+		z2 = static_cast<uint32_t>(vertex2.z / dividingValue.z);
 
 		// 登録（エリアをまたぐ場合、それぞれ登録）
 
 		// 0番目
-		polygonAreas[x][y][z].push_back(polygon);
+		polygonAreas[x0][y0][z0].push_back(polygon);
+		if (!((x0 == x1) && (y0 == y1) && (z0 == z1))) {
+			polygonAreas[x1][y1][z1].push_back(polygon);
+		}
+		if (!( ((x0 == x2) && (y0 == y2) && (z0 == z2)) || ((x1 == x2) && (y1 == y2) && (z1 == z2)))) {
+			polygonAreas[x2][y2][z2].push_back(polygon);
+		}
 
 	}
 
