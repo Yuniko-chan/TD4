@@ -15,6 +15,14 @@ void VehicleHandling::HandleInput(const float inputX)
 	isRight_.second = false;
 	isLeft_.second = false;
 
+	// 切り捨て閾値
+	const float kDiscardThreshold = 0.25f;
+
+	// 閾値以下なら早期
+	if (std::fabsf(inputX) < kDiscardThreshold) {
+		return;
+	}
+
 	// 右
 	if (inputX > 0) {
 		isRight_.second = true;
