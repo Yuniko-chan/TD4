@@ -25,6 +25,12 @@ public:
 	/// <param name="requestNum"></param>
 	virtual void ChangeRequest(uint32_t requestNum) = 0;
 
+	/// <summary>
+	/// 現在のステート取得
+	/// </summary>
+	/// <returns></returns>
+	IState* GetCurrentState() { return currentState_.get(); }
+
 protected:
 	// ファクトリー
 	std::unique_ptr<StateFactory> stateFactory_;
