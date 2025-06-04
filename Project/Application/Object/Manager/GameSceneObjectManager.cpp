@@ -241,6 +241,8 @@ void GameSceneObjectManager::OptionProcess()
 	pickupPointManager_->AddPickupPoint("EnginePickupPoint", static_cast<IPickupPoint*>(this->GetObjectPointer("EnginePickupPoint")));
 	pickupPointManager_->AddPickupPoint("TirePickupPoint", static_cast<IPickupPoint*>(this->GetObjectPointer("TirePickupPoint")));
 	pickupPointManager_->AddPickupPoint("ArmorPickupPoint", static_cast<IPickupPoint*>(this->GetObjectPointer("ArmorPickupPoint")));
+	
+	VehiclePreset("init");
 
 	// コア作成
 	//AddObject("VehicleCore", "Resources/Model/Frame", "Frame.obj");

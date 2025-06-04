@@ -29,19 +29,33 @@ void VehicleHandling::PreUpdate()
 		++inputCounter_;
 	}
 	// 間隔
-	const int duration = 6;
+	const int duration = 6;	// 間隔
+	const int spDecrement = 6;	// 減少の量を増やすしきい
+	const int kMaxCount = 45;	// 押し込み最大	
 
-	// 増加
+	// 入力増加
 	if (inputCounter_ % duration == 0) {
 		if (isLeft_) {
-			consecutiveReceptions_--;
+			// 特殊処理
+			if (consecutiveReceptions_ > spDecrement) {
+				consecutiveReceptions_ -= spDecrement;
+			}
+			else {
+				consecutiveReceptions_--;
+			}
 		}
 		else if (isRight_) {
-			consecutiveReceptions_++;
+			// 特殊処理
+			if (consecutiveReceptions_ < -spDecrement) {
+				consecutiveReceptions_ += spDecrement;
+			}
+			else {
+				consecutiveReceptions_++;
+			}
 		}
 		inputCounter_ = 0;
 	}
-	// 減少
+	// 非入力での減少処理
 	else if (!IsInput() && (inputCounter_ % (duration / 2) == 0)) {
 		if (consecutiveReceptions_ > 0) {
 			consecutiveReceptions_--;
@@ -53,7 +67,6 @@ void VehicleHandling::PreUpdate()
 	}
 
 	// カウントを最大値内に制限
-	const int kMaxCount = 45;
 	consecutiveReceptions_ = (int16_t)std::clamp((int)consecutiveReceptions_, -kMaxCount, kMaxCount);
 
 	float t = (float)std::abs((int)consecutiveReceptions_) / kMaxCount;
