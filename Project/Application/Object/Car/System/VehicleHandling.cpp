@@ -41,7 +41,7 @@ void VehicleHandling::PreUpdate()
 		if (isLeft_.second) {
 			// 特殊処理
 			if (consecutiveReceptions_ > spDecrement) {
-				consecutiveReceptions_ -= spDecrement;
+				//consecutiveReceptions_ -= spDecrement;
 			}
 			else {
 				consecutiveReceptions_--;
@@ -50,13 +50,18 @@ void VehicleHandling::PreUpdate()
 		else if (isRight_.second) {
 			// 特殊処理
 			if (consecutiveReceptions_ < -spDecrement) {
-				consecutiveReceptions_ += spDecrement;
+				//consecutiveReceptions_ += spDecrement;
 			}
 			else {
 				consecutiveReceptions_++;
 			}
 		}
 		inputCounter_ = 0;
+		static bool issDebug = false;
+		if (std::isnan(consecutiveReceptions_)) {
+			issDebug = true;
+		}
+
 	}
 	// 非入力での減少処理
 	else if (!IsInput() && (inputCounter_ % (duration / 2) == 0)) {
@@ -105,6 +110,14 @@ void VehicleHandling::PreUpdate()
 
 	if (executeDirection_ == Vector3(0.0f, 0.0f, 0.0f)) {
 		executeDirection_ = Vector3(0.0f, 0.0f, 1.0f);
+	}
+
+	static bool isDebug = false;
+	if (std::isnan(steerDirection_.x)) {
+		isDebug = true;
+	}
+	if (std::isnan(executeDirection_.x)) {
+		isDebug = true;
 	}
 
 }

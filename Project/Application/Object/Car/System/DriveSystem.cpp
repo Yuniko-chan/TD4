@@ -39,11 +39,12 @@ void DriveSystem::Update()
 		return;
 	}
 	// 角度
-	float eulerY = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, Vector3::FrontVector());
+	//float eulerY = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, Vector3::FrontVector());
+	Vector3 newDirect = Matrix4x4::TransformNormal(velocity_, Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), owner_->GetWorldTransformAdress()->direction_));
+	
 	// 座標計算
-	VehicleCaluclator calc;
-	owner_->GetWorldTransformAdress()->transform_.translate +=
-		calc.RotateVector(velocity_, eulerY) * kDeltaTime_;
+	//VehicleCaluclator calc;
+	owner_->GetWorldTransformAdress()->transform_.translate += newDirect * kDeltaTime_;
 
 }
 
