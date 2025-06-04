@@ -41,27 +41,6 @@
         },
         {
             "type": "MESH",
-            "name": "円柱.008",
-            "transform": {
-                "translation": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
             "name": "Player",
             "transform": {
                 "translation": [
@@ -102,18 +81,18 @@
             "name": "ironball",
             "transform": {
                 "translation": [
-                    45.20729064941406,
-                    0.0,
+                    26.512874603271484,
+                    22.71453857421875,
                     15.200000762939453
                 ],
                 "rotation": [
                     -0.0,
                     0.0,
-                    0.0
+                    1.099568486213684
                 ],
                 "scaling": [
-                    1.0,
-                    1.0,
+                    0.9999999403953552,
+                    0.9999999403953552,
                     1.0
                 ]
             },
@@ -267,6 +246,117 @@
                 "size": [
                     45.0,
                     45.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "FramePoint",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "frame.obj",
+            "directoryPath": "Resources/Model/PickupPoint/Frame",
+            "className": "ArmorPickupPoint",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "EnginePoint",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "engine.obj",
+            "directoryPath": "Resources/Model/PickupPoint/Engine",
+            "className": "EnginePickupPoint",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "TirePoint",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "tire.obj",
+            "directoryPath": "Resources/Model/PickupPoint/Tire",
+            "className": "TirePickupPoint",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
                     2.0
                 ]
             }
