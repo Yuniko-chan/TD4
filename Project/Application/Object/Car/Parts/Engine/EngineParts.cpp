@@ -38,8 +38,3 @@ void EngineParts::ImGuiDrawParts()
 	ImGuiTransform(moveValue);
 	ImGui::Text("\n");
 }
-
-void EngineParts::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
-{
-	colliderPartner, collisionData;
-}

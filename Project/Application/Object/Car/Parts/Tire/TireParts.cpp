@@ -41,8 +41,3 @@ void TireParts::ImGuiDrawParts()
 	}
 	ImGui::Text("\n");
 }
-
-void TireParts::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
-{
-	colliderPartner, collisionData;
-}
