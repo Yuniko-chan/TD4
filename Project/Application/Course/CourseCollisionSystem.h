@@ -164,6 +164,12 @@ private: // メンバ変数
 	/// </summary>
 	void CartExtrusionCalculation();
 
+	/// <summary>
+	/// オブジェクト登録プレイヤー版
+	/// </summary>
+	/// <param name="player">プレイヤー</param>
+	void ObjectRegistrationPlayer(Player* player);
+
 private: // メンバ変数
 
 	// コース
