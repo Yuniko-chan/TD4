@@ -107,7 +107,6 @@ void DebugScene::Draw()
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(dxCommon_->GetCommadList());
 
-
 	//背景
 	//前景スプライト描画
 
