@@ -2,6 +2,7 @@
 #include "../../Engine/Collision/Collision.h"
 #include "../Object/GameObjectsList.h"
 #include "../Object/Wall/Wall.h"
+#include "../Object/CustomArea/CustomArea.h"
 
 void GameSceneCollisionManager::CheckCollisionPair(ColliderShape* colliderA, ColliderShape* colliderB)
 {

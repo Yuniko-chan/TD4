@@ -4,6 +4,7 @@
 #include "../GameObjectsList.h"
 #include "../Wall/Wall.h"
 #include "../../Course/Course.h"
+#include "../CustomArea/CustomArea.h"
 
 IObject* ObjectCreate::CreateObjectSkydome(LevelData::ObjectData& objectData)
 {
@@ -93,6 +94,14 @@ IObject* ObjectCreate::CreateObjectArmorPoint(LevelData::ObjectData& objectData)
 	IObject* object = new ArmorPickupPoint();
 
 	static_cast<ArmorPickupPoint*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}
+
+IObject* ObjectCreate::CreateObjectCustomArea(LevelData::ObjectData& objectData)
+{
+	IObject* object = new CustomArea();
+
+	static_cast<CustomArea*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
 	return object;
 }
 

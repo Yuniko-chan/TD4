@@ -45,6 +45,8 @@ public:	// USER
 	
 	static IObject* CreateObjectArmorPoint(LevelData::ObjectData& objectData);
 
+	static IObject* CreateObjectCustomArea(LevelData::ObjectData& objectData);
+
 	//gimmick
 	static IObject* CreateObjectIronBall(LevelData::ObjectData& objectData);
 	static IObject* CreateObjectCannon(LevelData::ObjectData& objectData);
