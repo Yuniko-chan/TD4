@@ -11,10 +11,15 @@
 #include "../../../Engine/Collision2D/Collision2DDebugDraw.h"
 
 #include "../../Camera/FollowCamera.h"
+#include "../../Camera/GameCameraManager.h"
 #include "../../Effect/EffectManager.h"
 #include "../../Collision/GameSceneCollisionManager.h"
 #include "../../UI/UIManager.h"
 #include "../../System/PostEffectSystem/PostEffectSystem.h"
+#include "../../Object/KeyConfig/GameKeyconfig.h"
+#include "../../Object/GlobalParameterManager.h"
+#include "../../Course/CourseCollisionSystem.h"
+#include "../../Course/Debug/CourseDebugDraw.h"
 
 /// <summary>
 /// ゲームシーン
@@ -80,6 +85,9 @@ private:
 	// 追加カメラ
 	std::unique_ptr<FollowCamera> followCamera_;
 
+	// カメラマネージャ
+	std::unique_ptr<GameCameraManager> cameraManager_;
+
 	// エフェクトマネージャー
 	EffectManager* effectManager_ = nullptr;
 
@@ -88,5 +96,15 @@ private:
 
 	// ポストエフェクトシステム
 	std::unique_ptr<PostEffectSystem> postEffectSystem_ = nullptr;
+
+	// キー入力管理
+	GameKeyconfig* keyConfig_ = nullptr;
+	// 外部パラメータ変数をまとめておくクラス
+	GlobalParameterManager* parameterManager_ = nullptr;
+
+	// コース衝突システム
+	std::unique_ptr<CourseCollisionSystem> courseCollisionSystem_;
+	// コースデバッグ描画
+	std::unique_ptr<CourseDebugDraw> courseDebugDraw_;
 
 };

@@ -1,14 +1,15 @@
 #pragma once
 #include "../../../Engine/3D/Transform/WorldTransform.h"
 #include "../../../Engine/Camera/BaseCamera.h"
+#include "../Object/Utility/Timer/FrameTimer.h"
+#include "Transition/TransitionCameraModule.h"
 
 /// <summary>
 /// 追従カメラ
 /// </summary>
 class FollowCamera :
-	public BaseCamera
+	public BaseCamera, public TransitionCameraModule
 {
-
 public: // メンバ関数
 
 	/// <summary>
@@ -20,6 +21,8 @@ public: // メンバ関数
 	/// 更新
 	/// </summary>
 	void Update(float elapsedTime = 0.0f) override;
+
+	void ImGuiDraw();
 
 public: // アクセッサ
 
@@ -48,19 +51,32 @@ private: // メンバ関数
 	/// </summary>
 	void ApplyGlobalVariables();
 
+private:
+	void TransitionUpdate() override;
+
 private: // メンバ変数
 
 	//追従対象
 	const WorldTransform* target_ = nullptr;
 
-	// オフセットの長さ
-	float offsetLength_ = -10.0f;
-	
-	// オフセットの高さ
-	float offsetHeight_ = 3.0f;
-
 	// ターゲット位置
 	Vector3 interTarget_;
+
+	float offsetMoveRate_ = 0.1f;
+
+	// 車両に乗っている状態の
+	Vector3 inVehicleRotation_ = {};
+	Vector3 inVehicleOffset_ = {};
+
+	// 降りてる時の
+	Vector3 onFootRotation_ = {};
+	Vector3 onFootOffset_ = {};
+
+	// 方向ベクトル
+	bool usedDirection_ = false;
+	Vector3 rotateDirection_ = Vector3(0.0f, 0.0f, 1.0f);
+
+	Vector3 offset_ = {};
 
 };
 

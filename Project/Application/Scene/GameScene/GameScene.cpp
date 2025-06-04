@@ -9,6 +9,7 @@
 #include "../../../Engine/base/WindowSprite/WindowSprite.h"
 #include "../../Object/Manager/GameSceneObjectManager.h"
 #include "../../Object/Factory/ObjectFactory.h"
+#include "../../Object/Player/Player.h"
 #include "../../../Engine/Physics/ClothGPU/ClothGPU.h"
 
 GameScene::~GameScene()
@@ -24,6 +25,10 @@ void GameScene::Initialize() {
 
 	ModelCreate();
 	TextureLoad();
+
+	// パラメータマネージャ
+	parameterManager_ = GlobalParameterManager::GetInstance();
+	parameterManager_->Initialize();
 
 	// ビュープロジェクション
 	const EulerTransform baseCameraTransform = {
@@ -49,13 +54,23 @@ void GameScene::Initialize() {
 
 	// オブジェクトマネージャー
 	objectManager_ = std::make_unique<GameSceneObjectManager>();
-	objectManager_->Initialize(kLevelIndexMain, levelDataManager_);
+	objectManager_->Initialize(kLevelIndexDebug, levelDataManager_);
 
-	// 追従カメラ
-	followCamera_ = std::make_unique<FollowCamera>();
-	followCamera_->Initialize();
-	followCamera_->SetTarget(objectManager_->GetObjectPointer("Player")->GetWorldTransformAdress());
+	// キーコンフィグ
+	keyConfig_ = GameKeyconfig::GetInstance();
+	keyConfig_->Initialize();
 
+	// カメラのマネージャー
+	cameraManager_ = std::make_unique<GameCameraManager>();
+	cameraManager_->Initialize();
+	static_cast<FollowCamera*>(cameraManager_->FindCamera("Follow"))->SetTarget(objectManager_->GetObjectPointer("Player")->GetWorldTransformAdress());
+	static_cast<OverheadCamera*>(cameraManager_->FindCamera("Overhead"))->SetTarget(objectManager_->GetObjectPointer("Player")->GetWorldTransformAdress());
+	static_cast<Player*>(objectManager_->GetObjectPointer("Player"))->SetCameraManager(cameraManager_.get());
+	//// 追従カメラ
+	//followCamera_ = std::make_unique<FollowCamera>();
+	//followCamera_->Initialize();
+	//followCamera_->SetTarget(objectManager_->GetObjectPointer("Player")->GetWorldTransformAdress());
+	//static_cast<Player*>(objectManager_->GetObjectPointer("Player"))->SetCamera(followCamera_.get());
 	// UIマネージャー
 	uiManager_ = std::make_unique<UIManager>();
 	uiManager_->Initialize();
@@ -64,6 +79,18 @@ void GameScene::Initialize() {
 	postEffectSystem_ = std::make_unique<PostEffectSystem>();
 	postEffectSystem_->Initialize();
 	postEffectSystem_->SetRenderTargetTexture(renderTargetTexture_);
+
+	// コース
+	Course* course = static_cast<Course*>(objectManager_->GetObjectPointer("course_test"));
+
+	// コース衝突システム
+	courseCollisionSystem_ = std::make_unique<CourseCollisionSystem>();
+	courseCollisionSystem_->Initialize();
+	courseCollisionSystem_->SetCourse(course);
+
+	// コースデバッグ描画
+	courseDebugDraw_ = std::make_unique<CourseDebugDraw>();
+	courseDebugDraw_->Initialize(course);
 
 	// モデル描画
 	ModelDraw::PreDrawParameters preDrawParameters;
@@ -91,15 +118,23 @@ void GameScene::Update() {
 		resetScene_ = false;
 		return;
 	}
+	// パラメータ
+	parameterManager_->Update();
 
 	//光源
 	directionalLight_->Update(directionalLightData_);
 	pointLightManager_->Update(pointLightDatas_);
 	spotLightManager_->Update(spotLightDatas_);
 
-	// 追従カメラ
-	followCamera_->Update();
-	camera_ = static_cast<BaseCamera>(*followCamera_.get());
+	// カメラ
+	//followCamera_->Update();
+	//camera_ = static_cast<BaseCamera>(*followCamera_.get());
+
+	cameraManager_->Update();
+	camera_ = *cameraManager_->GetActiveCamera();
+
+	// キー入力更新
+	keyConfig_->Update();
 
 	// オブジェクトマネージャー
 	objectManager_->Update();
@@ -110,6 +145,12 @@ void GameScene::Update() {
 	objectManager_->CollisionListRegister(collisionManager_.get());
 
 	collisionManager_->CheakAllCollision();
+
+	courseCollisionSystem_->ObjectRegistration(objectManager_.get());
+	courseCollisionSystem_->Execute();
+
+	// コースデバッグ描画
+	courseDebugDraw_->DrawMap(drawLine_);
 
 	// デバッグカメラ
 	DebugCameraUpdate();
@@ -196,15 +237,20 @@ void GameScene::ImguiDraw(){
 
 	ImGui::Begin("Framerate");
 	ImGui::Text("Frame rate: %6.2f fps", ImGui::GetIO().Framerate);
+	ImGui::Checkbox("DebugCamera", &isDebugCameraActive_);
 	ImGui::End();
 
 	debugCamera_->ImGuiDraw();
 
+	//followCamera_->ImGuiDraw();
+	cameraManager_->ImGuiDraw();
 	objectManager_->ImGuiDraw();
 
 	PostEffect::GetInstance()->ImGuiDraw();
 
 	uiManager_->ImGuiDraw();
+
+	courseDebugDraw_->ImGuiDraw();
 
 }
 

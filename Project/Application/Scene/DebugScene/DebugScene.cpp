@@ -1,12 +1,12 @@
 #include "DebugScene.h"
-
+#include "../../Course/CourseLoader.h"
+#include "../../Object/Manager/GameSceneObjectManager.h"
 DebugScene::~DebugScene()
 {
 }
 
 void DebugScene::Initialize()
 {
-
 	BaseScene::Initialize();
 
 	// スカイドーム
@@ -43,7 +43,23 @@ void DebugScene::Initialize()
 	//UI
 	UIManager_ = std::make_unique<UIManager>();
 	UIManager_->Initialize();
+	// オブジェクトマネージャー
+	objectManager_ = std::make_unique<GameSceneObjectManager>();
+	objectManager_->Initialize(kLevelIndexDebug, levelDataManager_);
 
+	// コース
+	//courseModel_.reset();
+	/*course_ = std::make_unique<Course>();
+	ModelManager::GetInstance()->AppendModel(CourseLoader::LoadCourseFile("Resources/Course", "courseWallTest2.course", *(course_->GetCoursePolygonsAdress())));
+	LevelData::MeshData courseData;
+	courseData.directoryPath = "Resources/Course";
+	courseData.flieName = "courseWallTest2.course";
+	courseData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+	courseData.className = "Course";
+	courseData.name = "";
+	courseData.parentName = "";
+	course_->Initialize(&courseData);
+	*/
 	isDebugCameraActive_ = true;
 
 	// モデル描画
@@ -55,18 +71,66 @@ void DebugScene::Initialize()
 	preDrawParameters.environmentTextureHandle = TextureManager::Load("Resources/default/rostock_laage_airport_4k.dds", DirectXCommon::GetInstance());
 	ModelDraw::SetPreDrawParameters(preDrawParameters);
 
+	// 
+	courseCollisionSystem_ = std::make_unique<CourseCollisionSystem>();
+	courseCollisionSystem_->Initialize();
+	//courseCollisionSystem_->SetCourse(course_.get());
+
+	// コースデモ用
+	courseDemoModel_.reset(Model::Create("Resources/default/", "ball.obj", dxCommon_));
+	courseDemoObject_ = std::make_unique<CourseDemoObject>();
+	LevelData::MeshData courseDemoData;
+	courseDemoData.directoryPath = "Resources/default/";
+	courseDemoData.flieName = "ball.obj";
+	courseDemoData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+	courseDemoData.className = "CourseDemo";
+	courseDemoData.name = "";
+	courseDemoData.parentName = "";
+	courseDemoObject_->Initialize(&courseDemoData);
+
+	// ミニガン
+	objModel_.reset(Model::Create("Resources/Model/Gimmick/Cannon/", "Cannon.obj", dxCommon_));
+	objG_ = std::make_unique<Cannon>();
+	LevelData::MeshData objData;
+	objData.directoryPath = "Resources/Model/Gimmick/Cannon/";
+	objData.flieName = "Cannon.obj";
+	objData.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+	objData.className = "Obstacle";
+	objData.name = "";
+	objData.parentName = "";
+	OBB objCollider;
+	objCollider.center_ = { 0.0f,0.0f,0.0f };
+	objCollider.size_ = { 1.0f,1.0f,1.0f };
+	objCollider.SetOtientatuons(Matrix4x4::MakeIdentity4x4());
+	objData.collider = objCollider;
+	objG_->Initialize(&objData);
+
 	BaseScene::InitilaizeCheck();
 
 }
 
 void DebugScene::Update()
 {
+#ifdef _DEBUG
+	if (input_->TriggerKey(DIK_RSHIFT)) {
+		// 行きたいシーンへ
+		requestSceneNo_ = kGame;
+	}
+#endif // _DEBUG
 
 	//clothDemo_->Update();
 
 	ParticleManager_->Update();
 
 	UIManager_->Update();
+	// オブジェクトマネージャー
+	objectManager_->Update();
+
+	courseDemoObject_->Update();
+	//courseCollisionSystem_->ObjectRegistration(courseDemoObject_.get());
+	//courseCollisionSystem_->Execute();
+	
+	objG_->Update();
 
 	DebugCameraUpdate();
 
@@ -88,12 +152,21 @@ void DebugScene::Draw()
 	// スカイドーム
 	skydome_->Draw(camera_);
 
-	//clothDemo_->CollisionObjectDraw(&camera_);
+	objectManager_->Draw(camera_, drawLine_);
+
+	//コース表示
+	//course_->Draw(camera_);
+
+	// コースデモ
+	//courseDemoObject_->Draw(camera_);
+
+	objG_->Draw(camera_);
 
 	ModelDraw::PostDraw();
 
 #pragma region 線描画
 
+	drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
 
 	//drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
 
@@ -123,9 +196,12 @@ void DebugScene::Draw()
 void DebugScene::ImguiDraw()
 {
 
+	debugCamera_->ImGuiDraw();
+
+	course_->ImGuiDraw();
 	//clothDemo_->ImGuiDraw(camera_);
 
-	debugCamera_->ImGuiDraw();
+	//courseCollisionSystem_->ImGuiDraw();
 
 	UIManager_->ImGuiDraw();
 

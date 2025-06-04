@@ -8,5 +8,20 @@
 /// </summary>
 
 const std::array<std::string, CreateObjectIndex::kCreateObjectIndexOfCount> kCreateObjectNames_ = {
-	"Skydome"
+	"Skydome",
+	"Player",
+	"VehicleCore",
+	"EngineParts",
+	"TireParts",
+	"ArmorFrameParts",
+	"EnginePickupPoint",
+	"TirePickupPoint",
+	"ArmorPickupPoint",
+	"Wall",
+	"Course",
+	"TerrainObject",
+	//ギミック
+	"PendulumIronBall",
+	"Cannon",
+	"Minigun",
 };

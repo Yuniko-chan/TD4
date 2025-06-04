@@ -8,9 +8,33 @@
 
 // 前方宣言
 class ParentNullObject;
+// 
+class Player;
+// 車両パーツ
+class VehicleCore;
+class TireParts;
+class ArmorFrameParts;
+class EngineParts;
+class TerrainObject;
+
+// ギミック
+class ConicalPendulumIronBall;
+class PendulumIronBall;
+class Cannon;
+class CannonBall;
+class CannonExplosion;
+class Minigun;
+class MinigunBullet;
+class Obstacle;
+
+//フィールド
+class Wall;
 
 // variantでまとめる
-using ColliderParentObject = std::variant<ParentNullObject*>;
+using ColliderParentObject = std::variant<ParentNullObject*, Player*, VehicleCore*, 
+	ConicalPendulumIronBall*, PendulumIronBall*, Cannon*, CannonBall*, CannonExplosion*, 
+	Minigun*, MinigunBullet*, Obstacle*, TerrainObject*
+	, TireParts*, ArmorFrameParts*, EngineParts*, Wall* > ;
 
 /// <summary>
 /// 親がないもの用

@@ -9,7 +9,7 @@ void Skydome::Initialize(LevelData::MeshData* data)
 
 	MeshObject::Initialize(data);
 
-	material_->SetEnableLighting(BlinnPhongReflection);
+	//material_->SetEnableLighting(BlinnPhongReflection);
 
 }
 

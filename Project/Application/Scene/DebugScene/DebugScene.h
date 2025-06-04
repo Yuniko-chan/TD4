@@ -5,6 +5,16 @@
 #include "../../../Engine/Physics/Cloth/Cloth.h"
 #include "../../../Engine/Physics/ClothGPU/ClothGPU.h"
 #include "../../ClothDemo/ClothDemo.h"
+#include "../../Course/Course.h"
+#include "../../Course/CourseCollisionSystem.h"
+#include "../../Course/Demo/CourseDemoObject.h"
+#include "../../Object/Gimmick/IronBall/ConicalPendulumIronBall.h"
+#include "../../Object/Gimmick/IronBall/PendulumIronBall.h"
+#include "../../Object/Gimmick/Cannon/Cannon.h"
+#include "../../Object/Gimmick/Minigun/Minigun.h"
+#include "../../Object/Gimmick/Obstacle/Obstacle.h"
+
+#include "../../Object/Player/Player.h"
 
 #include "../../../Engine/GPUParticle/GPUParticle.h"
 #include "../../ParticleManager/ParticleManager.h"
@@ -58,6 +68,20 @@ private: // メンバ変数
 	std::unique_ptr<Skydome> skydome_;
 	std::unique_ptr<Model> skydomeModel_;
 
+	// Course
+	std::unique_ptr<Course> course_;
+	std::unique_ptr<Model> courseModel_;
+
+	// CourseCollisionSystem 
+	std::unique_ptr<CourseCollisionSystem> courseCollisionSystem_;
+
+	// コースとぶつけるオブジェクト
+	std::unique_ptr<CourseDemoObject> courseDemoObject_;
+	std::unique_ptr<Model> courseDemoModel_;
+
+	// 障害物
+	std::unique_ptr<Cannon> objG_;
+	std::unique_ptr<Model> objModel_;
 	// クロスシミュレーションデモ
 	//std::unique_ptr<ClothDemo> clothDemo_;
 

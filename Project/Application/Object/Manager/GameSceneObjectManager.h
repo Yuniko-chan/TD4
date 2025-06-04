@@ -1,6 +1,8 @@
 #pragma once
 #include "../../../Engine/Object/BaseObjectManager.h"
 #include "../../System/Shadow/ShadowManager.h"
+#include "../Car/Manager/VehiclePartsManager.h"
+#include "../Car/Manager/PickupPointManager.h"
 
 // 前方宣言
 class Player;
@@ -39,12 +41,37 @@ public: // メンバ関数
 	/// <param name="drawLine">線描画クラス</param>
 	void Draw(BaseCamera& camera, DrawLine* drawLine) override;
 
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw() override;
 private: // メンバ関数
 
 	/// <summary>
 	/// 影更新
 	/// </summary>
 	void ShadowUpdate();
+
+
+	// プレイヤー専用の初期化処理
+	void PlayerInitialize();
+	void OptionProcess();
+
+	void VehiclePreset(const std::string& presetName);
+public:
+	/// <summary>
+	/// オブジェクト追加（ハードコーディング用）
+	/// </summary>
+	/// <param name="className"></param>
+	/// <param name="directory"></param>
+	/// <param name="modelName"></param>
+	void AddObject(const std::string& className, const std::string& directory, const std::string& modelName);
+	void AddObject(const std::string& className, const std::string& name, const std::string& directory, const std::string& modelName);
+	void AddObject(const std::string& className, const std::string& name, const std::string& directory, const std::string& modelName, const Vector3& position);
+
+public:
+	// パーツ用のマネージャークラス取得
+	VehiclePartsManager* GetPartsManager() { return partsManager_.get(); }
 
 private: // メンバ変数
 
@@ -56,5 +83,10 @@ private: // メンバ変数
 	// レベルデータマネージャー
 	LevelDataManager* levelDataManager_;
 
+private: // USER
+	// パーツマネージャー
+	std::unique_ptr<VehiclePartsManager> partsManager_;
+	// 拾う場所のマネージャー
+	std::unique_ptr<PickupPointManager> pickupPointManager_;
 };
 
