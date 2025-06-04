@@ -127,6 +127,8 @@ void DebugScene::ImguiDraw()
 
 	debugCamera_->ImGuiDraw();
 
+	UIManager_->ImGuiDraw();
+
 }
 
 void DebugScene::DebugCameraUpdate()
