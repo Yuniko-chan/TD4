@@ -77,6 +77,7 @@ void CourseCollisionSystem::Execute()
 		itr != collidingObjects_.end(); ++itr) {
 
 		// カートに属しているか
+		bool isAlone = true;
 		bool belongToCart = 
 			std::visit([&](auto x) {
 			// 型
@@ -100,7 +101,14 @@ void CourseCollisionSystem::Execute()
 				}
 				bool belongToCartXX = 
 					std::visit([&](auto xx) {
-					return xx->IsParent();
+					// 型
+					using ParentT = std::decay_t<decltype(xx->IsParent())>;
+					// コア
+					if constexpr (std::is_same_v<ParentT, VehicleCore*>) {
+						return true;
+					}
+					isAlone = false;
+					return false;
 					}, collisionCarObject);
 				return belongToCartXX;
 			}
@@ -113,7 +121,7 @@ void CourseCollisionSystem::Execute()
 			belongsToCartPartsNumbers_.push_back(collisionCheakNum_);
 		}
 		// 個人勢
-		else {
+		else if(isAlone){
 			// ->CPU側で押し出し、回転（壁データはとらない）
 			// ->OBB登録のオブジェクトのワールドトランスフォーム更新
 			AloneExtrusionCalculation(*itr);
