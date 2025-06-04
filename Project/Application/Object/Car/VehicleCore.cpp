@@ -130,8 +130,3 @@ void VehicleCore::ImGuiDrawParts()
 
 	ImGui::Text("\n");
 }
-
-void VehicleCore::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
-{
-	colliderPartner, collisionData;
-}

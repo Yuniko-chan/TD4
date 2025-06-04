@@ -47,13 +47,6 @@ public: // メンバ関数
     /// </summary>
     void ImGuiDrawParts() override;
 
-    /// <summary>
-    /// 衝突処理
-    /// </summary>
-    /// <param name="colliderPartner"></param>
-    /// <param name="collisionData"></param>
-    void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
-
 public: // アクセッサ
     //---ゲッター---//
     // パーツ構築システム

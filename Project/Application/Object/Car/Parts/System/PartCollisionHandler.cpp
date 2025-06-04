@@ -25,7 +25,7 @@ void PartCollisionHandler::Execute(Car::IParts* part, ColliderParentObject colli
     }
     else {
         // null確認
-        Obstacle* obstacle = std::get<Obstacle*>(colliderPartner);
+        Obstacle* obstacle = std::get<Obstacle*>(gimmickObject);
         if (obstacle) {
             OnCollisionGimmick(part, gimmickObject);
         }
