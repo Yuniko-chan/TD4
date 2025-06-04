@@ -11,10 +11,10 @@ Model* CourseLoader::LoadCourseFile(const std::string& directoryPath, const std:
 	
 	if (fopen_s(&fp, filepath.c_str(), "rb")==0) {
 		//一時リソース生成
-		CourseInportData* data = new CourseInportData();
+		CourseImportData* data = new CourseImportData();
 
 		//一時リソース格納
-		StragedInportData(fp, data);
+		StragedImportData(fp, data);
 
 		fclose(fp);
 
@@ -23,12 +23,12 @@ Model* CourseLoader::LoadCourseFile(const std::string& directoryPath, const std:
 		modelData.material.textureFilePaths.push_back(directoryPath + "/" + data->textureFileName_);
 		
 		CoursePolygon cData;
-		uint32_t courseAttribute[3] = {0};
+		//uint32_t courseAttribute[3] = {0};
 
 		//データ格納
 		for (uint32_t i = 0; i < data->verticesNum_; i++) {
 			VertexData vData;
-			vData.position = data->vertices[i].positon_;
+			vData.position = data->vertices[i].position_;
 			vData.texcoord = data->vertices[i].uv_;
 			vData.normal = data->vertices[i].normal_;
 
@@ -45,18 +45,18 @@ Model* CourseLoader::LoadCourseFile(const std::string& directoryPath, const std:
 			
 			//coursepolygone
 			if (i % 3 == 0) {
-				cData.position0 = { data->vertices[i].positon_.x, data->vertices[i].positon_.y, data->vertices[i].positon_.z };
+				cData.position0 = { data->vertices[i].position_.x, data->vertices[i].position_.y, data->vertices[i].position_.z };
 			}
 			else if (i % 3 == 1) {
-				cData.position1 = { data->vertices[i].positon_.x, data->vertices[i].positon_.y, data->vertices[i].positon_.z };
+				cData.position1 = { data->vertices[i].position_.x, data->vertices[i].position_.y, data->vertices[i].position_.z };
 			}
 			else {
-				cData.position2 = { data->vertices[i].positon_.x, data->vertices[i].positon_.y, data->vertices[i].positon_.z };
+				cData.position2 = { data->vertices[i].position_.x, data->vertices[i].position_.y, data->vertices[i].position_.z };
 			}
 
 			cData.normal += data->vertices[i].normal_;
-			cData.texcoord += data->vertices[i].uv_;
-			courseAttribute[i % 3] = data->vertices[i].courseAttribute_;
+			cData.texcoord += data->vertices[i].attributeUv_;
+			//courseAttribute[i % 3] = data->vertices[i].courseAttribute_;
 			if (i%3 == 2) {
 				cData.normal = Vector3::Normalize(cData.normal);
 				//cData.coursePolygonType = std::min(std::min(courseAttribute[0], courseAttribute[1]), courseAttribute[2]);
@@ -82,25 +82,25 @@ Model* CourseLoader::LoadCourseFile(const std::string& directoryPath, const std:
 }
 
 
-void CourseLoader::StragedInportData(FILE* fp, CourseInportData* courseInportData) {
+void CourseLoader::StragedImportData(FILE* fp, CourseImportData* courseImportData) {
 	static char buff[kInportFileSize];
 	fread(buff, sizeof(char) * kInportFileSize, 1, fp);
 	//ヘッダ
-	memcpy(&(courseInportData->verticesNum_), buff, sizeof(uint32_t));
-	memcpy(&(courseInportData->textureNameSize_), buff + sizeof(uint32_t), sizeof(uint32_t));
+	memcpy(&(courseImportData->verticesNum_), buff, sizeof(uint32_t));
+	memcpy(&(courseImportData->textureNameSize_), buff + sizeof(uint32_t), sizeof(uint32_t));
 	//頂点
-	for (uint32_t i = 0; i < courseInportData->verticesNum_;i+=3) {
+	for (uint32_t i = 0; i < courseImportData->verticesNum_;i+=3) {
 		//開始オフセット
 		size_t offset = kHeaderOfset + sizeof(CourseFileVertex) * size_t(i);
-		memcpy(&(courseInportData->vertices[i]), buff + offset, sizeof(CourseFileVertex));
+		memcpy(&(courseImportData->vertices[i]), buff + offset, sizeof(CourseFileVertex));
 		offset +=sizeof(CourseFileVertex) * 2;
-		memcpy(&(courseInportData->vertices[i+1]), buff + offset, sizeof(CourseFileVertex));
+		memcpy(&(courseImportData->vertices[i+1]), buff + offset, sizeof(CourseFileVertex));
 		offset -=sizeof(CourseFileVertex);
-		memcpy(&(courseInportData->vertices[i+2]), buff + offset, sizeof(CourseFileVertex));
+		memcpy(&(courseImportData->vertices[i+2]), buff + offset, sizeof(CourseFileVertex));
 	}
 	//テクスチャファイルネーム
-	size_t nameOffset = kHeaderOfset + sizeof(CourseFileVertex) * size_t(courseInportData->verticesNum_);
+	size_t nameOffset = kHeaderOfset + sizeof(CourseFileVertex) * size_t(courseImportData->verticesNum_);
 	static char name[256];
-	memcpy(&(name), buff + nameOffset, size_t(courseInportData->textureNameSize_));
-	courseInportData->textureFileName_ = name;
+	memcpy(&(name), buff + nameOffset, size_t(courseImportData->textureNameSize_));
+	courseImportData->textureFileName_ = name;
 }
