@@ -88,6 +88,10 @@ void CannonBall::Draw(BaseCamera& camera)
 void CannonBall::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
 	colliderPartner, collisionData;
+	// 爆発
+	if (isWorking_) {
+		Explosion();
+	}
 }
 
 void CannonBall::CollisionListRegister(BaseCollisionManager* collisionManager)
@@ -151,7 +155,14 @@ void CannonBall::ColliderUpdate()
 
 	Sphere sphere = std::get<Sphere>(*collider_.get());
 
-	sphere.center_ = worldTransform_.GetWorldPosition();
+	// 活動終了なら遠くへ
+	if (isWorking_) {
+		sphere.center_ = worldTransform_.GetWorldPosition();
+	}
+	else {
+		sphere.center_ = { -10000.0f,-10000.0f ,-10000.0f };
+	}
+
 
 	sphere.radius_ = worldTransform_.transform_.scale.x;
 
