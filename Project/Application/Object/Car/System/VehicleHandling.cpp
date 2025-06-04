@@ -49,7 +49,7 @@ void VehicleHandling::PreUpdate()
 		if (isLeft_.second) {
 			// 特殊処理
 			if (consecutiveReceptions_ > spDecrement) {
-				//consecutiveReceptions_ -= spDecrement;
+				consecutiveReceptions_ -= spDecrement;
 			}
 			else {
 				consecutiveReceptions_--;
@@ -58,7 +58,7 @@ void VehicleHandling::PreUpdate()
 		else if (isRight_.second) {
 			// 特殊処理
 			if (consecutiveReceptions_ < -spDecrement) {
-				//consecutiveReceptions_ += spDecrement;
+				consecutiveReceptions_ += spDecrement;
 			}
 			else {
 				consecutiveReceptions_++;
