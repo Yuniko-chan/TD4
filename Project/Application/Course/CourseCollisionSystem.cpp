@@ -10,6 +10,7 @@
 #include "../Object/Player/Player.h"
 #include "../Object/Car/CarLists.h"
 #include "../Object/Player/State/User/PlayerInVehicleState.h"
+#include <typeinfo>
 
 // ポリゴンエリアの原点
 const Vector3 CourseCollisionSystem::kPolygonAreasOrigin_ = { -500.0f, -500.0f, -500.0f };
@@ -162,7 +163,6 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 		for (uint32_t i = 0; i < kCollidingObjectKeywordsMax_; ++i) {
 			// キーワードに引っかかるか
 			if (itr->first.find(kCollidingObjectKeywords_[i]) != std::string::npos) {
-				Player* player = nullptr;
 				// オブジェクトリストに登録
 				switch (i)
 				{
@@ -170,12 +170,7 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 					collidingObjects_.push_back(static_cast<CourseDemoObject*>(itr->second.get()));
 					break;
 				case 1:
-					player = static_cast<Player*>(itr->second.get());
-					// 型
-					using T = std::decay_t<decltype(player->GetStateMachine()->GetCurrentState())>;
-					if constexpr (!std::is_same_v<T, PlayerInVehicleState*>) {
-						collidingObjects_.push_back(player);
-					}
+					ObjectRegistrationPlayer(static_cast<Player*>(itr->second.get()));
 					break;
 				case 2:
 					collidingObjects_.push_back(static_cast<VehicleCore*>(itr->second.get()));
@@ -834,5 +829,17 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 	//	vehicleCore_->GetWorldTransformAdress()->direction_ = normal;
 	//}
 	vehicleCore_->GetWorldTransformAdress()->UpdateMatrix();
+
+}
+
+void CourseCollisionSystem::ObjectRegistrationPlayer(Player* player)
+{
+
+	// 型
+	const std::type_info& t = typeid(*(player->GetStateMachine()->GetCurrentState()));
+	std::string name = t.name();
+	if (!(name == "class PlayerInVehicleState")) {
+		collidingObjects_.push_back(player);
+	}
 
 }
