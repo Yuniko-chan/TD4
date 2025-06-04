@@ -46,6 +46,8 @@ public: // アクセッサ
 	/// <returns></returns>
 	Matrix4x4 GetRotateMatrix();
 
+	void SetDirection(const Vector3& direct) { rotateDirection_ = direct; }
+
 private: // メンバ関数
 
 	/// <summary>

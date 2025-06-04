@@ -10,6 +10,11 @@ public:
 	/// <param name="model"></param>
 	void Initialize(Model* model) override;
 
+	void Update();
+	void AnimationStart();
+	//void OpenStart();
+
+
 	/// <summary>
 	/// ImGui
 	/// </summary>

@@ -6,6 +6,9 @@ void PartHPHandler::Initialize()
 {
 
 	hp_ = 1;
+	// 死亡・解除状態をリセット
+	owner_->SetIsDelete(false);
+	owner_->SetIsDead(false);
 
 }
 

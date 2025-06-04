@@ -44,3 +44,16 @@ bool PlayerFrontChecker::IsInRange(const Vector3& target)
 	const float maxRange = GlobalVariables::GetInstance()->GetFloatValue("Player", "FrontCatchRange");
 	return (distanceValue <= maxRange) ? true : false;
 }
+
+bool PlayerFrontChecker::IsPointInRange(const Vector3& target)
+{
+	// XZ平面上の位置
+	Vector3 xzTarget = Vector3(target.x, 0.0f, target.z);
+	Vector3 xzPlayer = Vector3(owner_->GetWorldTransformAdress()->GetWorldPosition().x, 0.0f, owner_->GetWorldTransformAdress()->GetWorldPosition().z);
+	Vector3 distance = xzTarget - xzPlayer;
+	// 距離の大きさ
+	float distanceValue = float(std::sqrtf(std::powf(distance.x, 2) + std::powf(distance.y, 2) + std::powf(distance.z, 2)));
+	// 最大距離
+	const float maxRange = GlobalVariables::GetInstance()->GetFloatValue("Player", "FrontCatchRange");
+	return (distanceValue <= maxRange) ? true : false;
+}

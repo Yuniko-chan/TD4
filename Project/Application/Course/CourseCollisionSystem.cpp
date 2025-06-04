@@ -434,9 +434,10 @@ void CourseCollisionSystem::DistanceJudgment(CollisionObject object)
 	// オブジェクトデータ取得
 	buffers_[collisionCheakNum_].objectMap_->center = obb.center_;
 	// 軸を送る時の代入
-	buffers_[collisionCheakNum_].objectMap_->otientatuonsX = { 0.0f, 1.0f, 0.0f };
-	buffers_[collisionCheakNum_].objectMap_->otientatuonsY = { 0.0f, 0.0f, 1.0f };
-	buffers_[collisionCheakNum_].objectMap_->otientatuonsZ = { 1.0f, 0.0f, 0.0f };
+	//軸反転応急措置byシマザキ
+	buffers_[collisionCheakNum_].objectMap_->otientatuonsX = { 0.0f, 0.5f, 0.5f };
+	buffers_[collisionCheakNum_].objectMap_->otientatuonsY = { 0.5f, 0.0f, 0.5f };
+	buffers_[collisionCheakNum_].objectMap_->otientatuonsZ = { 0.5f, 0.5f, 0.0f };
 
 	buffers_[collisionCheakNum_].objectMap_->size = obb.size_;
 

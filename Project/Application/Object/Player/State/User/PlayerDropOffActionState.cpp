@@ -1,5 +1,6 @@
 #include "PlayerDropOffActionState.h"
 #include "../../Player.h"
+#include "../../../Car/VehicleCore.h"
 #include "../../../Utility/Calc/MotionHelper.h"
 
 
@@ -16,6 +17,8 @@ void PlayerDropOffActionState::Initialize()
 	easePoint_.second = player_->GetCoreTransform()->GetWorldPosition() + rotateOffset;
 
 	player_->GetCameraManager()->SetRequest(ActiveCamera::kOverhead);
+	//static_cast<OverheadCamera*>(player_->GetCameraManager()->FindCamera("Overhead"))->SetDirection(player_->GetCoreTransform()->direction_);
+	player_->GetCore()->GetAnimation()->AnimationStart();
 }
 
 void PlayerDropOffActionState::Update()

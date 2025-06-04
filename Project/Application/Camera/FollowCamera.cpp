@@ -67,13 +67,14 @@ void FollowCamera::Update(float elapsedTime) {
 		// 追従座標の補間(Z軸を取ってくる)
 		//const Vector3 kTargetPositionEnd = { 0.0f, 0.0f, target_->worldMatrix_.m[3][2] };
 		const Vector3 kTargetPositionEnd = { target_->worldMatrix_.m[3][0],target_->worldMatrix_.m[3][1] ,target_->worldMatrix_.m[3][2] };
-		// 前後で追従レートの変化を付ける
-		if (interTarget_.z > kTargetPositionEnd.z) {
-			interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, 0.9f);
-		}
-		else {
-			interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, offsetMoveRate_);
-		}
+		//// 前後で追従レートの変化を付ける
+		//if (interTarget_.z > kTargetPositionEnd.z) {
+		//	interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, 0.9f);
+		//}
+		//else {
+		//	interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, offsetMoveRate_);
+		//}
+		interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, offsetMoveRate_);
 
 		// オフセット
 		Vector3 offset = OffsetCalc();
@@ -131,14 +132,14 @@ Matrix4x4 FollowCamera::GetRotateMatrix()
 	if (target_) {
 		// 
 		if (usedDirection_) {
-			//// 対象に親がいれば
-			//if (target_->parent_) {
-			//	// 自分の回転
-			//	Matrix4x4 from = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, Vector3::Normalize(rotateDirection_));
-			//	// 対象の回転
-			//	Matrix4x4 to = target_->parent_->rotateMatrix_;
-			//	return Matrix4x4::Multiply(from, to);
-			//}
+			// カートがあれば、その向きに
+			if (target_->parent_) {
+				// 自分の回転
+				Matrix4x4 from = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, Vector3::Normalize(rotateDirection_));
+				// 対象の回転
+				Matrix4x4 to = target_->parent_->rotateMatrix_;
+				return Matrix4x4::Multiply(from, to);
+			}
 			//// 自分の回転
 			//Matrix4x4 from = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, Vector3::Normalize(rotateDirection_));
 			//// 対象の回転

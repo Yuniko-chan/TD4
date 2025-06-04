@@ -66,7 +66,7 @@ void VehicleCore::Update()
 	// 運転・移動処理
 	driveSystem_->Update();
 	// アニメーション
-	animation_->Update(0);
+	animation_->Update();
 	// 基底
 	Car::IParts::Update();
 }

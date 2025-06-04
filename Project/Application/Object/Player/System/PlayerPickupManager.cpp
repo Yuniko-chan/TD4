@@ -138,27 +138,40 @@ void PlayerPickupManager::CatchAction()
 	Car::IParts* nearParts = partsManager_->FindRootNonCoreParts(owner_->GetWorldTransformAdress()->GetWorldPosition());
 	// 両方あれば
 	if (nearParts && nearPoint) {
+		// 方向
+		const Vector3 toPartDirect = nearParts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+		const Vector3 toPointDirect = nearParts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+		// 前方チェック
+		bool isFrontParts = owner_->GetFrontChecker()->FrontCheck(toPartDirect);
+		bool isFrontPoint = owner_->GetFrontChecker()->FrontCheck(toPointDirect);
+		
 		float toPoint = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
 			nearPoint->GetWorldTransformAdress()->GetWorldPosition());
 		float toPart = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
 			nearParts->GetWorldTransformAdress()->GetWorldPosition());
 
 		// ポイントの方が近ければ
-		if (toPoint < toPart) {
+		if (toPoint < toPart && isFrontPoint) {
 			// パーツ取得
 			nearParts = pickupPointManager_->AttemptPartAcquisition();
 			// 拾う処理
 			PickUp(nearParts);
 		}
 		// パーツの方が近ければ
-		else {
-			OnCatchSuccess(nearParts);
+		else if(isFrontParts) {
+			OnPartCatchSuccess(nearParts);
 		}
 
 	}
 	// パーツしかなければ
 	else if (nearParts) {
-		OnCatchSuccess(nearParts);
+		// 前方チェック
+		const Vector3 toPartDirect = nearParts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+		bool isFrontParts = owner_->GetFrontChecker()->FrontCheck(toPartDirect);
+		if (!isFrontParts) {
+			return;
+		}
+		OnPartCatchSuccess(nearParts);
 	}
 	// ポイントしかなければ
 	else if (nearPoint) {
@@ -167,15 +180,6 @@ void PlayerPickupManager::CatchAction()
 		// 拾う処理
 		PickUp(nearParts);
 	}
-
-	// エラー回避用
-	//if (nearParts) {
-	//	// 失敗
-	//	OnCatchFailure();
-
-	//	// 成功
-	//	OnCatchSuccess(nearParts);
-	//}
 }
 
 void PlayerPickupManager::PickUp(Car::IParts* parts)
@@ -189,24 +193,19 @@ void PlayerPickupManager::PickUp(Car::IParts* parts)
 	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
 }
 
-void PlayerPickupManager::OnCatchSuccess(Car::IParts* parts)
+void PlayerPickupManager::OnPartCatchSuccess(Car::IParts* parts)
 {
-	// 方向
-	const Vector3 direct = parts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
-	// 前方の閾値内か
-	if (owner_->GetFrontChecker()->FrontCheck(direct)) {
-		// 最大距離より外ならつかまない
-		if (!owner_->GetFrontChecker()->IsInRange(parts->GetWorldTransformAdress()->GetWorldPosition())) {
-			return;
-		}
-		// つかみパーツとしてポインタ取得
-		holdParts_ = parts;
-		// オフセットの位置に設定・親子設定
-		const Vector3 localOffset = Vector3(0.0f, 0.0f, 2.0f);
-		holdParts_->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
-		holdParts_->GetWorldTransformAdress()->transform_.translate = localOffset;
-		holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
+	// 最大距離より外ならつかまない
+	if (!owner_->GetFrontChecker()->IsInRange(parts->GetWorldTransformAdress()->GetWorldPosition())) {
+		return;
 	}
+	// つかみパーツとしてポインタ取得
+	holdParts_ = parts;
+	// オフセットの位置に設定・親子設定
+	const Vector3 localOffset = Vector3(0.0f, 0.0f, 2.0f);
+	holdParts_->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
+	holdParts_->GetWorldTransformAdress()->transform_.translate = localOffset;
+	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
 
 }
 

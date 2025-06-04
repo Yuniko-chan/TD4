@@ -62,7 +62,7 @@
         },
         {
             "type": "MESH",
-            "name": "course_test",
+            "name": "course_test_1",
             "transform": {
                 "translation": [
                     0.0,
@@ -307,6 +307,30 @@
                 "cooltime": 3.0,
                 "firingSpeed": 1.0
             }
+        },
+        {
+            "type": "MESH",
+            "name": "course_test",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "demoCourse.course",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
         }
     ]
 }

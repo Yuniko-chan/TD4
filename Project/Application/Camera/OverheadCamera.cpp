@@ -16,16 +16,8 @@ void OverheadCamera::Initialize()
 
 	cameraTransform_ = &transform_;
 
-	const char* groupName = "FollowCamera";
-	// オフセット
-	offset_ = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootOffset");
-	// 開始点
-	from_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleOffset");
-	from_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleRotation");
-	// 終着点
-	to_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootOffset");
-	to_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootRotation");
-
+	// Globalの取得更新
+	ApplyGlobalVariable();
 }
 
 void OverheadCamera::Update(float elapsedTime)
@@ -94,7 +86,16 @@ void OverheadCamera::ApplyGlobalVariable()
 	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
 	const char* groupName = "FollowCamera";
 
+	// 追従レート
 	offsetMoveRate_ = globalVariables->GetFloatValue(groupName, "offsetMoveRate");
+	// オフセット
+	offset_ = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootOffset");
+	// 開始点
+	from_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleOffset");
+	from_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleRotation");
+	// 終着点
+	to_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootOffset");
+	to_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootRotation");
 
 }
 

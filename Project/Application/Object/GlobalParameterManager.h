@@ -28,5 +28,6 @@ private:
 	GlobalVariables* globalVariables_ = nullptr;
 	// プレイヤー
 	ParameterStructs::PlayerData player_ = {};
-	
+	// 車両関係
+	ParameterStructs::VehicleData vehicle_ = {};
 };
