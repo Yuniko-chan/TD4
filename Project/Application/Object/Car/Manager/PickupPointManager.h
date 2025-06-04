@@ -34,6 +34,7 @@ public:
 
 	//void AttemptPartAcquisition(const Vector3& position);
 	Car::IParts* AttemptPartAcquisition();
+	Car::IParts* FindAcquirablePart(IPickupPoint* point);
 
 	bool IsAccept(const Vector3& position);
 
