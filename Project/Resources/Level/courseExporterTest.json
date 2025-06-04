@@ -255,7 +255,7 @@
             "name": "FramePoint",
             "transform": {
                 "translation": [
-                    0.0,
+                    12.9399995803833,
                     0.0,
                     0.0
                 ],
@@ -293,7 +293,7 @@
             "transform": {
                 "translation": [
                     0.0,
-                    0.0,
+                    14.170000076293945,
                     0.0
                 ],
                 "rotation": [
@@ -329,7 +329,7 @@
             "name": "TirePoint",
             "transform": {
                 "translation": [
-                    0.0,
+                    -7.799999713897705,
                     0.0,
                     0.0
                 ],
