@@ -78,4 +78,6 @@ private:
 	std::map<Vector2Int, Car::IParts*> partsMapping_;
 public: // アクセッサ
 	void SetStatusManager(VehicleStatus* status) { status_ = status; }
+
+	bool IsEmpty() { return partsMapping_.empty(); }
 };
