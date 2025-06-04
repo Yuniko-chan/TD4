@@ -60,7 +60,7 @@ public: // アクセッサ
     VehicleConstructionSystem* GetConstructionSystem() { return constructionSystem_.get(); }
     // 運転システム
     DriveSystem* GetDriveSystem() { return driveSystem_.get(); }
-
+    VehicleAnimation* GetAnimation() { return animation_.get(); }
     //---セッター---//
     // プレイヤー
     void SetPlayer(Player* player) { pairPlayer_ = player; }
