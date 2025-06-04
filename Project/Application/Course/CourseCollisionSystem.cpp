@@ -9,6 +9,8 @@
 
 #include "../Object/Player/Player.h"
 #include "../Object/Car/CarLists.h"
+#include "../Object/Player/State/User/PlayerInVehicleState.h"
+#include <typeinfo>
 
 // ポリゴンエリアの原点
 const Vector3 CourseCollisionSystem::kPolygonAreasOrigin_ = { -500.0f, -500.0f, -500.0f };
@@ -75,6 +77,7 @@ void CourseCollisionSystem::Execute()
 		itr != collidingObjects_.end(); ++itr) {
 
 		// カートに属しているか
+		bool isAlone = true;
 		bool belongToCart = 
 			std::visit([&](auto x) {
 			// 型
@@ -98,7 +101,14 @@ void CourseCollisionSystem::Execute()
 				}
 				bool belongToCartXX = 
 					std::visit([&](auto xx) {
-					return xx->IsParent();
+					// 型
+					using ParentT = std::decay_t<decltype(xx->IsParent())>;
+					// コア
+					if constexpr (std::is_same_v<ParentT, VehicleCore*>) {
+						return true;
+					}
+					isAlone = false;
+					return false;
 					}, collisionCarObject);
 				return belongToCartXX;
 			}
@@ -111,7 +121,7 @@ void CourseCollisionSystem::Execute()
 			belongsToCartPartsNumbers_.push_back(collisionCheakNum_);
 		}
 		// 個人勢
-		else {
+		else if(isAlone){
 			// ->CPU側で押し出し、回転（壁データはとらない）
 			// ->OBB登録のオブジェクトのワールドトランスフォーム更新
 			AloneExtrusionCalculation(*itr);
@@ -168,7 +178,7 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 					collidingObjects_.push_back(static_cast<CourseDemoObject*>(itr->second.get()));
 					break;
 				case 1:
-					collidingObjects_.push_back(static_cast<Player*>(itr->second.get()));
+					ObjectRegistrationPlayer(static_cast<Player*>(itr->second.get()));
 					break;
 				case 2:
 					collidingObjects_.push_back(static_cast<VehicleCore*>(itr->second.get()));
@@ -210,7 +220,9 @@ void CourseCollisionSystem::SetCourse(Course* course)
 	assert(course_);
 
 	// ポリゴンエリアに登録
-	int32_t x = 0, y = 0, z = 0;
+	int32_t x0 = 0, y0 = 0, z0 = 0;
+	int32_t x1 = 0, y1 = 0, z1 = 0;
+	int32_t x2 = 0, y2 = 0, z2 = 0;
 
 	// 割る用の値
 	Vector3 dividingValue = Vector3::Multiply(kPolygonAreasLength_, 1.0f / static_cast<float>(kPolygonAreasDiv_));
@@ -234,14 +246,28 @@ void CourseCollisionSystem::SetCourse(Course* course)
 		Vector3 centerOfGravity = (vertex0 + vertex1 + vertex2) * (1.0f / 3.0f);
 
 		// エリア番号
-		x = static_cast<uint32_t>(centerOfGravity.x / dividingValue.x);
-		y = static_cast<uint32_t>(centerOfGravity.y / dividingValue.y);
-		z = static_cast<uint32_t>(centerOfGravity.z / dividingValue.z);
+		x0 = static_cast<uint32_t>(vertex0.x / dividingValue.x);
+		y0 = static_cast<uint32_t>(vertex0.y / dividingValue.y);
+		z0 = static_cast<uint32_t>(vertex0.z / dividingValue.z);
+
+		x1 = static_cast<uint32_t>(vertex1.x / dividingValue.x);
+		y1 = static_cast<uint32_t>(vertex1.y / dividingValue.y);
+		z1 = static_cast<uint32_t>(vertex1.z / dividingValue.z);
+
+		x2 = static_cast<uint32_t>(vertex2.x / dividingValue.x);
+		y2 = static_cast<uint32_t>(vertex2.y / dividingValue.y);
+		z2 = static_cast<uint32_t>(vertex2.z / dividingValue.z);
 
 		// 登録（エリアをまたぐ場合、それぞれ登録）
 
 		// 0番目
-		polygonAreas[x][y][z].push_back(polygon);
+		polygonAreas[x0][y0][z0].push_back(polygon);
+		if (!((x0 == x1) && (y0 == y1) && (z0 == z1))) {
+			polygonAreas[x1][y1][z1].push_back(polygon);
+		}
+		if (!( ((x0 == x2) && (y0 == y2) && (z0 == z2)) || ((x1 == x2) && (y1 == y2) && (z1 == z2)))) {
+			polygonAreas[x2][y2][z2].push_back(polygon);
+		}
 
 	}
 
@@ -823,9 +849,21 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 
 	// コアに代入
 	vehicleCore_->GetWorldTransformAdress()->transform_.translate += extrusion;
-	if (normalCount != 0) {
-		//vehicleCore_->GetWorldTransformAdress()->direction_ = normal;
-	}
+	//if (normalCount != 0) {
+	//	vehicleCore_->GetWorldTransformAdress()->direction_ = normal;
+	//}
 	vehicleCore_->GetWorldTransformAdress()->UpdateMatrix();
+
+}
+
+void CourseCollisionSystem::ObjectRegistrationPlayer(Player* player)
+{
+
+	// 型
+	const std::type_info& t = typeid(*(player->GetStateMachine()->GetCurrentState()));
+	std::string name = t.name();
+	if (!(name == "class PlayerInVehicleState")) {
+		collidingObjects_.push_back(player);
+	}
 
 }
