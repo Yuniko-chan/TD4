@@ -45,7 +45,7 @@ namespace Car
 		// ワールドトランスフォームの親設定
 		void TransformParent();
 		// 親の設定
-		void SettingParent(VehiclePartsManager* partsManager);
+		bool SettingParent(VehiclePartsManager* partsManager);
 		// ワールドトランスフォームの親解除
 		void ReleaseParent();
 

@@ -81,11 +81,15 @@ void Car::IParts::TransformParent()
 	}
 }
 
-void Car::IParts::SettingParent(VehiclePartsManager* partsManager)
+bool Car::IParts::SettingParent(VehiclePartsManager* partsManager)
 {
+	// True:親への合体に成功した場合
+	// false:適した部分への合体ができなかった場合｜｜例外処理
+
 	// コアがある場合
 	if (parentCore_) {
 		worldTransform_.SetParent(parentCore_->GetWorldTransformAdress());
+		return false;
 	}
 	else {
 		// 一番近いコアの取得
@@ -93,8 +97,14 @@ void Car::IParts::SettingParent(VehiclePartsManager* partsManager)
 		// ポインタの設定
 		parentCore_ = static_cast<VehicleCore*>(parts);
 		// 親に設定
-		parentCore_->GetConstructionSystem()->Attach(this);
+		bool isSuccess = parentCore_->GetConstructionSystem()->Attach(this);
+		if (isSuccess) {
+			return true;
+		}
+		parentCore_ = nullptr;
 	}
+
+	return false;
 }
 
 void Car::IParts::ImGuiTransform(const float& value)

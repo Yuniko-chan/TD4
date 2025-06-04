@@ -113,17 +113,20 @@ void PlayerPickupManager::ReleaseAction()
 		return;
 	}
 
-	// パーツの位置再設定
-	holdParts_->GetWorldTransformAdress()->transform_ = TransformHelper::DetachWithWorldTransform(holdParts_->GetWorldTransformAdress());
-	holdParts_->GetWorldTransformAdress()->transform_.translate = {};
+	// 親の設定が上手く行かなかった場合
+	if (!holdParts_->SettingParent(partsManager_)) {
+		// パーツの位置再設定
+		holdParts_->GetWorldTransformAdress()->transform_ = TransformHelper::DetachWithWorldTransform(holdParts_->GetWorldTransformAdress());
+		holdParts_->GetWorldTransformAdress()->SetParent(nullptr);
+		// パーツの管理を削除
+		holdParts_ = nullptr;
+		return;
+	}
+
+	// SettingParent関数が成功した場合の終了処理
 	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
-	holdParts_->GetWorldTransformAdress()->SetParent(nullptr);
-
-	// 近くのコアにセット
-	holdParts_->SettingParent(partsManager_);
-
-	// パーツの管理を削除
 	holdParts_ = nullptr;
+
 }
 
 void PlayerPickupManager::CatchAction()
@@ -139,14 +142,15 @@ void PlayerPickupManager::CatchAction()
 	// 両方あれば
 	if (nearParts && nearPoint) {
 		// 方向
-		const Vector3 toPartDirect = nearParts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
-		const Vector3 toPointDirect = nearParts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+		const Vector3 toPointDirect = nearPoint->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
 		// 前方チェック
-		bool isFrontParts = owner_->GetFrontChecker()->FrontCheck(toPartDirect);
 		bool isFrontPoint = owner_->GetFrontChecker()->FrontCheck(toPointDirect);
-		
 		float toPoint = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
 			nearPoint->GetWorldTransformAdress()->GetWorldPosition());
+		
+		// パーツ
+		const Vector3 toPartDirect = nearParts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+		bool isFrontParts = owner_->GetFrontChecker()->FrontCheck(toPartDirect);
 		float toPart = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
 			nearParts->GetWorldTransformAdress()->GetWorldPosition());
 
@@ -155,7 +159,7 @@ void PlayerPickupManager::CatchAction()
 			// パーツ取得
 			nearParts = pickupPointManager_->AttemptPartAcquisition();
 			// 拾う処理
-			PickUp(nearParts);
+			OnPartCatchSuccess(nearParts);
 		}
 		// パーツの方が近ければ
 		else if(isFrontParts) {
@@ -175,30 +179,19 @@ void PlayerPickupManager::CatchAction()
 	}
 	// ポイントしかなければ
 	else if (nearPoint) {
-		// パーツ取得
+		// 前方チェック
+		const Vector3 toPointDirect = nearPoint->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+		bool isFrontPoint = owner_->GetFrontChecker()->FrontCheck(toPointDirect);
+		if (!isFrontPoint) {
+			return;
+		}
 		nearParts = pickupPointManager_->AttemptPartAcquisition();
-		// 拾う処理
-		PickUp(nearParts);
+		OnPartCatchSuccess(nearParts);
 	}
-}
-
-void PlayerPickupManager::PickUp(Car::IParts* parts)
-{
-	// つかみパーツとしてポインタ取得
-	holdParts_ = parts;
-	// オフセットの位置に設定・親子設定
-	const Vector3 localOffset = Vector3(0.0f, 0.0f, 2.0f);
-	holdParts_->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
-	holdParts_->GetWorldTransformAdress()->transform_.translate = localOffset;
-	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
 }
 
 void PlayerPickupManager::OnPartCatchSuccess(Car::IParts* parts)
 {
-	// 最大距離より外ならつかまない
-	if (!owner_->GetFrontChecker()->IsInRange(parts->GetWorldTransformAdress()->GetWorldPosition())) {
-		return;
-	}
 	// つかみパーツとしてポインタ取得
 	holdParts_ = parts;
 	// オフセットの位置に設定・親子設定
@@ -206,9 +199,9 @@ void PlayerPickupManager::OnPartCatchSuccess(Car::IParts* parts)
 	holdParts_->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
 	holdParts_->GetWorldTransformAdress()->transform_.translate = localOffset;
 	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
-
 }
 
 void PlayerPickupManager::OnCatchFailure()
 {
+
 }

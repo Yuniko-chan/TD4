@@ -37,7 +37,7 @@ public:
 	/// 方向判断まで
 	/// </summary>
 	/// <param name="parts"></param>
-	void Attach(Car::IParts* parts);
+	bool Attach(Car::IParts* parts);
 
 	/// <summary>
 	/// 任意指定でのくっつけ処理

@@ -64,7 +64,9 @@ namespace ParameterStructs {
 		float dashSpeedFactor = 0.0f;
 		// 割り算
 		float cameraRotateSpeed = 30.0f;
-
+		
+		// パーツ持った時のオフセット
+		Vector3 holdOffset = Vector3(0.0f, 0.0f, 2.0f);
 	};
 
 	/// <summary>

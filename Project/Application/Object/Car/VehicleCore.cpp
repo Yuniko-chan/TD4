@@ -69,6 +69,8 @@ void VehicleCore::Update()
 	animation_->Update();
 	// 基底
 	Car::IParts::Update();
+
+	isDelete_ = false;
 }
 
 void VehicleCore::Draw(BaseCamera& camera)
@@ -95,6 +97,8 @@ void VehicleCore::ImGuiDrawParts()
 	ImGui::BeginChild("Tab", ImVec2(400, 300), true, ImGuiWindowFlags_None);
 	// トランスフォームに移動
 	ImGuiTransform(0.1f);
+
+	ImGui::Checkbox("IsDelete", &isDelete_);
 
 	ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 0.75f));
 	ImGui::BeginChild("SystemBlock", ImVec2(300, 200), true);

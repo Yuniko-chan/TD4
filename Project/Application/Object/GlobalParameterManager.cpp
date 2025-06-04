@@ -35,6 +35,8 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	player_.frontCheck.catchRange = globalVariables_->GetFloatValue(groupName, "FrontCatchRange");
 
 	player_.cameraRotateSpeed = globalVariables_->GetFloatValue(groupName, "CameraRotateSpeed");
+
+	player_.holdOffset = globalVariables_->GetVector3Value(groupName, "HoldOffset");
 }
 
 void GlobalParameterManager::AddItems()
@@ -52,6 +54,8 @@ void GlobalParameterManager::AddItems()
 	// 拾う
 	globalVariables_->AddItem(groupName, "FrontThreshold", float(player_.frontCheck.threshold));
 	globalVariables_->AddItem(groupName, "FrontCatchRange", float(player_.frontCheck.catchRange));
+
+	globalVariables_->AddItem(groupName, "HoldOffset", Vector3(player_.holdOffset));
 
 	// 移動量
 	globalVariables_->AddItem(groupName, "RideSpeed", float(player_.rideSpeedFactor));

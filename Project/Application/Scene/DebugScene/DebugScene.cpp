@@ -27,7 +27,7 @@ void DebugScene::Initialize()
 
 	// コース
 	//courseModel_.reset();
-	course_ = std::make_unique<Course>();
+	/*course_ = std::make_unique<Course>();
 	ModelManager::GetInstance()->AppendModel(CourseLoader::LoadCourseFile("Resources/Course", "courseWallTest2.course", *(course_->GetCoursePolygonsAdress())));
 	LevelData::MeshData courseData;
 	courseData.directoryPath = "Resources/Course";
@@ -37,7 +37,7 @@ void DebugScene::Initialize()
 	courseData.name = "";
 	courseData.parentName = "";
 	course_->Initialize(&courseData);
-	
+	*/
 	isDebugCameraActive_ = true;
 
 	// モデル描画
@@ -52,7 +52,7 @@ void DebugScene::Initialize()
 	// 
 	courseCollisionSystem_ = std::make_unique<CourseCollisionSystem>();
 	courseCollisionSystem_->Initialize();
-	courseCollisionSystem_->SetCourse(course_.get());
+	//courseCollisionSystem_->SetCourse(course_.get());
 
 	// コースデモ用
 	courseDemoModel_.reset(Model::Create("Resources/default/", "ball.obj", dxCommon_));
@@ -100,8 +100,8 @@ void DebugScene::Update()
 	objectManager_->Update();
 
 	courseDemoObject_->Update();
-	courseCollisionSystem_->ObjectRegistration(courseDemoObject_.get());
-	courseCollisionSystem_->Execute();
+	//courseCollisionSystem_->ObjectRegistration(courseDemoObject_.get());
+	//courseCollisionSystem_->Execute();
 	
 	objG_->Update();
 
@@ -146,7 +146,7 @@ void DebugScene::ImguiDraw()
 
 	course_->ImGuiDraw();
 
-	courseCollisionSystem_->ImGuiDraw();
+	//courseCollisionSystem_->ImGuiDraw();
 
 }
 
