@@ -34,6 +34,11 @@ public: // 関数
 	/// </summary>
 	static void Initialize();
 
+	/// <summary>
+	/// 実行
+	/// </summary>
+	/// <param name="part">パーツ</param>
+	/// <param name="colliderPartner"衝突オブジェクト</param>
 	static void Execute(Car::IParts* part, ColliderParentObject colliderPartner);
 
 private: // 関数
@@ -51,6 +56,14 @@ private: // 関数
 	/// <param name="part">パーツ</param>
 	/// <param name="colliderPartner"></param>
 	static void OnCollisionGimmick(Car::IParts* part, GimmickObject colliderPartner);
+
+private: // 変数
+
+	// 通常ダメ―ジ
+	static int16_t usuallyDamage_;
+
+	// ミニガンダメ―ジ
+	static int16_t MinigunDamage_;
 
 };
 
