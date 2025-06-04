@@ -18,7 +18,8 @@ void VehicleConstructionSystem::Update()
 			UnRegistParts((*it).first, (*it).second);
 			// ステータス側からも削除
 			status_->ApplyPartRemove((*it).second->GetClassNameString(), (*it).first);
-			//DeleteCount((*it).second->GetClassNameString());
+			// HPの初期化
+			(*it).second->GetHPHandler()->Initialize();
 			it = partsMapping_.erase(it);
 			break;
 		}
