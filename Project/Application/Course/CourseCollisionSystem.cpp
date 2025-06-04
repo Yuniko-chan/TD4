@@ -7,10 +7,25 @@
 #include "../../Engine/base/Texture/TextureManager.h"
 #include "Demo/CourseDemoObject.h"
 
+#include "../Object/Player/Player.h"
+#include "../Object/Car/CarLists.h"
+
 // ポリゴンエリアの原点
 const Vector3 CourseCollisionSystem::kPolygonAreasOrigin_ = { -500.0f, -500.0f, -500.0f };
 // ポリゴンエリアの長さ
 const Vector3 CourseCollisionSystem::kPolygonAreasLength_ = { 1000.0f, 1000.0f, 1000.0f };
+
+// 衝突するオブジェクトキーワード
+const std::array<std::string, CourseCollisionSystem::kCollidingObjectKeywordsMax_> 
+CourseCollisionSystem::kCollidingObjectKeywords_ = 
+{
+	"CourseDemo", // コースデモオブジェクト
+	"Player", // プレイヤー
+	"Core", // ベーシックコア
+	"Tire", // タイヤ
+	"ArmorFrame", // フレーム
+	"Engine" // エンジン
+};
 
 void CourseCollisionSystem::Initialize()
 {
@@ -24,6 +39,9 @@ void CourseCollisionSystem::Initialize()
 	// バッファ初期化
 	BuffersInitialize();
 
+	// コア
+	vehicleCore_ = nullptr;
+
 }
 
 void CourseCollisionSystem::Execute()
@@ -33,7 +51,7 @@ void CourseCollisionSystem::Execute()
 	collisionCheakNum_ = 0;
 
 	// 登録分回す
-	for (std::list<MeshObject*>::iterator itr = collidingObjects_.begin();
+	for (std::list<CollisionObject>::iterator itr = collidingObjects_.begin();
 		itr != collidingObjects_.end();++itr) {
 		// CPU側でOBBとの距離判定をとる->メッシュ登録
 		DistanceJudgment(*itr);
@@ -53,30 +71,134 @@ void CourseCollisionSystem::Execute()
 	collisionCheakNum_ = 0;
 
 	// 登録分回す
-	for (std::list<MeshObject*>::iterator itr = collidingObjects_.begin();
+	for (std::list<CollisionObject>::iterator itr = collidingObjects_.begin();
 		itr != collidingObjects_.end(); ++itr) {
-	
-		// ->CPU側で押し出し、回転（壁データはとらない）
-		// ->OBB登録のオブジェクトのワールドトランスフォーム更新
-		ExtrusionCalculation(*itr);
-	
+
+		// カートに属しているか
+		bool belongToCart = 
+			std::visit([&](auto x) {
+			// 型
+			using T = std::decay_t<decltype(x)>;
+			// プレイヤー
+			if constexpr (std::is_same_v<T, Player*>) {
+				return false;
+			}
+			// デモオブジェクト
+			else if constexpr (std::is_same_v<T, CourseDemoObject*>) {
+				return false;
+			}
+			// プレイヤーじゃない
+			else {
+				CollisionCarObject collisionCarObject = x;
+				// コアか
+				if (std::holds_alternative<VehicleCore*>(collisionCarObject)) {
+					// コアに代入
+					vehicleCore_ = std::get<VehicleCore*>(x);
+					return true;
+				}
+				bool belongToCartXX = 
+					std::visit([&](auto xx) {
+					return xx->IsParent();
+					}, collisionCarObject);
+				return belongToCartXX;
+			}
+			}, *itr);
+		
+
+		// カートに属しているか
+		if (belongToCart) {
+			// 登録
+			belongsToCartPartsNumbers_.push_back(collisionCheakNum_);
+		}
+		// 個人勢
+		else {
+			// ->CPU側で押し出し、回転（壁データはとらない）
+			// ->OBB登録のオブジェクトのワールドトランスフォーム更新
+			AloneExtrusionCalculation(*itr);
+		}
 		// 回数を増やす
 		collisionCheakNum_++;
 
 	}
 
-	// 後処理
+	// カートに属している勢
+	CartExtrusionCalculation();
 
+	// 後処理
 	// 登録したオブジェクトリストをクリア
 	collidingObjects_.clear();
+	// カートに属しているパーツ&&衝突しているパーツの番号保存
+	belongsToCartPartsNumbers_.clear();
+	// コアをヌルに
+	vehicleCore_ = nullptr;
 
 }
 
-void CourseCollisionSystem::ObjectRegistration(MeshObject* object)
+void CourseCollisionSystem::ObjectRegistration(CollisionObject object)
 {
+
+	// オブジェクト登録数制限
+	if (collidingObjects_.size() >= kObjectsThatCanBeRegisteredMax_) {
+		return;
+	}
 
 	// オブジェクトリストに登録
 	collidingObjects_.push_back(object);
+
+}
+
+void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
+{
+
+	// オブジェクト取得
+	std::list<BaseObjectManager::ObjectPair>* objects = objectManager->GetObjects();
+
+	// オブジェクト
+	for (std::list<BaseObjectManager::ObjectPair>::iterator itr = objects->begin();
+		itr != objects->end(); ++itr) {
+
+		// キーワード検索
+		for (uint32_t i = 0; i < kCollidingObjectKeywordsMax_; ++i) {
+			// キーワードに引っかかるか
+			if (itr->first.find(kCollidingObjectKeywords_[i]) != std::string::npos) {
+				// オブジェクトリストに登録
+				switch (i)
+				{
+				case 0:
+					collidingObjects_.push_back(static_cast<CourseDemoObject*>(itr->second.get()));
+					break;
+				case 1:
+					collidingObjects_.push_back(static_cast<Player*>(itr->second.get()));
+					break;
+				case 2:
+					collidingObjects_.push_back(static_cast<VehicleCore*>(itr->second.get()));
+					break;
+				case 3:
+					collidingObjects_.push_back(static_cast<TireParts*>(itr->second.get()));
+					break;
+				case 4:
+					collidingObjects_.push_back(static_cast<ArmorFrameParts*>(itr->second.get()));
+					break;
+				case 5:
+					collidingObjects_.push_back(static_cast<EngineParts*>(itr->second.get()));
+					break;
+				default:
+					break;
+				}
+
+				// キーワード検索から抜ける
+				break;
+
+			}
+
+		}
+
+		// オブジェクト登録数制限
+		if (collidingObjects_.size() >= kObjectsThatCanBeRegisteredMax_) {
+			break;
+		}
+
+	}
 
 }
 
@@ -104,9 +226,9 @@ void CourseCollisionSystem::SetCourse(Course* course)
 		CoursePolygon polygon = (*polygons)[i];
 
 		// 頂点位置、原点調整
-		Vector3 vertex0 = polygon.positions[0] - kPolygonAreasOrigin_ - worldPosition;
-		Vector3 vertex1 = polygon.positions[1] - kPolygonAreasOrigin_ - worldPosition;
-		Vector3 vertex2 = polygon.positions[2] - kPolygonAreasOrigin_ - worldPosition;
+		Vector3 vertex0 = polygon.position0 - kPolygonAreasOrigin_ + worldPosition;
+		Vector3 vertex1 = polygon.position1 - kPolygonAreasOrigin_ + worldPosition;
+		Vector3 vertex2 = polygon.position2 - kPolygonAreasOrigin_ + worldPosition;
 
 		// 重心
 		Vector3 centerOfGravity = (vertex0 + vertex1 + vertex2) * (1.0f / 3.0f);
@@ -161,9 +283,9 @@ void CourseCollisionSystem::ImGuiDraw()
 
 		polygon = polygonAreas[areaDisplayX_][areaDisplayY_][areaDisplayZ_][i];
 		ImGui::Text("%d個目", i);
-		ImGui::Text("位置0 x:%7.2f y:%7.2f z:%7.2f", polygon.positions[0].x, polygon.positions[0].y, polygon.positions[0].z);
-		ImGui::Text("位置1 x:%7.2f y:%7.2f z:%7.2f", polygon.positions[1].x, polygon.positions[1].y, polygon.positions[1].z);
-		ImGui::Text("位置2 x:%7.2f y:%7.2f z:%7.2f", polygon.positions[2].x, polygon.positions[2].y, polygon.positions[2].z);
+		ImGui::Text("位置0 x:%7.2f y:%7.2f z:%7.2f", polygon.position0.x, polygon.position0.y, polygon.position0.z);
+		ImGui::Text("位置1 x:%7.2f y:%7.2f z:%7.2f", polygon.position1.x, polygon.position1.y, polygon.position1.z);
+		ImGui::Text("位置2 x:%7.2f y:%7.2f z:%7.2f", polygon.position2.x, polygon.position2.y, polygon.position2.z);
 		ImGui::Text("法線 x:%7.2f y:%7.2f z:%7.2f", polygon.normal.x, polygon.normal.y, polygon.normal.z);
 		ImGui::Separator();
 
@@ -225,9 +347,9 @@ void CourseCollisionSystem::BuffersInitialize()
 
 		// ポリゴンデータを初期化
 		for (uint32_t j = 0; j < kCollisionPolygonMax_; ++j) {
-			buffers_[i].polygonDataMap_[j].positions[0] = { 0.0f, 0.0f, 0.0f };
-			buffers_[i].polygonDataMap_[j].positions[1] = { 0.0f, 0.0f, 0.0f };
-			buffers_[i].polygonDataMap_[j].positions[2] = { 0.0f, 0.0f, 0.0f };
+			buffers_[i].polygonDataMap_[j].position0 = { 0.0f, 0.0f, 0.0f };
+			buffers_[i].polygonDataMap_[j].position1 = { 0.0f, 0.0f, 0.0f };
+			buffers_[i].polygonDataMap_[j].position2 = { 0.0f, 0.0f, 0.0f };
 			buffers_[i].polygonDataMap_[j].normal = { 0.0f, 0.0f, 0.0f };
 			buffers_[i].polygonDataMap_[j].texcoord = { 0.0f, 0.0f };
 		}
@@ -280,18 +402,43 @@ void CourseCollisionSystem::BuffersInitialize()
 
 }
 
-void CourseCollisionSystem::DistanceJudgment(MeshObject* object)
+void CourseCollisionSystem::DistanceJudgment(CollisionObject object)
 {
 
 	// オブジェクト情報
 	Vector3 objectPosition = { 0.0f,0.0f,0.0f };
-	OBB obb = std::get<OBB>(*object->GetCollider());
+
+	// obb取得
+	OBB obb = std::visit([&](auto x) {
+		// 型
+		using T = std::decay_t<decltype(x)>;
+		// プレイヤー
+		if constexpr (std::is_same_v<T, Player*>) {
+			return std::get<OBB>(*x->GetCollider());
+		}
+		// デモオブジェクト
+		else if constexpr (std::is_same_v<T, CourseDemoObject*>) {
+			return std::get<OBB>(*x->GetCollider());
+		}
+		// プレイヤーじゃない
+		else {
+			CollisionCarObject collisionCarObject = x;
+			OBB obbXX = std::visit([&](auto xx) {
+				return std::get<OBB>(*xx->GetCollider());
+				}, collisionCarObject);
+			return obbXX;
+		}
+		}, object);
+
 
 	// オブジェクトデータ取得
 	buffers_[collisionCheakNum_].objectMap_->center = obb.center_;
-	buffers_[collisionCheakNum_].objectMap_->otientatuonsX = obb.otientatuons_[0];
-	buffers_[collisionCheakNum_].objectMap_->otientatuonsY = obb.otientatuons_[1];
-	buffers_[collisionCheakNum_].objectMap_->otientatuonsZ = obb.otientatuons_[2];
+	// 軸を送る時の代入
+	//軸反転応急措置byシマザキ
+	buffers_[collisionCheakNum_].objectMap_->otientatuonsX = { 0.0f, 0.5f, 0.5f };
+	buffers_[collisionCheakNum_].objectMap_->otientatuonsY = { 0.5f, 0.0f, 0.5f };
+	buffers_[collisionCheakNum_].objectMap_->otientatuonsZ = { 0.5f, 0.5f, 0.0f };
+
 	buffers_[collisionCheakNum_].objectMap_->size = obb.size_;
 
 	// オブジェクトの位置からエリアを取得
@@ -408,9 +555,9 @@ void CourseCollisionSystem::DistanceJudgment(MeshObject* object)
 	for (uint32_t i = 0; i < vertexNum; ++i) {
 
 		// 現在の値のエリア番号
-		int32_t tmpX = static_cast<uint32_t>((vertices[i].x - kPolygonAreasOrigin_.x) / dividingValue.x);
-		int32_t tmpY = static_cast<uint32_t>((vertices[i].y - kPolygonAreasOrigin_.y) / dividingValue.y);
-		int32_t tmpZ = static_cast<uint32_t>((vertices[i].z - kPolygonAreasOrigin_.z) / dividingValue.z);
+		int32_t tmpX = static_cast<int32_t>((vertices[i].x - kPolygonAreasOrigin_.x) / dividingValue.x);
+		int32_t tmpY = static_cast<int32_t>((vertices[i].y - kPolygonAreasOrigin_.y) / dividingValue.y);
+		int32_t tmpZ = static_cast<int32_t>((vertices[i].z - kPolygonAreasOrigin_.z) / dividingValue.z);
 
 		// エリア範囲外
 		if (tmpX >= kPolygonAreasDiv_ || tmpY >= kPolygonAreasDiv_ || tmpZ >= kPolygonAreasDiv_ ||
@@ -421,7 +568,7 @@ void CourseCollisionSystem::DistanceJudgment(MeshObject* object)
 		// かぶり確認
 		bool fogging = false;
 		for (uint32_t j = 0; j < i; ++j) {
-			if (tmpX == x[i] && tmpY == y[i] && tmpZ == z[i]) {
+			if (tmpX == x[j] && tmpY == y[j] && tmpZ == z[j]) {
 				fogging = true;
 				break;
 			}
@@ -467,7 +614,7 @@ void CourseCollisionSystem::ExtrusionExecuteCS()
 
 	TextureManager::GetInstance()->SetComputeRootDescriptorTable(commandList, 3, course_->GetCourseTextureHandle());
 
-	commandList->Dispatch(1, 1, 1);
+	commandList->Dispatch((buffers_[collisionCheakNum_].objectMap_->indexMax / 1024) + 1, 1, 1);
 
 }
 
@@ -507,7 +654,7 @@ void CourseCollisionSystem::CommadKick()
 
 }
 
-void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
+void CourseCollisionSystem::AloneExtrusionCalculation(CollisionObject object)
 {
 
 	// 押し出し
@@ -519,8 +666,6 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 	// 法線
 	Vector3 normal = { 0.0f,0.0f,0.0f };
 	uint32_t normalCount = 0;
-	// 走行場所
-	CoursePolygonType drivingLocation = CoursePolygonType::kCoursePolygonTypeRoad;
 
 	// ポリゴン数だけ回す
 	for (uint32_t i = 0; i < buffers_[collisionCheakNum_].objectMap_->indexMax; i++) {
@@ -538,10 +683,6 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 				// 法線
 				normal += Vector3::Normalize(outputData.extrusion);
 				normalCount++;
-				// 走行場所
-				if (drivingLocation < static_cast<CoursePolygonType>(outputData.drivingLocation)) {
-					drivingLocation = static_cast<CoursePolygonType>(outputData.drivingLocation);
-				}
 
 			}
 			else {
@@ -563,6 +704,116 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 	}
 
 	// 法線
+	if (normalCount == 0 || Vector3::Length(normal) == 0.0f) {
+		normal = { 0.0f, 0.0f, 1.0f };
+	}
+	else {
+		normal = Vector3::Normalize(normal * (1.0f / static_cast<float>(normalCount)));
+	}
+
+	normal = { 0.0f, 0.0f, 1.0f };
+
+	// メッシュオブジェクトに代入
+	std::visit([&](auto x) {
+		// 型
+		using T = std::decay_t<decltype(x)>;
+		// プレイヤー
+		if constexpr (std::is_same_v<T, Player*>) {
+			x->GetWorldTransformAdress()->transform_.translate += extrusion;
+			if (normalCount != 0) {
+				x->GetWorldTransformAdress()->direction_ = normal;
+			}
+			x->GetWorldTransformAdress()->UpdateMatrix();
+		}
+		// デモオブジェクト
+		else if constexpr (std::is_same_v<T, CourseDemoObject*>) {
+			x->GetWorldTransformAdress()->transform_.translate += extrusion;
+			if (normalCount != 0) {
+				x->GetWorldTransformAdress()->direction_ = normal;
+			}
+			x->GetWorldTransformAdress()->UpdateMatrix();
+		}
+		// プレイヤーじゃない
+		else {
+			CollisionCarObject collisionCarObject = x;
+			std::visit([&](auto xx) {
+				xx->GetWorldTransformAdress()->transform_.translate += extrusion;
+				if (normalCount != 0) {
+					xx->GetWorldTransformAdress()->direction_ = normal;
+				}
+				xx->GetWorldTransformAdress()->UpdateMatrix();
+				}, collisionCarObject);
+		}
+		}, object);
+
+}
+
+void CourseCollisionSystem::CartExtrusionCalculation()
+{
+
+	// コアがない
+	if (!vehicleCore_) {
+		return;
+	}
+
+	// 押し出し
+	Vector3 extrusion = { 0.0f,0.0f,0.0f };
+	Vector3 extrusionWall = { 0.0f,0.0f,0.0f };
+	Vector3 extrusionRoad = { 0.0f,0.0f,0.0f };
+	uint32_t extrusionWallCount = 0;
+	uint32_t extrusionRoadCount = 0;
+	// 法線
+	Vector3 normal = { 0.0f,0.0f,0.0f };
+	uint32_t normalCount = 0;
+	// 走行場所
+	CoursePolygonType drivingLocation = CoursePolygonType::kCoursePolygonTypeRoad;
+
+	// カートに属しているパーツ&&衝突しているパーツの番号分回す
+	for (std::list<uint32_t>::iterator itr = belongsToCartPartsNumbers_.begin();
+		itr != belongsToCartPartsNumbers_.end(); ++itr) {
+
+		// ポリゴン数だけ回す
+		for (uint32_t i = 0; i < buffers_[*itr].objectMap_->indexMax; i++) {
+
+			// 出力データ
+			OutputData outputData = buffers_[*itr].outputDataMap_[i];
+
+			// 衝突したか
+			if (outputData.collided == 1) {
+				// 壁ではないなら
+				if (outputData.drivingLocation < CoursePolygonType::kCoursePolygonTypeWall) {
+					// 押し出し値
+					extrusionRoad += outputData.extrusion;
+					extrusionRoadCount++;
+					// 法線
+					normal += Vector3::Normalize(outputData.extrusion);
+					normalCount++;
+					// 走行場所
+					if (drivingLocation < static_cast<CoursePolygonType>(outputData.drivingLocation)) {
+						drivingLocation = static_cast<CoursePolygonType>(outputData.drivingLocation);
+					}
+
+				}
+				else {
+					extrusionWall += outputData.extrusion;
+					extrusionWallCount++;
+				}
+
+			}
+		}
+
+	}
+
+	//押し出し
+
+	if (extrusionRoadCount > 0) {
+		extrusion += extrusionRoad * (1.0f / static_cast<float>(extrusionRoadCount));
+	}
+	if (extrusionWallCount > 0) {
+		extrusion += extrusionWall * (1.0f / static_cast<float>(extrusionWallCount));
+	}
+
+	// 法線
 	if (normalCount == 0) {
 		normal = { 0.0f, 0.0f, 1.0f };
 	}
@@ -570,12 +821,11 @@ void CourseCollisionSystem::ExtrusionCalculation(MeshObject* object)
 		normal = Vector3::Normalize(normal * (1.0f / static_cast<float>(normalCount)));
 	}
 
-	// メッシュオブジェクトに代入
-	// object;
-	object->GetWorldTransformAdress()->transform_.translate += extrusion;
+	// コアに代入
+	vehicleCore_->GetWorldTransformAdress()->transform_.translate += extrusion;
 	if (normalCount != 0) {
-		object->GetWorldTransformAdress()->direction_ = normal;
+		//vehicleCore_->GetWorldTransformAdress()->direction_ = normal;
 	}
-	object->GetWorldTransformAdress()->UpdateMatrix();
+	vehicleCore_->GetWorldTransformAdress()->UpdateMatrix();
 
 }

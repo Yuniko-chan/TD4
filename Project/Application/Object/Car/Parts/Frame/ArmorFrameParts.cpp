@@ -38,8 +38,3 @@ void ArmorFrameParts::ImGuiDrawParts()
 	ImGuiTransform(moveValue);
 	ImGui::Text("\n");
 }
-
-void ArmorFrameParts::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
-{
-	colliderPartner, collisionData;
-}

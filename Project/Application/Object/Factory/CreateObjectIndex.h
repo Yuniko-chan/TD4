@@ -17,8 +17,17 @@ enum CreateObjectIndex {
 	kCreateObjectIndexTirePoint,	// タイヤ箇所
 	kCreateObjectIndexArmorPoint,		// アーマー箇所
 
+	kCreateObjectIndexWall,	// 壁
+	kCreateObjectIndexCourse,//コース
+
 	// 地形
 	kCreateObjectIndexTerrain,
+
+	///ギミック
+	kCreateObjectIndexIronBall,
+	kCreateObjectIndexCannon,
+	kCreateObjectIndexMinigun,
+
 
 	kCreateObjectIndexOfCount, // 数数える用
 };

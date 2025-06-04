@@ -34,6 +34,9 @@ public:	// USER
 
 	static IObject* CreateObjectIParts(LevelData::ObjectData& objectData);
 
+	static IObject* CreateObjectWall(LevelData::ObjectData& objectData);
+
+	static IObject* CreateObjectCourse(LevelData::ObjectData& objectData);
 	static IObject* CreateObjectTerrain(LevelData::ObjectData& objectData);
 
 	static IObject* CreateObjectEnginePoint(LevelData::ObjectData& objectData);
@@ -41,4 +44,9 @@ public:	// USER
 	static IObject* CreateObjectTirePoint(LevelData::ObjectData& objectData);
 	
 	static IObject* CreateObjectArmorPoint(LevelData::ObjectData& objectData);
+
+	//gimmick
+	static IObject* CreateObjectIronBall(LevelData::ObjectData& objectData);
+	static IObject* CreateObjectCannon(LevelData::ObjectData& objectData);
+	static IObject* CreateObjectMinigun(LevelData::ObjectData& objectData);
 };

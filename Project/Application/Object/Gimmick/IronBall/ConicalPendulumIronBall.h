@@ -62,6 +62,11 @@ private: // 関数
     void ColliderInitialize(ColliderShape collider) override;
 
     /// <summary>
+    /// コライダー更新
+    /// </summary>
+    void ColliderUpdate();
+
+    /// <summary>
     /// 円錐振り子初期化
     /// </summary>
     /// <param name="length">円錐振り子の初期データ</param>

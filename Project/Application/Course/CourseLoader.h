@@ -16,14 +16,15 @@ static const size_t kHeaderOfset = sizeof(uint32_t) * 2;
 //コースファイル形式の頂点データ
 struct CourseFileVertex
 {
-	Vector4 positon_;
+	Vector4 position_;
 	Vector2 uv_;
+	Vector2 attributeUv_;
 	Vector3 normal_;
-	uint32_t courseAttribute_;
+	//uint32_t courseAttribute_;
 };
 
 //コース用読み取りデータ
-struct CourseInportData
+struct CourseImportData
 {
 	uint32_t verticesNum_;
 	uint32_t textureNameSize_;
@@ -47,5 +48,5 @@ private:
 	/// <summary>
 	/// インポート用データを一時リソースに格納する
 	/// </summary>
-	static void StragedInportData(FILE* fp, CourseInportData* courseInportData);
+	static void StragedImportData(FILE* fp, CourseImportData* courseInportData);
 };

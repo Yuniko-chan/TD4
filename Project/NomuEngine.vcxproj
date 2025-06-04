@@ -171,6 +171,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Course\CourseCollisionPipeline.cpp" />
     <ClCompile Include="Application\Course\CourseCollisionSystem.cpp" />
     <ClCompile Include="Application\Course\CourseTexture.cpp" />
+    <ClCompile Include="Application\Course\Debug\CourseDebugDraw.cpp" />
     <ClCompile Include="Application\Course\Demo\CourseDemoObject.cpp" />
     <ClCompile Include="Application\Course\CourseLoader.cpp" />
     <ClCompile Include="Application\Effect\BillboardEffect.cpp" />
@@ -183,6 +184,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Car\Manager\VehiclePartsManager.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Engine\EngineParts.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Frame\ArmorFrameParts.cpp" />
+    <ClCompile Include="Application\Object\Car\Parts\System\PartCollisionHandler.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\System\PartHPHandler.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\System\PartsOffsetCalculator.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\System\VehicleConnector.cpp" />
@@ -192,6 +194,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Car\PickupPoint\User\EnginePickupPoint.cpp" />
     <ClCompile Include="Application\Object\Car\PickupPoint\User\TirePickupPoint.cpp" />
     <ClCompile Include="Application\Object\Car\System\DriveSystem.cpp" />
+    <ClCompile Include="Application\Object\Gimmick\Minigun\MinigunAnimation.cpp" />
     <ClCompile Include="Application\Object\Player\Animation\PlayerAnimation.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp" />
     <ClCompile Include="Application\Object\Car\System\VehicleEngine.cpp" />
@@ -231,6 +234,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Utility\Calc\MotionHelper.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\TransformHelper.cpp" />
     <ClCompile Include="Application\Object\Utility\Timer\FrameTimer.cpp" />
+    <ClCompile Include="Application\Object\Wall\Wall.cpp" />
     <ClCompile Include="Application\OutGameObject\ClearBackGround\ClearBackGround.cpp" />
     <ClCompile Include="Application\OutGameObject\Curtain\Curtain.cpp" />
     <ClCompile Include="Application\OutGameObject\TitleBackGround\TitleBackGround.cpp" />
@@ -400,6 +404,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Course\CoursePolygon.h" />
     <ClInclude Include="Application\Course\CoursePolygonType.h" />
     <ClInclude Include="Application\Course\CourseTexture.h" />
+    <ClInclude Include="Application\Course\Debug\CourseDebugDraw.h" />
     <ClInclude Include="Application\Course\Demo\CourseDemoObject.h" />
     <ClInclude Include="Application\Effect\BillboardEffect.h" />
     <ClInclude Include="Application\Camera\FollowCamera.h" />
@@ -410,6 +415,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Car\Construction\VehicleConstructionSystem.h" />
     <ClInclude Include="Application\Object\Car\Manager\PickupPointManager.h" />
     <ClInclude Include="Application\Object\Car\Manager\VehiclePartsManager.h" />
+    <ClInclude Include="Application\Object\Car\Parts\System\PartCollisionHandler.h" />
     <ClInclude Include="Application\Object\Car\Parts\System\PartHPHandler.h" />
     <ClInclude Include="Application\Object\Car\Parts\System\PartsOffsetCalculator.h" />
     <ClInclude Include="Application\Object\Car\Parts\System\VehicleConnector.h" />
@@ -426,6 +432,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Car\System\User\AutoDriver.h" />
     <ClInclude Include="Application\Object\Car\System\User\InterfaceDriver.h" />
     <ClInclude Include="Application\Object\Car\System\User\UserDriver.h" />
+    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunAnimation.h" />
     <ClInclude Include="Application\Object\Utility\Calc\VehicleCaluclator.h" />
     <ClInclude Include="Application\Object\Car\System\VehicleEngine.h" />
     <ClInclude Include="Application\Object\Car\System\VehicleHandling.h" />
@@ -494,6 +501,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Utility\GlobalParameterStructs.h" />
     <ClInclude Include="Application\Object\Utility\Math\Vector2Int.h" />
     <ClInclude Include="Application\Object\Utility\Timer\FrameTimer.h" />
+    <ClInclude Include="Application\Object\Wall\Wall.h" />
     <ClInclude Include="Application\OutGameObject\ClearBackGround\ClearBackGround.h" />
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />
     <ClInclude Include="Application\OutGameObject\TitleBackGround\TitleBackGround.h" />

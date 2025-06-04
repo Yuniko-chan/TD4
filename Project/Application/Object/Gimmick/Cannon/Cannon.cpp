@@ -16,7 +16,6 @@ void Cannon::Initialize(LevelData::MeshData* data)
     // 本体初期化
     CannonData cannonData;
     cannonData.cooltimeMax = 3.0f;
-    cannonData.rotate = { 0.0f,0.0f,0.0f };
     cannonData.firingDirection = Vector3::Normalize(Vector3{ 0.0f,1.0f,2.0f });
     cannonData.firingSpeed = 1.0f;
 
@@ -36,6 +35,9 @@ void Cannon::Initialize(LevelData::MeshData* data, const CannonData& cannonData)
 
     // 大砲の弾初期化
     CannonBallInitialize();
+
+    // マテリアル
+    material_->SetEnableLighting(BlinnPhongReflection);
 
 }
 
@@ -119,7 +121,6 @@ void Cannon::CannonInitialize(const CannonData& cannonData)
     cooltimeMax_ = cannonData.cooltimeMax;
 
     // 回転
-    worldTransform_.transform_.rotate = cannonData.rotate;
     worldTransform_.usedDirection_ = true;
     worldTransform_.direction_ = cannonData.firingDirection;
     worldTransform_.UpdateMatrix();

@@ -127,6 +127,17 @@ void LevelDataViewing::ObjectViewing(LevelData::LightData* objectData)
 
 }
 
+void LevelDataViewing::ObjectViewing(LevelData::GimmickData* objectData)
+{
+
+	// 名前
+	NamaViewing(objectData->meshData.name);
+
+	// トランスフォーム
+	TransformViewing(objectData->meshData.transform);
+
+}
+
 void LevelDataViewing::NamaViewing(const std::string& name)
 {
 

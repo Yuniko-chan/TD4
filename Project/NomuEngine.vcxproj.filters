@@ -406,6 +406,9 @@
     <Filter Include="Application\Object\Gimmick\Obstacle">
       <UniqueIdentifier>{45a7f8fe-9d95-4b7f-8e59-7ff19e398ce8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Course\Debug">
+      <UniqueIdentifier>{705e81a0-0f8e-4592-9727-60c9d23664b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -994,6 +997,9 @@
     <ClCompile Include="Application\Object\Gimmick\Cannon\CannonBall.cpp">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Object\Wall\Wall.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="Application\Object\Gimmick\Cannon\CannonExplosion.cpp">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClCompile>
@@ -1052,6 +1058,15 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Car\Parts\System\PartHPHandler.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Course\Debug\CourseDebugDraw.cpp">
+      <Filter>Application\Course\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Gimmick\Minigun\MinigunAnimation.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Car\Parts\System\PartCollisionHandler.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1848,6 +1863,9 @@
     <ClInclude Include="Application\Object\Gimmick\Cannon\CannonBall.h">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClInclude>
+    <ClInclude Include="Application\Object\Wall\Wall.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="Application\Object\Gimmick\Cannon\CannonExplosionData.h">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClInclude>
@@ -1948,6 +1966,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Car\Parts\System\PartHPHandler.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Course\Debug\CourseDebugDraw.h">
+      <Filter>Application\Course\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunAnimation.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Car\Parts\System\PartCollisionHandler.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -54,7 +54,7 @@ void GameScene::Initialize() {
 
 	// オブジェクトマネージャー
 	objectManager_ = std::make_unique<GameSceneObjectManager>();
-	objectManager_->Initialize(kLevelIndexMain, levelDataManager_);
+	objectManager_->Initialize(kLevelIndexDebug, levelDataManager_);
 
 	// キーコンフィグ
 	keyConfig_ = GameKeyconfig::GetInstance();
@@ -79,6 +79,18 @@ void GameScene::Initialize() {
 	postEffectSystem_ = std::make_unique<PostEffectSystem>();
 	postEffectSystem_->Initialize();
 	postEffectSystem_->SetRenderTargetTexture(renderTargetTexture_);
+
+	// コース
+	Course* course = static_cast<Course*>(objectManager_->GetObjectPointer("course_test"));
+
+	// コース衝突システム
+	courseCollisionSystem_ = std::make_unique<CourseCollisionSystem>();
+	courseCollisionSystem_->Initialize();
+	courseCollisionSystem_->SetCourse(course);
+
+	// コースデバッグ描画
+	courseDebugDraw_ = std::make_unique<CourseDebugDraw>();
+	courseDebugDraw_->Initialize(course);
 
 	// モデル描画
 	ModelDraw::PreDrawParameters preDrawParameters;
@@ -133,6 +145,12 @@ void GameScene::Update() {
 	objectManager_->CollisionListRegister(collisionManager_.get());
 
 	collisionManager_->CheakAllCollision();
+
+	courseCollisionSystem_->ObjectRegistration(objectManager_.get());
+	courseCollisionSystem_->Execute();
+
+	// コースデバッグ描画
+	courseDebugDraw_->DrawMap(drawLine_);
 
 	// デバッグカメラ
 	DebugCameraUpdate();
@@ -231,6 +249,8 @@ void GameScene::ImguiDraw(){
 	PostEffect::GetInstance()->ImGuiDraw();
 
 	uiManager_->ImGuiDraw();
+
+	courseDebugDraw_->ImGuiDraw();
 
 }
 

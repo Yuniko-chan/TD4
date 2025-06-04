@@ -27,8 +27,16 @@ public:
 public:
 	void SetHP(int16_t hp) { hp_ = hp; }
 
+	/// <summary>
+	/// 無敵経過
+	/// </summary>
+	void InvisibleProgress();
+
 private:
 	
 	int16_t hp_ = 0;
 	bool isInvisible_ = false;
+
+	float invisibleCooltime_ = 0.0f;
+
 };

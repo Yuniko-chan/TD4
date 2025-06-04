@@ -1,0 +1,312 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "立方体.001",
+            "transform": {
+                "translation": [
+                    8.0600004196167,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "directoryPath": "",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "MINIGUN"
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "円柱.008",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Wall",
+            "transform": {
+                "translation": [
+                    3.144087553024292,
+                    21.82179069519043,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    24.042722702026367,
+                    10.029997825622559
+                ]
+            },
+            "fileName": "Box.obj",
+            "directoryPath": "Resources/Model/Box",
+            "className": "Wall",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    48.085445404052734,
+                    20.059995651245117
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Wall.001",
+            "transform": {
+                "translation": [
+                    -3.526325225830078,
+                    21.82179069519043,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    24.042722702026367,
+                    10.029997825622559
+                ]
+            },
+            "fileName": "Box.obj",
+            "directoryPath": "Resources/Model/Box",
+            "className": "Wall",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    48.085445404052734,
+                    20.059995651245117
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Player",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Player.gltf",
+            "directoryPath": "Resources/Model/Player",
+            "className": "Player",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "ironball",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    5.813091278076172
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "SPHERE",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "radius": 2
+            },
+            "gimmick": {
+                "type": "IRONBALL",
+                "length": 5.0,
+                "angle": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "大砲_円柱.007",
+            "transform": {
+                "translation": [
+                    -13.130254745483398,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "大砲_円柱.001",
+            "transform": {
+                "translation": [
+                    -19.074378967285156,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    3.141592502593994,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "course_test",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "demoCourse.course",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        }
+    ]
+}

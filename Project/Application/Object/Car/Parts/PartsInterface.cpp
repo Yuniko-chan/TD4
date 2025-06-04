@@ -5,6 +5,7 @@
 
 #include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Engine/Physics/Gravity/Gravity.h"
+#include "System/PartCollisionHandler.h"
 
 int32_t Car::SerialNumberGenerate::sSerialArmor = 0;
 int32_t Car::SerialNumberGenerate::sSerialEngine = 0;
@@ -62,6 +63,14 @@ void Car::IParts::ReleaseParent()
 	parentCore_ = nullptr;
 	// コネクターのリセット
 	connector_->Reset();
+}
+
+void Car::IParts::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
+{
+
+	collisionData;
+	PartCollisionHandler::Execute(this, colliderPartner);
+
 }
 
 void Car::IParts::TransformParent()
@@ -158,6 +167,7 @@ void Car::IParts::ColliderUpdate()
 	OBB obb = std::get<OBB>(*collider_);
 	obb.center_ = worldTransform_.GetWorldPosition();
 	obb.SetOtientatuons(worldTransform_.rotateMatrix_);
+	obb.size_ = worldTransform_.transform_.scale;
 	// コライダーを設定しなおす
 	ColliderShape* shape = new ColliderShape();
 	*shape = obb;

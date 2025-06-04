@@ -59,6 +59,9 @@ void CannonExplosion::Update()
 
     worldTransform_.UpdateMatrix();
 
+    // コライダー更新
+    ColliderUpdate();
+
 }
 
 void CannonExplosion::Draw(BaseCamera& camera)
@@ -128,7 +131,13 @@ void CannonExplosion::ColliderUpdate()
 
     Sphere sphere = std::get<Sphere>(*collider_.get());
 
-    sphere.center_ = worldTransform_.GetWorldPosition();
+    // 爆発していないなら遠くへ
+    if (isExploding_) {
+        sphere.center_ = worldTransform_.GetWorldPosition();
+    }
+    else {
+        sphere.center_ = { -10000.0f,-10000.0f ,-10000.0f };
+    }
 
     sphere.radius_ = explosionRadius_;
 

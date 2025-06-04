@@ -17,5 +17,11 @@ const std::array<std::string, CreateObjectIndex::kCreateObjectIndexOfCount> kCre
 	"EnginePickupPoint",
 	"TirePickupPoint",
 	"ArmorPickupPoint",
+	"Wall",
+	"Course",
 	"TerrainObject",
+	//ギミック
+	"PendulumIronBall",
+	"Cannon",
+	"Minigun",
 };
