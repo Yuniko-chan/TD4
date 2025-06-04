@@ -58,7 +58,10 @@ void VehicleEngine::Update()
 	
 	// 加速度の計算
 	const float rideSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue("Player", "RideSpeed");
-	currentSpeed_ = speedRatio_ * rideSpeedFactor;
+	
+	if (speedRatio_ != 0.0f) {
+		currentSpeed_ = speedRatio_ * rideSpeedFactor;
+	}
 	// 切り捨て
 	const float discard = 0.001f;
 	if (std::fabsf(currentSpeed_) <= discard) {
