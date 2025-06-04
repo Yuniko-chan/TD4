@@ -17,6 +17,7 @@ void PlayerDropOffActionState::Initialize()
 	easePoint_.second = player_->GetCoreTransform()->GetWorldPosition() + rotateOffset;
 
 	player_->GetCameraManager()->SetRequest(ActiveCamera::kOverhead);
+	//static_cast<OverheadCamera*>(player_->GetCameraManager()->FindCamera("Overhead"))->SetDirection(player_->GetCoreTransform()->direction_);
 	player_->GetCore()->GetAnimation()->AnimationStart();
 }
 
