@@ -27,7 +27,7 @@ void VehicleEngine::Update()
 
 		inputCounter_ = 0;
 	}
-	else if (!(isAccel_ || isDecel_) && (inputCounter_ % 5 == 0)) {
+	else if (!(isAccel_ || isDecel_) && (inputCounter_ % (timming / 2) == 0)) {
 		if (consecutiveReceptions_ > 0) {
 			consecutiveReceptions_--;
 		}
@@ -59,7 +59,9 @@ void VehicleEngine::Update()
 	// 加速度の計算
 	const float rideSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue("Player", "RideSpeed");
 	currentSpeed_ = speedRatio_ * rideSpeedFactor;
-	if (std::fabsf(currentSpeed_) <= 0.001f) {
+	// 切り捨て
+	const float discard = 0.001f;
+	if (std::fabsf(currentSpeed_) <= discard) {
 		currentSpeed_ = 0.0f;
 	}
 
@@ -77,11 +79,6 @@ void VehicleEngine::EngineAccept(GameKeyconfig* keyConfig)
 	isAccel_ = keyConfig->GetConfig()->accel;
 	isDecel_ = keyConfig->GetConfig()->brake;
 	
-	controlDirect_ = keyConfig->GetLeftStick()->x;
-
-	handringDirect_.x = Ease::Easing(Ease::EaseName::Lerp, -1.0f, 1.0f, (controlDirect_ + 1.0f) / 2.0f);
-	handringDirect_.z = 1.0f;
-	handringDirect_ = Vector3::Normalize(handringDirect_);
 }
 
 void VehicleEngine::ImGuiDraw()
@@ -93,9 +90,6 @@ void VehicleEngine::ImGuiDraw()
 		int con = this->consecutiveReceptions_;
 		ImGui::InputInt("ConsecutiveRecept", &con);
 		ImGui::DragFloat("SpeedRatio", &speedRatio_);
-		// ハンドル角
-		ImGui::DragFloat("LeftstickX", &controlDirect_);
-		ImGui::DragFloat3("Handle", &handringDirect_.x);
 
 		ImGui::TreePop();
 	}

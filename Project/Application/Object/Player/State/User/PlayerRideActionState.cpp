@@ -1,5 +1,6 @@
 #include "PlayerRideActionState.h"
 #include "../../Player.h"
+#include "../../../Car/VehicleCore.h"
 #include "../../DebugData/PlayerDebugData.h"
 #include "../../../Utility/Calc/MotionHelper.h"
 
@@ -13,7 +14,8 @@ void PlayerRideActionState::Initialize()
 	animTimer_.Start(frame);
 
 	player_->GetCameraManager()->SetRequest(ActiveCamera::kFollow);
-
+	// アニメーション開始
+	player_->GetCore()->GetAnimation()->AnimationStart();
 }
 
 void PlayerRideActionState::Update()

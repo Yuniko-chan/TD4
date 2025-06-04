@@ -64,7 +64,7 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts)
 	// 対象セット
 	std::pair<Vector2Int, Car::IParts*> futureParts = { Vector2Int(0,0),owner_ };
 
-	// 既に付いているパーツの検索
+	// 各パーツとの距離比較検索
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin();
 		it != partsMapping_.end(); ++it) {
 		float newDistace = TransformHelper::Vector3Distance(
@@ -143,8 +143,6 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 	parts->GetConnector()->SetDepth(key.GetLength());
 	// キー
 	parts->GetConnector()->SetKey(Vector2((float)key.x, (float)key.y));
-	// 消すフラグを初期化
-	parts->SetIsDelete(false);
 	// マッピング
 	RegistParts(key, parts);
 	if (parts->GetConnector()->GetDepth() <= 1) {

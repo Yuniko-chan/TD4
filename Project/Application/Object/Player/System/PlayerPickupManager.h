@@ -73,7 +73,7 @@ private:
 	/// 拾うのに成功処理
 	/// </summary>
 	/// <param name="parts"></param>
-	void OnCatchSuccess(Car::IParts* parts);
+	void OnPartCatchSuccess(Car::IParts* parts);
 	/// <summary>
 	/// 拾うのに失敗処理
 	/// </summary>

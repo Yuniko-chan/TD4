@@ -68,13 +68,21 @@ void PlayerCommand::VectorRotate()
 
 void PlayerCommand::StickMoveCommand()
 {
-	Vector2 rotate = Vector2::Normalize(Vector2(keyConfig_->GetLeftStick()->x, keyConfig_->GetLeftStick()->y));
+	//Vector2 rotate = Vector2::Normalize(Vector2(keyConfig_->GetLeftStick()->x, keyConfig_->GetLeftStick()->y));
 	// 向き
-	Vector3 direct = Vector3(rotate.x, 0.0f, rotate.y);
-	if (direct == Vector3(0.0f, 0.0f, 0.0f)) {
-		direct.z = 1.0f;
+	Vector3 direct = moveDirect_;
+	// 入力があれば更新
+	if (direct != Vector3(0.0f, 0.0f, 0.0f)) {
+		// 例外処理
+		if (direct == Vector3(0.0f, 0.0f, -1.0f)) {
+			direct.x = -0.1f;
+			playerTransform_->direction_ = Vector3::Normalize(direct);
+		}
+		// 通常処理
+		else {
+			playerTransform_->direction_ = direct;
+		}
 	}
-	playerTransform_->direction_ = Vector3::Normalize(direct);
 }
 
 void PlayerCommand::InVehicleRotateCommand()

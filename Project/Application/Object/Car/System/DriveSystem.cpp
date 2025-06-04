@@ -22,6 +22,7 @@ void DriveSystem::Update()
 {
 	//---それぞれのシステム処理---//
 	// ハンドル処理
+	handling_->SetVehicleDirection(owner_->GetWorldTransformAdress()->direction_);
 	handling_->PreUpdate();
 	// エンジン処理
 	driveEngine_->Update();
