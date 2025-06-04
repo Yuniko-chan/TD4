@@ -2,9 +2,13 @@
 #include "../../../Engine/Math/Vector/Vector3.h"
 #include "../../Utility/Common/OwnerComponent.h"
 #include <cstdint>
+#include <algorithm>
 
 class VehicleCore;
 class VehicleStatus;
+
+// 入力フラグ（前、現在）
+using InputFlag = std::pair<bool, bool>;
 
 class VehicleHandling : public OwnerComponent<VehicleCore>
 {
@@ -30,14 +34,13 @@ public:
 	// ステアの向き
 	Vector3 GetSteerDirect() { return steerDirection_; }
 	// 入力があるか
-	bool IsInput() { return (isRight_ || isLeft_); }
+	bool IsInput() { return (isRight_.second || isLeft_.second); }
 
 	void SetVehicleDirection(const Vector3& direct) { vehicleDirection_ = direct; }
 private:
-	// 右
-	bool isRight_ = false;
-	// 左
-	bool isLeft_ = false;
+	// 入力チェック
+	InputFlag isLeft_ = {};
+	InputFlag isRight_ = {};
 	// 入力カウント
 	int16_t inputCounter_ = 0;
 	// 受付

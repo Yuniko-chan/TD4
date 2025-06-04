@@ -33,7 +33,6 @@ public: // アクセッサ
 	//---ゲッター---//
 	float GetSpeedRatio() const { return speedRatio_; }
 	float GetCurrentSpeed() const { return currentSpeed_; }
-	Vector3 GetAcceleration() { return acceleration_; }
 	float GetEuler() { return eulerY_; }
 
 private:
@@ -48,12 +47,6 @@ private:
 	// 速度
 	float speedRatio_ = 0.0f;
 	float currentSpeed_ = 0.0f;
-	// 移動方向
-	float controlDirect_ = 0.0f;
-	// 加速度
-	Vector3 acceleration_ = {};
-	// ハンドリングの向き
-	Vector3 handringDirect_ = {};
-
+	// オイラー
 	float eulerY_ = 0.0f;
 };
