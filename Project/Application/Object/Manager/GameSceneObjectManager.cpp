@@ -32,7 +32,7 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 	
 	// 初期読み込み 
 	// レベルデータの取得
-	LevelData* levelData = levelDataManager->GetLevelDatas(kLevelIndexGenerationPattern_00);
+	/*LevelData* levelData = levelDataManager->GetLevelDatas(kLevelIndexGenerationPattern_00);
 	// レベルデータのオブジェクトを走査
 	for (std::vector<LevelData::ObjectData>::iterator it = levelData->objectsData_.begin(); it != levelData->objectsData_.end(); ++it) {
 
@@ -48,9 +48,9 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 			objects_.emplace_back(object->GetName(), std::move(object));
 		}
 
-	}
+	}*/
 
-	levelData = levelDataManager->GetLevelDatas(levelIndex);
+	LevelData* levelData = levelDataManager->GetLevelDatas(levelIndex);
 	// レベルデータのオブジェクトを走査
 	for (std::vector<LevelData::ObjectData>::iterator it = levelData->objectsData_.begin(); it != levelData->objectsData_.end(); ++it) {
 
