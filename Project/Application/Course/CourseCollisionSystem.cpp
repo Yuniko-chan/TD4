@@ -25,7 +25,7 @@ CourseCollisionSystem::kCollidingObjectKeywords_ =
 	"Player", // プレイヤー
 	"Core", // ベーシックコア
 	"Tire", // タイヤ
-	"ArmorFrame", // フレーム
+	"Armor", // フレーム
 	"Engine" // エンジン
 };
 
