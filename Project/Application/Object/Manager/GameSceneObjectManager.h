@@ -57,6 +57,9 @@ private: // メンバ関数
 	void PlayerInitialize();
 	void OptionProcess();
 
+	//オブジェクトデータからの取得ポイントの登録
+	void RegisterPickupPoint(IObject* object, const std::string& className);
+
 	void VehiclePreset(const std::string& presetName);
 public:
 	/// <summary>

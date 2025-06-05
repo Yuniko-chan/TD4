@@ -14,7 +14,10 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 	static_cast<ObjectFactory*>(objectFactory_.get())->Initialize(this);
 
 	levelDataManager_ = levelDataManager;
-	BaseObjectManager::Initialize(levelIndex, levelDataManager_);
+	//BaseObjectManager::Initialize(levelIndex, levelDataManager_);
+	// コライダーのデバッグ描画
+	colliderDebugDraw_ = std::make_unique<ColliderDebugDraw>();
+	colliderDebugDraw_->Initialize();
 
 	// 影
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
@@ -22,6 +25,11 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 	shadowManager_ = std::make_unique<ShadowManager>();
 	shadowManager_->Initialize(shadowModel_.get());
 
+	// ピックアップ
+	pickupPointManager_ = std::make_unique<PickupPointManager>();
+	pickupPointManager_->SetObjectManager(this);
+
+	
 	// 初期読み込み 
 	// レベルデータの取得
 	LevelData* levelData = levelDataManager->GetLevelDatas(kLevelIndexGenerationPattern_00);
@@ -35,6 +43,31 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 		std::unique_ptr<IObject> object;
 		object.reset(static_cast<ObjectFactory*>(objectFactory_.get())->CreateObjectPattern(objectData));
 
+		if (object) {
+			// listへ
+			objects_.emplace_back(object->GetName(), std::move(object));
+		}
+
+	}
+
+	levelData = levelDataManager->GetLevelDatas(levelIndex);
+	// レベルデータのオブジェクトを走査
+	for (std::vector<LevelData::ObjectData>::iterator it = levelData->objectsData_.begin(); it != levelData->objectsData_.end(); ++it) {
+
+		// オブジェクトの参照
+		LevelData::ObjectData objectData = *it;
+
+		// 型にあわせてInitialize
+		std::unique_ptr<IObject> object;
+		object.reset(static_cast<ObjectFactory*>(objectFactory_.get())->CreateObjectPattern(objectData));
+
+		//PickupPoint登録
+		if (std::holds_alternative<LevelData::MeshData>(objectData)) {
+
+			LevelData::MeshData meshData = std::get<LevelData::MeshData>(objectData);
+
+			RegisterPickupPoint(object.get(), meshData.className);
+		}
 		if (object) {
 			// listへ
 			objects_.emplace_back(object->GetName(), std::move(object));
@@ -222,8 +255,8 @@ void GameSceneObjectManager::PlayerInitialize()
 	// パーツ
 	partsManager_ = std::make_unique<VehiclePartsManager>();
 	// ピックアップ
-	pickupPointManager_ = std::make_unique<PickupPointManager>();
-	pickupPointManager_->SetObjectManager(this);
+	//pickupPointManager_ = std::make_unique<PickupPointManager>();
+	//pickupPointManager_->SetObjectManager(this);
 
 	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
 	player->GetPickUpManager()->SetPartsManager(partsManager_.get());
@@ -257,6 +290,14 @@ void GameSceneObjectManager::OptionProcess()
 	//partsManager_->AddParts(core->GetName(), core);
 
 	//VehiclePreset("Test");
+}
+
+void GameSceneObjectManager::RegisterPickupPoint(IObject* object, const std::string& className) {
+	for (size_t i = 0; i < kPickupPointCount_;i++) {
+		if (className == kRegisterPickupPointNames_[i]) {
+			pickupPointManager_->AddPickupPoint(className, static_cast<IPickupPoint*>(object));
+		}
+	}
 }
 
 void GameSceneObjectManager::VehiclePreset(const std::string& presetName)
