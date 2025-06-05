@@ -118,6 +118,15 @@ void GameScene::Update() {
 		resetScene_ = false;
 		return;
 	}
+
+	// 中間プレイ会用処理（初期化）
+	if (input_->TriggerKey(DIK_0)) {
+		Initialize();
+	}
+	else if (input_->TriggerJoystick(JoystickButton::kJoystickButtonSTART)) {
+		Initialize();
+	}
+
 	// パラメータ
 	parameterManager_->Update();
 
