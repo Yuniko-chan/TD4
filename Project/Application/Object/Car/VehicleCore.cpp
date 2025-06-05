@@ -62,15 +62,6 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 
 void VehicleCore::Update()
 {
-	static bool isDebug = false;
-	if (std::isnan(worldTransform_.direction_.x) || std::isnan(worldTransform_.direction_.z)) {
-		isDebug = true;
-		worldTransform_.direction_ = preDirection_;
-	}
-	else {
-		preDirection_ = worldTransform_.direction_;
-	}
-
 
 	// 接続管理
 	constructionSystem_->Update();

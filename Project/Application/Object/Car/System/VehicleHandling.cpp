@@ -65,10 +65,6 @@ void VehicleHandling::PreUpdate()
 			}
 		}
 		inputCounter_ = 0;
-		static bool issDebug = false;
-		if (std::isnan(consecutiveReceptions_)) {
-			issDebug = true;
-		}
 
 	}
 	// 非入力での減少処理
@@ -118,14 +114,6 @@ void VehicleHandling::PreUpdate()
 
 	if (executeDirection_ == Vector3(0.0f, 0.0f, 0.0f)) {
 		executeDirection_ = Vector3(0.0f, 0.0f, 1.0f);
-	}
-
-	static bool isDebug = false;
-	if (std::isnan(steerDirection_.x)) {
-		isDebug = true;
-	}
-	if (std::isnan(executeDirection_.x)) {
-		isDebug = true;
 	}
 
 }

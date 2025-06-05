@@ -1,5 +1,8 @@
 #include "TransformHelper.h"
 
+#include <cmath>
+#include <algorithm>
+
 EulerTransform TransformHelper::DetachWithWorldTransform(const Vector3& parentRotate, WorldTransform* child)
 {
     EulerTransform result = {};
