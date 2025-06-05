@@ -170,11 +170,11 @@ void VehicleHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 
 		//owner_->GetWorldTransformAdress()->direction_ = executeDirection_;
 
+		executeDirection_ = Vector3::Normalize(executeDirection_);
+
 		float radian = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, executeDirection_);
-
 		radian /= 60.0f;
-
-		owner_->GetWorldTransformAdress()->direction_ = TransformHelper::XZRotateDirection(owner_->GetWorldTransformAdress()->direction_, radian);
+		owner_->GetWorldTransformAdress()->direction_ = TransformHelper::XZRotateDirection(owner_->GetWorldTransformAdress()->direction_, radian);	
 	}
 }
 
