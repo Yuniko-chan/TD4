@@ -56,6 +56,7 @@ float TransformHelper::CalculateXZVectorToRotateRadian(const Vector3& from, cons
     to2 = Vector2::Normalize(to2);
 
     float cos = Vector2::Dot(from2, to2);
+    cos = std::clamp(cos, -1.0f, 1.0f);
     float rad = std::acosf(cos);
 
     //float angle = rad / (3.14f * 180.0f);
