@@ -265,15 +265,15 @@ void GameSceneObjectManager::PlayerInitialize()
 
 void GameSceneObjectManager::OptionProcess()
 {
-	AddObject("TerrainObject", "Resources/Model/Ground", "Ground.obj");
+	//AddObject("TerrainObject", "Resources/Model/Ground", "Ground.obj");
 
-	AddObject("EnginePickupPoint", sVehiclePaths[VehicleDatas::kEngine].first, sVehiclePaths[VehicleDatas::kEngine].second);
-	AddObject("TirePickupPoint", sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
-	AddObject("ArmorPickupPoint", sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
-	
-	pickupPointManager_->AddPickupPoint("EnginePickupPoint", static_cast<IPickupPoint*>(this->GetObjectPointer("EnginePickupPoint")));
-	pickupPointManager_->AddPickupPoint("TirePickupPoint", static_cast<IPickupPoint*>(this->GetObjectPointer("TirePickupPoint")));
-	pickupPointManager_->AddPickupPoint("ArmorPickupPoint", static_cast<IPickupPoint*>(this->GetObjectPointer("ArmorPickupPoint")));
+	//AddObject("EnginePickupPoint", sVehiclePaths[VehicleDatas::kEngine].first, sVehiclePaths[VehicleDatas::kEngine].second);
+	//AddObject("TirePickupPoint", sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
+	//AddObject("ArmorPickupPoint", sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
+	//
+	//pickupPointManager_->AddPickupPoint("EnginePickupPoint", static_cast<IPickupPoint*>(this->GetObjectPointer("EnginePickupPoint")));
+	//pickupPointManager_->AddPickupPoint("TirePickupPoint", static_cast<IPickupPoint*>(this->GetObjectPointer("TirePickupPoint")));
+	//pickupPointManager_->AddPickupPoint("ArmorPickupPoint", static_cast<IPickupPoint*>(this->GetObjectPointer("ArmorPickupPoint")));
 	
 	VehiclePreset("init");
 
