@@ -32,13 +32,20 @@ void DriveSystem::Update()
 	//---角度の設定---//
 	// ハンドル操作の更新（旋回の適応など）
 	handling_->PostUpdate(velocity_, status_);
+
+	// 速度が無ければ早期
+	if (velocity_ == Vector3(0.0f, 0.0f, 0.0f))
+	{
+		return;
+	}
 	// 角度
-	float eulerY = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, Vector3::FrontVector());
+	//float eulerY = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, Vector3::FrontVector());
+	Vector3 newDirect = Matrix4x4::TransformNormal(velocity_, Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), owner_->GetWorldTransformAdress()->direction_));
 	
 	// 座標計算
-	VehicleCaluclator calc;
-	owner_->GetWorldTransformAdress()->transform_.translate +=
-		calc.RotateVector(velocity_, eulerY) * kDeltaTime_;
+	//VehicleCaluclator calc;
+	owner_->GetWorldTransformAdress()->transform_.translate += newDirect * kDeltaTime_;
+
 }
 
 void DriveSystem::PreUpdate()
@@ -68,8 +75,11 @@ void DriveSystem::VelocityUpdate()
 {
 	//---速度の設定---//
 	// 速度の計算
-	Vector3 acceleration = Vector3::FrontVector() * driveEngine_->GetCurrentSpeed();
-	velocity_ += acceleration * kDeltaTime_;
+	// 速度レートが0の場合加算しない
+	if (driveEngine_->GetCurrentSpeed() != 0) {
+		Vector3 acceleration = Vector3::FrontVector() * driveEngine_->GetCurrentSpeed();
+		velocity_ += acceleration * kDeltaTime_;
+	}
 
 	const float velocityDecrement = 0.75f;	// 減速値
 	const float kEpsilon = 0.001f;	// 切り捨て値

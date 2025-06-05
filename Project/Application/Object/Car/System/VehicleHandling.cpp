@@ -15,6 +15,14 @@ void VehicleHandling::HandleInput(const float inputX)
 	isRight_.second = false;
 	isLeft_.second = false;
 
+	// 切り捨て閾値
+	const float kDiscardThreshold = 0.25f;
+
+	// 閾値以下なら早期
+	if (std::fabsf(inputX) < kDiscardThreshold) {
+		return;
+	}
+
 	// 右
 	if (inputX > 0) {
 		isRight_.second = true;
@@ -57,6 +65,11 @@ void VehicleHandling::PreUpdate()
 			}
 		}
 		inputCounter_ = 0;
+		static bool issDebug = false;
+		if (std::isnan(consecutiveReceptions_)) {
+			issDebug = true;
+		}
+
 	}
 	// 非入力での減少処理
 	else if (!IsInput() && (inputCounter_ % (duration / 2) == 0)) {
@@ -107,6 +120,14 @@ void VehicleHandling::PreUpdate()
 		executeDirection_ = Vector3(0.0f, 0.0f, 1.0f);
 	}
 
+	static bool isDebug = false;
+	if (std::isnan(steerDirection_.x)) {
+		isDebug = true;
+	}
+	if (std::isnan(executeDirection_.x)) {
+		isDebug = true;
+	}
+
 }
 
 void VehicleHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
@@ -149,11 +170,11 @@ void VehicleHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 
 		//owner_->GetWorldTransformAdress()->direction_ = executeDirection_;
 
+		executeDirection_ = Vector3::Normalize(executeDirection_);
+
 		float radian = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, executeDirection_);
-
 		radian /= 60.0f;
-
-		owner_->GetWorldTransformAdress()->direction_ = TransformHelper::XZRotateDirection(owner_->GetWorldTransformAdress()->direction_, radian);
+		owner_->GetWorldTransformAdress()->direction_ = TransformHelper::XZRotateDirection(owner_->GetWorldTransformAdress()->direction_, radian);	
 	}
 }
 

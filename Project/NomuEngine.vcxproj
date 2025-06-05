@@ -238,6 +238,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\OutGameObject\ClearBackGround\ClearBackGround.cpp" />
     <ClCompile Include="Application\OutGameObject\Curtain\Curtain.cpp" />
     <ClCompile Include="Application\OutGameObject\TitleBackGround\TitleBackGround.cpp" />
+    <ClCompile Include="Application\ParticleManager\ParticleManager.cpp" />
+    <ClCompile Include="Application\Particle\RunDustParticle\RunDustParticle.cpp" />
     <ClCompile Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.cpp" />
     <ClCompile Include="Application\Scene\DebugScene\DebugScene.cpp" />
     <ClCompile Include="Application\Scene\SceneManager\SceneManager.cpp" />
@@ -248,6 +250,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\System\Shadow\Shadow.cpp" />
     <ClCompile Include="Application\System\Shadow\ShadowManager.cpp" />
     <ClCompile Include="Application\UI\BaseUI.cpp" />
+    <ClCompile Include="Application\UI\ManualUI.cpp" />
     <ClCompile Include="Application\UI\UIManager.cpp" />
     <ClCompile Include="Engine\2D\ImGuiManager.cpp" />
     <ClCompile Include="Engine\3D\Line\DrawLine.cpp" />
@@ -505,6 +508,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\OutGameObject\ClearBackGround\ClearBackGround.h" />
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />
     <ClInclude Include="Application\OutGameObject\TitleBackGround\TitleBackGround.h" />
+    <ClInclude Include="Application\ParticleManager\ParticleManager.h" />
+    <ClInclude Include="Application\Particle\RunDustParticle\RunDustParticle.h" />
     <ClInclude Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.h" />
     <ClInclude Include="Application\Scene\DebugScene\DebugScene.h" />
     <ClInclude Include="Application\Scene\SceneManager\SceneManager.h" />
@@ -517,6 +522,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\System\Shadow\Shadow.h" />
     <ClInclude Include="Application\System\Shadow\ShadowManager.h" />
     <ClInclude Include="Application\UI\BaseUI.h" />
+    <ClInclude Include="Application\UI\ManualUI.h" />
     <ClInclude Include="Application\UI\UIManager.h" />
     <ClInclude Include="Application\Course\CourseLoader.h" />
     <ClInclude Include="Engine\2D\ImGuiManager.h" />
@@ -750,6 +756,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>
     <None Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDust.CS.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Resources\Shaders\GPUParticle\particle\CS.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -1017,6 +1028,21 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDustUpdate.CS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\GPUParticle\particle\Emit.CS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\GPUParticle\particle\Initialize.CS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\GPUParticle\particle\Update.CS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

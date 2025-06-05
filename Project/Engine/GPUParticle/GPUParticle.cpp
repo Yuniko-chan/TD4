@@ -157,6 +157,12 @@ void GPUParticle::SetEmitter(const EmitterCS& emitter, bool isEmitSet)
 
 }
 
+void GPUParticle::ChangeEmission(bool flag)
+{
+	emitterMap_->emit = flag;
+	emitterMap_->frequencyTime = 0;
+}
+
 void GPUParticle::PipelineStateCSInitialize(ID3D12Device* device)
 {
 	

@@ -21,6 +21,28 @@ void DebugScene::Initialize()
 	skydomeData.parentName = "";
 	skydome_->Initialize(&skydomeData);
 
+	//clothDemo_ = std::make_unique<ClothDemo>();
+	//clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
+
+	//パーティクル
+	ParticleManager_ = std::make_unique<ParticleManager>();
+	ParticleManager_->Initialize();
+
+	ParticleManager_->CreateParticle<RunDustParticle>("RunDust",
+		{
+				Vector3{0.0f, 0.0f, 0.0f}, // 位置
+				1.0f, // 射出半径
+				10, // 射出数
+				0.1f, // 射出間隔
+				0.0f, // 射出間隔調整時間
+				true // 射出許可
+		}
+	);
+	
+	ParticleManager_->CreateParticle<GPUParticle>("");
+	//UI
+	UIManager_ = std::make_unique<UIManager>();
+	UIManager_->Initialize();
 	// オブジェクトマネージャー
 	objectManager_ = std::make_unique<GameSceneObjectManager>();
 	objectManager_->Initialize(kLevelIndexDebug, levelDataManager_);
@@ -96,6 +118,11 @@ void DebugScene::Update()
 	}
 #endif // _DEBUG
 
+	//clothDemo_->Update();
+
+	ParticleManager_->Update();
+
+	UIManager_->Update();
 	// オブジェクトマネージャー
 	objectManager_->Update();
 
@@ -109,6 +136,12 @@ void DebugScene::Update()
 
 	ImguiDraw();
 
+	ImGui::Begin("ParticleManagerStopEmissionTest");
+	if (ImGui::Button("Button")) {
+		
+	}
+	ImGui::End();
+ParticleManager_->StopEmission("RunDust");
 }
 
 void DebugScene::Draw()
@@ -135,6 +168,27 @@ void DebugScene::Draw()
 
 	drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
 
+	//drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
+
+	//clothDemo_->Draw(&camera_);
+
+#pragma endregion
+
+	ParticleManager_->Draw(camera_);
+
+#pragma region 前景スプライト描画
+	// 前景スプライト描画前処理
+	Sprite::PreDraw(dxCommon_->GetCommadList());
+
+	//背景
+	//前景スプライト描画
+
+	// UI
+	UIManager_->Draw();
+
+	// 前景スプライト描画後処理
+	Sprite::PostDraw();
+
 #pragma endregion
 
 }
@@ -145,8 +199,11 @@ void DebugScene::ImguiDraw()
 	debugCamera_->ImGuiDraw();
 
 	course_->ImGuiDraw();
+	//clothDemo_->ImGuiDraw(camera_);
 
 	//courseCollisionSystem_->ImGuiDraw();
+
+	UIManager_->ImGuiDraw();
 
 }
 

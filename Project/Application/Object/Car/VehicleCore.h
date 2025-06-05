@@ -70,4 +70,6 @@ private:
 
     // ペアになるプレイヤーポインタ
     Player* pairPlayer_ = nullptr;
+
+    Vector3 preDirection_ = {};
 };

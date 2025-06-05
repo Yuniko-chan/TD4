@@ -1,4 +1,4 @@
-#include "RunDust.CS.hlsli"
+#include "CS.hlsli"
 #include "../../RandomGenerator/RandomGenerator.hlsli"
 
 struct Emitter {
@@ -42,17 +42,15 @@ void main( uint32_t3 DTid : SV_DispatchThreadID )
 				
 				int32_t particleIndex = gFreeList[freeListIndex];
 
-                gParticles[particleIndex].scale = float32_t3(1.0f, 1.0f, 1.0f) * generator.Generate1d() * 0.5f;
+				gParticles[particleIndex].scale = float32_t3(1.0f, 1.0f, 1.0f) * generator.Generate1d() * 0.5f;
 				gParticles[particleIndex].translate = gEmitter.translate;
-				gParticles[particleIndex].translate.x += generator.Generate1d() * 2.0f * gEmitter.radius - gEmitter.radius;
-				gParticles[particleIndex].translate.z += generator.Generate1d() * 2.0f * gEmitter.radius - gEmitter.radius;
-				gParticles[particleIndex].color.rgb = float32_t3(1.0f, 1.0f, 1.0f);
+				gParticles[particleIndex].color.rgb = float32_t3(generator.Generate1d(), generator.Generate1d(), 0.2f);
 				gParticles[particleIndex].color.a = 1.0f;
 				gParticles[particleIndex].lifeTime = 1.0f;
-				float32_t speed = 0.1f;
+				float32_t speed = 0.15f;
 				gParticles[particleIndex].velocity.x = generator.Generate1d() * speed * 2.0f - speed;
-				gParticles[particleIndex].velocity.y = generator.Generate1d() * speed;
-				gParticles[particleIndex].velocity.z = 0.0f;
+				gParticles[particleIndex].velocity.y = generator.Generate1d() * speed * 3.0f;
+				gParticles[particleIndex].velocity.z = generator.Generate1d() * speed * 2.0f - speed;
 				gParticles[particleIndex].currentTime = 0.0f;
 			}
 			else {

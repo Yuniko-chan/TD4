@@ -2,6 +2,7 @@
 #include "../../../Engine/Input/Input.h"
 #include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Engine/3D/Model/ModelDraw.h"
+#include "../../../Engine/Physics/Gravity/Gravity.h"
 
 #include "../GameObjectsList.h"
 #include "../../Collider/CollisionConfig.h"
@@ -61,6 +62,16 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 
 void VehicleCore::Update()
 {
+	static bool isDebug = false;
+	if (std::isnan(worldTransform_.direction_.x) || std::isnan(worldTransform_.direction_.z)) {
+		isDebug = true;
+		worldTransform_.direction_ = preDirection_;
+	}
+	else {
+		preDirection_ = worldTransform_.direction_;
+	}
+
+
 	// 接続管理
 	constructionSystem_->Update();
 	// 運転・移動処理
@@ -68,7 +79,21 @@ void VehicleCore::Update()
 	// アニメーション
 	animation_->Update();
 	// 基底
-	Car::IParts::Update();
+	// メッシュの更新
+	MeshObject::Update();
+	// 子専用更新（重力の適応）
+	// 仮の地面処理（後で消す）
+	if (worldTransform_.GetWorldPosition().y <= 0.0f) {
+		worldTransform_.transform_.translate.y = 0.0f;
+		//return;
+	}
+	// トランスフォームの更新
+	worldTransform_.direction_ = Vector3::Normalize(worldTransform_.direction_);
+	worldTransform_.UpdateMatrix();
+	// コライダーの更新
+	ColliderUpdate();
+	// 重力
+	worldTransform_.transform_.translate += Gravity::Execute();
 
 	isDelete_ = false;
 }

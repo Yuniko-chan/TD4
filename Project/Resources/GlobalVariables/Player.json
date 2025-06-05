@@ -4,12 +4,17 @@
         "DropOffActionFrame": 15.0,
         "DropOffHeight": 8.0,
         "DropOffOffset": [
-            6.0,
+            0.0,
             0.0,
             0.0
         ],
         "FrontCatchRange": 50.0,
         "FrontThreshold": 0.800000011920929,
+        "HoldOffset": [
+            0.0,
+            0.0,
+            2.0
+        ],
         "RideActionFrame": 15.0,
         "RideHeight": 12.5,
         "RideOffset": [

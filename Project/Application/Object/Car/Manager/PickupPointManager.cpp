@@ -91,6 +91,17 @@ Car::IParts* PickupPointManager::AttemptPartAcquisition()
 	return parts;
 }
 
+Car::IParts* PickupPointManager::FindAcquirablePart(IPickupPoint* point)
+{
+	Car::IParts* newParts = nullptr;
+	// 同じ名のポイントがあればパーツの生成
+	if (pointLists_.contains(point->GetName())) {
+		newParts = GenerateParts(point->GetType());
+	}
+
+	return newParts;
+}
+
 bool PickupPointManager::IsAccept(const Vector3& position)
 {
 	// 初期化
