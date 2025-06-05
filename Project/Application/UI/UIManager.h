@@ -57,7 +57,7 @@ private: // 定数
 	// UI作成データ
 	const std::array<UICreateData, UIIndex::kUIIndexOfCount> kUICreateDatas_ =
 	{
-		UICreateData{ manual, manualUIClass, {1050.0f,550.0f}, {256.0f,150.0f} },
+		UICreateData{ manual, manualUIClass, {1050.0f,150.0f}, {320.0f,240.0f} },
 	};
 
 public: // メンバ関数
