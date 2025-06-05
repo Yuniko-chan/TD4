@@ -69,8 +69,8 @@ namespace Car
 		bool GetIsDelete() { return isDelete_; }
 
 		PartHPHandler* GetHPHandler() { return &hpHandler_; }
-		//// 親があるか（ポインタで取得可能なように）
-		//VehicleCore* GetParent() { return parentCore_; }
+		// 親があるか（ポインタで取得可能なように）
+		VehicleCore* GetParent() { return parentCore_; }
 
 		//---セッター---//
 		// 親子関係

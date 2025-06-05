@@ -99,18 +99,19 @@ void CourseCollisionSystem::Execute()
 					vehicleCore_ = std::get<VehicleCore*>(x);
 					return true;
 				}
+
 				bool belongToCartXX = 
 					std::visit([&](auto xx) {
-					// 型
-					using ParentT = std::decay_t<decltype(xx->IsParent())>;
 					// コア
-					if constexpr (std::is_same_v<ParentT, VehicleCore*>) {
+					if(xx->GetParent()) {
 						return true;
 					}
 					isAlone = false;
 					return false;
 					}, collisionCarObject);
+
 				return belongToCartXX;
+			
 			}
 			}, *itr);
 		
