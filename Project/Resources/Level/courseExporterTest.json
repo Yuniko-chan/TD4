@@ -41,101 +41,6 @@
         },
         {
             "type": "MESH",
-            "name": "円柱.008",
-            "transform": {
-                "translation": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "Wall",
-            "transform": {
-                "translation": [
-                    3.144087553024292,
-                    21.82179069519043,
-                    0.0
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    24.042722702026367,
-                    10.029997825622559
-                ]
-            },
-            "fileName": "Box.obj",
-            "directoryPath": "Resources/Model/Box",
-            "className": "Wall",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    48.085445404052734,
-                    20.059995651245117
-                ]
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "Wall.001",
-            "transform": {
-                "translation": [
-                    -3.526325225830078,
-                    21.82179069519043,
-                    0.0
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    24.042722702026367,
-                    10.029997825622559
-                ]
-            },
-            "fileName": "Box.obj",
-            "directoryPath": "Resources/Model/Box",
-            "className": "Wall",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    48.085445404052734,
-                    20.059995651245117
-                ]
-            }
-        },
-        {
-            "type": "MESH",
             "name": "Player",
             "transform": {
                 "translation": [
@@ -176,18 +81,18 @@
             "name": "ironball",
             "transform": {
                 "translation": [
-                    0.0,
-                    0.0,
-                    5.813091278076172
+                    26.512874603271484,
+                    22.71453857421875,
+                    15.200000762939453
                 ],
                 "rotation": [
                     -0.0,
                     0.0,
-                    0.0
+                    1.099568486213684
                 ],
                 "scaling": [
-                    1.0,
-                    1.0,
+                    0.9999999403953552,
+                    0.9999999403953552,
                     1.0
                 ]
             },
@@ -202,8 +107,8 @@
             },
             "gimmick": {
                 "type": "IRONBALL",
-                "length": 5.0,
-                "angle": 1.0
+                "length": 9.940000534057617,
+                "angle": 2.380000114440918
             }
         },
         {
@@ -211,14 +116,14 @@
             "name": "大砲_円柱.007",
             "transform": {
                 "translation": [
-                    -13.130254745483398,
-                    0.0,
+                    -26.045272827148438,
+                    39.644405364990234,
                     0.0
                 ],
                 "rotation": [
-                    -0.0,
-                    0.0,
-                    0.0
+                    -0.5646548867225647,
+                    1.3924176478496975e-08,
+                    -0.7058340311050415
                 ],
                 "scaling": [
                     1.0,
@@ -307,6 +212,154 @@
             "fileName": "demoCourse.course",
             "directoryPath": "Resources/Course/",
             "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "customArea",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "custom.obj",
+            "directoryPath": "Resources/Model/Custom",
+            "className": "CustomArea",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    45.0,
+                    45.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "FramePoint",
+            "transform": {
+                "translation": [
+                    12.9399995803833,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "frame.obj",
+            "directoryPath": "Resources/Model/PickupPoint/Frame",
+            "className": "ArmorPickupPoint",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "EnginePoint",
+            "transform": {
+                "translation": [
+                    0.0,
+                    14.170000076293945,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "engine.obj",
+            "directoryPath": "Resources/Model/PickupPoint/Engine",
+            "className": "EnginePickupPoint",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "TirePoint",
+            "transform": {
+                "translation": [
+                    -7.799999713897705,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "tire.obj",
+            "directoryPath": "Resources/Model/PickupPoint/Tire",
+            "className": "TirePickupPoint",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            }
         }
     ]
 }

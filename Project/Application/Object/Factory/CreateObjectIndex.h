@@ -16,6 +16,7 @@ enum CreateObjectIndex {
 	kCreateObjectIndexEnginePoint,	// エンジン箇所
 	kCreateObjectIndexTirePoint,	// タイヤ箇所
 	kCreateObjectIndexArmorPoint,		// アーマー箇所
+	kCreateObjectIndexCustomArea, //カスタムエリア
 
 	kCreateObjectIndexWall,	// 壁
 	kCreateObjectIndexCourse,//コース

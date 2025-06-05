@@ -29,12 +29,13 @@ class Obstacle;
 
 //フィールド
 class Wall;
+class CustomArea;
 
 // variantでまとめる
 using ColliderParentObject = std::variant<ParentNullObject*, Player*, VehicleCore*, 
 	ConicalPendulumIronBall*, PendulumIronBall*, Cannon*, CannonBall*, CannonExplosion*, 
 	Minigun*, MinigunBullet*, Obstacle*, TerrainObject*
-	, TireParts*, ArmorFrameParts*, EngineParts*, Wall* > ;
+	, TireParts*, ArmorFrameParts*, EngineParts*, Wall*,CustomArea* > ;
 
 /// <summary>
 /// 親がないもの用

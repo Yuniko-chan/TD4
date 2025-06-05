@@ -53,6 +53,9 @@ void ObjectFactory::Initialize(BaseObjectManager* objectManager)
 	// アーマーポイント
 	createObjectFunctions_[kCreateObjectIndexArmorPoint].first = kCreateObjectNames_[kCreateObjectIndexArmorPoint];
 	createObjectFunctions_[kCreateObjectIndexArmorPoint].second = ObjectCreate::CreateObjectArmorPoint;
+	//カスタムエリア
+	createObjectFunctions_[kCreateObjectIndexCustomArea].first = kCreateObjectNames_[kCreateObjectIndexCustomArea];
+	createObjectFunctions_[kCreateObjectIndexCustomArea].second = ObjectCreate::CreateObjectCustomArea;
 
 	//壁
 	createObjectFunctions_[kCreateObjectIndexWall].first = kCreateObjectNames_[kCreateObjectIndexWall];

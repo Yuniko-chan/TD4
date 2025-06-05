@@ -77,7 +77,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_DEMO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/utf-8 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>$(ProjectDir)externals\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -194,6 +194,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Car\PickupPoint\User\EnginePickupPoint.cpp" />
     <ClCompile Include="Application\Object\Car\PickupPoint\User\TirePickupPoint.cpp" />
     <ClCompile Include="Application\Object\Car\System\DriveSystem.cpp" />
+    <ClCompile Include="Application\Object\CustomArea\CustomArea.cpp" />
     <ClCompile Include="Application\Object\Gimmick\Minigun\MinigunAnimation.cpp" />
     <ClCompile Include="Application\Object\Player\Animation\PlayerAnimation.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp" />
@@ -435,6 +436,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Car\System\User\AutoDriver.h" />
     <ClInclude Include="Application\Object\Car\System\User\InterfaceDriver.h" />
     <ClInclude Include="Application\Object\Car\System\User\UserDriver.h" />
+    <ClInclude Include="Application\Object\CustomArea\CustomArea.h" />
     <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunAnimation.h" />
     <ClInclude Include="Application\Object\Utility\Calc\VehicleCaluclator.h" />
     <ClInclude Include="Application\Object\Car\System\VehicleEngine.h" />
