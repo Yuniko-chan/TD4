@@ -23,7 +23,7 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	material_->SetEnableLighting(HalfLambert);
 	// ベクトルで向きを決めるように
 	worldTransform_.usedDirection_ = true;
-	worldTransform_.transform_.translate.y = 10.0f;
+	worldTransform_.transform_.translate.y = 0.0f;
 	worldTransform_.transform_.translate.z = 0.0f;
 	worldTransform_.UpdateMatrix();
 	
