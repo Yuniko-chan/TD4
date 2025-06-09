@@ -166,7 +166,13 @@ void Car::IParts::ColliderUpdate()
 	// コライダーの更新
 	OBB obb = std::get<OBB>(*collider_);
 	obb.center_ = worldTransform_.GetWorldPosition();
-	obb.SetOtientatuons(worldTransform_.rotateMatrix_);
+
+	if (parentCore_) {
+		obb.SetOtientatuons(Matrix4x4::Multiply(worldTransform_.rotateMatrix_, worldTransform_.parent_->parentMatrix_));
+	}
+	else {
+		obb.SetOtientatuons(worldTransform_.rotateMatrix_);
+	}
 	obb.size_ = worldTransform_.transform_.scale;
 	// コライダーを設定しなおす
 	ColliderShape* shape = new ColliderShape();
