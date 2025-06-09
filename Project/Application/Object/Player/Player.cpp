@@ -43,9 +43,11 @@ void Player::Update()
 	// 基底
 	MeshObject::Update();
 	
+
 	// システム
 	SystemUpdate();
 
+	worldTransform_.direction_ = Vector3::Normalize(worldTransform_.direction_);
 	// 座標更新
 	worldTransform_.UpdateMatrix();
 

@@ -754,7 +754,7 @@ void CourseCollisionSystem::AloneExtrusionCalculation(CollisionObject object)
 		if constexpr (std::is_same_v<T, Player*>) {
 			x->GetWorldTransformAdress()->transform_.translate += extrusion;
 			if (normalCount != 0) {
-				x->GetWorldTransformAdress()->direction_ = normal;
+				//x->GetWorldTransformAdress()->direction_ = normal;
 			}
 			x->GetWorldTransformAdress()->UpdateMatrix();
 		}

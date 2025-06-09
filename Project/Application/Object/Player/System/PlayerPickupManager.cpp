@@ -85,8 +85,8 @@ void PlayerPickupManager::InteractParts()
 	// 掴む
 	else {
 		// ここに今後アルゴリズムを追加する
-		//RemovalAction();
-		CatchAction();
+		RemovalAction();
+		//CatchAction();
 	}
 
 	// インタラクトキーを連打できないように
