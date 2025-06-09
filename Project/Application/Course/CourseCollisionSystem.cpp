@@ -21,12 +21,12 @@ const Vector3 CourseCollisionSystem::kPolygonAreasLength_ = { 1000.0f, 1000.0f, 
 const std::array<std::string, CourseCollisionSystem::kCollidingObjectKeywordsMax_> 
 CourseCollisionSystem::kCollidingObjectKeywords_ = 
 {
-	"CourseDemo", // コースデモオブジェクト
-	"Player", // プレイヤー
-	"Core", // ベーシックコア
-	"Tire", // タイヤ
-	"Armor", // フレーム
-	"Engine" // エンジン
+	"class CourseDemoObject", // コースデモオブジェクト
+	"class Player", // プレイヤー
+	"class VehicleCore", // ベーシックコア
+	"class TireParts", // タイヤ
+	"class ArmorFrameParts", // フレーム
+	"class EngineParts" // エンジン
 };
 
 void CourseCollisionSystem::Initialize()
@@ -168,10 +168,16 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 	for (std::list<BaseObjectManager::ObjectPair>::iterator itr = objects->begin();
 		itr != objects->end(); ++itr) {
 
+		IObject* obj = itr->second.get();
+
+		// 型
+		const std::type_info& t = typeid(*obj);
+		std::string className = t.name();
+
 		// キーワード検索
 		for (uint32_t i = 0; i < kCollidingObjectKeywordsMax_; ++i) {
 			// キーワードに引っかかるか
-			if (itr->first.find(kCollidingObjectKeywords_[i]) != std::string::npos) {
+			if (className == kCollidingObjectKeywords_[i]) {
 				// オブジェクトリストに登録
 				switch (i)
 				{
