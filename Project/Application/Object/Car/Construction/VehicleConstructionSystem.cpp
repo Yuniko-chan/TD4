@@ -131,6 +131,26 @@ void VehicleConstructionSystem::AnyDocking(Car::IParts* parts, const Vector2Int&
 	Attach(parts, key);
 }
 
+Car::IParts* VehicleConstructionSystem::FindNearPart(const Vector3& point)
+{
+	// 一番近いパーツを返す
+	float nearDist = FLT_MAX;
+	Car::IParts* result = nullptr;
+
+	// 
+	for (auto it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
+		float distance = TransformHelper::Vector3Distance(point, (*it).second->GetWorldTransformAdress()->GetWorldPosition());
+		// 距離が短いか
+		if (nearDist >= distance) {
+			nearDist = distance;
+			result = (*it).second;
+		}
+	}
+
+	// 
+	return result;
+}
+
 void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key)
 {
 	// 計算器
@@ -154,11 +174,47 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 
 }
 
+void VehicleConstructionSystem::Detach(Car::IParts* parts)
+{
+	// 検索
+	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin();
+		it != partsMapping_.end(); ++it) {
+		// 一致パーツへの処理
+		if ((*it).second == parts) {
+			// 外すためのフラグ処理
+			(*it).second->SetIsDelete(true);
+			// 解除処理
+			UnRegistParts((*it).first, (*it).second);
+			// ステータス側からも削除
+			status_->ApplyPartRemove((*it).second->GetClassNameString(), (*it).first);
+			// HPの初期化
+			(*it).second->GetHPHandler()->Initialize();
+			// リストから外す
+			it = partsMapping_.erase(it);
+			return;
+		}
+	}
+
+}
+
 Car::IParts* VehicleConstructionSystem::FindPreNumber(std::list<std::pair<int, Car::IParts*>>* directLists, int32_t number)
 {
 	for (std::list<std::pair<int, Car::IParts*>>::iterator it = directLists->begin(); it != directLists->end();) {
 		// 該当番号が見つかれば
 		if ((*it).first == number) {
+			return (*it).second;
+		}
+		++it;
+	}
+
+	return nullptr;
+}
+
+Car::IParts* VehicleConstructionSystem::FindParts(Car::IParts* parts)
+{
+	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end();) {
+		// 該当番号が見つかればそれを返す
+		if ((*it).second == parts) {
 			return (*it).second;
 		}
 		++it;

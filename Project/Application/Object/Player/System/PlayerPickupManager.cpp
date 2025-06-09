@@ -84,6 +84,8 @@ void PlayerPickupManager::InteractParts()
 	}
 	// 掴む
 	else {
+		// ここに今後アルゴリズムを追加する
+		//RemovalAction();
 		CatchAction();
 	}
 
@@ -271,6 +273,23 @@ void PlayerPickupManager::CatchAction()
 		}
 		OnPartCatchSuccess(nearCore);
 	}
+}
+
+void PlayerPickupManager::RemovalAction()
+{
+	// コアがなければ
+	if (!owner_->GetCore()) {
+		return;
+	}
+
+	// コアに付けている中で一番近いパーツを検索
+	Car::IParts* part = owner_->GetCore()->GetConstructionSystem()->FindNearPart(owner_->GetWorldTransformAdress()->GetWorldPosition());
+	
+	// 解除処理
+	owner_->GetCore()->GetConstructionSystem()->Detach(part);
+
+	// 拾う処理
+	OnPartCatchSuccess(part);
 }
 
 void PlayerPickupManager::OnPartCatchSuccess(Car::IParts* parts)

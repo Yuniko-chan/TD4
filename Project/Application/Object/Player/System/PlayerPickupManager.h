@@ -68,6 +68,11 @@ private:
 	void CatchAction();
 
 	/// <summary>
+	/// 取り外しアクション（持つまで
+	/// </summary>
+	void RemovalAction();
+
+	/// <summary>
 	/// 拾うのに成功処理
 	/// </summary>
 	/// <param name="parts"></param>

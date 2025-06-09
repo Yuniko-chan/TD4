@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Utility/Common/OwnerComponent.h"
 #include "../../Utility/Math/Vector2Int.h"
+#include "../../../Engine/Math/Vector/Vector3.h"
 #include <list>
 #include <unordered_map>
 #include <map>
@@ -46,12 +47,26 @@ public:
 	/// <param name="key"></param>
 	void AnyDocking(Car::IParts* parts, const Vector2Int& key);
 
+	/// <summary>
+	/// 近いパーツの取得
+	/// </summary>
+	/// <param name="point"></param>
+	/// <returns></returns>
+	Car::IParts* FindNearPart(const Vector3& point);
+
+	/// <summary>
+	/// 解除
+	/// </summary>
+	/// <param name="parts"></param>
+	void Detach(Car::IParts* parts);
+
 private:
 	/// <summary>
 	/// 接続
 	/// </summary>
 	/// <param name="parts"></param>
 	void Attach(Car::IParts* parts, const Vector2Int& key);
+
 	/// <summary>
 	/// 検索
 	/// </summary>
@@ -59,6 +74,8 @@ private:
 	/// <param name="number"></param>
 	/// <returns></returns>
 	Car::IParts* FindPreNumber(std::list<std::pair<int, Car::IParts*>>* directLists, int32_t number);
+
+	Car::IParts* FindParts(Car::IParts* parts);
 	/// <summary>
 	/// パーツの登録処理
 	/// </summary>
