@@ -30,7 +30,7 @@ private: // メンバ定数
 	static const uint32_t kObjectsThatCanBeRegisteredMax_ = 32;
 	
 	//	ポリゴンエリアの分割数
-	static const uint32_t kPolygonAreasDiv_ = 1;
+	static const uint32_t kPolygonAreasDiv_ = 16;
 	// ポリゴンエリアの原点
 	static const Vector3 kPolygonAreasOrigin_;
 	// ポリゴンエリアの長さ
@@ -126,6 +126,11 @@ public: // メンバ関数
 	void SetCourse(Course* course);
 
 	/// <summary>
+	/// コースクリア
+	/// </summary>
+	void ClearCorse();
+
+	/// <summary>
 	/// ImGui描画
 	/// </summary>
 	void ImGuiDraw();
@@ -172,9 +177,6 @@ private: // メンバ変数
 
 private: // メンバ変数
 
-	// コース
-	Course* course_;
-
 	// コースとぶつかるオブジェクト
 	std::list<CollisionObject> collidingObjects_;
 
@@ -203,5 +205,8 @@ private: // メンバ変数
 
 	// コア
 	VehicleCore* vehicleCore_;
+
+	// 衝突用テクスチャ
+	uint32_t roadAttributeTextureHandle_;
 
 };

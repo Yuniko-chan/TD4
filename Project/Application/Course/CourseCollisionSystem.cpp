@@ -44,6 +44,9 @@ void CourseCollisionSystem::Initialize()
 	// コア
 	vehicleCore_ = nullptr;
 
+	// テクスチャハンドル
+	roadAttributeTextureHandle_ = TextureManager::Load("Resources/Course/roadAttribute_.png", dxCommon_);
+
 }
 
 void CourseCollisionSystem::Execute()
@@ -222,10 +225,6 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 void CourseCollisionSystem::SetCourse(Course* course)
 {
 
-	// コース
-	course_ = course;
-	assert(course_);
-
 	// ポリゴンエリアに登録
 	int32_t x0 = 0, y0 = 0, z0 = 0;
 	int32_t x1 = 0, y1 = 0, z1 = 0;
@@ -235,10 +234,10 @@ void CourseCollisionSystem::SetCourse(Course* course)
 	Vector3 dividingValue = Vector3::Multiply(kPolygonAreasLength_, 1.0f / static_cast<float>(kPolygonAreasDiv_));
 
 	// コース中心のワールド座標
-	Vector3 worldPosition = course_->GetWorldTransformAdress()->GetWorldPosition();
+	Vector3 worldPosition = course->GetWorldTransformAdress()->GetWorldPosition();
 
 	// コースメッシュ分回す
-	std::vector<CoursePolygon>* polygons = course_->GetCoursePolygonsAdress();
+	std::vector<CoursePolygon>* polygons = course->GetCoursePolygonsAdress();
 	for (uint32_t i = 0; i < polygons->size(); ++i) {
 
 		// ポリゴン
@@ -276,6 +275,20 @@ void CourseCollisionSystem::SetCourse(Course* course)
 			polygonAreas[x2][y2][z2].push_back(polygon);
 		}
 
+	}
+
+}
+
+void CourseCollisionSystem::ClearCorse()
+{
+
+	// ポリゴンエリアをクリアする
+	for (size_t x = 0; x < kPolygonAreasDiv_; x++) {
+		for (size_t y = 0; y < kPolygonAreasDiv_; y++) {
+			for (size_t z = 0; z < kPolygonAreasDiv_; z++) {
+				polygonAreas[x][y][z].clear();
+			}
+		}
 	}
 
 }
@@ -645,7 +658,7 @@ void CourseCollisionSystem::ExtrusionExecuteCS()
 
 	commandList->SetComputeRootDescriptorTable(2, buffers_[collisionCheakNum_].outputDescriptorHandles.handleGPU_);
 
-	TextureManager::GetInstance()->SetComputeRootDescriptorTable(commandList, 3, course_->GetCourseTextureHandle());
+	TextureManager::GetInstance()->SetComputeRootDescriptorTable(commandList, 3, roadAttributeTextureHandle_);
 
 	commandList->Dispatch((buffers_[collisionCheakNum_].objectMap_->indexMax / 1024) + 1, 1, 1);
 
