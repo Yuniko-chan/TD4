@@ -9,6 +9,10 @@
 
 Car::IParts* PartJudgeSystem::GetCatchPart(VehiclePartsManager* partManager, PickupPointManager* pointManager)
 {
+	// リストの初期化
+	objects_.clear();
+
+	// 座標
 	Vector3 worldPosition = owner_->GetWorldTransformAdress()->GetWorldPosition();
 	// 一番近いポイント（生成箇所）
 	IPickupPoint* nearPoint = pointManager->FindNearPoint(worldPosition);

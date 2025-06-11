@@ -89,10 +89,16 @@ private:
 	/// </summary>
 	void OnCatchFailure();
 
-	//// 取り外し・持つ
-	//void DetachAndHold();
-	//// 拾う
-	//void PickUpDroppedPart();
+	/// <summary>
+	/// 置く処理
+	/// </summary>
+	void DropPart();
+
+	/// <summary>
+	/// パーツをドロップ（その場に置くか判断）
+	/// </summary>
+	/// <returns></returns>
+	bool ShouldDropPart();
 
 private:
 	// 
