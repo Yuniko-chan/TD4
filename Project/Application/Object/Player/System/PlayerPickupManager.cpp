@@ -1,6 +1,8 @@
 #include "PlayerPickupManager.h"
 
 #include "../Player.h"
+//#include "PickUp/PartJudgeSystem.h"
+
 #include "../../Car/CarLists.h"
 #include "../../Car/Manager/VehiclePartsManager.h"
 #include "../../Car/Manager/PickupPointManager.h"
@@ -11,6 +13,12 @@
 
 PlayerPickupManager::PlayerPickupManager()
 {
+}
+
+void PlayerPickupManager::Initialize()
+{
+	judgeSystem_ = std::make_unique<PartJudgeSystem>();
+	judgeSystem_->SetOwner(owner_);
 }
 
 void PlayerPickupManager::Update()
@@ -85,8 +93,8 @@ void PlayerPickupManager::InteractParts()
 	// 掴む
 	else {
 		// ここに今後アルゴリズムを追加する
-		RemovalAction();
-		//CatchAction();
+		//RemovalAction();
+		CatchAction();
 	}
 
 	// インタラクトキーを連打できないように
@@ -141,125 +149,141 @@ void PlayerPickupManager::ReleaseAction()
 
 void PlayerPickupManager::CatchAction()
 {
+	// 検索処理
+	Car::IParts* interactPart = judgeSystem_->GetCatchPart(partsManager_, pickupPointManager_);
+
+	// パーツが見つかれば
+	if (interactPart) {
+		OnPartCatchSuccess(interactPart);
+	}
+
+	
 	// 返すポインタ
 	//Car::IParts* resultPart = nullptr;
-	// ワールド座標
-	Vector3 worldPosition = owner_->GetWorldTransformAdress()->GetWorldPosition();
-	// 一番近いポイント（生成箇所）
-	IPickupPoint* nearPoint = pickupPointManager_->FindNearPoint(worldPosition);
-	// 一番近いパーツ
-	Car::IParts* nearParts = partsManager_->FindRootNonCoreParts(worldPosition);
-	// 自分のコア
-	Car::IParts* nearCore = (partsManager_->FindNearCoreParts(worldPosition));
-	bool isEmpty = static_cast<VehicleCore*>(nearCore)->GetConstructionSystem()->IsEmpty();
+	//// ワールド座標
+	//Vector3 worldPosition = owner_->GetWorldTransformAdress()->GetWorldPosition();
+	//// 一番近いポイント（生成箇所）
+	//IPickupPoint* nearPoint = pickupPointManager_->FindNearPoint(worldPosition);
+	//// 一番近いパーツ
+	//Car::IParts* nearParts = partsManager_->FindRootNonCoreParts(worldPosition);
+	//// 自分のコア
+	//Car::IParts* nearCore = (partsManager_->FindNearCoreParts(worldPosition));
+	//bool isEmpty = static_cast<VehicleCore*>(nearCore)->GetConstructionSystem()->IsEmpty();
 
-	// コアに子がない場合
-	if ((isEmpty && nearCore) && nearParts && nearPoint) {
-		// 方向
-		const Vector3 toCoreDirect = nearCore->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
-		// 前方チェック
-		bool isFrontCore = owner_->GetFrontChecker()->FrontCheck(toCoreDirect);
-		float toCore = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
-			nearCore->GetWorldTransformAdress()->GetWorldPosition());
+	//// コアに付けている中で一番近いパーツを検索
+	//Car::IParts* nearDockingPart = nullptr;
+	//if (owner_->GetCore()) {
+	//	nearDockingPart = owner_->GetCore()->GetConstructionSystem()->FindNearPart(owner_->GetWorldTransformAdress()->GetWorldPosition());
+	//}
 
-		// 方向
-		const Vector3 toPointDirect = nearPoint->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
-		// 前方チェック
-		bool isFrontPoint = owner_->GetFrontChecker()->FrontCheck(toPointDirect);
-		float toPoint = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
-			nearPoint->GetWorldTransformAdress()->GetWorldPosition());
 
-		// パーツ
-		const Vector3 toPartDirect = nearParts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
-		bool isFrontParts = owner_->GetFrontChecker()->FrontCheck(toPartDirect);
-		float toPart = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
-			nearParts->GetWorldTransformAdress()->GetWorldPosition());
+	//// コアに子がない場合
+	//if ((isEmpty && nearCore) && nearParts && nearPoint) {
+	//	// 方向
+	//	const Vector3 toCoreDirect = nearCore->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+	//	// 前方チェック
+	//	bool isFrontCore = owner_->GetFrontChecker()->FrontCheck(toCoreDirect);
+	//	float toCore = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
+	//		nearCore->GetWorldTransformAdress()->GetWorldPosition());
 
-		// ポイントが一番近い
-		if ((toPoint < toPart && toPoint < toCore) && isFrontPoint) {
-			if (!pickupPointManager_->IsAccept(worldPosition)) {
-				return;
-			}
-			// パーツ取得
-			nearParts = pickupPointManager_->AttemptPartAcquisition();
-			// 拾う処理
-			OnPartCatchSuccess(nearParts);
-		}
-		// パーツが一番近い
-		else if ((toPart < toPoint && toPart < toCore) && isFrontParts) {
-			OnPartCatchSuccess(nearParts);
-		}
-		// コアが一番近い
-		else if ((toCore < toPoint && toCore < toPart) && isFrontCore) {
-			OnPartCatchSuccess(nearCore);
-		}
-	}
+	//	// 方向
+	//	const Vector3 toPointDirect = nearPoint->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+	//	// 前方チェック
+	//	bool isFrontPoint = owner_->GetFrontChecker()->FrontCheck(toPointDirect);
+	//	float toPoint = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
+	//		nearPoint->GetWorldTransformAdress()->GetWorldPosition());
 
-	// 両方あれば
-	else if (nearParts && nearPoint) {
-		// 方向
-		const Vector3 toPointDirect = nearPoint->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
-		// 前方チェック
-		bool isFrontPoint = owner_->GetFrontChecker()->FrontCheck(toPointDirect);
-		float toPoint = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
-			nearPoint->GetWorldTransformAdress()->GetWorldPosition());
-		
-		// パーツ
-		const Vector3 toPartDirect = nearParts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
-		bool isFrontParts = owner_->GetFrontChecker()->FrontCheck(toPartDirect);
-		float toPart = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
-			nearParts->GetWorldTransformAdress()->GetWorldPosition());
+	//	// パーツ
+	//	const Vector3 toPartDirect = nearParts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+	//	bool isFrontParts = owner_->GetFrontChecker()->FrontCheck(toPartDirect);
+	//	float toPart = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
+	//		nearParts->GetWorldTransformAdress()->GetWorldPosition());
 
-		// ポイントの方が近ければ
-		if (toPoint < toPart && isFrontPoint) {
-			if (!pickupPointManager_->IsAccept(worldPosition)) {
-				return;
-			}
-			// パーツ取得
-			nearParts = pickupPointManager_->AttemptPartAcquisition();
-			// 拾う処理
-			OnPartCatchSuccess(nearParts);
-		}
-		// パーツの方が近ければ
-		else if(isFrontParts) {
-			OnPartCatchSuccess(nearParts);
-		}
+	//	// ポイントが一番近い
+	//	if ((toPoint < toPart && toPoint < toCore) && isFrontPoint) {
+	//		if (!pickupPointManager_->IsAccept(worldPosition)) {
+	//			return;
+	//		}
+	//		// パーツ取得
+	//		nearParts = pickupPointManager_->AttemptPartAcquisition();
+	//		// 拾う処理
+	//		OnPartCatchSuccess(nearParts);
+	//	}
+	//	// パーツが一番近い
+	//	else if ((toPart < toPoint && toPart < toCore) && isFrontParts) {
+	//		OnPartCatchSuccess(nearParts);
+	//	}
+	//	// コアが一番近い
+	//	else if ((toCore < toPoint && toCore < toPart) && isFrontCore) {
+	//		OnPartCatchSuccess(nearCore);
+	//	}
+	//}
 
-	}
-	// パーツしかなければ
-	else if (nearParts) {
-		// 前方チェック
-		const Vector3 toPartDirect = nearParts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
-		bool isFrontParts = owner_->GetFrontChecker()->FrontCheck(toPartDirect);
-		if (!isFrontParts) {
-			return;
-		}
-		OnPartCatchSuccess(nearParts);
-	}
-	// ポイントしかなければ
-	else if (nearPoint) {
-		// 前方チェック
-		const Vector3 toPointDirect = nearPoint->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
-		bool isFrontPoint = owner_->GetFrontChecker()->FrontCheck(toPointDirect);
-		if (!isFrontPoint) {
-			return;
-		}
-		if (!pickupPointManager_->IsAccept(worldPosition)) {
-			return;
-		}
-		nearParts = pickupPointManager_->AttemptPartAcquisition();
-		OnPartCatchSuccess(nearParts);
-	}
+	//// 両方あれば
+	//else if (nearParts && nearPoint) {
+	//	// 方向
+	//	const Vector3 toPointDirect = nearPoint->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+	//	// 前方チェック
+	//	bool isFrontPoint = owner_->GetFrontChecker()->FrontCheck(toPointDirect);
+	//	float toPoint = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
+	//		nearPoint->GetWorldTransformAdress()->GetWorldPosition());
+	//	
+	//	// パーツ
+	//	const Vector3 toPartDirect = nearParts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+	//	bool isFrontParts = owner_->GetFrontChecker()->FrontCheck(toPartDirect);
+	//	float toPart = TransformHelper::Vector3Distance(owner_->GetWorldTransformAdress()->GetWorldPosition(),
+	//		nearParts->GetWorldTransformAdress()->GetWorldPosition());
 
-	else if ((isEmpty && nearCore)) {
-		// 前方チェック
-		const Vector3 toCoreDirect = nearCore->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
-		bool isFront = owner_->GetFrontChecker()->FrontCheck(toCoreDirect);
-		if (!isFront) {
-			return;
-		}
-		OnPartCatchSuccess(nearCore);
-	}
+	//	// ポイントの方が近ければ
+	//	if (toPoint < toPart && isFrontPoint) {
+	//		if (!pickupPointManager_->IsAccept(worldPosition)) {
+	//			return;
+	//		}
+	//		// パーツ取得
+	//		nearParts = pickupPointManager_->AttemptPartAcquisition();
+	//		// 拾う処理
+	//		OnPartCatchSuccess(nearParts);
+	//	}
+	//	// パーツの方が近ければ
+	//	else if(isFrontParts) {
+	//		OnPartCatchSuccess(nearParts);
+	//	}
+
+	//}
+	//// パーツしかなければ
+	//else if (nearParts) {
+	//	// 前方チェック
+	//	const Vector3 toPartDirect = nearParts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+	//	bool isFrontParts = owner_->GetFrontChecker()->FrontCheck(toPartDirect);
+	//	if (!isFrontParts) {
+	//		return;
+	//	}
+	//	OnPartCatchSuccess(nearParts);
+	//}
+	//// ポイントしかなければ
+	//else if (nearPoint) {
+	//	// 前方チェック
+	//	const Vector3 toPointDirect = nearPoint->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+	//	bool isFrontPoint = owner_->GetFrontChecker()->FrontCheck(toPointDirect);
+	//	if (!isFrontPoint) {
+	//		return;
+	//	}
+	//	if (!pickupPointManager_->IsAccept(worldPosition)) {
+	//		return;
+	//	}
+	//	nearParts = pickupPointManager_->AttemptPartAcquisition();
+	//	OnPartCatchSuccess(nearParts);
+	//}
+
+	//else if ((isEmpty && nearCore)) {
+	//	// 前方チェック
+	//	const Vector3 toCoreDirect = nearCore->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+	//	bool isFront = owner_->GetFrontChecker()->FrontCheck(toCoreDirect);
+	//	if (!isFront) {
+	//		return;
+	//	}
+	//	OnPartCatchSuccess(nearCore);
+	//}
 }
 
 void PlayerPickupManager::RemovalAction()

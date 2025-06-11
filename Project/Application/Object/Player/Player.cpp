@@ -153,12 +153,13 @@ void Player::SystemInitialize()
 
 	// ステート
 	stateMachine_ = std::make_unique<PlayerStateMachine>();
-	stateMachine_->Initialize();
 	stateMachine_->SetOwner(this);
+	stateMachine_->Initialize();
 
 	// ピックアップ
 	pickUpManager_ = std::make_unique<PlayerPickupManager>();
 	pickUpManager_->SetOwner(this);
+	pickUpManager_->Initialize();
 
 	// 
 	frontChecker_.SetOwner(this);

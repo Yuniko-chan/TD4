@@ -197,6 +197,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\CustomArea\CustomArea.cpp" />
     <ClCompile Include="Application\Object\Gimmick\Minigun\MinigunAnimation.cpp" />
     <ClCompile Include="Application\Object\Player\Animation\PlayerAnimation.cpp" />
+    <ClCompile Include="Application\Object\Player\System\PickUp\PartJudgeSystem.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp" />
     <ClCompile Include="Application\Object\Car\System\VehicleEngine.cpp" />
     <ClCompile Include="Application\Object\Car\System\VehicleHandling.cpp" />
