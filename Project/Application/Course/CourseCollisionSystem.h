@@ -51,9 +51,9 @@ private: // メンバ定数
 		// 座標軸方向の長さの半分
 		Vector3 size;
 		// 座標軸
-		Vector3 otientatuonsX;
-		Vector3 otientatuonsY;
-		Vector3 otientatuonsZ;
+		Vector3 planeYZ;
+		Vector3 planeXZ;
+		Vector3 planeXY;
 	};
 
 	/// <summary>
