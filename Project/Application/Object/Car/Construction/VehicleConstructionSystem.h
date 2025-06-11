@@ -41,6 +41,12 @@ public:
 	bool Attach(Car::IParts* parts);
 
 	/// <summary>
+	/// 解除
+	/// </summary>
+	/// <param name="parts"></param>
+	void Detach(Car::IParts* parts);
+
+	/// <summary>
 	/// 任意指定でのくっつけ処理
 	/// </summary>
 	/// <param name="parts"></param>
@@ -54,21 +60,20 @@ public:
 	/// <returns></returns>
 	Car::IParts* FindNearPart(const Vector3& point);
 
-	/// <summary>
-	/// 解除
-	/// </summary>
-	/// <param name="parts"></param>
-	void Detach(Car::IParts* parts);
 
-private:
+private: // 指定して設定OR解除
 	/// <summary>
 	/// 接続
 	/// </summary>
 	/// <param name="parts"></param>
 	void Attach(Car::IParts* parts, const Vector2Int& key);
-
+	/// <summary>
+	/// 解除
+	/// </summary>
+	/// <param name="it"></param>
 	void Detach(std::map<Vector2Int, Car::IParts*>::iterator it);
 
+private: // 検索
 	/// <summary>
 	/// 検索
 	/// </summary>
@@ -77,7 +82,14 @@ private:
 	/// <returns></returns>
 	Car::IParts* FindPreNumber(std::list<std::pair<int, Car::IParts*>>* directLists, int32_t number);
 
+	/// <summary>
+	/// ポインタから検索
+	/// </summary>
+	/// <param name="parts"></param>
+	/// <returns></returns>
 	Car::IParts* FindParts(Car::IParts* parts);
+
+private: // 登録・解除
 	/// <summary>
 	/// パーツの登録処理
 	/// </summary>

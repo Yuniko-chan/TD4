@@ -141,10 +141,9 @@ void PlayerPickupManager::ReleaseAction()
 
 void PlayerPickupManager::CatchAction()
 {
-	//// falseなら受付失敗
-	//if (!pickupPointManager_->IsAccept(owner_->GetWorldTransformAdress()->GetWorldPosition())) {
-	//	return;
-	//}
+	// 返すポインタ
+	//Car::IParts* resultPart = nullptr;
+	// ワールド座標
 	Vector3 worldPosition = owner_->GetWorldTransformAdress()->GetWorldPosition();
 	// 一番近いポイント（生成箇所）
 	IPickupPoint* nearPoint = pickupPointManager_->FindNearPoint(worldPosition);
@@ -194,18 +193,6 @@ void PlayerPickupManager::CatchAction()
 		else if ((toCore < toPoint && toCore < toPart) && isFrontCore) {
 			OnPartCatchSuccess(nearCore);
 		}
-
-		//// ポイントの方が近ければ
-		//if (toPoint < toPart && isFrontPoint) {
-		//	// パーツ取得
-		//	nearParts = pickupPointManager_->AttemptPartAcquisition();
-		//	// 拾う処理
-		//	OnPartCatchSuccess(nearParts);
-		//}
-		//// パーツの方が近ければ
-		//else if (isFrontParts) {
-		//	OnPartCatchSuccess(nearParts);
-		//}
 	}
 
 	// 両方あれば

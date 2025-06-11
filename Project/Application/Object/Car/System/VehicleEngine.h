@@ -1,8 +1,10 @@
 #pragma once
 #include "../../Utility/Timer/FrameTimer.h"
 #include "../../KeyConfig/GameKeyconfig.h"
-#include "../../../Engine/Math/Vector/Vector3.h"
+#include "../../../Engine/3D/Transform/WorldTransform.h"
 #include <cstdint>
+
+class VehicleStatus;
 
 class VehicleEngine
 {
@@ -26,9 +28,15 @@ public:
 	/// デバッグ用の
 	/// </summary>
 	void ImGuiDraw();
+private:
+	/// <summary>
+	/// 速度計算
+	/// </summary>
+	void SpeedCalculation();
 
 public: // アクセッサ
 	//---セッター---//
+	void SetStatus(VehicleStatus* status) { status_ = status; }
 
 	//---ゲッター---//
 	float GetSpeedRatio() const { return speedRatio_; }
@@ -49,4 +57,8 @@ private:
 	float currentSpeed_ = 0.0f;
 	// オイラー
 	float eulerY_ = 0.0f;
+private:
+	// コアのステータス
+	VehicleStatus* status_ = nullptr;
+
 };

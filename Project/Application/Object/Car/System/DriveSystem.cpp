@@ -15,7 +15,11 @@ DriveSystem::DriveSystem()
 
 void DriveSystem::Initialize()
 {
+	// ハンドルクラス
 	handling_->SetOwner(owner_);
+
+	// エンジングラス
+	driveEngine_->SetStatus(status_);
 }
 
 void DriveSystem::Update()

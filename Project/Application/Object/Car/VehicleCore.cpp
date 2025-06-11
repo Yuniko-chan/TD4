@@ -52,8 +52,8 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	// 運転クラス
 	driveSystem_ = std::make_unique<DriveSystem>();
 	driveSystem_->SetOwner(this);
-	driveSystem_->Initialize();
 	driveSystem_->SetStatusManager(statusSystem_.get());
+	driveSystem_->Initialize();
 
 	animation_ = std::make_unique<VehicleAnimation>();
 	animation_->Initialize(model_);
