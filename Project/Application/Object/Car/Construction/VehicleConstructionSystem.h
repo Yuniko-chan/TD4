@@ -67,6 +67,8 @@ private:
 	/// <param name="parts"></param>
 	void Attach(Car::IParts* parts, const Vector2Int& key);
 
+	void Detach(std::map<Vector2Int, Car::IParts*>::iterator it);
+
 	/// <summary>
 	/// 検索
 	/// </summary>

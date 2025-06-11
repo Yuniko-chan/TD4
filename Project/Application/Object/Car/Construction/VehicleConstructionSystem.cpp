@@ -13,14 +13,10 @@ void VehicleConstructionSystem::Initialize()
 void VehicleConstructionSystem::Update()
 {
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
+		// 見つかった場合抜ける
 		if ((*it).second->GetIsDelete()) {
-			// 解除処理
-			UnRegistParts((*it).first, (*it).second);
-			// ステータス側からも削除
-			status_->ApplyPartRemove((*it).second->GetClassNameString(), (*it).first);
-			// HPの初期化
-			(*it).second->GetHPHandler()->Initialize();
-			it = partsMapping_.erase(it);
+			// 外す処理
+			Detach(it);
 			break;
 		}
 	}
@@ -174,6 +170,18 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 
 }
 
+void VehicleConstructionSystem::Detach(std::map<Vector2Int, Car::IParts*>::iterator it)
+{
+	// 解除処理
+	UnRegistParts((*it).first, (*it).second);
+	// ステータス側からも削除
+	status_->ApplyPartRemove((*it).second->GetClassNameString(), (*it).first);
+	// HPの初期化
+	(*it).second->GetHPHandler()->Initialize();
+	// リストから外す
+	it = partsMapping_.erase(it);
+}
+
 void VehicleConstructionSystem::Detach(Car::IParts* parts)
 {
 	// 検索
@@ -183,14 +191,8 @@ void VehicleConstructionSystem::Detach(Car::IParts* parts)
 		if ((*it).second == parts) {
 			// 外すためのフラグ処理
 			(*it).second->SetIsDelete(true);
-			// 解除処理
-			UnRegistParts((*it).first, (*it).second);
-			// ステータス側からも削除
-			status_->ApplyPartRemove((*it).second->GetClassNameString(), (*it).first);
-			// HPの初期化
-			(*it).second->GetHPHandler()->Initialize();
-			// リストから外す
-			it = partsMapping_.erase(it);
+			// 共通の外す処理
+			Detach(it);
 			return;
 		}
 	}
