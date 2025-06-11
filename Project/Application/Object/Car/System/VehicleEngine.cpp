@@ -10,14 +10,13 @@ void VehicleEngine::Update()
 	const int timming = 10;
 	const int maxReception = 10;
 
-	int tireCount = status_->GetTire();
 	// アクセルキーか受付連続値があれば
 	if ((isAccel_ || isDecel_) || consecutiveReceptions_ != 0) {
 		inputCounter_++;
 	}
 
 	// 加速減速（タイヤが無ければ加速減速の処理を受け付けない）
-	if (inputCounter_ % timming == 0 && (tireCount != 0)) {
+	if (inputCounter_ % timming == 0) {
 		if (isAccel_) {
 			consecutiveReceptions_++;
 		}
@@ -54,9 +53,18 @@ void VehicleEngine::Reset()
 
 void VehicleEngine::EngineAccept(GameKeyconfig* keyConfig)
 {
+		
 	isAccel_ = keyConfig->GetConfig()->accel;
 	isDecel_ = keyConfig->GetConfig()->brake;
-	
+
+	// タイヤの数
+	int tireCount = status_->GetTire();
+	// タイヤがなければ入力を削除
+	if (tireCount <= 0) {
+		isAccel_ = false;
+		isDecel_ = false;
+	}
+
 }
 
 void VehicleEngine::ImGuiDraw()
