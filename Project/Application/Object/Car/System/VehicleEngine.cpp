@@ -85,10 +85,16 @@ void VehicleEngine::ImGuiDraw()
 void VehicleEngine::SpeedCalculation()
 {
 	// スピード用のレシオ計算
-	const float kPlusRate = 3.0f;
+	const float kMaxRate = 10.0f;	// 最大
+	const float kMinRate = 1.0f;	// 最小
+	const float kEngineMax = 10.0f;	// エンジンの最大数
+	// レート
+	float t = (std::clamp((float)status_->GetEngine(),0.0f, 9.0f) + 1.0f ) / kEngineMax;
+	// 乗算レート
+	float plusRate = Ease::Easing(Ease::EaseName::Lerp, kMinRate, kMaxRate, t);
 	// エンジンが回転している場合
 	if (consecutiveReceptions_ != 0) {
-		speedRatio_ = (float)consecutiveReceptions_ * (kPlusRate);
+		speedRatio_ = (float)consecutiveReceptions_ * (plusRate);
 	}
 	// エンジンが回転していない場合
 	else {

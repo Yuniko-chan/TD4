@@ -44,6 +44,8 @@ public:	// アクセッサ
 	int GetRightWheel() const { return wheelRight_; }
 	// タイヤの数
 	int GetTire() const { return partsTypes_.tire; }
+	// エンジン数
+	int GetEngine() const { return partsTypes_.engine; }
 private:
 	float weight_ = 1.0f;
 	float speed_ = 1.0f;
