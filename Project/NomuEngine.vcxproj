@@ -257,6 +257,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\3D\Line\DrawLine.cpp" />
     <ClCompile Include="Engine\3D\Fog\FogManager.cpp" />
     <ClCompile Include="Engine\3D\ManyObjects\LargeNumberOfObjects.cpp" />
+    <ClCompile Include="Engine\3D\Model\InstancingDrawing.cpp" />
     <ClCompile Include="Engine\3D\Model\Mesh.cpp" />
     <ClCompile Include="Engine\3D\Model\ModelDraw.cpp" />
     <ClCompile Include="Engine\3D\Model\ModelLoaderFromCourseEX.cpp" />
@@ -530,6 +531,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\2D\ImGuiManager.h" />
     <ClInclude Include="Engine\2D\SpriteForGPU.h" />
     <ClInclude Include="Engine\2D\SpriteVertex.h" />
+    <ClInclude Include="Engine\3D\Model\InstancingDrawing.h" />
     <ClInclude Include="Engine\3D\Vertex\ColorVertexData.h" />
     <ClInclude Include="Engine\3D\Line\DrawLine.h" />
     <ClInclude Include="Engine\3D\Fog\FogData.h" />
@@ -607,6 +609,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\Math\ShortestDistance.h" />
     <ClInclude Include="Engine\Object\AbstractObjectFactory.h" />
     <ClInclude Include="Engine\Object\BaseObjectManager.h" />
+    <ClInclude Include="Engine\3D\Model\InstancingDrawingData.h" />
     <ClInclude Include="Engine\Object\IObject.h" />
     <ClInclude Include="Engine\Object\MeshObject.h" />
     <ClInclude Include="Engine\Particle\BillBoardMatrix.h" />
