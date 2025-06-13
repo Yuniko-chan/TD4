@@ -1,11 +1,6 @@
 #pragma once
-#include "../../../Utility/Common/OwnerComponent.h"
-#include "../../../Utility/Math/Vector2Int.h"
-#include "../../../Engine/Math/Vector/Vector3.h"
-#include <list>
-#include <unordered_map>
+#include "../VehicleSystemCommons.h"
 #include <map>
-#include <string>
 #include <utility>
 
 namespace Car { class IParts; }

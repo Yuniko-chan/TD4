@@ -8,4 +8,7 @@ class PartsOffsetCalculator
 public:
 	// オフセット計算
 	Vector3 GetOffset(const Vector2Int& id);
+
+	// ドットダメージ計算
+	float GetDotDamage();
 };

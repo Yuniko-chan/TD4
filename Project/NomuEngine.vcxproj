@@ -433,7 +433,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Car\PickupPoint\User\TirePickupPoint.h" />
     <ClInclude Include="Application\Object\Car\Preset\VehiclePaths.h" />
     <ClInclude Include="Application\Object\Car\Preset\VehiclePresetCreator.h" />
+    <ClInclude Include="Application\Object\Car\System\Damage\OverheatSystem.h" />
     <ClInclude Include="Application\Object\Car\System\Drive\DriveSystem.h" />
+    <ClInclude Include="Application\Object\Car\System\VehicleSystemCommons.h" />
     <ClInclude Include="Application\Object\CustomArea\CustomArea.h" />
     <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunAnimation.h" />
     <ClInclude Include="Application\Object\Player\System\PickUp\PartJudgeSystem.h" />

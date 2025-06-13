@@ -1,8 +1,6 @@
 #pragma once
-#include "../../../Engine/3D/Transform/WorldTransform.h"
-#include "../../../Utility/Common/OwnerComponent.h"
+#include "../VehicleSystemCommons.h"
 #include "../../System/VehicleSystems.h"
-#include <memory>
 
 class VehicleCore;
 class VehicleStatus;

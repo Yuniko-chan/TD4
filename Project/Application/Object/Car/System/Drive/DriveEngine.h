@@ -1,9 +1,5 @@
 #pragma once
-#include "../../../Utility/Timer/FrameTimer.h"
-#include "../../../KeyConfig/GameKeyconfig.h"
-#include "../../../Utility/Common/OwnerComponent.h"
-#include "../../../Engine/3D/Transform/WorldTransform.h"
-#include <cstdint>
+#include "../VehicleSystemCommons.h"
 
 class VehicleStatus;
 class VehicleCore;
