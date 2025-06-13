@@ -10,7 +10,7 @@ class VehicleStatus;
 // 入力フラグ（前、現在）
 using InputFlag = std::pair<bool, bool>;
 
-class VehicleHandling : public OwnerComponent<VehicleCore>
+class DriveHandling : public OwnerComponent<VehicleCore>
 {
 public:
 	/// <summary>

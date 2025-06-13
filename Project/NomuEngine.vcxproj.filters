@@ -970,10 +970,10 @@
     <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Car\System\VehicleEngine.cpp">
+    <ClCompile Include="Application\Object\Car\System\DriveEngine.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Car\System\VehicleHandling.cpp">
+    <ClCompile Include="Application\Object\Car\System\DriveHandling.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Car\System\VehicleStatus.cpp">
@@ -1914,7 +1914,7 @@
     <ClInclude Include="Application\Object\Car\System\VehicleSystems.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\VehicleEngine.h">
+    <ClInclude Include="Application\Object\Car\System\DriveEngine.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Utility\Calc\VehicleCaluclator.h">
@@ -1923,22 +1923,13 @@
     <ClInclude Include="Application\Object\Car\System\DriveSystem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\User\UserDriver.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\User\AutoDriver.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\User\InterfaceDriver.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Application\Object\Terrain\TerrainObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Utility\GlobalParameterStructs.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\VehicleHandling.h">
+    <ClInclude Include="Application\Object\Car\System\DriveHandling.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Camera\OverheadCamera.h">

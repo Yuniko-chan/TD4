@@ -4,9 +4,9 @@
 // 速度計算
 #include "../../Utility/Calc/VehicleCaluclator.h"
 // エンジンのシステム
-#include "VehicleEngine.h"
+#include "DriveEngine.h"
 // ハンドルのシステム
-#include "VehicleHandling.h"
+#include "DriveHandling.h"
 // 運転関係をまとめるシステム
 #include "DriveSystem.h"
 // アニメーションシステム

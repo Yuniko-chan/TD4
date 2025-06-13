@@ -1,12 +1,14 @@
 #pragma once
 #include "../../Utility/Timer/FrameTimer.h"
 #include "../../KeyConfig/GameKeyconfig.h"
+#include "../../Utility/Common/OwnerComponent.h"
 #include "../../../Engine/3D/Transform/WorldTransform.h"
 #include <cstdint>
 
 class VehicleStatus;
+class VehicleCore;
 
-class VehicleEngine
+class DriveEngine : public OwnerComponent<VehicleCore>
 {
 public:
 	/// <summary>
@@ -34,10 +36,13 @@ private:
 	/// </summary>
 	void SpeedCalculation();
 
-public: // アクセッサ
-	//---セッター---//
-	void SetStatus(VehicleStatus* status) { status_ = status; }
+	/// <summary>
+	/// 速度出しすぎた時のやつ
+	/// </summary>
+	/// <param name="SpeedPercentage"></param>
+	void OverheatProcess(const float& SpeedPercentage);
 
+public: // アクセッサ
 	//---ゲッター---//
 	float GetSpeedRatio() const { return speedRatio_; }
 	float GetCurrentSpeed() const { return currentSpeed_; }
@@ -58,7 +63,6 @@ private:
 	// オイラー
 	float eulerY_ = 0.0f;
 private:
-	// コアのステータス
-	VehicleStatus* status_ = nullptr;
+
 
 };

@@ -8,9 +8,9 @@
 DriveSystem::DriveSystem()
 {
 	// エンジン
-	driveEngine_ = std::make_unique<VehicleEngine>();
+	driveEngine_ = std::make_unique<DriveEngine>();
 	// ハンドル
-	handling_ = std::make_unique<VehicleHandling>();
+	handling_ = std::make_unique<DriveHandling>();
 }
 
 void DriveSystem::Initialize()
@@ -19,7 +19,7 @@ void DriveSystem::Initialize()
 	handling_->SetOwner(owner_);
 
 	// エンジングラス
-	driveEngine_->SetStatus(status_);
+	driveEngine_->SetOwner(owner_);
 }
 
 void DriveSystem::Update()

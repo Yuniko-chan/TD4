@@ -1,10 +1,11 @@
-#include "VehicleEngine.h"
+#include "DriveEngine.h"
 #include "../../../Engine/Math/Ease.h"
 #include "../../../Engine/2D/ImguiManager.h"
 #include "../../Player/DebugData/PlayerDebugData.h"
 #include "VehicleSystems.h"
+#include "../VehicleCore.h"
 
-void VehicleEngine::Update()
+void DriveEngine::Update()
 {
 	// フレームカウント
 	const int timming = 10;
@@ -44,21 +45,21 @@ void VehicleEngine::Update()
 	SpeedCalculation();
 }
 
-void VehicleEngine::Reset()
+void DriveEngine::Reset()
 {
 	// 初期化
 	consecutiveReceptions_ = 0;
 
 }
 
-void VehicleEngine::EngineAccept(GameKeyconfig* keyConfig)
+void DriveEngine::EngineAccept(GameKeyconfig* keyConfig)
 {
 		
 	isAccel_ = keyConfig->GetConfig()->accel;
 	isDecel_ = keyConfig->GetConfig()->brake;
 
 	// タイヤの数
-	int tireCount = status_->GetTire();
+	int tireCount = owner_->GetStatus()->GetTire();
 	// タイヤがなければ入力を削除
 	if (tireCount <= 0) {
 		isAccel_ = false;
@@ -67,7 +68,7 @@ void VehicleEngine::EngineAccept(GameKeyconfig* keyConfig)
 
 }
 
-void VehicleEngine::ImGuiDraw()
+void DriveEngine::ImGuiDraw()
 {
 
 	if (ImGui::TreeNode("EngineInfo")) {
@@ -82,19 +83,25 @@ void VehicleEngine::ImGuiDraw()
 
 }
 
-void VehicleEngine::SpeedCalculation()
+void DriveEngine::SpeedCalculation()
 {
 	// スピード用のレシオ計算
 	const float kMaxRate = 10.0f;	// 最大
 	const float kMinRate = 1.0f;	// 最小
 	const float kEngineMax = 10.0f;	// エンジンの最大数
 	// レート
-	float t = (std::clamp((float)status_->GetEngine(),0.0f, 9.0f) + 1.0f ) / kEngineMax;
+	float engineCount = (float)owner_->GetStatus()->GetEngine();
+	float t = (std::clamp(engineCount, 0.0f, 9.0f) + 1.0f) / kEngineMax;
 	// 乗算レート
 	float plusRate = Ease::Easing(Ease::EaseName::Lerp, kMinRate, kMaxRate, t);
 	// エンジンが回転している場合
 	if (consecutiveReceptions_ != 0) {
+		// 速度計算
 		speedRatio_ = (float)consecutiveReceptions_ * (plusRate);
+
+		// 全体への影響（速度レートが一定を越えている場合オーバーヒート的な何か）
+		OverheatProcess(t);
+
 	}
 	// エンジンが回転していない場合
 	else {
@@ -118,4 +125,17 @@ void VehicleEngine::SpeedCalculation()
 	if (std::fabsf(currentSpeed_) <= discard) {
 		currentSpeed_ = 0.0f;
 	}
+}
+
+void DriveEngine::OverheatProcess(const float& SpeedPercentage)
+{
+	// 押し込みが半分以上かつ
+	const float speedLimit = 0.5f;
+	const float receptionLimit = 10 / 2;
+	if (SpeedPercentage >= speedLimit &&
+		std::abs(consecutiveReceptions_) >= receptionLimit) {
+		
+	}
+
+
 }

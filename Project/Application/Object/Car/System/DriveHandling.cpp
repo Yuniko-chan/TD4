@@ -1,4 +1,4 @@
-#include "VehicleHandling.h"
+#include "DriveHandling.h"
 #include "VehicleSystems.h"
 #include "../VehicleCore.h"
 #include "../../Utility/Calc/TransformHelper.h"
@@ -6,7 +6,7 @@
 #include "../../../Engine/Math/Ease.h"
 #include "../../../Engine/2D/ImguiManager.h"
 
-void VehicleHandling::HandleInput(const float inputX)
+void DriveHandling::HandleInput(const float inputX)
 {
 	// 前の入力保存
 	isRight_.first = isRight_.second;
@@ -33,7 +33,7 @@ void VehicleHandling::HandleInput(const float inputX)
 	}
 }
 
-void VehicleHandling::PreUpdate()
+void DriveHandling::PreUpdate()
 {
 	// カウント
 	if (IsInput() || consecutiveReceptions_ != 0) {
@@ -118,7 +118,7 @@ void VehicleHandling::PreUpdate()
 
 }
 
-void VehicleHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
+void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 {
 	// 速度が無く動いていなかったら
 	float length = Vector3::Length(velocity);
@@ -166,7 +166,7 @@ void VehicleHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	}
 }
 
-void VehicleHandling::ImGuiDraw()
+void DriveHandling::ImGuiDraw()
 {
 	ImGui::DragFloat3("Steer", &steerDirection_.x);
 }
