@@ -1,7 +1,7 @@
 #pragma once
 #include "../../../Engine/Math/Vector/Vector3.h"
 #include "../../../Utility/Math/Vector2Int.h"
-#include "../../Construction/VehicleConstructionSystem.h"
+#include "../../System/Construction/VehicleConstructionSystem.h"
 
 class PartsOffsetCalculator
 {

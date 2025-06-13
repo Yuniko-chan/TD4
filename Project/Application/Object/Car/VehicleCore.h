@@ -4,7 +4,6 @@
 
 #include "Parts/PartsInterface.h"
 #include "System/VehicleSystems.h"
-#include "Construction/VehicleConstructionSystem.h"
 
 class Player;
 

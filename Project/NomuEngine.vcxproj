@@ -179,7 +179,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Camera\FollowCamera.cpp" />
     <ClCompile Include="Application\Object\BaseCharacter\BaseCharacterAnimation.cpp" />
     <ClCompile Include="Application\Object\Car\Animation\VehicleAnimation.cpp" />
-    <ClCompile Include="Application\Object\Car\Construction\VehicleConstructionSystem.cpp" />
+    <ClCompile Include="Application\Object\Car\System\Construction\VehicleConstructionSystem.cpp" />
     <ClCompile Include="Application\Object\Car\Manager\PickupPointManager.cpp" />
     <ClCompile Include="Application\Object\Car\Manager\VehiclePartsManager.cpp" />
     <ClCompile Include="Application\Object\Car\Parts\Engine\EngineParts.cpp" />
@@ -417,7 +417,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Collider\CollisionConfig.h" />
     <ClInclude Include="Application\Object\BaseCharacter\BaseCharacterAnimation.h" />
     <ClInclude Include="Application\Object\Car\Animation\VehicleAnimation.h" />
-    <ClInclude Include="Application\Object\Car\Construction\VehicleConstructionSystem.h" />
+    <ClInclude Include="Application\Object\Car\System\Construction\VehicleConstructionSystem.h" />
     <ClInclude Include="Application\Object\Car\Manager\PickupPointManager.h" />
     <ClInclude Include="Application\Object\Car\Manager\VehiclePartsManager.h" />
     <ClInclude Include="Application\Object\Car\Parts\System\PartCollisionHandler.h" />

@@ -11,3 +11,5 @@
 #include "Drive/DriveSystem.h"
 // アニメーションシステム
 #include "../Animation/VehicleAnimation.h"
+// 構築システム
+#include "Construction/VehicleConstructionSystem.h"
