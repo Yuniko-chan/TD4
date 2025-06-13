@@ -20,6 +20,9 @@ void DriveSystem::Initialize()
 
 void DriveSystem::Update()
 {
+	// オーバーヒートフラグ初期化
+	status_->SetIsOverheat(false);
+
 	//---それぞれのシステム処理---//
 	// ハンドル処理
 	handling_->SetVehicleDirection(owner_->GetWorldTransformAdress()->direction_);

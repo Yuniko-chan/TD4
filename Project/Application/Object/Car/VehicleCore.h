@@ -67,6 +67,8 @@ private:
     std::unique_ptr<VehicleStatus> statusSystem_;
     // アニメーション
     std::unique_ptr<VehicleAnimation> animation_;
+    // オーバーヒート
+    std::unique_ptr<OverheatSystem> overheatSystem_;
 
     // ペアになるプレイヤーポインタ
     Player* pairPlayer_ = nullptr;

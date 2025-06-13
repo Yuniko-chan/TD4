@@ -43,6 +43,10 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	// ステータスクラス
 	statusSystem_ = std::make_unique<VehicleStatus>();
 
+	//
+	overheatSystem_ = std::make_unique<OverheatSystem>();
+	overheatSystem_->SetOwner(this);
+
 	// パーツ構築クラス
 	constructionSystem_ = std::make_unique<VehicleConstructionSystem>();
 	constructionSystem_->SetOwner(this);
@@ -67,11 +71,12 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 
 void VehicleCore::Update()
 {
-
 	// 接続管理
 	constructionSystem_->Update();
 	// 運転・移動処理
 	driveSystem_->Update();
+	// 
+	overheatSystem_->Update();
 	// アニメーション
 	animation_->Update();
 	// 基底

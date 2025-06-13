@@ -7,5 +7,9 @@ class OverheatSystem : public OwnerComponent<VehicleCore>
 {
 public:
 
+	void Update();
+
+	//void ImGuiDraw();
+
 
 };
