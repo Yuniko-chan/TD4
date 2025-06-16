@@ -44,6 +44,9 @@ void CourseCollisionSystem::Initialize()
 	// コア
 	vehicleCore_ = nullptr;
 
+	// テクスチャハンドル
+	roadAttributeTextureHandle_ = TextureManager::Load("Resources/Course/roadAttribute_.png", dxCommon_);
+
 }
 
 void CourseCollisionSystem::Execute()
@@ -222,10 +225,6 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 void CourseCollisionSystem::SetCourse(Course* course)
 {
 
-	// コース
-	course_ = course;
-	assert(course_);
-
 	// ポリゴンエリアに登録
 	int32_t x0 = 0, y0 = 0, z0 = 0;
 	int32_t x1 = 0, y1 = 0, z1 = 0;
@@ -235,10 +234,10 @@ void CourseCollisionSystem::SetCourse(Course* course)
 	Vector3 dividingValue = Vector3::Multiply(kPolygonAreasLength_, 1.0f / static_cast<float>(kPolygonAreasDiv_));
 
 	// コース中心のワールド座標
-	Vector3 worldPosition = course_->GetWorldTransformAdress()->GetWorldPosition();
+	Vector3 worldPosition = course->GetWorldTransformAdress()->GetWorldPosition();
 
 	// コースメッシュ分回す
-	std::vector<CoursePolygon>* polygons = course_->GetCoursePolygonsAdress();
+	std::vector<CoursePolygon>* polygons = course->GetCoursePolygonsAdress();
 	for (uint32_t i = 0; i < polygons->size(); ++i) {
 
 		// ポリゴン
@@ -276,6 +275,20 @@ void CourseCollisionSystem::SetCourse(Course* course)
 			polygonAreas[x2][y2][z2].push_back(polygon);
 		}
 
+	}
+
+}
+
+void CourseCollisionSystem::ClearCorse()
+{
+
+	// ポリゴンエリアをクリアする
+	for (size_t x = 0; x < kPolygonAreasDiv_; x++) {
+		for (size_t y = 0; y < kPolygonAreasDiv_; y++) {
+			for (size_t z = 0; z < kPolygonAreasDiv_; z++) {
+				polygonAreas[x][y][z].clear();
+			}
+		}
 	}
 
 }
@@ -367,9 +380,9 @@ void CourseCollisionSystem::BuffersInitialize()
 		buffers_[i].objectBuff_->Map(0, nullptr, reinterpret_cast<void**>(&(buffers_[i].objectMap_)));
 		// 頂点データを初期化
 		buffers_[i].objectMap_->center = { 0.0f,0.0f,0.0f };
-		buffers_[i].objectMap_->otientatuonsX = { 1.0f, 0.0f, 0.0f };
-		buffers_[i].objectMap_->otientatuonsY = { 0.0f, 1.0f, 0.0f };
-		buffers_[i].objectMap_->otientatuonsZ = { 0.0f, 0.0f, 1.0f };
+		buffers_[i].objectMap_->planeYZ = { 1.0f, 0.0f, 0.0f };
+		buffers_[i].objectMap_->planeXZ = { 0.0f, 1.0f, 0.0f };
+		buffers_[i].objectMap_->planeXY = { 0.0f, 0.0f, 1.0f };
 		buffers_[i].objectMap_->size = { 1.0f, 1.0f, 1.0f };
 		buffers_[i].objectMap_->indexMax = 0;
 
@@ -468,9 +481,9 @@ void CourseCollisionSystem::DistanceJudgment(CollisionObject object)
 	buffers_[collisionCheakNum_].objectMap_->center = obb.center_;
 	// 軸を送る時の代入
 	//軸反転応急措置byシマザキ
-	buffers_[collisionCheakNum_].objectMap_->otientatuonsX = { 0.0f, 0.5f, 0.5f };
-	buffers_[collisionCheakNum_].objectMap_->otientatuonsY = { 0.5f, 0.0f, 0.5f };
-	buffers_[collisionCheakNum_].objectMap_->otientatuonsZ = { 0.5f, 0.5f, 0.0f };
+	buffers_[collisionCheakNum_].objectMap_->planeYZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(obb.otientatuons_[0].x), 1.0f - std::fabs(obb.otientatuons_[0].y), 1.0f - std::fabs(obb.otientatuons_[0].z) });
+	buffers_[collisionCheakNum_].objectMap_->planeXZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(obb.otientatuons_[1].x), 1.0f - std::fabs(obb.otientatuons_[1].y), 1.0f - std::fabs(obb.otientatuons_[1].z) });
+	buffers_[collisionCheakNum_].objectMap_->planeXY = Vector3::Normalize(Vector3{ 1.0f - std::fabs(obb.otientatuons_[2].x), 1.0f - std::fabs(obb.otientatuons_[2].y), 1.0f - std::fabs(obb.otientatuons_[2].z) });
 
 	buffers_[collisionCheakNum_].objectMap_->size = obb.size_;
 
@@ -484,82 +497,82 @@ void CourseCollisionSystem::DistanceJudgment(CollisionObject object)
 
 	// 左 上 前
 	vertices[0] = {
-		(-objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
-			-objectData.size.z * objectData.otientatuonsZ.x),
-		(-objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
-			-objectData.size.z * objectData.otientatuonsZ.y),
-		(-objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
-			-objectData.size.z * objectData.otientatuonsZ.z)
+		(-objectData.size.x * objectData.planeYZ.x + objectData.size.y * objectData.planeXZ.x +
+			-objectData.size.z * objectData.planeXY.x),
+		(-objectData.size.x * objectData.planeYZ.y + objectData.size.y * objectData.planeXZ.y +
+			-objectData.size.z * objectData.planeXY.y),
+		(-objectData.size.x * objectData.planeYZ.z + objectData.size.y * objectData.planeXZ.z +
+			-objectData.size.z * objectData.planeXY.z)
 	};
 
 	// 左 上 後
 	vertices[1] = {
-		(-objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
-			objectData.size.z * objectData.otientatuonsZ.x),
-		(-objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
-			objectData.size.z * objectData.otientatuonsZ.y),
-		(-objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
-			objectData.size.z * objectData.otientatuonsZ.z)
+		(-objectData.size.x * objectData.planeYZ.x + objectData.size.y * objectData.planeXZ.x +
+			objectData.size.z * objectData.planeXY.x),
+		(-objectData.size.x * objectData.planeYZ.y + objectData.size.y * objectData.planeXZ.y +
+			objectData.size.z * objectData.planeXY.y),
+		(-objectData.size.x * objectData.planeYZ.z + objectData.size.y * objectData.planeXZ.z +
+			objectData.size.z * objectData.planeXY.z)
 	};
 
 	// 右 上 前
 	vertices[2] = {
-		(objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
-			-objectData.size.z * objectData.otientatuonsZ.x),
-		(objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
-			-objectData.size.z * objectData.otientatuonsZ.y),
-		(objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
-			-objectData.size.z * objectData.otientatuonsZ.z)
+		(objectData.size.x * objectData.planeYZ.x + objectData.size.y * objectData.planeXZ.x +
+			-objectData.size.z * objectData.planeXY.x),
+		(objectData.size.x * objectData.planeYZ.y + objectData.size.y * objectData.planeXZ.y +
+			-objectData.size.z * objectData.planeXY.y),
+		(objectData.size.x * objectData.planeYZ.z + objectData.size.y * objectData.planeXZ.z +
+			-objectData.size.z * objectData.planeXY.z)
 	};
 
 	// 右 上 後
 	vertices[3] = {
-		(objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
-			objectData.size.z * objectData.otientatuonsZ.x),
-		(objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
-			objectData.size.z * objectData.otientatuonsZ.y),
-		(objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
-			objectData.size.z * objectData.otientatuonsZ.z)
+		(objectData.size.x * objectData.planeYZ.x + objectData.size.y * objectData.planeXZ.x +
+			objectData.size.z * objectData.planeXY.x),
+		(objectData.size.x * objectData.planeYZ.y + objectData.size.y * objectData.planeXZ.y +
+			objectData.size.z * objectData.planeXY.y),
+		(objectData.size.x * objectData.planeYZ.z + objectData.size.y * objectData.planeXZ.z +
+			objectData.size.z * objectData.planeXY.z)
 	};
 
 	// 左 下 前
 	vertices[4] = {
-		(-objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
-			-objectData.size.z * objectData.otientatuonsZ.x),
-		(-objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
-			-objectData.size.z * objectData.otientatuonsZ.y),
-		(-objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
-			-objectData.size.z * objectData.otientatuonsZ.z)
+		(-objectData.size.x * objectData.planeYZ.x + -objectData.size.y * objectData.planeXZ.x +
+			-objectData.size.z * objectData.planeXY.x),
+		(-objectData.size.x * objectData.planeYZ.y + -objectData.size.y * objectData.planeXZ.y +
+			-objectData.size.z * objectData.planeXY.y),
+		(-objectData.size.x * objectData.planeYZ.z + -objectData.size.y * objectData.planeXZ.z +
+			-objectData.size.z * objectData.planeXY.z)
 	};
 
 	// 左 下 後
 	vertices[5] = {
-		(-objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
-			objectData.size.z * objectData.otientatuonsZ.x),
-		(-objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
-			objectData.size.z * objectData.otientatuonsZ.y),
-		(-objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
-			objectData.size.z * objectData.otientatuonsZ.z)
+		(-objectData.size.x * objectData.planeYZ.x + -objectData.size.y * objectData.planeXZ.x +
+			objectData.size.z * objectData.planeXY.x),
+		(-objectData.size.x * objectData.planeYZ.y + -objectData.size.y * objectData.planeXZ.y +
+			objectData.size.z * objectData.planeXY.y),
+		(-objectData.size.x * objectData.planeYZ.z + -objectData.size.y * objectData.planeXZ.z +
+			objectData.size.z * objectData.planeXY.z)
 	};
 
 	// 右 下 前
 	vertices[6] = {
-		(objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
-			-objectData.size.z * objectData.otientatuonsZ.x),
-		(objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
-			-objectData.size.z * objectData.otientatuonsZ.y),
-		(objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
-			-objectData.size.z * objectData.otientatuonsZ.z)
+		(objectData.size.x * objectData.planeYZ.x + -objectData.size.y * objectData.planeXZ.x +
+			-objectData.size.z * objectData.planeXY.x),
+		(objectData.size.x * objectData.planeYZ.y + -objectData.size.y * objectData.planeXZ.y +
+			-objectData.size.z * objectData.planeXY.y),
+		(objectData.size.x * objectData.planeYZ.z + -objectData.size.y * objectData.planeXZ.z +
+			-objectData.size.z * objectData.planeXY.z)
 	};
 
 	// 右 下 後
 	vertices[7] = {
-		(objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
-			objectData.size.z * objectData.otientatuonsZ.x),
-		(objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
-			objectData.size.z * objectData.otientatuonsZ.y),
-		(objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
-			objectData.size.z * objectData.otientatuonsZ.z)
+		(objectData.size.x * objectData.planeYZ.x + -objectData.size.y * objectData.planeXZ.x +
+			objectData.size.z * objectData.planeXY.x),
+		(objectData.size.x * objectData.planeYZ.y + -objectData.size.y * objectData.planeXZ.y +
+			objectData.size.z * objectData.planeXY.y),
+		(objectData.size.x * objectData.planeYZ.z + -objectData.size.y * objectData.planeXZ.z +
+			objectData.size.z * objectData.planeXY.z)
 	};
 
 	for (uint32_t i = 0; i < 8; ++i)
@@ -645,7 +658,7 @@ void CourseCollisionSystem::ExtrusionExecuteCS()
 
 	commandList->SetComputeRootDescriptorTable(2, buffers_[collisionCheakNum_].outputDescriptorHandles.handleGPU_);
 
-	TextureManager::GetInstance()->SetComputeRootDescriptorTable(commandList, 3, course_->GetCourseTextureHandle());
+	TextureManager::GetInstance()->SetComputeRootDescriptorTable(commandList, 3, roadAttributeTextureHandle_);
 
 	commandList->Dispatch((buffers_[collisionCheakNum_].objectMap_->indexMax / 1024) + 1, 1, 1);
 

@@ -51,9 +51,9 @@ private: // メンバ定数
 		// 座標軸方向の長さの半分
 		Vector3 size;
 		// 座標軸
-		Vector3 otientatuonsX;
-		Vector3 otientatuonsY;
-		Vector3 otientatuonsZ;
+		Vector3 planeYZ;
+		Vector3 planeXZ;
+		Vector3 planeXY;
 	};
 
 	/// <summary>
@@ -126,6 +126,11 @@ public: // メンバ関数
 	void SetCourse(Course* course);
 
 	/// <summary>
+	/// コースクリア
+	/// </summary>
+	void ClearCorse();
+
+	/// <summary>
 	/// ImGui描画
 	/// </summary>
 	void ImGuiDraw();
@@ -172,9 +177,6 @@ private: // メンバ変数
 
 private: // メンバ変数
 
-	// コース
-	Course* course_;
-
 	// コースとぶつかるオブジェクト
 	std::list<CollisionObject> collidingObjects_;
 
@@ -203,5 +205,8 @@ private: // メンバ変数
 
 	// コア
 	VehicleCore* vehicleCore_;
+
+	// 衝突用テクスチャ
+	uint32_t roadAttributeTextureHandle_;
 
 };

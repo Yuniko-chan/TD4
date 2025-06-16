@@ -13,9 +13,9 @@ struct ObjectData
     uint32_t indexMax;
     float32_t3 center;
     float32_t3 size;
-    float32_t3 otientatuonsX;
-    float32_t3 otientatuonsY;
-    float32_t3 otientatuonsZ;
+    float32_t3 planeYZ;
+    float32_t3 planeXZ;
+    float32_t3 planeXY;
     
 };
 
@@ -105,9 +105,9 @@ float32_t3 Extrusion(ObjectData objectData, PolygonData polygonData, uint32_t in
     
     float32_t r = 0.0f;
 
-    r += abs(dot(objectData.otientatuonsX * objectData.size.x, planeNormal));
-    r += abs(dot(objectData.otientatuonsY * objectData.size.y, planeNormal));
-    r += abs(dot(objectData.otientatuonsZ * objectData.size.z, planeNormal));
+    r += abs(dot(objectData.planeYZ * objectData.size.x, planeNormal));
+    r += abs(dot(objectData.planeXZ * objectData.size.y, planeNormal));
+    r += abs(dot(objectData.planeXY * objectData.size.z, planeNormal));
 
 	//平面とobbの距離(怪しい)
     float32_t3 planePos = planeNormal * planeDistance;
@@ -134,82 +134,82 @@ float32_t3 Extrusion(ObjectData objectData, PolygonData polygonData, uint32_t in
 
 	// 左 上 前
     vertices[0] = (
-        (-objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
-			-objectData.size.z * objectData.otientatuonsZ.x),
-		(-objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
-			-objectData.size.z * objectData.otientatuonsZ.y),
-		(-objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
-			-objectData.size.z * objectData.otientatuonsZ.z)
+        (-objectData.size.x * objectData.planeYZ.x + objectData.size.y * objectData.planeXZ.x +
+			-objectData.size.z * objectData.planeXY.x),
+		(-objectData.size.x * objectData.planeYZ.y + objectData.size.y * objectData.planeXZ.y +
+			-objectData.size.z * objectData.planeXY.y),
+		(-objectData.size.x * objectData.planeYZ.z + objectData.size.y * objectData.planeXZ.z +
+			-objectData.size.z * objectData.planeXY.z)
 	);
 
 	// 左 上 後
     vertices[1] = (
-        (-objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
-			objectData.size.z * objectData.otientatuonsZ.x),
-		(-objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
-			objectData.size.z * objectData.otientatuonsZ.y),
-		(-objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
-			objectData.size.z * objectData.otientatuonsZ.z)
+        (-objectData.size.x * objectData.planeYZ.x + objectData.size.y * objectData.planeXZ.x +
+			objectData.size.z * objectData.planeXY.x),
+		(-objectData.size.x * objectData.planeYZ.y + objectData.size.y * objectData.planeXZ.y +
+			objectData.size.z * objectData.planeXY.y),
+		(-objectData.size.x * objectData.planeYZ.z + objectData.size.y * objectData.planeXZ.z +
+			objectData.size.z * objectData.planeXY.z)
 	);
 
 	// 右 上 前
     vertices[2] = (
-        (objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
-			-objectData.size.z * objectData.otientatuonsZ.x),
-		(objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
-			-objectData.size.z * objectData.otientatuonsZ.y),
-		(objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
-			-objectData.size.z * objectData.otientatuonsZ.z)
+        (objectData.size.x * objectData.planeYZ.x + objectData.size.y * objectData.planeXZ.x +
+			-objectData.size.z * objectData.planeXY.x),
+		(objectData.size.x * objectData.planeYZ.y + objectData.size.y * objectData.planeXZ.y +
+			-objectData.size.z * objectData.planeXY.y),
+		(objectData.size.x * objectData.planeYZ.z + objectData.size.y * objectData.planeXZ.z +
+			-objectData.size.z * objectData.planeXY.z)
 	);
 
 	// 右 上 後
     vertices[3] = (
-        (objectData.size.x * objectData.otientatuonsX.x + objectData.size.y * objectData.otientatuonsY.x +
-			objectData.size.z * objectData.otientatuonsZ.x),
-		(objectData.size.x * objectData.otientatuonsX.y + objectData.size.y * objectData.otientatuonsY.y +
-			objectData.size.z * objectData.otientatuonsZ.y),
-		(objectData.size.x * objectData.otientatuonsX.z + objectData.size.y * objectData.otientatuonsY.z +
-			objectData.size.z * objectData.otientatuonsZ.z)
+        (objectData.size.x * objectData.planeYZ.x + objectData.size.y * objectData.planeXZ.x +
+			objectData.size.z * objectData.planeXY.x),
+		(objectData.size.x * objectData.planeYZ.y + objectData.size.y * objectData.planeXZ.y +
+			objectData.size.z * objectData.planeXY.y),
+		(objectData.size.x * objectData.planeYZ.z + objectData.size.y * objectData.planeXZ.z +
+			objectData.size.z * objectData.planeXY.z)
 	);
 
 	// 左 下 前
     vertices[4] = (
-        (-objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
-			-objectData.size.z * objectData.otientatuonsZ.x),
-		(-objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
-			-objectData.size.z * objectData.otientatuonsZ.y),
-		(-objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
-			-objectData.size.z * objectData.otientatuonsZ.z)
+        (-objectData.size.x * objectData.planeYZ.x + -objectData.size.y * objectData.planeXZ.x +
+			-objectData.size.z * objectData.planeXY.x),
+		(-objectData.size.x * objectData.planeYZ.y + -objectData.size.y * objectData.planeXZ.y +
+			-objectData.size.z * objectData.planeXY.y),
+		(-objectData.size.x * objectData.planeYZ.z + -objectData.size.y * objectData.planeXZ.z +
+			-objectData.size.z * objectData.planeXY.z)
 	);
 
 	// 左 下 後
     vertices[5] = (
-        (-objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
-			objectData.size.z * objectData.otientatuonsZ.x),
-		(-objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
-			objectData.size.z * objectData.otientatuonsZ.y),
-		(-objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
-			objectData.size.z * objectData.otientatuonsZ.z)
+        (-objectData.size.x * objectData.planeYZ.x + -objectData.size.y * objectData.planeXZ.x +
+			objectData.size.z * objectData.planeXY.x),
+		(-objectData.size.x * objectData.planeYZ.y + -objectData.size.y * objectData.planeXZ.y +
+			objectData.size.z * objectData.planeXY.y),
+		(-objectData.size.x * objectData.planeYZ.z + -objectData.size.y * objectData.planeXZ.z +
+			objectData.size.z * objectData.planeXY.z)
 	);
 
 	// 右 下 前
     vertices[6] = (
-        (objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
-			-objectData.size.z * objectData.otientatuonsZ.x),
-		(objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
-			-objectData.size.z * objectData.otientatuonsZ.y),
-		(objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
-			-objectData.size.z * objectData.otientatuonsZ.z)
+        (objectData.size.x * objectData.planeYZ.x + -objectData.size.y * objectData.planeXZ.x +
+			-objectData.size.z * objectData.planeXY.x),
+		(objectData.size.x * objectData.planeYZ.y + -objectData.size.y * objectData.planeXZ.y +
+			-objectData.size.z * objectData.planeXY.y),
+		(objectData.size.x * objectData.planeYZ.z + -objectData.size.y * objectData.planeXZ.z +
+			-objectData.size.z * objectData.planeXY.z)
 	);
 
 	// 右 下 後
     vertices[7] = (
-         (objectData.size.x * objectData.otientatuonsX.x + -objectData.size.y * objectData.otientatuonsY.x +
-			objectData.size.z * objectData.otientatuonsZ.x),
-		(objectData.size.x * objectData.otientatuonsX.y + -objectData.size.y * objectData.otientatuonsY.y +
-			objectData.size.z * objectData.otientatuonsZ.y),
-		(objectData.size.x * objectData.otientatuonsX.z + -objectData.size.y * objectData.otientatuonsY.z +
-			objectData.size.z * objectData.otientatuonsZ.z)
+         (objectData.size.x * objectData.planeYZ.x + -objectData.size.y * objectData.planeXZ.x +
+			objectData.size.z * objectData.planeXY.x),
+		(objectData.size.x * objectData.planeYZ.y + -objectData.size.y * objectData.planeXZ.y +
+			objectData.size.z * objectData.planeXY.y),
+		(objectData.size.x * objectData.planeYZ.z + -objectData.size.y * objectData.planeXZ.z +
+			objectData.size.z * objectData.planeXY.z)
 	);
     
     bool collisionCheck = false;

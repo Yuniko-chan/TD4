@@ -3,6 +3,7 @@
 #include "../../System/Shadow/ShadowManager.h"
 #include "../Car/Manager/VehiclePartsManager.h"
 #include "../Car/Manager/PickupPointManager.h"
+#include "../../../Engine/3D/Model/InstancingDrawing.h"
 
 // 前方宣言
 class Player;
@@ -85,6 +86,9 @@ private: // メンバ変数
 
 	// レベルデータマネージャー
 	LevelDataManager* levelDataManager_;
+
+	//
+	std::unique_ptr<InstancingDrawing> instancingDrawing_;
 
 private: // USER
 	// パーツマネージャー
