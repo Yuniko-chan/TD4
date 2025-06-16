@@ -43,9 +43,11 @@ void Player::Update()
 	// 基底
 	MeshObject::Update();
 	
+
 	// システム
 	SystemUpdate();
 
+	worldTransform_.direction_ = Vector3::Normalize(worldTransform_.direction_);
 	// 座標更新
 	worldTransform_.UpdateMatrix();
 
@@ -151,12 +153,13 @@ void Player::SystemInitialize()
 
 	// ステート
 	stateMachine_ = std::make_unique<PlayerStateMachine>();
-	stateMachine_->Initialize();
 	stateMachine_->SetOwner(this);
+	stateMachine_->Initialize();
 
 	// ピックアップ
 	pickUpManager_ = std::make_unique<PlayerPickupManager>();
 	pickUpManager_->SetOwner(this);
+	pickUpManager_->Initialize();
 
 	// 
 	frontChecker_.SetOwner(this);

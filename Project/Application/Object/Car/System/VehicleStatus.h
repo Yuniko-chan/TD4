@@ -44,6 +44,14 @@ public:	// アクセッサ
 	int GetRightWheel() const { return wheelRight_; }
 	// タイヤの数
 	int GetTire() const { return partsTypes_.tire; }
+	// エンジン数
+	int GetEngine() const { return partsTypes_.engine; }
+	// オーバーヒートのチェック
+	bool GetIsOverheat() const { return isOverheat_; }
+
+	//---セッター---//
+	void SetIsOverheat(bool isOverheat) { isOverheat_ = isOverheat; }
+
 private:
 	float weight_ = 1.0f;
 	float speed_ = 1.0f;
@@ -58,4 +66,6 @@ private:
 	int wheelRight_ = 0;	// 右
 	int wheelReal_ = 0;	// 後方
 	int wheelFront_ = 0;	// 前方
+
+	bool isOverheat_ = false;
 };

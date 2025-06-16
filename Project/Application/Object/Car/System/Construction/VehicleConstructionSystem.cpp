@@ -1,9 +1,5 @@
 #include "VehicleConstructionSystem.h"
-#include "../CarLists.h"
-#include "../Parts/System/PartsOffsetCalculator.h"
-#include "../../Utility/Calc/TransformHelper.h"
-
-#include "../../../Engine/2D/ImguiManager.h"
+#include "../../CarLists.h"
 
 void VehicleConstructionSystem::Initialize()
 {
@@ -13,14 +9,10 @@ void VehicleConstructionSystem::Initialize()
 void VehicleConstructionSystem::Update()
 {
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
+		// 見つかった場合抜ける
 		if ((*it).second->GetIsDelete()) {
-			// 解除処理
-			UnRegistParts((*it).first, (*it).second);
-			// ステータス側からも削除
-			status_->ApplyPartRemove((*it).second->GetClassNameString(), (*it).first);
-			// HPの初期化
-			(*it).second->GetHPHandler()->Initialize();
-			it = partsMapping_.erase(it);
+			// 外す処理
+			Detach(it);
 			break;
 		}
 	}
@@ -131,6 +123,26 @@ void VehicleConstructionSystem::AnyDocking(Car::IParts* parts, const Vector2Int&
 	Attach(parts, key);
 }
 
+Car::IParts* VehicleConstructionSystem::FindNearPart(const Vector3& point)
+{
+	// 一番近いパーツを返す
+	float nearDist = FLT_MAX;
+	Car::IParts* result = nullptr;
+
+	// 
+	for (auto it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
+		float distance = TransformHelper::Vector3Distance(point, (*it).second->GetWorldTransformAdress()->GetWorldPosition());
+		// 距離が短いか
+		if (nearDist >= distance) {
+			nearDist = distance;
+			result = (*it).second;
+		}
+	}
+
+	// 
+	return result;
+}
+
 void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key)
 {
 	// 計算器
@@ -154,11 +166,53 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 
 }
 
+void VehicleConstructionSystem::Detach(std::map<Vector2Int, Car::IParts*>::iterator it)
+{
+	// 解除処理
+	UnRegistParts((*it).first, (*it).second);
+	// ステータス側からも削除
+	status_->ApplyPartRemove((*it).second->GetClassNameString(), (*it).first);
+	// HPの初期化
+	(*it).second->GetHPHandler()->Initialize();
+	// リストから外す
+	it = partsMapping_.erase(it);
+}
+
+void VehicleConstructionSystem::Detach(Car::IParts* parts)
+{
+	// 検索
+	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin();
+		it != partsMapping_.end(); ++it) {
+		// 一致パーツへの処理
+		if ((*it).second == parts) {
+			// 外すためのフラグ処理
+			(*it).second->SetIsDelete(true);
+			// 共通の外す処理
+			Detach(it);
+			return;
+		}
+	}
+
+}
+
 Car::IParts* VehicleConstructionSystem::FindPreNumber(std::list<std::pair<int, Car::IParts*>>* directLists, int32_t number)
 {
 	for (std::list<std::pair<int, Car::IParts*>>::iterator it = directLists->begin(); it != directLists->end();) {
 		// 該当番号が見つかれば
 		if ((*it).first == number) {
+			return (*it).second;
+		}
+		++it;
+	}
+
+	return nullptr;
+}
+
+Car::IParts* VehicleConstructionSystem::FindParts(Car::IParts* parts)
+{
+	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end();) {
+		// 該当番号が見つかればそれを返す
+		if ((*it).second == parts) {
 			return (*it).second;
 		}
 		++it;

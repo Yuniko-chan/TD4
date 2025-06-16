@@ -4,7 +4,6 @@
 
 #include "Parts/PartsInterface.h"
 #include "System/VehicleSystems.h"
-#include "Construction/VehicleConstructionSystem.h"
 
 class Player;
 
@@ -54,6 +53,7 @@ public: // アクセッサ
     // 運転システム
     DriveSystem* GetDriveSystem() { return driveSystem_.get(); }
     VehicleAnimation* GetAnimation() { return animation_.get(); }
+    VehicleStatus* GetStatus() { return statusSystem_.get(); }
     //---セッター---//
     // プレイヤー
     void SetPlayer(Player* player) { pairPlayer_ = player; }
@@ -67,6 +67,8 @@ private:
     std::unique_ptr<VehicleStatus> statusSystem_;
     // アニメーション
     std::unique_ptr<VehicleAnimation> animation_;
+    // オーバーヒート
+    std::unique_ptr<OverheatSystem> overheatSystem_;
 
     // ペアになるプレイヤーポインタ
     Player* pairPlayer_ = nullptr;

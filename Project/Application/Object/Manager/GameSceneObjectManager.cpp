@@ -335,36 +335,36 @@ void GameSceneObjectManager::VehiclePreset(const std::string& presetName)
 	partsManager_->AddParts(core->GetName(), core);
 
 
-	//name = presetName + "Engine";
-	//AddObject("EngineParts", name.c_str(),
-	//	sVehiclePaths[VehicleDatas::kEngine].first, sVehiclePaths[VehicleDatas::kEngine].second);
-	//partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-	//core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(0, -1));
-	//static_cast<Car::IParts*>(this->GetObjectPointer(name))->SetParent(core);
+	name = presetName + "Engine";
+	AddObject("EngineParts", name.c_str(),
+		sVehiclePaths[VehicleDatas::kEngine].first, sVehiclePaths[VehicleDatas::kEngine].second);
+	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+	core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(0, -1));
+	static_cast<Car::IParts*>(this->GetObjectPointer(name))->SetParent(core);
 
 
-	//name = presetName + "Tire" + std::to_string(Car::SerialNumberGenerate::sSerialTire);
-	//Car::SerialNumberGenerate::sSerialTire++;
-	//AddObject("TireParts", name.c_str(),
-	//	sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
-	//partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-	//core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(1, 0));
-	//static_cast<Car::IParts*>(this->GetObjectPointer(name))->SetParent(core);
+	name = presetName + "Tire" + std::to_string(Car::SerialNumberGenerate::sSerialTire);
+	Car::SerialNumberGenerate::sSerialTire++;
+	AddObject("TireParts", name.c_str(),
+		sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
+	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+	core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(1, 0));
+	static_cast<Car::IParts*>(this->GetObjectPointer(name))->SetParent(core);
 
-	//name = presetName + "Tire" + std::to_string(Car::SerialNumberGenerate::sSerialTire);
-	//Car::SerialNumberGenerate::sSerialTire++;
-	//AddObject("TireParts", name.c_str(),
-	//	sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
-	//partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-	//core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(-1, 0));
-	//static_cast<Car::IParts*>(this->GetObjectPointer(name))->SetParent(core);
+	name = presetName + "Tire" + std::to_string(Car::SerialNumberGenerate::sSerialTire);
+	Car::SerialNumberGenerate::sSerialTire++;
+	AddObject("TireParts", name.c_str(),
+		sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
+	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+	core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(-1, 0));
+	static_cast<Car::IParts*>(this->GetObjectPointer(name))->SetParent(core);
 
 
-	//name = presetName + "Armor";
-	//AddObject("ArmorFrameParts", name.c_str(),
-	//	sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
-	//partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-	//core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(0, -2));
-	//static_cast<Car::IParts*>(this->GetObjectPointer(name))->SetParent(core);
+	name = presetName + "Armor";
+	AddObject("ArmorFrameParts", name.c_str(),
+		sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
+	partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+	core->GetConstructionSystem()->AnyDocking(static_cast<Car::IParts*>(this->GetObjectPointer(name)), Vector2Int(0, -2));
+	static_cast<Car::IParts*>(this->GetObjectPointer(name))->SetParent(core);
 
 }
