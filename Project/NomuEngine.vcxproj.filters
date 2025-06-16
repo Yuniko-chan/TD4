@@ -988,15 +988,6 @@
     <ClCompile Include="Application\Object\Car\Parts\PartsInterface.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Gimmick\Cannon\Cannon.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Gimmick\Cannon\CannonBall.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Gimmick\Cannon\CannonExplosion.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Application\Object\Gimmick\IronBall\PendulumIronBall.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -1105,9 +1096,6 @@
     <ClCompile Include="Application\Object\Car\Animation\VehicleAnimation.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Car\Construction\VehicleConstructionSystem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Application\Object\Car\Manager\PickupPointManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -1147,9 +1135,6 @@
     <ClCompile Include="Application\Object\Car\PickupPoint\User\TirePickupPoint.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Car\System\DriveSystem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Application\Object\CustomArea\CustomArea.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -1160,12 +1145,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Car\System\VehicleEngine.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Car\System\VehicleHandling.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Car\System\VehicleStatus.cpp">
@@ -1275,6 +1254,15 @@
     </ClCompile>
     <ClCompile Include="Engine\3D\Model\InstancingDrawing.cpp">
       <Filter>Engine\3D\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Gimmick\Cannon\Cannon.cpp">
+      <Filter>Application\Object\Gimmick\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Gimmick\Cannon\CannonBall.cpp">
+      <Filter>Application\Object\Gimmick\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Gimmick\Cannon\CannonExplosion.cpp">
+      <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

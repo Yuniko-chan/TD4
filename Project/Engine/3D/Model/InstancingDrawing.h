@@ -15,7 +15,7 @@ private: //定数
 	/// <summary>
 	/// モデルデータ最大数
 	/// </summary>
-	static const size_t kModelDataMax_ = 3;
+	static const size_t kModelDataMax_ = 7;
 
 	/// <summary>
 	/// それぞれのトランスフォームデータ最大数
@@ -35,6 +35,11 @@ private: //定数
 		std::pair<ModelPathAndName, bool>{{"Resources/Model/Tire", "Tire.obj"}, false}, // タイヤ
 		std::pair<ModelPathAndName, bool>{{"Resources/Model/Frame", "Frame.obj"}, false}, // フレーム
 		std::pair<ModelPathAndName, bool>{{"Resources/Model/Engine", "Engine.obj"}, false}, // エンジン
+
+		std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/Cannon/", "Cannon.obj"}, false}, // 大砲
+		std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/IronBall/", "IronBall.obj"}, false}, // 鉄球
+		std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/IronBall/", "Rope.obj"}, false}, // 鉄球紐
+		std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/Gatling/", "Gatling.gltf"}, false}, // ミニガン
 	
 	};
 
