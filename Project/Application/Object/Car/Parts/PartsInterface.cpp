@@ -118,6 +118,10 @@ void Car::IParts::ImGuiTransform(const float& value)
 	// スケール
 	name = name_ + ":Scale";
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, value);
+
+	name = name_ + ":HP";
+	float hp = this->hpHandler_.GetHP();
+	ImGui::DragFloat(name.c_str(), &hp, value);
 	// 方向
 	name = name_ + ":Direction";
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.direction_.x, value);

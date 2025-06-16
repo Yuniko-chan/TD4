@@ -40,12 +40,12 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	*colliderShape = obb;
 	collider_.reset(colliderShape);
 
+	// アニメーション
+	animation_ = std::make_unique<VehicleAnimation>();
+	animation_->Initialize(model_);
+
 	// ステータスクラス
 	statusSystem_ = std::make_unique<VehicleStatus>();
-
-	//
-	overheatSystem_ = std::make_unique<OverheatSystem>();
-	overheatSystem_->SetOwner(this);
 
 	// パーツ構築クラス
 	constructionSystem_ = std::make_unique<VehicleConstructionSystem>();
@@ -59,9 +59,12 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	driveSystem_->SetStatusManager(statusSystem_.get());
 	driveSystem_->Initialize();
 
-	animation_ = std::make_unique<VehicleAnimation>();
-	animation_->Initialize(model_);
-
+	// オーバーヒート
+	overheatSystem_ = std::make_unique<OverheatSystem>();
+	overheatSystem_->SetOwner(this);
+	overheatSystem_->SetMappingData(constructionSystem_->GetPartMappingPtr());
+	
+	// HP
 	hpHandler_.SetOwner(this);
 	hpHandler_.Initialize();
 
@@ -113,6 +116,8 @@ void VehicleCore::Draw(BaseCamera& camera)
 void VehicleCore::ImGuiDrawParts()
 {
 	ImGui::SeparatorText(className_.c_str());
+	ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 0.75f));
+	ImGui::BeginChild("SystemBlock", ImVec2(400, 200), true);
 	if (ImGui::TreeNode("Status"))
 	{
 		// ステータス
@@ -120,6 +125,9 @@ void VehicleCore::ImGuiDrawParts()
 
 		ImGui::TreePop();
 	}
+	ImGui::EndChild();
+	ImGui::PopStyleColor();
+
 	ImGui::BeginChild("Tab", ImVec2(400, 300), true, ImGuiWindowFlags_None);
 	// トランスフォームに移動
 	ImGuiTransform(0.1f);

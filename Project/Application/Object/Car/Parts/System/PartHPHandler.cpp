@@ -4,8 +4,8 @@
 
 void PartHPHandler::Initialize()
 {
-
-	hp_ = 1;
+	maxHP_ = 20;
+	hp_ = maxHP_;
 	// 死亡・解除状態をリセット
 	owner_->SetIsDelete(false);
 	owner_->SetIsDead(false);
@@ -25,7 +25,7 @@ void PartHPHandler::Update()
 
 }
 
-void PartHPHandler::OnHit(int16_t damage)
+void PartHPHandler::OnHit(float damage)
 {
 
 	// 無敵状態なのでリターン
@@ -60,4 +60,14 @@ void PartHPHandler::InvisibleProgress()
 		}
 	}
 
+}
+
+void PartHPHandler::HeatDamage()
+{
+	//const int persent = 50;
+	hp_ -= (1.0f) * kDeltaTime_;
+	// 0より小さい値にならないように
+	if (hp_ < 0) {
+		hp_ = 0;
+	}
 }

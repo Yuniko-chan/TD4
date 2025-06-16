@@ -34,6 +34,8 @@ void VehicleStatus::StatusUpdate(std::map<Vector2Int, Car::IParts*>* lists)
 
 void VehicleStatus::ImGuiDraw()
 {
+	ImGui::Checkbox("IsOverheat", &isOverheat_);
+
 	ImGui::DragFloat("Armor", &this->armor_);
 	ImGui::DragFloat("Speed", &this->speed_);
 	ImGui::DragFloat("Weight", &this->weight_);

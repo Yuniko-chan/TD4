@@ -133,7 +133,7 @@ void DriveEngine::OverheatProcess(const float& SpeedPercentage)
 	const float receptionLimit = 10 / 2;
 	if (SpeedPercentage >= speedLimit &&
 		std::abs(consecutiveReceptions_) >= receptionLimit) {
-		
+		this->owner_->GetStatus()->SetIsOverheat(true);
 	}
 
 

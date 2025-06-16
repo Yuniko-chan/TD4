@@ -32,6 +32,11 @@ void VehicleConstructionSystem::ImGuiDraw()
 			name = (*it).second->GetName() + "Translate";
 			EulerTransform t = (*it).second->GetWorldTransformAdress()->transform_;
 			ImGui::DragFloat3(name.c_str(), &t.translate.x, 0.01f);
+
+			name = (*it).second->GetName() + "HP";
+			float hp = (*it).second->GetHPHandler()->GetHP();
+			ImGui::DragFloat(name.c_str(), &hp);
+
 			// 配列キー
 			name = (*it).second->GetName() + "Key";
 			Vector2Int key = (*it).first;
