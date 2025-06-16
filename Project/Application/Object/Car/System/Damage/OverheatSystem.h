@@ -9,7 +9,10 @@ public:
 
 	void Update();
 
-	//void ImGuiDraw();
+	void SetMappingData(std::map<Vector2Int, Car::IParts*>* data) { mappingData_ = data; }
 
+private:
+	// パーツのマッピングデータ
+	std::map<Vector2Int, Car::IParts*>* mappingData_ = nullptr;
 
 };
