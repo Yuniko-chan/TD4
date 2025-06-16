@@ -87,7 +87,7 @@ private: // メンバ変数
 	// レベルデータマネージャー
 	LevelDataManager* levelDataManager_;
 
-	//
+	// インスタンシング描画
 	std::unique_ptr<InstancingDrawing> instancingDrawing_;
 
 private: // USER

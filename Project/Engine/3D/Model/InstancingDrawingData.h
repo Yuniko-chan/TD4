@@ -11,6 +11,9 @@ struct InstancingDrawingData {
 	// アニメーションするか
 	bool isAnimation;
 
+	// ローカル行列マネージャー
+	LocalMatrixManager* localMatrixManager;
+
 	// トランスフォーム SRV
 	Microsoft::WRL::ComPtr<ID3D12Resource> transformBuff;
 	// トランスフォーム マップ

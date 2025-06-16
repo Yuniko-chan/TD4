@@ -69,7 +69,12 @@ public: // 関数
 	/// <param name="camera">カメラ</param>
 	void Draw(BaseCamera& camera);
 
-private:
+	/// <summary>
+	/// ローカル行列マネージャー設定
+	/// </summary>
+	/// <param name="fileName">ファイル名前</param>
+	/// <param name="localMatrixManager">ローカル行列マネージャー</param>
+	void SetLocalMatrixManager(const std::string& fileName, LocalMatrixManager* localMatrixManager);
 
 private:
 

@@ -18,6 +18,7 @@ void InstancingDrawing::Initialize()
 		// インスタンシング描画用モデル保存
 		instancingDrawingDatas_[i].model = modelManager->GetModel(kModelDatas_[i].first.first, kModelDatas_[i].first.second);
 		instancingDrawingDatas_[i].isAnimation = kModelDatas_[i].second;
+		instancingDrawingDatas_[i].localMatrixManager = nullptr;
 
 		// バッファ
 		instancingDrawingDatas_[i].transformBuff = BufferResource::CreateBufferResource(device, ((sizeof(TransformationMatrix) + 0xff) & ~0xff) * kTransformationMatrixMax_);
@@ -124,12 +125,31 @@ void InstancingDrawing::Draw(BaseCamera& camera)
 		if (instancingDrawingDatas_[i].isAnimation) {
 
 			// 作成中
+			if (instancingDrawingDatas_[i].localMatrixManager) {
+				ModelDraw::ManyAnimObjectsDesc desc;
+				desc.camera = &camera;
+				desc.materialsHandle = &instancingDrawingDatas_[i].materialSrvHandleGPU;
+				desc.model = instancingDrawingDatas_[i].model;
+				desc.numInstance = static_cast<uint32_t>(instancingDrawingTransformationMatrixNum_[i]);
+				desc.transformationMatrixesHandle = &instancingDrawingDatas_[i].transformSrvHandleGPU;
+				desc.localMatrixManager = instancingDrawingDatas_[i].localMatrixManager;
+				ModelDraw::ManyAnimObjectsDraw(desc);
+			}
+			// ローカル行列マネージャーが入っていないならアニメーションなし
+			else {
+				ModelDraw::ManyNormalObjectsDesc desc;
+				desc.camera = &camera;
+				desc.materialsHandle = &instancingDrawingDatas_[i].materialSrvHandleGPU;
+				desc.model = instancingDrawingDatas_[i].model;
+				desc.numInstance = static_cast<uint32_t>(instancingDrawingTransformationMatrixNum_[i]);
+				desc.transformationMatrixesHandle = &instancingDrawingDatas_[i].transformSrvHandleGPU;
+				ModelDraw::ManyNormalObjectsDraw(desc);
+			}
 			
 
 		}
 		// アニメーションなし
 		else {
-
 			ModelDraw::ManyNormalObjectsDesc desc;
 			desc.camera = &camera;
 			desc.materialsHandle = &instancingDrawingDatas_[i].materialSrvHandleGPU;
@@ -137,9 +157,21 @@ void InstancingDrawing::Draw(BaseCamera& camera)
 			desc.numInstance = static_cast<uint32_t>(instancingDrawingTransformationMatrixNum_[i]);
 			desc.transformationMatrixesHandle = &instancingDrawingDatas_[i].transformSrvHandleGPU;
 			ModelDraw::ManyNormalObjectsDraw(desc);
-		
 		}
 	
+	}
+
+}
+
+void InstancingDrawing::SetLocalMatrixManager(const std::string& fileName, LocalMatrixManager* localMatrixManager)
+{
+
+	for (size_t i = 0; i < kModelDataMax_; ++i) {
+		// 名前が一致する
+		if (fileName == instancingDrawingDatas_[i].model->GetFileName()) {
+			instancingDrawingDatas_[i].localMatrixManager = localMatrixManager;
+			break;
+		}
 	}
 
 }
