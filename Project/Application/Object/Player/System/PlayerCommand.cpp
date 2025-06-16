@@ -75,7 +75,7 @@ void PlayerCommand::StickMoveCommand()
 	if (direct != Vector3(0.0f, 0.0f, 0.0f)) {
 		// 例外処理
 		if (direct == Vector3(0.0f, 0.0f, -1.0f)) {
-			direct.x = -0.1f;
+			direct.x = -0.001f;
 			playerTransform_->direction_ = Vector3::Normalize(direct);
 		}
 		// 通常処理

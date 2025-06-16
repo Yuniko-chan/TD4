@@ -2,6 +2,7 @@
 #include "../../../Engine/Collision/BaseCollisionManager.h"
 #include "../../Utility/Common/OwnerComponent.h"
 #include "../../Utility/Timer/FrameTimer.h"
+#include "PickUp/PartJudgeSystem.h"
 
 #include <optional>
 
@@ -13,6 +14,7 @@ namespace Car
 
 class VehiclePartsManager;
 class PickupPointManager;
+// PartJudgeSystem;
 class Player;
 
 struct PickUpCollision {
@@ -30,6 +32,10 @@ class PlayerPickupManager : public OwnerComponent<Player>
 {
 public:
 	PlayerPickupManager();
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Initialize();
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -68,6 +74,11 @@ private:
 	void CatchAction();
 
 	/// <summary>
+	/// 取り外しアクション（持つまで
+	/// </summary>
+	void RemovalAction();
+
+	/// <summary>
 	/// 拾うのに成功処理
 	/// </summary>
 	/// <param name="parts"></param>
@@ -78,7 +89,20 @@ private:
 	/// </summary>
 	void OnCatchFailure();
 
+	/// <summary>
+	/// 置く処理
+	/// </summary>
+	void DropPart();
+
+	/// <summary>
+	/// パーツをドロップ（その場に置くか判断）
+	/// </summary>
+	/// <returns></returns>
+	bool ShouldDropPart();
+
 private:
+	// 
+	std::unique_ptr<PartJudgeSystem> judgeSystem_;
 	// パーツのマネージャ
 	VehiclePartsManager* partsManager_ = nullptr;
 	// 拾える場所

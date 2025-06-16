@@ -1,25 +1,28 @@
 #include "DriveSystem.h"
-#include "../VehicleCore.h"
-#include "../../Utility/Calc/TransformHelper.h"
-#include "../../KeyConfig/GameKeyconfig.h"
-#include "../../../Engine/Math/DeltaTime.h"
-#include "../../../Engine/2D/ImguiManager.h"
+#include "../../VehicleCore.h"
 
 DriveSystem::DriveSystem()
 {
 	// エンジン
-	driveEngine_ = std::make_unique<VehicleEngine>();
+	driveEngine_ = std::make_unique<DriveEngine>();
 	// ハンドル
-	handling_ = std::make_unique<VehicleHandling>();
+	handling_ = std::make_unique<DriveHandling>();
 }
 
 void DriveSystem::Initialize()
 {
+	// ハンドルクラス
 	handling_->SetOwner(owner_);
+
+	// エンジングラス
+	driveEngine_->SetOwner(owner_);
 }
 
 void DriveSystem::Update()
 {
+	// オーバーヒートフラグ初期化
+	status_->SetIsOverheat(false);
+
 	//---それぞれのシステム処理---//
 	// ハンドル処理
 	handling_->SetVehicleDirection(owner_->GetWorldTransformAdress()->direction_);

@@ -1,10 +1,10 @@
 #pragma once
-#include "../../Utility/Timer/FrameTimer.h"
-#include "../../KeyConfig/GameKeyconfig.h"
-#include "../../../Engine/Math/Vector/Vector3.h"
-#include <cstdint>
+#include "../VehicleSystemCommons.h"
 
-class VehicleEngine
+class VehicleStatus;
+class VehicleCore;
+
+class DriveEngine : public OwnerComponent<VehicleCore>
 {
 public:
 	/// <summary>
@@ -26,10 +26,19 @@ public:
 	/// デバッグ用の
 	/// </summary>
 	void ImGuiDraw();
+private:
+	/// <summary>
+	/// 速度計算
+	/// </summary>
+	void SpeedCalculation();
+
+	/// <summary>
+	/// 速度出しすぎた時のやつ
+	/// </summary>
+	/// <param name="SpeedPercentage"></param>
+	void OverheatProcess(const float& SpeedPercentage);
 
 public: // アクセッサ
-	//---セッター---//
-
 	//---ゲッター---//
 	float GetSpeedRatio() const { return speedRatio_; }
 	float GetCurrentSpeed() const { return currentSpeed_; }
@@ -49,4 +58,7 @@ private:
 	float currentSpeed_ = 0.0f;
 	// オイラー
 	float eulerY_ = 0.0f;
+private:
+
+
 };

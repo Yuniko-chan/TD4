@@ -1,8 +1,6 @@
 #pragma once
-#include "../../../Engine/3D/Transform/WorldTransform.h"
-#include "../../Utility/Common/OwnerComponent.h"
-#include "../System/VehicleSystems.h"
-#include <memory>
+#include "../VehicleSystemCommons.h"
+#include "../../System/VehicleSystems.h"
 
 class VehicleCore;
 class VehicleStatus;
@@ -40,9 +38,9 @@ private:
 
 private:
 	// 運転用のエンジン
-	std::unique_ptr<VehicleEngine> driveEngine_;
+	std::unique_ptr<DriveEngine> driveEngine_;
 	// ハンドルシステム
-	std::unique_ptr<VehicleHandling> handling_;
+	std::unique_ptr<DriveHandling> handling_;
 	// ステータス情報
 	VehicleStatus* status_ = nullptr;
 	// 速度ベクトル

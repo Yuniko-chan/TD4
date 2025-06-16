@@ -1,10 +1,6 @@
 #pragma once
-#include "../../Utility/Common/OwnerComponent.h"
-#include "../../Utility/Math/Vector2Int.h"
-#include <list>
-#include <unordered_map>
+#include "../VehicleSystemCommons.h"
 #include <map>
-#include <string>
 #include <utility>
 
 namespace Car { class IParts; }
@@ -40,18 +36,39 @@ public:
 	bool Attach(Car::IParts* parts);
 
 	/// <summary>
+	/// 解除
+	/// </summary>
+	/// <param name="parts"></param>
+	void Detach(Car::IParts* parts);
+
+	/// <summary>
 	/// 任意指定でのくっつけ処理
 	/// </summary>
 	/// <param name="parts"></param>
 	/// <param name="key"></param>
 	void AnyDocking(Car::IParts* parts, const Vector2Int& key);
 
-private:
+	/// <summary>
+	/// 近いパーツの取得
+	/// </summary>
+	/// <param name="point"></param>
+	/// <returns></returns>
+	Car::IParts* FindNearPart(const Vector3& point);
+
+
+private: // 指定して設定OR解除
 	/// <summary>
 	/// 接続
 	/// </summary>
 	/// <param name="parts"></param>
 	void Attach(Car::IParts* parts, const Vector2Int& key);
+	/// <summary>
+	/// 解除
+	/// </summary>
+	/// <param name="it"></param>
+	void Detach(std::map<Vector2Int, Car::IParts*>::iterator it);
+
+private: // 検索
 	/// <summary>
 	/// 検索
 	/// </summary>
@@ -59,6 +76,15 @@ private:
 	/// <param name="number"></param>
 	/// <returns></returns>
 	Car::IParts* FindPreNumber(std::list<std::pair<int, Car::IParts*>>* directLists, int32_t number);
+
+	/// <summary>
+	/// ポインタから検索
+	/// </summary>
+	/// <param name="parts"></param>
+	/// <returns></returns>
+	Car::IParts* FindParts(Car::IParts* parts);
+
+private: // 登録・解除
 	/// <summary>
 	/// パーツの登録処理
 	/// </summary>

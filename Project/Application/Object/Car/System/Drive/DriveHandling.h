@@ -1,7 +1,6 @@
 #pragma once
-#include "../../../Engine/Math/Vector/Vector3.h"
-#include "../../Utility/Common/OwnerComponent.h"
-#include <cstdint>
+#include "../VehicleSystemCommons.h"
+
 #include <algorithm>
 
 class VehicleCore;
@@ -10,7 +9,7 @@ class VehicleStatus;
 // 入力フラグ（前、現在）
 using InputFlag = std::pair<bool, bool>;
 
-class VehicleHandling : public OwnerComponent<VehicleCore>
+class DriveHandling : public OwnerComponent<VehicleCore>
 {
 public:
 	/// <summary>
