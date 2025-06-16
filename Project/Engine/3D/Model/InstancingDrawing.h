@@ -56,7 +56,11 @@ public: // 関数
 	/// <param name="worldTransform">ワールドトランスフォーム</param>
 	/// <param name="viewProjectionMatrix">ビュープロジェクション</param>
 	/// <returns>成功したか</returns>
-	bool RegistrationConfirmation(Model* model,	WorldTransform* worldTransform, const Matrix4x4& viewProjectionMatrix);
+	bool RegistrationConfirmation(
+		Model* model, 
+		WorldTransform* worldTransform,
+		const MaterialData& materialData,
+		const Matrix4x4& viewProjectionMatrix);
 
 	/// <summary>
 	/// 描画
