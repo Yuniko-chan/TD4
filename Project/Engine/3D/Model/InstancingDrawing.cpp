@@ -2,6 +2,7 @@
 #include "ModelManager.h"
 #include "../../base/BufferResource.h"
 #include "../../base/DescriptorHerpManager/SRVDescriptorHerpManager.h"
+#include "ModelDraw.h"
 
 void InstancingDrawing::Initialize()
 {
@@ -94,7 +95,11 @@ bool InstancingDrawing::RegistrationConfirmation(
 			instancingDrawingDatas_[i].transformMap[instancingDrawingTransformationMatrixNum_[i]].WorldInverseTranspose = Matrix4x4::Transpose(Matrix4x4::Inverse(worldTransform->worldMatrix_));
 
 			// マテリアルデータ マップ
-			instancingDrawingDatas_[i].materialMap[instancingDrawingTransformationMatrixNum_[i]] = materialData;
+			instancingDrawingDatas_[i].materialMap[instancingDrawingTransformationMatrixNum_[i]].color = materialData.color;
+			instancingDrawingDatas_[i].materialMap[instancingDrawingTransformationMatrixNum_[i]].enableLighting = materialData.enableLighting;
+			instancingDrawingDatas_[i].materialMap[instancingDrawingTransformationMatrixNum_[i]].environmentCoefficient = materialData.environmentCoefficient;
+			instancingDrawingDatas_[i].materialMap[instancingDrawingTransformationMatrixNum_[i]].shininess = materialData.shininess;
+			instancingDrawingDatas_[i].materialMap[instancingDrawingTransformationMatrixNum_[i]].uvTransform = materialData.uvTransform;
 
 			// 回数をインクリメント
 			instancingDrawingTransformationMatrixNum_[i]++;
@@ -111,6 +116,30 @@ bool InstancingDrawing::RegistrationConfirmation(
 
 }
 
-void InstancingDrawing::Draw()
+void InstancingDrawing::Draw(BaseCamera& camera)
 {
+
+	for (size_t i = 0; i < kModelDataMax_; ++i) {
+		// アニメーションあり
+		if (instancingDrawingDatas_[i].isAnimation) {
+
+			// 作成中
+			
+
+		}
+		// アニメーションなし
+		else {
+
+			ModelDraw::ManyNormalObjectsDesc desc;
+			desc.camera = &camera;
+			desc.materialsHandle = &instancingDrawingDatas_[i].materialSrvHandleGPU;
+			desc.model = instancingDrawingDatas_[i].model;
+			desc.numInstance = static_cast<uint32_t>(instancingDrawingTransformationMatrixNum_[i]);
+			desc.transformationMatrixesHandle = &instancingDrawingDatas_[i].transformSrvHandleGPU;
+			ModelDraw::ManyNormalObjectsDraw(desc);
+		
+		}
+	
+	}
+
 }

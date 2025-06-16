@@ -15,7 +15,7 @@ private: //定数
 	/// <summary>
 	/// モデルデータ最大数
 	/// </summary>
-	static const size_t kModelDataMax_ = 2;
+	static const size_t kModelDataMax_ = 3;
 
 	/// <summary>
 	/// それぞれのトランスフォームデータ最大数
@@ -32,8 +32,9 @@ private: //定数
 	/// </summary>
 	const std::array<std::pair<ModelPathAndName, bool>, kModelDataMax_> kModelDatas_ = {
 	
-		std::pair<ModelPathAndName, bool>{{"aaa", "aaa"}, false},
-		std::pair<ModelPathAndName, bool>{{"aaa", "aaa"}, false},
+		std::pair<ModelPathAndName, bool>{{"Resources/Model/Tire", "Tire.obj"}, false}, // タイヤ
+		std::pair<ModelPathAndName, bool>{{"Resources/Model/Frame", "Frame.obj"}, false}, // フレーム
+		std::pair<ModelPathAndName, bool>{{"Resources/Model/Engine", "Engine.obj"}, false}, // エンジン
 	
 	};
 
@@ -65,7 +66,8 @@ public: // 関数
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	/// <param name="camera">カメラ</param>
+	void Draw(BaseCamera& camera);
 
 private:
 

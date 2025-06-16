@@ -25,7 +25,7 @@ struct InstancingDrawingData {
 	// マテリアル SRV
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialBuff;
 	// マテリアル マップ
-	MaterialData* materialMap = nullptr;
+	SRVMaterialData* materialMap = nullptr;
 	// マテリアル CPUハンドル
 	D3D12_CPU_DESCRIPTOR_HANDLE materialSrvHandleCPU{};
 	// マテリアル GPUハンドル

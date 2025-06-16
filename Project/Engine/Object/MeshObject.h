@@ -105,6 +105,18 @@ public: // アクセッサ
     /// <param name="color"></param>
     void SetMaterialColor(const Vector4 color) { return material_->SetColor(color); }
 
+    /// <summary>
+    /// モデル取得
+    /// </summary>
+    /// <returns></returns>
+    Model* GetModel() { return model_; }
+
+    /// <summary>
+    /// マテリアル取得
+    /// </summary>
+    /// <returns></returns>
+    Material* GetMaterial() { return material_.get(); }
+
 protected: // 変数
 
     // ファイル名前
