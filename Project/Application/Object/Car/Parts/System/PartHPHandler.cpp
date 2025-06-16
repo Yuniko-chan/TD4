@@ -1,6 +1,7 @@
 #include "PartHPHandler.h"
 #include "../PartsInterface.h"
-#include "../../../../../Engine/Math/DeltaTime.h"
+#include "../../../Engine/Math/DeltaTime.h"
+#include "../../../Engine/Math/Ease.h"
 
 void PartHPHandler::Initialize()
 {
@@ -14,6 +15,17 @@ void PartHPHandler::Initialize()
 
 void PartHPHandler::Update()
 {
+	float t = hp_ / (float)maxHP_;
+	float r = 1.0f;
+	float g = Ease::Easing(Ease::EaseName::Lerp, 0.0f, 1.0f, t);
+	float b = Ease::Easing(Ease::EaseName::Lerp, 0.0f, 1.0f, t);
+	float a = 1.0f;
+	Vector4 color = {};
+	color.x = r;
+	color.y = g;
+	color.z = b;
+	color.w = a;
+	owner_->SetMaterialColor(color);
 	// HPチェック
 	if (hp_ <= 0) {
 		// 解除フラグ
