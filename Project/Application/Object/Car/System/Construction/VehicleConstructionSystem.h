@@ -85,6 +85,7 @@ private: // 検索
 	/// <returns></returns>
 	Car::IParts* FindParts(Car::IParts* parts);
 
+public:
 	std::vector<Car::IParts*> FindPartsByCategory(int typeID);
 
 private: // 登録・解除
