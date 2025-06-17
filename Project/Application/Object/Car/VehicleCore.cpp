@@ -165,9 +165,9 @@ void VehicleCore::ImGuiDrawParts()
 	ImGui::EndChild();
 
 
-	if (ImGui::Button("Release")) {
-		pairPlayer_ = nullptr;
-	}
+	//if (ImGui::Button("Release")) {
+	//	pairPlayer_ = nullptr;
+	//}
 
 	ImGui::Text("\n");
 }
