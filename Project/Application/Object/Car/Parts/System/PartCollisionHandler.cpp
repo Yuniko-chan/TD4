@@ -77,6 +77,6 @@ void PartCollisionHandler::OnCollisionGimmick(Car::IParts* part, GimmickObject c
         damage = MinigunDamage_;
     }
 
-    part->GetHPHandler()->OnHit(damage);
+    part->GetHPHandler()->OnHit((float)damage);
 
 }

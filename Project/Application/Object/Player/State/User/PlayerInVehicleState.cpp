@@ -9,6 +9,8 @@ void PlayerInVehicleState::Initialize()
 	// 回転角初期化
 	player_->GetWorldTransformAdress()->transform_.rotate = {};
 	player_->GetWorldTransformAdress()->direction_ = Vector3(0.0f, 0.0f, 1.0f);
+
+	player_->GetCore()->SetIsDrive(true);
 }
 
 void PlayerInVehicleState::Update()
@@ -33,4 +35,6 @@ void PlayerInVehicleState::Exit()
 	player_->GetWorldTransformAdress()->SetParent(nullptr);
 	player_->GetWorldTransformAdress()->transform_.translate = wolrdPosition;
 	player_->GetWorldTransformAdress()->transform_.rotate.y = parentRotate.y;
+
+	player_->GetCore()->SetIsDrive(false);
 }

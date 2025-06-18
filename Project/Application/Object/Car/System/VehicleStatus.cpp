@@ -1,6 +1,7 @@
 #include "VehicleStatus.h"
 #include "../CarLists.h"
 #include "../../../Engine/2D/ImguiManager.h"
+#include "../../../Engine/Math/RandomEngine.h"
 
 void VehicleStatus::Update()
 {
@@ -34,6 +35,16 @@ void VehicleStatus::StatusUpdate(std::map<Vector2Int, Car::IParts*>* lists)
 
 void VehicleStatus::ImGuiDraw()
 {
+	static float random = 0.0f;
+	if (ImGui::Button("Rand"))
+	{
+		random = RandomEngine::GetRandom(0, 10);
+	}
+	ImGui::DragFloat("Randomvalue", &random);
+	//int seed = RandomEngine::GetInstance()->GetSeedData();
+	//ImGui::InputInt("RandSeed", &seed);
+	ImGui::Checkbox("IsOverheat", &isOverheat_);
+
 	ImGui::DragFloat("Armor", &this->armor_);
 	ImGui::DragFloat("Speed", &this->speed_);
 	ImGui::DragFloat("Weight", &this->weight_);
@@ -44,10 +55,8 @@ void VehicleStatus::ImGuiDraw()
 
 	// タイヤ数
 	ImGui::InputInt("総タイヤ", &print);
-	ImGui::InputInt("左タイヤ", &wheelLeft_);
-	ImGui::InputInt("右タイヤ", &wheelRight_);
-	ImGui::InputInt("前タイヤ", &wheelFront_);
-	ImGui::InputInt("後タイヤ", &wheelReal_);
+	ImGui::Text("タイヤ X:左 Y:右 Z:前 W:後");
+	ImGui::InputFloat4("タイヤ数", &wheelDirectCount_.x);
 
 
 	print = partsTypes_.armor;
@@ -75,16 +84,16 @@ void VehicleStatus::ApplyPartAdd(std::string name, Vector2Int key)
 		partsTypes_.tire++;
 		// 左右のチェック
 		if (key.x > 0) {
-			wheelRight_++;
+			wheelDirectCount_.x++;
 		}
 		else if (key.x < 0) {
-			wheelLeft_++;
+			wheelDirectCount_.y++;
 		}
 		else if (key.y > 0) {
-			wheelFront_++;
+			wheelDirectCount_.z++;
 		}
 		else if (key.y < 0) {
-			wheelReal_++;
+			wheelDirectCount_.w++;
 		}
 	}
 	else if (name == "ArmorFrameParts") {
@@ -101,16 +110,16 @@ void VehicleStatus::ApplyPartRemove(std::string name, Vector2Int key)
 		partsTypes_.tire--;
 		// 左右のチェック
 		if (key.x > 0) {
-			wheelRight_--;
+			wheelDirectCount_.x--;
 		}
 		else if (key.x < 0) {
-			wheelLeft_--;
+			wheelDirectCount_.y--;
 		}
 		else if (key.y > 0) {
-			wheelFront_--;
+			wheelDirectCount_.z--;
 		}
 		else if (key.y < 0) {
-			wheelReal_--;
+			wheelDirectCount_.w--;
 		}
 	}
 	else if (name == "ArmorFrameParts") {

@@ -1,11 +1,12 @@
 #include "PartHPHandler.h"
 #include "../PartsInterface.h"
-#include "../../../../../Engine/Math/DeltaTime.h"
+#include "../../../Engine/Math/DeltaTime.h"
+#include "../../../Engine/Math/Ease.h"
 
 void PartHPHandler::Initialize()
 {
-
-	hp_ = 1;
+	maxHP_ = 20;
+	hp_ = maxHP_;
 	// 死亡・解除状態をリセット
 	owner_->SetIsDelete(false);
 	owner_->SetIsDead(false);
@@ -14,6 +15,17 @@ void PartHPHandler::Initialize()
 
 void PartHPHandler::Update()
 {
+	float t = hp_ / (float)maxHP_;
+	float r = 1.0f;
+	float g = Ease::Easing(Ease::EaseName::Lerp, 0.0f, 1.0f, t);
+	float b = Ease::Easing(Ease::EaseName::Lerp, 0.0f, 1.0f, t);
+	float a = 1.0f;
+	Vector4 color = {};
+	color.x = r;
+	color.y = g;
+	color.z = b;
+	color.w = a;
+	owner_->SetMaterialColor(color);
 	// HPチェック
 	if (hp_ <= 0) {
 		// 解除フラグ
@@ -25,7 +37,7 @@ void PartHPHandler::Update()
 
 }
 
-void PartHPHandler::OnHit(int16_t damage)
+void PartHPHandler::OnHit(float damage)
 {
 
 	// 無敵状態なのでリターン
@@ -60,4 +72,14 @@ void PartHPHandler::InvisibleProgress()
 		}
 	}
 
+}
+
+void PartHPHandler::HeatDamage(float damage)
+{
+	//const int persent = 50;
+	hp_ -= (damage) * kDeltaTime_;
+	// 0より小さい値にならないように
+	if (hp_ < 0) {
+		hp_ = 0;
+	}
 }

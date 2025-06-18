@@ -32,6 +32,11 @@ void VehicleConstructionSystem::ImGuiDraw()
 			name = (*it).second->GetName() + "Translate";
 			EulerTransform t = (*it).second->GetWorldTransformAdress()->transform_;
 			ImGui::DragFloat3(name.c_str(), &t.translate.x, 0.01f);
+
+			name = (*it).second->GetName() + "HP";
+			float hp = (*it).second->GetHPHandler()->GetHP();
+			ImGui::DragFloat(name.c_str(), &hp);
+
 			// 配列キー
 			name = (*it).second->GetName() + "Key";
 			Vector2Int key = (*it).first;
@@ -219,6 +224,38 @@ Car::IParts* VehicleConstructionSystem::FindParts(Car::IParts* parts)
 	}
 
 	return nullptr;
+}
+
+std::vector<Car::IParts*> VehicleConstructionSystem::FindPartsByCategory(int typeID)
+{
+	std::vector<Car::IParts*> result = {};
+	std::string className;
+
+	// IDからクラス決定
+	switch (typeID)
+	{
+	case 0:
+		className = "EngineParts";
+		break;
+	case 1:
+		className = "TireParts";
+		break;
+	case 2:
+		className = "ArmorFrameParts";
+		break;
+	default:
+		break;
+	}
+
+	// 名前から検索、追加
+	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin();
+		it != partsMapping_.end(); ++it) {
+		if ((*it).second->GetClassNameString() == className) {
+			result.push_back((*it).second);
+		}
+	}
+
+	return std::vector<Car::IParts*>(result);
 }
 
 void VehicleConstructionSystem::RegistParts(const Vector2Int& id, Car::IParts* parts)

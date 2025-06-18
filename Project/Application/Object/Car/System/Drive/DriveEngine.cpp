@@ -75,7 +75,7 @@ void DriveEngine::ImGuiDraw()
 		ImGui::Checkbox("IsDecel", &isDecel_);
 		int con = this->consecutiveReceptions_;
 		ImGui::InputInt("ConsecutiveRecept", &con);
-		ImGui::DragFloat("SpeedRatio", &speedRatio_);
+		ImGui::DragFloat("SpeedRatio", &speedRate_);
 
 		ImGui::TreePop();
 	}
@@ -96,7 +96,7 @@ void DriveEngine::SpeedCalculation()
 	// エンジンが回転している場合
 	if (consecutiveReceptions_ != 0) {
 		// 速度計算
-		speedRatio_ = (float)consecutiveReceptions_ * (plusRate);
+		speedRate_ = (float)consecutiveReceptions_ * (plusRate);
 
 		// 全体への影響（速度レートが一定を越えている場合オーバーヒート的な何か）
 		OverheatProcess(t);
@@ -105,9 +105,18 @@ void DriveEngine::SpeedCalculation()
 	// エンジンが回転していない場合
 	else {
 		// 速度が残っている場合
-		if (speedRatio_ != 0.0f) {
+		if (speedRate_ != 0.0f) {
 			const float decreValue = 0.05f;
-			speedRatio_ = Ease::Easing(Ease::EaseName::Lerp, speedRatio_, 0.0f, decreValue);
+			speedRate_ = Ease::Easing(Ease::EaseName::Lerp, speedRate_, 0.0f, decreValue);
+		}
+	}
+
+	// 運転されていなければ
+	if (!owner_->IsDrive()) {
+		// 速度が残っている場合
+		if (speedRate_ != 0.0f) {
+			const float decreValue = 0.1f;
+			speedRate_ = Ease::Easing(Ease::EaseName::Lerp, speedRate_, 0.0f, decreValue);
 		}
 	}
 
@@ -115,8 +124,8 @@ void DriveEngine::SpeedCalculation()
 	const float rideSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue("Player", "RideSpeed");
 
 	// 速度があるとき
-	if (speedRatio_ != 0.0f) {
-		currentSpeed_ = speedRatio_ * rideSpeedFactor;
+	if (speedRate_ != 0.0f) {
+		currentSpeed_ = speedRate_ * rideSpeedFactor;
 	}
 
 	// 切り捨て
@@ -133,7 +142,26 @@ void DriveEngine::OverheatProcess(const float& SpeedPercentage)
 	const float receptionLimit = 10 / 2;
 	if (SpeedPercentage >= speedLimit &&
 		std::abs(consecutiveReceptions_) >= receptionLimit) {
-		
+		this->owner_->GetStatus()->SetIsOverheat(true);
+		float minDPS = 1.0f;
+		float maxDPS = 7.5f;
+		// スピード用のレシオ計算
+		const float kMaxRate = 10.0f;	// 最大
+		const float kMinRate = 1.0f;	// 最小
+		const float kEngineMax = 10.0f;	// エンジンの最大数
+		// レート
+		float engineCount = (float)owner_->GetStatus()->GetEngine();
+		float t = (std::clamp(engineCount, 0.0f, 9.0f) + 1.0f) / kEngineMax;
+		// 乗算レート
+		float plusRate = Ease::Easing(Ease::EaseName::Lerp, kMinRate, kMaxRate, t);
+		float maxRate = receptionLimit * plusRate;
+		t = (speedRate_ - (maxRate)) / maxRate;
+
+		float dps = Ease::Easing(Ease::EaseName::Lerp, minDPS, maxDPS, t);
+
+		// SpeedRate(now / max) = t
+		// Ease(minDPS,maxDPS,t)
+		owner_->GetStatus()->SetDamagePerSecond(dps);
 	}
 
 
