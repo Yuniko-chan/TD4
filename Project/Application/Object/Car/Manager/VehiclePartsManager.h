@@ -58,6 +58,12 @@ public:
 	/// <param name="position"></param>
 	/// <returns></returns>
 	Car::IParts* FindRootNonCoreParts(const Vector3& position);
+	/// <summary>
+	/// 親のあるコア以外のパーツ検索
+	/// </summary>
+	/// <param name="position"></param>
+	/// <returns></returns>
+	Car::IParts* FindRootCoreParts(const Vector3& position);
 private:
 	// パーツのリスト
 	std::unordered_map<std::string, Car::IParts*> partsLists_;

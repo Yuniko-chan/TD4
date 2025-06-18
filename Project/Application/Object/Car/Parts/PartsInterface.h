@@ -78,6 +78,8 @@ namespace Car
 		// 消す
 		void SetIsDelete(bool isDelete) { isDelete_ = isDelete; }
 
+		Material* GetMaterial() { return material_.get(); }
+
 	protected:
 		/// <summary>
 		/// ImGui

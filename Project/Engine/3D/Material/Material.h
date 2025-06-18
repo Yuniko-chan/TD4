@@ -102,6 +102,8 @@ public: //アクセッサ
 	/// <param name="environmentCoefficient"></param>
 	void SetEnvironmentCoefficient(const float environmentCoefficient);
 
+	Vector4 GetColor() { return color_; }
+
 private:
 
 	// Sprite用のマテリアルリソースを作る

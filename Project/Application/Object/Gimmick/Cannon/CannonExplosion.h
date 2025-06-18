@@ -59,6 +59,12 @@ public: // 関数
     /// <param name="cannonExplosionData">大砲爆発データ</param>
     void Reset(const CannonExplosionData& cannonExplosionData);
 
+    /// <summary>
+    /// 爆発時間
+    /// </summary>
+    /// <returns></returns>
+    bool GetIsExploding() { return isExploding_; }
+
 private: // 関数
 
     /// <summary>

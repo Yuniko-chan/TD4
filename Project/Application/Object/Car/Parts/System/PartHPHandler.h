@@ -22,19 +22,23 @@ public:
 	/// 被弾
 	/// </summary>
 	/// <param name="damage"></param>
-	void OnHit(int16_t damage);
+	void OnHit(float damage);
 
 public:
-	void SetHP(int16_t hp) { hp_ = hp; }
+	void SetHP(int16_t hp) { hp_ = (float)hp; }
 
 	/// <summary>
 	/// 無敵経過
 	/// </summary>
 	void InvisibleProgress();
 
+	void HeatDamage(float damage = 1.0f);
+
+	float GetHP() { return hp_; }
 private:
 	
-	int16_t hp_ = 0;
+	int16_t maxHP_ = 0;
+	float hp_ = 0;
 	bool isInvisible_ = false;
 
 	float invisibleCooltime_ = 0.0f;

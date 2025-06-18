@@ -169,7 +169,7 @@ void PendulumIronBall::StringInitialize()
 
     // 紐描画
     // ファイル名前
-    stringFileName_ = "IronBallString.obj";
+    stringFileName_ = "Rope.obj";
     // モデル
     stringModel_ = ModelManager::GetInstance()->GetModel(directoryPath_, stringFileName_);
     // マテリアル

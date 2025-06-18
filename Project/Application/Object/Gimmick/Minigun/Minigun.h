@@ -72,6 +72,12 @@ public: // 関数
     /// <param name="colliderDebugDraw">衝突デバッグ描画</param>
     void CollisionListRegister(BaseCollisionManager* collisionManager, ColliderDebugDraw* colliderDebugDraw);
 
+    /// <summary>
+    /// 弾取得
+    /// </summary>
+    /// <returns></returns>
+    std::list<MinigunBullet*>* GetBullets() { return &bullets_; }
+
 private: // 関数
 
     /// <summary>

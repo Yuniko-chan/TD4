@@ -54,9 +54,11 @@ public: // アクセッサ
     DriveSystem* GetDriveSystem() { return driveSystem_.get(); }
     VehicleAnimation* GetAnimation() { return animation_.get(); }
     VehicleStatus* GetStatus() { return statusSystem_.get(); }
+    bool IsDrive() { return isDrive_; }
     //---セッター---//
     // プレイヤー
     void SetPlayer(Player* player) { pairPlayer_ = player; }
+    void SetIsDrive(bool isDrive) { isDrive_ = isDrive; }
 
 private:
     // パーツ構築システム
@@ -74,4 +76,8 @@ private:
     Player* pairPlayer_ = nullptr;
 
     Vector3 preDirection_ = {};
+
+    // 運転中か？
+    bool isDrive_ = false;
+
 };

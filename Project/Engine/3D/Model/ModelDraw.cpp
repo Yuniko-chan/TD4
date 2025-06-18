@@ -588,7 +588,7 @@ void ModelDraw::ManyNormalObjectsDraw(ManyNormalObjectsDesc& desc) {
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(sCommandList_, 15, sEnvironmentTextureHandle_);
 
 	//描画
-	sCommandList_->DrawIndexedInstanced(UINT(desc.model->GetModelData().indices.size()), 1, 0, 0, 0);
+	sCommandList_->DrawIndexedInstanced(UINT(desc.model->GetModelData().indices.size()), desc.numInstance, 0, 0, 0);
 
 }
 

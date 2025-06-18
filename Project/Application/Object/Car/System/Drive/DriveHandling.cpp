@@ -113,6 +113,14 @@ void DriveHandling::PreUpdate()
 		executeDirection_ = Vector3(0.0f, 0.0f, 1.0f);
 	}
 
+	// タイヤの向き決定
+	std::vector<Car::IParts*> tires = {};
+	tires = owner_->GetConstructionSystem()->FindPartsByCategory(1);
+
+	for (std::vector<Car::IParts*>::iterator it = tires.begin(); it != tires.end(); ++it) {
+		(*it)->GetWorldTransformAdress()->direction_ = steerDirection_;
+	}
+
 }
 
 void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
@@ -152,8 +160,6 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 		else if (leftWheel == 0 && rightWheel == 0 && (std::fabsf(executeDirection_.x) != 0.0f)) {
 			executeDirection_.x *= (1.0f / 30.0f);
 		}
-
-		//owner_->GetWorldTransformAdress()->direction_ = executeDirection_;
 
 		executeDirection_ = Vector3::Normalize(executeDirection_);
 
