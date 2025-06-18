@@ -11,6 +11,8 @@ void OverheatSystem::Update()
 
 	// 深度情報更新
 	preDepth_ = maxDepth_;
+	// 最大値の初期化
+	maxDepth_ = 0;
 
 	// 最大深度値検索
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = this->mappingData_->begin();
@@ -37,12 +39,14 @@ void OverheatSystem::DamageProcess()
 
 	// 対象にダメージ
 	if (targetPart_) {
-		targetPart_->GetHPHandler()->HeatDamage();
+		targetPart_->GetHPHandler()->HeatDamage(owner_->GetStatus()->GetHeatDPS());
 	}
 }
 
 void OverheatSystem::AssignRandomOverheatPart()
 {
+	// 対象のリセット
+	targetPart_ = nullptr;
 	// 対象
 	std::vector<Car::IParts*> depths = {};
 	// 最大深度
@@ -55,7 +59,10 @@ void OverheatSystem::AssignRandomOverheatPart()
 		}
 	}
 	// 番号をランダムで決定
-	int targetIndex = (int)RandomEngine::GetRandom(0, (float)depths.size() - 1);
+	int targetIndex = 0;
+	if (depths.size() > 0) {
+		targetIndex = (int)RandomEngine::GetRandom(0, (float)depths.size() - 1);
+	}
 	// 番号のパーツを設定
 	targetPart_ = depths[targetIndex];
 }

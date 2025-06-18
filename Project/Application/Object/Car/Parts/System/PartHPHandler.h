@@ -32,7 +32,7 @@ public:
 	/// </summary>
 	void InvisibleProgress();
 
-	void HeatDamage();
+	void HeatDamage(float damage = 1.0f);
 
 	float GetHP() { return hp_; }
 private:

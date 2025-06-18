@@ -58,10 +58,11 @@ public:	// アクセッサ
 	int GetEngine() const { return partsTypes_.engine; }
 	// オーバーヒートのチェック
 	bool GetIsOverheat() const { return isOverheat_; }
+	float GetHeatDPS() const { return damagePerSecond_; }
 
 	//---セッター---//
 	void SetIsOverheat(bool isOverheat) { isOverheat_ = isOverheat; }
-
+	void SetDamagePerSecond(float damage) { damagePerSecond_ = damage; }
 private:
 	float weight_ = 1.0f;
 	float speed_ = 1.0f;
@@ -75,5 +76,7 @@ private:
 	// X:左,Y:右,Z:前,W:後
 	Vector4 wheelDirectCount_ = {};
 
+	// オーバーヒート関係
 	bool isOverheat_ = false;
+	float damagePerSecond_ = 1.0f;
 };

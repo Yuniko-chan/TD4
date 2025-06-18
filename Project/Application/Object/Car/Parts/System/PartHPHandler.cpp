@@ -74,10 +74,10 @@ void PartHPHandler::InvisibleProgress()
 
 }
 
-void PartHPHandler::HeatDamage()
+void PartHPHandler::HeatDamage(float damage)
 {
 	//const int persent = 50;
-	hp_ -= (1.0f) * kDeltaTime_;
+	hp_ -= (damage) * kDeltaTime_;
 	// 0より小さい値にならないように
 	if (hp_ < 0) {
 		hp_ = 0;

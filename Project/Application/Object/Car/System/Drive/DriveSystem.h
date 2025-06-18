@@ -45,13 +45,10 @@ private:
 	VehicleStatus* status_ = nullptr;
 	// 速度ベクトル
 	Vector3 velocity_ = {};
-	// 運転中か？
-	bool isDrive_ = false;
 
 public:	// アクセッサ
 	//---セッター---//
 	void SetStatusManager(VehicleStatus* status) { status_ = status; }
-	void SetIsDrive(bool isDrive) { isDrive_ = isDrive; }
 
 	//---ゲッター---//
 
