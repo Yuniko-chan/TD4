@@ -87,6 +87,12 @@ public: // 関数
     /// <returns></returns>
     bool GetIsWorking() { return isWorking_; }
 
+    /// <summary>
+    /// 大砲の爆発取得
+    /// </summary>
+    /// <returns></returns>
+    CannonExplosion* GetCannonExplosion() { return cannonExplosion_.get(); }
+
 private: // 関数
 
     /// <summary>

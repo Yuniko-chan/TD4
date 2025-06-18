@@ -3,6 +3,7 @@
 #include "../Transform/WorldTransform.h"
 #include "InstancingDrawingData.h"
 #include <list>
+#include "../../Object/MeshObject.h"
 
 /// <summary>
 /// インスタンシング描画
@@ -37,14 +38,11 @@ public: // 関数
 	/// <summary>
 	/// 登録確認
 	/// </summary>
-	/// <param name="model">モデル</param>
-	/// <param name="worldTransform">ワールドトランスフォーム</param>
+	/// <param name="meshObject">メッシュオブジェクト</param>
 	/// <param name="viewProjectionMatrix">ビュープロジェクション</param>
 	/// <returns>成功したか</returns>
-	bool RegistrationConfirmation(
-		Model* model, 
-		WorldTransform* worldTransform,
-		const MaterialData& materialData,
+	virtual bool RegistrationConfirmation(
+		MeshObject* meshObject,
 		const Matrix4x4& viewProjectionMatrix);
 
 	/// <summary>

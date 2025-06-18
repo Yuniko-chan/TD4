@@ -108,8 +108,7 @@ void GameSceneObjectManager::Draw(BaseCamera& camera)
 
 		// インスタンシング描画登録成功しないなら単独描画
 		if (!instancingDrawing_->RegistrationConfirmation(
-			object->GetModel(), object->GetWorldTransformAdress(),
-			*(object->GetMaterial()->GetMaterialMap()), camera.GetViewProjectionMatrix())) {
+			object, camera.GetViewProjectionMatrix())) {
 
 			static_cast<MeshObject*>(it->second.get())->Draw(camera);
 

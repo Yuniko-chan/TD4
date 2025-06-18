@@ -101,6 +101,14 @@ private: // 関数
     /// </summary>
     void CannonBallInitialize();
 
+public: // 関数
+
+    /// <summary>
+    /// 大砲の弾取得
+    /// </summary>
+    /// <returns></returns>
+    CannonBall* GetCannonBall() { return cannonBall_.get(); }
+
 private: // 変数
 
     // 撃つ状態か
@@ -116,7 +124,7 @@ private: // 変数
     bool isFiring_;
 
     // 大砲の弾
-    std::unique_ptr<CannonBall>  cannonBall_;
+    std::unique_ptr<CannonBall> cannonBall_;
 
     // 発射向き
     Vector3 firingDirection_;

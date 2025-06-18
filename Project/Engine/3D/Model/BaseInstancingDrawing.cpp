@@ -85,11 +85,13 @@ void BaseInstancingDrawing::Clear()
 }
 
 bool BaseInstancingDrawing::RegistrationConfirmation(
-	Model* model, 
-	WorldTransform* worldTransform,
-	const MaterialData& materialData, 
+	MeshObject* meshObject,
 	const Matrix4x4& viewProjectionMatrix)
 {
+
+	Model* model = meshObject->GetModel();
+	WorldTransform* worldTransform = meshObject->GetWorldTransformAdress();
+	const MaterialData materialData = *(meshObject->GetMaterial()->GetMaterialMap());
 
 	for (size_t i = 0; i < modelDataMax_; ++i) {
 		// 名前が一致する
