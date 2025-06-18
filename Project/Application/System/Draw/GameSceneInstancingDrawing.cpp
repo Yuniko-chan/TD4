@@ -1,6 +1,8 @@
 #include "GameSceneInstancingDrawing.h"
 
 #include "../../Object/Gimmick/Cannon/Cannon.h"
+#include "../../Object/Gimmick/IronBall/ConicalPendulumIronBall.h"
+#include "../../Object/Gimmick/IronBall/PendulumIronBall.h"
 
 void GameSceneInstancingDrawing::Initialize()
 {
@@ -43,8 +45,15 @@ bool GameSceneInstancingDrawing::RegistrationConfirmation(MeshObject* meshObject
 	if (meshObject->GetClassNameString() == "Cannon") {
 		CannonVer(meshObject, viewProjectionMatrix);
 	}
+	else if (meshObject->GetClassNameString() == "ConicalPendulumIronBall") {
+		ConicalPendulumIronBallVer(meshObject, viewProjectionMatrix);
+	}
+	else if (meshObject->GetClassNameString() == "PendulumIronBall") {
+		PendulumIronBallVer(meshObject, viewProjectionMatrix);
+	}
 
 	return BaseInstancingDrawing::RegistrationConfirmation(meshObject, viewProjectionMatrix);
+
 }
 
 void GameSceneInstancingDrawing::CannonVer(MeshObject* meshObject, const Matrix4x4& viewProjectionMatrix)
@@ -65,5 +74,46 @@ void GameSceneInstancingDrawing::CannonVer(MeshObject* meshObject, const Matrix4
 	if (cannonExplosion->GetIsExploding()) {
 		RegistrationConfirmation(obj->GetCannonBall()->GetCannonExplosion(), viewProjectionMatrix);
 	}
+
+}
+
+void GameSceneInstancingDrawing::ConicalPendulumIronBallVer(MeshObject* meshObject, const Matrix4x4& viewProjectionMatrix)
+{
+
+	ConicalPendulumIronBall* obj = reinterpret_cast<ConicalPendulumIronBall*>(meshObject);
+
+	RopeRegistrationConfirmation(obj->GetStringWorldTransformAddress(), *(obj->GetStringMaterial()->GetMaterialMap()), viewProjectionMatrix);
+
+}
+
+void GameSceneInstancingDrawing::PendulumIronBallVer(MeshObject* meshObject, const Matrix4x4& viewProjectionMatrix)
+{
+
+	PendulumIronBall* obj = reinterpret_cast<PendulumIronBall*>(meshObject);
+
+	RopeRegistrationConfirmation(obj->GetStringWorldTransformAddress(), *(obj->GetStringMaterial()->GetMaterialMap()), viewProjectionMatrix);
+
+
+}
+
+void GameSceneInstancingDrawing::RopeRegistrationConfirmation(WorldTransform* worldTransform, const MaterialData& materialData, const Matrix4x4& viewProjectionMatrix)
+{
+
+	const size_t kRopeNum = 5;
+
+	// トランスフォーム マップ
+	instancingDrawingDatas_[kRopeNum].transformMap[instancingDrawingTransformationMatrixNum_[kRopeNum]].WVP = worldTransform->worldMatrix_ * viewProjectionMatrix;
+	instancingDrawingDatas_[kRopeNum].transformMap[instancingDrawingTransformationMatrixNum_[kRopeNum]].World = worldTransform->worldMatrix_;
+	instancingDrawingDatas_[kRopeNum].transformMap[instancingDrawingTransformationMatrixNum_[kRopeNum]].WorldInverseTranspose = Matrix4x4::Transpose(Matrix4x4::Inverse(worldTransform->worldMatrix_));
+
+	// マテリアルデータ マップ
+	instancingDrawingDatas_[kRopeNum].materialMap[instancingDrawingTransformationMatrixNum_[kRopeNum]].color = materialData.color;
+	instancingDrawingDatas_[kRopeNum].materialMap[instancingDrawingTransformationMatrixNum_[kRopeNum]].enableLighting = materialData.enableLighting;
+	instancingDrawingDatas_[kRopeNum].materialMap[instancingDrawingTransformationMatrixNum_[kRopeNum]].environmentCoefficient = materialData.environmentCoefficient;
+	instancingDrawingDatas_[kRopeNum].materialMap[instancingDrawingTransformationMatrixNum_[kRopeNum]].shininess = materialData.shininess;
+	instancingDrawingDatas_[kRopeNum].materialMap[instancingDrawingTransformationMatrixNum_[kRopeNum]].uvTransform = materialData.uvTransform;
+
+	// 回数をインクリメント
+	instancingDrawingTransformationMatrixNum_[kRopeNum]++;
 
 }

@@ -53,6 +53,18 @@ public: // 関数
     /// <param name="collisionData"></param>
     void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
+    /// <summary>
+    /// 紐のワールドトランスフォーム取得
+    /// </summary>
+    /// <returns></returns>
+    WorldTransform* GetStringWorldTransformAddress() { return &stringWorldTransform_; }
+
+    /// <summary>
+    /// 紐のマテリアル取得
+    /// </summary>
+    /// <returns></returns>
+    Material* GetStringMaterial() { return stringMaterial_.get(); }
+
 private: // 関数
 
     /// <summary>
