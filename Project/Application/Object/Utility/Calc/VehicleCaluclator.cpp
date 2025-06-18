@@ -1,6 +1,7 @@
 #include "VehicleCaluclator.h"
 #include "../../../Engine/Math/Matrix/Matrix4x4.h"
 #include "../../../Engine/Math/DeltaTime.h"
+#include "../../Car/CarLists.h"
 
 Vector3 VehicleCaluclator::VelocityCalculator()
 {
@@ -27,4 +28,50 @@ Vector3 VehicleCaluclator::ExponentialInterpolate(const Vector3& current, const 
     Vector3 v1 = current;
     Vector3 v2 = end;
     return v1 + (v2 - v1) * factor;
+}
+
+std::vector<Vector2Int> VehicleCaluclator::GetEmptyList(std::map<Vector2Int, Car::IParts*>* partLists)
+{
+    std::vector<Vector2Int> parts = {};
+    // 全ての隣接パーツをリストに（被りが起きないように
+    for (std::map<Vector2Int, Car::IParts*>::iterator it = partLists->begin();
+        it != partLists->end(); ++it) {
+        Vector2Int key = (*it).first;
+        // 四方向のキーを追加する（被りが起きないように）
+        Vector2Int findKey = Vector2Int(key.x, key.y + 1);
+        parts = PushLists(parts, findKey);
+        
+        findKey = Vector2Int(key.x, key.y - 1);
+        parts = PushLists(parts, findKey);
+
+        findKey = Vector2Int(key.x + 1, key.y);
+        parts = PushLists(parts, findKey);
+        
+        findKey = Vector2Int(key.x - 1, key.y);
+        parts = PushLists(parts, findKey);
+    }
+
+    // パーツで既にある場合削除
+    for (std::vector<Vector2Int>::iterator it = parts.begin();
+        it != parts.end();) {
+        if (partLists->contains((*it))) {
+            it = parts.erase(it);
+        }
+        else {
+            it++;
+        }
+    }
+
+
+    return std::vector<Vector2Int>(parts);
+}
+
+std::vector<Vector2Int> VehicleCaluclator::PushLists(std::vector<Vector2Int> list, Vector2Int key)
+{
+    std::vector<Vector2Int> result = list;
+    // 追加できるか
+    if (std::find(list.begin(), list.end(), key) == list.end() && key != Vector2Int(0, 0)) {
+        result.push_back(key);
+    }
+    return std::vector<Vector2Int>(result);
 }

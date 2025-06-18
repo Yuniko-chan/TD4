@@ -106,6 +106,8 @@ private:
 	VehicleStatus* status_ = nullptr;
 	// パーツのリスト
 	std::map<Vector2Int, Car::IParts*> partsMapping_;
+	// 空いてるキーリスト
+	std::vector<Vector2Int> emptyMap_;
 public: // アクセッサ
 	void SetStatusManager(VehicleStatus* status) { status_ = status; }
 

@@ -3,7 +3,7 @@
 
 void VehicleConstructionSystem::Initialize()
 {
-
+	partsMapping_.emplace(Vector2Int(0, 0), owner_);
 }
 
 void VehicleConstructionSystem::Update()
@@ -111,6 +111,10 @@ bool VehicleConstructionSystem::Attach(Car::IParts* parts)
 	// 一致するものがなければ＆＆0,0でなければ
 	if (!partsMapping_.contains(newKey) && newKey != Vector2Int(0, 0)) {
 		Attach(parts, Vector2Int(newKey));
+
+		// 空いてる場所
+		this->emptyMap_ = VehicleCaluclator::GetEmptyList(&partsMapping_);
+
 		return true;
 	}
 
@@ -283,6 +287,10 @@ void VehicleConstructionSystem::RegistParts(const Vector2Int& id, Car::IParts* p
 	}
 	// 子・親の登録
 	for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
+		// コアならスキップ
+		if ((*it)->GetClassNameString() == "VehicleCore") {
+			continue;
+		}
 		// 対象の深度値
 		int32_t targetDepth = (*it)->GetConnector()->GetDepth();
 		// 子に追加
@@ -327,6 +335,10 @@ void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts*
 
 	// 隣接パーツ（子・親）の解除処理
 	for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
+		// コアならスキップ
+		if ((*it)->GetClassNameString() == "VehicleCore") {
+			continue;
+		}
 		// 対象の深度値
 		int32_t targetDepth = (*it)->GetConnector()->GetDepth();
 		// 自分が子である場合
