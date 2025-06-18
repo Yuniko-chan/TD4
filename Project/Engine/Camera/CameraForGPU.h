@@ -7,4 +7,5 @@
 struct CameraForGPU{
 	// ワールド座標
 	Vector3 worldPosition;
+	float pad;
 };
