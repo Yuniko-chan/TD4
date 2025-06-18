@@ -76,7 +76,7 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 	}
 
 	// インスタンシング描画
-	instancingDrawing_ = std::make_unique<InstancingDrawing>();
+	instancingDrawing_ = std::make_unique<GameSceneInstancingDrawing>();
 	instancingDrawing_->Initialize();
 
 	// プレイヤーの設定などなど
@@ -117,6 +117,7 @@ void GameSceneObjectManager::Draw(BaseCamera& camera)
 
 	}
 
+	// インスタンシング描画
 	instancingDrawing_->Draw(camera);
 
 	// 影

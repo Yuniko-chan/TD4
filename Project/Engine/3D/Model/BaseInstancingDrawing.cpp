@@ -1,11 +1,16 @@
-#include "InstancingDrawing.h"
+#include "BaseInstancingDrawing.h"
 #include "ModelManager.h"
 #include "../../base/BufferResource.h"
 #include "../../base/DescriptorHerpManager/SRVDescriptorHerpManager.h"
 #include "ModelDraw.h"
 
-void InstancingDrawing::Initialize()
+void BaseInstancingDrawing::Initialize()
 {
+
+	// モデルのデータがない
+	if (modelDataMax_ == 0) {
+		return;
+	}
 
 	// モデルマネージャー
 	ModelManager* modelManager = ModelManager::GetInstance();
@@ -13,11 +18,11 @@ void InstancingDrawing::Initialize()
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 
 	// 変数初期化
-	for (size_t i = 0; i < kModelDataMax_; ++i) {
+	for (size_t i = 0; i < modelDataMax_; ++i) {
 		
 		// インスタンシング描画用モデル保存
-		instancingDrawingDatas_[i].model = modelManager->GetModel(kModelDatas_[i].first.first, kModelDatas_[i].first.second);
-		instancingDrawingDatas_[i].isAnimation = kModelDatas_[i].second;
+		instancingDrawingDatas_[i].model = modelManager->GetModel(modelDatas_[i].first.first, modelDatas_[i].first.second);
+		instancingDrawingDatas_[i].isAnimation = modelDatas_[i].second;
 		instancingDrawingDatas_[i].localMatrixManager = nullptr;
 
 		// バッファ
@@ -69,24 +74,24 @@ void InstancingDrawing::Initialize()
 
 }
 
-void InstancingDrawing::Clear()
+void BaseInstancingDrawing::Clear()
 {
 
-	for (size_t i = 0; i < kModelDataMax_; ++i) {
+	for (size_t i = 0; i < modelDataMax_; ++i) {
 		// ワールドトランスフォームの保存回数を0
 		instancingDrawingTransformationMatrixNum_[i] = 0;
 	}
 
 }
 
-bool InstancingDrawing::RegistrationConfirmation(
+bool BaseInstancingDrawing::RegistrationConfirmation(
 	Model* model, 
 	WorldTransform* worldTransform,
 	const MaterialData& materialData, 
 	const Matrix4x4& viewProjectionMatrix)
 {
 
-	for (size_t i = 0; i < kModelDataMax_; ++i) {
+	for (size_t i = 0; i < modelDataMax_; ++i) {
 		// 名前が一致する
 		if (model->GetFileName() == instancingDrawingDatas_[i].model->GetFileName()) {
 			
@@ -117,10 +122,10 @@ bool InstancingDrawing::RegistrationConfirmation(
 
 }
 
-void InstancingDrawing::Draw(BaseCamera& camera)
+void BaseInstancingDrawing::Draw(BaseCamera& camera)
 {
 
-	for (size_t i = 0; i < kModelDataMax_; ++i) {
+	for (size_t i = 0; i < modelDataMax_; ++i) {
 		// アニメーションあり
 		if (instancingDrawingDatas_[i].isAnimation) {
 
@@ -163,10 +168,10 @@ void InstancingDrawing::Draw(BaseCamera& camera)
 
 }
 
-void InstancingDrawing::SetLocalMatrixManager(const std::string& fileName, LocalMatrixManager* localMatrixManager)
+void BaseInstancingDrawing::SetLocalMatrixManager(const std::string& fileName, LocalMatrixManager* localMatrixManager)
 {
 
-	for (size_t i = 0; i < kModelDataMax_; ++i) {
+	for (size_t i = 0; i < modelDataMax_; ++i) {
 		// 名前が一致する
 		if (fileName == instancingDrawingDatas_[i].model->GetFileName()) {
 			instancingDrawingDatas_[i].localMatrixManager = localMatrixManager;

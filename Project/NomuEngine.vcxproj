@@ -249,6 +249,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Scene\SelectScene\SelectScene.cpp" />
     <ClCompile Include="Application\Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Application\Scene\TutorialScene\TutorialScene.cpp" />
+    <ClCompile Include="Application\System\Draw\GameSceneInstancingDrawing.cpp" />
     <ClCompile Include="Application\System\PostEffectSystem\PostEffectSystem.cpp" />
     <ClCompile Include="Application\System\Shadow\Shadow.cpp" />
     <ClCompile Include="Application\System\Shadow\ShadowManager.cpp" />
@@ -259,7 +260,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\3D\Line\DrawLine.cpp" />
     <ClCompile Include="Engine\3D\Fog\FogManager.cpp" />
     <ClCompile Include="Engine\3D\ManyObjects\LargeNumberOfObjects.cpp" />
-    <ClCompile Include="Engine\3D\Model\InstancingDrawing.cpp" />
+    <ClCompile Include="Engine\3D\Model\BaseInstancingDrawing.cpp" />
     <ClCompile Include="Engine\3D\Model\Mesh.cpp" />
     <ClCompile Include="Engine\3D\Model\ModelDraw.cpp" />
     <ClCompile Include="Engine\3D\Model\ModelLoaderFromCourseEX.cpp" />
@@ -523,6 +524,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Application\Scene\TutorialScene\TutorialScene.h" />
     <ClInclude Include="Application\Effect\EffectManager.h" />
+    <ClInclude Include="Application\System\Draw\GameSceneInstancingDrawing.h" />
     <ClInclude Include="Application\System\PostEffectSystem\PostEffectSystem.h" />
     <ClInclude Include="Application\System\Shadow\Shadow.h" />
     <ClInclude Include="Application\System\Shadow\ShadowManager.h" />
@@ -533,7 +535,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\2D\ImGuiManager.h" />
     <ClInclude Include="Engine\2D\SpriteForGPU.h" />
     <ClInclude Include="Engine\2D\SpriteVertex.h" />
-    <ClInclude Include="Engine\3D\Model\InstancingDrawing.h" />
+    <ClInclude Include="Engine\3D\Model\BaseInstancingDrawing.h" />
     <ClInclude Include="Engine\3D\Vertex\ColorVertexData.h" />
     <ClInclude Include="Engine\3D\Line\DrawLine.h" />
     <ClInclude Include="Engine\3D\Fog\FogData.h" />

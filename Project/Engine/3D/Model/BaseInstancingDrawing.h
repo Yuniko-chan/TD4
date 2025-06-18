@@ -7,15 +7,10 @@
 /// <summary>
 /// インスタンシング描画
 /// </summary>
-class InstancingDrawing
+class BaseInstancingDrawing
 {
 
-private: //定数
-
-	/// <summary>
-	/// モデルデータ最大数
-	/// </summary>
-	static const size_t kModelDataMax_ = 7;
+protected: //定数
 
 	/// <summary>
 	/// それぞれのトランスフォームデータ最大数
@@ -27,28 +22,12 @@ private: //定数
 	/// </summary>
 	using ModelPathAndName = std::pair<std::string, std::string>;
 
-	/// <summary>
-	/// モデルデータ<ファイルパス,アニメーションするか>
-	/// </summary>
-	const std::array<std::pair<ModelPathAndName, bool>, kModelDataMax_> kModelDatas_ = {
-	
-		std::pair<ModelPathAndName, bool>{{"Resources/Model/Tire", "Tire.obj"}, false}, // タイヤ
-		std::pair<ModelPathAndName, bool>{{"Resources/Model/Frame", "Frame.obj"}, false}, // フレーム
-		std::pair<ModelPathAndName, bool>{{"Resources/Model/Engine", "Engine.obj"}, false}, // エンジン
-
-		std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/Cannon/", "Cannon.obj"}, false}, // 大砲
-		std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/IronBall/", "IronBall.obj"}, false}, // 鉄球
-		std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/IronBall/", "Rope.obj"}, false}, // 鉄球紐
-		std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/Gatling/", "Gatling.gltf"}, false}, // ミニガン
-	
-	};
-
 public: // 関数
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	virtual void Initialize();
 
 	/// <summary>
 	/// クリア
@@ -81,14 +60,19 @@ public: // 関数
 	/// <param name="localMatrixManager">ローカル行列マネージャー</param>
 	void SetLocalMatrixManager(const std::string& fileName, LocalMatrixManager* localMatrixManager);
 
-private:
+protected: // 変数
 
+	// モデルデータ最大数
+	size_t modelDataMax_;
+
+	// モデルデータ<ファイルパス, アニメーションするか>
+	std::vector<std::pair<ModelPathAndName, bool>> modelDatas_;
 
 	// インスタンシング描画用モデル保存
-	std::array<InstancingDrawingData, kModelDataMax_> instancingDrawingDatas_;
+	std::vector<InstancingDrawingData> instancingDrawingDatas_;
 
 	// ワールドトランスフォームの保存回数
-	std::array<size_t, kModelDataMax_> instancingDrawingTransformationMatrixNum_;
+	std::vector<size_t> instancingDrawingTransformationMatrixNum_;
 
 };
 

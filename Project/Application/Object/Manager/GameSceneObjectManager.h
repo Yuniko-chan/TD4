@@ -3,7 +3,7 @@
 #include "../../System/Shadow/ShadowManager.h"
 #include "../Car/Manager/VehiclePartsManager.h"
 #include "../Car/Manager/PickupPointManager.h"
-#include "../../../Engine/3D/Model/InstancingDrawing.h"
+#include "../../System/Draw/GameSceneInstancingDrawing.h"
 
 // 前方宣言
 class Player;
@@ -88,7 +88,7 @@ private: // メンバ変数
 	LevelDataManager* levelDataManager_;
 
 	// インスタンシング描画
-	std::unique_ptr<InstancingDrawing> instancingDrawing_;
+	std::unique_ptr<GameSceneInstancingDrawing> instancingDrawing_;
 
 private: // USER
 	// パーツマネージャー

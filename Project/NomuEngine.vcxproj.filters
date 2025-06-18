@@ -1252,7 +1252,7 @@
     <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3D\Model\InstancingDrawing.cpp">
+    <ClCompile Include="Engine\3D\Model\BaseInstancingDrawing.cpp">
       <Filter>Engine\3D\Model</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Gimmick\Cannon\Cannon.cpp">
@@ -1263,6 +1263,9 @@
     </ClCompile>
     <ClCompile Include="Application\Object\Gimmick\Cannon\CannonExplosion.cpp">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\System\Draw\GameSceneInstancingDrawing.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2184,11 +2187,14 @@
     <ClInclude Include="Application\Object\Car\System\VehicleSystemCommons.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3D\Model\InstancingDrawing.h">
+    <ClInclude Include="Engine\3D\Model\BaseInstancingDrawing.h">
       <Filter>Engine\3D\Model</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3D\Model\InstancingDrawingData.h">
       <Filter>Engine\3D\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\System\Draw\GameSceneInstancingDrawing.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
