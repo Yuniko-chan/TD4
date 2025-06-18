@@ -88,10 +88,12 @@ void CourseLoader::StragedImportData(FILE* fp, CourseImportData* courseImportDat
 	//ヘッダ
 	memcpy(&(courseImportData->verticesNum_), buff, sizeof(uint32_t));
 	memcpy(&(courseImportData->textureNameSize_), buff + sizeof(uint32_t), sizeof(uint32_t));
+	memcpy(&(courseImportData->courseAttribute_), buff + (sizeof(uint32_t)*2), sizeof(bool)*kCourseAttributeOffset);
+
 	//頂点
 	for (uint32_t i = 0; i < courseImportData->verticesNum_;i+=3) {
 		//開始オフセット
-		size_t offset = kHeaderOfset + sizeof(CourseFileVertex) * size_t(i);
+		size_t offset = kHeaderOffset + sizeof(CourseFileVertex) * size_t(i);
 		memcpy(&(courseImportData->vertices[i]), buff + offset, sizeof(CourseFileVertex));
 		offset +=sizeof(CourseFileVertex) * 2;
 		memcpy(&(courseImportData->vertices[i+1]), buff + offset, sizeof(CourseFileVertex));
@@ -99,7 +101,7 @@ void CourseLoader::StragedImportData(FILE* fp, CourseImportData* courseImportDat
 		memcpy(&(courseImportData->vertices[i+2]), buff + offset, sizeof(CourseFileVertex));
 	}
 	//テクスチャファイルネーム
-	size_t nameOffset = kHeaderOfset + sizeof(CourseFileVertex) * size_t(courseImportData->verticesNum_);
+	size_t nameOffset = kHeaderOffset + sizeof(CourseFileVertex) * size_t(courseImportData->verticesNum_);
 	static char name[256];
 	memcpy(&(name), buff + nameOffset, size_t(courseImportData->textureNameSize_));
 	courseImportData->textureFileName_ = name;
