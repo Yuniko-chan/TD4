@@ -3,6 +3,7 @@
 #include "../../Object/Gimmick/Cannon/Cannon.h"
 #include "../../Object/Gimmick/IronBall/ConicalPendulumIronBall.h"
 #include "../../Object/Gimmick/IronBall/PendulumIronBall.h"
+#include "../../Object/Gimmick/Minigun/Minigun.h"
 
 void GameSceneInstancingDrawing::Initialize()
 {
@@ -45,11 +46,17 @@ bool GameSceneInstancingDrawing::RegistrationConfirmation(MeshObject* meshObject
 	if (meshObject->GetClassNameString() == "Cannon") {
 		CannonVer(meshObject, viewProjectionMatrix);
 	}
+	// 鉄球
 	else if (meshObject->GetClassNameString() == "ConicalPendulumIronBall") {
 		ConicalPendulumIronBallVer(meshObject, viewProjectionMatrix);
 	}
+	// 鉄球
 	else if (meshObject->GetClassNameString() == "PendulumIronBall") {
 		PendulumIronBallVer(meshObject, viewProjectionMatrix);
+	}
+	// ミニガン
+	else if (meshObject->GetClassNameString() == "Minigun") {
+		MinigunVer(meshObject, viewProjectionMatrix);
 	}
 
 	return BaseInstancingDrawing::RegistrationConfirmation(meshObject, viewProjectionMatrix);
@@ -93,6 +100,16 @@ void GameSceneInstancingDrawing::PendulumIronBallVer(MeshObject* meshObject, con
 
 	RopeRegistrationConfirmation(obj->GetStringWorldTransformAddress(), *(obj->GetStringMaterial()->GetMaterialMap()), viewProjectionMatrix);
 
+}
+
+void GameSceneInstancingDrawing::MinigunVer(MeshObject* meshObject, const Matrix4x4& viewProjectionMatrix)
+{
+
+	Minigun* obj = reinterpret_cast<Minigun*>(meshObject);
+
+	for (MinigunBullet* bullet : *obj->GetBullets()) {
+		RegistrationConfirmation(bullet, viewProjectionMatrix);
+	}
 
 }
 

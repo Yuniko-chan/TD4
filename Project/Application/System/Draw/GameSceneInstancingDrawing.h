@@ -48,7 +48,12 @@ private: // 関数
     /// <param name="viewProjectionMatrix">ビュープロジェクション</param>
     void PendulumIronBallVer(MeshObject* meshObject, const Matrix4x4& viewProjectionMatrix);
 
-    void MinigunVer();
+    /// <summary>
+    /// ミニガン
+    /// </summary>
+    /// <param name="meshObject">オブジェクト</param>
+    /// <param name="viewProjectionMatrix">ビュープロジェクション</param>
+    void MinigunVer(MeshObject* meshObject, const Matrix4x4& viewProjectionMatrix);
 
 private: // 関数
 
