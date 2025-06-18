@@ -183,3 +183,30 @@ Car::IParts* VehiclePartsManager::FindRootNonCoreParts(const Vector3& position)
 
     return targetParts;
 }
+
+Car::IParts* VehiclePartsManager::FindRootCoreParts(const Vector3& position)
+{
+    // 最大設定
+    float maxValue = FLT_MAX;
+    Car::IParts* targetParts = nullptr;
+    for (std::unordered_map<std::string, Car::IParts*>::iterator it = partsLists_.begin(); it != partsLists_.end(); ++it) {
+        // コアだったらスキップ
+        if ((*it).second->GetClassNameString() == "VehicleCore") {
+            continue;
+        }
+        // 親がいればスキップ
+        if (!(*it).second->IsParent()) {
+            continue;
+        }
+        // 距離ベクトル
+        Vector3 distance = (*it).second->GetWorldTransformAdress()->GetWorldPosition() - position;
+        float distanceValue = float(std::sqrtf(std::powf(distance.x, 2) + std::powf(distance.y, 2) + std::powf(distance.z, 2)));
+        // 距離の値
+        if (maxValue > distanceValue) {
+            maxValue = distanceValue;
+            targetParts = (*it).second;
+        }
+    }
+
+    return targetParts;
+}

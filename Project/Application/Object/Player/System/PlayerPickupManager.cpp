@@ -196,11 +196,12 @@ bool PlayerPickupManager::ShouldDropPart()
 		return true;
 	}
 
-	// 正面になければのそばに置く
-	Vector3 playerToCoreDirect = owner_->GetCoreTransform()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
-	playerToCoreDirect.y = 0.0f;
-	playerToCoreDirect = Vector3::Normalize(playerToCoreDirect);
-	if (!owner_->GetFrontChecker()->FrontCheck(playerToCoreDirect)) {
+	// 一番近いパーツに向いていなければ
+	Car::IParts* parts = partsManager_->FindRootCoreParts(owner_->GetWorldTransformAdress()->GetWorldPosition());
+	Vector3 playerToNearPartsDirect = parts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+	playerToNearPartsDirect.y = 0.0f;
+	playerToNearPartsDirect = Vector3::Normalize(playerToNearPartsDirect);
+	if (!owner_->GetFrontChecker()->FrontCheck(playerToNearPartsDirect)) {
 		return true;
 	}
 
