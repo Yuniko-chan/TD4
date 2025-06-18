@@ -197,7 +197,7 @@ bool PlayerPickupManager::ShouldDropPart()
 	}
 
 	// 一番近いパーツに向いていなければ
-	Car::IParts* parts = partsManager_->FindRootCoreParts(owner_->GetWorldTransformAdress()->GetWorldPosition());
+	Car::IParts* parts = partsManager_->FindRootCoreParts(owner_->GetWorldTransformAdress()->GetWorldPosition(), holdParts_);
 	Vector3 playerToNearPartsDirect = parts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
 	playerToNearPartsDirect.y = 0.0f;
 	playerToNearPartsDirect = Vector3::Normalize(playerToNearPartsDirect);

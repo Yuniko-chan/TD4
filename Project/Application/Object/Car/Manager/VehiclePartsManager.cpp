@@ -184,7 +184,7 @@ Car::IParts* VehiclePartsManager::FindRootNonCoreParts(const Vector3& position)
     return targetParts;
 }
 
-Car::IParts* VehiclePartsManager::FindRootCoreParts(const Vector3& position)
+Car::IParts* VehiclePartsManager::FindRootCoreParts(const Vector3& position, Car::IParts* exception)
 {
     // 最大設定
     float maxValue = FLT_MAX;
@@ -197,6 +197,12 @@ Car::IParts* VehiclePartsManager::FindRootCoreParts(const Vector3& position)
         // 親がいればスキップ
         if (!(*it).second->IsParent()) {
             continue;
+        }
+        // 同じパーツならスキップ
+        if (exception) {
+            if ((*it).second == exception) {
+                continue;
+            }
         }
         // 距離ベクトル
         Vector3 distance = (*it).second->GetWorldTransformAdress()->GetWorldPosition() - position;

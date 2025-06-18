@@ -23,6 +23,8 @@ void VehicleConstructionSystem::Update()
 
 void VehicleConstructionSystem::ImGuiDraw()
 {
+	int size = (int)emptyMap_.size();
+	ImGui::InputInt("EmptyMapsize", &size);
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin();
 		it != partsMapping_.end(); ++it) {
 		ImGui::SeparatorText((*it).second->GetName().c_str());
@@ -128,8 +130,10 @@ void VehicleConstructionSystem::AnyDocking(Car::IParts* parts, const Vector2Int&
 	if (partsMapping_.contains(key) || key == Vector2Int(0,0)) {
 		return;
 	}
-
+	// 追加
 	Attach(parts, key);
+	// 空いてる場所更新
+	emptyMap_ = VehicleCaluclator::GetEmptyList(&partsMapping_);
 }
 
 Car::IParts* VehicleConstructionSystem::FindNearPart(const Vector3& point)
