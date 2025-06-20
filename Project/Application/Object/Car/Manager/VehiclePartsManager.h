@@ -63,7 +63,7 @@ public:
 	/// </summary>
 	/// <param name="position"></param>
 	/// <returns></returns>
-	Car::IParts* FindRootCoreParts(const Vector3& position);
+	Car::IParts* FindRootCoreParts(const Vector3& position, Car::IParts* exception = nullptr);
 private:
 	// パーツのリスト
 	std::unordered_map<std::string, Car::IParts*> partsLists_;

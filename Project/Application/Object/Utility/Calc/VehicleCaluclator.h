@@ -1,5 +1,11 @@
 #pragma once
 #include "../../../Engine/Math/Vector/Vector3.h"
+#include "../Math/Vector2Int.h"
+
+#include <map>
+#include <vector>
+
+namespace Car { class IParts; }
 
 class VehicleCaluclator
 {
@@ -28,4 +34,10 @@ public:
 	/// <param name="decay"></param>
 	/// <returns></returns>
 	static Vector3 ExponentialInterpolate(const Vector3& current, const Vector3& end, float decay);
+
+	static std::vector<Vector2Int> GetEmptyList(std::map<Vector2Int, Car::IParts*>* partLists);
+
+private:
+	static std::vector<Vector2Int> PushLists(std::vector<Vector2Int> list, Vector2Int key);
+
 };

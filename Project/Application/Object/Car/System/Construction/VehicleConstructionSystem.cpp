@@ -3,7 +3,7 @@
 
 void VehicleConstructionSystem::Initialize()
 {
-
+	partsMapping_.emplace(Vector2Int(0, 0), owner_);
 }
 
 void VehicleConstructionSystem::Update()
@@ -23,6 +23,8 @@ void VehicleConstructionSystem::Update()
 
 void VehicleConstructionSystem::ImGuiDraw()
 {
+	int size = (int)emptyMap_.size();
+	ImGui::InputInt("EmptyMapsize", &size);
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin();
 		it != partsMapping_.end(); ++it) {
 		ImGui::SeparatorText((*it).second->GetName().c_str());
@@ -111,6 +113,10 @@ bool VehicleConstructionSystem::Attach(Car::IParts* parts)
 	// 一致するものがなければ＆＆0,0でなければ
 	if (!partsMapping_.contains(newKey) && newKey != Vector2Int(0, 0)) {
 		Attach(parts, Vector2Int(newKey));
+
+		// 空いてる場所
+		this->emptyMap_ = VehicleCaluclator::GetEmptyList(&partsMapping_);
+
 		return true;
 	}
 
@@ -124,8 +130,10 @@ void VehicleConstructionSystem::AnyDocking(Car::IParts* parts, const Vector2Int&
 	if (partsMapping_.contains(key) || key == Vector2Int(0,0)) {
 		return;
 	}
-
+	// 追加
 	Attach(parts, key);
+	// 空いてる場所更新
+	emptyMap_ = VehicleCaluclator::GetEmptyList(&partsMapping_);
 }
 
 Car::IParts* VehicleConstructionSystem::FindNearPart(const Vector3& point)
@@ -283,6 +291,10 @@ void VehicleConstructionSystem::RegistParts(const Vector2Int& id, Car::IParts* p
 	}
 	// 子・親の登録
 	for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
+		// コアならスキップ
+		if ((*it)->GetClassNameString() == "VehicleCore") {
+			continue;
+		}
 		// 対象の深度値
 		int32_t targetDepth = (*it)->GetConnector()->GetDepth();
 		// 子に追加
@@ -327,6 +339,10 @@ void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts*
 
 	// 隣接パーツ（子・親）の解除処理
 	for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
+		// コアならスキップ
+		if ((*it)->GetClassNameString() == "VehicleCore") {
+			continue;
+		}
 		// 対象の深度値
 		int32_t targetDepth = (*it)->GetConnector()->GetDepth();
 		// 自分が子である場合
