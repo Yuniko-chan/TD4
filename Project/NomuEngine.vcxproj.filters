@@ -2510,9 +2510,11 @@
     <FxCompile Include="Resources\Shaders\GPUParticle\MissParticle\MissUpdate.CS.hlsl">
       <Filter>shaders\GPUParticle\Miss</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\Cource\CourceExtrusion.CS.hlsl" />
     <FxCompile Include="Resources\Shaders\GPUParticle\particle\Emit.CS.hlsl" />
     <FxCompile Include="Resources\Shaders\GPUParticle\particle\Initialize.CS.hlsl" />
     <FxCompile Include="Resources\Shaders\GPUParticle\particle\Update.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\Cource\CourceExtrusion.CS.hlsl">
+      <Filter>shaders\Cource</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
