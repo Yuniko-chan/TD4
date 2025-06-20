@@ -161,7 +161,7 @@ void DriveEngine::OverheatProcess(const float& SpeedPercentage)
 
 		// SpeedRate(now / max) = t
 		// Ease(minDPS,maxDPS,t)
-		owner_->GetStatus()->SetDamagePerSecond(dps);
+		owner_->GetStatus()->SetDamagePerSecond(std::fabsf(dps));
 	}
 
 
