@@ -150,3 +150,11 @@ IObject* ObjectCreate::CreateObjectMinigun(LevelData::ObjectData& objectData)
 	static_cast<Minigun*>(object)->Initialize(&std::get<LevelData::GimmickData>(objectData).meshData, data);
 	return object;
 }
+
+IObject* ObjectCreate::CreateObjectInteract(LevelData::ObjectData& objectData)
+{
+	IObject* object = new InteractionSpot();
+
+	static_cast<InteractionSpot*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}

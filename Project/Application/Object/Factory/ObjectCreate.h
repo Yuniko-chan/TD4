@@ -51,4 +51,7 @@ public:	// USER
 	static IObject* CreateObjectIronBall(LevelData::ObjectData& objectData);
 	static IObject* CreateObjectCannon(LevelData::ObjectData& objectData);
 	static IObject* CreateObjectMinigun(LevelData::ObjectData& objectData);
+
+	// インタラクト
+	static IObject* CreateObjectInteract(LevelData::ObjectData& objectData);
 };

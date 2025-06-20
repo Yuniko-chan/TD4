@@ -1255,6 +1255,9 @@
     <ClCompile Include="Engine\3D\Model\BaseInstancingDrawing.cpp">
       <Filter>Engine\3D\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Object\Interact\InteractionSpot.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="Application\Object\Gimmick\Cannon\Cannon.cpp">
       <Filter>Application\Object\Gimmick\Cannon</Filter>
     </ClCompile>
@@ -2195,6 +2198,12 @@
     </ClInclude>
     <ClInclude Include="Engine\3D\Model\InstancingDrawingData.h">
       <Filter>Engine\3D\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Interact\InteractionSpot.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Interact\Manager\InteractionManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\System\Draw\GameSceneInstancingDrawing.h">
       <Filter>ヘッダー ファイル</Filter>

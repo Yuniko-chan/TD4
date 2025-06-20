@@ -14,6 +14,7 @@ namespace Car
 
 class VehiclePartsManager;
 class PickupPointManager;
+class InteractionSpot;
 // PartJudgeSystem;
 class Player;
 
@@ -51,6 +52,7 @@ public:
 	/// <param name="manager"></param>
 	void SetPartsManager(VehiclePartsManager* manager) { partsManager_ = manager; }
 	void SetPickupPointManager(PickupPointManager* manager) { pickupPointManager_ = manager; }
+	void SetInteractSpot(InteractionSpot* interact) { interaction_ = interact; }
 
 	/// <summary>
 	/// パーツに触れる処理
@@ -115,4 +117,6 @@ private:
 	std::string nearPartsName_ = "None";
 	// 間隔タイマー
 	std::optional<FrameTimer> interactDuration_;
+	// 拾う場所
+	InteractionSpot* interaction_ = nullptr;
 };
