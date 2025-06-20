@@ -10,5 +10,6 @@ struct FogData
 	Vector4 color; // 色
 	float fagNear; // 開始位置
 	float fagFar; // 終了位置
+	float pad[2];
 
 };

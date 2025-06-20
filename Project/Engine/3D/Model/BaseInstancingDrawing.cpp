@@ -47,7 +47,7 @@ void BaseInstancingDrawing::Initialize()
 		device->CreateShaderResourceView(instancingDrawingDatas_[i].transformBuff.Get(), &transformSrvDesc, instancingDrawingDatas_[i].transformSrvHandleCPU);
 
 		// バッファ
-		instancingDrawingDatas_[i].materialBuff = BufferResource::CreateBufferResource(device, ((sizeof(MaterialData) + 0xff) & ~0xff) * kTransformationMatrixMax_);
+		instancingDrawingDatas_[i].materialBuff = BufferResource::CreateBufferResource(device, ((sizeof(SRVMaterialData) + 0xff) & ~0xff) * kTransformationMatrixMax_);
 		//書き込むためのアドレスを取得
 		instancingDrawingDatas_[i].materialBuff->Map(0, nullptr, reinterpret_cast<void**>(&instancingDrawingDatas_[i].materialMap));
 
@@ -58,7 +58,7 @@ void BaseInstancingDrawing::Initialize()
 		materialSrvDesc.Buffer.FirstElement = 0;
 		materialSrvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
 		materialSrvDesc.Buffer.NumElements = kTransformationMatrixMax_;
-		materialSrvDesc.Buffer.StructureByteStride = sizeof(MaterialData);
+		materialSrvDesc.Buffer.StructureByteStride = sizeof(SRVMaterialData);
 
 		instancingDrawingDatas_[i].materialSrvHandleCPU = SRVDescriptorHerpManager::GetCPUDescriptorHandle();
 		instancingDrawingDatas_[i].materialSrvHandleGPU = SRVDescriptorHerpManager::GetGPUDescriptorHandle();
@@ -97,6 +97,8 @@ bool BaseInstancingDrawing::RegistrationConfirmation(
 		// 名前が一致する
 		if (model->GetFileName() == instancingDrawingDatas_[i].model->GetFileName()) {
 			
+			assert(!(kTransformationMatrixMax_ == instancingDrawingTransformationMatrixNum_[i]));
+
 			// トランスフォーム マップ
 			instancingDrawingDatas_[i].transformMap[instancingDrawingTransformationMatrixNum_[i]].WVP = worldTransform->worldMatrix_ * viewProjectionMatrix;
 			instancingDrawingDatas_[i].transformMap[instancingDrawingTransformationMatrixNum_[i]].World = worldTransform->worldMatrix_;
