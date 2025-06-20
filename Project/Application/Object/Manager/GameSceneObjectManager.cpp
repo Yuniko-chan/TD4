@@ -29,7 +29,7 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 	pickupPointManager_ = std::make_unique<PickupPointManager>();
 	pickupPointManager_->SetObjectManager(this);
 
-	
+
 	// 初期読み込み 
 	// レベルデータの取得
 	/*LevelData* levelData = levelDataManager->GetLevelDatas(kLevelIndexGenerationPattern_00);
@@ -274,6 +274,8 @@ void GameSceneObjectManager::AddObject(const std::string& className, const std::
 
 void GameSceneObjectManager::PlayerInitialize()
 {
+	// インタラクトのオブジェクト
+	AddObject("InteractionSpot", sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
 	// パーツ
 	partsManager_ = std::make_unique<VehiclePartsManager>();
 	// ピックアップ
@@ -283,6 +285,7 @@ void GameSceneObjectManager::PlayerInitialize()
 	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
 	player->GetPickUpManager()->SetPartsManager(partsManager_.get());
 	player->GetPickUpManager()->SetPickupPointManager(pickupPointManager_.get());
+	player->GetPickUpManager()->SetInteractSpot(static_cast<InteractionSpot*>(this->GetObjectPointer("InteractionSpot")));
 }
 
 void GameSceneObjectManager::OptionProcess()

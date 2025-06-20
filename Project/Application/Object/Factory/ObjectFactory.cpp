@@ -28,7 +28,10 @@ void ObjectFactory::Initialize(BaseObjectManager* objectManager)
 	// プレイヤー
 	createObjectFunctions_[kCreateObjectIndexPlayer].first = kCreateObjectNames_[kCreateObjectIndexPlayer];
 	createObjectFunctions_[kCreateObjectIndexPlayer].second = ObjectCreate::CreateObjectPlayer;
-
+	
+	// インタラクト
+	createObjectFunctions_[kCreateObjectIndexInteract].first = kCreateObjectNames_[kCreateObjectIndexInteract];
+	createObjectFunctions_[kCreateObjectIndexInteract].second = ObjectCreate::CreateObjectInteract;
 
 	///---USER---///
 	// 車両コア

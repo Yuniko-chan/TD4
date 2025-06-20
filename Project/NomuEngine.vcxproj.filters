@@ -1105,9 +1105,6 @@
     <ClCompile Include="Application\Object\Car\Animation\VehicleAnimation.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Car\Construction\VehicleConstructionSystem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Application\Object\Car\Manager\PickupPointManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -1147,9 +1144,6 @@
     <ClCompile Include="Application\Object\Car\PickupPoint\User\TirePickupPoint.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Car\System\DriveSystem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Application\Object\CustomArea\CustomArea.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -1160,12 +1154,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Car\System\VehicleEngine.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Object\Car\System\VehicleHandling.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Application\Object\Car\System\VehicleStatus.cpp">
@@ -1275,6 +1263,9 @@
     </ClCompile>
     <ClCompile Include="Engine\3D\Model\InstancingDrawing.cpp">
       <Filter>Engine\3D\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Object\Interact\InteractionSpot.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2201,6 +2192,12 @@
     </ClInclude>
     <ClInclude Include="Engine\3D\Model\InstancingDrawingData.h">
       <Filter>Engine\3D\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Interact\InteractionSpot.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Object\Interact\Manager\InteractionManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

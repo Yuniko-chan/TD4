@@ -1,5 +1,6 @@
 #pragma once
 #include "Player/Player.h"
+#include "Interact/InteractionSpot.h"
 #include "Car/CarLists.h"
 #include "Car/PickupPoint/PickupPointLists.h"
 #include "Terrain/TerrainObject.h"
