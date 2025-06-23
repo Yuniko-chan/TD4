@@ -118,5 +118,5 @@ private:
 public: // アクセッサ
 	void SetStatusManager(VehicleStatus* status) { status_ = status; }
 
-	bool IsEmpty() { return partsMapping_.empty(); }
+	bool IsEmpty() { return partsMapping_.size() <= 1; }
 };

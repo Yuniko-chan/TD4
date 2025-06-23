@@ -171,7 +171,7 @@ Car::IParts* VehicleConstructionSystem::FindNearPart(const Vector3& point)
 	for (auto it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
 		float distance = TransformHelper::Vector3Distance(point, (*it).second->GetWorldTransformAdress()->GetWorldPosition());
 		// 距離が短いか
-		if (nearDist >= distance) {
+		if (nearDist >= distance && (*it).second->GetClassNameString() != "VehicleCore") {
 			nearDist = distance;
 			result = (*it).second;
 		}
@@ -206,6 +206,10 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 
 void VehicleConstructionSystem::Detach(std::map<Vector2Int, Car::IParts*>::iterator it)
 {
+	// キーが0,0ならスキップ
+	if ((*it).first == Vector2Int(0, 0)) {
+		return;
+	}
 	// 解除処理
 	UnRegistParts((*it).first, (*it).second);
 	// ステータス側からも削除
