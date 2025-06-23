@@ -33,6 +33,18 @@ public: // アクセッサ
 	/// <param name="renderTargetTexture"></param>
 	void SetRenderTargetTexture(RenderTargetTexture* renderTargetTexture) { renderTargetTexture_ = renderTargetTexture; }
 
+private:
+
+	/// <summary>
+	/// グローバル変数を適用する
+	/// </summary>
+	void ApplyGlobalVariables();
+
+	/// <summary>
+	/// グローバル変数を登録する
+	/// </summary>
+	void RegisteringGlobalVariables();
+
 private: // メンバ変数
 
 	// ポストエフェクト
@@ -46,6 +58,12 @@ private: // メンバ変数
 
 	// ウインドウスプライト
 	WindowSprite* windowSprite_;
+
+	// ラジアルブラー実行するか
+	bool runRadialBlur_;
+
+	// 放射状ブラーの広がる強さ
+	float radialBlurStrength_;
 
 };
 
