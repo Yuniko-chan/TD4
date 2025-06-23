@@ -55,8 +55,7 @@ public:
 
 
 	Vector3 GetEmptyToNearPoint(std::vector<std::pair<Vector2Int, Vector3>>* emptyList, const Vector3& position);
-	Vector3 GetEmptyToNearPoint(std::vector<std::pair<Vector2Int, Vector3>>* emptyList, const Vector3& position, const Vector3& front);
-
+	std::pair<Vector2Int, Vector3> GetEmptyToNearPoint(std::vector<std::pair<Vector2Int, Vector3>>* emptyList, const Vector3& position, const Vector3& front);
 	bool FrontCheck(const Vector3& direct, const Vector3& front, float threshold);
 
 private:

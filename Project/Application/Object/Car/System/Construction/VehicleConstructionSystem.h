@@ -38,6 +38,8 @@ public:
 	/// <param name="parts"></param>
 	bool Attach(Car::IParts* parts);
 
+	bool IsAttach(Car::IParts* parts, Vector2Int key);
+
 	/// <summary>
 	/// 解除
 	/// </summary>

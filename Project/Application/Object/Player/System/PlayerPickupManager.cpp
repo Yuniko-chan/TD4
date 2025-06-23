@@ -36,12 +36,13 @@ void PlayerPickupManager::Update()
 
 	if (holdParts_) {
 		VehicleCaluclator calc;
-		Vector3 nearPoint = calc.GetEmptyToNearPoint(owner_->GetCore()->GetConstructionSystem()->GetEmptyData(),
+		std::pair<Vector2Int, Vector3> nearPoint = calc.GetEmptyToNearPoint(owner_->GetCore()->GetConstructionSystem()->GetEmptyData(),
 			owner_->GetWorldTransformAdress()->GetWorldPosition(), owner_->GetWorldTransformAdress()->direction_);
-		interaction_->GetWorldTransformAdress()->transform_.translate = nearPoint;
+		interaction_->GetWorldTransformAdress()->transform_.translate = nearPoint.second;
 		interaction_->GetWorldTransformAdress()->direction_ = owner_->GetCore()->GetWorldTransformAdress()->direction_;
+		nearKey_ = nearPoint.first;
 		// 一番近いのが自分で返された場合
-		if (nearPoint == owner_->GetWorldTransformAdress()->GetWorldPosition()) {
+		if (nearPoint.first == Vector2Int(0,0)) {
 			interaction_->SetIsDraw(false);
 		}
 		else {
@@ -130,11 +131,15 @@ void PlayerPickupManager::ReleaseAction()
 		DropPart();
 		return;
 	}
-	// くっつけられるか（false:できなかったためその場に置く
-	if (!holdParts_->SettingParent(partsManager_)) {
+	if (!owner_->GetCore()->GetConstructionSystem()->IsAttach(holdParts_, nearKey_)) {
 		DropPart();
 		return;
 	}
+	//// くっつけられるか（false:できなかったためその場に置く
+	//if (!holdParts_->SettingParent(partsManager_)) {
+	//	DropPart();
+	//	return;
+	//}
 
 	// SettingParent関数が成功した場合の終了処理
 	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
@@ -216,14 +221,19 @@ bool PlayerPickupManager::ShouldDropPart()
 		return true;
 	}
 
-	// 一番近いパーツに向いていなければ
-	Car::IParts* parts = partsManager_->FindRootCoreParts(owner_->GetWorldTransformAdress()->GetWorldPosition(), holdParts_);
-	Vector3 playerToNearPartsDirect = parts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
-	playerToNearPartsDirect.y = 0.0f;
-	playerToNearPartsDirect = Vector3::Normalize(playerToNearPartsDirect);
-	if (!owner_->GetFrontChecker()->FrontCheck(playerToNearPartsDirect)) {
+	// 一番近いキーが無かったら（下の処理の代理）
+	if (nearKey_ == Vector2Int(0, 0)) {
 		return true;
 	}
+
+	//// 一番近いパーツに向いていなければ
+	//Car::IParts* parts = partsManager_->FindRootCoreParts(owner_->GetWorldTransformAdress()->GetWorldPosition(), holdParts_);
+	//Vector3 playerToNearPartsDirect = parts->GetWorldTransformAdress()->GetWorldPosition() - owner_->GetWorldTransformAdress()->GetWorldPosition();
+	//playerToNearPartsDirect.y = 0.0f;
+	//playerToNearPartsDirect = Vector3::Normalize(playerToNearPartsDirect);
+	//if (!owner_->GetFrontChecker()->FrontCheck(playerToNearPartsDirect)) {
+	//	return true;
+	//}
 
 	return false;
 }

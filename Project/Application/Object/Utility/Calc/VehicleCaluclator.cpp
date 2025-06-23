@@ -110,9 +110,9 @@ Vector3 VehicleCaluclator::GetEmptyToNearPoint(std::vector<std::pair<Vector2Int,
     return Vector3(result);
 }
 
-Vector3 VehicleCaluclator::GetEmptyToNearPoint(std::vector<std::pair<Vector2Int, Vector3>>* emptyList, const Vector3& position, const Vector3& front)
+std::pair<Vector2Int, Vector3> VehicleCaluclator::GetEmptyToNearPoint(std::vector<std::pair<Vector2Int, Vector3>>* emptyList, const Vector3& position, const Vector3& front)
 {
-    Vector3 result = {};
+    std::pair<Vector2Int, Vector3> result = {};
     float distance = FLT_MAX;
     // 最短距離の物を検索
     for (std::vector<std::pair<Vector2Int, Vector3>>::iterator it = emptyList->begin();
@@ -127,15 +127,16 @@ Vector3 VehicleCaluclator::GetEmptyToNearPoint(std::vector<std::pair<Vector2Int,
         // 前方かつ一番近い
         if (distance > emptyToPosition && isfront) {
             distance = emptyToPosition;
-            result = (*it).second;
+            result.first = (*it).first;
+            result.second = (*it).second;
         }
     }
     // なにもなかった場合
     if (distance == FLT_MAX) {
-        return position;
+        return result;
     }
 
-    return Vector3(result);
+    return std::pair<Vector2Int, Vector3>(result);
 }
 
 bool VehicleCaluclator::FrontCheck(const Vector3& direct, const Vector3& front, float threshold)

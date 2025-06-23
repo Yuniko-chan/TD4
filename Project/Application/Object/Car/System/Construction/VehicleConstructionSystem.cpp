@@ -134,6 +134,21 @@ bool VehicleConstructionSystem::Attach(Car::IParts* parts)
 	return false;
 }
 
+bool VehicleConstructionSystem::IsAttach(Car::IParts* parts, Vector2Int key)
+{
+	if (!partsMapping_.contains(key) && key != Vector2Int(0, 0)) {
+		// アタッチ処理
+		Attach(parts, Vector2Int(key));
+		// 親の設定
+		parts->SetParent(owner_);
+		// 空マップ更新
+		emptyMap_ = VehicleCaluclator::GetEmptyList(&partsMapping_);
+		return true;
+	}
+
+	return false;
+}
+
 void VehicleConstructionSystem::AnyDocking(Car::IParts* parts, const Vector2Int& key)
 {
 	// 既にあればスキップ
