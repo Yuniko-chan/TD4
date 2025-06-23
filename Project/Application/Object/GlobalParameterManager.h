@@ -30,4 +30,12 @@ private:
 	ParameterStructs::PlayerData player_ = {};
 	// 車両関係
 	ParameterStructs::VehicleData vehicle_ = {};
+
+	//---カメラ---//
+	// 共通データ
+	ParameterStructs::CameraCommonData cameraCommon_ = {};
+
+	// それぞれ
+	ParameterStructs::OverheadCameraData overheadCamera_ = {};
+	ParameterStructs::DriveCameraData driveCamera_ = {};
 };

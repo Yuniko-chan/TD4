@@ -17,6 +17,16 @@ void VehicleConstructionSystem::Update()
 		}
 	}
 
+	// 初期化
+	emptyDatas_.clear();
+	// データ作成
+	for (std::vector<Vector2Int>::iterator it = emptyMap_.begin(); it != emptyMap_.end(); ++it) {
+		VehicleCaluclator calc;
+		Vector3 point = calc.GetIDToWorldPosition((*it), owner_->GetWorldTransformAdress());
+		MappingKey data = { (*it),point };
+		emptyDatas_.push_back(data);
+	}
+
 	// マップから
 	status_->StatusUpdate(&partsMapping_);
 }
@@ -124,6 +134,21 @@ bool VehicleConstructionSystem::Attach(Car::IParts* parts)
 	return false;
 }
 
+bool VehicleConstructionSystem::IsAttach(Car::IParts* parts, Vector2Int key)
+{
+	if (!partsMapping_.contains(key) && key != Vector2Int(0, 0)) {
+		// アタッチ処理
+		Attach(parts, Vector2Int(key));
+		// 親の設定
+		parts->SetParent(owner_);
+		// 空マップ更新
+		emptyMap_ = VehicleCaluclator::GetEmptyList(&partsMapping_);
+		return true;
+	}
+
+	return false;
+}
+
 void VehicleConstructionSystem::AnyDocking(Car::IParts* parts, const Vector2Int& key)
 {
 	// 既にあればスキップ
@@ -189,6 +214,8 @@ void VehicleConstructionSystem::Detach(std::map<Vector2Int, Car::IParts*>::itera
 	(*it).second->GetHPHandler()->Initialize();
 	// リストから外す
 	it = partsMapping_.erase(it);
+	// 空いてる場所更新
+	emptyMap_ = VehicleCaluclator::GetEmptyList(&partsMapping_);
 }
 
 void VehicleConstructionSystem::Detach(Car::IParts* parts)

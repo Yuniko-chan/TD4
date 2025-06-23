@@ -155,7 +155,7 @@ void DriveEngine::OverheatProcess(const float& SpeedPercentage)
 		// 乗算レート
 		float plusRate = Ease::Easing(Ease::EaseName::Lerp, kMinRate, kMaxRate, t);
 		float maxRate = receptionLimit * plusRate;
-		t = (speedRate_ - (maxRate)) / maxRate;
+		t = (std::fabsf(speedRate_) - (maxRate)) / maxRate;
 
 		float dps = Ease::Easing(Ease::EaseName::Lerp, minDPS, maxDPS, t);
 

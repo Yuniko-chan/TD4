@@ -2,6 +2,7 @@
 #include "../../../Engine/Collision/BaseCollisionManager.h"
 #include "../../Utility/Common/OwnerComponent.h"
 #include "../../Utility/Timer/FrameTimer.h"
+#include "../../Utility/Math/Vector2Int.h"
 #include "PickUp/PartJudgeSystem.h"
 
 #include <optional>
@@ -111,6 +112,7 @@ private:
 	PickupPointManager* pickupPointManager_ = nullptr;
 	// 持ってるパーツ
 	Car::IParts* holdParts_;
+	Vector2Int nearKey_;
 	// 拾う用のコライダー
 	std::unique_ptr<ColliderShape> collider_;
 	// 近いパーツの名前

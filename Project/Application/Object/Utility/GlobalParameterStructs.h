@@ -2,6 +2,7 @@
 #include "../../../Engine/Math/Vector/Vector3.h"
 #include <string>
 #include <list>
+#include <algorithm>
 
 namespace ParameterStructs {
 
@@ -36,6 +37,11 @@ namespace ParameterStructs {
 			int maxReception = 15;
 			// 受付数に対する倍率
 			float receptionRatio = 3.0f;
+		};
+
+		struct CameraDefault {
+			Vector3 position = {};
+			Vector3 rotateVector = Vector3(0.0f, 0.0f, 1.0f);
 		};
 	}
 
@@ -75,6 +81,27 @@ namespace ParameterStructs {
 	struct VehicleData {
 		Datas::VehicleHandling handling;
 		Datas::VehicleEngine engine;
+	};
+
+	/// <summary>
+	/// 見下ろしカメラ
+	/// </summary>
+	struct OverheadCameraData {
+		Datas::CameraDefault defaultData;
+
+	};
+
+	/// <summary>
+	/// 運転中のカメラ
+	/// </summary>
+	struct DriveCameraData {
+		Datas::CameraDefault defaultData;
+	};
+
+	struct CameraCommonData {
+		// Pair<Offset,Rotation>
+		std::pair<Vector3, Vector3> inVehicle;
+		std::pair<Vector3, Vector3> onFoot;
 	};
 
 }
