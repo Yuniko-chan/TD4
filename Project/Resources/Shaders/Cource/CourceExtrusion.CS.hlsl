@@ -253,9 +253,14 @@ uint32_t SetDrivingLocation(float32_t2 texcoord)
         // 黒ければ道
         return 0;
     }
- 
-    // 白ければ壁
-    return 2;
+    else if (color.r == 1.0f)
+    {
+        // 白ければ壁
+        return 2;   
+    }
+    
+    // 灰色はダート
+    return 1;
     
 }
 
