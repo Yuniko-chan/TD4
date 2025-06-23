@@ -481,9 +481,15 @@ void CourseCollisionSystem::DistanceJudgment(CollisionObject object)
 	buffers_[collisionCheakNum_].objectMap_->center = obb.center_;
 	// 軸を送る時の代入
 	//軸反転応急措置byシマザキ
-	buffers_[collisionCheakNum_].objectMap_->planeYZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(obb.otientatuons_[0].x), 1.0f - std::fabs(obb.otientatuons_[0].y), 1.0f - std::fabs(obb.otientatuons_[0].z) });
-	buffers_[collisionCheakNum_].objectMap_->planeXZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(obb.otientatuons_[1].x), 1.0f - std::fabs(obb.otientatuons_[1].y), 1.0f - std::fabs(obb.otientatuons_[1].z) });
-	buffers_[collisionCheakNum_].objectMap_->planeXY = Vector3::Normalize(Vector3{ 1.0f - std::fabs(obb.otientatuons_[2].x), 1.0f - std::fabs(obb.otientatuons_[2].y), 1.0f - std::fabs(obb.otientatuons_[2].z) });
+	//buffers_[collisionCheakNum_].objectMap_->planeYZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(obb.otientatuons_[0].x), 1.0f - std::fabs(obb.otientatuons_[0].y), 1.0f - std::fabs(obb.otientatuons_[0].z) });
+	//buffers_[collisionCheakNum_].objectMap_->planeXZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(obb.otientatuons_[1].x), 1.0f - std::fabs(obb.otientatuons_[1].y), 1.0f - std::fabs(obb.otientatuons_[1].z) });
+	//buffers_[collisionCheakNum_].objectMap_->planeXY = Vector3::Normalize(Vector3{ 1.0f - std::fabs(obb.otientatuons_[2].x), 1.0f - std::fabs(obb.otientatuons_[2].y), 1.0f - std::fabs(obb.otientatuons_[2].z) });
+
+	// 軸固定
+	buffers_[collisionCheakNum_].objectMap_->planeYZ = Vector3{ 0.0f, 0.5f,0.5f };
+	buffers_[collisionCheakNum_].objectMap_->planeXZ = Vector3{ 0.5f, 0.0f,0.5f };
+	buffers_[collisionCheakNum_].objectMap_->planeXY = Vector3{ 0.5f, 0.5f,0.0f };
+
 
 	buffers_[collisionCheakNum_].objectMap_->size = obb.size_;
 

@@ -136,9 +136,14 @@ Vector3 Extrusion::OBBAndPlane(OBB* pushedOut, Plane* pushOut, Vector3 planeVert
 {
 
     // OBB平面作成
-    Vector3 planeYZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushedOut->otientatuons_[0].x), 1.0f - std::fabs(pushedOut->otientatuons_[0].y), 1.0f - std::fabs(pushedOut->otientatuons_[0].z) });
-    Vector3 planeXZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushedOut->otientatuons_[1].x), 1.0f - std::fabs(pushedOut->otientatuons_[1].y), 1.0f - std::fabs(pushedOut->otientatuons_[1].z) });
-    Vector3 planeXY = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushedOut->otientatuons_[2].x), 1.0f - std::fabs(pushedOut->otientatuons_[2].y), 1.0f - std::fabs(pushedOut->otientatuons_[2].z) });
+    //Vector3 planeYZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushedOut->otientatuons_[0].x), 1.0f - std::fabs(pushedOut->otientatuons_[0].y), 1.0f - std::fabs(pushedOut->otientatuons_[0].z) });
+    //Vector3 planeXZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushedOut->otientatuons_[1].x), 1.0f - std::fabs(pushedOut->otientatuons_[1].y), 1.0f - std::fabs(pushedOut->otientatuons_[1].z) });
+    //Vector3 planeXY = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushedOut->otientatuons_[2].x), 1.0f - std::fabs(pushedOut->otientatuons_[2].y), 1.0f - std::fabs(pushedOut->otientatuons_[2].z) });
+
+    // 軸固定
+    Vector3 planeYZ = Vector3{ 0.0f, 0.5f,0.5f };
+    Vector3 planeXZ = Vector3{ 0.5f, 0.0f,0.5f };
+    Vector3 planeXY = Vector3{ 0.5f, 0.5f,0.0f };
 
     Vector3 size = pushedOut->size_;
     Vector3 center = pushedOut->center_;
