@@ -37,6 +37,14 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	player_.cameraRotateSpeed = globalVariables_->GetFloatValue(groupName, "CameraRotateSpeed");
 
 	player_.holdOffset = globalVariables_->GetVector3Value(groupName, "HoldOffset");
+
+	groupName = "OverheadCamera";
+	overheadCamera_.defaultData.position = globalVariables_->GetVector3Value(groupName, "Position");
+	overheadCamera_.defaultData.rotateVector = globalVariables_->GetVector3Value(groupName, "RotateVector");
+
+	driveCamera_.defaultData.position = globalVariables_->GetVector3Value(groupName, "Position");
+	driveCamera_.defaultData.rotateVector = globalVariables_->GetVector3Value(groupName, "RotateVector");
+
 }
 
 void GlobalParameterManager::AddItems()
@@ -63,5 +71,19 @@ void GlobalParameterManager::AddItems()
 
 	// カメラ
 	globalVariables_->AddItem(groupName, "CameraRotateSpeed", float(player_.cameraRotateSpeed));
+
+	groupName = "CameraCommon";
+	globalVariables_->AddItem(groupName, "Position", Vector3(cameraCommon_.inVehicle.first));
+	globalVariables_->AddItem(groupName, "Position", Vector3(cameraCommon_.inVehicle.second));
+	globalVariables_->AddItem(groupName, "Position", Vector3(cameraCommon_.onFoot.first));
+	globalVariables_->AddItem(groupName, "Position", Vector3(cameraCommon_.onFoot.second));
+
+	groupName = "OverheadCamera";
+	globalVariables_->AddItem(groupName, "Position", Vector3(overheadCamera_.defaultData.position));
+	globalVariables_->AddItem(groupName, "RotateVector", Vector3(overheadCamera_.defaultData.rotateVector));
+
+	groupName = "DriveCamera";
+	globalVariables_->AddItem(groupName, "Position", Vector3(driveCamera_.defaultData.position));
+	globalVariables_->AddItem(groupName, "RotateVector", Vector3(driveCamera_.defaultData.rotateVector));
 
 }

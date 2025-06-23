@@ -4,6 +4,7 @@
 #include "../../../Engine/Math/Ease.h"
 #include "../../../Engine/Input/Input.h"
 #include "../../../Engine/2D/ImguiManager.h"
+#include "../Object/GlobalParameterManager.h"
 
 void OverheadCamera::Initialize()
 {
