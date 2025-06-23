@@ -1,5 +1,6 @@
 #include "Course.h"
 #include "CoursePolygonType.h"
+#include "CourseLoader.h"
 #include "../../Engine/2D/ImguiManager.h"
 #include "../../Engine/base/Texture/TextureManager.h"
 #include "../../Engine/3D/Model/ModelManager.h"
@@ -8,14 +9,29 @@
 void Course::Initialize(LevelData::MeshData* data)
 {
 	ModelManager::GetInstance()->AppendModel(CourseLoader::LoadCourseFile(data->directoryPath, data->flieName, *(GetCoursePolygonsAdress())));
+	
 	// メッシュオブジェクト
 	MeshObject::Initialize(data);
 
 	// コーステクスチャ
-	const std::string kCourseTextureFileName = "Resources/Course/roadAttribute_.png";
+	const std::string kCourseTextureFileName = "Resources/Course/course.png";
 	courseTextureHandle_ = TextureManager::Load(kCourseTextureFileName, DirectXCommon::GetInstance());
 
 }
+
+void Course::Initialize(LevelData::MeshData* data,CourseImportData* courseData) {
+	//ModelManager::GetInstance()->GetModel(data->directoryPath, data->flieName);
+	CourseLoader::CreateCoursePolygons(*courseData, *(GetCoursePolygonsAdress()));
+	
+	// メッシュオブジェクト
+	MeshObject::Initialize(data);
+
+	// コーステクスチャ
+	const std::string kCourseTextureFileName = "Resources/Course/course.png";
+	courseTextureHandle_ = TextureManager::Load(kCourseTextureFileName, DirectXCommon::GetInstance());
+
+}
+
 
 void Course::Update()
 {

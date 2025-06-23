@@ -10,9 +10,10 @@
 #include <string>
 #include <fstream>
 
-static const uint32_t kVerticesMax = 8192;
+static const uint32_t kVerticesMax = 1024;
 static const uint32_t kInportFileSize = 65536*2;
-static const size_t kHeaderOfset = sizeof(uint32_t) * 2;
+static const size_t kCourseAttributeOffset = 6;
+static const size_t kHeaderOffset = sizeof(uint32_t) * 2 + sizeof(bool) * kCourseAttributeOffset;
 //コースファイル形式の頂点データ
 struct CourseFileVertex
 {
@@ -28,6 +29,7 @@ struct CourseImportData
 {
 	uint32_t verticesNum_;
 	uint32_t textureNameSize_;
+	bool courseAttribute_[kCourseAttributeOffset] = {false};
 	CourseFileVertex vertices[kVerticesMax];
 	std::string textureFileName_;
 };
@@ -43,6 +45,12 @@ public:
 	/// 
 	/// <returns></returns>
 	static Model* LoadCourseFile(const std::string& directoryPath, const std::string& filename,std::vector<CoursePolygon>& course);
+
+	static void LoadCourseFileFromManager(const std::string& directoryPath, const std::string& filename, CourseImportData& course);
+
+	static Model* CreateCourseModel(const CourseImportData& data);
+
+	static void CreateCoursePolygons(const CourseImportData& data, std::vector<CoursePolygon>& course);
 
 private:
 	/// <summary>

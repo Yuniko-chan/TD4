@@ -92,6 +92,11 @@ void GameScene::Initialize() {
 	courseDebugDraw_ = std::make_unique<CourseDebugDraw>();
 	courseDebugDraw_->Initialize(course);
 
+	//コース生成システム
+	courseManager_ = std::make_unique<CourseManager>();
+	courseManager_->Initialize(static_cast<GameSceneObjectManager*>(objectManager_.get()));
+
+
 	// モデル描画
 	ModelDraw::PreDrawParameters preDrawParameters;
 	preDrawParameters.directionalLight = directionalLight_.get();

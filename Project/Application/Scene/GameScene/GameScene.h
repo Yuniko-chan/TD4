@@ -20,6 +20,7 @@
 #include "../../Object/GlobalParameterManager.h"
 #include "../../Course/CourseCollisionSystem.h"
 #include "../../Course/Debug/CourseDebugDraw.h"
+#include "../../Course/CourseManager.h"
 
 /// <summary>
 /// ゲームシーン
@@ -106,5 +107,8 @@ private:
 	std::unique_ptr<CourseCollisionSystem> courseCollisionSystem_;
 	// コースデバッグ描画
 	std::unique_ptr<CourseDebugDraw> courseDebugDraw_;
+
+	//コースの生成などを行うクラス
+	std::unique_ptr<CourseManager> courseManager_;
 
 };

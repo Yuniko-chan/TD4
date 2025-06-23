@@ -170,6 +170,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Course\Course.cpp" />
     <ClCompile Include="Application\Course\CourseCollisionPipeline.cpp" />
     <ClCompile Include="Application\Course\CourseCollisionSystem.cpp" />
+    <ClCompile Include="Application\Course\CourseManager.cpp" />
     <ClCompile Include="Application\Course\CourseTexture.cpp" />
     <ClCompile Include="Application\Course\Debug\CourseDebugDraw.cpp" />
     <ClCompile Include="Application\Course\Demo\CourseDemoObject.cpp" />
@@ -410,6 +411,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Course\Course.h" />
     <ClInclude Include="Application\Course\CourseCollisionPipeline.h" />
     <ClInclude Include="Application\Course\CourseCollisionSystem.h" />
+    <ClInclude Include="Application\Course\CourseManager.h" />
     <ClInclude Include="Application\Course\CoursePolygon.h" />
     <ClInclude Include="Application\Course\CoursePolygonType.h" />
     <ClInclude Include="Application\Course\CourseTexture.h" />

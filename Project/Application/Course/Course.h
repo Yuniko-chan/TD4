@@ -2,6 +2,8 @@
 #include "CoursePolygon.h"
 #include "../../Engine/Object/MeshObject.h"
 
+struct CourseImportData;
+
 /// <summary>
 /// コース
 /// </summary>
@@ -16,6 +18,8 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="data">データ</param>
 	void Initialize(LevelData::MeshData* data) override;
+
+	void Initialize(LevelData::MeshData* data, CourseImportData* courseData);
 
 	/// <summary>
 	/// 更新

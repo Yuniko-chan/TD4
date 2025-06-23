@@ -371,3 +371,9 @@ void GameSceneObjectManager::VehiclePreset(const std::string& presetName)
 	static_cast<Car::IParts*>(this->GetObjectPointer(name))->SetParent(core);
 
 }
+
+void GameSceneObjectManager::AddObject(IObject* object) {
+	std::unique_ptr<IObject> uniqueObject;
+	uniqueObject.reset(object);
+	objects_.emplace_back(uniqueObject->GetName(), std::move(uniqueObject));
+}
