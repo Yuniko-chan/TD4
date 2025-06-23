@@ -10,7 +10,7 @@
 #include <string>
 #include <fstream>
 
-static const uint32_t kVerticesMax = 8192;
+static const uint32_t kVerticesMax = 1024;
 static const uint32_t kInportFileSize = 65536*2;
 static const size_t kCourseAttributeOffset = 6;
 static const size_t kHeaderOffset = sizeof(uint32_t) * 2 + sizeof(bool) * kCourseAttributeOffset;
@@ -45,6 +45,12 @@ public:
 	/// 
 	/// <returns></returns>
 	static Model* LoadCourseFile(const std::string& directoryPath, const std::string& filename,std::vector<CoursePolygon>& course);
+
+	static void LoadCourseFileFromManager(const std::string& directoryPath, const std::string& filename, CourseImportData& course);
+
+	static Model* CreateCourseModel(const CourseImportData& data);
+
+	static void CreateCoursePolygons(const CourseImportData& data, std::vector<CoursePolygon>& course);
 
 private:
 	/// <summary>

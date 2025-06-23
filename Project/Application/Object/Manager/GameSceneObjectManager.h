@@ -73,6 +73,7 @@ public:
 	void AddObject(const std::string& className, const std::string& name, const std::string& directory, const std::string& modelName);
 	void AddObject(const std::string& className, const std::string& name, const std::string& directory, const std::string& modelName, const Vector3& position);
 
+	void AddObject(IObject* object);
 public:
 	// パーツ用のマネージャークラス取得
 	VehiclePartsManager* GetPartsManager() { return partsManager_.get(); }
