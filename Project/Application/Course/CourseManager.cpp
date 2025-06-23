@@ -3,7 +3,8 @@
 #include "../../Engine/3D/Model/ModelManager.h"
 #include "../../Engine/Math/Vector/Vector3.h"
 void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
-
+	//初期化
+	courseIndex_ = 0;
 	objectManager_ = objectManager;
 	//全コース用データをロード
 	for (size_t i = 0; i < kCourseFileCount;i++) {
