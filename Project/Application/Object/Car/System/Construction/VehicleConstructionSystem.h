@@ -2,10 +2,13 @@
 #include "../VehicleSystemCommons.h"
 #include <map>
 #include <utility>
+#include <algorithm>
 
 namespace Car { class IParts; }
 class VehicleCore;
 class VehicleStatus;
+
+using MappingKey = std::pair<Vector2Int, Vector3>;
 
 /// <summary>
 /// 車両構築システム（コア用）（パーツ管理など）
@@ -87,7 +90,7 @@ private: // 検索
 
 public:
 	std::vector<Car::IParts*> FindPartsByCategory(int typeID);
-
+	std::vector<MappingKey>* GetEmptyData() { return &emptyDatas_; }
 private: // 登録・解除
 	/// <summary>
 	/// パーツの登録処理
@@ -108,6 +111,8 @@ private:
 	std::map<Vector2Int, Car::IParts*> partsMapping_;
 	// 空いてるキーリスト
 	std::vector<Vector2Int> emptyMap_;
+	// 空いてる情報
+	std::vector<MappingKey> emptyDatas_;
 public: // アクセッサ
 	void SetStatusManager(VehicleStatus* status) { status_ = status; }
 

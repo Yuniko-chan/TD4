@@ -13,6 +13,18 @@ void InteractionSpot::Initialize(LevelData::MeshData* data)
 
 void InteractionSpot::Update()
 {
+	// フラグがfalseなら表示しない
+	if (!isDraw_) {
+		Vector4 color = material_->GetColor();
+		color.w = 0.0f;
+		material_->SetColor(color);
+	}
+	else {
+		Vector4 color = material_->GetColor();
+		color.w = 0.5f;
+		material_->SetColor(color);
+	}
+
 	// 更新
 	MeshObject::Update();
 	worldTransform_.UpdateMatrix();

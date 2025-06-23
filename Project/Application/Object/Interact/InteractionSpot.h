@@ -14,6 +14,9 @@ public:
 	/// </summary>
 	void Update() override;
 
+public:	// アクセッサ
+	void SetIsDraw(bool isDraw) { isDraw_ = isDraw; }
+
 private:
 	bool isDraw_ = false;
 

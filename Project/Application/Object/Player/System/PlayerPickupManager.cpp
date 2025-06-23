@@ -8,6 +8,7 @@
 #include "../../Car/Manager/PickupPointManager.h"
 #include "../../Car/PickupPoint/InterfacePickupPoint.h"
 #include "../../Utility/Calc/TransformHelper.h"
+#include "../../Interact/InteractionSpot.h"
 
 #include "../../../Engine/2D/ImguiManager.h"
 
@@ -32,6 +33,25 @@ void PlayerPickupManager::Update()
 			interactDuration_ = std::nullopt;
 		}
 	}
+
+	if (holdParts_) {
+		VehicleCaluclator calc;
+		Vector3 nearPoint = calc.GetEmptyToNearPoint(owner_->GetCore()->GetConstructionSystem()->GetEmptyData(),
+			owner_->GetWorldTransformAdress()->GetWorldPosition(), owner_->GetWorldTransformAdress()->direction_);
+		interaction_->GetWorldTransformAdress()->transform_.translate = nearPoint;
+		interaction_->GetWorldTransformAdress()->direction_ = owner_->GetCore()->GetWorldTransformAdress()->direction_;
+		// 一番近いのが自分で返された場合
+		if (nearPoint == owner_->GetWorldTransformAdress()->GetWorldPosition()) {
+			interaction_->SetIsDraw(false);
+		}
+		else {
+			interaction_->SetIsDraw(true);
+		}
+	}
+	else {
+		interaction_->SetIsDraw(false);
+	}
+
 }
 
 void PlayerPickupManager::ImGuiDraw()

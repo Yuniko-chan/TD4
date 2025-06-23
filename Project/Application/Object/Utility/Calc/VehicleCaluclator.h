@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Engine/Math/Vector/Vector3.h"
 #include "../Math/Vector2Int.h"
+#include "../../../Engine/3D/Transform/WorldTransform.h"
 
 #include <map>
 #include <vector>
@@ -37,7 +38,27 @@ public:
 
 	static std::vector<Vector2Int> GetEmptyList(std::map<Vector2Int, Car::IParts*>* partLists);
 
+	/// <summary>
+	/// オフセット
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns></returns>
+	Vector3 GetOffset(const Vector2Int& id);
+
+	/// <summary>
+	/// IDから親を含めたワールド座標計算
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="parent"></param>
+	/// <returns></returns>
+	Vector3 GetIDToWorldPosition(const Vector2Int& id, WorldTransform* parent);
+
+
+	Vector3 GetEmptyToNearPoint(std::vector<std::pair<Vector2Int, Vector3>>* emptyList, const Vector3& position);
+	Vector3 GetEmptyToNearPoint(std::vector<std::pair<Vector2Int, Vector3>>* emptyList, const Vector3& position, const Vector3& front);
+
+	bool FrontCheck(const Vector3& direct, const Vector3& front, float threshold);
+
 private:
 	static std::vector<Vector2Int> PushLists(std::vector<Vector2Int> list, Vector2Int key);
-
 };
