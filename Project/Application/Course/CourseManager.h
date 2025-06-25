@@ -14,10 +14,10 @@ static const float kCourseDiameter = 100.0f;
 
 static const std::array<Vector3, kCourseNum> courseOffsets_ = { Vector3{0.0f,0.0f,0.0f},
 	Vector3{0.0f,0.0f,1.0f},
-	Vector3{1.0f,0.0f,1.0f},
-	Vector3{1.0f,0.0f,0.0f},
-	Vector3{2.0f,0.0f,0.0f},
-	Vector3{2.0f,0.0f,1.0f}};
+	Vector3{-1.0f,0.0f,1.0f},
+	Vector3{-1.0f,0.0f,0.0f},
+	Vector3{-2.0f,0.0f,0.0f},
+	Vector3{-2.0f,0.0f,1.0f}};
 
 class CourseManager
 {
