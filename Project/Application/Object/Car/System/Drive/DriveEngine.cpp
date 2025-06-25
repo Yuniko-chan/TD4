@@ -76,6 +76,7 @@ void DriveEngine::ImGuiDraw()
 		int con = this->consecutiveReceptions_;
 		ImGui::InputInt("ConsecutiveRecept", &con);
 		ImGui::DragFloat("SpeedRatio", &speedRate_);
+		ImGui::InputFloat("CurrentSpeed", &currentSpeed_);
 
 		ImGui::TreePop();
 	}

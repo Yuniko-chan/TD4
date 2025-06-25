@@ -1,8 +1,11 @@
 #pragma once
 #include "../../../Engine/Math/Vector/Vector3.h"
+
 #include <string>
 #include <list>
 #include <algorithm>
+
+class GlobalVariables;
 
 namespace ParameterStructs {
 
@@ -42,6 +45,10 @@ namespace ParameterStructs {
 		struct CameraDefault {
 			Vector3 position = {};
 			Vector3 rotateVector = Vector3(0.0f, 0.0f, 1.0f);
+			float trackingDelay = 0.1f;
+
+			void Initialize(const char* groupName, GlobalVariables* globalVariables);
+			void ApplyGlobalVariables(const char* groupName, GlobalVariables* globalVariables);
 		};
 	}
 

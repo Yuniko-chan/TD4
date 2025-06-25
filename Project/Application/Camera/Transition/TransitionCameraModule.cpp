@@ -6,23 +6,16 @@ void TransitionCameraModule::Accept(const float& frame)
 {
 	// 開始
 	transitionTimer_.Start(frame);
-
-	//const char* groupName = "FollowCamera";
-	//// 開始点
-	//from_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleOffset");
-	//from_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleRotation");
-	//// 終着点
-	//to_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootOffset");
-	//to_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootRotation");
 }
 
 void TransitionCameraModule::TransitionUpdate()
 {
 	transitionTimer_.Update();
 	if (transitionTimer_.IsActive()) {
-		this->cameraTransform_->translate =
+		currentPose_.first =
 			Ease::Easing(Ease::EaseName::Lerp, from_.first, to_.first, transitionTimer_.GetElapsedFrame());
-		cameraDirection_ = Ease::Easing(Ease::EaseName::Lerp,
+		currentPose_.second = Ease::Easing(Ease::EaseName::Lerp,
 			from_.second, to_.second, transitionTimer_.GetElapsedFrame());
+
 	}
 }
