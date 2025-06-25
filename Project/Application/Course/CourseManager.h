@@ -6,9 +6,9 @@
 
 
 static const size_t kCourseNum = 6;
-static const size_t kCourseFileCount = 1;
+static const size_t kCourseFileCount = 2;
 
-static const std::array<std::string, kCourseFileCount> kCourseNameList = {"demoCourse2.course"};
+static const std::array<std::string, kCourseFileCount> kCourseNameList = { "course_A.course","course_B.course"};
 
 static const float kCourseDiameter = 100.0f;
 

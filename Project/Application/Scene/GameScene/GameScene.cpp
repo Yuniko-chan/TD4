@@ -84,16 +84,16 @@ void GameScene::Initialize() {
 		reinterpret_cast<VehicleCore*>(objectManager_->GetObjectPointer("initCore"))->GetDriveSystem()->GetDriveEngine());
 
 	// コース
-	Course* course = static_cast<Course*>(objectManager_->GetObjectPointer("course_test"));
+	//Course* course = static_cast<Course*>(objectManager_->GetObjectPointer("course_test"));
 
 	// コース衝突システム
 	courseCollisionSystem_ = std::make_unique<CourseCollisionSystem>();
 	courseCollisionSystem_->Initialize();
-	courseCollisionSystem_->SetCourse(course);
+	//courseCollisionSystem_->SetCourse(course);
 
 	// コースデバッグ描画
 	courseDebugDraw_ = std::make_unique<CourseDebugDraw>();
-	courseDebugDraw_->Initialize(course);
+	//courseDebugDraw_->Initialize(course);
 
 	//コース生成システム
 	courseManager_ = std::make_unique<CourseManager>();

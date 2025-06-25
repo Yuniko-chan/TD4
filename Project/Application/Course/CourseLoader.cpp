@@ -118,11 +118,10 @@ void CourseLoader::LoadCourseFileFromManager(const std::string& directoryPath, c
 	}
 }
 
-Model* CourseLoader::CreateCourseModel(const CourseImportData& data) {
+Model* CourseLoader::CreateCourseModel(const CourseImportData& data,const std::string& name) {
 	//モデルデータ作製
 	Model::ModelData modelData;
 	modelData.material.textureFilePaths.push_back("Resources/Course/" + data.textureFileName_);
-
 	//CoursePolygon cData;
 	//uint32_t courseAttribute[3] = {0};
 
@@ -171,7 +170,7 @@ Model* CourseLoader::CreateCourseModel(const CourseImportData& data) {
 	//モデル生成
 	//モデル生成
 	Model* newModel = nullptr;
-	newModel = Model::CreateFromModelData(modelData, data.textureFileName_);
+	newModel = Model::CreateFromModelData(modelData,name);
 	return newModel;
 }
 
