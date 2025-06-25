@@ -93,11 +93,11 @@ int CourseManager::Place2(int prev) {
 	isPlaced_[2] = true;
 	if (prev == 1) {
 		if (RandomEngine::GetRandom(0, 1) > 0.5f) {
-			CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[2],1);
+			CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[2],-1);
 			next = Place3(2);
 		}
 		else {
-			CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[2],1);
+			CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[2],-1);
 			next = Place5(2);
 		}
 	}
@@ -114,16 +114,16 @@ int CourseManager::Place3(int prev) {
 	isPlaced_[3] = true;
 	if (prev == 0) {
 		if (RandomEngine::GetRandom(0, 1) > 0.5f) {
-			CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[3],2);
+			CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[3],-2);
 			next = Place2(3);
 		}
 		else {
-			CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[3],1);
+			CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[3],-1);
 			next = Place4(3);
 		}
 	}
 	else {
-		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[3],-1);
+		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[3],1);
 		next = Place5(2);
 	}
 
@@ -134,7 +134,7 @@ int CourseManager::Place4(int prev) {
 	int next = 0;
 	isPlaced_[4] = true;
 	if (prev == 3) {
-		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[4],-2);
+		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[4],2);
 		next = Place5(4);
 	}
 
@@ -145,7 +145,7 @@ int CourseManager::Place5(int prev) {
 	int next = 6;
 	isPlaced_[5] = true;
 	if (prev == 2) {
-		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[5],2);
+		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[5],-2);
 		
 	}
 	else {
