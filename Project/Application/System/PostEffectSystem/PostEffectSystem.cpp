@@ -20,6 +20,9 @@ void PostEffectSystem::Initialize()
 	// 放射状ブラーの広がる強さ
 	radialBlurStrength_ = 0.2f;
 
+	// 放射状ブラーがかかる速度
+	radialBlurSpeed_ = 1.0f;
+
 	// グローバル変数を登録する
 	RegisteringGlobalVariables();
 
@@ -37,6 +40,18 @@ void PostEffectSystem::Update()
 
 	// ラジアルブラー
 	postEffect_->SetRadialBlurStrength(radialBlurStrength_);
+
+	if (driveEngine_) {
+		if (driveEngine_->GetCurrentSpeed() >= radialBlurSpeed_) {
+			runRadialBlur_ = true;
+		}
+		else {
+			runRadialBlur_ = false;
+		}
+	}
+	else {
+		runRadialBlur_ = false;
+	}
 
 }
 
@@ -62,6 +77,7 @@ void PostEffectSystem::ApplyGlobalVariables()
 	const char* groupName = "PostEffectSystem";
 
 	radialBlurStrength_ = globalVariables->GetFloatValue(groupName, "radialBlurStrength");
+	radialBlurSpeed_ = globalVariables->GetFloatValue(groupName, "radialBlurSpeed");
 
 }
 
@@ -73,5 +89,6 @@ void PostEffectSystem::RegisteringGlobalVariables()
 	//グループを追加
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
 	globalVariables->AddItem(groupName, "radialBlurStrength", radialBlurStrength_);
+	globalVariables->AddItem(groupName, "radialBlurSpeed", radialBlurSpeed_);
 
 }

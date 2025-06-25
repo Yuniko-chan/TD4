@@ -11,6 +11,7 @@
 #include "../../Object/Factory/ObjectFactory.h"
 #include "../../Object/Player/Player.h"
 #include "../../../Engine/Physics/ClothGPU/ClothGPU.h"
+#include "../../Object/Car/VehicleCore.h"
 
 GameScene::~GameScene()
 {
@@ -79,6 +80,8 @@ void GameScene::Initialize() {
 	postEffectSystem_ = std::make_unique<PostEffectSystem>();
 	postEffectSystem_->Initialize();
 	postEffectSystem_->SetRenderTargetTexture(renderTargetTexture_);
+	postEffectSystem_->SetDriveEngine(
+		reinterpret_cast<VehicleCore*>(objectManager_->GetObjectPointer("initCore"))->GetDriveSystem()->GetDriveEngine());
 
 	// コース
 	Course* course = static_cast<Course*>(objectManager_->GetObjectPointer("course_test"));
