@@ -9,7 +9,7 @@ void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
 	//全コース用データをロード
 	for (size_t i = 0; i < kCourseFileCount;i++) {
 		CourseLoader::LoadCourseFileFromManager("Resources/Course",kCourseNameList[i], courseDatas_[i]);
-		ModelManager::GetInstance()->AppendModel(CourseLoader::CreateCourseModel(courseDatas_[i]));
+		ModelManager::GetInstance()->AppendModel(CourseLoader::CreateCourseModel(courseDatas_[i], kCourseNameList[i]));
 	}
 
 	//オブジェクトマネージャーに登録(仮で同じものを六個作る)

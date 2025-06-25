@@ -48,7 +48,7 @@ public:
 
 	static void LoadCourseFileFromManager(const std::string& directoryPath, const std::string& filename, CourseImportData& course);
 
-	static Model* CreateCourseModel(const CourseImportData& data);
+	static Model* CreateCourseModel(const CourseImportData& data, const std::string& name);
 
 	static void CreateCoursePolygons(const CourseImportData& data, std::vector<CoursePolygon>& course);
 
