@@ -91,17 +91,18 @@ void GameScene::Initialize() {
 	courseManager_ = std::make_unique<CourseManager>();
 	courseManager_->Initialize(static_cast<GameSceneObjectManager*>(objectManager_.get()));
 
+	// コースデバッグ描画
+	courseDebugDraw_ = std::make_unique<CourseDebugDraw>();
+	courseDebugDraw_->Initialize();
+
 	// コース
 	Course* course = nullptr;
 	for (size_t i = 0; i < kCourseNum; i++) {
 		std::string courseName = std::format("Course{}", i);
 		course = static_cast<Course*>(objectManager_->GetObjectPointer(courseName));
 		courseCollisionSystem_->SetCourse(course);
+		courseDebugDraw_->SetCourse(course);
 	}
-
-	// コースデバッグ描画
-	courseDebugDraw_ = std::make_unique<CourseDebugDraw>();
-	//courseDebugDraw_->Initialize(course);
 
 	// モデル描画
 	ModelDraw::PreDrawParameters preDrawParameters;

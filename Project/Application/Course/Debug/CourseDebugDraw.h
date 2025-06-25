@@ -13,8 +13,7 @@ public: // 関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	/// <param name="course">コース</param>
-	void Initialize(Course* course);
+	void Initialize();
 
 	/// <summary>
 	/// 描画マッピング
@@ -26,6 +25,12 @@ public: // 関数
 	/// ImGui描画
 	/// </summary>
 	void ImGuiDraw();
+
+	/// <summary>
+	/// コース設定
+	/// </summary>
+	/// <param name="course"></param>
+	void SetCourse(Course* course);
 
 private: // 関数
 
@@ -41,7 +46,7 @@ private: // 関数
 private: // 変数
 
 	// コース
-	Course* course_;
+	std::list<Course*> courses_;
 
 	// 表示するか
 	bool isDraw_;

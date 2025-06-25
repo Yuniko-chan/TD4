@@ -1,11 +1,11 @@
 #include "CourseDebugDraw.h"
 #include "../../../Engine/2D/ImguiManager.h"
 
-void CourseDebugDraw::Initialize(Course* course)
+void CourseDebugDraw::Initialize()
 {
 
 	// コース
-	course_ = course;
+	courses_.clear();
 
 	// 表示するか
 	isDraw_ = false;
@@ -21,12 +21,15 @@ void CourseDebugDraw::DrawMap(DrawLine* drawLine)
 	}
 
 	// コースマッピング
-	std::vector<CoursePolygon>* polygons = course_->GetCoursePolygonsAdress();
-	for (uint32_t i = 0; i < polygons->size(); ++i) {
-	
-		// ポリゴンマッピング
-		DrawMapPolygon(drawLine, (*polygons)[i].position0, (*polygons)[i].position1, (*polygons)[i].position2);
-	
+	for (std::list<Course*>::iterator itr = courses_.begin(); itr != courses_.end(); ++itr) {
+		std::vector<CoursePolygon>* polygons = (*itr)->GetCoursePolygonsAdress();
+
+		Vector3 worldPosition = (*itr)->GetWorldTransformAdress()->GetWorldPosition();
+
+		for (uint32_t i = 0; i < polygons->size(); ++i) {
+			// ポリゴンマッピング
+			DrawMapPolygon(drawLine, (*polygons)[i].position0 + worldPosition, (*polygons)[i].position1 + worldPosition, (*polygons)[i].position2 + worldPosition);
+		}
 	}
 
 }
@@ -39,6 +42,13 @@ void CourseDebugDraw::ImGuiDraw()
 	ImGui::Checkbox("描画するか", &isDraw_);
 	ImGui::End();
 #endif // _DEMO
+
+}
+
+void CourseDebugDraw::SetCourse(Course* course)
+{
+
+	courses_.push_back(course);
 
 }
 
