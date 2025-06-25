@@ -27,6 +27,6 @@ private:
 	//
 	Vector3 steerDirection_ = { 0.0f,0.0f,1.0f };
 	float spinRate_ = 0.0f;
-
+	float currentSpin_ = 0.0f;
 };
 

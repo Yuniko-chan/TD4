@@ -47,7 +47,7 @@ void DriveSystem::Update()
 	std::vector<Car::IParts*> tires = {};
 	tires = owner_->GetConstructionSystem()->FindPartsByCategory(1);
 	for (std::vector<Car::IParts*>::iterator it = tires.begin(); it != tires.end(); ++it) {
-		static_cast<TireParts*>((*it))->SetSpinRate(velocity_.z * kDeltaTime_);
+		static_cast<TireParts*>((*it))->SetSpinRate(velocity_.z);
 	}
 
 	// 角度
