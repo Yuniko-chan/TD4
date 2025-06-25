@@ -29,13 +29,6 @@ private: // メンバ定数
 	// 登録できるオブジェクトの数
 	static const uint32_t kObjectsThatCanBeRegisteredMax_ = 32;
 	
-	//	ポリゴンエリアの分割数
-	static const uint32_t kPolygonAreasDiv_ = 1;
-	// ポリゴンエリアの原点
-	static const Vector3 kPolygonAreasOrigin_;
-	// ポリゴンエリアの長さ
-	static const Vector3 kPolygonAreasLength_;
-
 	// 衝突するポリゴンの上限
 	static const uint32_t kCollisionPolygonMax_ = 1024;
 	
@@ -184,15 +177,10 @@ private: // メンバ変数
 	Buffers buffers_[kObjectsThatCanBeRegisteredMax_];
 
 	// エリア
-	std::vector<CoursePolygon> polygonAreas[kPolygonAreasDiv_][kPolygonAreasDiv_][kPolygonAreasDiv_];
+	std::vector<CoursePolygon> polygons_;
 
 	// 現在確認しているオブジェクトが何番目か
 	uint32_t collisionCheakNum_;
-
-	// ImGui エリア表示モード番号（デバッグ）
-	int32_t areaDisplayX_;
-	int32_t areaDisplayY_;
-	int32_t areaDisplayZ_;
 
 	// パイプライン
 	std::unique_ptr<CourseCollisionPipeline> courseCollisionPipeline_;

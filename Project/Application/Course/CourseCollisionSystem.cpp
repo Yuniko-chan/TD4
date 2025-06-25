@@ -12,11 +12,6 @@
 #include "../Object/Player/State/User/PlayerInVehicleState.h"
 #include <typeinfo>
 
-// ポリゴンエリアの原点
-const Vector3 CourseCollisionSystem::kPolygonAreasOrigin_ = { -500.0f, -500.0f, -500.0f };
-// ポリゴンエリアの長さ
-const Vector3 CourseCollisionSystem::kPolygonAreasLength_ = { 1000.0f, 1000.0f, 1000.0f };
-
 // 衝突するオブジェクトキーワード
 const std::array<std::string, CourseCollisionSystem::kCollidingObjectKeywordsMax_> 
 CourseCollisionSystem::kCollidingObjectKeywords_ = 
@@ -225,14 +220,6 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 void CourseCollisionSystem::SetCourse(Course* course)
 {
 
-	// ポリゴンエリアに登録
-	int32_t x0 = 0, y0 = 0, z0 = 0;
-	int32_t x1 = 0, y1 = 0, z1 = 0;
-	int32_t x2 = 0, y2 = 0, z2 = 0;
-
-	// 割る用の値
-	Vector3 dividingValue = Vector3::Multiply(kPolygonAreasLength_, 1.0f / static_cast<float>(kPolygonAreasDiv_));
-
 	// コース中心のワールド座標
 	Vector3 worldPosition = course->GetWorldTransformAdress()->GetWorldPosition();
 
@@ -243,37 +230,13 @@ void CourseCollisionSystem::SetCourse(Course* course)
 		// ポリゴン
 		CoursePolygon polygon = (*polygons)[i];
 
-		// 頂点位置、原点調整
-		Vector3 vertex0 = polygon.position0 - kPolygonAreasOrigin_ + worldPosition;
-		Vector3 vertex1 = polygon.position1 - kPolygonAreasOrigin_ + worldPosition;
-		Vector3 vertex2 = polygon.position2 - kPolygonAreasOrigin_ + worldPosition;
+		// コース中心のワールド座標をプラス
+		polygon.position0 += worldPosition;
+		polygon.position1 += worldPosition;
+		polygon.position2 += worldPosition;
 
-		// 重心
-		Vector3 centerOfGravity = (vertex0 + vertex1 + vertex2) * (1.0f / 3.0f);
-
-		// エリア番号
-		x0 = static_cast<uint32_t>(vertex0.x / dividingValue.x);
-		y0 = static_cast<uint32_t>(vertex0.y / dividingValue.y);
-		z0 = static_cast<uint32_t>(vertex0.z / dividingValue.z);
-
-		x1 = static_cast<uint32_t>(vertex1.x / dividingValue.x);
-		y1 = static_cast<uint32_t>(vertex1.y / dividingValue.y);
-		z1 = static_cast<uint32_t>(vertex1.z / dividingValue.z);
-
-		x2 = static_cast<uint32_t>(vertex2.x / dividingValue.x);
-		y2 = static_cast<uint32_t>(vertex2.y / dividingValue.y);
-		z2 = static_cast<uint32_t>(vertex2.z / dividingValue.z);
-
-		// 登録（エリアをまたぐ場合、それぞれ登録）
-
-		// 0番目
-		polygonAreas[x0][y0][z0].push_back(polygon);
-		if (!((x0 == x1) && (y0 == y1) && (z0 == z1))) {
-			polygonAreas[x1][y1][z1].push_back(polygon);
-		}
-		if (!( ((x0 == x2) && (y0 == y2) && (z0 == z2)) || ((x1 == x2) && (y1 == y2) && (z1 == z2)))) {
-			polygonAreas[x2][y2][z2].push_back(polygon);
-		}
+		// 登録
+		polygons_.push_back(polygon);
 
 	}
 
@@ -282,62 +245,13 @@ void CourseCollisionSystem::SetCourse(Course* course)
 void CourseCollisionSystem::ClearCorse()
 {
 
-	// ポリゴンエリアをクリアする
-	for (size_t x = 0; x < kPolygonAreasDiv_; x++) {
-		for (size_t y = 0; y < kPolygonAreasDiv_; y++) {
-			for (size_t z = 0; z < kPolygonAreasDiv_; z++) {
-				polygonAreas[x][y][z].clear();
-			}
-		}
-	}
+	// ポリゴンをクリアする
+	polygons_.clear();
 
 }
 
 void CourseCollisionSystem::ImGuiDraw()
 {
-
-	ImGui::Begin("CourseCollisionSystem");
-	// エリア表示モード番号
-	std::string radioButtonName = "name";
-	for (int32_t i = 0; i < kPolygonAreasDiv_; ++i) {
-		radioButtonName = "areaDisplayX_" + std::to_string(i);
-		ImGui::RadioButton(radioButtonName.c_str(), &areaDisplayX_, i); 
-		if (i != kPolygonAreasDiv_ - 1) {
-			ImGui::SameLine();
-		}
-	}
-	for (int32_t i = 0; i < kPolygonAreasDiv_; ++i) {
-		radioButtonName = "areaDisplayY_" + std::to_string(i);
-		ImGui::RadioButton(radioButtonName.c_str(), &areaDisplayY_, i);
-		if (i != kPolygonAreasDiv_ - 1) {
-			ImGui::SameLine();
-		}
-	}
-	for (int32_t i = 0; i < kPolygonAreasDiv_; ++i) {
-		radioButtonName = "areaDisplayZ_" + std::to_string(i);
-		ImGui::RadioButton(radioButtonName.c_str(), &areaDisplayZ_, i);
-		if (i != kPolygonAreasDiv_ - 1) {
-			ImGui::SameLine();
-		}
-	}
-
-	ImGui::Text("X:%d Y:%d Z:%d", areaDisplayX_, areaDisplayY_, areaDisplayZ_);
-	ImGui::Separator();
-
-	CoursePolygon polygon = {};
-	for (uint32_t i = 0; i < polygonAreas[areaDisplayX_][areaDisplayY_][areaDisplayZ_].size(); ++i) {
-
-		polygon = polygonAreas[areaDisplayX_][areaDisplayY_][areaDisplayZ_][i];
-		ImGui::Text("%d個目", i);
-		ImGui::Text("位置0 x:%7.2f y:%7.2f z:%7.2f", polygon.position0.x, polygon.position0.y, polygon.position0.z);
-		ImGui::Text("位置1 x:%7.2f y:%7.2f z:%7.2f", polygon.position1.x, polygon.position1.y, polygon.position1.z);
-		ImGui::Text("位置2 x:%7.2f y:%7.2f z:%7.2f", polygon.position2.x, polygon.position2.y, polygon.position2.z);
-		ImGui::Text("法線 x:%7.2f y:%7.2f z:%7.2f", polygon.normal.x, polygon.normal.y, polygon.normal.z);
-		ImGui::Separator();
-
-	}
-
-	ImGui::End();
 
 	// CS
 	ImGui::Begin("CourseCollisionSystem_CS");
@@ -493,158 +407,12 @@ void CourseCollisionSystem::DistanceJudgment(CollisionObject object)
 
 	buffers_[collisionCheakNum_].objectMap_->size = obb.size_;
 
-	// オブジェクトの位置からエリアを取得
-
-	// 頂点8個
-	const uint32_t vertexNum = 8;
-	// 頂点求める
-	Vector3 vertices[8];
-	const ObjectData objectData = *buffers_[collisionCheakNum_].objectMap_;
-
-	// 左 上 前
-	vertices[0] = {
-		(-objectData.size.x * objectData.planeYZ.x + objectData.size.y * objectData.planeXZ.x +
-			-objectData.size.z * objectData.planeXY.x),
-		(-objectData.size.x * objectData.planeYZ.y + objectData.size.y * objectData.planeXZ.y +
-			-objectData.size.z * objectData.planeXY.y),
-		(-objectData.size.x * objectData.planeYZ.z + objectData.size.y * objectData.planeXZ.z +
-			-objectData.size.z * objectData.planeXY.z)
-	};
-
-	// 左 上 後
-	vertices[1] = {
-		(-objectData.size.x * objectData.planeYZ.x + objectData.size.y * objectData.planeXZ.x +
-			objectData.size.z * objectData.planeXY.x),
-		(-objectData.size.x * objectData.planeYZ.y + objectData.size.y * objectData.planeXZ.y +
-			objectData.size.z * objectData.planeXY.y),
-		(-objectData.size.x * objectData.planeYZ.z + objectData.size.y * objectData.planeXZ.z +
-			objectData.size.z * objectData.planeXY.z)
-	};
-
-	// 右 上 前
-	vertices[2] = {
-		(objectData.size.x * objectData.planeYZ.x + objectData.size.y * objectData.planeXZ.x +
-			-objectData.size.z * objectData.planeXY.x),
-		(objectData.size.x * objectData.planeYZ.y + objectData.size.y * objectData.planeXZ.y +
-			-objectData.size.z * objectData.planeXY.y),
-		(objectData.size.x * objectData.planeYZ.z + objectData.size.y * objectData.planeXZ.z +
-			-objectData.size.z * objectData.planeXY.z)
-	};
-
-	// 右 上 後
-	vertices[3] = {
-		(objectData.size.x * objectData.planeYZ.x + objectData.size.y * objectData.planeXZ.x +
-			objectData.size.z * objectData.planeXY.x),
-		(objectData.size.x * objectData.planeYZ.y + objectData.size.y * objectData.planeXZ.y +
-			objectData.size.z * objectData.planeXY.y),
-		(objectData.size.x * objectData.planeYZ.z + objectData.size.y * objectData.planeXZ.z +
-			objectData.size.z * objectData.planeXY.z)
-	};
-
-	// 左 下 前
-	vertices[4] = {
-		(-objectData.size.x * objectData.planeYZ.x + -objectData.size.y * objectData.planeXZ.x +
-			-objectData.size.z * objectData.planeXY.x),
-		(-objectData.size.x * objectData.planeYZ.y + -objectData.size.y * objectData.planeXZ.y +
-			-objectData.size.z * objectData.planeXY.y),
-		(-objectData.size.x * objectData.planeYZ.z + -objectData.size.y * objectData.planeXZ.z +
-			-objectData.size.z * objectData.planeXY.z)
-	};
-
-	// 左 下 後
-	vertices[5] = {
-		(-objectData.size.x * objectData.planeYZ.x + -objectData.size.y * objectData.planeXZ.x +
-			objectData.size.z * objectData.planeXY.x),
-		(-objectData.size.x * objectData.planeYZ.y + -objectData.size.y * objectData.planeXZ.y +
-			objectData.size.z * objectData.planeXY.y),
-		(-objectData.size.x * objectData.planeYZ.z + -objectData.size.y * objectData.planeXZ.z +
-			objectData.size.z * objectData.planeXY.z)
-	};
-
-	// 右 下 前
-	vertices[6] = {
-		(objectData.size.x * objectData.planeYZ.x + -objectData.size.y * objectData.planeXZ.x +
-			-objectData.size.z * objectData.planeXY.x),
-		(objectData.size.x * objectData.planeYZ.y + -objectData.size.y * objectData.planeXZ.y +
-			-objectData.size.z * objectData.planeXY.y),
-		(objectData.size.x * objectData.planeYZ.z + -objectData.size.y * objectData.planeXZ.z +
-			-objectData.size.z * objectData.planeXY.z)
-	};
-
-	// 右 下 後
-	vertices[7] = {
-		(objectData.size.x * objectData.planeYZ.x + -objectData.size.y * objectData.planeXZ.x +
-			objectData.size.z * objectData.planeXY.x),
-		(objectData.size.x * objectData.planeYZ.y + -objectData.size.y * objectData.planeXZ.y +
-			objectData.size.z * objectData.planeXY.y),
-		(objectData.size.x * objectData.planeYZ.z + -objectData.size.y * objectData.planeXZ.z +
-			objectData.size.z * objectData.planeXY.z)
-	};
-
-	for (uint32_t i = 0; i < 8; ++i)
-	{
-		vertices[i] += objectData.center;
-
+	// ポリゴン登録
+	for (uint32_t i = 0; i < polygons_.size(); ++i) {
+		buffers_[collisionCheakNum_].polygonDataMap_[i] = polygons_[i];
 	}
 
-	// エリア8個
-	int32_t x[vertexNum] = {};
-	int32_t y[vertexNum] = {};
-	int32_t z[vertexNum] = {};
-	
-	// 初期化
-	for (uint32_t i = 0; i < vertexNum; ++i) {
-		x[i] = -1;
-		y[i] = -1;
-		z[i] = -1;
-	}
-
-	// 割る用の値
-	Vector3 dividingValue = Vector3::Multiply(kPolygonAreasLength_, 1.0f / static_cast<float>(kPolygonAreasDiv_));
-
-	// エリアに入っているポリゴンデータをSRVに登録
-	uint32_t polygonDataMapIndex = 0;
-	for (uint32_t i = 0; i < vertexNum; ++i) {
-
-		// 現在の値のエリア番号
-		int32_t tmpX = static_cast<int32_t>((vertices[i].x - kPolygonAreasOrigin_.x) / dividingValue.x);
-		int32_t tmpY = static_cast<int32_t>((vertices[i].y - kPolygonAreasOrigin_.y) / dividingValue.y);
-		int32_t tmpZ = static_cast<int32_t>((vertices[i].z - kPolygonAreasOrigin_.z) / dividingValue.z);
-
-		// エリア範囲外
-		if (tmpX >= kPolygonAreasDiv_ || tmpY >= kPolygonAreasDiv_ || tmpZ >= kPolygonAreasDiv_ ||
-			tmpX <= -1 || tmpY <= -1 || tmpZ <= -1) {
-			continue;
-		}
-
-		// かぶり確認
-		bool fogging = false;
-		for (uint32_t j = 0; j < i; ++j) {
-			if (tmpX == x[j] && tmpY == y[j] && tmpZ == z[j]) {
-				fogging = true;
-				break;
-			}
-		}
-
-		// かぶっていないので登録
-		if (!fogging) {
-
-			// ポリゴン登録
-			for (uint32_t j = 0; j < polygonAreas[tmpX][tmpY][tmpZ].size(); ++j) {
-				buffers_[collisionCheakNum_].polygonDataMap_[polygonDataMapIndex] = polygonAreas[tmpX][tmpY][tmpZ][j];
-				polygonDataMapIndex++;
-			}
-
-		}
-		
-		// かぶり確認用追加
-		x[i] = tmpX;
-		y[i] = tmpY;
-		z[i] = tmpZ;
-
-	}
-
-	buffers_[collisionCheakNum_].objectMap_->indexMax = polygonDataMapIndex;
+	buffers_[collisionCheakNum_].objectMap_->indexMax = static_cast<uint32_t>(polygons_.size());
 
 }
 
