@@ -72,8 +72,14 @@ private: // メンバ変数
 	// 放射状ブラーの広がる強さ
 	float radialBlurStrength_;
 
+	// 放射状ブラーの広がる最大の強さ
+	float radialBlurStrengthMax_;
+
 	// 放射状ブラーがかかる速度
 	float radialBlurSpeed_;
+
+	// 放射状ブラーが最大でかかる速度
+	float radialBlurSpeedMax_;
 
 	// ドライブエンジン
 	DriveEngine* driveEngine_;

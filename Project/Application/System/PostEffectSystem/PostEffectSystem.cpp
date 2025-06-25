@@ -1,5 +1,6 @@
 #include "PostEffectSystem.h"
 #include "../../../Engine/GlobalVariables/GlobalVariables.h"
+#include "../../../Engine/Math/Ease.h"
 
 void PostEffectSystem::Initialize()
 {
@@ -20,8 +21,14 @@ void PostEffectSystem::Initialize()
 	// 放射状ブラーの広がる強さ
 	radialBlurStrength_ = 0.2f;
 
+	// 放射状ブラーの広がる最大の強さ
+	radialBlurStrengthMax_ = 0.5f;
+
 	// 放射状ブラーがかかる速度
-	radialBlurSpeed_ = 1.0f;
+	radialBlurSpeed_ = 200.0f;
+
+	// 放射状ブラーが最大でかかる速度
+	radialBlurSpeedMax_ = 420.0f;
 
 	// グローバル変数を登録する
 	RegisteringGlobalVariables();
@@ -38,16 +45,20 @@ void PostEffectSystem::Update()
 	ApplyGlobalVariables();
 #endif // _DEMO
 
-	// ラジアルブラー
-	postEffect_->SetRadialBlurStrength(radialBlurStrength_);
+	if (!driveEngine_) {
+		return;
+	}
 
-	if (driveEngine_) {
-		if (driveEngine_->GetCurrentSpeed() >= radialBlurSpeed_) {
-			runRadialBlur_ = true;
-		}
-		else {
-			runRadialBlur_ = false;
-		}
+	// ラジアルブラー
+	float t = 0.0f;
+	if (!((radialBlurSpeedMax_ - radialBlurSpeed_) <= 0.0f)) {
+		t = std::clamp((driveEngine_->GetCurrentSpeed() - radialBlurSpeed_), 0.0f, (radialBlurSpeedMax_ - radialBlurSpeed_)) / (radialBlurSpeedMax_ - radialBlurSpeed_);
+	}
+	float radialBlurStrength = Ease::Easing(Ease::EaseName::Lerp, radialBlurStrength_, radialBlurStrengthMax_, t);
+	postEffect_->SetRadialBlurStrength(radialBlurStrength);
+
+	if (driveEngine_->GetCurrentSpeed() >= radialBlurSpeed_) {
+		runRadialBlur_ = true;
 	}
 	else {
 		runRadialBlur_ = false;

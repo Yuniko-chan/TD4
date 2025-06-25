@@ -1,6 +1,6 @@
 {
     "PostEffectSystem": {
-        "radialBlurSpeed": 420.0,
-        "radialBlurStrength": 0.019999999552965164
+        "radialBlurSpeed": 200.0,
+        "radialBlurStrength": 0.20000000298023224
     }
 }
