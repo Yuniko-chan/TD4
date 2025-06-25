@@ -40,7 +40,7 @@ void CourseCollisionSystem::Initialize()
 	vehicleCore_ = nullptr;
 
 	// テクスチャハンドル
-	roadAttributeTextureHandle_ = TextureManager::Load("Resources/Course/roadAttribute_.png", dxCommon_);
+	roadAttributeTextureHandle_ = TextureManager::Load("Resources/Course/course.png", dxCommon_);
 
 }
 
