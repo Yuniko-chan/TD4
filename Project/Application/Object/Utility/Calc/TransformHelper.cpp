@@ -51,6 +51,20 @@ Vector3 TransformHelper::XZRotateDirection(const Vector3& direct, float& theta)
     return Vector3(Vector3::Normalize(result));
 }
 
+Vector3 TransformHelper::YZRotateDirection(const Vector3& direct, float& theta)
+{
+    float cosT = std::cosf(theta);
+    float sinT = std::sinf(theta);
+
+    Vector3 result = {
+        direct.x,
+        direct.y * cosT - direct.z * sinT,
+        direct.y * sinT + direct.z * cosT
+    };
+
+    return Vector3(result);
+}
+
 float TransformHelper::CalculateXZVectorToRotateRadian(const Vector3& from, const Vector3& to)
 {
     Vector2 from2 = Vector2(from.x, from.z);

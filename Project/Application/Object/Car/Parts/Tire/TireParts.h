@@ -21,9 +21,12 @@ public:
 	/// </summary>
 	void ImGuiDrawParts() override;
 
+	void SetSteerDirection(const Vector3& steer) { steerDirection_ = steer; }
+	void SetSpinRate(const float rate) { spinRate_ = rate; }
 private:
 	//
-
+	Vector3 steerDirection_ = { 0.0f,0.0f,1.0f };
+	float spinRate_ = 0.0f;
 
 };
 

@@ -134,6 +134,7 @@ void DriveEngine::SpeedCalculation()
 	if (std::fabsf(currentSpeed_) <= discard) {
 		currentSpeed_ = 0.0f;
 	}
+
 }
 
 void DriveEngine::OverheatProcess(const float& SpeedPercentage)
