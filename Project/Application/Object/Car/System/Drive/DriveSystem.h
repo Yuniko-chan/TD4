@@ -51,6 +51,7 @@ public:	// アクセッサ
 	void SetStatusManager(VehicleStatus* status) { status_ = status; }
 
 	//---ゲッター---//
+	DriveEngine* GetDriveEngine() { return driveEngine_.get(); }
 
 
 };

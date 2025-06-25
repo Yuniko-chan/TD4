@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Engine/PostEffect/PostEffect.h"
 #include "../../../Engine/base/WindowSprite/WindowSprite.h"
+#include "../../Object/Car/System/Drive/DriveEngine.h"
 
 /// <summary>
 /// ポストエフェクトシステム
@@ -33,6 +34,12 @@ public: // アクセッサ
 	/// <param name="renderTargetTexture"></param>
 	void SetRenderTargetTexture(RenderTargetTexture* renderTargetTexture) { renderTargetTexture_ = renderTargetTexture; }
 
+	/// <summary>
+	/// ドライブエンジン設定
+	/// </summary>
+	/// <param name="driveEngine"></param>
+	void SetDriveEngine(DriveEngine* driveEngine) { driveEngine_ = driveEngine; }
+
 private:
 
 	/// <summary>
@@ -64,6 +71,12 @@ private: // メンバ変数
 
 	// 放射状ブラーの広がる強さ
 	float radialBlurStrength_;
+
+	// 放射状ブラーがかかる速度
+	float radialBlurSpeed_;
+
+	// ドライブエンジン
+	DriveEngine* driveEngine_;
 
 };
 
