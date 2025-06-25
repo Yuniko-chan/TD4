@@ -115,9 +115,11 @@ IObject* ObjectCreate::CreateObjectWall(LevelData::ObjectData& objectData)
 
 IObject* ObjectCreate::CreateObjectCourse(LevelData::ObjectData& objectData)
 {
-	IObject* object = new Course();
-
-	static_cast<Course*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	//IObject* object = new Course();
+	IObject* object = nullptr;
+	if (false) {
+		static_cast<Course*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	}
 	return object;
 }
 
