@@ -60,7 +60,6 @@ public:
 	/// <returns></returns>
 	Car::IParts* FindNearPart(const Vector3& point);
 
-	std::map<Vector2Int, Car::IParts*>* GetPartMappingPtr() { return &partsMapping_; }
 
 private: // 指定して設定OR解除
 	/// <summary>
@@ -91,8 +90,24 @@ private: // 検索
 	Car::IParts* FindParts(Car::IParts* parts);
 
 public:
+	/// <summary>
+	/// パーツごとの検索（リスト化）
+	/// </summary>
+	/// <param name="typeID"></param>
+	/// <returns></returns>
 	std::vector<Car::IParts*> FindPartsByCategory(int typeID);
+	/// <summary>
+	/// 空のマップデータ取得
+	/// </summary>
+	/// <returns></returns>
 	std::vector<MappingKey>* GetEmptyData() { return &emptyDatas_; }
+
+	/// <summary>
+	/// マップデータ取得
+	/// </summary>
+	/// <returns></returns>
+	std::map<Vector2Int, Car::IParts*>* GetPartMappingPtr() { return &partsMapping_; }
+
 private: // 登録・解除
 	/// <summary>
 	/// パーツの登録処理

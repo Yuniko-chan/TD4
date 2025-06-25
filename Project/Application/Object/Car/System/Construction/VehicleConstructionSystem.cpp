@@ -45,6 +45,7 @@ void VehicleConstructionSystem::ImGuiDraw()
 			EulerTransform t = (*it).second->GetWorldTransformAdress()->transform_;
 			ImGui::DragFloat3(name.c_str(), &t.translate.x, 0.01f);
 
+			// HP
 			name = (*it).second->GetName() + "HP";
 			float hp = (*it).second->GetHPHandler()->GetHP();
 			ImGui::DragFloat(name.c_str(), &hp);
@@ -53,6 +54,11 @@ void VehicleConstructionSystem::ImGuiDraw()
 			name = (*it).second->GetName() + "Key";
 			Vector2Int key = (*it).first;
 			ImGui::InputInt2(name.c_str(), &key.x);
+
+			// 深度
+			name = (*it).second->GetName() + "Depth";
+			int depth = (*it).second->GetConnector()->GetDepth();
+			ImGui::InputInt(name.c_str(), &depth);
 
 			ImGui::TreePop();
 		}
@@ -192,8 +198,6 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 	parts->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
 	// オフセット
 	parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(key);
-	// 深度
-	parts->GetConnector()->SetDepth(key.GetLength());
 	// キー
 	parts->GetConnector()->SetKey(Vector2((float)key.x, (float)key.y));
 	// マッピング
@@ -299,6 +303,9 @@ std::vector<Car::IParts*> VehicleConstructionSystem::FindPartsByCategory(int typ
 
 void VehicleConstructionSystem::RegistParts(const Vector2Int& id, Car::IParts* parts)
 {
+	// カウント追加
+	status_->ApplyPartAdd(parts->GetClassNameString(), id);
+
 	// リストに登録
 	partsMapping_.emplace(id, parts);
 	// 隣接検索
@@ -320,14 +327,67 @@ void VehicleConstructionSystem::RegistParts(const Vector2Int& id, Car::IParts* p
 	if (partsMapping_.contains(findID)) {
 		adjoinParts.push_back(partsMapping_.find(findID)->second);
 	}
+	// 最小深度値
+	int minDepth = 100;
+	// 一個しかなければ
+	bool isOne = adjoinParts.size();
 	// 子・親の登録
 	for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
-		// コアならスキップ
+		// 数による処理別
+		if (isOne) {
+			// 数が一つかつそれがコアである場合
+			if ((*it)->GetClassNameString() == "VehicleCore") {
+				parts->GetConnector()->AddParents(*it);
+				parts->GetConnector()->SetDepth(1);
+				break;
+			}
+
+			// コアでない場合（親登録＋深度値を親＋１で決定）
+			parts->GetConnector()->AddParents(*it);
+			parts->GetConnector()->SetDepth((*it)->GetConnector()->GetDepth() + 1);
+			break;
+		}
+
+		// コアなら親として登録のみ行う
 		if ((*it)->GetClassNameString() == "VehicleCore") {
+			parts->GetConnector()->AddParents(*it);
+			continue;
+		}
+		// 最小の設定
+		if (minDepth > (*it)->GetConnector()->GetDepth()) {
+			minDepth = (*it)->GetConnector()->GetDepth();
+		}
+
+		//// 対象の深度値
+		//int32_t targetDepth = (*it)->GetConnector()->GetDepth();
+		//// 子に追加
+		//if (parts->GetConnector()->GetDepth() < targetDepth) {
+		//	parts->GetConnector()->AddChildren(*it);
+		//	(*it)->GetConnector()->AddParents(parts);
+		//}
+		//// 親に追加
+		//else if (parts->GetConnector()->GetDepth() > targetDepth) {
+		//	parts->GetConnector()->AddParents(*it);
+		//	// 子に設定
+		//	(*it)->GetConnector()->AddChildren(parts);
+		//}
+	}
+	// 一個しかなければ早期
+	if (isOne) {
+		return;
+	}
+
+	// 深度設定
+	parts->GetConnector()->SetDepth(minDepth);
+
+	for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
+		// コアなら親として登録のみ行う
+		if ((*it)->GetClassNameString() == "VehicleCore") {
+			parts->GetConnector()->AddParents(*it);
 			continue;
 		}
 		// 対象の深度値
-		int32_t targetDepth = (*it)->GetConnector()->GetDepth();
+		int32_t targetDepth = parts->GetConnector()->GetDepth();
 		// 子に追加
 		if (parts->GetConnector()->GetDepth() < targetDepth) {
 			parts->GetConnector()->AddChildren(*it);
@@ -340,9 +400,6 @@ void VehicleConstructionSystem::RegistParts(const Vector2Int& id, Car::IParts* p
 			(*it)->GetConnector()->AddChildren(parts);
 		}
 	}
-	// カウント追加
-	status_->ApplyPartAdd(parts->GetClassNameString(), id);
-	//this->AddCount(parts->GetClassNameString());
 }
 
 void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts* parts)

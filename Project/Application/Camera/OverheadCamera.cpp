@@ -14,9 +14,6 @@ void OverheadCamera::Initialize()
 
 	usedDirection_ = true;
 
-
-	cameraTransform_ = &transform_;
-
 	// Globalの取得更新
 	ApplyGlobalVariable();
 }
@@ -85,18 +82,19 @@ void OverheadCamera::ImGuiDraw()
 void OverheadCamera::ApplyGlobalVariable()
 {
 	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
-	const char* groupName = "FollowCamera";
+	const char* groupName = "OverheadCamera";
 
 	// 追従レート
-	offsetMoveRate_ = globalVariables->GetFloatValue(groupName, "offsetMoveRate");
+	offsetMoveRate_ = globalVariables->GetFloatValue(groupName, "TrackingDelay");
 	// オフセット
-	offset_ = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootOffset");
-	// 開始点
-	from_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleOffset");
-	from_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleRotation");
-	// 終着点
-	to_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootOffset");
-	to_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootRotation");
+	offset_ = globalVariables->GetVector3Value(groupName, "Position");
+	// 終着点（車両：降りてる
+	to_.first = globalVariables->GetVector3Value(groupName, "Position");
+	to_.second = globalVariables->GetVector3Value(groupName, "RotateVector");
+
+	// 開始点（車両：乗ってる
+	from_.first = globalVariables->GetVector3Value("DriveCamera", "Position");
+	from_.second = globalVariables->GetVector3Value("DriveCamera", "RotateVector");
 
 }
 
@@ -105,7 +103,9 @@ void OverheadCamera::TransitionUpdate()
 	TransitionCameraModule::TransitionUpdate();
 
 	if (transitionTimer_.IsActive()) {
-		rotateDirection_ = cameraDirection_;
+		transform_.translate = currentPose_.first;
+		rotateDirection_ = currentPose_.second;
+		//rotateDirection_ = cameraDirection_;
 	}
 
 }

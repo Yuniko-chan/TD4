@@ -27,7 +27,7 @@ protected:
 	/// </summary>
 	virtual void TransitionUpdate();
 	// 現在の値
-	Pose cameraPose_{};
+	Pose currentPose_{};
 	// 元
 	Pose from_{};
 	// 先
@@ -35,6 +35,4 @@ protected:
 	// 遷移時間
 	FrameTimer transitionTimer_;
 
-	EulerTransform* cameraTransform_ = nullptr;
-	Vector3 cameraDirection_ = Vector3();
 };

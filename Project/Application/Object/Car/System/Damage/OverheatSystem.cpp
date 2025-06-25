@@ -17,8 +17,10 @@ void OverheatSystem::Update()
 	// 最大深度値検索
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = this->mappingData_->begin();
 		it != mappingData_->end(); ++it) {
-		if (maxDepth_ < (*it).first.GetLength()) {
-			maxDepth_ = (*it).first.GetLength();
+		if (Vector2Int(0, 0) != (*it).first) {
+			if (maxDepth_ < (*it).second->GetConnector()->GetDepth()) {
+				maxDepth_ = (*it).second->GetConnector()->GetDepth();
+			}
 		}
 	}
 	// パーツにダメージを与えるメソッド
@@ -49,13 +51,13 @@ void OverheatSystem::AssignRandomOverheatPart()
 	targetPart_ = nullptr;
 	// 対象
 	std::vector<Car::IParts*> depths = {};
-	// 最大深度
-	int maxDepth = maxDepth_;
 	// 最大深度の物をリスト化
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = this->mappingData_->begin();
 		it != mappingData_->end(); ++it) {
-		if (maxDepth == (*it).first.GetLength()) {
-			depths.push_back((*it).second);
+		if (Vector2Int(0, 0) != (*it).first) {
+			if (maxDepth_ == (*it).second->GetConnector()->GetDepth()) {
+				depths.push_back((*it).second);
+			}
 		}
 	}
 	// 番号をランダムで決定

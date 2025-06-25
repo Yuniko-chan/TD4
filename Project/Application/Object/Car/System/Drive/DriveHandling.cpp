@@ -1,7 +1,7 @@
 #include "DriveHandling.h"
 #include "../VehicleSystems.h"
 #include "../../VehicleCore.h"
-
+#include "../../CarLists.h"
 
 void DriveHandling::HandleInput(const float inputX)
 {
@@ -118,7 +118,7 @@ void DriveHandling::PreUpdate()
 	tires = owner_->GetConstructionSystem()->FindPartsByCategory(1);
 
 	for (std::vector<Car::IParts*>::iterator it = tires.begin(); it != tires.end(); ++it) {
-		(*it)->GetWorldTransformAdress()->direction_ = steerDirection_;
+		static_cast<TireParts*>((*it))->SetSteerDirection(steerDirection_);
 	}
 
 }
