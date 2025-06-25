@@ -118,13 +118,13 @@ int CourseManager::Place3(int prev) {
 			next = Place2(3);
 		}
 		else {
-			CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[3],-1);
+			CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[3],1);
 			next = Place4(3);
 		}
 	}
 	else {
 		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[3],1);
-		next = Place5(2);
+		next = Place4(3);
 	}
 
 	return next;
