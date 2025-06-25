@@ -28,7 +28,13 @@ void CourseDebugDraw::DrawMap(DrawLine* drawLine)
 
 		for (uint32_t i = 0; i < polygons->size(); ++i) {
 			// ポリゴンマッピング
-			DrawMapPolygon(drawLine, (*polygons)[i].position0 + worldPosition, (*polygons)[i].position1 + worldPosition, (*polygons)[i].position2 + worldPosition);
+			CoursePolygon polygon = (*polygons)[i];
+
+			Vector3 position0 = Matrix4x4::Transform(polygon.position0, (*itr)->GetWorldTransformAdress()->worldMatrix_);
+			Vector3 position1 = Matrix4x4::Transform(polygon.position1, (*itr)->GetWorldTransformAdress()->worldMatrix_);
+			Vector3 position2 = Matrix4x4::Transform(polygon.position2, (*itr)->GetWorldTransformAdress()->worldMatrix_);
+			DrawMapPolygon(drawLine, position0, position1, position2);
+
 		}
 	}
 

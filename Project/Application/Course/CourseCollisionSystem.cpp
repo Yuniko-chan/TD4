@@ -231,9 +231,9 @@ void CourseCollisionSystem::SetCourse(Course* course)
 		CoursePolygon polygon = (*polygons)[i];
 
 		// コース中心のワールド座標をプラス
-		polygon.position0 += worldPosition;
-		polygon.position1 += worldPosition;
-		polygon.position2 += worldPosition;
+		polygon.position0 = Matrix4x4::Transform(polygon.position0, course->GetWorldTransformAdress()->worldMatrix_);
+		polygon.position1 = Matrix4x4::Transform(polygon.position1, course->GetWorldTransformAdress()->worldMatrix_);
+		polygon.position2 = Matrix4x4::Transform(polygon.position2, course->GetWorldTransformAdress()->worldMatrix_);
 
 		// 登録
 		polygons_.push_back(polygon);
