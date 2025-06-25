@@ -2,6 +2,7 @@
 #include "../../../Engine/PostEffect/PostEffect.h"
 #include "../../../Engine/base/WindowSprite/WindowSprite.h"
 #include "../../Object/Car/System/Drive/DriveEngine.h"
+#include "../../Object/Player/Player.h"
 
 /// <summary>
 /// ポストエフェクトシステム
@@ -39,6 +40,12 @@ public: // アクセッサ
 	/// </summary>
 	/// <param name="driveEngine"></param>
 	void SetDriveEngine(DriveEngine* driveEngine) { driveEngine_ = driveEngine; }
+
+	/// <summary>
+	/// プレイヤー設定
+	/// </summary>
+	/// <param name="player"></param>
+	void SetPlayer(Player* player) { player_ = player; }
 
 private:
 
@@ -83,6 +90,9 @@ private: // メンバ変数
 
 	// ドライブエンジン
 	DriveEngine* driveEngine_;
+
+	// セットプレイヤー
+	Player* player_;
 
 };
 
