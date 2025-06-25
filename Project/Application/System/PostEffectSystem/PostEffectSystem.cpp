@@ -88,7 +88,12 @@ void PostEffectSystem::ApplyGlobalVariables()
 	const char* groupName = "PostEffectSystem";
 
 	radialBlurStrength_ = globalVariables->GetFloatValue(groupName, "radialBlurStrength");
+
+	radialBlurStrengthMax_ = globalVariables->GetFloatValue(groupName, "radialBlurStrengthMax");
+	
 	radialBlurSpeed_ = globalVariables->GetFloatValue(groupName, "radialBlurSpeed");
+
+	radialBlurSpeedMax_ = globalVariables->GetFloatValue(groupName, "radialBlurSpeedMax");
 
 }
 
@@ -100,6 +105,11 @@ void PostEffectSystem::RegisteringGlobalVariables()
 	//グループを追加
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
 	globalVariables->AddItem(groupName, "radialBlurStrength", radialBlurStrength_);
+
+	globalVariables->AddItem(groupName, "radialBlurStrengthMax", radialBlurStrengthMax_);
+	
 	globalVariables->AddItem(groupName, "radialBlurSpeed", radialBlurSpeed_);
+
+	globalVariables->AddItem(groupName, "radialBlurSpeedMax", radialBlurSpeedMax_);
 
 }
