@@ -120,7 +120,7 @@ void GameSceneInstancingDrawing::MinigunVer(MeshObject* meshObject, const Matrix
 void GameSceneInstancingDrawing::RopeRegistrationConfirmation(WorldTransform* worldTransform, const MaterialData& materialData, const Matrix4x4& viewProjectionMatrix)
 {
 
-	const size_t kRopeNum = 5;
+	const size_t kRopeNum = 8;
 
 	// トランスフォーム マップ
 	instancingDrawingDatas_[kRopeNum].transformMap[instancingDrawingTransformationMatrixNum_[kRopeNum]].WVP = worldTransform->worldMatrix_ * viewProjectionMatrix;
