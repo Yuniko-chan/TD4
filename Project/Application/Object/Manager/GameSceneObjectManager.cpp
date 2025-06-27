@@ -66,7 +66,7 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 
 			LevelData::MeshData meshData = std::get<LevelData::MeshData>(objectData);
 
-			RegisterPickupPoint(object.get(), meshData.name);
+			RegisterPickupPoint(object.get(), meshData.className, meshData.name);
 		}
 		if (object) {
 			// listへ
@@ -318,10 +318,10 @@ void GameSceneObjectManager::OptionProcess()
 	//VehiclePreset("Test");
 }
 
-void GameSceneObjectManager::RegisterPickupPoint(IObject* object, const std::string& className) {
+void GameSceneObjectManager::RegisterPickupPoint(IObject* object, const std::string& className, const std::string& objectName) {
 	for (size_t i = 0; i < kPickupPointCount_;i++) {
 		if (className == kRegisterPickupPointNames_[i]) {
-			pickupPointManager_->AddPickupPoint(className, static_cast<IPickupPoint*>(object));
+			pickupPointManager_->AddPickupPoint(objectName, static_cast<IPickupPoint*>(object));
 		}
 	}
 }

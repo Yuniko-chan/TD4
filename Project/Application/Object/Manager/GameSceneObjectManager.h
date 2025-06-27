@@ -59,7 +59,7 @@ private: // メンバ関数
 	void OptionProcess();
 
 	//オブジェクトデータからの取得ポイントの登録
-	void RegisterPickupPoint(IObject* object, const std::string& className);
+	void RegisterPickupPoint(IObject* object, const std::string& className, const std::string& objectName);
 
 	void VehiclePreset(const std::string& presetName);
 public:
