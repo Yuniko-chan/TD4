@@ -37,25 +37,22 @@ void TireParts::Update()
 
 	Matrix4x4 yzRotate = Matrix4x4::MakeIdentity4x4();
 	Matrix4x4 xzRotate = Matrix4x4::MakeIdentity4x4();
+	Vector3 xzDirection = Vector3(0.0f, 0.0f, 1.0f);
 
 	if (spinRate_ != 0.0f) {
 		// タイヤの長さ
 		float spinRadius = 1.0f;
 		// 回転量
 		currentSpin_ += spinRate_ / spinRadius;
-		//Vector3 next = TransformHelper::YZRotateDirection(steerDirection_, spinRate_);
-		//worldTransform_.direction_ = Ease::Easing(Ease::EaseName::Lerp, worldTransform_.direction_, next, 0.05f);
 
 		// XZとYZの回転行列構築
 		Vector3 yz = TransformHelper::YZRotateDirection(Vector3(0.0f, 0.0f, 1.0f), currentSpin_);
-		xzRotate = Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), steerDirection_);
 		yzRotate = Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), yz);
 	}
-	else {
-		//worldTransform_.direction_ = Ease::Easing(Ease::EaseName::Lerp, worldTransform_.direction_, steerDirection_, 0.05f);
-		xzRotate = Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), steerDirection_);
-	}
-	//worldTransform_.direction_ = TransformHelper::YZRotateDirection(steerDirection_, spinRate_);
+
+	// 
+	xzDirection = Ease::Easing(Ease::EaseName::Lerp, preSteerDirection_, steerDirection_, 0.05f);
+	xzRotate = Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), xzDirection);
 
 	Car::IParts::Update();
 

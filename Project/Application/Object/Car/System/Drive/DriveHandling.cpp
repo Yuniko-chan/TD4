@@ -37,26 +37,41 @@ void DriveHandling::PreUpdate()
 		++inputCounter_;
 	}
 	// 間隔
-	const int duration = 6;	// 間隔
-	const int spDecrement = 6;	// 減少の量を増やすしきい
+	const int duration = 5;	// 間隔
+	const int kDecrementDuration = 2;	// 減少間隔
+	const int kSteerReturnSensitivity = 3;	// ハンドル戻し感度
+	const int kSpDecrementThreshold = 6;	// 減少量を増やすしきい
+	const int kSpReturnSensitivity = 5;	// 減少量を増やす感度
 	const int kMaxCount = 45;	// 押し込み最大	
 
 	// 入力増加
-	if (inputCounter_ % duration == 0) {
+	if (IsInput() && inputCounter_ % duration == 0) {
+		// 左
 		if (isLeft_.second) {
 			// 特殊処理
-			if (consecutiveReceptions_ > spDecrement) {
-				consecutiveReceptions_ -= spDecrement;
+			if (consecutiveReceptions_ > kSpDecrementThreshold) {
+				consecutiveReceptions_ -= kSpReturnSensitivity;
 			}
+			// 切り返しの通常処理
+			else if (consecutiveReceptions_ > 0) {
+				consecutiveReceptions_ -= kSteerReturnSensitivity;
+			}
+			// 通常処理
 			else {
 				consecutiveReceptions_--;
 			}
 		}
+		// 右
 		else if (isRight_.second) {
 			// 特殊処理
-			if (consecutiveReceptions_ < -spDecrement) {
-				consecutiveReceptions_ += spDecrement;
+			if (consecutiveReceptions_ < -kSpDecrementThreshold) {
+				consecutiveReceptions_ += kSpReturnSensitivity;
 			}
+			// 切り返しの通常処理
+			else if (consecutiveReceptions_ < 0) {
+				consecutiveReceptions_ += kSteerReturnSensitivity;
+			}
+			// 通常処理
 			else {
 				consecutiveReceptions_++;
 			}
@@ -65,18 +80,23 @@ void DriveHandling::PreUpdate()
 
 	}
 	// 非入力での減少処理
-	else if (!IsInput() && (inputCounter_ % (duration / 2) == 0)) {
+	else if (IsNoneInput() && inputCounter_ % kDecrementDuration == 0) {
+		int16_t decreValue = 1;
+		// 減少量の変化
+		float lim = (float)kMaxCount / 3.0f;
+		if (std::fabsf((float)consecutiveReceptions_) > (lim)) {
+			decreValue = 4;
+		}
+		else if (std::fabsf((float)consecutiveReceptions_) > ((float)kMaxCount / 5.0f)) {
+			decreValue = 2;
+		}
+
+		// 受付の変化処理
 		if (consecutiveReceptions_ > 0) {
-			consecutiveReceptions_ -= (kMaxCount / 5);
-			if (consecutiveReceptions_ < 0) {
-				consecutiveReceptions_ = 0;
-			}
+			consecutiveReceptions_ -= decreValue;
 		}
 		else if (consecutiveReceptions_ < 0) {
-			consecutiveReceptions_ += (kMaxCount / 5);
-			if (consecutiveReceptions_ > 0) {
-				consecutiveReceptions_ = 0;
-			}
+			consecutiveReceptions_ += decreValue;
 		}
 		inputCounter_ = 0;
 	}
@@ -86,6 +106,8 @@ void DriveHandling::PreUpdate()
 
 	float t = (float)std::abs((int)consecutiveReceptions_) / kMaxCount;
 	const float limitDirect = 2.0f;	// 最大角度（-1~1,0,1):(-0.5|0.5,0,0.5)
+	// 前フレーム
+	preSteerDirection_ = steerDirection_;
 	// プラス方向（右
 	if (consecutiveReceptions_ > 0) {
 		steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, limitDirect, t);
@@ -97,28 +119,18 @@ void DriveHandling::PreUpdate()
 	else {
 		steerDirection_.x = 0.0f;
 	}
+	// Z設定
 	steerDirection_.z = 1.0f;
 
 	// 正規化
 	steerDirection_ = Vector3::Normalize(steerDirection_);
 
+	// 向きの設定
 	Matrix4x4 vehicleRotate = Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), vehicleDirection_);
 	executeDirection_ = Matrix4x4::TransformNormal(steerDirection_, vehicleRotate);
 
-	//float radian = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, executeDirection_);
-	//radian /= 60.0f;
-	//executeDirection_ = TransformHelper::XZRotateDirection(executeDirection_, radian);
-
 	if (executeDirection_ == Vector3(0.0f, 0.0f, 0.0f)) {
 		executeDirection_ = Vector3(0.0f, 0.0f, 1.0f);
-	}
-
-	// タイヤの向き決定
-	std::vector<Car::IParts*> tires = {};
-	tires = owner_->GetConstructionSystem()->FindPartsByCategory(1);
-
-	for (std::vector<Car::IParts*>::iterator it = tires.begin(); it != tires.end(); ++it) {
-		static_cast<TireParts*>((*it))->SetSteerDirection(steerDirection_);
 	}
 
 }
