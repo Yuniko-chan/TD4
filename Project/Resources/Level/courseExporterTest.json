@@ -594,7 +594,7 @@
             },
             "gimmick": {
                 "type": "CANNON",
-                "cooltime": 3.0,
+                "cooltime": 4.0,
                 "firingSpeed": 1.0
             }
         },
@@ -672,7 +672,7 @@
             },
             "gimmick": {
                 "type": "CANNON",
-                "cooltime": 3.0,
+                "cooltime": 3.5,
                 "firingSpeed": 1.0
             }
         },
@@ -711,7 +711,7 @@
             },
             "gimmick": {
                 "type": "CANNON",
-                "cooltime": 3.0,
+                "cooltime": 2.0,
                 "firingSpeed": 1.0
             }
         },
@@ -750,7 +750,7 @@
             },
             "gimmick": {
                 "type": "CANNON",
-                "cooltime": 3.0,
+                "cooltime": 1.5,
                 "firingSpeed": 1.0
             }
         },
@@ -789,7 +789,7 @@
             },
             "gimmick": {
                 "type": "CANNON",
-                "cooltime": 3.0,
+                "cooltime": 2.5,
                 "firingSpeed": 1.0
             }
         },
@@ -828,7 +828,7 @@
             },
             "gimmick": {
                 "type": "CANNON",
-                "cooltime": 3.0,
+                "cooltime": 1.0,
                 "firingSpeed": 1.0
             }
         },
@@ -867,7 +867,7 @@
             },
             "gimmick": {
                 "type": "CANNON",
-                "cooltime": 3.0,
+                "cooltime": 0.0,
                 "firingSpeed": 1.0
             }
         },
@@ -906,8 +906,156 @@
             },
             "gimmick": {
                 "type": "CANNON",
-                "cooltime": 3.0,
+                "cooltime": 0.5,
                 "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "TirePoint.001",
+            "transform": {
+                "translation": [
+                    -1084.2852783203125,
+                    765.3118896484375,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "tire.obj",
+            "directoryPath": "Resources/Model/PickupPoint/Tire",
+            "className": "TirePickupPoint",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    7.059999465942383,
+                    7.099999904632568,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "FramePoint.001",
+            "transform": {
+                "translation": [
+                    -1060.2972412109375,
+                    759.527587890625,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "frame.obj",
+            "directoryPath": "Resources/Model/PickupPoint/Frame",
+            "className": "ArmorPickupPoint",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    7.949999809265137,
+                    7.46999979019165,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "EnginePoint.001",
+            "transform": {
+                "translation": [
+                    -1066.7362060546875,
+                    779.48193359375,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "engine.obj",
+            "directoryPath": "Resources/Model/PickupPoint/Engine",
+            "className": "EnginePickupPoint",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    7.099999904632568,
+                    7.099999904632568,
+                    2.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "customArea.001",
+            "transform": {
+                "translation": [
+                    -1073.2371826171875,
+                    765.3118896484375,
+                    0.00799494981765747
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.6464892625808716,
+                    0.6464892625808716,
+                    0.6464892625808716
+                ]
+            },
+            "fileName": "custom.obj",
+            "directoryPath": "Resources/Model/Custom",
+            "className": "CustomArea",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    29.09201681613922,
+                    29.09201681613922,
+                    1.2929785251617432
+                ]
             }
         }
     ]
