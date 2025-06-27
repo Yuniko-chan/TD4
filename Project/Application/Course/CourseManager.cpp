@@ -28,7 +28,7 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 	LevelData::MeshData objectData;
 	EulerTransform transform;
 	transform.rotate = { 0,0,0 };
-	transform.scale = { 1.0f,1.0f,1.0f };
+	transform.scale = { 5.0f,5.0f,5.0f };
 	transform.translate.x = offset.x * kCourseDiameter;
 	transform.translate.y = offset.y * kCourseDiameter;
 	transform.translate.z = offset.z * kCourseDiameter;
