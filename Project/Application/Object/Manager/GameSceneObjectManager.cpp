@@ -144,6 +144,7 @@ void GameSceneObjectManager::ImGuiDraw()
 #ifdef _DEMO
 	
 	partsManager_->ImGuiDraw();
+	pickupPointManager_->ImGuiDraw();
 
 	ImGui::Begin("GameObjectManager");
 	static char buffer[256];
