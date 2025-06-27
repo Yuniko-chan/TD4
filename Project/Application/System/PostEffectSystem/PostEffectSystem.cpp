@@ -1,6 +1,7 @@
 #include "PostEffectSystem.h"
 #include "../../../Engine/GlobalVariables/GlobalVariables.h"
 #include "../../../Engine/Math/Ease.h"
+#include "../../Object/Player/State/User/PlayerInVehicleState.h"
 
 void PostEffectSystem::Initialize()
 {
@@ -45,20 +46,25 @@ void PostEffectSystem::Update()
 	ApplyGlobalVariables();
 #endif // _DEMO
 
-	if (!driveEngine_) {
-		return;
-	}
-
 	// ラジアルブラー
-	float t = 0.0f;
-	if (!((radialBlurSpeedMax_ - radialBlurSpeed_) <= 0.0f)) {
-		t = std::clamp((driveEngine_->GetCurrentSpeed() - radialBlurSpeed_), 0.0f, (radialBlurSpeedMax_ - radialBlurSpeed_)) / (radialBlurSpeedMax_ - radialBlurSpeed_);
-	}
-	float radialBlurStrength = Ease::Easing(Ease::EaseName::Lerp, radialBlurStrength_, radialBlurStrengthMax_, t);
-	postEffect_->SetRadialBlurStrength(radialBlurStrength);
+	if (driveEngine_ && player_) {
 
-	if (driveEngine_->GetCurrentSpeed() >= radialBlurSpeed_) {
-		runRadialBlur_ = true;
+		// 型
+		const std::type_info& currentState = typeid(*(player_->GetStateMachine()->GetCurrentState()));
+		std::string name = currentState.name();
+		bool playerDriving = name == "class PlayerInVehicleState";
+		if (driveEngine_->GetCurrentSpeed() >= radialBlurSpeed_ && playerDriving) {
+			runRadialBlur_ = true;
+			float t = 0.0f;
+			if (!((radialBlurSpeedMax_ - radialBlurSpeed_) <= 0.0f)) {
+				t = std::clamp((driveEngine_->GetCurrentSpeed() - radialBlurSpeed_), 0.0f, (radialBlurSpeedMax_ - radialBlurSpeed_)) / (radialBlurSpeedMax_ - radialBlurSpeed_);
+			}
+			float radialBlurStrength = Ease::Easing(Ease::EaseName::Lerp, radialBlurStrength_, radialBlurStrengthMax_, t);
+			postEffect_->SetRadialBlurStrength(radialBlurStrength);
+		}
+		else {
+			runRadialBlur_ = false;
+		}
 	}
 	else {
 		runRadialBlur_ = false;

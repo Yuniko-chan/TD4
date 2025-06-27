@@ -82,6 +82,7 @@ void GameScene::Initialize() {
 	postEffectSystem_->SetRenderTargetTexture(renderTargetTexture_);
 	postEffectSystem_->SetDriveEngine(
 		reinterpret_cast<VehicleCore*>(objectManager_->GetObjectPointer("initCore"))->GetDriveSystem()->GetDriveEngine());
+	postEffectSystem_->SetPlayer(reinterpret_cast<Player*>(objectManager_->GetObjectPointer("Player")));
 
 	// コース衝突システム
 	courseCollisionSystem_ = std::make_unique<CourseCollisionSystem>();

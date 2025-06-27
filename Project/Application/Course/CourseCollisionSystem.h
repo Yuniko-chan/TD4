@@ -27,7 +27,7 @@ private: // メンバ定数
 	using CollisionObject = std::variant<Player*, CourseDemoObject*, CollisionCarObject>;
 
 	// 登録できるオブジェクトの数
-	static const uint32_t kObjectsThatCanBeRegisteredMax_ = 32;
+	static const uint32_t kObjectsThatCanBeRegisteredMax_ = 64;
 	
 	// 衝突するポリゴンの上限
 	static const uint32_t kCollisionPolygonMax_ = 1024;

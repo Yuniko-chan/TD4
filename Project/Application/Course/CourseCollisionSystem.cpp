@@ -102,9 +102,9 @@ void CourseCollisionSystem::Execute()
 					std::visit([&](auto xx) {
 					// コア
 					if(xx->GetParent()) {
+						isAlone = false;
 						return true;
 					}
-					isAlone = false;
 					return false;
 					}, collisionCarObject);
 
@@ -531,8 +531,6 @@ void CourseCollisionSystem::AloneExtrusionCalculation(CollisionObject object)
 		normal = Vector3::Normalize(normal * (1.0f / static_cast<float>(normalCount)));
 	}
 
-	normal = { 0.0f, 0.0f, 1.0f };
-
 	// メッシュオブジェクトに代入
 	std::visit([&](auto x) {
 		// 型
@@ -540,17 +538,11 @@ void CourseCollisionSystem::AloneExtrusionCalculation(CollisionObject object)
 		// プレイヤー
 		if constexpr (std::is_same_v<T, Player*>) {
 			x->GetWorldTransformAdress()->transform_.translate += extrusion;
-			if (normalCount != 0) {
-				//x->GetWorldTransformAdress()->direction_ = normal;
-			}
 			x->GetWorldTransformAdress()->UpdateMatrix();
 		}
 		// デモオブジェクト
 		else if constexpr (std::is_same_v<T, CourseDemoObject*>) {
 			x->GetWorldTransformAdress()->transform_.translate += extrusion;
-			if (normalCount != 0) {
-				x->GetWorldTransformAdress()->direction_ = normal;
-			}
 			x->GetWorldTransformAdress()->UpdateMatrix();
 		}
 		// プレイヤーじゃない
@@ -558,9 +550,6 @@ void CourseCollisionSystem::AloneExtrusionCalculation(CollisionObject object)
 			CollisionCarObject collisionCarObject = x;
 			std::visit([&](auto xx) {
 				xx->GetWorldTransformAdress()->transform_.translate += extrusion;
-				if (normalCount != 0) {
-					xx->GetWorldTransformAdress()->direction_ = normal;
-				}
 				xx->GetWorldTransformAdress()->UpdateMatrix();
 				}, collisionCarObject);
 		}
