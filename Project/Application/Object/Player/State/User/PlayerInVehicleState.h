@@ -17,4 +17,10 @@ public:
 	/// </summary>
 	void Exit() override;
 
+private:
+	/// <summary>
+	/// カメラのオフセット更新
+	/// </summary>
+	void UpdateCameraOffset();
+
 };

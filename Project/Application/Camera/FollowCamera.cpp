@@ -94,6 +94,7 @@ void FollowCamera::ImGuiDraw()
 	ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Offset", &offset_.x, 0.01f);
 	ImGui::DragFloat3("RotateVector", &rotateDirection_.x, 0.01f);
+	ImGui::DragFloat("OffsetPlus", &zoomOutOffset_);
 	ImGui::Checkbox("UseDirection", &usedDirection_);
 }
 
@@ -146,6 +147,7 @@ Vector3 FollowCamera::OffsetCalc()
 
 	//追従対象からカメラまでのオフセット
 	Vector3 offset = offset_;
+	offset.z -= zoomOutOffset_;
 
 	Matrix4x4 rotateMatrix = GetRotateMatrix();
 
@@ -163,6 +165,8 @@ void FollowCamera::ApplyGlobalVariables()
 	const char* groupName = "DriveCamera";
 	// 移動
 	offsetMoveRate_ = globalVariables->GetFloatValue(groupName, "TrackingDelay");
+	// オフセット
+	offset_ = globalVariables->GetVector3Value(groupName, "Position");
 	// 終着点
 	to_.first = globalVariables->GetVector3Value(groupName, "Position");
 	to_.second = globalVariables->GetVector3Value(groupName, "RotateVector");

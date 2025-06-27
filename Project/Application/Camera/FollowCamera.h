@@ -38,6 +38,12 @@ public: // アクセッサ
 	/// <returns></returns>
 	Matrix4x4 GetRotateMatrix();
 
+	/// <summary>
+	/// 引きカメラのオフセット追加値
+	/// </summary>
+	/// <param name="offset"></param>
+	void SetZoomOutOffset(const float& offset) { zoomOutOffset_ = offset; }
+
 private: // メンバ関数
 
 	/// <summary>
@@ -76,7 +82,9 @@ private: // メンバ変数
 	bool usedDirection_ = false;
 	Vector3 rotateDirection_ = Vector3(0.0f, 0.0f, 1.0f);
 
+	// オフセット
 	Vector3 offset_ = {};
+	float zoomOutOffset_ = 0.0f;
 
 };
 
