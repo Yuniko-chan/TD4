@@ -76,6 +76,7 @@ void DriveEngine::ImGuiDraw()
 		int con = this->consecutiveReceptions_;
 		ImGui::InputInt("ConsecutiveRecept", &con);
 		ImGui::DragFloat("SpeedRatio", &speedRate_);
+		ImGui::InputFloat("CurrentSpeed", &currentSpeed_);
 
 		ImGui::TreePop();
 	}
@@ -133,6 +134,7 @@ void DriveEngine::SpeedCalculation()
 	if (std::fabsf(currentSpeed_) <= discard) {
 		currentSpeed_ = 0.0f;
 	}
+
 }
 
 void DriveEngine::OverheatProcess(const float& SpeedPercentage)

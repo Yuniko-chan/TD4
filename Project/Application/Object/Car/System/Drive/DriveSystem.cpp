@@ -1,5 +1,6 @@
 #include "DriveSystem.h"
 #include "../../VehicleCore.h"
+#include "../../CarLists.h"
 
 DriveSystem::DriveSystem()
 {
@@ -41,6 +42,14 @@ void DriveSystem::Update()
 	{
 		return;
 	}
+
+	// タイヤの回転決定
+	std::vector<Car::IParts*> tires = {};
+	tires = owner_->GetConstructionSystem()->FindPartsByCategory(1);
+	for (std::vector<Car::IParts*>::iterator it = tires.begin(); it != tires.end(); ++it) {
+		static_cast<TireParts*>((*it))->SetSpinRate(velocity_.z);
+	}
+
 	// 角度
 	//float eulerY = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, Vector3::FrontVector());
 	Vector3 newDirect = Matrix4x4::TransformNormal(velocity_, Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), owner_->GetWorldTransformAdress()->direction_));

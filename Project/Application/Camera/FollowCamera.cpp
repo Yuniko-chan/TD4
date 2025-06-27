@@ -25,31 +25,9 @@ void FollowCamera::Initialize() {
 	const float rotateX = 0.1f;
 	transform_.rotate.x = rotateX;
 
-	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
-	const char* groupName = "FollowCamera";
-	//グループを追加
-	GlobalVariables::GetInstance()->CreateGroup(groupName);
-	globalVariables->AddItem(groupName, "offsetMoveRate", offsetMoveRate_);
-
-	globalVariables->AddItem(groupName, "inVehicleOffset", inVehicleOffset_);
-	globalVariables->AddItem(groupName, "inVehicleRotation", inVehicleRotation_);
-
-	globalVariables->AddItem(groupName, "onFootRotation", onFootRotation_);
-	globalVariables->AddItem(groupName, "onFootOffset", onFootOffset_);
-
 	ApplyGlobalVariables();
-
-	offset_ = Vector3(onFootOffset_);
+	offset_ = Vector3(to_.first);
 	usedDirection_ = true;
-
-	cameraTransform_ = &transform_;
-
-	// 開始点
-	from_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootOffset");
-	from_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "onFootRotation");
-	// 終着点
-	to_.first = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleOffset");
-	to_.second = GlobalVariables::GetInstance()->GetVector3Value(groupName, "inVehicleRotation");
 
 }
 
@@ -182,15 +160,16 @@ void FollowCamera::ApplyGlobalVariables()
 {
 
 	GlobalVariables* globalVariables = GlobalVariables::GetInstance();
-	const char* groupName = "FollowCamera";
+	const char* groupName = "DriveCamera";
+	// 移動
+	offsetMoveRate_ = globalVariables->GetFloatValue(groupName, "TrackingDelay");
+	// 終着点
+	to_.first = globalVariables->GetVector3Value(groupName, "Position");
+	to_.second = globalVariables->GetVector3Value(groupName, "RotateVector");
 
-	offsetMoveRate_ = globalVariables->GetFloatValue(groupName, "offsetMoveRate");
-
-	inVehicleOffset_ = globalVariables->GetVector3Value(groupName, "inVehicleOffset");
-	inVehicleRotation_ = globalVariables->GetVector3Value(groupName, "inVehicleRotation");
-
-	onFootOffset_ = globalVariables->GetVector3Value(groupName, "onFootOffset");
-	onFootRotation_ = globalVariables->GetVector3Value(groupName, "onFootRotation");
+	// 開始点
+	from_.first = globalVariables->GetVector3Value("OverheadCamera", "Position");
+	from_.second = globalVariables->GetVector3Value("OverheadCamera", "RotateVector");
 }
 
 void FollowCamera::TransitionUpdate()
@@ -198,6 +177,7 @@ void FollowCamera::TransitionUpdate()
 	TransitionCameraModule::TransitionUpdate();
 	// 遷移中なら向きをモジュール側の値に
 	if (transitionTimer_.IsActive()) {
-		rotateDirection_ = cameraDirection_;
+		offset_ = currentPose_.first;
+		rotateDirection_ = currentPose_.second;
 	}
 }

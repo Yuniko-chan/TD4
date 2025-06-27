@@ -34,6 +34,16 @@ public:
 	static Vector3 XZRotateDirection(const Vector3& direct, float& theta);
 
 	/// <summary>
+	/// YZ
+	/// </summary>
+	/// <param name="direct"></param>
+	/// <param name="theta"></param>
+	/// <returns></returns>
+	static Vector3 YZRotateDirection(const Vector3& direct, float& theta);
+
+	//static Vector3 RotateAxis(const Vector3& v, const Vector3& axis, float angle);
+
+	/// <summary>
 	/// XZベクトルの回転角を求める関数
 	/// </summary>
 	/// <param name="from"></param>
