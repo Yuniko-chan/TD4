@@ -15,6 +15,10 @@ void GameSceneInstancingDrawing::Initialize()
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Frame/", "Frame.obj"}, false}); // フレーム
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Engine/", "Engine.obj"}, false}); // エンジン
 
+	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/PickupPoint/Tire/", "tire.obj"}, false}); // タイヤ
+	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/PickupPoint/Frame", "frame.obj"}, false}); // フレーム
+	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/PickupPoint/Engine", "engine.obj"}, false}); // エンジン
+
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/Cannon/", "Cannon.obj"}, false}); // 大砲
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/IronBall/", "IronBall.obj"}, false}); // 鉄球
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/IronBall/", "Rope.obj"}, false}); // 鉄球紐
