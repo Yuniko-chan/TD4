@@ -42,7 +42,6 @@ void Player::Update()
 {
 	// 基底
 	MeshObject::Update();
-	
 
 	// システム
 	SystemUpdate();

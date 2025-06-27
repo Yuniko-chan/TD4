@@ -15,7 +15,6 @@ void PlayerDropOffActionState::Initialize()
 	// コアのベクトルから
 	Vector3 rotateOffset = Matrix4x4::TransformNormal(offset, Matrix4x4::DirectionToDirection(Vector3(0.0f,0.0f,1.0f),player_->GetCoreTransform()->direction_));
 	easePoint_.second = player_->GetCoreTransform()->GetWorldPosition() + rotateOffset;
-	easePoint_.second = player_->GetCoreTransform()->GetWorldPosition() + Vector3{ 0.0f,30.0f,0.0f };
 
 	player_->GetCameraManager()->SetRequest(ActiveCamera::kOverhead);
 	//static_cast<OverheadCamera*>(player_->GetCameraManager()->FindCamera("Overhead"))->SetDirection(player_->GetCoreTransform()->direction_);
