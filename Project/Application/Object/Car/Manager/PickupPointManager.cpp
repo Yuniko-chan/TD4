@@ -4,6 +4,7 @@
 #include "../Preset/VehiclePaths.h"
 #include "../Parts/PartsInterface.h"
 #include "../../Utility/Calc/TransformHelper.h"
+#include "../../../Engine/2D/ImguiManager.h"
 
 void PickupPointManager::AddPickupPoint(const std::string& tag, IPickupPoint* newPoint)
 {
@@ -125,4 +126,24 @@ bool PickupPointManager::IsAccept(const Vector3& position)
 	// 書き換え
 	pickupPoint_ = nearPoint;
 	return true;
+}
+
+void PickupPointManager::ImGuiDraw()
+{
+	ImGui::Begin("PickupManager");
+	
+	std::string name = "";
+
+	for (std::unordered_map<std::string, IPickupPoint*>::iterator it = pointLists_.begin();
+		it != pointLists_.end(); it++) {
+		name = (*it).second->GetName();
+
+		ImGui::SeparatorText(name.c_str());
+		Vector3 position = (*it).second->GetWorldTransformAdress()->GetWorldPosition();
+		name = (*it).second->GetName() + ":Position";
+		ImGui::DragFloat3(name.c_str(), &position.x);
+
+	}
+
+	ImGui::End();
 }

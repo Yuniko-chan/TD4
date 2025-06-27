@@ -38,6 +38,8 @@ public:
 
 	bool IsAccept(const Vector3& position);
 
+	void ImGuiDraw();
+
 public: // アクセッサ
 
 	void SetObjectManager(BaseObjectManager* objectManager) { objectManager_ = objectManager; }
@@ -48,6 +50,7 @@ private:
 private:
 	// パーツのリスト
 	std::unordered_map<std::string, IPickupPoint*> pointLists_;
+
 	// オブジェクトマネージャー
 	BaseObjectManager* objectManager_ = nullptr;
 	// 拾うやつ
