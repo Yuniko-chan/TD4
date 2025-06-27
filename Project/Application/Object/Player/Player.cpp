@@ -58,13 +58,20 @@ void Player::Update()
 
 void Player::Draw(BaseCamera& camera)
 {
-	ModelDraw::AnimObjectDesc desc;
-	desc.camera = &camera;
-	desc.localMatrixManager = playerAnimation_->GetLocalMatrixManager();
-	desc.material = material_.get();
-	desc.model = model_;
-	desc.worldTransform = &worldTransform_;
-	ModelDraw::AnimObjectDraw(desc);
+	if (!stateMachine_->GetCurrentState()) {
+		return;
+	}
+	const std::type_info& t = typeid(*(stateMachine_->GetCurrentState()));
+	std::string name = t.name();
+	if (!(name == "class PlayerInVehicleState")) {
+		ModelDraw::AnimObjectDesc desc;
+		desc.camera = &camera;
+		desc.localMatrixManager = playerAnimation_->GetLocalMatrixManager();
+		desc.material = material_.get();
+		desc.model = model_;
+		desc.worldTransform = &worldTransform_;
+		ModelDraw::AnimObjectDraw(desc);
+	}
 }
 
 void Player::ImGuiDraw()

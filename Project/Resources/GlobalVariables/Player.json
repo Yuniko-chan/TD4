@@ -1,8 +1,8 @@
 {
     "Player": {
         "CameraRotateSpeed": 30.0,
-        "DropOffActionFrame": 15.0,
-        "DropOffHeight": 8.0,
+        "DropOffActionFrame": 30.0,
+        "DropOffHeight": 100.0,
         "DropOffOffset": [
             0.0,
             0.0,
@@ -15,7 +15,7 @@
             0.0,
             2.0
         ],
-        "RideActionFrame": 15.0,
+        "RideActionFrame": 60.0,
         "RideHeight": 12.5,
         "RideOffset": [
             0.0,
