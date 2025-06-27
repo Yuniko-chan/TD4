@@ -37,17 +37,19 @@ void DriveSystem::Update()
 	// ハンドル操作の更新（旋回の適応など）
 	handling_->PostUpdate(velocity_, status_);
 
-	// 速度が無ければ早期
-	if (velocity_ == Vector3(0.0f, 0.0f, 0.0f))
-	{
-		return;
-	}
-
-	// タイヤの回転決定
+	// タイヤの回転・向き決定
 	std::vector<Car::IParts*> tires = {};
 	tires = owner_->GetConstructionSystem()->FindPartsByCategory(1);
 	for (std::vector<Car::IParts*>::iterator it = tires.begin(); it != tires.end(); ++it) {
 		static_cast<TireParts*>((*it))->SetSpinRate(velocity_.z);
+		static_cast<TireParts*>((*it))->SetSteerDirection(handling_->GetSteerDirection());
+		static_cast<TireParts*>((*it))->SetPreSteerDirection(handling_->GetPreSteerDirection());
+	}
+
+	// 速度が無ければ早期
+	if (velocity_ == Vector3(0.0f, 0.0f, 0.0f))
+	{
+		return;
 	}
 
 	// 角度

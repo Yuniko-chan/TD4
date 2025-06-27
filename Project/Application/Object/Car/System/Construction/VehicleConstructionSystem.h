@@ -9,6 +9,10 @@ class VehicleCore;
 class VehicleStatus;
 
 using MappingKey = std::pair<Vector2Int, Vector3>;
+/// <summary>
+/// Width:Height
+/// </summary>
+using GridSize = std::pair<int, int>;
 
 /// <summary>
 /// 車両構築システム（コア用）（パーツ管理など）
@@ -108,6 +112,8 @@ public:
 	/// <returns></returns>
 	std::map<Vector2Int, Car::IParts*>* GetPartMappingPtr() { return &partsMapping_; }
 
+	GridSize GetMaxGridSize() { return maxGridSize_; }
+
 private: // 登録・解除
 	/// <summary>
 	/// パーツの登録処理
@@ -121,6 +127,10 @@ private: // 登録・解除
 	/// <param name="parts"></param>
 	void UnRegistParts(const Vector2Int& id, Car::IParts* parts);
 
+public:
+	void RefrashGridSize();
+
+
 private:
 	// ステータス
 	VehicleStatus* status_ = nullptr;
@@ -130,6 +140,9 @@ private:
 	std::vector<Vector2Int> emptyMap_;
 	// 空いてる情報
 	std::vector<MappingKey> emptyDatas_;
+	// グリッドの最大サイズ
+	GridSize maxGridSize_ = {};
+
 public: // アクセッサ
 	void SetStatusManager(VehicleStatus* status) { status_ = status; }
 

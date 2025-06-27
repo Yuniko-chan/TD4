@@ -31,9 +31,11 @@ public:
 	/// </summary>
 	void ImGuiDraw();
 	// ステアの向き
-	Vector3 GetSteerDirect() { return steerDirection_; }
+	Vector3 GetSteerDirection() { return steerDirection_; }
+	Vector3 GetPreSteerDirection() { return preSteerDirection_; }
 	// 入力があるか
 	bool IsInput() { return (isRight_.second || isLeft_.second); }
+	bool IsNoneInput() { return (!isRight_.second && !isLeft_.second); }
 
 	void SetVehicleDirection(const Vector3& direct) { vehicleDirection_ = direct; }
 private:
@@ -46,6 +48,9 @@ private:
 	int16_t consecutiveReceptions_ = 0;
 	// ステア方向
 	Vector3 steerDirection_ = {};
+	Vector3 preSteerDirection_ = {};
+
+	// 適応向き
 	Vector3 executeDirection_ = {};
 	// 車体の向き
 	Vector3 vehicleDirection_ = {};

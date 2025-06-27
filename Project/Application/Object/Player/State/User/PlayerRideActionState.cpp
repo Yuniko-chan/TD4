@@ -3,6 +3,7 @@
 #include "../../../Car/VehicleCore.h"
 #include "../../DebugData/PlayerDebugData.h"
 #include "../../../Utility/Calc/MotionHelper.h"
+#include "../../../Utility/Calc/CameraHelper.h"
 
 #include "../../../Engine/Math/Ease.h"
 
@@ -16,6 +17,18 @@ void PlayerRideActionState::Initialize()
 	player_->GetCameraManager()->SetRequest(ActiveCamera::kFollow);
 	// アニメーション開始
 	player_->GetCore()->GetAnimation()->AnimationStart();
+
+	// カメラ
+	FollowCamera* camera = static_cast<FollowCamera*>(player_->GetCameraManager()->FindCamera("Follow"));
+	// ズームアウト計算
+	std::pair<int, int> grid = player_->GetCore()->GetConstructionSystem()->GetMaxGridSize();
+	const float kOffsetRatio = 3.0f;	// レート
+	const int kGridThreshold = 3;	// 閾値
+	CameraHelper cameraHelper;	// ヘルパー
+	float offset = cameraHelper.CreateGridSizeOffset(grid, kGridThreshold, kOffsetRatio);
+	// オフセット設定
+	camera->SetZoomOutOffset(offset);
+
 }
 
 void PlayerRideActionState::Update()

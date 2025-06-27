@@ -35,6 +35,8 @@ void VehicleConstructionSystem::ImGuiDraw()
 {
 	int size = (int)emptyMap_.size();
 	ImGui::InputInt("EmptyMapsize", &size);
+	ImGui::InputInt2("GridSize", &maxGridSize_.first);
+
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin();
 		it != partsMapping_.end(); ++it) {
 		ImGui::SeparatorText((*it).second->GetName().c_str());
@@ -206,6 +208,8 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 		parts->GetConnector()->AddParents(owner_);
 	}
 
+	// グリッドのリフレッシュ
+	RefrashGridSize();
 }
 
 void VehicleConstructionSystem::Detach(std::map<Vector2Int, Car::IParts*>::iterator it)
@@ -222,6 +226,8 @@ void VehicleConstructionSystem::Detach(std::map<Vector2Int, Car::IParts*>::itera
 	(*it).second->GetHPHandler()->Initialize();
 	// リストから外す
 	it = partsMapping_.erase(it);
+	// グリッドリフレッシュ
+	RefrashGridSize();
 	// 空いてる場所更新
 	emptyMap_ = VehicleCaluclator::GetEmptyList(&partsMapping_);
 }
@@ -448,4 +454,20 @@ void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts*
 	parts->ReleaseParent();
 	//// カウントから削除
 	//DeleteCount(parts->GetClassNameString());
+}
+
+void VehicleConstructionSystem::RefrashGridSize()
+{
+	GridSize maxSize = {};
+	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin();
+		it != partsMapping_.end(); ++it) {
+		if (std::abs((*it).first.x) > maxSize.first) {
+			maxSize.first = std::abs((*it).first.x);
+		}
+		if (std::abs((*it).first.y) > maxSize.second) {
+			maxSize.second = std::abs((*it).first.y);
+		}
+	}
+
+	this->maxGridSize_ = maxSize;
 }
