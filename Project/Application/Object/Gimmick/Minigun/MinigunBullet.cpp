@@ -69,7 +69,9 @@ void MinigunBullet::Update()
 
 void MinigunBullet::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
-	colliderPartner, collisionData;
+    colliderPartner, collisionData;
+    // 死亡
+    isDead_ = true;
 }
 
 void MinigunBullet::ColliderInitialize(ColliderShape collider)
