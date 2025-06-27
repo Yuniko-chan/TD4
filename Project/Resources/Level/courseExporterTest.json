@@ -45,7 +45,7 @@
             "transform": {
                 "translation": [
                     0.0,
-                    -64.48971557617188,
+                    -264.4881286621094,
                     0.0
                 ],
                 "rotation": [
@@ -195,7 +195,7 @@
             "transform": {
                 "translation": [
                     0.0,
-                    -64.48971557617188,
+                    -264.4881286621094,
                     0.00799494981765747
                 ],
                 "rotation": [
@@ -232,7 +232,7 @@
             "transform": {
                 "translation": [
                     12.9399995803833,
-                    -70.27406311035156,
+                    -270.2724609375,
                     0.0
                 ],
                 "rotation": [
@@ -269,7 +269,7 @@
             "transform": {
                 "translation": [
                     6.500909805297852,
-                    -50.31971740722656,
+                    -250.318115234375,
                     0.0
                 ],
                 "rotation": [
@@ -306,7 +306,7 @@
             "transform": {
                 "translation": [
                     -11.04811954498291,
-                    -64.48971557617188,
+                    -264.4881286621094,
                     0.0
                 ],
                 "rotation": [
@@ -352,129 +352,9 @@
                     0.0
                 ],
                 "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "fileName": "course_B.course",
-            "directoryPath": "Resources/Course/",
-            "className": "Course"
-        },
-        {
-            "type": "MESH",
-            "name": "course_test_B.001",
-            "transform": {
-                "translation": [
-                    0.0,
-                    100.0,
-                    0.0
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "fileName": "course_B.course",
-            "directoryPath": "Resources/Course/",
-            "className": "Course"
-        },
-        {
-            "type": "MESH",
-            "name": "course_test_B.002",
-            "transform": {
-                "translation": [
-                    -100.0,
-                    100.0,
-                    0.0
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "fileName": "course_B.course",
-            "directoryPath": "Resources/Course/",
-            "className": "Course"
-        },
-        {
-            "type": "MESH",
-            "name": "course_test_B.003",
-            "transform": {
-                "translation": [
-                    -100.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "fileName": "course_B.course",
-            "directoryPath": "Resources/Course/",
-            "className": "Course"
-        },
-        {
-            "type": "MESH",
-            "name": "course_test_B.004",
-            "transform": {
-                "translation": [
-                    -200.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "fileName": "course_B.course",
-            "directoryPath": "Resources/Course/",
-            "className": "Course"
-        },
-        {
-            "type": "MESH",
-            "name": "course_test_B.005",
-            "transform": {
-                "translation": [
-                    -200.0,
-                    100.0,
-                    0.0
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
+                    5.0,
+                    5.0,
+                    5.0
                 ]
             },
             "fileName": "course_B.course",
@@ -527,6 +407,477 @@
                 "translation": [
                     -46.844608306884766,
                     -33.7706298828125,
+                    0.0
+                ],
+                "rotation": [
+                    -0.5646548867225647,
+                    1.3924176478496975e-08,
+                    -0.7058340311050415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_B.001",
+            "transform": {
+                "translation": [
+                    -500.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "fileName": "course_B.course",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_B.002",
+            "transform": {
+                "translation": [
+                    -1000.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "fileName": "course_B.course",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_B.003",
+            "transform": {
+                "translation": [
+                    -1000.0,
+                    500.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "fileName": "course_B.course",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_B.004",
+            "transform": {
+                "translation": [
+                    -500.0,
+                    500.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "fileName": "course_B.course",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_B.005",
+            "transform": {
+                "translation": [
+                    0.0,
+                    500.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "fileName": "course_B.course",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "大砲_円柱.004",
+            "transform": {
+                "translation": [
+                    -30.52456283569336,
+                    -238.56402587890625,
+                    0.0
+                ],
+                "rotation": [
+                    -0.5646548867225647,
+                    1.3924176478496975e-08,
+                    -0.7058340311050415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "大砲_円柱.005",
+            "transform": {
+                "translation": [
+                    -46.844608306884766,
+                    -238.56402587890625,
+                    0.0
+                ],
+                "rotation": [
+                    -0.5646548867225647,
+                    1.3924176478496975e-08,
+                    -0.7058340311050415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "大砲_円柱.006",
+            "transform": {
+                "translation": [
+                    -38.69804000854492,
+                    -238.56402587890625,
+                    0.0
+                ],
+                "rotation": [
+                    -0.5646548867225647,
+                    1.3924176478496975e-08,
+                    -0.7058340311050415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "大砲_円柱.008",
+            "transform": {
+                "translation": [
+                    -67.77345275878906,
+                    -238.56402587890625,
+                    0.0
+                ],
+                "rotation": [
+                    -0.5646548867225647,
+                    1.3924176478496975e-08,
+                    -0.7058340311050415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "大砲_円柱.009",
+            "transform": {
+                "translation": [
+                    -75.9200210571289,
+                    -238.56402587890625,
+                    0.0
+                ],
+                "rotation": [
+                    -0.5646548867225647,
+                    1.3924176478496975e-08,
+                    -0.7058340311050415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "大砲_円柱.010",
+            "transform": {
+                "translation": [
+                    -59.5999755859375,
+                    -238.56402587890625,
+                    0.0
+                ],
+                "rotation": [
+                    -0.5646548867225647,
+                    1.3924176478496975e-08,
+                    -0.7058340311050415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "大砲_円柱.011",
+            "transform": {
+                "translation": [
+                    -87.63030242919922,
+                    -238.56402587890625,
+                    0.0
+                ],
+                "rotation": [
+                    -0.5646548867225647,
+                    1.3924176478496975e-08,
+                    -0.7058340311050415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "大砲_円柱.012",
+            "transform": {
+                "translation": [
+                    -103.95034790039062,
+                    -238.56402587890625,
+                    0.0
+                ],
+                "rotation": [
+                    -0.5646548867225647,
+                    1.3924176478496975e-08,
+                    -0.7058340311050415
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "大砲_円柱.013",
+            "transform": {
+                "translation": [
+                    -95.80377960205078,
+                    -238.56402587890625,
                     0.0
                 ],
                 "rotation": [
