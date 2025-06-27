@@ -66,7 +66,7 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 
 			LevelData::MeshData meshData = std::get<LevelData::MeshData>(objectData);
 
-			RegisterPickupPoint(object.get(), meshData.className);
+			RegisterPickupPoint(object.get(), meshData.name);
 		}
 		if (object) {
 			// listへ
