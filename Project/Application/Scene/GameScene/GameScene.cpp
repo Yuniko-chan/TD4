@@ -12,6 +12,7 @@
 #include "../../Object/Player/Player.h"
 #include "../../../Engine/Physics/ClothGPU/ClothGPU.h"
 #include "../../Object/Car/VehicleCore.h"
+#include "../../Object/CustomArea/CustomArea.h"
 
 GameScene::~GameScene()
 {
@@ -104,6 +105,15 @@ void GameScene::Initialize() {
 		courseCollisionSystem_->SetCourse(course);
 		courseDebugDraw_->SetCourse(course);
 	}
+
+	// カスタムエリア
+	CustomArea* customArea = nullptr;
+	std::string customAreaName = "customArea";
+	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
+	courseCollisionSystem_->SetCustomArea(customArea);
+	customAreaName = "customArea.001";
+	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
+	courseCollisionSystem_->SetCustomArea(customArea);
 
 	// モデル描画
 	ModelDraw::PreDrawParameters preDrawParameters;

@@ -10,6 +10,7 @@
 #include "../Object/Player/Player.h"
 #include "../Object/Car/CarLists.h"
 #include "../Object/Player/State/User/PlayerInVehicleState.h"
+#include "../Object/CustomArea/CustomArea.h"
 #include <typeinfo>
 
 // 衝突するオブジェクトキーワード
@@ -220,9 +221,6 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 void CourseCollisionSystem::SetCourse(Course* course)
 {
 
-	// コース中心のワールド座標
-	Vector3 worldPosition = course->GetWorldTransformAdress()->GetWorldPosition();
-
 	// コースメッシュ分回す
 	std::vector<CoursePolygon>* polygons = course->GetCoursePolygonsAdress();
 	for (uint32_t i = 0; i < polygons->size(); ++i) {
@@ -239,6 +237,45 @@ void CourseCollisionSystem::SetCourse(Course* course)
 		polygons_.push_back(polygon);
 
 	}
+
+}
+
+void CourseCollisionSystem::SetCustomArea(CustomArea* customArea)
+{
+
+	// ポリゴン
+	CoursePolygon polygon = {};
+	polygon.normal = { 0.0f,0.0f,1.0f };
+	polygon.texcoord = { 0.0f,0.0f };
+
+	// 高さ
+	const float kHeight = 0.0f;
+	// 幅
+	const float kWidth = 20.0f;
+	
+	polygon.position0 = { -kWidth, kHeight, -kWidth };
+	polygon.position1 = { -kWidth, kHeight, kWidth };
+	polygon.position2 = { kWidth, kHeight, kWidth };
+
+	// コース中心のワールド座標をプラス
+	polygon.position0 = Matrix4x4::Transform(polygon.position0, customArea->GetWorldTransformAdress()->worldMatrix_);
+	polygon.position1 = Matrix4x4::Transform(polygon.position1, customArea->GetWorldTransformAdress()->worldMatrix_);
+	polygon.position2 = Matrix4x4::Transform(polygon.position2, customArea->GetWorldTransformAdress()->worldMatrix_);
+
+	// 登録
+	polygons_.push_back(polygon);
+
+	polygon.position0 = { -kWidth, kHeight, -kWidth };
+	polygon.position1 = { kWidth, kHeight, kWidth };
+	polygon.position2 = { kWidth, kHeight, -kWidth };
+
+	// コース中心のワールド座標をプラス
+	polygon.position0 = Matrix4x4::Transform(polygon.position0, customArea->GetWorldTransformAdress()->worldMatrix_);
+	polygon.position1 = Matrix4x4::Transform(polygon.position1, customArea->GetWorldTransformAdress()->worldMatrix_);
+	polygon.position2 = Matrix4x4::Transform(polygon.position2, customArea->GetWorldTransformAdress()->worldMatrix_);
+
+	// 登録
+	polygons_.push_back(polygon);
 
 }
 
