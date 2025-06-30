@@ -2,6 +2,7 @@
 #include "../../../Engine/GlobalVariables/GlobalVariables.h"
 #include "../../../Engine/Math/Ease.h"
 #include "../../Object/Player/State/User/PlayerInVehicleState.h"
+#include "../../Object/Utility/Calc/VehicleCaluclator.h"
 
 void PostEffectSystem::Initialize()
 {
@@ -47,19 +48,21 @@ void PostEffectSystem::Update()
 #endif // _DEMO
 
 	// ラジアルブラー
-	if (driveEngine_ && player_) {
+	if (driveSystem_ && player_) {
 
 		// 型
 		const std::type_info& currentState = typeid(*(player_->GetStateMachine()->GetCurrentState()));
 		std::string name = currentState.name();
 		bool playerDriving = name == "class PlayerInVehicleState";
-		if (driveEngine_->GetCurrentSpeed() >= radialBlurSpeed_ && playerDriving) {
+		float driveSpeed = driveSystem_->GetVelocity().z;
+;		if (driveSpeed >= radialBlurSpeed_ && playerDriving) {
 			runRadialBlur_ = true;
 			float t = 0.0f;
 			if (!((radialBlurSpeedMax_ - radialBlurSpeed_) <= 0.0f)) {
-				t = std::clamp((driveEngine_->GetCurrentSpeed() - radialBlurSpeed_), 0.0f, (radialBlurSpeedMax_ - radialBlurSpeed_)) / (radialBlurSpeedMax_ - radialBlurSpeed_);
+				VehicleCaluclator calc;
+				t = calc.BlurStrengthFactor(driveSystem_, radialBlurSpeed_, radialBlurSpeedMax_);
 			}
-			float radialBlurStrength = Ease::Easing(Ease::EaseName::Lerp, radialBlurStrength_, radialBlurStrengthMax_, t);
+			float radialBlurStrength = Ease::Easing(Ease::EaseName::EaseOutCubic, radialBlurStrength_, radialBlurStrengthMax_, t);
 			postEffect_->SetRadialBlurStrength(radialBlurStrength);
 		}
 		else {

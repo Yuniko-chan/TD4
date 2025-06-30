@@ -53,5 +53,5 @@ public:	// アクセッサ
 	//---ゲッター---//
 	DriveEngine* GetDriveEngine() { return driveEngine_.get(); }
 
-
+	Vector3 GetVelocity() const { return velocity_; }
 };
