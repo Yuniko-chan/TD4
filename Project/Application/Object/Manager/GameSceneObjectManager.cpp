@@ -90,6 +90,9 @@ void GameSceneObjectManager::Update()
 {
 	BaseObjectManager::Update();
 
+	// インスタンシング描画
+	instancingDrawing_->Update();
+
 	// 影
 	ShadowUpdate();
 

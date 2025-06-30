@@ -22,7 +22,7 @@ void GameSceneInstancingDrawing::Initialize()
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/Cannon/", "Cannon.obj"}, false}); // 大砲
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/IronBall/", "IronBall.obj"}, false}); // 鉄球
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/IronBall/", "Rope.obj"}, false}); // 鉄球紐
-	//modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/Gatling/", "Gatling.gltf"}, false}); // ミニガン
+	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/Gatling/", "Gatling.gltf"}, true}); // ミニガン
 
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/defult", "ball.obj"}, false}); // ball
 

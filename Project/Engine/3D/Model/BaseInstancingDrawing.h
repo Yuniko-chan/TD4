@@ -4,6 +4,7 @@
 #include "InstancingDrawingData.h"
 #include <list>
 #include "../../Object/MeshObject.h"
+#include "BaseInstancingDrawingAnimation.h"
 
 /// <summary>
 /// インスタンシング描画
@@ -29,6 +30,11 @@ public: // 関数
 	/// 初期化
 	/// </summary>
 	virtual void Initialize();
+
+	/// <summary>
+	/// 更新
+	/// </summary>
+	virtual void Update();
 
 	/// <summary>
 	/// クリア
@@ -71,6 +77,9 @@ protected: // 変数
 
 	// ワールドトランスフォームの保存回数
 	std::vector<size_t> instancingDrawingTransformationMatrixNum_;
+
+	// アニメーション
+	std::vector<std::unique_ptr<BaseInstancingDrawingAnimation>> animations_;
 
 };
 
