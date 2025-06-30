@@ -23,7 +23,20 @@ void BaseInstancingDrawing::Initialize()
 		// インスタンシング描画用モデル保存
 		instancingDrawingDatas_[i].model = modelManager->GetModel(modelDatas_[i].first.first, modelDatas_[i].first.second);
 		instancingDrawingDatas_[i].isAnimation = modelDatas_[i].second;
-		instancingDrawingDatas_[i].localMatrixManager = nullptr;
+		
+		// アニメーション
+		if (instancingDrawingDatas_[i].isAnimation) {
+			
+			std::unique_ptr<BaseInstancingDrawingAnimation> animation;
+			animation = std::make_unique<BaseInstancingDrawingAnimation>();
+			animation->Initialize(instancingDrawingDatas_[i].model);
+			animations_.push_back(std::move(animation));
+
+			instancingDrawingDatas_[i].localMatrixManager = animations_[animations_.size() - 1].get()->GetLocalMatrixManager();
+		}
+		else {
+			instancingDrawingDatas_[i].localMatrixManager = nullptr;
+		}
 
 		// バッファ
 		instancingDrawingDatas_[i].transformBuff = BufferResource::CreateBufferResource(device, ((sizeof(TransformationMatrix) + 0xff) & ~0xff) * kTransformationMatrixMax_);
@@ -70,6 +83,16 @@ void BaseInstancingDrawing::Initialize()
 		// ワールドトランスフォームの保存回数
 		instancingDrawingTransformationMatrixNum_[i] = 0;
 
+	}
+
+}
+
+void BaseInstancingDrawing::Update()
+{
+
+	// アニメーション 0番のみ
+	for (uint32_t i = 0; i < animations_.size(); ++i) {
+		animations_[i]->Update(0);
 	}
 
 }
