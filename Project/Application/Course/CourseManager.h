@@ -10,7 +10,7 @@ static const size_t kCourseFileCount = 2;
 
 static const std::array<std::string, kCourseFileCount> kCourseNameList = { "course_A.course","course_B.course"};
 
-static const float kCourseDiameter = 100.0f * 5.0f;
+static const float kCourseDiameter = 100.0f * 1.0f;
 
 static const std::array<Vector3, kCourseNum> courseOffsets_ = { Vector3{0.0f,0.0f,0.0f},
 	Vector3{0.0f,0.0f,1.0f},
@@ -19,7 +19,7 @@ static const std::array<Vector3, kCourseNum> courseOffsets_ = { Vector3{0.0f,0.0
 	Vector3{-2.0f,0.0f,0.0f},
 	Vector3{-2.0f,0.0f,1.0f}};
 
-static const Vector3 kCourseGroupOffset_ = {-1000.0f,0.0f,1000.0f};
+static const Vector3 kCourseGroupOffset_ = {-1000.0f/5.0f,0.0f,1000.0f/5.0f};
 
 class CourseManager
 {
@@ -28,6 +28,8 @@ public:
 	~CourseManager() {};
 
 	void Initialize(GameSceneObjectManager* objectManager);
+
+	std::array<Course*, kCourseNum>& GetCourseList() { return courseList_[0]; };
 
 private:
 	std::array<CourseImportData, kCourseFileCount> courseDatas_;

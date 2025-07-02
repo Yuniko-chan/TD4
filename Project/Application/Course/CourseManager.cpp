@@ -27,12 +27,14 @@ void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
 	PlaceCourseRandom();
 	
 	//仮二個目
-	nowGroup_++;
-	for (size_t i = 0; i < kCourseNum; i++) {
-		isPlaced_[i] = false;
+	for (int a = 0; a < 1;a++) {
+		nowGroup_++;
+		for (size_t i = 0; i < kCourseNum; i++) {
+			isPlaced_[i] = false;
+		}
+		courseList_.emplace_back(std::array<Course*, kCourseNum>{});
+		PlaceCourseRandom();
 	}
-	courseList_.emplace_back(std::array<Course*, kCourseNum>{});
-	PlaceCourseRandom();
 }
 
 void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* courseInportData,const Vector3& offset, int rotate) {
@@ -45,7 +47,7 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 	groupOffset.z = kCourseGroupOffset_.z* nowGroup_;
 
 	transform.rotate = { 0,0,0 };
-	transform.scale = { 5.0f,5.0f,5.0f };
+	transform.scale = { 1.0f,1.0f,1.0f };
 	transform.translate.x = offset.x * kCourseDiameter + groupOffset.x;
 	transform.translate.y = offset.y * kCourseDiameter;
 	transform.translate.z = offset.z * kCourseDiameter + groupOffset.z;
@@ -61,7 +63,7 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 	Course* object = new Course();
 	object->Initialize(&objectData,courseInportData);
 	objectManager_->AddObject(object);
-	courseList_[nowGroup_][courseIndex_ % (nowGroup_+1)] = object;
+	courseList_[nowGroup_][courseIndex_ % 6] = object;
 	courseIndex_++;
 }
 
