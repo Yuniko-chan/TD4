@@ -43,15 +43,24 @@ void FollowCamera::Update(float elapsedTime) {
 	//追従対象がいれば
 	if (target_) {
 		// 追従座標の補間(Z軸を取ってくる)
-		//const Vector3 kTargetPositionEnd = { 0.0f, 0.0f, target_->worldMatrix_.m[3][2] };
 		const Vector3 kTargetPositionEnd = { target_->worldMatrix_.m[3][0],target_->worldMatrix_.m[3][1] ,target_->worldMatrix_.m[3][2] };
-		//// 前後で追従レートの変化を付ける
-		//if (interTarget_.z > kTargetPositionEnd.z) {
-		//	interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, 0.9f);
-		//}
-		//else {
-		//	interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, offsetMoveRate_);
-		//}
+
+		// カメラからプレイヤー
+		Vector3 CameraToPlayer = Vector3(target_->worldMatrix_.m[3][0], 0.0f, target_->worldMatrix_.m[3][2]) - Vector3(transform_.translate.x, 0.0f, transform_.translate.z);
+		// 元位置から現位置
+		Vector3 PreToPlayer = Vector3(target_->worldMatrix_.m[3][0], 0.0f, target_->worldMatrix_.m[3][2]) - Vector3(interTarget_.x, 0.0f, interTarget_.z);
+		// 内積
+		float dot = Vector3::Dot(CameraToPlayer, PreToPlayer);
+		const float kThreshold = -0.25f;
+		// 前進
+		if (dot > kThreshold) {
+			offsetMoveRate_ = GlobalVariables::GetInstance()->GetFloatValue("DriveCamera", "TrackingDelay");
+		}
+		// 後退
+		else {
+			offsetMoveRate_ = GlobalVariables::GetInstance()->GetFloatValue("DriveCamera", "BackTrackingDelay");
+		}
+
 		interTarget_ = Ease::Easing(Ease::EaseName::Lerp, interTarget_, kTargetPositionEnd, offsetMoveRate_);
 
 		// オフセット

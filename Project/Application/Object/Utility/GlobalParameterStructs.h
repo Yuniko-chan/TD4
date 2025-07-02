@@ -103,6 +103,8 @@ namespace ParameterStructs {
 	/// </summary>
 	struct DriveCameraData {
 		Datas::CameraDefault defaultData;
+		// バックするときのディレイ
+		float backTrackingDelay = 0.0f;
 	};
 
 	struct CameraCommonData {
