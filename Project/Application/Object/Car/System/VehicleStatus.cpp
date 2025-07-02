@@ -2,6 +2,7 @@
 #include "../CarLists.h"
 #include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Engine/Math/RandomEngine.h"
+#include <numeric>
 
 void VehicleStatus::Update()
 {
@@ -57,6 +58,14 @@ void VehicleStatus::ImGuiDraw()
 	ImGui::InputInt("総タイヤ", &print);
 	ImGui::Text("タイヤ X:左 Y:右 Z:前 W:後");
 	ImGui::InputFloat4("タイヤ数", &wheelDirectCount_.x);
+
+	if (wheelDirectCount_.x != 0 && wheelDirectCount_.y != 0) {
+		//float leftTRight = wheelDirectCount_.x / wheelDirectCount_.y;
+		float sum = wheelDirectCount_.x + wheelDirectCount_.y;
+		Vector2 tireSide = Vector2(wheelDirectCount_.x / sum, wheelDirectCount_.y / sum);
+		ImGui::InputFloat("タイヤ比率:左", &tireSide.y);
+		ImGui::InputFloat("タイヤ比率:右", &tireSide.x);
+	}
 
 
 	print = partsTypes_.armor;
