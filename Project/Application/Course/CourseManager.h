@@ -19,6 +19,8 @@ static const std::array<Vector3, kCourseNum> courseOffsets_ = { Vector3{0.0f,0.0
 	Vector3{-2.0f,0.0f,0.0f},
 	Vector3{-2.0f,0.0f,1.0f}};
 
+static const Vector3 kCourseGroupOffset_ = {-1000.0f,0.0f,1000.0f};
+
 class CourseManager
 {
 public:
@@ -33,6 +35,9 @@ private:
 	size_t courseIndex_ = 0;
 
 	bool isPlaced_[kCourseNum] = { false };
+
+	size_t nowGroup_;
+	std::vector<std::array<Course*, kCourseNum>> courseList_;
 
 	//std::array<std::function<int(int)>,kCourseNum> placeOnce_;
 

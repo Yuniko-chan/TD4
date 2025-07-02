@@ -16,22 +16,39 @@ void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
 		ModelManager::GetInstance()->AppendModel(CourseLoader::CreateCourseModel(courseDatas_[i], kCourseNameList[i]));
 	}
 
-	//オブジェクトマネージャーに登録(仮で同じものを六個作る)
-	/*for (size_t i = 0; i < kCourseNum; i++) {
-		CreateCourse(kCourseNameList[i%2], &courseDatas_[i%2], courseOffsets_[i]);
-	}*/
+	//仮でグループ設定
+	nowGroup_ = 0;
+	courseList_.emplace_back(std::array<Course*, kCourseNum>{});
+
+	// 今追加した要素の参照を得る
+	//std::array<Course*, kCourseNum>&group = (courseList_.back());
+
 	//ランダムに配置する処理
+	PlaceCourseRandom();
+	
+	//仮二個目
+	nowGroup_++;
+	for (size_t i = 0; i < kCourseNum; i++) {
+		isPlaced_[i] = false;
+	}
+	courseList_.emplace_back(std::array<Course*, kCourseNum>{});
 	PlaceCourseRandom();
 }
 
 void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* courseInportData,const Vector3& offset, int rotate) {
 	LevelData::MeshData objectData;
 	EulerTransform transform;
+
+	//グループでのオフセット計算
+	static Vector3 groupOffset = {0,0,0};
+	groupOffset.x = kCourseGroupOffset_.x* nowGroup_;
+	groupOffset.z = kCourseGroupOffset_.z* nowGroup_;
+
 	transform.rotate = { 0,0,0 };
 	transform.scale = { 5.0f,5.0f,5.0f };
-	transform.translate.x = offset.x * kCourseDiameter;
+	transform.translate.x = offset.x * kCourseDiameter + groupOffset.x;
 	transform.translate.y = offset.y * kCourseDiameter;
-	transform.translate.z = offset.z * kCourseDiameter;
+	transform.translate.z = offset.z * kCourseDiameter + groupOffset.z;
 	transform.rotate.y = float(rotate) * 3.141592f*0.5f;
 
 
@@ -44,7 +61,7 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 	Course* object = new Course();
 	object->Initialize(&objectData,courseInportData);
 	objectManager_->AddObject(object);
-
+	courseList_[nowGroup_][courseIndex_ % (nowGroup_+1)] = object;
 	courseIndex_++;
 }
 
