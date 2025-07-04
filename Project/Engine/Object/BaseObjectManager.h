@@ -9,6 +9,7 @@
 #include "../Collider/ColliderDebugDraw/ColliderDebugDraw.h"
 #include "../Collision/BaseCollisionManager.h"
 #include "AbstractObjectFactory.h"
+#include "../3D/Model/BaseInstancingDrawing.h"
 
 /// <summary>
 /// オブジェクトマネージャーの基盤
@@ -106,6 +107,9 @@ protected:
 
 	// オブジェクトファクトリー
 	std::unique_ptr<AbstractObjectFactory> objectFactory_;
+
+	// インスタンシング描画
+	std::unique_ptr<BaseInstancingDrawing> instancingDrawing_;
 
 };
 
