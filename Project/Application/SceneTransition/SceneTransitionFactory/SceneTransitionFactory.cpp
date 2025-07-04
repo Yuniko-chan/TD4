@@ -16,11 +16,11 @@ BaseSceneTransition* SceneTransitionFactory::CreateSceneTransition(int sceneName
 
 	// タイトルからゲーム
 	if (sceneName == SceneName::kTitle && requestSeneName == SceneName::kGame) {
-		newSceneTransition = new SceneTransitionCurtain();
+		newSceneTransition = new SceneTransitionBlackOut();
 	}
 	else {
 		// 現在のシーンから次のシーンへ行くときの遷移が設定されてない
-		newSceneTransition = new SceneTransitionCurtain();
+		newSceneTransition = new SceneTransitionBlackOut();
 	}
 
 	return newSceneTransition;
