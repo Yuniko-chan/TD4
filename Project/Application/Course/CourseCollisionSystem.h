@@ -125,6 +125,12 @@ public: // メンバ関数
 	void SetCustomArea(CustomArea* customArea);
 
 	/// <summary>
+	/// ギミック設定
+	/// </summary>
+	/// <param name="obb">ギミックOBB</param>
+	void SetGimmick(OBB* obb);
+
+	/// <summary>
 	/// コースクリア
 	/// </summary>
 	void ClearCorse();
