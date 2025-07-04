@@ -6,9 +6,9 @@
 
 
 static const size_t kCourseNum = 6;
-static const size_t kCourseFileCount = 2;
+static const size_t kCourseFileCount = 3;
 
-static const std::array<std::string, kCourseFileCount> kCourseNameList = { "course_A.course","course_B.course"};
+static const std::array<std::string, kCourseFileCount> kCourseNameList = { "course_A.course","course_B.course","dirt.course"};
 
 static const float kCourseDiameter = 100.0f * 1.0f;
 
@@ -55,4 +55,7 @@ private:
 	int Place3(int prev);
 	int Place4(int prev);
 	int Place5(int prev);
+
+	//カスタマイズエリア生成
+	void CreateCustomizeArea(size_t group);
 };

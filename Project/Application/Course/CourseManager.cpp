@@ -3,6 +3,7 @@
 #include "../../Engine/3D/Model/ModelManager.h"
 #include "../../Engine/Math/Vector/Vector3.h"
 #include "../../Engine/Math/RandomEngine.h"
+#include "../Object/CustomArea/CustomArea.h"
 
 void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
 	//初期化
@@ -27,7 +28,7 @@ void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
 	PlaceCourseRandom();
 	
 	//仮二個目
-	for (int a = 0; a < 1;a++) {
+	for (int a = 0; a < 10;a++) {
 		nowGroup_++;
 		for (size_t i = 0; i < kCourseNum; i++) {
 			isPlaced_[i] = false;
@@ -76,9 +77,12 @@ void CourseManager::PlaceCourseRandom() {
 	//ダート埋め
 	for (size_t i = 0; i < kCourseNum; i++) {
 		if (!isPlaced_[i]) {
-			CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[i],0);
+			CreateCourse(kCourseNameList[2], &courseDatas_[2], courseOffsets_[i],0);
 		}
 	}
+
+	//カスタムエリア
+	CreateCustomizeArea(nowGroup_);
 }
 
 
@@ -172,4 +176,38 @@ int CourseManager::Place5(int prev) {
 	}
 
 	return next;
+}
+
+void CourseManager::CreateCustomizeArea(size_t group) {
+	//-250
+	//グループでのオフセット計算
+	static Vector3 center = { 0,0,-250.0f /5.0f};
+	static Vector3 offset;
+	offset.x = kCourseGroupOffset_.x * group;
+	offset.z = kCourseGroupOffset_.z * group + center.z;
+	offset.y = 0.2f;
+
+	LevelData::MeshData objectData;
+	EulerTransform transform;
+
+	transform.rotate = { 0,0,0 };
+	transform.scale = { 1.0f,1.0f,1.0f };
+	transform.translate.x = offset.x ;
+	transform.translate.y = offset.y ;
+	transform.translate.z = offset.z ;
+	
+
+	objectData.name = std::format("CustomArea{}", group);
+
+	objectData.className = "CustomArea";
+	objectData.flieName = "custom.obj";
+	objectData.directoryPath = "Resources/Model/Custom";
+	objectData.transform = transform;
+	
+	OBB obb;
+	obb.Initialize(objectData.transform.translate, Matrix4x4::MakeIdentity4x4(), {0,0,0}, static_cast<ParentNullObject*>(nullptr));
+	objectData.collider = obb;
+	CustomArea* object = new CustomArea();
+	object->Initialize(&objectData);
+	objectManager_->AddObject(object);
 }
