@@ -33,6 +33,7 @@ void BaseInstancingDrawing::Initialize()
 			animations_.push_back(std::move(animation));
 
 			instancingDrawingDatas_[i].localMatrixManager = animations_[animations_.size() - 1].get()->GetLocalMatrixManager();
+			animationNums_.push_back(0);
 		}
 		else {
 			instancingDrawingDatas_[i].localMatrixManager = nullptr;
@@ -92,7 +93,7 @@ void BaseInstancingDrawing::Update()
 
 	// アニメーション 0番のみ
 	for (uint32_t i = 0; i < animations_.size(); ++i) {
-		animations_[i]->Update(0);
+		animations_[i]->Update(animationNums_[i]);
 	}
 
 }
@@ -205,5 +206,12 @@ void BaseInstancingDrawing::SetLocalMatrixManager(const std::string& fileName, L
 			break;
 		}
 	}
+
+}
+
+void BaseInstancingDrawing::SetAnimationNums(uint32_t animationNum, uint32_t vectorNum)
+{
+
+	animationNums_[vectorNum] = animationNum;
 
 }

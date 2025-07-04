@@ -64,6 +64,13 @@ public: // 関数
 	/// <param name="localMatrixManager">ローカル行列マネージャー</param>
 	void SetLocalMatrixManager(const std::string& fileName, LocalMatrixManager* localMatrixManager);
 
+	/// <summary>
+	/// アニメーション番号設定
+	/// </summary>
+	/// <param name="animationNum">アニメーション番号</param>
+	/// <param name="vectorNum">ベクターの番号</param>
+	void SetAnimationNums(uint32_t animationNum, uint32_t vectorNum);
+
 protected: // 変数
 
 	// モデルデータ最大数
@@ -80,6 +87,9 @@ protected: // 変数
 
 	// アニメーション
 	std::vector<std::unique_ptr<BaseInstancingDrawingAnimation>> animations_;
+
+	// アニメーション番号
+	std::vector<uint32_t> animationNums_;
 
 };
 
