@@ -11,6 +11,10 @@ void BaseObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager* leve
 	colliderDebugDraw_ = std::make_unique<ColliderDebugDraw>();
 	colliderDebugDraw_->Initialize();
 
+	// インスタンシング描画
+	instancingDrawing_ = std::make_unique<BaseInstancingDrawing>();
+	instancingDrawing_->Initialize();
+
 	// リセット
 	Reset(levelIndex);
 
@@ -44,15 +48,34 @@ void BaseObjectManager::Update()
 		it->second->Update();
 	}
 
+	// インスタンシング描画
+	instancingDrawing_->Update();
+
 }
 
 void BaseObjectManager::Draw(BaseCamera& camera)
 {
 
+	instancingDrawing_->Clear();
+
+	// オブジェクト走査
 	for (std::list<ObjectPair>::iterator it = objects_.begin();
 		it != objects_.end(); ++it) {
-		static_cast<MeshObject*>(it->second.get())->Draw(camera);
+
+		MeshObject* object = static_cast<MeshObject*>(it->second.get());
+
+		// インスタンシング描画登録成功しないなら単独描画
+		if (!instancingDrawing_->RegistrationConfirmation(
+			object, camera.GetViewProjectionMatrix())) {
+
+			static_cast<MeshObject*>(it->second.get())->Draw(camera);
+
+		}
+
 	}
+
+	// インスタンシング描画
+	instancingDrawing_->Draw(camera);
 
 }
 

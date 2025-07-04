@@ -90,9 +90,6 @@ private: // メンバ変数
 	// レベルデータマネージャー
 	LevelDataManager* levelDataManager_;
 
-	// インスタンシング描画
-	std::unique_ptr<GameSceneInstancingDrawing> instancingDrawing_;
-
 private: // USER
 	// パーツマネージャー
 	std::unique_ptr<VehiclePartsManager> partsManager_;
