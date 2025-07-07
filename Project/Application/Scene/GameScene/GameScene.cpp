@@ -14,6 +14,7 @@
 #include "../../Object/Car/VehicleCore.h"
 #include "../../Object/CustomArea/CustomArea.h"
 #include "../../Object/Gimmick/Cannon/Cannon.h"
+#include "../../Object/Gimmick/Minigun/Minigun.h"
 
 GameScene::~GameScene()
 {
@@ -86,51 +87,8 @@ void GameScene::Initialize() {
 		reinterpret_cast<VehicleCore*>(objectManager_->GetObjectPointer("initCore"))->GetDriveSystem()->GetDriveEngine());
 	postEffectSystem_->SetPlayer(reinterpret_cast<Player*>(objectManager_->GetObjectPointer("Player")));
 
-	// コース衝突システム
-	courseCollisionSystem_ = std::make_unique<CourseCollisionSystem>();
-	courseCollisionSystem_->Initialize();
-
-	//コース生成システム
-	courseManager_ = std::make_unique<CourseManager>();
-	courseManager_->Initialize(static_cast<GameSceneObjectManager*>(objectManager_.get()));
-
-	// コースデバッグ描画
-	courseDebugDraw_ = std::make_unique<CourseDebugDraw>();
-	courseDebugDraw_->Initialize();
-
 	// コース
-	Course* course = nullptr;
-	for (size_t i = 0; i < kCourseNum; i++) {
-		std::string courseName = std::format("Course{}", i);
-		course = static_cast<Course*>(objectManager_->GetObjectPointer(courseName));
-		courseCollisionSystem_->SetCourse(course);
-		courseDebugDraw_->SetCourse(course);
-	}
-
-	// カスタムエリア
-	CustomArea* customArea = nullptr;
-	std::string customAreaName = "customArea";
-	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
-	courseCollisionSystem_->SetCustomArea(customArea);
-	customAreaName = "customArea.001";
-	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
-	courseCollisionSystem_->SetCustomArea(customArea);
-
-	// 大砲
-	Cannon* cannon = nullptr;
-	size_t i = 0;
-	while(1){
-		cannon = nullptr;
-		std::string courseName = std::format("Cannon{}", i);
-		cannon = static_cast<Cannon*>(objectManager_->GetObjectPointer(courseName));
-		if (cannon) {
-			courseCollisionSystem_->SetGimmick(reinterpret_cast<OBB*>(cannon->GetCollider()));
-		}
-		else {
-			break;
-		}
-		++i;
-	}
+	CourseInitialize();
 
 	// モデル描画
 	ModelDraw::PreDrawParameters preDrawParameters;
@@ -338,5 +296,72 @@ void GameScene::ModelCreate()
 
 void GameScene::TextureLoad()
 {
+
+}
+
+void GameScene::CourseInitialize()
+{
+
+	// コース衝突システム
+	courseCollisionSystem_ = std::make_unique<CourseCollisionSystem>();
+	courseCollisionSystem_->Initialize();
+
+	//コース生成システム
+	courseManager_ = std::make_unique<CourseManager>();
+	courseManager_->Initialize(static_cast<GameSceneObjectManager*>(objectManager_.get()));
+
+	// コースデバッグ描画
+	courseDebugDraw_ = std::make_unique<CourseDebugDraw>();
+	courseDebugDraw_->Initialize();
+
+	// コース
+	Course* course = nullptr;
+	for (size_t i = 0; i < kCourseNum; i++) {
+		std::string courseName = std::format("Course{}", i);
+		course = static_cast<Course*>(objectManager_->GetObjectPointer(courseName));
+		courseCollisionSystem_->SetCourse(course);
+		courseDebugDraw_->SetCourse(course);
+	}
+
+	// カスタムエリア
+	CustomArea* customArea = nullptr;
+	std::string customAreaName = "customArea";
+	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
+	courseCollisionSystem_->SetCustomArea(customArea);
+	customAreaName = "customArea.001";
+	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
+	courseCollisionSystem_->SetCustomArea(customArea);
+
+	// 大砲
+	Cannon* cannon = nullptr;
+	size_t i = 0;
+	while (1) {
+		cannon = nullptr;
+		std::string courseName = std::format("Cannon{}", i);
+		cannon = static_cast<Cannon*>(objectManager_->GetObjectPointer(courseName));
+		if (cannon) {
+			courseCollisionSystem_->SetGimmick(reinterpret_cast<OBB*>(cannon->GetCollider()));
+		}
+		else {
+			break;
+		}
+		++i;
+	}
+
+	// ミニガン
+	Minigun* minigun = nullptr;
+	i = 0;
+	while (1) {
+		minigun = nullptr;
+		std::string courseName = std::format("Minigun{}", i);
+		minigun = static_cast<Minigun*>(objectManager_->GetObjectPointer(courseName));
+		if (minigun) {
+			courseCollisionSystem_->SetGimmick(reinterpret_cast<OBB*>(minigun->GetCollider()));
+		}
+		else {
+			break;
+		}
+		++i;
+	}
 
 }
