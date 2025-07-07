@@ -3,7 +3,7 @@
     "objects": [
         {
             "type": "MESH",
-            "name": "立方体.001",
+            "name": "Minigun0",
             "transform": {
                 "translation": [
                     22.389938354492188,
@@ -113,7 +113,7 @@
         },
         {
             "type": "MESH",
-            "name": "大砲_円柱.007",
+            "name": "Cannon3",
             "transform": {
                 "translation": [
                     -30.52456283569336,
@@ -152,7 +152,7 @@
         },
         {
             "type": "MESH",
-            "name": "大砲_円柱.001",
+            "name": "Cannon0",
             "transform": {
                 "translation": [
                     -19.074378967285156,
@@ -363,7 +363,7 @@
         },
         {
             "type": "MESH",
-            "name": "大砲_円柱.002",
+            "name": "Cannon1",
             "transform": {
                 "translation": [
                     -38.69804000854492,
@@ -402,7 +402,7 @@
         },
         {
             "type": "MESH",
-            "name": "大砲_円柱.003",
+            "name": "Cannon2",
             "transform": {
                 "translation": [
                     -46.844608306884766,
@@ -558,357 +558,6 @@
             "fileName": "course_B.course",
             "directoryPath": "Resources/Course/",
             "className": "Course"
-        },
-        {
-            "type": "MESH",
-            "name": "大砲_円柱.004",
-            "transform": {
-                "translation": [
-                    -30.52456283569336,
-                    -238.56402587890625,
-                    0.0
-                ],
-                "rotation": [
-                    -0.5646548867225647,
-                    1.3924176478496975e-08,
-                    -0.7058340311050415
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "gimmick": {
-                "type": "CANNON",
-                "cooltime": 4.0,
-                "firingSpeed": 1.0
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "大砲_円柱.005",
-            "transform": {
-                "translation": [
-                    -46.844608306884766,
-                    -238.56402587890625,
-                    0.0
-                ],
-                "rotation": [
-                    -0.5646548867225647,
-                    1.3924176478496975e-08,
-                    -0.7058340311050415
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "gimmick": {
-                "type": "CANNON",
-                "cooltime": 3.0,
-                "firingSpeed": 1.0
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "大砲_円柱.006",
-            "transform": {
-                "translation": [
-                    -38.69804000854492,
-                    -238.56402587890625,
-                    0.0
-                ],
-                "rotation": [
-                    -0.5646548867225647,
-                    1.3924176478496975e-08,
-                    -0.7058340311050415
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "gimmick": {
-                "type": "CANNON",
-                "cooltime": 3.5,
-                "firingSpeed": 1.0
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "大砲_円柱.008",
-            "transform": {
-                "translation": [
-                    -67.77345275878906,
-                    -238.56402587890625,
-                    0.0
-                ],
-                "rotation": [
-                    -0.5646548867225647,
-                    1.3924176478496975e-08,
-                    -0.7058340311050415
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "gimmick": {
-                "type": "CANNON",
-                "cooltime": 2.0,
-                "firingSpeed": 1.0
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "大砲_円柱.009",
-            "transform": {
-                "translation": [
-                    -75.9200210571289,
-                    -238.56402587890625,
-                    0.0
-                ],
-                "rotation": [
-                    -0.5646548867225647,
-                    1.3924176478496975e-08,
-                    -0.7058340311050415
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "gimmick": {
-                "type": "CANNON",
-                "cooltime": 1.5,
-                "firingSpeed": 1.0
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "大砲_円柱.010",
-            "transform": {
-                "translation": [
-                    -59.5999755859375,
-                    -238.56402587890625,
-                    0.0
-                ],
-                "rotation": [
-                    -0.5646548867225647,
-                    1.3924176478496975e-08,
-                    -0.7058340311050415
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "gimmick": {
-                "type": "CANNON",
-                "cooltime": 2.5,
-                "firingSpeed": 1.0
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "大砲_円柱.011",
-            "transform": {
-                "translation": [
-                    -87.63030242919922,
-                    -238.56402587890625,
-                    0.0
-                ],
-                "rotation": [
-                    -0.5646548867225647,
-                    1.3924176478496975e-08,
-                    -0.7058340311050415
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "gimmick": {
-                "type": "CANNON",
-                "cooltime": 1.0,
-                "firingSpeed": 1.0
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "大砲_円柱.012",
-            "transform": {
-                "translation": [
-                    -103.95034790039062,
-                    -238.56402587890625,
-                    0.0
-                ],
-                "rotation": [
-                    -0.5646548867225647,
-                    1.3924176478496975e-08,
-                    -0.7058340311050415
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "gimmick": {
-                "type": "CANNON",
-                "cooltime": 0.0,
-                "firingSpeed": 1.0
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "大砲_円柱.013",
-            "transform": {
-                "translation": [
-                    -95.80377960205078,
-                    -238.56402587890625,
-                    0.0
-                ],
-                "rotation": [
-                    -0.5646548867225647,
-                    1.3924176478496975e-08,
-                    -0.7058340311050415
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "gimmick": {
-                "type": "CANNON",
-                "cooltime": 0.5,
-                "firingSpeed": 1.0
-            }
         },
         {
             "type": "MESH",

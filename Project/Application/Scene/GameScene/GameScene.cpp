@@ -13,6 +13,7 @@
 #include "../../../Engine/Physics/ClothGPU/ClothGPU.h"
 #include "../../Object/Car/VehicleCore.h"
 #include "../../Object/CustomArea/CustomArea.h"
+#include "../../Object/Gimmick/Cannon/Cannon.h"
 
 GameScene::~GameScene()
 {
@@ -114,6 +115,22 @@ void GameScene::Initialize() {
 	customAreaName = "customArea.001";
 	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
 	courseCollisionSystem_->SetCustomArea(customArea);
+
+	// 大砲
+	Cannon* cannon = nullptr;
+	size_t i = 0;
+	while(1){
+		cannon = nullptr;
+		std::string courseName = std::format("Cannon{}", i);
+		cannon = static_cast<Cannon*>(objectManager_->GetObjectPointer(courseName));
+		if (cannon) {
+			courseCollisionSystem_->SetGimmick(reinterpret_cast<OBB*>(cannon->GetCollider()));
+		}
+		else {
+			break;
+		}
+		++i;
+	}
 
 	// モデル描画
 	ModelDraw::PreDrawParameters preDrawParameters;

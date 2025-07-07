@@ -288,9 +288,10 @@ void CourseCollisionSystem::SetGimmick(OBB* obb)
 	polygon.texcoord = { 1.0f, 1.0f };
 	
 	// OBB平面作成
-	Vector3 planeYZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(obb->otientatuons_[0].x), 1.0f - std::fabs(obb->otientatuons_[0].y), 1.0f - std::fabs(obb->otientatuons_[0].z) });
-	Vector3 planeXZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(obb->otientatuons_[1].x), 1.0f - std::fabs(obb->otientatuons_[1].y), 1.0f - std::fabs(obb->otientatuons_[1].z) });
-	Vector3 planeXY = Vector3::Normalize(Vector3{ 1.0f - std::fabs(obb->otientatuons_[2].x), 1.0f - std::fabs(obb->otientatuons_[2].y), 1.0f - std::fabs(obb->otientatuons_[2].z) });
+	Vector3 otientatuonX = obb->otientatuons_[0];
+	Vector3 otientatuonY = obb->otientatuons_[1];
+	Vector3 otientatuonZ = obb->otientatuons_[2];
+
 
 	Vector3 size = obb->size_;
 	Vector3 center = obb->center_;
@@ -300,65 +301,65 @@ void CourseCollisionSystem::SetGimmick(OBB* obb)
 
 	// 左 上 前
 	vertices[0] = {
-		(-size.x * planeYZ.x + size.y * planeXZ.x + -size.z * planeXY.x),
-		(-size.x * planeYZ.y + size.y * planeXZ.y + -size.z * planeXY.y),
-		(-size.x * planeYZ.z + size.y * planeXZ.z + -size.z * planeXY.z)
+		(-size.x * otientatuonX.x + size.y * otientatuonY.x + -size.z * otientatuonZ.x),
+		(-size.x * otientatuonX.y + size.y * otientatuonY.y + -size.z * otientatuonZ.y),
+		(-size.x * otientatuonX.z + size.y * otientatuonY.z + -size.z * otientatuonZ.z)
 	};
 
 	// 左 上 後
 	vertices[1] = {
-		(-size.x * planeYZ.x + size.y * planeXZ.x + size.z * planeXY.x),
-		(-size.x * planeYZ.y + size.y * planeXZ.y + size.z * planeXY.y),
-		(-size.x * planeYZ.z + size.y * planeXZ.z + size.z * planeXY.z)
+		(-size.x * otientatuonX.x + size.y * otientatuonY.x + size.z * otientatuonZ.x),
+		(-size.x * otientatuonX.y + size.y * otientatuonY.y + size.z * otientatuonZ.y),
+		(-size.x * otientatuonX.z + size.y * otientatuonY.z + size.z * otientatuonZ.z)
 	};
 
 	// 右 上 前
 	vertices[2] = {
-		(size.x * planeYZ.x + size.y * planeXZ.x + -size.z * planeXY.x),
-		(size.x * planeYZ.y + size.y * planeXZ.y + -size.z * planeXY.y),
-		(size.x * planeYZ.z + size.y * planeXZ.z + -size.z * planeXY.z)
+		(size.x * otientatuonX.x + size.y * otientatuonY.x + -size.z * otientatuonZ.x),
+		(size.x * otientatuonX.y + size.y * otientatuonY.y + -size.z * otientatuonZ.y),
+		(size.x * otientatuonX.z + size.y * otientatuonY.z + -size.z * otientatuonZ.z)
 	};
 
 	// 右 上 後
 	vertices[3] = {
-		(size.x * planeYZ.x + size.y * planeXZ.x + size.z * planeXY.x),
-		(size.x * planeYZ.y + size.y * planeXZ.y + size.z * planeXY.y),
-		(size.x * planeYZ.z + size.y * planeXZ.z + size.z * planeXY.z)
+		(size.x * otientatuonX.x + size.y * otientatuonY.x + size.z * otientatuonZ.x),
+		(size.x * otientatuonX.y + size.y * otientatuonY.y + size.z * otientatuonZ.y),
+		(size.x * otientatuonX.z + size.y * otientatuonY.z + size.z * otientatuonZ.z)
 	};
 
 	// 左 下 前
 	vertices[4] = {
-		(-size.x * planeYZ.x + -size.y * planeXZ.x + -size.z * planeXY.x),
-		(-size.x * planeYZ.y + -size.y * planeXZ.y + -size.z * planeXY.y),
-		(-size.x * planeYZ.z + -size.y * planeXZ.z + -size.z * planeXY.z)
+		(-size.x * otientatuonX.x + -size.y * otientatuonY.x + -size.z * otientatuonZ.x),
+		(-size.x * otientatuonX.y + -size.y * otientatuonY.y + -size.z * otientatuonZ.y),
+		(-size.x * otientatuonX.z + -size.y * otientatuonY.z + -size.z * otientatuonZ.z)
 	};
 
 	// 左 下 後
 	vertices[5] = {
-		(-size.x * planeYZ.x + -size.y * planeXZ.x + size.z * planeXY.x),
-		(-size.x * planeYZ.y + -size.y * planeXZ.y + size.z * planeXY.y),
-		(-size.x * planeYZ.z + -size.y * planeXZ.z + size.z * planeXY.z)
+		(-size.x * otientatuonX.x + -size.y * otientatuonY.x + size.z * otientatuonZ.x),
+		(-size.x * otientatuonX.y + -size.y * otientatuonY.y + size.z * otientatuonZ.y),
+		(-size.x * otientatuonX.z + -size.y * otientatuonY.z + size.z * otientatuonZ.z)
 	};
 
 	// 右 下 前
 	vertices[6] = {
-		(size.x * planeYZ.x + -size.y * planeXZ.x + -size.z * planeXY.x),
-		(size.x * planeYZ.y + -size.y * planeXZ.y + -size.z * planeXY.y),
-		(size.x * planeYZ.z + -size.y * planeXZ.z + -size.z * planeXY.z)
+		(size.x * otientatuonX.x + -size.y * otientatuonY.x + -size.z * otientatuonZ.x),
+		(size.x * otientatuonX.y + -size.y * otientatuonY.y + -size.z * otientatuonZ.y),
+		(size.x * otientatuonX.z + -size.y * otientatuonY.z + -size.z * otientatuonZ.z)
 	};
 
 	// 右 下 後
 	vertices[7] = {
-		(size.x * planeYZ.x + -size.y * planeXZ.x + size.z * planeXY.x),
-		(size.x * planeYZ.y + -size.y * planeXZ.y + size.z * planeXY.y),
-		(size.x * planeYZ.z + -size.y * planeXZ.z + size.z * planeXY.z)
+		(size.x * otientatuonX.x + -size.y * otientatuonY.x + size.z * otientatuonZ.x),
+		(size.x * otientatuonX.y + -size.y * otientatuonY.y + size.z * otientatuonZ.y),
+		(size.x * otientatuonX.z + -size.y * otientatuonY.z + size.z * otientatuonZ.z)
 	};
 
 	for (size_t i = 0; i < 8; ++i) {
 		vertices[i] += center;
 	}
 
-	Vector3 planeVertices[6][4];
+	Vector3 planeVertices[4][4];
 
 	// 前
 	planeVertices[0][0] = vertices[4];
@@ -384,19 +385,7 @@ void CourseCollisionSystem::SetGimmick(OBB* obb)
 	planeVertices[3][2] = vertices[4];
 	planeVertices[3][3] = vertices[0];
 
-	// 上
-	planeVertices[4][0] = vertices[0];
-	planeVertices[4][1] = vertices[1];
-	planeVertices[4][2] = vertices[3];
-	planeVertices[4][3] = vertices[2];
-
-	// 下
-	planeVertices[5][0] = vertices[5];
-	planeVertices[5][1] = vertices[4];
-	planeVertices[5][2] = vertices[6];
-	planeVertices[5][3] = vertices[7];
-
-	for (uint32_t i = 0; i < 6; ++i) {
+	for (uint32_t i = 0; i < 4; ++i) {
 	
 		// 法線
 		Vector3 v01 = planeVertices[i][1] - planeVertices[i][0];
