@@ -4,6 +4,7 @@
 #include "../../Engine/Math/Vector/Vector3.h"
 #include "../../Engine/Math/RandomEngine.h"
 #include "../Object/CustomArea/CustomArea.h"
+#include "../Object/Factory/ObjectCreate.h"
 
 void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
 	//初期化
@@ -210,4 +211,48 @@ void CourseManager::CreateCustomizeArea(size_t group) {
 	CustomArea* object = new CustomArea();
 	object->Initialize(&objectData);
 	objectManager_->AddObject(object);
+
+	//各ピックアップポイント
+	for (size_t i = 0; i < kPickupPointCount_;i++) {
+		CreatePickUpPoint(transform.translate,i,group);
+	}
+}
+
+void CourseManager::CreatePickUpPoint(const Vector3& center,size_t num,size_t group) {
+	LevelData::MeshData objectData;
+	EulerTransform transform;
+
+	transform.rotate = { 0,0,0 };
+	transform.scale = { 1.0f,1.0f,1.0f };
+	transform.translate.x = center.x + kPickupPointOffset[num].x;
+	transform.translate.y = center.y + kPickupPointOffset[num].y;
+	transform.translate.z = center.z + kPickupPointOffset[num].z;
+
+
+	//std::string name = kRegisterPickupPointNames_[num];
+
+	objectData.name = kRegisterPickupPointNames_[num] + std::format("{}", group);
+
+	objectData.className = kRegisterPickupPointNames_[num];
+	objectData.flieName = kPickupPointFileList[num];
+	objectData.directoryPath = "Resources/Model/PickupPoint/" + kPickupPointDirectlyList[num];
+	objectData.transform = transform;
+
+	OBB obb;
+	obb.Initialize(objectData.transform.translate, Matrix4x4::MakeIdentity4x4(), { 0,0,0 }, static_cast<ParentNullObject*>(nullptr));
+	objectData.collider = obb;
+	LevelData::ObjectData wrappedObjectData = objectData;
+	IObject* object = nullptr;
+	if (num == 0) {
+		object = ObjectCreate::CreateObjectEnginePoint(wrappedObjectData);
+	}
+	else if(num == 1){
+		object = ObjectCreate::CreateObjectTirePoint(wrappedObjectData);
+	}
+	else {
+		object = ObjectCreate::CreateObjectArmorPoint(wrappedObjectData);
+	}
+
+	objectManager_->AddObject(object);
+	objectManager_->RegisterPickupPoint(object,objectData.className,objectData.name);
 }
