@@ -75,6 +75,11 @@ private: // メンバ関数
 	/// </summary>
 	void TextureLoad() override;
 
+	/// <summary>
+	/// コース初期化
+	/// </summary>
+	void CourseInitialize();
+
 private:
 
 	// パーティクルモデル
