@@ -30,7 +30,7 @@ private: // メンバ定数
 	static const uint32_t kObjectsThatCanBeRegisteredMax_ = 64;
 	
 	// 衝突するポリゴンの上限
-	static const uint32_t kCollisionPolygonMax_ = 1024;
+	static const uint32_t kCollisionPolygonMax_ = 4096;
 	
 	/// <summary>
 	///	オブジェクトデータ(現在OBB)
