@@ -249,7 +249,7 @@ void CourseCollisionSystem::SetCustomArea(CustomArea* customArea)
 	polygon.texcoord = { 0.0f,0.0f };
 
 	// 高さ
-	const float kHeight = 0.0f;
+	const float kHeight = 0.25f;
 	// 幅
 	const float kWidth = 20.0f;
 	

@@ -24,9 +24,9 @@ static const Vector3 kCourseGroupOffset_ = {-1000.0f/5.0f,0.0f,1000.0f/5.0f};
 
 //pickup
 static const std::array<Vector3, kPickupPointCount_> kPickupPointOffset = {
-	Vector3{10.0f,1.0f,15.0f},
-	Vector3{-15.0f,1.0f,0.0f},
-	Vector3{15.0f,1.0f,-10.0f}
+	Vector3{10.0f,-0.1f,15.0f},
+	Vector3{-15.0f,-0.1f,0.0f},
+	Vector3{15.0f,-0.1f,-10.0f}
 };
 
 static const std::array<std::string, kPickupPointCount_> kPickupPointDirectlyList = { "Engine","Tire","Frame" };
