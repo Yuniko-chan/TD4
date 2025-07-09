@@ -104,10 +104,12 @@ void GameScene::Initialize() {
 		courseCollisionSystem_->SetCourse(course);
 		courseDebugDraw_->SetCourse(course);
 	}*/
-	auto& courseList = courseManager_->GetCourseList();
-	for (auto* course : courseList) {
-		courseCollisionSystem_->SetCourse(course);
-		courseDebugDraw_->SetCourse(course);
+	for (size_t i = 0; i < 10;i++) {
+		auto& courseList = courseManager_->GetCourseList(i);
+		for (auto* course : courseList) {
+			courseCollisionSystem_->SetCourse(course);
+			courseDebugDraw_->SetCourse(course);
+		}
 	}
 
 	// モデル描画

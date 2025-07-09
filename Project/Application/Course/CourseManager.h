@@ -42,6 +42,7 @@ public:
 	void Initialize(GameSceneObjectManager* objectManager);
 
 	std::array<Course*, kCourseNum>& GetCourseList() { return courseList_[0]; };
+	std::array<Course*, kCourseNum>& GetCourseList(size_t group) { return courseList_[group]; };
 
 private:
 	std::array<CourseImportData, kCourseFileCount> courseDatas_;
