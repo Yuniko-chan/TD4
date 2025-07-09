@@ -28,15 +28,16 @@ void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
 	//ランダムに配置する処理
 	PlaceCourseRandom();
 	
+	nowGroup_++;
 	//仮二個目
-	for (int a = 0; a < 10;a++) {
+	/*for (int a = 0; a < 10; a++) {
 		nowGroup_++;
 		for (size_t i = 0; i < kCourseNum; i++) {
 			isPlaced_[i] = false;
 		}
 		courseList_.emplace_back(std::array<Course*, kCourseNum>{});
 		PlaceCourseRandom();
-	}
+	}*/
 }
 
 void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* courseInportData,const Vector3& offset, int rotate) {
@@ -255,4 +256,13 @@ void CourseManager::CreatePickUpPoint(const Vector3& center,size_t num,size_t gr
 
 	objectManager_->AddObject(object);
 	objectManager_->RegisterPickupPoint(object,objectData.className,objectData.name);
+}
+
+size_t CourseManager::AddCourseGroup() {
+	for (size_t i = 0; i < kCourseNum; i++) {
+		isPlaced_[i] = false;
+	}
+	courseList_.emplace_back(std::array<Course*, kCourseNum>{});
+	PlaceCourseRandom();
+	return ++nowGroup_-1;
 }

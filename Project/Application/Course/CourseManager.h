@@ -44,6 +44,9 @@ public:
 	std::array<Course*, kCourseNum>& GetCourseList() { return courseList_[0]; };
 	std::array<Course*, kCourseNum>& GetCourseList(size_t group) { return courseList_[group]; };
 
+	//コースグループ一個分増やす
+	size_t AddCourseGroup();
+
 private:
 	std::array<CourseImportData, kCourseFileCount> courseDatas_;
 	GameSceneObjectManager* objectManager_;
