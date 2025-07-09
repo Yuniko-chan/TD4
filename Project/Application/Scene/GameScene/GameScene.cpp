@@ -315,22 +315,29 @@ void GameScene::CourseInitialize()
 	courseDebugDraw_->Initialize();
 
 	// コース
-	for (size_t i = 0; i < 10; i++) {
+	size_t courseGroupNum = 11;
+	for (size_t i = 0; i < courseGroupNum; i++) {
 		auto& courseList = courseManager_->GetCourseList(i);
 		for (auto* course : courseList) {
-			courseCollisionSystem_->SetCourse(course);
+			///courseCollisionSystem_->SetCourse(course);
 			courseDebugDraw_->SetCourse(course);
 		}
 	}
 
 	// カスタムエリア
 	CustomArea* customArea = nullptr;
-	std::string customAreaName = "customArea";
+	/*std::string customAreaName = "customArea";
 	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
 	courseCollisionSystem_->SetCustomArea(customArea);
 	customAreaName = "customArea.001";
 	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
-	courseCollisionSystem_->SetCustomArea(customArea);
+	courseCollisionSystem_->SetCustomArea(customArea);*/
+	for (size_t i = 0; i < courseGroupNum; i++) {
+		std::string customAreaName = std::format("CustomArea{}",i);
+		customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
+		courseCollisionSystem_->SetCustomArea(customArea);
+	}
+
 
 	// 大砲
 	Cannon* cannon = nullptr;
