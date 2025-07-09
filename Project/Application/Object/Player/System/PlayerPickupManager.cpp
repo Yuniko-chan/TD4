@@ -49,10 +49,6 @@ void PlayerPickupManager::Update()
 			interaction_->SetIsDraw(true);
 		}
 	}
-	else {
-		interaction_->SetIsDraw(false);
-	}
-
 }
 
 void PlayerPickupManager::ImGuiDraw()
@@ -100,6 +96,28 @@ void PlayerPickupManager::ImGuiDraw()
 	}
 }
 
+void PlayerPickupManager::AddSpot(std::string name, InteractionSpot* interact)
+{
+	// 既にあればスキップ
+	if (interactionSpots_.contains(name)) {
+		return;
+	}
+	// 追加
+	interactionSpots_.emplace(name, interact);
+}
+
+InteractionSpot* PlayerPickupManager::FindSpot(const std::string& name)
+{
+	if (interactionSpots_.contains(name)) {
+		for (auto it = interactionSpots_.begin(); it != interactionSpots_.end(); ++it) {
+			if (name == (*it).first) {
+				return (*it).second;
+			}
+		}
+	}
+	return nullptr;
+}
+
 void PlayerPickupManager::InteractParts()
 {
 	// 連打回避のタイマー
@@ -144,7 +162,8 @@ void PlayerPickupManager::ReleaseAction()
 	// SettingParent関数が成功した場合の終了処理
 	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
 	holdParts_ = nullptr;
-
+	interaction_->SetIsDraw(false);
+	interaction_ = nullptr;
 }
 
 void PlayerPickupManager::CatchAction()
@@ -185,6 +204,16 @@ void PlayerPickupManager::OnPartCatchSuccess(Car::IParts* parts)
 	holdParts_->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
 	holdParts_->GetWorldTransformAdress()->transform_.translate = localOffset;
 	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
+
+	if (holdParts_->GetClassNameString() == "TireParts") {
+		interaction_ = FindSpot("TireSpot");
+	}
+	else if (holdParts_->GetClassNameString() == "ArmorFrameParts") {
+		interaction_ = FindSpot("ArmorSpot");
+	}
+	else if (holdParts_->GetClassNameString() == "EngineParts") {
+		interaction_ = FindSpot("EngineSpot");
+	}
 }
 
 void PlayerPickupManager::OnCatchFailure()
@@ -199,6 +228,10 @@ void PlayerPickupManager::DropPart()
 	holdParts_->GetWorldTransformAdress()->SetParent(nullptr);
 	// 所持パーツから解除
 	holdParts_ = nullptr;
+
+	// インタラクション初期化
+	interaction_->SetIsDraw(false);
+	interaction_ = nullptr;
 }
 
 bool PlayerPickupManager::ShouldDropPart()

@@ -9,6 +9,7 @@ void InteractionSpot::Initialize(LevelData::MeshData* data)
 	material_->SetColor({ 1,1,1,0 });
 	// 方向フラグ
 	worldTransform_.usedDirection_ = true;
+	isDraw_ = false;
 }
 
 void InteractionSpot::Update()

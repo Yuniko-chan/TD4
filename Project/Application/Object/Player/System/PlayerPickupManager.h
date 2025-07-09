@@ -55,6 +55,9 @@ public:
 	void SetPickupPointManager(PickupPointManager* manager) { pickupPointManager_ = manager; }
 	void SetInteractSpot(InteractionSpot* interact) { interaction_ = interact; }
 
+	void AddSpot(std::string name, InteractionSpot* interact);
+	InteractionSpot* FindSpot(const std::string& name);
+
 	/// <summary>
 	/// パーツに触れる処理
 	/// </summary>
@@ -121,4 +124,6 @@ private:
 	std::optional<FrameTimer> interactDuration_;
 	// 拾う場所
 	InteractionSpot* interaction_ = nullptr;
+	// スポット配列
+	std::map<std::string, InteractionSpot*> interactionSpots_;
 };

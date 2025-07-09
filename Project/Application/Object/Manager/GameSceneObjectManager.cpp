@@ -276,7 +276,9 @@ void GameSceneObjectManager::AddObject(const std::string& className, const std::
 void GameSceneObjectManager::PlayerInitialize()
 {
 	// インタラクトのオブジェクト
-	AddObject("InteractionSpot", sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
+	AddObject("InteractionSpot", "ArmorSpot", sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
+	AddObject("InteractionSpot", "EngineSpot", sVehiclePaths[VehicleDatas::kEngine].first, sVehiclePaths[VehicleDatas::kEngine].second);
+	AddObject("InteractionSpot", "TireSpot", sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
 	// パーツ
 	partsManager_ = std::make_unique<VehiclePartsManager>();
 	// ピックアップ
@@ -286,7 +288,15 @@ void GameSceneObjectManager::PlayerInitialize()
 	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
 	player->GetPickUpManager()->SetPartsManager(partsManager_.get());
 	player->GetPickUpManager()->SetPickupPointManager(pickupPointManager_.get());
-	player->GetPickUpManager()->SetInteractSpot(static_cast<InteractionSpot*>(this->GetObjectPointer("InteractionSpot")));
+	InteractionSpot* spot = static_cast<InteractionSpot*>(this->GetObjectPointer("ArmorSpot"));
+	//player->GetPickUpManager()->SetInteractSpot(spot);
+
+	// 3種類登録
+	player->GetPickUpManager()->AddSpot(spot->GetName(), spot);
+	spot = static_cast<InteractionSpot*>(this->GetObjectPointer("EngineSpot"));
+	player->GetPickUpManager()->AddSpot(spot->GetName(), spot);
+	spot = static_cast<InteractionSpot*>(this->GetObjectPointer("TireSpot"));
+	player->GetPickUpManager()->AddSpot(spot->GetName(), spot);
 }
 
 void GameSceneObjectManager::OptionProcess()
