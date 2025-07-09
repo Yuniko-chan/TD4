@@ -43,6 +43,18 @@ void CourseCollisionSystem::Initialize()
 	// テクスチャハンドル
 	roadAttributeTextureHandle_ = TextureManager::Load("Resources/Course/course.png", dxCommon_);
 
+	// ポリゴン登録番号
+	polygonRegistrationNumber_ = 0;
+
+	// ポリゴン
+	for (size_t i = 0; i < kCollisionPolygonMax_; ++i) {
+		polygons_[i].position0 = { 0.0f,-10000.0f,0.0f };
+		polygons_[i].position1 = { 0.0f,-10000.0f,0.0f };
+		polygons_[i].position2 = { 0.0f,-10000.0f,0.0f };
+		polygons_[i].normal = { 0.0f,0.0f,1.0f };
+		polygons_[i].texcoord = { 0.0f,0.0f };
+	}
+
 }
 
 void CourseCollisionSystem::Execute()
@@ -234,7 +246,8 @@ void CourseCollisionSystem::SetCourse(Course* course)
 		polygon.position2 = Matrix4x4::Transform(polygon.position2, course->GetWorldTransformAdress()->worldMatrix_);
 
 		// 登録
-		polygons_.push_back(polygon);
+		polygons_[polygonRegistrationNumber_] = polygon;
+		polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
 
 	}
 
@@ -263,7 +276,8 @@ void CourseCollisionSystem::SetCustomArea(CustomArea* customArea)
 	polygon.position2 = Matrix4x4::Transform(polygon.position2, customArea->GetWorldTransformAdress()->worldMatrix_);
 
 	// 登録
-	polygons_.push_back(polygon);
+	polygons_[polygonRegistrationNumber_] = polygon;
+	polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
 
 	polygon.position0 = { -kWidth, kHeight, -kWidth };
 	polygon.position1 = { kWidth, kHeight, kWidth };
@@ -275,7 +289,8 @@ void CourseCollisionSystem::SetCustomArea(CustomArea* customArea)
 	polygon.position2 = Matrix4x4::Transform(polygon.position2, customArea->GetWorldTransformAdress()->worldMatrix_);
 
 	// 登録
-	polygons_.push_back(polygon);
+	polygons_[polygonRegistrationNumber_] = polygon;
+	polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
 
 }
 
@@ -400,14 +415,16 @@ void CourseCollisionSystem::SetGimmick(OBB* obb)
 		polygon.position2 = planeVertices[i][3];
 		
 		// 登録
-		polygons_.push_back(polygon);
+		polygons_[polygonRegistrationNumber_] = polygon;
+		polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
 
 		polygon.position0 = planeVertices[i][0];
 		polygon.position1 = planeVertices[i][3];
 		polygon.position2 = planeVertices[i][2];
 
 		// 登録
-		polygons_.push_back(polygon);
+		polygons_[polygonRegistrationNumber_] = polygon;
+		polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
 
 	}
 
@@ -417,7 +434,7 @@ void CourseCollisionSystem::ClearCorse()
 {
 
 	// ポリゴンをクリアする
-	polygons_.clear();
+	//polygons_.clear();
 
 }
 

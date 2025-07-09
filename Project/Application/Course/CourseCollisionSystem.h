@@ -189,7 +189,10 @@ private: // メンバ変数
 	Buffers buffers_[kObjectsThatCanBeRegisteredMax_];
 
 	// エリア
-	std::vector<CoursePolygon> polygons_;
+	std::array<CoursePolygon, kCollisionPolygonMax_> polygons_;
+
+	// ポリゴン登録番号
+	uint32_t polygonRegistrationNumber_;
 
 	// 現在確認しているオブジェクトが何番目か
 	uint32_t collisionCheakNum_;
