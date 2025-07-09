@@ -326,7 +326,7 @@ void GameScene::CourseInitialize()
 	for (size_t i = 0; i < courseGroupNum; i++) {
 		auto& courseList = courseManager_->GetCourseList(i);
 		for (auto* course : courseList) {
-			///courseCollisionSystem_->SetCourse(course);
+			courseCollisionSystem_->SetCourse(course);
 			courseDebugDraw_->SetCourse(course);
 		}
 	}
@@ -384,7 +384,7 @@ void GameScene::AddCourse() {
 	size_t group = courseManager_->AddCourseGroup();
 	auto& courseList = courseManager_->GetCourseList(group);
 	for (auto* course : courseList) {
-		///courseCollisionSystem_->SetCourse(course);
+		courseCollisionSystem_->SetCourse(course);
 		courseDebugDraw_->SetCourse(course);
 	}
 	
