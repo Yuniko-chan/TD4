@@ -72,7 +72,7 @@ private: // メンバ変数
 	// 背景
 	std::unique_ptr<ClearBackGround> clearBackGround_;
 
-	// 
+	// コース踏破システム
 	std::unique_ptr<CourseTraversalSystem> courseTraversalSystem_;
 
 };

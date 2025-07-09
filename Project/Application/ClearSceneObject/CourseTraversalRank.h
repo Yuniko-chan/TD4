@@ -31,6 +31,11 @@ public: // 関数
 	/// <param name="courseTraversalNum">コース踏破数</param>
 	void Update(uint32_t courseTraversalNum);
 
+	/// <summary>
+	/// ImGui描画
+	/// </summary>
+	void ImGuiDraw();
+
 private: // 関数
 
 	/// <summary>

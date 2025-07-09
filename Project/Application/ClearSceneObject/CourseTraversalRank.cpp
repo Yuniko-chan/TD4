@@ -1,5 +1,6 @@
 #include "CourseTraversalRank.h"
 #include "../../Engine/GlobalVariables/GlobalVariables.h"
+#include "../../Engine/2D/ImguiManager.h"
 
 const std::array<std::string, CourseTraversalRank::kRankNumMax_> CourseTraversalRank::kRankNames_ 
 = { "A", "B", "C" };
@@ -28,7 +29,15 @@ void CourseTraversalRank::Update(uint32_t courseTraversalNum)
 
 #ifdef _DEMO
 	DetermineRank(courseTraversalNum);
+	ApplyGlobalVariables();
 #endif
+
+}
+
+void CourseTraversalRank::ImGuiDraw()
+{
+
+	ImGui::Text("ランク：%s", &rank_);
 
 }
 

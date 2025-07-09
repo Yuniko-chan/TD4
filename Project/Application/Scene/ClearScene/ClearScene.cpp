@@ -54,6 +54,10 @@ void ClearScene::Initialize()
 	preDrawParameters.environmentTextureHandle = TextureManager::Load("Resources/default/rostock_laage_airport_4k.dds", DirectXCommon::GetInstance());
 	ModelDraw::SetPreDrawParameters(preDrawParameters);
 
+	// コース踏破システム
+	courseTraversalSystem_ = std::make_unique<CourseTraversalSystem>();
+	courseTraversalSystem_->Initialize();
+
 }
 
 void ClearScene::Update()
@@ -102,6 +106,10 @@ void ClearScene::Update()
 	buttonSprite_->SetColor(buttonColor_);
 
 	clearBackGround_->Update();
+
+	courseTraversalSystem_->Update();
+
+	ImguiDraw();
 	
 }
 
@@ -139,8 +147,9 @@ void ClearScene::Draw()
 void ClearScene::ImguiDraw()
 {
 
-#ifdef _DEBUG
-#endif // _DEBUG
+#ifdef _DEMO
+	courseTraversalSystem_->ImGuiDraw();
+#endif // _DEMO
 
 }
 
