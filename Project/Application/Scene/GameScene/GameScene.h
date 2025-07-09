@@ -80,6 +80,9 @@ private: // メンバ関数
 	/// </summary>
 	void CourseInitialize();
 
+	//コース追加(デバッグ用)
+	void AddCourse();
+
 private:
 
 	// パーティクルモデル

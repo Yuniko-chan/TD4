@@ -112,6 +112,13 @@ void GameScene::Update() {
 	ImguiDraw();
 #endif
 
+//コースデバッグ用
+#ifdef _DEMO
+	if (input_->TriggerKey(DIK_P)) {
+		AddCourse();
+	}
+#endif
+
 	if (requestSceneNo_ == kClear || requestSceneNo_ == kTitle || isBeingReset_) {
 		resetScene_ = false;
 		return;
@@ -315,22 +322,29 @@ void GameScene::CourseInitialize()
 	courseDebugDraw_->Initialize();
 
 	// コース
-	for (size_t i = 0; i < 10; i++) {
+	size_t courseGroupNum = 1;
+	for (size_t i = 0; i < courseGroupNum; i++) {
 		auto& courseList = courseManager_->GetCourseList(i);
 		for (auto* course : courseList) {
-			courseCollisionSystem_->SetCourse(course);
+			///courseCollisionSystem_->SetCourse(course);
 			courseDebugDraw_->SetCourse(course);
 		}
 	}
 
 	// カスタムエリア
 	CustomArea* customArea = nullptr;
-	std::string customAreaName = "customArea";
+	/*std::string customAreaName = "customArea";
 	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
 	courseCollisionSystem_->SetCustomArea(customArea);
 	customAreaName = "customArea.001";
 	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
-	courseCollisionSystem_->SetCustomArea(customArea);
+	courseCollisionSystem_->SetCustomArea(customArea);*/
+	for (size_t i = 0; i < courseGroupNum; i++) {
+		std::string customAreaName = std::format("CustomArea{}",i);
+		customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
+		courseCollisionSystem_->SetCustomArea(customArea);
+	}
+
 
 	// 大砲
 	Cannon* cannon = nullptr;
@@ -364,4 +378,21 @@ void GameScene::CourseInitialize()
 		++i;
 	}
 
+}
+
+void GameScene::AddCourse() {
+	size_t group = courseManager_->AddCourseGroup();
+	auto& courseList = courseManager_->GetCourseList(group);
+	for (auto* course : courseList) {
+		///courseCollisionSystem_->SetCourse(course);
+		courseDebugDraw_->SetCourse(course);
+	}
+	
+
+	// カスタムエリア
+	CustomArea* customArea = nullptr;
+	std::string customAreaName = std::format("CustomArea{}", group);
+	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
+	courseCollisionSystem_->SetCustomArea(customArea);
+	
 }
