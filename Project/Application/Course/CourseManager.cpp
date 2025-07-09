@@ -3,6 +3,8 @@
 #include "../../Engine/3D/Model/ModelManager.h"
 #include "../../Engine/Math/Vector/Vector3.h"
 #include "../../Engine/Math/RandomEngine.h"
+#include "../Object/CustomArea/CustomArea.h"
+#include "../Object/Factory/ObjectCreate.h"
 
 void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
 	//初期化
@@ -16,22 +18,41 @@ void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
 		ModelManager::GetInstance()->AppendModel(CourseLoader::CreateCourseModel(courseDatas_[i], kCourseNameList[i]));
 	}
 
-	//オブジェクトマネージャーに登録(仮で同じものを六個作る)
-	/*for (size_t i = 0; i < kCourseNum; i++) {
-		CreateCourse(kCourseNameList[i%2], &courseDatas_[i%2], courseOffsets_[i]);
-	}*/
+	//仮でグループ設定
+	nowGroup_ = 0;
+	courseList_.emplace_back(std::array<Course*, kCourseNum>{});
+
+	// 今追加した要素の参照を得る
+	//std::array<Course*, kCourseNum>&group = (courseList_.back());
+
 	//ランダムに配置する処理
 	PlaceCourseRandom();
+	
+	//仮二個目
+	for (int a = 0; a < 10;a++) {
+		nowGroup_++;
+		for (size_t i = 0; i < kCourseNum; i++) {
+			isPlaced_[i] = false;
+		}
+		courseList_.emplace_back(std::array<Course*, kCourseNum>{});
+		PlaceCourseRandom();
+	}
 }
 
 void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* courseInportData,const Vector3& offset, int rotate) {
 	LevelData::MeshData objectData;
 	EulerTransform transform;
+
+	//グループでのオフセット計算
+	static Vector3 groupOffset = {0,0,0};
+	groupOffset.x = kCourseGroupOffset_.x* nowGroup_;
+	groupOffset.z = kCourseGroupOffset_.z* nowGroup_;
+
 	transform.rotate = { 0,0,0 };
-	transform.scale = { 5.0f,5.0f,5.0f };
-	transform.translate.x = offset.x * kCourseDiameter;
+	transform.scale = { 1.0f,1.0f,1.0f };
+	transform.translate.x = offset.x * kCourseDiameter + groupOffset.x;
 	transform.translate.y = offset.y * kCourseDiameter;
-	transform.translate.z = offset.z * kCourseDiameter;
+	transform.translate.z = offset.z * kCourseDiameter + groupOffset.z;
 	transform.rotate.y = float(rotate) * 3.141592f*0.5f;
 
 
@@ -44,7 +65,7 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 	Course* object = new Course();
 	object->Initialize(&objectData,courseInportData);
 	objectManager_->AddObject(object);
-
+	courseList_[nowGroup_][courseIndex_ % 6] = object;
 	courseIndex_++;
 }
 
@@ -57,9 +78,12 @@ void CourseManager::PlaceCourseRandom() {
 	//ダート埋め
 	for (size_t i = 0; i < kCourseNum; i++) {
 		if (!isPlaced_[i]) {
-			CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[i],0);
+			CreateCourse(kCourseNameList[2], &courseDatas_[2], courseOffsets_[i],0);
 		}
 	}
+
+	//カスタムエリア
+	CreateCustomizeArea(nowGroup_);
 }
 
 
@@ -153,4 +177,82 @@ int CourseManager::Place5(int prev) {
 	}
 
 	return next;
+}
+
+void CourseManager::CreateCustomizeArea(size_t group) {
+	//-250
+	//グループでのオフセット計算
+	static Vector3 center = { 0,0,-250.0f /5.0f};
+	static Vector3 offset;
+	offset.x = kCourseGroupOffset_.x * group;
+	offset.z = kCourseGroupOffset_.z * group + center.z;
+	offset.y = 0.2f;
+
+	LevelData::MeshData objectData;
+	EulerTransform transform;
+
+	transform.rotate = { 0,0,0 };
+	transform.scale = { 1.0f,1.0f,1.0f };
+	transform.translate.x = offset.x ;
+	transform.translate.y = offset.y ;
+	transform.translate.z = offset.z ;
+	
+
+	objectData.name = std::format("CustomArea{}", group);
+
+	objectData.className = "CustomArea";
+	objectData.flieName = "custom.obj";
+	objectData.directoryPath = "Resources/Model/Custom";
+	objectData.transform = transform;
+	
+	OBB obb;
+	obb.Initialize(objectData.transform.translate, Matrix4x4::MakeIdentity4x4(), {0,0,0}, static_cast<ParentNullObject*>(nullptr));
+	objectData.collider = obb;
+	CustomArea* object = new CustomArea();
+	object->Initialize(&objectData);
+	objectManager_->AddObject(object);
+
+	//各ピックアップポイント
+	for (size_t i = 0; i < kPickupPointCount_;i++) {
+		CreatePickUpPoint(transform.translate,i,group);
+	}
+}
+
+void CourseManager::CreatePickUpPoint(const Vector3& center,size_t num,size_t group) {
+	LevelData::MeshData objectData;
+	EulerTransform transform;
+
+	transform.rotate = { 0,0,0 };
+	transform.scale = { 1.0f,1.0f,1.0f };
+	transform.translate.x = center.x + kPickupPointOffset[num].x;
+	transform.translate.y = center.y + kPickupPointOffset[num].y;
+	transform.translate.z = center.z + kPickupPointOffset[num].z;
+
+
+	//std::string name = kRegisterPickupPointNames_[num];
+
+	objectData.name = kRegisterPickupPointNames_[num] + std::format("{}", group);
+
+	objectData.className = kRegisterPickupPointNames_[num];
+	objectData.flieName = kPickupPointFileList[num];
+	objectData.directoryPath = "Resources/Model/PickupPoint/" + kPickupPointDirectlyList[num];
+	objectData.transform = transform;
+
+	OBB obb;
+	obb.Initialize(objectData.transform.translate, Matrix4x4::MakeIdentity4x4(), { 0,0,0 }, static_cast<ParentNullObject*>(nullptr));
+	objectData.collider = obb;
+	LevelData::ObjectData wrappedObjectData = objectData;
+	IObject* object = nullptr;
+	if (num == 0) {
+		object = ObjectCreate::CreateObjectEnginePoint(wrappedObjectData);
+	}
+	else if(num == 1){
+		object = ObjectCreate::CreateObjectTirePoint(wrappedObjectData);
+	}
+	else {
+		object = ObjectCreate::CreateObjectArmorPoint(wrappedObjectData);
+	}
+
+	objectManager_->AddObject(object);
+	objectManager_->RegisterPickupPoint(object,objectData.className,objectData.name);
 }

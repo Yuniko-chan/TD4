@@ -98,12 +98,19 @@ void GameScene::Initialize() {
 	courseDebugDraw_->Initialize();
 
 	// コース
-	Course* course = nullptr;
+	/*Course* course = nullptr;
 	for (size_t i = 0; i < kCourseNum; i++) {
 		std::string courseName = std::format("Course{}", i);
 		course = static_cast<Course*>(objectManager_->GetObjectPointer(courseName));
 		courseCollisionSystem_->SetCourse(course);
 		courseDebugDraw_->SetCourse(course);
+	}*/
+	for (size_t i = 0; i < 10;i++) {
+		auto& courseList = courseManager_->GetCourseList(i);
+		for (auto* course : courseList) {
+			courseCollisionSystem_->SetCourse(course);
+			courseDebugDraw_->SetCourse(course);
+		}
 	}
 
 	// カスタムエリア
