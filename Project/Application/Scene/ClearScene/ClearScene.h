@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Engine/Scene/BaseScene/BaseScene.h"
 #include "../../OutGameObject/ClearBackGround/ClearBackGround.h"
+#include "../../ClearSceneObject/CourseTraversalSystem.h"
 
 /// <summary>
 /// クリアシーン
@@ -70,6 +71,9 @@ private: // メンバ変数
 
 	// 背景
 	std::unique_ptr<ClearBackGround> clearBackGround_;
+
+	// 
+	std::unique_ptr<CourseTraversalSystem> courseTraversalSystem_;
 
 };
 
