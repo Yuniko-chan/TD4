@@ -93,6 +93,15 @@ private: // 検索
 	/// <returns></returns>
 	Car::IParts* FindParts(Car::IParts* parts);
 
+	/// <summary>
+	/// 深度値のリフレッシュ
+	/// </summary>
+	void RefrashDepthsFromCore();
+	/// <summary>
+	/// コネクターのリフレッシュ
+	/// </summary>
+	void RefrashPartsConnector();
+
 public:
 	/// <summary>
 	/// パーツごとの検索（リスト化）
@@ -126,6 +135,20 @@ private: // 登録・解除
 	/// <param name="id"></param>
 	/// <param name="parts"></param>
 	void UnRegistParts(const Vector2Int& id, Car::IParts* parts);
+	/// <summary>
+	/// 例外の解除処理
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="parts"></param>
+	void ExceptionUnRegist(const Vector2Int& id, Car::IParts* parts);
+	/// <summary>
+	/// 爆破解除処理
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="parts"></param>
+	void BombUnRegistParts(const Vector2Int& id, Car::IParts* parts);
+
+	void DetachCommon(std::map<Vector2Int, Car::IParts*>::iterator it);
 
 public:
 	void RefrashGridSize();

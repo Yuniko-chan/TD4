@@ -64,7 +64,7 @@ private:
 	std::list<Car::IParts*> parents_;
 	std::list<Car::IParts*> childrens_;
 	// 深度値
-	int32_t depth_ = 0;
+	int32_t depth_ = -1;
 	// デバッグ用
 	Vector2 debugKey_ = {};
 	// 親ポインタ（座標構築用）

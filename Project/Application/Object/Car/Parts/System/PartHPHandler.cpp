@@ -30,6 +30,7 @@ void PartHPHandler::Update()
 	if (hp_ <= 0) {
 		// 解除フラグ
 		owner_->SetIsDelete(true);
+		//owner_->SetIsDead(true);
 	}
 
 	// 無敵経過

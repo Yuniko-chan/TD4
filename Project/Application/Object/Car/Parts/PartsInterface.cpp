@@ -62,7 +62,9 @@ void Car::IParts::ReleaseParent()
 	// コアの解除
 	parentCore_ = nullptr;
 	// コネクターのリセット
-	connector_->Reset();
+	if (connector_) {
+		connector_->Reset();
+	}
 }
 
 void Car::IParts::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)

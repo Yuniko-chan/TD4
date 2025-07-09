@@ -40,7 +40,7 @@ private:
 	int16_t maxHP_ = 0;
 	float hp_ = 0;
 	bool isInvisible_ = false;
-
+	bool isDead_ = false;
 	float invisibleCooltime_ = 0.0f;
 
 };
