@@ -285,6 +285,11 @@ Car::IParts* VehicleConstructionSystem::FindParts(Car::IParts* parts)
 
 void VehicleConstructionSystem::RefrashDepthsFromCore()
 {
+	for (auto it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
+		if ((*it).second->GetClassNameString() == "VehicleCore") continue;
+		(*it).second->GetConnector()->SetDepth(-1);
+	}
+
 	// キュー
 	std::queue<std::pair<Vector2Int, int>> queue;
 	// 四方向
@@ -427,84 +432,90 @@ void VehicleConstructionSystem::RegistParts(const Vector2Int& id, Car::IParts* p
 
 	// リストに登録
 	partsMapping_.emplace(id, parts);
-	// 隣接検索
-	std::list<Car::IParts*> adjoinParts;
-	Vector2Int findID = {};
-	findID = Vector2Int(id.x + 1, id.y);
-	if (partsMapping_.contains(findID)) {
-		adjoinParts.push_back(partsMapping_.find(findID)->second);
-	}
-	findID = Vector2Int(id.x - 1, id.y);
-	if (partsMapping_.contains(findID)) {
-		adjoinParts.push_back(partsMapping_.find(findID)->second);
-	}
-	findID = Vector2Int(id.x, id.y + 1);
-	if (partsMapping_.contains(findID)) {
-		adjoinParts.push_back(partsMapping_.find(findID)->second);
-	}
-	findID = Vector2Int(id.x, id.y - 1);
-	if (partsMapping_.contains(findID)) {
-		adjoinParts.push_back(partsMapping_.find(findID)->second);
-	}
-	// 最小深度値
-	int minDepth = 100;
-	// 一個しかなければ
-	bool isOne = adjoinParts.size();
-	// 子・親の登録
-	for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
-		// 数による処理別
-		if (isOne) {
-			// 数が一つかつそれがコアである場合
-			if ((*it)->GetClassNameString() == "VehicleCore") {
-				parts->GetConnector()->AddParents(*it);
-				parts->GetConnector()->SetDepth(1);
-				break;
-			}
 
-			// コアでない場合（親登録＋深度値を親＋１で決定）
-			parts->GetConnector()->AddParents(*it);
-			parts->GetConnector()->SetDepth((*it)->GetConnector()->GetDepth() + 1);
-			break;
-		}
+	// マッピング関係のリフレッシュ
+	RefrashGridSize();
+	RefrashDepthsFromCore();
+	RefrashPartsConnector();
 
-		// コアなら親として登録のみ行う
-		if ((*it)->GetClassNameString() == "VehicleCore") {
-			parts->GetConnector()->AddParents(*it);
-			continue;
-		}
-		// 最小の設定
-		if (minDepth > (*it)->GetConnector()->GetDepth()) {
-			minDepth = (*it)->GetConnector()->GetDepth();
-		}
-	}
-	// 一個しかなければ早期
-	if (isOne) {
-		return;
-	}
+	//// 隣接検索
+	//std::list<Car::IParts*> adjoinParts;
+	//Vector2Int findID = {};
+	//findID = Vector2Int(id.x + 1, id.y);
+	//if (partsMapping_.contains(findID)) {
+	//	adjoinParts.push_back(partsMapping_.find(findID)->second);
+	//}
+	//findID = Vector2Int(id.x - 1, id.y);
+	//if (partsMapping_.contains(findID)) {
+	//	adjoinParts.push_back(partsMapping_.find(findID)->second);
+	//}
+	//findID = Vector2Int(id.x, id.y + 1);
+	//if (partsMapping_.contains(findID)) {
+	//	adjoinParts.push_back(partsMapping_.find(findID)->second);
+	//}
+	//findID = Vector2Int(id.x, id.y - 1);
+	//if (partsMapping_.contains(findID)) {
+	//	adjoinParts.push_back(partsMapping_.find(findID)->second);
+	//}
+	//// 最小深度値
+	//int minDepth = 100;
+	//// 一個しかなければ
+	//bool isOne = adjoinParts.size();
+	//// 子・親の登録
+	//for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
+	//	// 数による処理別
+	//	if (isOne) {
+	//		// 数が一つかつそれがコアである場合
+	//		if ((*it)->GetClassNameString() == "VehicleCore") {
+	//			parts->GetConnector()->AddParents(*it);
+	//			parts->GetConnector()->SetDepth(1);
+	//			break;
+	//		}
 
-	// 深度設定
-	parts->GetConnector()->SetDepth(minDepth);
+	//		// コアでない場合（親登録＋深度値を親＋１で決定）
+	//		parts->GetConnector()->AddParents(*it);
+	//		parts->GetConnector()->SetDepth((*it)->GetConnector()->GetDepth() + 1);
+	//		break;
+	//	}
 
-	for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
-		// コアなら親として登録のみ行う
-		if ((*it)->GetClassNameString() == "VehicleCore") {
-			parts->GetConnector()->AddParents(*it);
-			continue;
-		}
-		// 対象の深度値
-		int32_t targetDepth = parts->GetConnector()->GetDepth();
-		// 子に追加
-		if (parts->GetConnector()->GetDepth() < targetDepth) {
-			parts->GetConnector()->AddChildren(*it);
-			(*it)->GetConnector()->AddParents(parts);
-		}
-		// 親に追加
-		else if (parts->GetConnector()->GetDepth() > targetDepth) {
-			parts->GetConnector()->AddParents(*it);
-			// 子に設定
-			(*it)->GetConnector()->AddChildren(parts);
-		}
-	}
+	//	// コアなら親として登録のみ行う
+	//	if ((*it)->GetClassNameString() == "VehicleCore") {
+	//		parts->GetConnector()->AddParents(*it);
+	//		continue;
+	//	}
+	//	// 最小の設定
+	//	if (minDepth > (*it)->GetConnector()->GetDepth()) {
+	//		minDepth = (*it)->GetConnector()->GetDepth();
+	//	}
+	//}
+	//// 一個しかなければ早期
+	//if (isOne) {
+	//	return;
+	//}
+
+	//// 深度設定
+	//parts->GetConnector()->SetDepth(minDepth);
+
+	//for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
+	//	// コアなら親として登録のみ行う
+	//	if ((*it)->GetClassNameString() == "VehicleCore") {
+	//		parts->GetConnector()->AddParents(*it);
+	//		continue;
+	//	}
+	//	// 対象の深度値
+	//	int32_t targetDepth = parts->GetConnector()->GetDepth();
+	//	// 子に追加
+	//	if (parts->GetConnector()->GetDepth() < targetDepth) {
+	//		parts->GetConnector()->AddChildren(*it);
+	//		(*it)->GetConnector()->AddParents(parts);
+	//	}
+	//	// 親に追加
+	//	else if (parts->GetConnector()->GetDepth() > targetDepth) {
+	//		parts->GetConnector()->AddParents(*it);
+	//		// 子に設定
+	//		(*it)->GetConnector()->AddChildren(parts);
+	//	}
+	//}
 }
 
 void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts* parts)
@@ -608,8 +619,11 @@ void VehicleConstructionSystem::DetachCommon(std::map<Vector2Int, Car::IParts*>:
 	(*it).second->GetHPHandler()->Initialize();
 	// リストから外す
 	it = partsMapping_.erase(it);
-	// グリッドリフレッシュ
+	// マッピング関係のリフレッシュ
 	RefrashGridSize();
+	RefrashDepthsFromCore();
+	RefrashPartsConnector();
+
 	// 空いてる場所更新
 	emptyMap_ = VehicleCaluclator::GetEmptyList(&partsMapping_);
 }
