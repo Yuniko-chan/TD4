@@ -30,7 +30,7 @@ private: // メンバ定数
 	static const uint32_t kObjectsThatCanBeRegisteredMax_ = 64;
 	
 	// 衝突するポリゴンの上限
-	static const uint32_t kCollisionPolygonMax_ = 1024;
+	static const uint32_t kCollisionPolygonMax_ = 4096;
 	
 	/// <summary>
 	///	オブジェクトデータ(現在OBB)
@@ -119,6 +119,18 @@ public: // メンバ関数
 	void SetCourse(Course* course);
 
 	/// <summary>
+	/// カスタムエリア設定
+	/// </summary>
+	/// <param name="customArea">カスタムエリア</param>
+	void SetCustomArea(CustomArea* customArea);
+
+	/// <summary>
+	/// ギミック設定
+	/// </summary>
+	/// <param name="obb">ギミックOBB</param>
+	void SetGimmick(OBB* obb);
+
+	/// <summary>
 	/// コースクリア
 	/// </summary>
 	void ClearCorse();
@@ -177,7 +189,10 @@ private: // メンバ変数
 	Buffers buffers_[kObjectsThatCanBeRegisteredMax_];
 
 	// エリア
-	std::vector<CoursePolygon> polygons_;
+	std::array<CoursePolygon, kCollisionPolygonMax_> polygons_;
+
+	// ポリゴン登録番号
+	uint32_t polygonRegistrationNumber_;
 
 	// 現在確認しているオブジェクトが何番目か
 	uint32_t collisionCheakNum_;

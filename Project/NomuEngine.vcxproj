@@ -161,6 +161,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Camera\GameCameraManager.cpp" />
     <ClCompile Include="Application\Camera\OverheadCamera.cpp" />
     <ClCompile Include="Application\Camera\Transition\TransitionCameraModule.cpp" />
+    <ClCompile Include="Application\ClearSceneObject\CourseTraversalRank.cpp" />
+    <ClCompile Include="Application\ClearSceneObject\CourseTraversalSystem.cpp" />
     <ClCompile Include="Application\ClothDemo\ClothDemo.cpp" />
     <ClCompile Include="Application\ClothDemo\CollisionObject\ClothDemoCapsule.cpp" />
     <ClCompile Include="Application\ClothDemo\CollisionObject\ClothDemoObject.cpp" />
@@ -269,6 +271,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\3D\Fog\FogManager.cpp" />
     <ClCompile Include="Engine\3D\ManyObjects\LargeNumberOfObjects.cpp" />
     <ClCompile Include="Engine\3D\Model\BaseInstancingDrawing.cpp" />
+    <ClCompile Include="Engine\3D\Model\BaseInstancingDrawingAnimation.cpp" />
     <ClCompile Include="Engine\3D\Model\Mesh.cpp" />
     <ClCompile Include="Engine\3D\Model\ModelDraw.cpp" />
     <ClCompile Include="Engine\3D\Model\ModelLoaderFromCourseEX.cpp" />
@@ -407,6 +410,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Camera\GameCameraManager.h" />
     <ClInclude Include="Application\Camera\OverheadCamera.h" />
     <ClInclude Include="Application\Camera\Transition\TransitionCameraModule.h" />
+    <ClInclude Include="Application\ClearSceneObject\CourseTraversalRank.h" />
+    <ClInclude Include="Application\ClearSceneObject\CourseTraversalSystem.h" />
     <ClInclude Include="Application\ClothDemo\ClothDemo.h" />
     <ClInclude Include="Application\ClothDemo\CollisionObject\ClothDemoCapsule.h" />
     <ClInclude Include="Application\ClothDemo\CollisionObject\ClothDemoObject.h" />
@@ -552,6 +557,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\2D\SpriteForGPU.h" />
     <ClInclude Include="Engine\2D\SpriteVertex.h" />
     <ClInclude Include="Engine\3D\Model\BaseInstancingDrawing.h" />
+    <ClInclude Include="Engine\3D\Model\BaseInstancingDrawingAnimation.h" />
     <ClInclude Include="Engine\3D\Vertex\ColorVertexData.h" />
     <ClInclude Include="Engine\3D\Line\DrawLine.h" />
     <ClInclude Include="Engine\3D\Fog\FogData.h" />

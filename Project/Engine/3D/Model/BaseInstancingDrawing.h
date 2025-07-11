@@ -4,6 +4,7 @@
 #include "InstancingDrawingData.h"
 #include <list>
 #include "../../Object/MeshObject.h"
+#include "BaseInstancingDrawingAnimation.h"
 
 /// <summary>
 /// インスタンシング描画
@@ -29,6 +30,11 @@ public: // 関数
 	/// 初期化
 	/// </summary>
 	virtual void Initialize();
+
+	/// <summary>
+	/// 更新
+	/// </summary>
+	virtual void Update();
 
 	/// <summary>
 	/// クリア
@@ -58,6 +64,13 @@ public: // 関数
 	/// <param name="localMatrixManager">ローカル行列マネージャー</param>
 	void SetLocalMatrixManager(const std::string& fileName, LocalMatrixManager* localMatrixManager);
 
+	/// <summary>
+	/// アニメーション番号設定
+	/// </summary>
+	/// <param name="animationNum">アニメーション番号</param>
+	/// <param name="vectorNum">ベクターの番号</param>
+	void SetAnimationNums(uint32_t animationNum, uint32_t vectorNum);
+
 protected: // 変数
 
 	// モデルデータ最大数
@@ -71,6 +84,12 @@ protected: // 変数
 
 	// ワールドトランスフォームの保存回数
 	std::vector<size_t> instancingDrawingTransformationMatrixNum_;
+
+	// アニメーション
+	std::vector<std::unique_ptr<BaseInstancingDrawingAnimation>> animations_;
+
+	// アニメーション番号
+	std::vector<uint32_t> animationNums_;
 
 };
 

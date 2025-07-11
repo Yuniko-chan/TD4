@@ -10,6 +10,7 @@
 #include "../Object/Player/Player.h"
 #include "../Object/Car/CarLists.h"
 #include "../Object/Player/State/User/PlayerInVehicleState.h"
+#include "../Object/CustomArea/CustomArea.h"
 #include <typeinfo>
 
 // 衝突するオブジェクトキーワード
@@ -41,6 +42,18 @@ void CourseCollisionSystem::Initialize()
 
 	// テクスチャハンドル
 	roadAttributeTextureHandle_ = TextureManager::Load("Resources/Course/course.png", dxCommon_);
+
+	// ポリゴン登録番号
+	polygonRegistrationNumber_ = 0;
+
+	// ポリゴン
+	for (size_t i = 0; i < kCollisionPolygonMax_; ++i) {
+		polygons_[i].position0 = { 0.0f,-10000.0f,0.0f };
+		polygons_[i].position1 = { 0.0f,-10000.0f,0.0f };
+		polygons_[i].position2 = { 0.0f,-10000.0f,0.0f };
+		polygons_[i].normal = { 0.0f,0.0f,1.0f };
+		polygons_[i].texcoord = { 0.0f,0.0f };
+	}
 
 }
 
@@ -220,9 +233,6 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 void CourseCollisionSystem::SetCourse(Course* course)
 {
 
-	// コース中心のワールド座標
-	Vector3 worldPosition = course->GetWorldTransformAdress()->GetWorldPosition();
-
 	// コースメッシュ分回す
 	std::vector<CoursePolygon>* polygons = course->GetCoursePolygonsAdress();
 	for (uint32_t i = 0; i < polygons->size(); ++i) {
@@ -236,7 +246,185 @@ void CourseCollisionSystem::SetCourse(Course* course)
 		polygon.position2 = Matrix4x4::Transform(polygon.position2, course->GetWorldTransformAdress()->worldMatrix_);
 
 		// 登録
-		polygons_.push_back(polygon);
+		polygons_[polygonRegistrationNumber_] = polygon;
+		polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
+
+	}
+
+}
+
+void CourseCollisionSystem::SetCustomArea(CustomArea* customArea)
+{
+
+	// ポリゴン
+	CoursePolygon polygon = {};
+	polygon.normal = { 0.0f,0.0f,1.0f };
+	polygon.texcoord = { 0.0f,0.0f };
+
+	// 高さ
+	const float kHeight = 0.25f;
+	// 幅
+	const float kWidth = 20.0f;
+	
+	polygon.position0 = { -kWidth, kHeight, -kWidth };
+	polygon.position1 = { -kWidth, kHeight, kWidth };
+	polygon.position2 = { kWidth, kHeight, kWidth };
+
+	// コース中心のワールド座標をプラス
+	polygon.position0 = Matrix4x4::Transform(polygon.position0, customArea->GetWorldTransformAdress()->worldMatrix_);
+	polygon.position1 = Matrix4x4::Transform(polygon.position1, customArea->GetWorldTransformAdress()->worldMatrix_);
+	polygon.position2 = Matrix4x4::Transform(polygon.position2, customArea->GetWorldTransformAdress()->worldMatrix_);
+
+	// 登録
+	polygons_[polygonRegistrationNumber_] = polygon;
+	polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
+
+	polygon.position0 = { -kWidth, kHeight, -kWidth };
+	polygon.position1 = { kWidth, kHeight, kWidth };
+	polygon.position2 = { kWidth, kHeight, -kWidth };
+
+	// コース中心のワールド座標をプラス
+	polygon.position0 = Matrix4x4::Transform(polygon.position0, customArea->GetWorldTransformAdress()->worldMatrix_);
+	polygon.position1 = Matrix4x4::Transform(polygon.position1, customArea->GetWorldTransformAdress()->worldMatrix_);
+	polygon.position2 = Matrix4x4::Transform(polygon.position2, customArea->GetWorldTransformAdress()->worldMatrix_);
+
+	// 登録
+	polygons_[polygonRegistrationNumber_] = polygon;
+	polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
+
+}
+
+void CourseCollisionSystem::SetGimmick(OBB* obb)
+{
+
+	// ポリゴン
+	CoursePolygon polygon = {};
+	polygon.normal = { 0.0f,0.0f,1.0f };
+	polygon.texcoord = { 1.0f, 1.0f };
+	
+	// OBB平面作成
+	Vector3 otientatuonX = obb->otientatuons_[0];
+	Vector3 otientatuonY = obb->otientatuons_[1];
+	Vector3 otientatuonZ = obb->otientatuons_[2];
+
+
+	Vector3 size = obb->size_;
+	Vector3 center = obb->center_;
+
+	// 頂点求める
+	Vector3 vertices[8];
+
+	// 左 上 前
+	vertices[0] = {
+		(-size.x * otientatuonX.x + size.y * otientatuonY.x + -size.z * otientatuonZ.x),
+		(-size.x * otientatuonX.y + size.y * otientatuonY.y + -size.z * otientatuonZ.y),
+		(-size.x * otientatuonX.z + size.y * otientatuonY.z + -size.z * otientatuonZ.z)
+	};
+
+	// 左 上 後
+	vertices[1] = {
+		(-size.x * otientatuonX.x + size.y * otientatuonY.x + size.z * otientatuonZ.x),
+		(-size.x * otientatuonX.y + size.y * otientatuonY.y + size.z * otientatuonZ.y),
+		(-size.x * otientatuonX.z + size.y * otientatuonY.z + size.z * otientatuonZ.z)
+	};
+
+	// 右 上 前
+	vertices[2] = {
+		(size.x * otientatuonX.x + size.y * otientatuonY.x + -size.z * otientatuonZ.x),
+		(size.x * otientatuonX.y + size.y * otientatuonY.y + -size.z * otientatuonZ.y),
+		(size.x * otientatuonX.z + size.y * otientatuonY.z + -size.z * otientatuonZ.z)
+	};
+
+	// 右 上 後
+	vertices[3] = {
+		(size.x * otientatuonX.x + size.y * otientatuonY.x + size.z * otientatuonZ.x),
+		(size.x * otientatuonX.y + size.y * otientatuonY.y + size.z * otientatuonZ.y),
+		(size.x * otientatuonX.z + size.y * otientatuonY.z + size.z * otientatuonZ.z)
+	};
+
+	// 左 下 前
+	vertices[4] = {
+		(-size.x * otientatuonX.x + -size.y * otientatuonY.x + -size.z * otientatuonZ.x),
+		(-size.x * otientatuonX.y + -size.y * otientatuonY.y + -size.z * otientatuonZ.y),
+		(-size.x * otientatuonX.z + -size.y * otientatuonY.z + -size.z * otientatuonZ.z)
+	};
+
+	// 左 下 後
+	vertices[5] = {
+		(-size.x * otientatuonX.x + -size.y * otientatuonY.x + size.z * otientatuonZ.x),
+		(-size.x * otientatuonX.y + -size.y * otientatuonY.y + size.z * otientatuonZ.y),
+		(-size.x * otientatuonX.z + -size.y * otientatuonY.z + size.z * otientatuonZ.z)
+	};
+
+	// 右 下 前
+	vertices[6] = {
+		(size.x * otientatuonX.x + -size.y * otientatuonY.x + -size.z * otientatuonZ.x),
+		(size.x * otientatuonX.y + -size.y * otientatuonY.y + -size.z * otientatuonZ.y),
+		(size.x * otientatuonX.z + -size.y * otientatuonY.z + -size.z * otientatuonZ.z)
+	};
+
+	// 右 下 後
+	vertices[7] = {
+		(size.x * otientatuonX.x + -size.y * otientatuonY.x + size.z * otientatuonZ.x),
+		(size.x * otientatuonX.y + -size.y * otientatuonY.y + size.z * otientatuonZ.y),
+		(size.x * otientatuonX.z + -size.y * otientatuonY.z + size.z * otientatuonZ.z)
+	};
+
+	for (size_t i = 0; i < 8; ++i) {
+		vertices[i] += center;
+	}
+
+	Vector3 planeVertices[4][4];
+
+	// 前
+	planeVertices[0][0] = vertices[4];
+	planeVertices[0][1] = vertices[0];
+	planeVertices[0][2] = vertices[6];
+	planeVertices[0][3] = vertices[2];
+
+	// 後
+	planeVertices[1][0] = vertices[7];
+	planeVertices[1][1] = vertices[3];
+	planeVertices[1][2] = vertices[5];
+	planeVertices[1][3] = vertices[1];
+
+	// 右
+	planeVertices[2][0] = vertices[6];
+	planeVertices[2][1] = vertices[2];
+	planeVertices[2][2] = vertices[7];
+	planeVertices[2][3] = vertices[3];
+
+	// 左
+	planeVertices[3][0] = vertices[5];
+	planeVertices[3][1] = vertices[1];
+	planeVertices[3][2] = vertices[4];
+	planeVertices[3][3] = vertices[0];
+
+	for (uint32_t i = 0; i < 4; ++i) {
+	
+		// 法線
+		Vector3 v01 = planeVertices[i][1] - planeVertices[i][0];
+		Vector3 v12 = planeVertices[i][2] - planeVertices[i][1];
+		Vector3 v20 = planeVertices[i][0] - planeVertices[i][2];
+
+		// 法線
+		polygon.normal = Vector3::Normalize(Vector3::Cross(v01, v12));
+	
+		polygon.position0 = planeVertices[i][0];
+		polygon.position1 = planeVertices[i][1];
+		polygon.position2 = planeVertices[i][3];
+		
+		// 登録
+		polygons_[polygonRegistrationNumber_] = polygon;
+		polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
+
+		polygon.position0 = planeVertices[i][0];
+		polygon.position1 = planeVertices[i][3];
+		polygon.position2 = planeVertices[i][2];
+
+		// 登録
+		polygons_[polygonRegistrationNumber_] = polygon;
+		polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
 
 	}
 
@@ -246,7 +434,7 @@ void CourseCollisionSystem::ClearCorse()
 {
 
 	// ポリゴンをクリアする
-	polygons_.clear();
+	//polygons_.clear();
 
 }
 

@@ -22,7 +22,7 @@ void GameSceneInstancingDrawing::Initialize()
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/Cannon/", "Cannon.obj"}, false}); // 大砲
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/IronBall/", "IronBall.obj"}, false}); // 鉄球
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/IronBall/", "Rope.obj"}, false}); // 鉄球紐
-	//modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/Gatling/", "Gatling.gltf"}, false}); // ミニガン
+	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/Gatling/", "Gatling.gltf"}, true}); // ミニガン
 
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/defult", "ball.obj"}, false}); // ball
 
@@ -120,7 +120,7 @@ void GameSceneInstancingDrawing::MinigunVer(MeshObject* meshObject, const Matrix
 void GameSceneInstancingDrawing::RopeRegistrationConfirmation(WorldTransform* worldTransform, const MaterialData& materialData, const Matrix4x4& viewProjectionMatrix)
 {
 
-	const size_t kRopeNum = 5;
+	const size_t kRopeNum = 8;
 
 	// トランスフォーム マップ
 	instancingDrawingDatas_[kRopeNum].transformMap[instancingDrawingTransformationMatrixNum_[kRopeNum]].WVP = worldTransform->worldMatrix_ * viewProjectionMatrix;
