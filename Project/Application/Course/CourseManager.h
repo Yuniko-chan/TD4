@@ -44,6 +44,8 @@ public:
 
 	void Update();
 
+	void AddCourse();
+
 	std::array<Course*, kCourseNum>& GetCourseList() { return courseList_[0]; };
 	std::array<Course*, kCourseNum>& GetCourseList(size_t group) { return courseList_[group]; };
 
