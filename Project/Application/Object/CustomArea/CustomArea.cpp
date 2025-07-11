@@ -1,6 +1,9 @@
 #include "CustomArea.h"
 #include "../../Collider/CollisionConfig.h"
 #include "../../../Engine/Math/DeltaTime.h"
+#include "../../Course/CourseManager.h"
+#include "../Car/VehicleCore.h"
+
 
 CustomArea::CustomArea()
 {
@@ -26,6 +29,11 @@ void CustomArea::Initialize(LevelData::MeshData* data)
 void CustomArea::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
     colliderPartner, collisionData;
+    if (!isTouchPlayer_ && std::holds_alternative<VehicleCore*>(colliderPartner)) {
+        //チェックポイント通過処理
+        isTouchPlayer_ = true;
+        courseManager_->AddCourse();
+    }
 }
 
 void CustomArea::CollisionListRegister(BaseCollisionManager* collisionManager)

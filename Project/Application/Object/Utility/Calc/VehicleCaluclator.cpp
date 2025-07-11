@@ -93,12 +93,12 @@ Vector3 VehicleCaluclator::GetIDToWorldPosition(const Vector2Int& id, WorldTrans
     return Vector3(result);
 }
 
-Vector3 VehicleCaluclator::GetEmptyToNearPoint(std::vector<std::pair<Vector2Int, Vector3>>* emptyList, const Vector3& position)
+Vector3 VehicleCaluclator::GetEmptyToNearPoint(std::vector<MappingKey>* emptyList, const Vector3& position)
 {
     Vector3 result = {};
     float distance = FLT_MAX;
     // 最短距離の物を検索
-    for (std::vector<std::pair<Vector2Int, Vector3>>::iterator it = emptyList->begin();
+    for (std::vector<MappingKey>::iterator it = emptyList->begin();
         it != emptyList->end(); ++it) {
         float emptyToPosition = TransformHelper::Vector3Distance((*it).second, position);
         if (distance > emptyToPosition) {
@@ -110,12 +110,12 @@ Vector3 VehicleCaluclator::GetEmptyToNearPoint(std::vector<std::pair<Vector2Int,
     return Vector3(result);
 }
 
-std::pair<Vector2Int, Vector3> VehicleCaluclator::GetEmptyToNearPoint(std::vector<std::pair<Vector2Int, Vector3>>* emptyList, const Vector3& position, const Vector3& front)
+MappingKey VehicleCaluclator::GetEmptyToNearPoint(std::vector<MappingKey>* emptyList, const Vector3& position, const Vector3& front)
 {
-    std::pair<Vector2Int, Vector3> result = {};
+    MappingKey result = {};
     float distance = FLT_MAX;
     // 最短距離の物を検索
-    for (std::vector<std::pair<Vector2Int, Vector3>>::iterator it = emptyList->begin();
+    for (std::vector<MappingKey>::iterator it = emptyList->begin();
         it != emptyList->end(); ++it) {
         // 距離
         float emptyToPosition = TransformHelper::Vector3Distance((*it).second, position);
@@ -136,7 +136,7 @@ std::pair<Vector2Int, Vector3> VehicleCaluclator::GetEmptyToNearPoint(std::vecto
         return result;
     }
 
-    return std::pair<Vector2Int, Vector3>(result);
+    return MappingKey(result);
 }
 
 bool VehicleCaluclator::FrontCheck(const Vector3& direct, const Vector3& front, float threshold)
@@ -148,6 +148,17 @@ bool VehicleCaluclator::FrontCheck(const Vector3& direct, const Vector3& front, 
     float dot = Vector3::Dot(Vector3::Normalize(front), targetDirect);
     // リザルト
     return (dot >= threshold) ? true : false;
+}
+
+float VehicleCaluclator::BlurStrengthFactor(DriveSystem* driveSystem, float blurSpeed, float blurMaxSpeed)
+{
+    float factor = 0.0f;
+    float driveSpeed = driveSystem->GetVelocity().z;
+
+    // 係数計算
+    factor = std::clamp((driveSpeed - blurSpeed), 0.0f, (blurMaxSpeed - blurSpeed)) / (blurMaxSpeed - blurSpeed);
+
+    return float(factor);
 }
 
 std::vector<Vector2Int> VehicleCaluclator::PushLists(std::vector<Vector2Int> list, Vector2Int key)

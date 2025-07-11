@@ -83,8 +83,8 @@ void GameScene::Initialize() {
 	postEffectSystem_ = std::make_unique<PostEffectSystem>();
 	postEffectSystem_->Initialize();
 	postEffectSystem_->SetRenderTargetTexture(renderTargetTexture_);
-	postEffectSystem_->SetDriveEngine(
-		reinterpret_cast<VehicleCore*>(objectManager_->GetObjectPointer("initCore"))->GetDriveSystem()->GetDriveEngine());
+	postEffectSystem_->SetDriveSystem(
+		reinterpret_cast<VehicleCore*>(objectManager_->GetObjectPointer("initCore"))->GetDriveSystem());
 	postEffectSystem_->SetPlayer(reinterpret_cast<Player*>(objectManager_->GetObjectPointer("Player")));
 
 	// コース
@@ -134,6 +134,9 @@ void GameScene::Update() {
 
 	// パラメータ
 	parameterManager_->Update();
+
+
+	courseManager_->Update();
 
 	//光源
 	directionalLight_->Update(directionalLightData_);
@@ -316,6 +319,9 @@ void GameScene::CourseInitialize()
 	//コース生成システム
 	courseManager_ = std::make_unique<CourseManager>();
 	courseManager_->Initialize(static_cast<GameSceneObjectManager*>(objectManager_.get()));
+	courseManager_->SetAddCourseFunction(std::bind(&GameScene::AddCourse,this));
+	courseManager_->SetPlayer(reinterpret_cast<MeshObject*>(objectManager_->GetObjectPointer("Player")));
+
 
 	// コースデバッグ描画
 	courseDebugDraw_ = std::make_unique<CourseDebugDraw>();

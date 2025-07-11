@@ -35,12 +35,14 @@ public:
 	void HeatDamage(float damage = 1.0f);
 
 	float GetHP() { return hp_; }
+	// 爆発処理用
+	bool IsDead();
 private:
 	
 	int16_t maxHP_ = 0;
 	float hp_ = 0;
 	bool isInvisible_ = false;
-
+	bool isDead_ = false;
 	float invisibleCooltime_ = 0.0f;
 
 };

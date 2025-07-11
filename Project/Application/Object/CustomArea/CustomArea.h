@@ -1,6 +1,8 @@
 #pragma once
 #include "../../../Engine/Object/MeshObject.h"
 
+class CourseManager;
+
 /// <summary>
 /// カスタムエリア
 /// </summary>
@@ -47,6 +49,8 @@ public: // 関数
     /// <param name="colliderDebugDraw">衝突デバッグ描画</param>
     void CollisionListRegister(BaseCollisionManager* collisionManager, ColliderDebugDraw* colliderDebugDraw);
 
+    void SetCourseManager(CourseManager* manager) { courseManager_ = manager; };
+
 private: // 関数
 
     /// <summary>
@@ -59,5 +63,9 @@ private: // 変数
 
     bool isVisible_ = false;
 
+    //プレイヤーが一度でも触れたかどうか
+    bool isTouchPlayer_ = false;
+
+    CourseManager* courseManager_ = nullptr;
 };
 

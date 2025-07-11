@@ -32,6 +32,7 @@ static const std::array<Vector3, kPickupPointCount_> kPickupPointOffset = {
 static const std::array<std::string, kPickupPointCount_> kPickupPointDirectlyList = { "Engine","Tire","Frame" };
 static const std::array<std::string, kPickupPointCount_> kPickupPointFileList = { "engine.obj","tire.obj","frame.obj" };
 
+static const float kAddCourseBorder = 200;
 
 class CourseManager
 {
@@ -41,11 +42,18 @@ public:
 
 	void Initialize(GameSceneObjectManager* objectManager);
 
+	void Update();
+
+	void AddCourse();
+
 	std::array<Course*, kCourseNum>& GetCourseList() { return courseList_[0]; };
 	std::array<Course*, kCourseNum>& GetCourseList(size_t group) { return courseList_[group]; };
 
 	//コースグループ一個分増やす
 	size_t AddCourseGroup();
+
+	void SetAddCourseFunction(std::function<void(void)> function);
+	void SetPlayer(MeshObject* object) { player_ = object; };
 
 private:
 	std::array<CourseImportData, kCourseFileCount> courseDatas_;
@@ -55,6 +63,7 @@ private:
 	bool isPlaced_[kCourseNum] = { false };
 
 	size_t nowGroup_;
+	size_t createdGroup_;
 	std::vector<std::array<Course*, kCourseNum>> courseList_;
 
 	//std::array<std::function<int(int)>,kCourseNum> placeOnce_;
@@ -75,4 +84,7 @@ private:
 	//カスタマイズエリア生成
 	void CreateCustomizeArea(size_t group);
 	void CreatePickUpPoint(const Vector3& center, size_t num, size_t group);
+
+	std::function<void(void)> addCourseToGameScene_;
+	MeshObject* player_;
 };

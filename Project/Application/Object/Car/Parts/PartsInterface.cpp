@@ -62,7 +62,9 @@ void Car::IParts::ReleaseParent()
 	// コアの解除
 	parentCore_ = nullptr;
 	// コネクターのリセット
-	connector_->Reset();
+	if (connector_) {
+		connector_->Reset();
+	}
 }
 
 void Car::IParts::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
@@ -71,6 +73,15 @@ void Car::IParts::OnCollision(ColliderParentObject colliderPartner, const Collis
 	collisionData;
 	PartCollisionHandler::Execute(this, colliderPartner);
 
+}
+
+void Car::IParts::OnDetach()
+{
+	// トランスフォームの更新
+	worldTransform_.direction_ = Vector3::Normalize(worldTransform_.direction_);
+	worldTransform_.UpdateMatrix();
+	// コライダーの更新
+	ColliderUpdate();
 }
 
 void Car::IParts::TransformParent()
@@ -190,7 +201,12 @@ void Car::IParts::ChildUpdate()
 	if (IsParent()) {
 		// 親がある場合コネクターの更新を入れる
 		connector_->Update();
+		worldTransform_.transform_.scale = Vector3(1.0f, 1.0f, 1.0f);
 		return;
+	}
+	else {
+		// スケールを小さくしてる
+		worldTransform_.transform_.scale = Vector3(0.75f, 0.75f, 0.75f);
 	}
 	// 仮の地面処理（後で消す）
 	if (worldTransform_.GetWorldPosition().y <= 0.0f) {
