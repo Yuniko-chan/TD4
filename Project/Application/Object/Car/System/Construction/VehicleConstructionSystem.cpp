@@ -226,7 +226,7 @@ void VehicleConstructionSystem::Detach(std::map<Vector2Int, Car::IParts*>::itera
 		return;
 	}
 	if ((*it).second->GetClassNameString() == "EngineParts") {
-		if ((*it).second->GetIsDelete()) {
+		if ((*it).second->GetHPHandler()->IsDead()) {
 			// 爆破解除
 			BombUnRegistParts((*it).first, (*it).second);
 			// 共通

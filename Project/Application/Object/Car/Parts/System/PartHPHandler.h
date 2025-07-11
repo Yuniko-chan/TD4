@@ -35,6 +35,8 @@ public:
 	void HeatDamage(float damage = 1.0f);
 
 	float GetHP() { return hp_; }
+	// 爆発処理用
+	bool IsDead();
 private:
 	
 	int16_t maxHP_ = 0;

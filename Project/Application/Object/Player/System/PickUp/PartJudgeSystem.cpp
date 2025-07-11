@@ -41,7 +41,7 @@ Car::IParts* PartJudgeSystem::GetCatchPart(VehiclePartsManager* partManager, Pic
 	// コア
 	if (isCore) {
 		data.object = nearCore;
-		data.type = Type::Core;
+		data.type = PartCondition::Core;
 		data.distance = TransformHelper::Vector3Distance(worldPosition,
 			nearCore->GetWorldTransformAdress()->GetWorldPosition());
 		objects_.push_back(data);
@@ -49,7 +49,7 @@ Car::IParts* PartJudgeSystem::GetCatchPart(VehiclePartsManager* partManager, Pic
 	// 拾う場所
 	if (isPoint) {
 		data.object = nearPoint;
-		data.type = Type::PickupPoint;
+		data.type = PartCondition::PickupPoint;
 		data.distance = TransformHelper::Vector3Distance(worldPosition,
 			nearPoint->GetWorldTransformAdress()->GetWorldPosition());
 		objects_.push_back(data);
@@ -57,7 +57,7 @@ Car::IParts* PartJudgeSystem::GetCatchPart(VehiclePartsManager* partManager, Pic
 	// 落ちてるパーツ
 	if (isParts) {
 		data.object = nearParts;
-		data.type = Type::Dropped;
+		data.type = PartCondition::Dropped;
 		data.distance = TransformHelper::Vector3Distance(worldPosition,
 			nearParts->GetWorldTransformAdress()->GetWorldPosition());
 		objects_.push_back(data);
@@ -67,7 +67,7 @@ Car::IParts* PartJudgeSystem::GetCatchPart(VehiclePartsManager* partManager, Pic
 		data.object = nearDockingPart;
 		data.distance = TransformHelper::Vector3Distance(worldPosition,
 			nearDockingPart->GetWorldTransformAdress()->GetWorldPosition());
-		data.type = Type::Docked;
+		data.type = PartCondition::Docked;
 		objects_.push_back(data);
 	}
 
@@ -121,20 +121,20 @@ Car::IParts* PartJudgeSystem::GetCatchPart(PickupPointManager* pointManager, Con
 	// 種類ごとの処理
 	switch (data.type)
 	{
-	case Type::Dropped:	// 落ちてる
+	case PartCondition::Dropped:	// 落ちてる
 		result = static_cast<Car::IParts*>(data.object);
 		break;
 
-	case Type::Docked:	// 外れる
+	case PartCondition::Docked:	// 外れる
 		result = static_cast<Car::IParts*>(data.object);
 		owner_->GetCore()->GetConstructionSystem()->Detach(result);
 		break;
 
-	case Type::Core:	// コア落ちてる
+	case PartCondition::Core:	// コア落ちてる
 		result = static_cast<Car::IParts*>(data.object);
 		break;
 
-	case Type::PickupPoint:	// 拾う
+	case PartCondition::PickupPoint:	// 拾う
 		if (!pointManager->IsAccept(worldPosition)) {
 			return nullptr;
 		}

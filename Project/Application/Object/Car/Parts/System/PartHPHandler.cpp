@@ -30,7 +30,7 @@ void PartHPHandler::Update()
 	if (hp_ <= 0) {
 		// 解除フラグ
 		owner_->SetIsDelete(true);
-		//owner_->SetIsDead(true);
+		isDead_ = true;
 	}
 
 	// 無敵経過
@@ -83,4 +83,9 @@ void PartHPHandler::HeatDamage(float damage)
 	if (hp_ < 0) {
 		hp_ = 0;
 	}
+}
+
+bool PartHPHandler::IsDead()
+{
+	return owner_->GetIsDelete() && isDead_;
 }

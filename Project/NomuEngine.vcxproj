@@ -204,6 +204,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Player\System\PickUp\BaseInteractionVisualizer.cpp" />
     <ClCompile Include="Application\Object\Player\System\PickUp\PartJudgeSystem.cpp" />
     <ClCompile Include="Application\Object\Player\System\PickUp\AttachVisualizer.cpp" />
+    <ClCompile Include="Application\Object\Player\System\PickUp\PickupVisualizer.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\CameraHelper.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp" />
     <ClCompile Include="Application\Object\Car\System\Drive\DriveEngine.cpp" />
@@ -455,6 +456,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Player\System\PickUp\BaseInteractionVisualizer.h" />
     <ClInclude Include="Application\Object\Player\System\PickUp\AttachVisualizer.h" />
     <ClInclude Include="Application\Object\Player\System\PickUp\PartJudgeSystem.h" />
+    <ClInclude Include="Application\Object\Player\System\PickUp\PickupVisualizer.h" />
     <ClInclude Include="Application\Object\Utility\Calc\CameraHelper.h" />
     <ClInclude Include="Application\Object\Utility\Calc\VehicleCaluclator.h" />
     <ClInclude Include="Application\Object\Car\System\Drive\DriveEngine.h" />
