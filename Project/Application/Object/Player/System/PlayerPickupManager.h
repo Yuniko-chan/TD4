@@ -4,7 +4,7 @@
 #include "../../Utility/Timer/FrameTimer.h"
 #include "../../Utility/Math/Vector2Int.h"
 #include "PickUp/PartJudgeSystem.h"
-#include "PickUp/PickupVisualizer.h"
+#include "PickUp/AttachVisualizer.h"
 
 #include <optional>
 
@@ -118,7 +118,7 @@ private:
 	// 
 	std::unique_ptr<PartJudgeSystem> judgeSystem_;
 	// 拾う場所の見た目系
-	std::unique_ptr<BaseInteractionVisualizer> pickupInteract_;
+	std::unique_ptr<BaseInteractionVisualizer> attachInteract_;
 	// パーツのマネージャ
 	VehiclePartsManager* partsManager_ = nullptr;
 	// 拾える場所

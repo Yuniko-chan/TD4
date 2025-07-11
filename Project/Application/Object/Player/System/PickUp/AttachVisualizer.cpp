@@ -1,12 +1,12 @@
-#include "PickupVisualizer.h"
+#include "AttachVisualizer.h"
 #include "../../../Interact/InteractionSpot.h"
 
-void PickupVisualizer::Initialize(Player* owner)
+void AttachVisualizer::Initialize(Player* owner)
 {
 	BaseInteractionVisualizer::Initialize(owner);
 }
 
-void PickupVisualizer::AddSpot(std::string name, InteractionSpot* interact)
+void AttachVisualizer::AddSpot(std::string name, InteractionSpot* interact)
 {
 	// 既にあればスキップ
 	if (interactionSpots_.contains(name)) {
@@ -16,7 +16,7 @@ void PickupVisualizer::AddSpot(std::string name, InteractionSpot* interact)
 	interactionSpots_.emplace(name, interact);
 }
 
-InteractionSpot* PickupVisualizer::FindSpot(const std::string& name)
+InteractionSpot* AttachVisualizer::FindSpot(const std::string& name)
 {
 	if (interactionSpots_.contains(name)) {
 		for (auto it = interactionSpots_.begin(); it != interactionSpots_.end(); ++it) {
@@ -28,7 +28,7 @@ InteractionSpot* PickupVisualizer::FindSpot(const std::string& name)
 	return nullptr;
 }
 
-void PickupVisualizer::RefrashSpot(const std::string& name)
+void AttachVisualizer::RefrashSpot(const std::string& name)
 {
 	// タイヤ
 	if (name == "TireParts") {
@@ -44,14 +44,14 @@ void PickupVisualizer::RefrashSpot(const std::string& name)
 	}
 }
 
-void PickupVisualizer::Reset()
+void AttachVisualizer::Reset()
 {
 	// 終了処理
 	InteractObject_->SetIsDraw(false);
 	InteractObject_ = nullptr;
 }
 
-void PickupVisualizer::SetUp(const Vector3& position, const Vector3& direction)
+void AttachVisualizer::SetUp(const Vector3& position, const Vector3& direction)
 {
 	InteractObject_->GetWorldTransformAdress()->transform_.translate = position;
 	InteractObject_->GetWorldTransformAdress()->direction_ = direction;

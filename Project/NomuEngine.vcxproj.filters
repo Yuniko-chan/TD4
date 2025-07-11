@@ -1285,7 +1285,7 @@
     <ClCompile Include="Application\Object\Player\System\PickUp\BaseInteractionVisualizer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Player\System\PickUp\PickupVisualizer.cpp">
+    <ClCompile Include="Application\Object\Player\System\PickUp\AttachVisualizer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2232,7 +2232,7 @@
     <ClInclude Include="Application\Object\GameTimer\GameTimeSystem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Object\Player\System\PickUp\PickupVisualizer.h">
+    <ClInclude Include="Application\Object\Player\System\PickUp\AttachVisualizer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Object\Player\System\PickUp\BaseInteractionVisualizer.h">

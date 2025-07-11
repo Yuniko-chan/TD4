@@ -4,7 +4,7 @@
 
 class InteractionSpot;
 
-class PickupVisualizer : public BaseInteractionVisualizer
+class AttachVisualizer : public BaseInteractionVisualizer
 {
 public:
 	/// <summary>

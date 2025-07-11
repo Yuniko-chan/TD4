@@ -21,8 +21,8 @@ void PlayerPickupManager::Initialize()
 	judgeSystem_ = std::make_unique<PartJudgeSystem>();
 	judgeSystem_->SetOwner(owner_);
 	// 
-	pickupInteract_ = std::make_unique<PickupVisualizer>();
-	pickupInteract_->Initialize(owner_);
+	attachInteract_ = std::make_unique<AttachVisualizer>();
+	attachInteract_->Initialize(owner_);
 }
 
 void PlayerPickupManager::Update()
@@ -45,7 +45,7 @@ void PlayerPickupManager::Update()
 		if (nearPoint.first == Vector2Int(0, 0)) {
 			return;
 		}
-		PickupVisualizer* ptr = static_cast<PickupVisualizer*>(pickupInteract_.get());
+		AttachVisualizer* ptr = static_cast<AttachVisualizer*>(attachInteract_.get());
 		ptr->SetUp(nearPoint.second, owner_->GetCore()->GetWorldTransformAdress()->direction_);
 		nearKey_ = nearPoint.first;
 	}
@@ -102,7 +102,7 @@ void PlayerPickupManager::DetachUpdate()
 
 void PlayerPickupManager::SpotSetup(const std::vector<std::pair<std::string, InteractionSpot*>>& spots)
 {
-	PickupVisualizer* ptr = static_cast<PickupVisualizer*>(pickupInteract_.get());
+	AttachVisualizer* ptr = static_cast<AttachVisualizer*>(attachInteract_.get());
 	// 初期化
 	for (auto it = spots.begin(); it != spots.end(); ++it) {
 		ptr->AddSpot((*it).first, (*it).second);
@@ -154,7 +154,7 @@ void PlayerPickupManager::ReleaseAction()
 	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
 	holdParts_ = nullptr;
 	// インタラクション初期化
-	PickupVisualizer* visualizer = static_cast<PickupVisualizer*>(pickupInteract_.get());
+	AttachVisualizer* visualizer = static_cast<AttachVisualizer*>(attachInteract_.get());
 	visualizer->Reset();
 }
 
@@ -198,7 +198,7 @@ void PlayerPickupManager::OnPartCatchSuccess(Car::IParts* parts)
 	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
 
 	// 対象の更新
-	PickupVisualizer* visualizer = static_cast<PickupVisualizer*>(pickupInteract_.get());
+	AttachVisualizer* visualizer = static_cast<AttachVisualizer*>(attachInteract_.get());
 	visualizer->RefrashSpot(holdParts_->GetClassNameString());
 }
 
@@ -216,7 +216,7 @@ void PlayerPickupManager::DropPart()
 	holdParts_ = nullptr;
 
 	// インタラクション初期化
-	PickupVisualizer* visualizer = static_cast<PickupVisualizer*>(pickupInteract_.get());
+	AttachVisualizer* visualizer = static_cast<AttachVisualizer*>(attachInteract_.get());
 	visualizer->Reset();
 }
 
