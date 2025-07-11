@@ -20,6 +20,7 @@ void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
 
 	//仮でグループ設定
 	nowGroup_ = 0;
+	createdGroup_ = 0;
 	courseList_.emplace_back(std::array<Course*, kCourseNum>{});
 
 	// 今追加した要素の参照を得る
@@ -29,6 +30,8 @@ void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
 	PlaceCourseRandom();
 	
 	nowGroup_++;
+	createdGroup_++;
+	
 	//仮二個目
 	/*for (int a = 0; a < 10; a++) {
 		nowGroup_++;
@@ -38,6 +41,13 @@ void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
 		courseList_.emplace_back(std::array<Course*, kCourseNum>{});
 		PlaceCourseRandom();
 	}*/
+}
+
+void CourseManager::Update() {
+	//条件は仮
+	if (player_->GetWorldTransformAdress()->GetWorldPosition().z >= float(nowGroup_-1) * kAddCourseBorder) {
+		addCourseToGameScene_();
+	}
 }
 
 void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* courseInportData,const Vector3& offset, int rotate) {
@@ -265,4 +275,8 @@ size_t CourseManager::AddCourseGroup() {
 	courseList_.emplace_back(std::array<Course*, kCourseNum>{});
 	PlaceCourseRandom();
 	return ++nowGroup_-1;
+}
+
+void CourseManager::SetAddCourseFunction(std::function<void(void)> function) {
+	addCourseToGameScene_ = function;
 }
