@@ -38,6 +38,11 @@ void PlayerPickupManager::Update()
 	}
 
 	if (holdParts_) {
+		// コアなら処理を行わない
+		if (holdParts_->GetClassNameString() == "VehicleCore") {
+			return;
+		}
+
 		VehicleCaluclator calc;
 		std::pair<Vector2Int, Vector3> nearPoint = calc.GetEmptyToNearPoint(owner_->GetCore()->GetConstructionSystem()->GetEmptyData(),
 			owner_->GetWorldTransformAdress()->GetWorldPosition(), owner_->GetWorldTransformAdress()->direction_);
@@ -191,6 +196,11 @@ void PlayerPickupManager::DropPart()
 	// パーツの位置再設定
 	holdParts_->GetWorldTransformAdress()->transform_ = TransformHelper::DetachWithWorldTransform(holdParts_->GetWorldTransformAdress());
 	holdParts_->GetWorldTransformAdress()->SetParent(nullptr);
+	// コアならスキップ
+	if (holdParts_->GetClassNameString() == "VehicleCore") {
+		holdParts_ = nullptr;
+		return;
+	}
 	// 所持パーツから解除
 	holdParts_ = nullptr;
 
