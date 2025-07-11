@@ -75,6 +75,15 @@ void Car::IParts::OnCollision(ColliderParentObject colliderPartner, const Collis
 
 }
 
+void Car::IParts::OnDetach()
+{
+	// トランスフォームの更新
+	worldTransform_.direction_ = Vector3::Normalize(worldTransform_.direction_);
+	worldTransform_.UpdateMatrix();
+	// コライダーの更新
+	ColliderUpdate();
+}
+
 void Car::IParts::TransformParent()
 {
 	// 親コアがあれば

@@ -229,13 +229,16 @@ void VehicleConstructionSystem::Detach(std::map<Vector2Int, Car::IParts*>::itera
 		if ((*it).second->GetHPHandler()->IsDead()) {
 			// 爆破解除
 			BombUnRegistParts((*it).first, (*it).second);
-			// 共通
-			DetachCommon(it);
-			return;
+		}
+		else {
+			// 解除処理
+			UnRegistParts((*it).first, (*it).second);
 		}
 	}
-	// 解除処理
-	UnRegistParts((*it).first, (*it).second);
+	else {
+		// 解除処理
+		UnRegistParts((*it).first, (*it).second);
+	}
 	// 共通
 	DetachCommon(it);
 }
@@ -615,6 +618,8 @@ void VehicleConstructionSystem::DetachCommon(std::map<Vector2Int, Car::IParts*>:
 	(*it).second->ReleaseParent();
 	// ステータス側からも削除
 	status_->ApplyPartRemove((*it).second->GetClassNameString(), (*it).first);
+	// 解除時のアクション処理
+	(*it).second->OnDetach();
 	// HPの初期化
 	(*it).second->GetHPHandler()->Initialize();
 	// リストから外す
@@ -626,6 +631,7 @@ void VehicleConstructionSystem::DetachCommon(std::map<Vector2Int, Car::IParts*>:
 
 	// 空いてる場所更新
 	emptyMap_ = VehicleCaluclator::GetEmptyList(&partsMapping_);
+
 }
 
 void VehicleConstructionSystem::RefrashGridSize()

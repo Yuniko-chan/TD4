@@ -10,6 +10,7 @@ void PartHPHandler::Initialize()
 	// 死亡・解除状態をリセット
 	owner_->SetIsDelete(false);
 	owner_->SetIsDead(false);
+	isDead_ = false;
 
 }
 

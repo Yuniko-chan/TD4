@@ -38,3 +38,13 @@ void EngineParts::ImGuiDrawParts()
 	ImGuiTransform(moveValue);
 	ImGui::Text("\n");
 }
+
+void EngineParts::OnDetach()
+{
+	if (hpHandler_.IsDead()) {
+		const float kBombPower = 15.0f;
+		worldTransform_.transform_.translate.y += kBombPower;
+	}
+	// 基底処理（座標更新
+	IParts::OnDetach();
+}

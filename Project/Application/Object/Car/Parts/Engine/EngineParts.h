@@ -21,6 +21,11 @@ public:
 	/// </summary>
 	void ImGuiDrawParts() override;
 
+	/// <summary>
+	/// 解除時の
+	/// </summary>
+	void OnDetach() override;
+
 private:
 	// 速度
 	float velocityRatio_;

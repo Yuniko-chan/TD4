@@ -61,6 +61,11 @@ namespace Car
 		/// <param name="collisionData"></param>
 		virtual void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
+		/// <summary>
+		/// 解除アクション
+		/// </summary>
+		virtual void OnDetach();
+
 	public:	// アクセッサ
 		//---ゲッター---//
 		// コネクター
