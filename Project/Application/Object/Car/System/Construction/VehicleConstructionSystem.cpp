@@ -540,6 +540,7 @@ void VehicleConstructionSystem::BombUnRegistParts(const Vector2Int& id, Car::IPa
 		// エンジンなら連鎖
 		if ((*it)->GetClassNameString() == "EngineParts") {
 			(*it)->GetHPHandler()->SetHP(0);
+			(*it)->GetHPHandler()->Update();
 		}
 
 	}

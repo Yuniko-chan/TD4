@@ -104,3 +104,12 @@ void DriveSystem::VelocityUpdate()
 	velocity_ = calc.SnapToZero(velocity_, kEpsilon);
 
 }
+
+void DriveSystem::PushPower(const Vector3& power)
+{
+	float length = Vector3::Length(power);
+	// 向きに合わせる
+	owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(power);
+	// 速度生成
+	velocity_ += Vector3(0.0f, 0.0f, 1.0f) * length;
+}
