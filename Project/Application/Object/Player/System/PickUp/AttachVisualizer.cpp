@@ -55,5 +55,16 @@ void AttachVisualizer::SetUp(const Vector3& position, const Vector3& direction)
 {
 	InteractObject_->GetWorldTransformAdress()->transform_.translate = position;
 	InteractObject_->GetWorldTransformAdress()->direction_ = direction;
-	InteractObject_->SetIsDraw(true);
+}
+
+void AttachVisualizer::Update(const Vector2Int& key)
+{
+	if (InteractObject_) {
+		if (key == Vector2Int(0, 0)) {
+			InteractObject_->SetIsDraw(false);
+		}
+		else {
+			InteractObject_->SetIsDraw(true);
+		}
+	}
 }

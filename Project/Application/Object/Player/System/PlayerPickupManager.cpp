@@ -41,13 +41,10 @@ void PlayerPickupManager::Update()
 		VehicleCaluclator calc;
 		std::pair<Vector2Int, Vector3> nearPoint = calc.GetEmptyToNearPoint(owner_->GetCore()->GetConstructionSystem()->GetEmptyData(),
 			owner_->GetWorldTransformAdress()->GetWorldPosition(), owner_->GetWorldTransformAdress()->direction_);
-		// 0-0ならなし
-		if (nearPoint.first == Vector2Int(0, 0)) {
-			return;
-		}
+		nearKey_ = nearPoint.first;
 		AttachVisualizer* ptr = static_cast<AttachVisualizer*>(attachInteract_.get());
 		ptr->SetUp(nearPoint.second, owner_->GetCore()->GetWorldTransformAdress()->direction_);
-		nearKey_ = nearPoint.first;
+		ptr->Update(nearKey_);
 	}
 }
 
