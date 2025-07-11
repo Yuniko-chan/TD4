@@ -862,12 +862,6 @@
     <ClCompile Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.cpp">
       <Filter>Application\SceneTransition</Filter>
     </ClCompile>
-    <ClCompile Include="Application\OutGameObject\TitleBackGround\TitleBackGround.cpp">
-      <Filter>Application\OutGameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\OutGameObject\ClearBackGround\ClearBackGround.cpp">
-      <Filter>Application\OutGameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Physics\ClothGPU\ClothPipelineState.cpp">
       <Filter>Engine\Physics\ClothGPU</Filter>
     </ClCompile>
@@ -1286,6 +1280,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Application\ClearSceneObject\CourseTraversalRank.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ClearSceneObject\CourseTraversalDraw.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1881,12 +1878,6 @@
     <ClInclude Include="Application\Framework\MyGame.h">
       <Filter>Application\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Application\OutGameObject\ClearBackGround\ClearBackGround.h">
-      <Filter>Application\OutGameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\OutGameObject\TitleBackGround\TitleBackGround.h">
-      <Filter>Application\OutGameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Physics\ClothGPU\ClothPipelineState.h">
       <Filter>Engine\Physics\ClothGPU</Filter>
     </ClInclude>
@@ -2236,6 +2227,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\ClearSceneObject\CourseTraversalRank.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ClearSceneObject\CourseTraversalDraw.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

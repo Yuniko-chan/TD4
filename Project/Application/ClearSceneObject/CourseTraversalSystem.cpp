@@ -10,6 +10,9 @@ void CourseTraversalSystem::Initialize()
 	courseTraversalRank_ = std::make_unique<CourseTraversalRank>();
 	courseTraversalRank_->Initialize(courseTraversalNum_);
 
+	courseTraversalDraw_ = std::make_unique<CourseTraversalDraw>();
+	courseTraversalDraw_->Initialize(courseTraversalNum_);
+
 }
 
 void CourseTraversalSystem::Update()
@@ -17,10 +20,15 @@ void CourseTraversalSystem::Update()
 
 	courseTraversalRank_->Update(courseTraversalNum_);
 
+	courseTraversalDraw_->Update();
+
 }
 
 void CourseTraversalSystem::Draw()
 {
+
+	courseTraversalDraw_->Draw();
+
 }
 
 void CourseTraversalSystem::ImGuiDraw()

@@ -161,6 +161,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Camera\GameCameraManager.cpp" />
     <ClCompile Include="Application\Camera\OverheadCamera.cpp" />
     <ClCompile Include="Application\Camera\Transition\TransitionCameraModule.cpp" />
+    <ClCompile Include="Application\ClearSceneObject\CourseTraversalDraw.cpp" />
     <ClCompile Include="Application\ClearSceneObject\CourseTraversalRank.cpp" />
     <ClCompile Include="Application\ClearSceneObject\CourseTraversalSystem.cpp" />
     <ClCompile Include="Application\ClothDemo\ClothDemo.cpp" />
@@ -244,9 +245,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Utility\GlobalParameterStructs.cpp" />
     <ClCompile Include="Application\Object\Utility\Timer\FrameTimer.cpp" />
     <ClCompile Include="Application\Object\Wall\Wall.cpp" />
-    <ClCompile Include="Application\OutGameObject\ClearBackGround\ClearBackGround.cpp" />
     <ClCompile Include="Application\OutGameObject\Curtain\Curtain.cpp" />
-    <ClCompile Include="Application\OutGameObject\TitleBackGround\TitleBackGround.cpp" />
     <ClCompile Include="Application\ParticleManager\ParticleManager.cpp" />
     <ClCompile Include="Application\Particle\RunDustParticle\RunDustParticle.cpp" />
     <ClCompile Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.cpp" />
@@ -406,6 +405,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Camera\GameCameraManager.h" />
     <ClInclude Include="Application\Camera\OverheadCamera.h" />
     <ClInclude Include="Application\Camera\Transition\TransitionCameraModule.h" />
+    <ClInclude Include="Application\ClearSceneObject\CourseTraversalDraw.h" />
     <ClInclude Include="Application\ClearSceneObject\CourseTraversalRank.h" />
     <ClInclude Include="Application\ClearSceneObject\CourseTraversalSystem.h" />
     <ClInclude Include="Application\ClothDemo\ClothDemo.h" />
@@ -524,9 +524,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\Utility\Math\Vector2Int.h" />
     <ClInclude Include="Application\Object\Utility\Timer\FrameTimer.h" />
     <ClInclude Include="Application\Object\Wall\Wall.h" />
-    <ClInclude Include="Application\OutGameObject\ClearBackGround\ClearBackGround.h" />
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />
-    <ClInclude Include="Application\OutGameObject\TitleBackGround\TitleBackGround.h" />
     <ClInclude Include="Application\ParticleManager\ParticleManager.h" />
     <ClInclude Include="Application\Particle\RunDustParticle\RunDustParticle.h" />
     <ClInclude Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.h" />
