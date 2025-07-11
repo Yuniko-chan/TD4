@@ -10,12 +10,15 @@ void VehicleConstructionSystem::Initialize()
 
 void VehicleConstructionSystem::Update()
 {
-	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end(); ++it) {
+	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end();) {
 		// 見つかった場合抜ける
 		if ((*it).second->GetIsDelete()) {
 			// 外す処理
 			Detach(it);
-			break;
+			it = partsMapping_.begin();
+		}
+		else {
+			it++;
 		}
 	}
 
@@ -300,7 +303,7 @@ void VehicleConstructionSystem::RefrashDepthsFromCore()
 	// 深度が1のみ例外
 	for (const Vector2Int& direct : kDirections) {
 		std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.find(direct);
-
+		// 最後なら
 		if (it == partsMapping_.end()) continue;
 		// 深度設定
 		(*it).second->GetConnector()->SetDepth(1);
@@ -441,84 +444,6 @@ void VehicleConstructionSystem::RegistParts(const Vector2Int& id, Car::IParts* p
 	RefrashDepthsFromCore();
 	RefrashPartsConnector();
 
-	//// 隣接検索
-	//std::list<Car::IParts*> adjoinParts;
-	//Vector2Int findID = {};
-	//findID = Vector2Int(id.x + 1, id.y);
-	//if (partsMapping_.contains(findID)) {
-	//	adjoinParts.push_back(partsMapping_.find(findID)->second);
-	//}
-	//findID = Vector2Int(id.x - 1, id.y);
-	//if (partsMapping_.contains(findID)) {
-	//	adjoinParts.push_back(partsMapping_.find(findID)->second);
-	//}
-	//findID = Vector2Int(id.x, id.y + 1);
-	//if (partsMapping_.contains(findID)) {
-	//	adjoinParts.push_back(partsMapping_.find(findID)->second);
-	//}
-	//findID = Vector2Int(id.x, id.y - 1);
-	//if (partsMapping_.contains(findID)) {
-	//	adjoinParts.push_back(partsMapping_.find(findID)->second);
-	//}
-	//// 最小深度値
-	//int minDepth = 100;
-	//// 一個しかなければ
-	//bool isOne = adjoinParts.size();
-	//// 子・親の登録
-	//for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
-	//	// 数による処理別
-	//	if (isOne) {
-	//		// 数が一つかつそれがコアである場合
-	//		if ((*it)->GetClassNameString() == "VehicleCore") {
-	//			parts->GetConnector()->AddParents(*it);
-	//			parts->GetConnector()->SetDepth(1);
-	//			break;
-	//		}
-
-	//		// コアでない場合（親登録＋深度値を親＋１で決定）
-	//		parts->GetConnector()->AddParents(*it);
-	//		parts->GetConnector()->SetDepth((*it)->GetConnector()->GetDepth() + 1);
-	//		break;
-	//	}
-
-	//	// コアなら親として登録のみ行う
-	//	if ((*it)->GetClassNameString() == "VehicleCore") {
-	//		parts->GetConnector()->AddParents(*it);
-	//		continue;
-	//	}
-	//	// 最小の設定
-	//	if (minDepth > (*it)->GetConnector()->GetDepth()) {
-	//		minDepth = (*it)->GetConnector()->GetDepth();
-	//	}
-	//}
-	//// 一個しかなければ早期
-	//if (isOne) {
-	//	return;
-	//}
-
-	//// 深度設定
-	//parts->GetConnector()->SetDepth(minDepth);
-
-	//for (std::list<Car::IParts*>::iterator it = adjoinParts.begin(); it != adjoinParts.end(); ++it) {
-	//	// コアなら親として登録のみ行う
-	//	if ((*it)->GetClassNameString() == "VehicleCore") {
-	//		parts->GetConnector()->AddParents(*it);
-	//		continue;
-	//	}
-	//	// 対象の深度値
-	//	int32_t targetDepth = parts->GetConnector()->GetDepth();
-	//	// 子に追加
-	//	if (parts->GetConnector()->GetDepth() < targetDepth) {
-	//		parts->GetConnector()->AddChildren(*it);
-	//		(*it)->GetConnector()->AddParents(parts);
-	//	}
-	//	// 親に追加
-	//	else if (parts->GetConnector()->GetDepth() > targetDepth) {
-	//		parts->GetConnector()->AddParents(*it);
-	//		// 子に設定
-	//		(*it)->GetConnector()->AddChildren(parts);
-	//	}
-	//}
 }
 
 void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts* parts)
@@ -569,6 +494,10 @@ void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts*
 
 void VehicleConstructionSystem::BombUnRegistParts(const Vector2Int& id, Car::IParts* parts)
 {
+	Vector3 direct = owner_->GetWorldTransformAdress()->GetWorldPosition() - parts->GetWorldTransformAdress()->GetWorldPosition();
+	const float kPusher = 150.0f;
+	owner_->GetDriveSystem()->PushPower(Vector3::Normalize(direct) * kPusher);
+
 	// 隣接を検索
 	std::list<Car::IParts*> adjoinParts;
 	// IDから探す
@@ -608,6 +537,11 @@ void VehicleConstructionSystem::BombUnRegistParts(const Vector2Int& id, Car::IPa
 		}
 		// 隣接を解除
 		(*it)->SetIsDelete(true);
+		// エンジンなら連鎖
+		if ((*it)->GetClassNameString() == "EngineParts") {
+			(*it)->GetHPHandler()->SetHP(0);
+		}
+
 	}
 
 }

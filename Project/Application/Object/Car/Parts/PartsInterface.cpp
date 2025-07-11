@@ -201,7 +201,12 @@ void Car::IParts::ChildUpdate()
 	if (IsParent()) {
 		// 親がある場合コネクターの更新を入れる
 		connector_->Update();
+		worldTransform_.transform_.scale = Vector3(1.0f, 1.0f, 1.0f);
 		return;
+	}
+	else {
+		// スケールを小さくしてる
+		worldTransform_.transform_.scale = Vector3(0.75f, 0.75f, 0.75f);
 	}
 	// 仮の地面処理（後で消す）
 	if (worldTransform_.GetWorldPosition().y <= 0.0f) {

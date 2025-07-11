@@ -50,6 +50,8 @@ public:	// アクセッサ
 	//---セッター---//
 	void SetStatusManager(VehicleStatus* status) { status_ = status; }
 
+	void PushPower(const Vector3& power) { velocity_ += power; }
+
 	//---ゲッター---//
 	DriveEngine* GetDriveEngine() { return driveEngine_.get(); }
 
