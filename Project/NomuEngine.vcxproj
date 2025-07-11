@@ -406,6 +406,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\Camera\Animation\FollowCameraAnimation.h" />
     <ClInclude Include="Application\Camera\CameraLists.h" />
     <ClInclude Include="Application\Camera\GameCameraManager.h" />
     <ClInclude Include="Application\Camera\OverheadCamera.h" />

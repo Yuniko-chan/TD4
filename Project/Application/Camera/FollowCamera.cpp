@@ -1,13 +1,12 @@
 #include "FollowCamera.h"
 #include "../../../Engine/Math/Vector/Vector3.h"
 #include "../../../Engine/Math/Matrix/Matrix4x4.h"
-#include "../../../Engine/Input/input.h"
-#include <algorithm>
-#include "../../../Engine/GlobalVariables/GlobalVariables.h"
 #include "../../../Engine/Math/Math.h"
 #include "../../../Engine/Math/Ease.h"
-#include "../../../Engine/Input/Input.h"
+#include <algorithm>
 #include "../../../Engine/2D/ImguiManager.h"
+#include "../../../Engine/Input/input.h"
+#include "../../../Engine/GlobalVariables/GlobalVariables.h"
 
 
 void FollowCamera::Initialize() {
