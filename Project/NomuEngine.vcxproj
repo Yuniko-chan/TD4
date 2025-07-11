@@ -182,6 +182,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Camera\FollowCamera.cpp" />
     <ClCompile Include="Application\Object\BaseCharacter\BaseCharacterAnimation.cpp" />
     <ClCompile Include="Application\Object\Car\Animation\VehicleAnimation.cpp" />
+    <ClCompile Include="Application\Object\GameTimer\GameTimeSystem.cpp" />
     <ClCompile Include="Application\Object\Interact\InteractionSpot.cpp" />
     <ClCompile Include="Application\Object\Car\System\Construction\VehicleConstructionSystem.cpp" />
     <ClCompile Include="Application\Object\Car\Manager\PickupPointManager.cpp" />
@@ -202,7 +203,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\CustomArea\CustomArea.cpp" />
     <ClCompile Include="Application\Object\Gimmick\Minigun\MinigunAnimation.cpp" />
     <ClCompile Include="Application\Object\Player\Animation\PlayerAnimation.cpp" />
+    <ClCompile Include="Application\Object\Player\System\PickUp\BaseInteractionVisualizer.cpp" />
     <ClCompile Include="Application\Object\Player\System\PickUp\PartJudgeSystem.cpp" />
+    <ClCompile Include="Application\Object\Player\System\PickUp\AttachVisualizer.cpp" />
+    <ClCompile Include="Application\Object\Player\System\PickUp\PickupVisualizer.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\CameraHelper.cpp" />
     <ClCompile Include="Application\Object\Utility\Calc\VehicleCaluclator.cpp" />
     <ClCompile Include="Application\Object\Car\System\Drive\DriveEngine.cpp" />
@@ -402,6 +406,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\Camera\Animation\FollowCameraAnimation.h" />
     <ClInclude Include="Application\Camera\CameraLists.h" />
     <ClInclude Include="Application\Camera\GameCameraManager.h" />
     <ClInclude Include="Application\Camera\OverheadCamera.h" />
@@ -430,6 +435,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Collider\CollisionConfig.h" />
     <ClInclude Include="Application\Object\BaseCharacter\BaseCharacterAnimation.h" />
     <ClInclude Include="Application\Object\Car\Animation\VehicleAnimation.h" />
+    <ClInclude Include="Application\Object\GameTimer\GameTimeSystem.h" />
     <ClInclude Include="Application\Object\Interact\InteractionSpot.h" />
     <ClInclude Include="Application\Object\Car\System\Construction\VehicleConstructionSystem.h" />
     <ClInclude Include="Application\Object\Car\Manager\PickupPointManager.h" />
@@ -453,7 +459,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\CustomArea\CustomArea.h" />
     <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunAnimation.h" />
     <ClInclude Include="Application\Object\Interact\Manager\InteractionManager.h" />
+    <ClInclude Include="Application\Object\Player\System\PickUp\BaseInteractionVisualizer.h" />
+    <ClInclude Include="Application\Object\Player\System\PickUp\AttachVisualizer.h" />
     <ClInclude Include="Application\Object\Player\System\PickUp\PartJudgeSystem.h" />
+    <ClInclude Include="Application\Object\Player\System\PickUp\PickupVisualizer.h" />
     <ClInclude Include="Application\Object\Utility\Calc\CameraHelper.h" />
     <ClInclude Include="Application\Object\Utility\Calc\VehicleCaluclator.h" />
     <ClInclude Include="Application\Object\Car\System\Drive\DriveEngine.h" />

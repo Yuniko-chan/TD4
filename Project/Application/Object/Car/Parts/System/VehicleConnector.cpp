@@ -9,17 +9,6 @@ void VehicleConnector::Update()
 	if (parents_.empty()) {
 		owner_->SetIsDelete(true);
 	}
-	else {
-		for (std::list<Car::IParts*>::iterator it = parents_.begin(); it != parents_.end();) {
-			if ((*it)->GetIsDelete()) {
-				it = parents_.erase(it);
-			}
-			else {
-				++it;
-			}
-		}
-	}
-
 }
 
 void VehicleConnector::ImGuiDraw()
@@ -54,21 +43,12 @@ void VehicleConnector::ImGuiDraw()
 
 void VehicleConnector::ReleaseParent(Car::IParts* part)
 {
+	// 親から外す
 	parents_.remove(part);
-	// 親がなければ
-	if (parents_.empty()) {
-		// 子がいれば（その子の親に併せた処理
-		if (!childrens_.empty()) {
-			// 子の整理処理
-			OrganizeChildren();
-		}
-		// 子がいない為切り替え先がないため解除
-		else {
-			owner_->GetHPHandler()->SetHP(0);
-			//owner_->ReleaseParent();
-		}
+	// 親と子が無ければ削除
+	if (parents_.empty() && childrens_.empty()) {
+		owner_->SetIsDelete(true);
 	}
-
 }
 
 void VehicleConnector::ReleaseChildren(Car::IParts* part)
@@ -124,7 +104,6 @@ void VehicleConnector::OrganizeChildren()
 
 	}
 	else {
-		owner_->GetHPHandler()->SetHP(0);
-		//owner_->ReleaseParent();
+		owner_->SetIsDelete(true);
 	}
 }

@@ -20,6 +20,9 @@ void PlayerPickupManager::Initialize()
 {
 	judgeSystem_ = std::make_unique<PartJudgeSystem>();
 	judgeSystem_->SetOwner(owner_);
+	// 
+	attachInteract_ = std::make_unique<AttachVisualizer>();
+	attachInteract_->Initialize(owner_);
 }
 
 void PlayerPickupManager::Update()
@@ -35,24 +38,19 @@ void PlayerPickupManager::Update()
 	}
 
 	if (holdParts_) {
+		// コアなら処理を行わない
+		if (holdParts_->GetClassNameString() == "VehicleCore") {
+			return;
+		}
+
 		VehicleCaluclator calc;
 		std::pair<Vector2Int, Vector3> nearPoint = calc.GetEmptyToNearPoint(owner_->GetCore()->GetConstructionSystem()->GetEmptyData(),
 			owner_->GetWorldTransformAdress()->GetWorldPosition(), owner_->GetWorldTransformAdress()->direction_);
-		interaction_->GetWorldTransformAdress()->transform_.translate = nearPoint.second;
-		interaction_->GetWorldTransformAdress()->direction_ = owner_->GetCore()->GetWorldTransformAdress()->direction_;
 		nearKey_ = nearPoint.first;
-		// 一番近いのが自分で返された場合
-		if (nearPoint.first == Vector2Int(0,0)) {
-			interaction_->SetIsDraw(false);
-		}
-		else {
-			interaction_->SetIsDraw(true);
-		}
+		AttachVisualizer* ptr = static_cast<AttachVisualizer*>(attachInteract_.get());
+		ptr->SetUp(nearPoint.second, owner_->GetCore()->GetWorldTransformAdress()->direction_);
+		ptr->Update(nearKey_);
 	}
-	else {
-		interaction_->SetIsDraw(false);
-	}
-
 }
 
 void PlayerPickupManager::ImGuiDraw()
@@ -100,6 +98,19 @@ void PlayerPickupManager::ImGuiDraw()
 	}
 }
 
+void PlayerPickupManager::DetachUpdate()
+{
+}
+
+void PlayerPickupManager::SpotSetup(const std::vector<std::pair<std::string, InteractionSpot*>>& spots)
+{
+	AttachVisualizer* ptr = static_cast<AttachVisualizer*>(attachInteract_.get());
+	// 初期化
+	for (auto it = spots.begin(); it != spots.end(); ++it) {
+		ptr->AddSpot((*it).first, (*it).second);
+	}
+}
+
 void PlayerPickupManager::InteractParts()
 {
 	// 連打回避のタイマー
@@ -114,7 +125,6 @@ void PlayerPickupManager::InteractParts()
 	// 掴む
 	else {
 		// ここに今後アルゴリズムを追加する
-		//RemovalAction();
 		CatchAction();
 	}
 
@@ -144,7 +154,9 @@ void PlayerPickupManager::ReleaseAction()
 	// SettingParent関数が成功した場合の終了処理
 	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
 	holdParts_ = nullptr;
-
+	// インタラクション初期化
+	AttachVisualizer* visualizer = static_cast<AttachVisualizer*>(attachInteract_.get());
+	visualizer->Reset();
 }
 
 void PlayerPickupManager::CatchAction()
@@ -159,23 +171,6 @@ void PlayerPickupManager::CatchAction()
 
 }
 
-void PlayerPickupManager::RemovalAction()
-{
-	// コアがなければ
-	if (!owner_->GetCore()) {
-		return;
-	}
-
-	// コアに付けている中で一番近いパーツを検索
-	Car::IParts* part = owner_->GetCore()->GetConstructionSystem()->FindNearPart(owner_->GetWorldTransformAdress()->GetWorldPosition());
-	
-	// 解除処理
-	owner_->GetCore()->GetConstructionSystem()->Detach(part);
-
-	// 拾う処理
-	OnPartCatchSuccess(part);
-}
-
 void PlayerPickupManager::OnPartCatchSuccess(Car::IParts* parts)
 {
 	// つかみパーツとしてポインタ取得
@@ -185,6 +180,10 @@ void PlayerPickupManager::OnPartCatchSuccess(Car::IParts* parts)
 	holdParts_->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
 	holdParts_->GetWorldTransformAdress()->transform_.translate = localOffset;
 	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
+
+	// 対象の更新
+	AttachVisualizer* visualizer = static_cast<AttachVisualizer*>(attachInteract_.get());
+	visualizer->RefrashSpot(holdParts_->GetClassNameString());
 }
 
 void PlayerPickupManager::OnCatchFailure()
@@ -197,8 +196,17 @@ void PlayerPickupManager::DropPart()
 	// パーツの位置再設定
 	holdParts_->GetWorldTransformAdress()->transform_ = TransformHelper::DetachWithWorldTransform(holdParts_->GetWorldTransformAdress());
 	holdParts_->GetWorldTransformAdress()->SetParent(nullptr);
+	// コアならスキップ
+	if (holdParts_->GetClassNameString() == "VehicleCore") {
+		holdParts_ = nullptr;
+		return;
+	}
 	// 所持パーツから解除
 	holdParts_ = nullptr;
+
+	// インタラクション初期化
+	AttachVisualizer* visualizer = static_cast<AttachVisualizer*>(attachInteract_.get());
+	visualizer->Reset();
 }
 
 bool PlayerPickupManager::ShouldDropPart()

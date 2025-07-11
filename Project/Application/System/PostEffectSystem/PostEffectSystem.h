@@ -1,7 +1,7 @@
 #pragma once
 #include "../../../Engine/PostEffect/PostEffect.h"
 #include "../../../Engine/base/WindowSprite/WindowSprite.h"
-#include "../../Object/Car/System/Drive/DriveEngine.h"
+#include "../../Object/Car/System/Drive/DriveSystem.h"
 #include "../../Object/Player/Player.h"
 
 /// <summary>
@@ -36,10 +36,10 @@ public: // アクセッサ
 	void SetRenderTargetTexture(RenderTargetTexture* renderTargetTexture) { renderTargetTexture_ = renderTargetTexture; }
 
 	/// <summary>
-	/// ドライブエンジン設定
+	/// ドライブシステム設定
 	/// </summary>
-	/// <param name="driveEngine"></param>
-	void SetDriveEngine(DriveEngine* driveEngine) { driveEngine_ = driveEngine; }
+	/// <param name="driveSystem"></param>
+	void SetDriveSystem(DriveSystem* driveSystem) { driveSystem_ = driveSystem; }
 
 	/// <summary>
 	/// プレイヤー設定
@@ -88,8 +88,8 @@ private: // メンバ変数
 	// 放射状ブラーが最大でかかる速度
 	float radialBlurSpeedMax_;
 
-	// ドライブエンジン
-	DriveEngine* driveEngine_;
+	// ドライブシステム
+	DriveSystem* driveSystem_;
 
 	// セットプレイヤー
 	Player* player_;

@@ -15,7 +15,7 @@ class PartJudgeSystem : public OwnerComponent<Player>
 {
 public:
 	// 状態
-	enum Type
+	enum PartCondition
 	{
 		Dropped,
 		Docked,
@@ -26,7 +26,7 @@ public:
 	struct ConditionData
 	{
 		MeshObject* object;
-		Type type;
+		PartCondition type;
 		float distance;
 		bool isFront;
 	};
