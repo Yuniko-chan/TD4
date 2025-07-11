@@ -288,15 +288,21 @@ void GameSceneObjectManager::PlayerInitialize()
 	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
 	player->GetPickUpManager()->SetPartsManager(partsManager_.get());
 	player->GetPickUpManager()->SetPickupPointManager(pickupPointManager_.get());
-	InteractionSpot* spot = static_cast<InteractionSpot*>(this->GetObjectPointer("ArmorSpot"));
 	//player->GetPickUpManager()->SetInteractSpot(spot);
 
 	// 3種類登録
-	player->GetPickUpManager()->AddSpot(spot->GetName(), spot);
-	spot = static_cast<InteractionSpot*>(this->GetObjectPointer("EngineSpot"));
-	player->GetPickUpManager()->AddSpot(spot->GetName(), spot);
-	spot = static_cast<InteractionSpot*>(this->GetObjectPointer("TireSpot"));
-	player->GetPickUpManager()->AddSpot(spot->GetName(), spot);
+	std::vector<std::pair<std::string, InteractionSpot*>> spots = {
+		{static_cast<InteractionSpot*>(this->GetObjectPointer("ArmorSpot"))->GetName(),static_cast<InteractionSpot*>(this->GetObjectPointer("ArmorSpot"))},
+		{static_cast<InteractionSpot*>(this->GetObjectPointer("EngineSpot"))->GetName(),static_cast<InteractionSpot*>(this->GetObjectPointer("EngineSpot"))},
+		{static_cast<InteractionSpot*>(this->GetObjectPointer("TireSpot"))->GetName(),static_cast<InteractionSpot*>(this->GetObjectPointer("TireSpot"))}
+	};
+	player->GetPickUpManager()->SpotSetup(spots);
+	//InteractionSpot* spot = static_cast<InteractionSpot*>(this->GetObjectPointer("ArmorSpot"));
+	//player->GetPickUpManager()->AddSpot(spot->GetName(), spot);
+	//spot = static_cast<InteractionSpot*>(this->GetObjectPointer("EngineSpot"));
+	//player->GetPickUpManager()->AddSpot(spot->GetName(), spot);
+	//spot = static_cast<InteractionSpot*>(this->GetObjectPointer("TireSpot"));
+	//player->GetPickUpManager()->AddSpot(spot->GetName(), spot);
 }
 
 void GameSceneObjectManager::OptionProcess()

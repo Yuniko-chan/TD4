@@ -20,6 +20,9 @@ void PlayerPickupManager::Initialize()
 {
 	judgeSystem_ = std::make_unique<PartJudgeSystem>();
 	judgeSystem_->SetOwner(owner_);
+	// 
+	pickupInteract_ = std::make_unique<PickupVisualizer>();
+	pickupInteract_->Initialize(owner_);
 }
 
 void PlayerPickupManager::Update()
@@ -38,16 +41,13 @@ void PlayerPickupManager::Update()
 		VehicleCaluclator calc;
 		std::pair<Vector2Int, Vector3> nearPoint = calc.GetEmptyToNearPoint(owner_->GetCore()->GetConstructionSystem()->GetEmptyData(),
 			owner_->GetWorldTransformAdress()->GetWorldPosition(), owner_->GetWorldTransformAdress()->direction_);
-		interaction_->GetWorldTransformAdress()->transform_.translate = nearPoint.second;
-		interaction_->GetWorldTransformAdress()->direction_ = owner_->GetCore()->GetWorldTransformAdress()->direction_;
+		// 0-0ならなし
+		if (nearPoint.first == Vector2Int(0, 0)) {
+			return;
+		}
+		PickupVisualizer* ptr = static_cast<PickupVisualizer*>(pickupInteract_.get());
+		ptr->SetUp(nearPoint.second, owner_->GetCore()->GetWorldTransformAdress()->direction_);
 		nearKey_ = nearPoint.first;
-		// 一番近いのが自分で返された場合
-		if (nearPoint.first == Vector2Int(0,0)) {
-			interaction_->SetIsDraw(false);
-		}
-		else {
-			interaction_->SetIsDraw(true);
-		}
 	}
 }
 
@@ -96,26 +96,17 @@ void PlayerPickupManager::ImGuiDraw()
 	}
 }
 
-void PlayerPickupManager::AddSpot(std::string name, InteractionSpot* interact)
+void PlayerPickupManager::DetachUpdate()
 {
-	// 既にあればスキップ
-	if (interactionSpots_.contains(name)) {
-		return;
-	}
-	// 追加
-	interactionSpots_.emplace(name, interact);
 }
 
-InteractionSpot* PlayerPickupManager::FindSpot(const std::string& name)
+void PlayerPickupManager::SpotSetup(const std::vector<std::pair<std::string, InteractionSpot*>>& spots)
 {
-	if (interactionSpots_.contains(name)) {
-		for (auto it = interactionSpots_.begin(); it != interactionSpots_.end(); ++it) {
-			if (name == (*it).first) {
-				return (*it).second;
-			}
-		}
+	PickupVisualizer* ptr = static_cast<PickupVisualizer*>(pickupInteract_.get());
+	// 初期化
+	for (auto it = spots.begin(); it != spots.end(); ++it) {
+		ptr->AddSpot((*it).first, (*it).second);
 	}
-	return nullptr;
 }
 
 void PlayerPickupManager::InteractParts()
@@ -162,8 +153,9 @@ void PlayerPickupManager::ReleaseAction()
 	// SettingParent関数が成功した場合の終了処理
 	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
 	holdParts_ = nullptr;
-	interaction_->SetIsDraw(false);
-	interaction_ = nullptr;
+	// インタラクション初期化
+	PickupVisualizer* visualizer = static_cast<PickupVisualizer*>(pickupInteract_.get());
+	visualizer->Reset();
 }
 
 void PlayerPickupManager::CatchAction()
@@ -205,15 +197,9 @@ void PlayerPickupManager::OnPartCatchSuccess(Car::IParts* parts)
 	holdParts_->GetWorldTransformAdress()->transform_.translate = localOffset;
 	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
 
-	if (holdParts_->GetClassNameString() == "TireParts") {
-		interaction_ = FindSpot("TireSpot");
-	}
-	else if (holdParts_->GetClassNameString() == "ArmorFrameParts") {
-		interaction_ = FindSpot("ArmorSpot");
-	}
-	else if (holdParts_->GetClassNameString() == "EngineParts") {
-		interaction_ = FindSpot("EngineSpot");
-	}
+	// 対象の更新
+	PickupVisualizer* visualizer = static_cast<PickupVisualizer*>(pickupInteract_.get());
+	visualizer->RefrashSpot(holdParts_->GetClassNameString());
 }
 
 void PlayerPickupManager::OnCatchFailure()
@@ -230,8 +216,8 @@ void PlayerPickupManager::DropPart()
 	holdParts_ = nullptr;
 
 	// インタラクション初期化
-	interaction_->SetIsDraw(false);
-	interaction_ = nullptr;
+	PickupVisualizer* visualizer = static_cast<PickupVisualizer*>(pickupInteract_.get());
+	visualizer->Reset();
 }
 
 bool PlayerPickupManager::ShouldDropPart()

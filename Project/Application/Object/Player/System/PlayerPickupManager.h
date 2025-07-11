@@ -4,6 +4,7 @@
 #include "../../Utility/Timer/FrameTimer.h"
 #include "../../Utility/Math/Vector2Int.h"
 #include "PickUp/PartJudgeSystem.h"
+#include "PickUp/PickupVisualizer.h"
 
 #include <optional>
 
@@ -48,15 +49,22 @@ public:
 	void ImGuiDraw();
 
 	/// <summary>
+	/// 取り外し関係の更新
+	/// </summary>
+	void DetachUpdate();
+
+	/// <summary>
 	/// せったー
 	/// </summary>
 	/// <param name="manager"></param>
 	void SetPartsManager(VehiclePartsManager* manager) { partsManager_ = manager; }
 	void SetPickupPointManager(PickupPointManager* manager) { pickupPointManager_ = manager; }
-	void SetInteractSpot(InteractionSpot* interact) { interaction_ = interact; }
-
-	void AddSpot(std::string name, InteractionSpot* interact);
-	InteractionSpot* FindSpot(const std::string& name);
+	
+	/// <summary>
+	/// スポットの初期化
+	/// </summary>
+	/// <param name="spots"></param>
+	void SpotSetup(const std::vector<std::pair<std::string, InteractionSpot*>>& spots);
 
 	/// <summary>
 	/// パーツに触れる処理
@@ -109,6 +117,8 @@ private:
 private:
 	// 
 	std::unique_ptr<PartJudgeSystem> judgeSystem_;
+	// 拾う場所の見た目系
+	std::unique_ptr<BaseInteractionVisualizer> pickupInteract_;
 	// パーツのマネージャ
 	VehiclePartsManager* partsManager_ = nullptr;
 	// 拾える場所
@@ -122,8 +132,4 @@ private:
 	std::string nearPartsName_ = "None";
 	// 間隔タイマー
 	std::optional<FrameTimer> interactDuration_;
-	// 拾う場所
-	InteractionSpot* interaction_ = nullptr;
-	// スポット配列
-	std::map<std::string, InteractionSpot*> interactionSpots_;
 };
