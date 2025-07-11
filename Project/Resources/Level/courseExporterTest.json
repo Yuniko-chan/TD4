@@ -45,7 +45,7 @@
             "transform": {
                 "translation": [
                     0.0,
-                    -264.4881286621094,
+                    -100.0,
                     0.0
                 ],
                 "rotation": [
@@ -187,43 +187,6 @@
                 "type": "CANNON",
                 "cooltime": 3.0,
                 "firingSpeed": 1.0
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "customArea",
-            "transform": {
-                "translation": [
-                    0.0,
-                    -264.4881286621094,
-                    0.00799494981765747
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    0.0
-                ],
-                "scaling": [
-                    0.6464892625808716,
-                    0.6464892625808716,
-                    0.6464892625808716
-                ]
-            },
-            "fileName": "custom.obj",
-            "directoryPath": "Resources/Model/Custom",
-            "className": "CustomArea",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    29.09201681613922,
-                    29.09201681613922,
-                    1.2929785251617432
-                ]
             }
         },
         {
@@ -667,43 +630,6 @@
                     7.099999904632568,
                     7.099999904632568,
                     2.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "customArea.001",
-            "transform": {
-                "translation": [
-                    -1073.2371826171875,
-                    765.3118896484375,
-                    0.00799494981765747
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    0.0
-                ],
-                "scaling": [
-                    0.6464892625808716,
-                    0.6464892625808716,
-                    0.6464892625808716
-                ]
-            },
-            "fileName": "custom.obj",
-            "directoryPath": "Resources/Model/Custom",
-            "className": "CustomArea",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    29.09201681613922,
-                    29.09201681613922,
-                    1.2929785251617432
                 ]
             }
         },

@@ -46,8 +46,12 @@ void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
 void CourseManager::Update() {
 	//条件は仮
 	if (player_->GetWorldTransformAdress()->GetWorldPosition().z >= float(nowGroup_-1) * kAddCourseBorder) {
-		addCourseToGameScene_();
+		//addCourseToGameScene_();
 	}
+}
+
+void CourseManager::AddCourse() {
+	addCourseToGameScene_();
 }
 
 void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* courseInportData,const Vector3& offset, int rotate) {
@@ -217,12 +221,13 @@ void CourseManager::CreateCustomizeArea(size_t group) {
 	objectData.transform = transform;
 	
 	OBB obb;
-	obb.Initialize(objectData.transform.translate, Matrix4x4::MakeIdentity4x4(), {0,0,0}, static_cast<ParentNullObject*>(nullptr));
+	obb.Initialize(objectData.transform.translate, Matrix4x4::MakeIdentity4x4(), {20.0f,5.0f,20.0f}, static_cast<ParentNullObject*>(nullptr));
 	objectData.collider = obb;
 	CustomArea* object = new CustomArea();
 	object->Initialize(&objectData);
 	objectManager_->AddObject(object);
 
+	object->SetCourseManager(this);
 	//各ピックアップポイント
 	for (size_t i = 0; i < kPickupPointCount_;i++) {
 		CreatePickUpPoint(transform.translate,i,group);
