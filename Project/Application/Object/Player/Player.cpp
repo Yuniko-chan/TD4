@@ -220,7 +220,14 @@ void Player::SystemUpdate()
 	pickUpManager_->Update();
 
 	// アニメーション
-	playerAnimation_->Update(0);
+	int animNumber = 0;
+	if (pickUpManager_->IsPartsHold()) {
+		animNumber = 0;
+	}
+	else {
+		animNumber = 1;
+	}
+	playerAnimation_->Update(animNumber);
 
 	// コマンド処理
 	playerCommand_->Update();
