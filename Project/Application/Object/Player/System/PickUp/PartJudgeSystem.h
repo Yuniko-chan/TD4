@@ -40,6 +40,13 @@ public:
 	/// <param name="pointManager"></param>
 	/// <returns></returns>
 	Car::IParts* GetCatchPart(VehiclePartsManager* partManager, PickupPointManager* pointManager);
+	/// <summary>
+	/// 一番近いオブジェクト検索
+	/// </summary>
+	/// <param name="partManager"></param>
+	/// <param name="pointManager"></param>
+	/// <returns></returns>
+	MeshObject* GetNearObject(VehiclePartsManager* partManager, PickupPointManager* pointManager);
 
 private:
 	/// <summary>
@@ -48,6 +55,12 @@ private:
 	/// <returns></returns>
 	ConditionData NearSort();
 	/// <summary>
+	/// 一番近くて向きが一致しているもの
+	/// </summary>
+	/// <param name="frontVector"></param>
+	/// <returns></returns>
+	ConditionData NearSort(bool isDirection);
+	/// <summary>
 	/// 拾うパーツを決定する
 	/// </summary>
 	/// <param name="partManager"></param>
@@ -55,6 +68,7 @@ private:
 	/// <param name="data"></param>
 	/// <returns></returns>
 	Car::IParts* GetCatchPart(PickupPointManager* pointManager, ConditionData data);
+
 private:
 	// リスト
 	std::list<ConditionData> objects_;

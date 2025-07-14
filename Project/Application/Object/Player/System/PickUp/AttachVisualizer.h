@@ -1,7 +1,11 @@
 #pragma once
 #include "BaseInteractionVisualizer.h"
+
 #include "../../../Utility/Math/Vector2Int.h"
+#include "../../../Engine/Math/Vector/Vector3.h"
+
 #include <map>
+#include <string>
 
 class InteractionSpot;
 
@@ -43,12 +47,13 @@ public:
 	/// <param name="position"></param>
 	/// <param name="direction"></param>
 	void SetUp(const Vector3& position, const Vector3& direction);
-
+	/// <summary>
+	/// 更新
+	/// </summary>
+	/// <param name="key"></param>
 	void Update(const Vector2Int& key);
 private:
 	// スポット配列
 	std::map<std::string, InteractionSpot*> interactionSpots_;
-	// インタラクト用のオブジェクト
-	InteractionSpot* InteractObject_ = nullptr;
 
 };

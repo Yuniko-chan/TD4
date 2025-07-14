@@ -1,8 +1,8 @@
 #pragma once
 #include "../../../Utility/Common/OwnerComponent.h"
-#include "../../../Engine/Object/MeshObject.h"
 
 class Player;
+class InteractionSpot;
 
 class BaseInteractionVisualizer : public OwnerComponent<Player>
 {
@@ -12,8 +12,12 @@ public:
 	/// </summary>
 	/// <param name="owner"></param>
 	virtual void Initialize(Player* owner);
+	/// <summary>
+	/// 更新
+	/// </summary>
+	virtual void Update();
 
-private:
-
-
+protected:
+	// インタラクト用のオブジェクト
+	InteractionSpot* InteractObject_ = nullptr;
 };

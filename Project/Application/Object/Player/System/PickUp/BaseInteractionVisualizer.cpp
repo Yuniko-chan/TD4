@@ -6,3 +6,8 @@ void BaseInteractionVisualizer::Initialize(Player* owner)
 	// オーナーの設定
 	SetOwner(owner);
 }
+
+void BaseInteractionVisualizer::Update()
+{
+
+}

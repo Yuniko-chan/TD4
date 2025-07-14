@@ -1,7 +1,6 @@
 #include "PlayerPickupManager.h"
 
 #include "../Player.h"
-//#include "PickUp/PartJudgeSystem.h"
 
 #include "../../Car/CarLists.h"
 #include "../../Car/Manager/VehiclePartsManager.h"
@@ -20,9 +19,12 @@ void PlayerPickupManager::Initialize()
 {
 	judgeSystem_ = std::make_unique<PartJudgeSystem>();
 	judgeSystem_->SetOwner(owner_);
-	// 
+	// 置ける
 	attachInteract_ = std::make_unique<AttachVisualizer>();
 	attachInteract_->Initialize(owner_);
+	// 拾える
+	pickupInteract_ = std::make_unique<PickupVisualizer>();
+	pickupInteract_->Initialize(owner_);
 }
 
 void PlayerPickupManager::Update()
@@ -36,8 +38,15 @@ void PlayerPickupManager::Update()
 			interactDuration_ = std::nullopt;
 		}
 	}
+	// インタラクト更新
+	pickupInteract_->Update();
 
 	if (holdParts_) {
+		PickupVisualizer* pickUp = static_cast<PickupVisualizer*>(pickupInteract_.get());
+		if (pickUp->IsParent()) {
+			pickUp->SetTransform(nullptr);
+		}
+
 		// コアなら処理を行わない
 		if (holdParts_->GetClassNameString() == "VehicleCore") {
 			return;
@@ -50,6 +59,18 @@ void PlayerPickupManager::Update()
 		AttachVisualizer* ptr = static_cast<AttachVisualizer*>(attachInteract_.get());
 		ptr->SetUp(nearPoint.second, owner_->GetCore()->GetWorldTransformAdress()->direction_);
 		ptr->Update(nearKey_);
+	}
+	else {
+		PickupVisualizer* pickUp = static_cast<PickupVisualizer*>(pickupInteract_.get());
+		// 検索処理
+		// 一番近いの検索→Stateが通常かつ歩いている場合→場所取得（解除・拾う条件式を同じく行う
+		MeshObject* interactObject = judgeSystem_->GetNearObject(partsManager_, pickupPointManager_);
+		if (interactObject) {
+			pickUp->SetTransform(interactObject->GetWorldTransformAdress());
+		}
+		else {
+			pickUp->SetTransform(nullptr);
+		}
 	}
 }
 
@@ -109,6 +130,13 @@ void PlayerPickupManager::SpotSetup(const std::vector<std::pair<std::string, Int
 	for (auto it = spots.begin(); it != spots.end(); ++it) {
 		ptr->AddSpot((*it).first, (*it).second);
 	}
+}
+
+void PlayerPickupManager::InteractSetup(InteractionSpot* spot)
+{
+	PickupVisualizer* ptr = static_cast<PickupVisualizer*>(pickupInteract_.get());
+	// 設定
+	ptr->SetSpot(spot);
 }
 
 void PlayerPickupManager::InteractParts()
