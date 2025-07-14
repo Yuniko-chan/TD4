@@ -59,6 +59,11 @@ public:
 	/// <param name="manager"></param>
 	void SetPartsManager(VehiclePartsManager* manager) { partsManager_ = manager; }
 	void SetPickupPointManager(PickupPointManager* manager) { pickupPointManager_ = manager; }
+
+	/// <summary>
+	/// げったー
+	/// </summary>
+	Car::IParts* GetHoldParts() { return holdParts_; }
 	
 	/// <summary>
 	/// スポットの初期化

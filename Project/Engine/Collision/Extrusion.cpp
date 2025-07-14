@@ -2,133 +2,179 @@
 
 Vector3 Extrusion::OBBAndOBB(OBB* pushedOut, OBB* pushOut)
 {
+	Vector3* pushOutOtientatuons = pushOut->otientatuons_;
 
-    // pushOutを分解
-        
-    // OBB平面作成
-    Vector3 planeYZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushOut->otientatuons_[0].x), 1.0f - std::fabs(pushOut->otientatuons_[0].y), 1.0f - std::fabs(pushOut->otientatuons_[0].z) });
-    Vector3 planeXZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushOut->otientatuons_[1].x), 1.0f - std::fabs(pushOut->otientatuons_[1].y), 1.0f - std::fabs(pushOut->otientatuons_[1].z) });
-    Vector3 planeXY = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushOut->otientatuons_[2].x), 1.0f - std::fabs(pushOut->otientatuons_[2].y), 1.0f - std::fabs(pushOut->otientatuons_[2].z) });
+	Vector3 pushOutSize = pushOut->size_;
 
-    Vector3 size = pushOut->size_;
-    Vector3 center = pushOut->center_;
+	Vector3 pushOutCenter = pushOut->center_;
 
-    // 頂点求める
-    Vector3 vertices[8];
+	//頂点
+	Vector3 vertex[8];
 
-    // 左 上 前
-    vertices[0] = {
-        (-size.x * planeYZ.x + size.y * planeXZ.x + -size.z * planeXY.x),
-        (-size.x * planeYZ.y + size.y * planeXZ.y + -size.z * planeXY.y),
-        (-size.x * planeYZ.z + size.y * planeXZ.z + -size.z * planeXY.z)
-    };
+	vertex[0] = {
+		(-pushOutSize.x * pushOutOtientatuons[0].x + pushOutSize.y * pushOutOtientatuons[1].x +
+					 -pushOutSize.z * pushOutOtientatuons[2].x),
+		(-pushOutSize.x * pushOutOtientatuons[0].y + pushOutSize.y * pushOutOtientatuons[1].y +
+					 -pushOutSize.z * pushOutOtientatuons[2].y),
+		(-pushOutSize.x * pushOutOtientatuons[0].z + pushOutSize.y * pushOutOtientatuons[1].z +
+					 -pushOutSize.z * pushOutOtientatuons[2].z) };
 
-    // 左 上 後
-    vertices[1] = {
-        (-size.x * planeYZ.x + size.y * planeXZ.x + size.z * planeXY.x),
-        (-size.x * planeYZ.y + size.y * planeXZ.y + size.z * planeXY.y),
-        (-size.x * planeYZ.z + size.y * planeXZ.z + size.z * planeXY.z)
-    };
+	vertex[1] = {
+	   (-pushOutSize.x * pushOutOtientatuons[0].x + pushOutSize.y * pushOutOtientatuons[1].x +
+					 pushOutSize.z * pushOutOtientatuons[2].x),
+		(-pushOutSize.x * pushOutOtientatuons[0].y + pushOutSize.y * pushOutOtientatuons[1].y +
+					 pushOutSize.z * pushOutOtientatuons[2].y),
+		(-pushOutSize.x * pushOutOtientatuons[0].z + pushOutSize.y * pushOutOtientatuons[1].z +
+					 pushOutSize.z * pushOutOtientatuons[2].z) };
 
-    // 右 上 前
-    vertices[2] = {
-        (size.x * planeYZ.x + size.y * planeXZ.x + -size.z * planeXY.x),
-        (size.x * planeYZ.y + size.y * planeXZ.y + -size.z * planeXY.y),
-        (size.x * planeYZ.z + size.y * planeXZ.z + -size.z * planeXY.z)
-    };
+	vertex[2] = {
+		(pushOutSize.x * pushOutOtientatuons[0].x + pushOutSize.y * pushOutOtientatuons[1].x +
+					 -pushOutSize.z * pushOutOtientatuons[2].x),
+		(pushOutSize.x * pushOutOtientatuons[0].y + pushOutSize.y * pushOutOtientatuons[1].y +
+					 -pushOutSize.z * pushOutOtientatuons[2].y),
+		(pushOutSize.x * pushOutOtientatuons[0].z + pushOutSize.y * pushOutOtientatuons[1].z +
+					 -pushOutSize.z * pushOutOtientatuons[2].z) };
 
-    // 右 上 後
-    vertices[3] = {
-        (size.x * planeYZ.x + size.y * planeXZ.x + size.z * planeXY.x),
-        (size.x * planeYZ.y + size.y * planeXZ.y + size.z * planeXY.y),
-        (size.x * planeYZ.z + size.y * planeXZ.z + size.z * planeXY.z)
-    };
+	vertex[3] = {
+		(pushOutSize.x * pushOutOtientatuons[0].x + pushOutSize.y * pushOutOtientatuons[1].x +
+					 pushOutSize.z * pushOutOtientatuons[2].x),
+		(pushOutSize.x * pushOutOtientatuons[0].y + pushOutSize.y * pushOutOtientatuons[1].y +
+					 pushOutSize.z * pushOutOtientatuons[2].y),
+		(pushOutSize.x * pushOutOtientatuons[0].z + pushOutSize.y * pushOutOtientatuons[1].z +
+					 pushOutSize.z * pushOutOtientatuons[2].z) };
 
-    // 左 下 前
-    vertices[4] = {
-        (-size.x * planeYZ.x + -size.y * planeXZ.x + -size.z * planeXY.x),
-        (-size.x * planeYZ.y + -size.y * planeXZ.y + -size.z * planeXY.y),
-        (-size.x * planeYZ.z + -size.y * planeXZ.z + -size.z * planeXY.z)
-    };
+	vertex[4] = {
+		(-pushOutSize.x * pushOutOtientatuons[0].x + -pushOutSize.y * pushOutOtientatuons[1].x +
+					 -pushOutSize.z * pushOutOtientatuons[2].x),
+		(-pushOutSize.x * pushOutOtientatuons[0].y + -pushOutSize.y * pushOutOtientatuons[1].y +
+					 -pushOutSize.z * pushOutOtientatuons[2].y),
+		(-pushOutSize.x * pushOutOtientatuons[0].z + -pushOutSize.y * pushOutOtientatuons[1].z +
+					 -pushOutSize.z * pushOutOtientatuons[2].z) };
 
-    // 左 下 後
-    vertices[5] = {
-        (-size.x * planeYZ.x + -size.y * planeXZ.x + size.z * planeXY.x),
-        (-size.x * planeYZ.y + -size.y * planeXZ.y + size.z * planeXY.y),
-        (-size.x * planeYZ.z + -size.y * planeXZ.z + size.z * planeXY.z)
-    };
+	vertex[5] = {
+		(-pushOutSize.x * pushOutOtientatuons[0].x + -pushOutSize.y * pushOutOtientatuons[1].x +
+					 pushOutSize.z * pushOutOtientatuons[2].x),
+		(-pushOutSize.x * pushOutOtientatuons[0].y + -pushOutSize.y * pushOutOtientatuons[1].y +
+					 pushOutSize.z * pushOutOtientatuons[2].y),
+		(-pushOutSize.x * pushOutOtientatuons[0].z + -pushOutSize.y * pushOutOtientatuons[1].z +
+					 pushOutSize.z * pushOutOtientatuons[2].z) };
 
-    // 右 下 前
-    vertices[6] = {
-        (size.x * planeYZ.x + -size.y * planeXZ.x + -size.z * planeXY.x),
-        (size.x * planeYZ.y + -size.y * planeXZ.y + -size.z * planeXY.y),
-        (size.x * planeYZ.z + -size.y * planeXZ.z + -size.z * planeXY.z)
-    };
+	vertex[6] = {
+		(pushOutSize.x * pushOutOtientatuons[0].x + -pushOutSize.y * pushOutOtientatuons[1].x +
+					 -pushOutSize.z * pushOutOtientatuons[2].x),
+		(pushOutSize.x * pushOutOtientatuons[0].y + -pushOutSize.y * pushOutOtientatuons[1].y +
+					 -pushOutSize.z * pushOutOtientatuons[2].y),
+		(pushOutSize.x * pushOutOtientatuons[0].z + -pushOutSize.y * pushOutOtientatuons[1].z +
+					 -pushOutSize.z * pushOutOtientatuons[2].z) };
 
-    // 右 下 後
-    vertices[7] = {
-        (size.x * planeYZ.x + -size.y * planeXZ.x + size.z * planeXY.x),
-        (size.x * planeYZ.y + -size.y * planeXZ.y + size.z * planeXY.y),
-        (size.x * planeYZ.z + -size.y * planeXZ.z + size.z * planeXY.z)
-    };
+	vertex[7] = {
+		(pushOutSize.x * pushOutOtientatuons[0].x + -pushOutSize.y * pushOutOtientatuons[1].x +
+					 pushOutSize.z * pushOutOtientatuons[2].x),
+		(pushOutSize.x * pushOutOtientatuons[0].y + -pushOutSize.y * pushOutOtientatuons[1].y +
+					 pushOutSize.z * pushOutOtientatuons[2].y),
+		(pushOutSize.x * pushOutOtientatuons[0].z + -pushOutSize.y * pushOutOtientatuons[1].z +
+					 pushOutSize.z * pushOutOtientatuons[2].z) };
 
-    Vector3 planeVertices[6][4];
+	Vector3 useVertex[6][4]{
+		{vertex[2], vertex[3], vertex[7], vertex[6]},
+		{vertex[1], vertex[0], vertex[4], vertex[5]},
+		{vertex[0], vertex[1], vertex[3], vertex[2]},
+		{vertex[6], vertex[7], vertex[5], vertex[4]},
+		{vertex[5], vertex[7], vertex[3], vertex[1]},
+		{vertex[0], vertex[2], vertex[6], vertex[4]},
+	};
 
-    // 前
-    planeVertices[0][0] = vertices[4];
-    planeVertices[0][1] = vertices[0];
-    planeVertices[0][2] = vertices[6];
-    planeVertices[0][3] = vertices[2];
+	// 氷から平面
+	Vector3 icePlaneNormal[6] = {};
+	icePlaneNormal[0] = pushOutOtientatuons[0];
+	icePlaneNormal[1] = pushOutOtientatuons[0] * -1;
+	icePlaneNormal[2] = pushOutOtientatuons[1];
+	icePlaneNormal[3] = pushOutOtientatuons[1] * -1;
+	icePlaneNormal[4] = pushOutOtientatuons[2];
+	icePlaneNormal[5] = pushOutOtientatuons[2] * -1;
+	float iceDistance[6] = {};
+	iceDistance[0] = pushOutSize.x;
+	iceDistance[1] = pushOutSize.x;
+	iceDistance[2] = pushOutSize.y;
+	iceDistance[3] = pushOutSize.y;
+	iceDistance[4] = pushOutSize.z;
+	iceDistance[5] = pushOutSize.z;
 
-    // 後
-    planeVertices[1][0] = vertices[7];
-    planeVertices[1][1] = vertices[3];
-    planeVertices[1][2] = vertices[5];
-    planeVertices[1][3] = vertices[1];
+	//線分作成
+	Vector3 origin = { 0.0f,0.0f,0.0f };
+	Vector3 diff = pushedOut->center_ - pushOutCenter;
+	size_t num = 0;
 
-    // 右
-    planeVertices[2][0] = vertices[6];
-    planeVertices[2][1] = vertices[2];
-    planeVertices[2][2] = vertices[7];
-    planeVertices[2][3] = vertices[3];
+	for (size_t i = 0; i < 6; i++) {
 
-    // 左
-    planeVertices[3][0] = vertices[5];
-    planeVertices[3][1] = vertices[1];
-    planeVertices[3][2] = vertices[4];
-    planeVertices[3][3] = vertices[0];
+		// 垂直判定のため、法線と線の内積を求める
+		float dot = Vector3::Dot(icePlaneNormal[i], diff);
 
-    // 上
-    planeVertices[4][0] = vertices[0];
-    planeVertices[4][1] = vertices[1];
-    planeVertices[4][2] = vertices[3];
-    planeVertices[4][3] = vertices[2];
+		// 衝突しているかも
+		if (dot != 0.0f) {
 
-    // 下
-    planeVertices[5][0] = vertices[5];
-    planeVertices[5][1] = vertices[4];
-    planeVertices[5][2] = vertices[6];
-    planeVertices[5][3] = vertices[7];
+			// tを求める
+			float t = (iceDistance[i] - Vector3::Dot(origin, icePlaneNormal[i])) / dot;
 
-    Vector3 extrusion = { 0.0f,0.0f,0.0f };
+			if (t >= 0) {
 
-    for (uint32_t i = 0; i < 6; ++i) {
+				//平面の中か
+				Vector3 v01 = useVertex[i][1] - useVertex[i][0];
+				Vector3 v12 = useVertex[i][2] - useVertex[i][1];
+				Vector3 v23 = useVertex[i][3] - useVertex[i][2];
+				Vector3 v30 = useVertex[i][0] - useVertex[i][3];
 
-        Plane plane;
+				Vector3 v1p = origin + (diff * t) - useVertex[i][1];
+				Vector3 v2p = origin + (diff * t) - useVertex[i][2];
+				Vector3 v3p = origin + (diff * t) - useVertex[i][3];
+				Vector3 v0p = origin + (diff * t) - useVertex[i][0];
 
-        Vector3 v01 = planeVertices[i][1] - planeVertices[i][0];
-        Vector3 v12 = planeVertices[i][2] - planeVertices[i][1];
-        Vector3 v20 = planeVertices[i][0] - planeVertices[i][2];
+				Vector3 cross01 = Vector3::Cross(v01, v1p);
+				Vector3 cross12 = Vector3::Cross(v12, v2p);
+				Vector3 cross23 = Vector3::Cross(v23, v3p);
+				Vector3 cross30 = Vector3::Cross(v30, v0p);
 
-        //平面を求める
-        plane.normal_ = Vector3::Normalize(Vector3::Cross(v01, v12));
-        plane.distance_ = Vector3::Dot(planeVertices[i][0], plane.normal_);
+				if (Vector3::Dot(cross01, icePlaneNormal[i]) >= 0.0f &&
+					Vector3::Dot(cross12, icePlaneNormal[i]) >= 0.0f &&
+					Vector3::Dot(cross23, icePlaneNormal[i]) >= 0.0f &&
+					Vector3::Dot(cross30, icePlaneNormal[i]) >= 0.0f) {
 
-        extrusion += OBBAndPlane(pushedOut, &plane, planeVertices[i]);
+					num = i;
+					break;
+				}
+			}
 
-    }
+		}
 
-    return extrusion;
+	}
+
+	//平面とObb
+	float r = 0.0f;
+	Vector3* playerOtientatuons = pushedOut->otientatuons_;
+	float playersize[3] = {
+		pushedOut->size_.x,
+		pushedOut->size_.y,
+		pushedOut->size_.z,
+	};
+	for (size_t i = 0; i < 3; i++) {
+		r += std::fabsf(Vector3::Dot(playerOtientatuons[i] * playersize[i], icePlaneNormal[num]));
+	}
+
+	//平面とobbの距離
+	Vector3 playerPos = pushedOut->center_;
+	Vector3 planePos =
+		pushOutCenter + (icePlaneNormal[num] * iceDistance[num]);
+
+	float s = Vector3::Dot(playerPos - planePos, icePlaneNormal[num]);
+	float distance = 0.0f;
+	if (s > 0) {
+		distance = r - std::fabsf(s);
+	}
+	else {
+		distance = r + std::fabsf(s);
+	}
+
+	return icePlaneNormal[num] * distance;
 	
 }
 
@@ -136,14 +182,14 @@ Vector3 Extrusion::OBBAndPlane(OBB* pushedOut, Plane* pushOut, Vector3 planeVert
 {
 
     // OBB平面作成
-    //Vector3 planeYZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushedOut->otientatuons_[0].x), 1.0f - std::fabs(pushedOut->otientatuons_[0].y), 1.0f - std::fabs(pushedOut->otientatuons_[0].z) });
-    //Vector3 planeXZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushedOut->otientatuons_[1].x), 1.0f - std::fabs(pushedOut->otientatuons_[1].y), 1.0f - std::fabs(pushedOut->otientatuons_[1].z) });
-    //Vector3 planeXY = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushedOut->otientatuons_[2].x), 1.0f - std::fabs(pushedOut->otientatuons_[2].y), 1.0f - std::fabs(pushedOut->otientatuons_[2].z) });
+    Vector3 planeYZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushedOut->otientatuons_[0].x), 1.0f - std::fabs(pushedOut->otientatuons_[0].y), 1.0f - std::fabs(pushedOut->otientatuons_[0].z) });
+    Vector3 planeXZ = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushedOut->otientatuons_[1].x), 1.0f - std::fabs(pushedOut->otientatuons_[1].y), 1.0f - std::fabs(pushedOut->otientatuons_[1].z) });
+    Vector3 planeXY = Vector3::Normalize(Vector3{ 1.0f - std::fabs(pushedOut->otientatuons_[2].x), 1.0f - std::fabs(pushedOut->otientatuons_[2].y), 1.0f - std::fabs(pushedOut->otientatuons_[2].z) });
 
     // 軸固定
-    Vector3 planeYZ = Vector3{ 0.0f, 0.5f,0.5f };
-    Vector3 planeXZ = Vector3{ 0.5f, 0.0f,0.5f };
-    Vector3 planeXY = Vector3{ 0.5f, 0.5f,0.0f };
+    //Vector3 planeYZ = pushedOut->otientatuons_[0];
+    //Vector3 planeXZ = pushedOut->otientatuons_[1];
+    //Vector3 planeXY = pushedOut->otientatuons_[2];
 
     Vector3 size = pushedOut->size_;
     Vector3 center = pushedOut->center_;
