@@ -257,13 +257,13 @@ void GameScene::ImguiDraw(){
 	ImGui::Checkbox("DebugCamera", &isDebugCameraActive_);
 	ImGui::End();
 
-	debugCamera_->ImGuiDraw();
+	//debugCamera_->ImGuiDraw();
 
 	//followCamera_->ImGuiDraw();
 	cameraManager_->ImGuiDraw();
 	objectManager_->ImGuiDraw();
 
-	PostEffect::GetInstance()->ImGuiDraw();
+	//PostEffect::GetInstance()->ImGuiDraw();
 
 	uiManager_->ImGuiDraw();
 
