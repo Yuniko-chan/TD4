@@ -176,9 +176,7 @@
     <ClCompile Include="Application\Object\Utility\GlobalParameterStructs.cpp" />
     <ClCompile Include="Application\Object\Utility\Timer\FrameTimer.cpp" />
     <ClCompile Include="Application\Object\Wall\Wall.cpp" />
-    <ClCompile Include="Application\OutGameObject\ClearBackGround\ClearBackGround.cpp" />
     <ClCompile Include="Application\OutGameObject\Curtain\Curtain.cpp" />
-    <ClCompile Include="Application\OutGameObject\TitleBackGround\TitleBackGround.cpp" />
     <ClCompile Include="Application\ParticleManager\ParticleManager.cpp" />
     <ClCompile Include="Application\Particle\RunDustParticle\RunDustParticle.cpp" />
     <ClCompile Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.cpp" />
@@ -328,9 +326,6 @@
     <ClCompile Include="Engine\Math\Quaternion.cpp">
       <Filter>Engine\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\base\GraphicsPipelineState\GraphicsPipelineState.cpp">
-      <Filter>Engine\Base\GraphicsPipelineState</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\base\GraphicsPipelineState\BlendStateManager.cpp">
       <Filter>Engine\Base\GraphicsPipelineState</Filter>
     </ClCompile>
@@ -352,9 +347,6 @@
     <ClCompile Include="Engine\Light\SpotLight\SpotLightManager.cpp">
       <Filter>Engine\Light\SpotLight</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3D\Model\Model.cpp">
-      <Filter>Engine\3D\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\3D\Model\Mesh.cpp">
       <Filter>Engine\3D\Model</Filter>
     </ClCompile>
@@ -366,12 +358,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Math\Vector\Vector2.cpp">
       <Filter>Engine\Math\Vector2</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Math\Vector\Vector3.cpp">
-      <Filter>Engine\Math\vector3</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Math\Matrix\Matrix4x4.cpp">
-      <Filter>Engine\Math\Matrix4x4</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Collider2D\Box.cpp">
       <Filter>Engine\Collider2D</Filter>
@@ -445,17 +431,11 @@
     <ClCompile Include="Engine\2D\ImGuiManager.cpp">
       <Filter>Engine\2D\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2D\Sprite.cpp">
-      <Filter>Engine\2D\Sprite</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\3D\Fog\FogManager.cpp">
       <Filter>Engine\3D\Fog</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3D\Line\DrawLine.cpp">
       <Filter>Engine\3D\Line</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3D\Material\Material.cpp">
-      <Filter>Engine\3D\Material</Filter>
     </ClCompile>
     <ClCompile Include="Engine\3D\Model\ModelManager.cpp">
       <Filter>Engine\3D\Model</Filter>
@@ -468,9 +448,6 @@
     </ClCompile>
     <ClCompile Include="Engine\3D\Outline\Outline.cpp">
       <Filter>Engine\3D\Outline</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3D\Transform\WorldTransform.cpp">
-      <Filter>Engine\3D\Transform</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\WindowSprite\WindowSprite.cpp">
       <Filter>Engine\Base\Texture\WindowSprite</Filter>
@@ -850,9 +827,6 @@
     <ClCompile Include="Engine\3D\Model\ModelLoaderFromCourseEX.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Application\Object\Player\System\PickUp\PartJudgeSystem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -1069,9 +1043,6 @@
     <ClCompile Include="Application\ClearSceneObject\CourseTraversalRank.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ClearSceneObject\CourseTraversalDraw.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\3D\Material\Material.cpp" />
     <ClCompile Include="Engine\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="Engine\3D\Model\Model.cpp" />
@@ -1090,952 +1061,21 @@
     <ClCompile Include="Engine\base\WinApp.cpp" />
     <ClCompile Include="Engine\3D\Transform\WorldTransform.cpp" />
     <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp" />
+    <ClCompile Include="Application\ClearSceneObject\CourseTraversalDraw.cpp" />
+    <ClCompile Include="Engine\3D\Material\Material.cpp" />
+    <ClCompile Include="Engine\Math\Matrix\Matrix4x4.cpp" />
+    <ClCompile Include="Engine\3D\Model\Model.cpp" />
+    <ClCompile Include="Engine\base\GraphicsPipelineState\GraphicsPipelineState.cpp" />
+    <ClCompile Include="Engine\2D\Sprite.cpp" />
+    <ClCompile Include="Engine\Math\Vector\Vector3.cpp" />
+    <ClCompile Include="Engine\3D\Transform\WorldTransform.cpp" />
+    <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp" />
+    <ClCompile Include="Application\OutGameObject\OutGameSpriteObject.cpp" />
+    <ClCompile Include="Application\OutGameObject\OutGameSpriteObjectAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="externals\imgui\imgui.h">
-      <Filter>externals\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imgui_impl_dx12.h">
-      <Filter>externals\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imgui_impl_win32.h">
-      <Filter>externals\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imgui_internal.h">
-      <Filter>externals\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imstb_rectpack.h">
-      <Filter>externals\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imstb_textedit.h">
-      <Filter>externals\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\imstb_truetype.h">
-      <Filter>externals\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Audio\Audio.h">
-      <Filter>Engine\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\BufferResource.h">
-      <Filter>Engine\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\WinApp.h">
-      <Filter>Engine\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Camera\DebugCamera.h">
-      <Filter>Engine\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Camera\BaseCamera.h">
-      <Filter>Engine\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider\AABB\AABB.h">
-      <Filter>Engine\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider\ColliderDebugDraw\ColliderDebugDraw.h">
-      <Filter>Engine\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider\OBB\OBB.h">
-      <Filter>Engine\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider\Plane\Plane.h">
-      <Filter>Engine\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider\Sphere\Sphere.h">
-      <Filter>Engine\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider\Triangle\Triangle.h">
-      <Filter>Engine\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider\Collider.h">
-      <Filter>Engine\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collision\BaseCollisionManager.h">
-      <Filter>Engine\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collision\Collision.h">
-      <Filter>Engine\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Framework\MyFramework.h">
-      <Filter>Engine\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GlobalVariables\GlobalVariables.h">
-      <Filter>Engine\GlobalVariabls</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Input\Input.h">
-      <Filter>Engine\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Vector\Vector4.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\DeltaTime.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Math.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Ease.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Scene\SceneFactory\AbstractSceneFactory.h">
-      <Filter>Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Scene\BaseScene\BaseScene.h">
-      <Filter>Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\SceneTransition\BaseSceneTransition\BaseSceneTransition.h">
-      <Filter>Engine\SceneTransition</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\SceneTransition\SceneTransitionFactory\AbstractSceneTransitionFactory.h">
-      <Filter>Engine\SceneTransition</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Skydome\Skydome.h">
-      <Filter>Application\Object\Skydome</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Scene\SceneName.h">
-      <Filter>Application\System\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Scene\ClearScene\ClearScene.h">
-      <Filter>Application\System\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Scene\GameScene\GameScene.h">
-      <Filter>Application\System\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Scene\SceneFactory\SceneFactory.h">
-      <Filter>Application\System\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Scene\SelectScene\SelectScene.h">
-      <Filter>Application\System\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SceneTransition\SceneTransitionFactory\SceneTransitionFactory.h">
-      <Filter>Application\SceneTransition</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SceneTransition\SceneTransitionBlackOut\SceneTransitionBlackOut.h">
-      <Filter>Application\SceneTransition</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Scene\TitleScene\TitleScene.h">
-      <Filter>Application\System\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Line\Segment.h">
-      <Filter>Engine\Line</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider\Capsule\Capsule.h">
-      <Filter>Engine\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Line\Line.h">
-      <Filter>Engine\Line</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\ShortestDistance.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Camera\CameraForGPU.h">
-      <Filter>Engine\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Collider\ColliderParentObject.h">
-      <Filter>Application\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Audio\AudioManager.h">
-      <Filter>Engine\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider\ColliderShape.h">
-      <Filter>Engine\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collision\CollisionData.h">
-      <Filter>Engine\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Scene\TutorialScene\TutorialScene.h">
-      <Filter>Application\System\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Quaternion.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\RandomEngine.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Collider\CollisionConfig.h">
-      <Filter>Application\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\GraphicsPipelineState\GraphicsPipelineState.h">
-      <Filter>Engine\Base\GraphicsPipelineState</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\GraphicsPipelineState\SamplerManager.h">
-      <Filter>Engine\Base\GraphicsPipelineState</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\GraphicsPipelineState\BlendStateManager.h">
-      <Filter>Engine\Base\GraphicsPipelineState</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\GraphicsPipelineState\InputLayoutManager.h">
-      <Filter>Engine\Base\GraphicsPipelineState</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\GraphicsPipelineState\RootParameterManager.h">
-      <Filter>Engine\Base\GraphicsPipelineState</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Light\DirectionalLight\DirectionalLight.h">
-      <Filter>Engine\Light\DirctionalLight</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Light\DirectionalLight\DirectionalLightData.h">
-      <Filter>Engine\Light\DirctionalLight</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Light\PointLight\PointLightData.h">
-      <Filter>Engine\Light\PointLight</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Light\SpotLight\SpotLightData.h">
-      <Filter>Engine\Light\SpotLight</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Light\PointLight\PointLightManager.h">
-      <Filter>Engine\Light\PointLight</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Light\SpotLight\SpotLightManager.h">
-      <Filter>Engine\Light\SpotLight</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Model\Model.h">
-      <Filter>Engine\3D\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Model\Mesh.h">
-      <Filter>Engine\3D\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Model\ModelLoader.h">
-      <Filter>Engine\3D\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Model\ModelNode.h">
-      <Filter>Engine\3D\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Vector\Vector2.h">
-      <Filter>Engine\Math\Vector2</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Vector\Vector3.h">
-      <Filter>Engine\Math\vector3</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Matrix\Matrix4x4.h">
-      <Filter>Engine\Math\Matrix4x4</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider2D\Box.h">
-      <Filter>Engine\Collider2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider2D\Circle.h">
-      <Filter>Engine\Collider2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider2D\Collider2D.h">
-      <Filter>Engine\Collider2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider2D\ColliderShape2D.h">
-      <Filter>Engine\Collider2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider2D\Collider2DDebugDrawForGPU.h">
-      <Filter>Engine\Collider2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collision2D\Collision2DDebugDraw.h">
-      <Filter>Engine\Collision2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collision2D\Collision2DManager.h">
-      <Filter>Engine\Collision2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collision2D\Collision2D.h">
-      <Filter>Engine\Collision2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\MassPoint\MassPoint.h">
-      <Filter>Engine\Physics\MassPoint</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\RigidBody\RigidBody.h">
-      <Filter>Engine\Physics\RigidBody</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\RigidBody\InertiaTensor.h">
-      <Filter>Engine\Physics\RigidBody</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Camera\ViewProjectionMatrix.h">
-      <Filter>Engine\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Animation\NodeAnimationData.h">
-      <Filter>Engine\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Animation\AnimationData.h">
-      <Filter>Engine\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Animation\Animation.h">
-      <Filter>Engine\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Matrix\Matrix3x3.h">
-      <Filter>Engine\Math\Matrix3x3</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\CompileShader.h">
-      <Filter>Engine\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\PostEffect\PostEffect.h">
-      <Filter>Engine\PostEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider2D\Segment2D.h">
-      <Filter>Engine\Collider2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Animation\LocalMatrixManager.h">
-      <Filter>Engine\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Animation\LocalMatrix.h">
-      <Filter>Engine\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Model\ModelDraw.h">
-      <Filter>Engine\3D\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Model\ModelNodeData.h">
-      <Filter>Engine\3D\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\Spring\StructuralSpring.h">
-      <Filter>Engine\Physics\Spring</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\Spring\Spring.h">
-      <Filter>Engine\Physics\Spring</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\String\String.h">
-      <Filter>Engine\Physics\Spring</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\ContactRecord\ContactRecord.h">
       <Filter>Engine\Contactrecord</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Camera\FollowCamera.h">
-      <Filter>Application\FollowCamera</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\2D\ImGuiManager.h">
-      <Filter>Engine\2D\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\2D\SpriteForGPU.h">
-      <Filter>Engine\2D\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\2D\SpriteVertex.h">
-      <Filter>Engine\2D\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\2D\Sprite.h">
-      <Filter>Engine\2D\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Fog\FogManager.h">
-      <Filter>Engine\3D\Fog</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Fog\FogData.h">
-      <Filter>Engine\3D\Fog</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Line\DrawLine.h">
-      <Filter>Engine\3D\Line</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Line\LineForGPU.h">
-      <Filter>Engine\3D\Line</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Material\MaterialData.h">
-      <Filter>Engine\3D\Material</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Material\Material.h">
-      <Filter>Engine\3D\Material</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Model\ModelManager.h">
-      <Filter>Engine\3D\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\ManyObjects\LargeNumberOfObjects.h">
-      <Filter>Engine\3D\ManyObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\ManyObjects\OneOfManyObjects.h">
-      <Filter>Engine\3D\ManyObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Outline\OutLineData.h">
-      <Filter>Engine\3D\Outline</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Outline\Outline.h">
-      <Filter>Engine\3D\Outline</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Transform\TransformationMatrix.h">
-      <Filter>Engine\3D\Transform</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Transform\TransformStructure.h">
-      <Filter>Engine\3D\Transform</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Transform\WorldTransform.h">
-      <Filter>Engine\3D\Transform</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Vertex\VertexInfluence.h">
-      <Filter>Engine\3D\Vertex</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Vertex\VertexData.h">
-      <Filter>Engine\3D\Vertex</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Vertex\ColorVertexData.h">
-      <Filter>Engine\3D\Vertex</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Animation\SkinningInformation.h">
-      <Filter>Engine\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\WindowSprite\WindowSprite.h">
-      <Filter>Engine\Base\Texture\WindowSprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\ContactRecord\ContactRecord.h">
-      <Filter>Engine\Contactrecord</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Particle\BillBoardMatrix.h">
-      <Filter>Engine\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GPUParticle\GPUParticle.h">
-      <Filter>Engine\Particle\GPUParticle</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GPUParticle\GPUPerticleView.h">
-      <Filter>Engine\Particle\GPUParticle</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GPUParticle\ParticleCS.h">
-      <Filter>Engine\Particle\GPUParticle</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Level\LevelIndex.h">
-      <Filter>Engine\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Level\LevelData.h">
-      <Filter>Engine\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Level\LevelDataLoader.h">
-      <Filter>Engine\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Level\LevelDataManager.h">
-      <Filter>Engine\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Level\LevelDataViewing.h">
-      <Filter>Engine\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\SkyBox\SkyBox.h">
-      <Filter>Engine\SkyBox</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Object\AbstractObjectFactory.h">
-      <Filter>Engine\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Object\MeshObject.h">
-      <Filter>Engine\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Object\IObject.h">
-      <Filter>Engine\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Animation\LocalMatrixDraw.h">
-      <Filter>Engine\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Object\BaseObjectManager.h">
-      <Filter>Engine\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Manager\GameSceneObjectManager.h">
-      <Filter>Application\Object\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Manager\TutorialSceneObjectManager.h">
-      <Filter>Application\Object\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\PostEffect\ShockWave\ShockWaveData.h">
-      <Filter>Engine\PostEffect\ShockWave</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\PostEffect\ShockWave\ShockWaveManager.h">
-      <Filter>Engine\PostEffect\ShockWave</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\PostEffect\Velocity2D\Velocity2DManager.h">
-      <Filter>Engine\PostEffect\Velocity2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\PostEffect\Velocity2D\Velocity2DData.h">
-      <Filter>Engine\PostEffect\Velocity2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\PostEffect\HSV\HSVFilter.h">
-      <Filter>Engine\PostEffect\HSVFilter</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\Gravity\Gravity.h">
-      <Filter>Engine\Physics\Gravity</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GPUParticle\EmitterCS.h">
-      <Filter>Engine\Particle\GPUParticle</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\PerFrame.h">
-      <Filter>Engine\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Manager\TitleSceneObjectManager.h">
-      <Filter>Application\Object\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collision\Extrusion.h">
-      <Filter>Engine\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\Cloth\Cloth.h">
-      <Filter>Engine\Physics\Cloth</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Scene\DebugScene\DebugScene.h">
-      <Filter>Application\System\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\ClothGPU\ClothGPU.h">
-      <Filter>Engine\Physics\ClothGPU</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\Cloth\ClothModel.h">
-      <Filter>Engine\Physics\Cloth</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\Debug\CrashHandler.h">
-      <Filter>Engine\Base\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\Debug\D3DResourceLeakChecker.h">
-      <Filter>Engine\Base\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\Debug\QueryTimestamp.h">
-      <Filter>Engine\Base\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\Debug\SafeDelete.h">
-      <Filter>Engine\Base\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\Texture\TextureUAV.h">
-      <Filter>Engine\Base\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\Texture\TextureManager.h">
-      <Filter>Engine\Base\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\DescriptorHerpManager\DSVDescriptorHerpManager.h">
-      <Filter>Engine\Base\DescriptorHerpManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\DescriptorHerpManager\SRVDescriptorHerpManager.h">
-      <Filter>Engine\Base\DescriptorHerpManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\DescriptorHerpManager\RTVDescriptorHerpManager.h">
-      <Filter>Engine\Base\DescriptorHerpManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\Texture\RenderTargetTexture.h">
-      <Filter>Engine\Base\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\DxCommon\SwapChain.h">
-      <Filter>Engine\Base\DxCommon</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\DxCommon\DirectXCommon.h">
-      <Filter>Engine\Base\DxCommon</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\DxCommon\DxCommand.h">
-      <Filter>Engine\Base\DxCommon</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\DxCommon\DXGIDevice.h">
-      <Filter>Engine\Base\DxCommon</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\DxCommon\Log.h">
-      <Filter>Engine\Base\DxCommon</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ClothDemo\ClothDemo.h">
-      <Filter>Application\ClothDemo</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ClothDemo\CollisionObject\ClothDemoPlane.h">
-      <Filter>Application\ClothDemo\CollisionObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ClothDemo\CollisionObject\ClothDemoObject.h">
-      <Filter>Application\ClothDemo\CollisionObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ClothDemo\CollisionObject\ClothDemoSphere.h">
-      <Filter>Application\ClothDemo\CollisionObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ClothDemo\CollisionObject\ClothDemoCapsule.h">
-      <Filter>Application\ClothDemo\CollisionObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Effect\BillboardEffect.h">
-      <Filter>Application\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Factory\ObjectFactory.h">
-      <Filter>Application\Object\Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Factory\ObjectCreate.h">
-      <Filter>Application\Object\Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Collision\GameSceneCollisionManager.h">
-      <Filter>Application\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\BaseCharacter\BaseCharacterAnimation.h">
-      <Filter>Application\Object\BaseCharacter</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\System\Shadow\Shadow.h">
-      <Filter>Application\System\Shadow</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\System\Shadow\ShadowManager.h">
-      <Filter>Application\System\Shadow</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Factory\CreateObjectIndex.h">
-      <Filter>Application\Object\Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Factory\CreateObjectNames.h">
-      <Filter>Application\Object\Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\UI\UIManager.h">
-      <Filter>Application\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\UI\BaseUI.h">
-      <Filter>Application\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\System\PostEffectSystem\PostEffectSystem.h">
-      <Filter>Application\System\PostEffectSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Effect\EffectManager.h">
-      <Filter>Application\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Manager\ClearSceneObjectManager.h">
-      <Filter>Application\Object\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Collider2D\ColliderParentObject2D.h">
-      <Filter>Application\Collider2D</Filter>
-    </ClInclude>
-    <ClInclude Include="externals\imgui\ImGuizmo.h">
-      <Filter>externals\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h">
-      <Filter>Application\OutGameObject\Curtain</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Scene\SceneManager\BaseSceneManager.h">
-      <Filter>Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Scene\SceneManager\SceneManager.h">
-      <Filter>Application\System\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.h">
-      <Filter>Application\SceneTransition</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Framework\MyGame.h">
-      <Filter>Application\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\ClothGPU\ClothPipelineState.h">
-      <Filter>Engine\Physics\ClothGPU</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\ClothGPU\ClothManager.h">
-      <Filter>Engine\Physics\ClothGPU</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\ClothGPU\ClothGPUCollision.h">
-      <Filter>Engine\Physics\ClothGPU\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\ClothGPU\CollisionTypeIndex.h">
-      <Filter>Engine\Physics\ClothGPU\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Physics\ClothGPU\ClothGPUCollisionManager.h">
-      <Filter>Engine\Physics\ClothGPU\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Course\CoursePolygon.h">
-      <Filter>Application\Course</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Course\CoursePolygonType.h">
-      <Filter>Application\Course</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\DescriptorHandles.h">
-      <Filter>Engine\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Course\CourseCollisionSystem.h">
-      <Filter>Application\Course</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Course\Course.h">
-      <Filter>Application\Course</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Course\CourseCollisionPipeline.h">
-      <Filter>Application\Course</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Course\Demo\CourseDemoObject.h">
-      <Filter>Application\Course\Demo</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Course\CourseTexture.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Course\CourseLoader.h">
-      <Filter>Application\Course</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\GameObjectsList.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\Animation\PlayerAnimation.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\PlayerSystemLists.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\VehicleCore.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Parts\PartsInterface.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\System\PlayerCommand.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Parts\Engine\EngineParts.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Parts\Frame\ArmorFrameParts.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Parts\Tire\TireParts.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\CarLists.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\KeyConfig\GameKeyconfig.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\IPlayerState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\System\PlayerStateMachine.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\User\PlayerRootState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\PlayerStatesList.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\State\StateFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\State\IState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\State\StateMachine.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\Factory\PlayerStateFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Factory\VehicleFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\User\PlayerOnFootState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\User\PlayerInVehicleState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\Collision\PlayerCollision.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\User\PlayerRideActionState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Utility\Calc\MotionHelper.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Utility\Timer\FrameTimer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\DebugData\PlayerDebugData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\State\User\PlayerDropOffActionState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\System\PlayerPickupManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Utility\Common\GameObjectName.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Manager\VehiclePartsManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\VehicleStatus.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\VehicleCaluclator.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Utility\Calc\TransformHelper.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\System\PlayerFrontChecker.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\GlobalParameterManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Utility\Common\SingletonModule.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Physics\DriveSystem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Parts\System\VehicleConnector.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\Construction\VehicleConstructionSystem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Parts\System\PartsOffsetCalculator.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Utility\Common\OwnerComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\IronBall\ConicalPendulumIronBallData.h">
-      <Filter>Application\Object\Gimmick\IronBall</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\IronBall\ConicalPendulumIronBall.h">
-      <Filter>Application\Object\Gimmick\IronBall</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\IronBall\PendulumIronBall.h">
-      <Filter>Application\Object\Gimmick\IronBall</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\IronBall\PendulumIronBallData.h">
-      <Filter>Application\Object\Gimmick\IronBall</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\Cannon\Cannon.h">
-      <Filter>Application\Object\Gimmick\Cannon</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\Cannon\CannonData.h">
-      <Filter>Application\Object\Gimmick\Cannon</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\Cannon\cannonBallData.h">
-      <Filter>Application\Object\Gimmick\Cannon</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\Cannon\CannonBall.h">
-      <Filter>Application\Object\Gimmick\Cannon</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Wall\Wall.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\Cannon\CannonExplosionData.h">
-      <Filter>Application\Object\Gimmick\Cannon</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\Cannon\CannonExplosion.h">
-      <Filter>Application\Object\Gimmick\Cannon</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\Minigun\Minigun.h">
-      <Filter>Application\Object\Gimmick\Minigun</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunBullet.h">
-      <Filter>Application\Object\Gimmick\Minigun</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunData.h">
-      <Filter>Application\Object\Gimmick\Minigun</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunBulletData.h">
-      <Filter>Application\Object\Gimmick\Minigun</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\Obstacle\ObstacleData.h">
-      <Filter>Application\Object\Gimmick\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\Obstacle\Obstacle.h">
-      <Filter>Application\Object\Gimmick\Obstacle</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Utility\Math\Vector2Int.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Physics\System\VehicleEngine.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\VehicleSystems.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\Drive\DriveEngine.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Utility\Calc\VehicleCaluclator.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\Drive\DriveSystem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Terrain\TerrainObject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Utility\GlobalParameterStructs.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\Drive\DriveHandling.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Camera\OverheadCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Camera\GameCameraManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Camera\CameraLists.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Preset\VehiclePresetCreator.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Preset\VehiclePaths.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\PickupPoint\InterfacePickupPoint.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Manager\PickupPointManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Animation\VehicleAnimation.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\PickupPoint\User\EnginePickupPoint.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\PickupPoint\User\TirePickupPoint.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\PickupPoint\User\ArmorPickupPoint.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\PickupPoint\PickupPointLists.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Camera\Transition\TransitionCameraModule.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Parts\System\PartHPHandler.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Course\Debug\CourseDebugDraw.h">
-      <Filter>Application\Course\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunAnimation.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\Parts\System\PartCollisionHandler.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\CustomArea\CustomArea.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ParticleManager\ParticleManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Particle\RunDustParticle\RunDustParticle.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\UI\ManualUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Player\System\PickUp\PartJudgeSystem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\Damage\OverheatSystem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Car\System\VehicleSystemCommons.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Model\BaseInstancingDrawing.h">
-      <Filter>Engine\3D\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Model\InstancingDrawingData.h">
-      <Filter>Engine\3D\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\System\Draw\GameSceneInstancingDrawing.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Interact\InteractionSpot.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Interact\Manager\InteractionManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Course\CourseManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Object\Utility\Calc\CameraHelper.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\Model\BaseInstancingDrawingAnimation.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ClearSceneObject\CourseTraversalSystem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ClearSceneObject\CourseTraversalRank.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\ClearSceneObject\CourseTraversalDraw.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Camera\CameraLists.h" />
     <ClInclude Include="Application\Camera\GameCameraManager.h" />
@@ -2163,9 +1203,7 @@
     <ClInclude Include="Application\Object\Utility\Math\Vector2Int.h" />
     <ClInclude Include="Application\Object\Utility\Timer\FrameTimer.h" />
     <ClInclude Include="Application\Object\Wall\Wall.h" />
-    <ClInclude Include="Application\OutGameObject\ClearBackGround\ClearBackGround.h" />
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />
-    <ClInclude Include="Application\OutGameObject\TitleBackGround\TitleBackGround.h" />
     <ClInclude Include="Application\ParticleManager\ParticleManager.h" />
     <ClInclude Include="Application\Particle\RunDustParticle\RunDustParticle.h" />
     <ClInclude Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.h" />
@@ -2357,6 +1395,322 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Engine\Camera\ViewProjectionMatrix.h" />
     <ClInclude Include="Application\Camera\Animation\FollowCameraAnimation.h" />
+    <ClInclude Include="Application\Camera\CameraLists.h" />
+    <ClInclude Include="Application\Camera\GameCameraManager.h" />
+    <ClInclude Include="Application\Camera\OverheadCamera.h" />
+    <ClInclude Include="Application\Camera\Transition\TransitionCameraModule.h" />
+    <ClInclude Include="Application\ClearSceneObject\CourseTraversalDraw.h" />
+    <ClInclude Include="Application\ClearSceneObject\CourseTraversalRank.h" />
+    <ClInclude Include="Application\ClearSceneObject\CourseTraversalSystem.h" />
+    <ClInclude Include="Application\ClothDemo\ClothDemo.h" />
+    <ClInclude Include="Application\ClothDemo\CollisionObject\ClothDemoCapsule.h" />
+    <ClInclude Include="Application\ClothDemo\CollisionObject\ClothDemoObject.h" />
+    <ClInclude Include="Application\ClothDemo\CollisionObject\ClothDemoPlane.h" />
+    <ClInclude Include="Application\ClothDemo\CollisionObject\ClothDemoSphere.h" />
+    <ClInclude Include="Application\Collider2D\ColliderParentObject2D.h" />
+    <ClInclude Include="Application\Collision\GameSceneCollisionManager.h" />
+    <ClInclude Include="Application\Course\Course.h" />
+    <ClInclude Include="Application\Course\CourseCollisionPipeline.h" />
+    <ClInclude Include="Application\Course\CourseCollisionSystem.h" />
+    <ClInclude Include="Application\Course\CourseManager.h" />
+    <ClInclude Include="Application\Course\CoursePolygon.h" />
+    <ClInclude Include="Application\Course\CoursePolygonType.h" />
+    <ClInclude Include="Application\Course\CourseTexture.h" />
+    <ClInclude Include="Application\Course\Debug\CourseDebugDraw.h" />
+    <ClInclude Include="Application\Course\Demo\CourseDemoObject.h" />
+    <ClInclude Include="Application\Effect\BillboardEffect.h" />
+    <ClInclude Include="Application\Camera\FollowCamera.h" />
+    <ClInclude Include="Application\Collider\ColliderParentObject.h" />
+    <ClInclude Include="Application\Collider\CollisionConfig.h" />
+    <ClInclude Include="Application\Object\BaseCharacter\BaseCharacterAnimation.h" />
+    <ClInclude Include="Application\Object\Car\Animation\VehicleAnimation.h" />
+    <ClInclude Include="Application\Object\Interact\InteractionSpot.h" />
+    <ClInclude Include="Application\Object\Car\System\Construction\VehicleConstructionSystem.h" />
+    <ClInclude Include="Application\Object\Car\Manager\PickupPointManager.h" />
+    <ClInclude Include="Application\Object\Car\Manager\VehiclePartsManager.h" />
+    <ClInclude Include="Application\Object\Car\Parts\System\PartCollisionHandler.h" />
+    <ClInclude Include="Application\Object\Car\Parts\System\PartHPHandler.h" />
+    <ClInclude Include="Application\Object\Car\Parts\System\PartsOffsetCalculator.h" />
+    <ClInclude Include="Application\Object\Car\Parts\System\VehicleConnector.h" />
+    <ClInclude Include="Application\Object\Car\Physics\DriveSystem.h" />
+    <ClInclude Include="Application\Object\Car\Physics\System\VehicleEngine.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\InterfacePickupPoint.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\PickupPointLists.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\User\ArmorPickupPoint.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\User\EnginePickupPoint.h" />
+    <ClInclude Include="Application\Object\Car\PickupPoint\User\TirePickupPoint.h" />
+    <ClInclude Include="Application\Object\Car\Preset\VehiclePaths.h" />
+    <ClInclude Include="Application\Object\Car\Preset\VehiclePresetCreator.h" />
+    <ClInclude Include="Application\Object\Car\System\Damage\OverheatSystem.h" />
+    <ClInclude Include="Application\Object\Car\System\Drive\DriveSystem.h" />
+    <ClInclude Include="Application\Object\Car\System\VehicleSystemCommons.h" />
+    <ClInclude Include="Application\Object\CustomArea\CustomArea.h" />
+    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunAnimation.h" />
+    <ClInclude Include="Application\Object\Interact\Manager\InteractionManager.h" />
+    <ClInclude Include="Application\Object\Player\System\PickUp\PartJudgeSystem.h" />
+    <ClInclude Include="Application\Object\Utility\Calc\CameraHelper.h" />
+    <ClInclude Include="Application\Object\Utility\Calc\VehicleCaluclator.h" />
+    <ClInclude Include="Application\Object\Car\System\Drive\DriveEngine.h" />
+    <ClInclude Include="Application\Object\Car\System\Drive\DriveHandling.h" />
+    <ClInclude Include="Application\Object\Car\System\VehicleCaluclator.h" />
+    <ClInclude Include="Application\Object\Car\System\VehicleStatus.h" />
+    <ClInclude Include="Application\Object\Car\System\VehicleSystems.h" />
+    <ClInclude Include="Application\Object\Car\VehicleCore.h" />
+    <ClInclude Include="Application\Object\Car\CarLists.h" />
+    <ClInclude Include="Application\Object\Car\Factory\VehicleFactory.h" />
+    <ClInclude Include="Application\Object\Car\Parts\Engine\EngineParts.h" />
+    <ClInclude Include="Application\Object\Car\Parts\Frame\ArmorFrameParts.h" />
+    <ClInclude Include="Application\Object\Car\Parts\PartsInterface.h" />
+    <ClInclude Include="Application\Object\Car\Parts\Tire\TireParts.h" />
+    <ClInclude Include="Application\Object\Factory\CreateObjectIndex.h" />
+    <ClInclude Include="Application\Object\Factory\CreateObjectNames.h" />
+    <ClInclude Include="Application\Object\Factory\ObjectCreate.h" />
+    <ClInclude Include="Application\Object\GameObjectsList.h" />
+    <ClInclude Include="Application\Object\Gimmick\Cannon\Cannon.h" />
+    <ClInclude Include="Application\Object\Gimmick\Cannon\CannonBall.h" />
+    <ClInclude Include="Application\Object\Gimmick\Cannon\cannonBallData.h" />
+    <ClInclude Include="Application\Object\Gimmick\Cannon\CannonData.h" />
+    <ClInclude Include="Application\Object\Gimmick\Cannon\CannonExplosion.h" />
+    <ClInclude Include="Application\Object\Gimmick\Cannon\CannonExplosionData.h" />
+    <ClInclude Include="Application\Object\Gimmick\IronBall\PendulumIronBall.h" />
+    <ClInclude Include="Application\Object\Gimmick\IronBall\PendulumIronBallData.h" />
+    <ClInclude Include="Application\Object\Gimmick\Minigun\Minigun.h" />
+    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunBullet.h" />
+    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunBulletData.h" />
+    <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunData.h" />
+    <ClInclude Include="Application\Object\Gimmick\Obstacle\Obstacle.h" />
+    <ClInclude Include="Application\Object\Gimmick\Obstacle\ObstacleData.h" />
+    <ClInclude Include="Application\Object\GlobalParameterManager.h" />
+    <ClInclude Include="Application\Object\KeyConfig\GameKeyconfig.h" />
+    <ClInclude Include="Application\Object\Gimmick\IronBall\ConicalPendulumIronBall.h" />
+    <ClInclude Include="Application\Object\Gimmick\IronBall\ConicalPendulumIronBallData.h" />
+    <ClInclude Include="Application\Object\Manager\ClearSceneObjectManager.h" />
+    <ClInclude Include="Application\Object\Manager\GameSceneObjectManager.h" />
+    <ClInclude Include="Application\Object\Factory\ObjectFactory.h" />
+    <ClInclude Include="Application\Object\Manager\TitleSceneObjectManager.h" />
+    <ClInclude Include="Application\Object\Manager\TutorialSceneObjectManager.h" />
+    <ClInclude Include="Application\Object\Player\Animation\PlayerAnimation.h" />
+    <ClInclude Include="Application\Object\Player\Collision\PlayerCollision.h" />
+    <ClInclude Include="Application\Object\Player\DebugData\PlayerDebugData.h" />
+    <ClInclude Include="Application\Object\Player\Player.h" />
+    <ClInclude Include="Application\Object\Player\PlayerSystemLists.h" />
+    <ClInclude Include="Application\Object\Player\State\Factory\PlayerStateFactory.h" />
+    <ClInclude Include="Application\Object\Player\State\IPlayerState.h" />
+    <ClInclude Include="Application\Object\Player\State\User\PlayerDropOffActionState.h" />
+    <ClInclude Include="Application\Object\Player\State\User\PlayerRideActionState.h" />
+    <ClInclude Include="Application\Object\Player\State\User\PlayerRootState.h" />
+    <ClInclude Include="Application\Object\Player\State\PlayerStatesList.h" />
+    <ClInclude Include="Application\Object\Player\State\System\PlayerStateMachine.h" />
+    <ClInclude Include="Application\Object\Player\State\User\PlayerInVehicleState.h" />
+    <ClInclude Include="Application\Object\Player\State\User\PlayerOnFootState.h" />
+    <ClInclude Include="Application\Object\Player\System\PlayerCommand.h" />
+    <ClInclude Include="Application\Object\Player\System\PlayerPickupManager.h" />
+    <ClInclude Include="Application\Object\State\IState.h" />
+    <ClInclude Include="Application\Object\State\StateFactory.h" />
+    <ClInclude Include="Application\Object\State\StateMachine.h" />
+    <ClInclude Include="Application\Object\Terrain\TerrainObject.h" />
+    <ClInclude Include="Application\Object\Utility\Calc\MotionHelper.h" />
+    <ClInclude Include="Application\Object\Utility\Calc\TransformHelper.h" />
+    <ClInclude Include="Application\Object\Utility\Common\GameObjectName.h" />
+    <ClInclude Include="Application\Object\Utility\Common\SingletonModule.h" />
+    <ClInclude Include="Application\Object\Utility\Common\OwnerComponent.h" />
+    <ClInclude Include="Application\Object\Utility\GlobalParameterStructs.h" />
+    <ClInclude Include="Application\Object\Utility\Math\Vector2Int.h" />
+    <ClInclude Include="Application\Object\Utility\Timer\FrameTimer.h" />
+    <ClInclude Include="Application\Object\Wall\Wall.h" />
+    <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />
+    <ClInclude Include="Application\ParticleManager\ParticleManager.h" />
+    <ClInclude Include="Application\Particle\RunDustParticle\RunDustParticle.h" />
+    <ClInclude Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.h" />
+    <ClInclude Include="Application\Scene\DebugScene\DebugScene.h" />
+    <ClInclude Include="Application\Scene\SceneManager\SceneManager.h" />
+    <ClInclude Include="Application\Scene\SceneName.h" />
+    <ClInclude Include="Application\Scene\SelectScene\SelectScene.h" />
+    <ClInclude Include="Application\Scene\TitleScene\TitleScene.h" />
+    <ClInclude Include="Application\Scene\TutorialScene\TutorialScene.h" />
+    <ClInclude Include="Application\Effect\EffectManager.h" />
+    <ClInclude Include="Application\System\Draw\GameSceneInstancingDrawing.h" />
+    <ClInclude Include="Application\System\PostEffectSystem\PostEffectSystem.h" />
+    <ClInclude Include="Application\System\Shadow\Shadow.h" />
+    <ClInclude Include="Application\System\Shadow\ShadowManager.h" />
+    <ClInclude Include="Application\UI\BaseUI.h" />
+    <ClInclude Include="Application\UI\ManualUI.h" />
+    <ClInclude Include="Application\UI\UIManager.h" />
+    <ClInclude Include="Application\Course\CourseLoader.h" />
+    <ClInclude Include="Engine\2D\ImGuiManager.h" />
+    <ClInclude Include="Engine\2D\SpriteForGPU.h" />
+    <ClInclude Include="Engine\2D\SpriteVertex.h" />
+    <ClInclude Include="Engine\3D\Model\BaseInstancingDrawing.h" />
+    <ClInclude Include="Engine\3D\Model\BaseInstancingDrawingAnimation.h" />
+    <ClInclude Include="Engine\3D\Vertex\ColorVertexData.h" />
+    <ClInclude Include="Engine\3D\Line\DrawLine.h" />
+    <ClInclude Include="Engine\3D\Fog\FogData.h" />
+    <ClInclude Include="Engine\3D\Fog\FogManager.h" />
+    <ClInclude Include="Engine\3D\ManyObjects\LargeNumberOfObjects.h" />
+    <ClInclude Include="Engine\3D\Line\LineForGPU.h" />
+    <ClInclude Include="Engine\3D\Model\Mesh.h" />
+    <ClInclude Include="Engine\3D\Model\ModelDraw.h" />
+    <ClInclude Include="Engine\3D\Model\ModelManager.h" />
+    <ClInclude Include="Engine\3D\Model\ModelNodeData.h" />
+    <ClInclude Include="Engine\3D\ManyObjects\OneOfManyObjects.h" />
+    <ClInclude Include="Engine\3D\Outline\Outline.h" />
+    <ClInclude Include="Engine\3D\Vertex\VertexInfluence.h" />
+    <ClInclude Include="Engine\Animation\LocalMatrix.h" />
+    <ClInclude Include="Engine\Animation\LocalMatrixDraw.h" />
+    <ClInclude Include="Engine\Animation\LocalMatrixManager.h" />
+    <ClInclude Include="Engine\Animation\NodeAnimationData.h" />
+    <ClInclude Include="Engine\3D\Model\ModelLoader.h" />
+    <ClInclude Include="Engine\3D\Model\ModelNode.h" />
+    <ClInclude Include="Engine\3D\Outline\OutLineData.h" />
+    <ClInclude Include="Engine\Animation\Animation.h" />
+    <ClInclude Include="Engine\Animation\AnimationData.h" />
+    <ClInclude Include="Engine\Animation\SkinningInformation.h" />
+    <ClInclude Include="Engine\Audio\AudioManager.h" />
+    <ClInclude Include="Engine\base\CompileShader.h" />
+    <ClInclude Include="Engine\base\Debug\CrashHandler.h" />
+    <ClInclude Include="Engine\base\DescriptorHandles.h" />
+    <ClInclude Include="Engine\base\DescriptorHerpManager\DSVDescriptorHerpManager.h" />
+    <ClInclude Include="Engine\base\DescriptorHerpManager\RTVDescriptorHerpManager.h" />
+    <ClInclude Include="Engine\base\DescriptorHerpManager\SRVDescriptorHerpManager.h" />
+    <ClInclude Include="Engine\base\DxCommon\DirectXCommon.h" />
+    <ClInclude Include="Engine\base\DxCommon\DxCommand.h" />
+    <ClInclude Include="Engine\base\DxCommon\DXGIDevice.h" />
+    <ClInclude Include="Engine\base\DxCommon\Log.h" />
+    <ClInclude Include="Engine\base\DxCommon\SwapChain.h" />
+    <ClInclude Include="Engine\base\Debug\QueryTimestamp.h" />
+    <ClInclude Include="Engine\base\GraphicsPipelineState\BlendStateManager.h" />
+    <ClInclude Include="Engine\base\GraphicsPipelineState\InputLayoutManager.h" />
+    <ClInclude Include="Engine\base\GraphicsPipelineState\RootParameterManager.h" />
+    <ClInclude Include="Engine\base\GraphicsPipelineState\SamplerManager.h" />
+    <ClInclude Include="Engine\base\Texture\RenderTargetTexture.h" />
+    <ClInclude Include="Engine\base\Texture\TextureManager.h" />
+    <ClInclude Include="Engine\base\Texture\TextureUAV.h" />
+    <ClInclude Include="Engine\base\WindowSprite\WindowSprite.h" />
+    <ClInclude Include="Engine\Camera\CameraForGPU.h" />
+    <ClInclude Include="Engine\Collider2D\Circle.h" />
+    <ClInclude Include="Engine\Collider2D\Collider2D.h" />
+    <ClInclude Include="Engine\Collider2D\Collider2DDebugDrawForGPU.h" />
+    <ClInclude Include="Engine\Collider2D\ColliderShape2D.h" />
+    <ClInclude Include="Engine\Collider2D\Box.h" />
+    <ClInclude Include="Engine\Collider2D\Segment2D.h" />
+    <ClInclude Include="Engine\Collider\Capsule\Capsule.h" />
+    <ClInclude Include="Engine\Collider\ColliderShape.h" />
+    <ClInclude Include="Engine\Collision2D\Collision2D.h" />
+    <ClInclude Include="Engine\Collision2D\Collision2DDebugDraw.h" />
+    <ClInclude Include="Engine\Collision2D\Collision2DManager.h" />
+    <ClInclude Include="Engine\Collision\CollisionData.h" />
+    <ClInclude Include="Engine\Collision\Extrusion.h" />
+    <ClInclude Include="Engine\ContactRecord\ContactRecord.h" />
+    <ClInclude Include="Engine\Level\LevelData.h" />
+    <ClInclude Include="Engine\Level\LevelDataLoader.h" />
+    <ClInclude Include="Engine\Level\LevelDataManager.h" />
+    <ClInclude Include="Engine\Level\LevelDataViewing.h" />
+    <ClInclude Include="Engine\Level\LevelIndex.h" />
+    <ClInclude Include="Engine\Light\PointLight\PointLightData.h" />
+    <ClInclude Include="Engine\Light\PointLight\PointLightManager.h" />
+    <ClInclude Include="Engine\Light\SpotLight\SpotLightData.h" />
+    <ClInclude Include="Engine\Light\SpotLight\SpotLightManager.h" />
+    <ClInclude Include="Engine\Line\Line.h" />
+    <ClInclude Include="Engine\Line\Segment.h" />
+    <ClInclude Include="Engine\Math\Matrix\Matrix3x3.h" />
+    <ClInclude Include="Engine\Math\PerFrame.h" />
+    <ClInclude Include="Engine\Math\Quaternion.h" />
+    <ClInclude Include="Engine\Math\RandomEngine.h" />
+    <ClInclude Include="Engine\Math\ShortestDistance.h" />
+    <ClInclude Include="Engine\Object\AbstractObjectFactory.h" />
+    <ClInclude Include="Engine\Object\BaseObjectManager.h" />
+    <ClInclude Include="Engine\3D\Model\InstancingDrawingData.h" />
+    <ClInclude Include="Engine\Object\IObject.h" />
+    <ClInclude Include="Engine\Object\MeshObject.h" />
+    <ClInclude Include="Engine\Particle\BillBoardMatrix.h" />
+    <ClInclude Include="Engine\GPUParticle\EmitterCS.h" />
+    <ClInclude Include="Engine\GPUParticle\GPUParticle.h" />
+    <ClInclude Include="Engine\GPUParticle\GPUPerticleView.h" />
+    <ClInclude Include="Engine\GPUParticle\ParticleCS.h" />
+    <ClInclude Include="Engine\Audio\Audio.h" />
+    <ClInclude Include="Engine\base\BufferResource.h" />
+    <ClInclude Include="Engine\base\Debug\D3DResourceLeakChecker.h" />
+    <ClInclude Include="Engine\Camera\BaseCamera.h" />
+    <ClInclude Include="Engine\Camera\DebugCamera.h" />
+    <ClInclude Include="Engine\Light\DirectionalLight\DirectionalLight.h" />
+    <ClInclude Include="Engine\Light\DirectionalLight\DirectionalLightData.h" />
+    <ClInclude Include="Engine\Collider\ColliderDebugDraw\ColliderDebugDraw.h" />
+    <ClInclude Include="Application\Framework\MyGame.h" />
+    <ClInclude Include="Engine\GlobalVariables\GlobalVariables.h" />
+    <ClInclude Include="Engine\Math\DeltaTime.h" />
+    <ClInclude Include="Engine\Math\Ease.h" />
+    <ClInclude Include="Engine\Math\Math.h" />
+    <ClInclude Include="Application\SceneTransition\SceneTransitionBlackOut\SceneTransitionBlackOut.h" />
+    <ClInclude Include="Engine\Physics\ClothGPU\ClothGPUCollisionManager.h" />
+    <ClInclude Include="Engine\Physics\ClothGPU\ClothManager.h" />
+    <ClInclude Include="Engine\Physics\ClothGPU\ClothPipelineState.h" />
+    <ClInclude Include="Engine\Physics\ClothGPU\CollisionTypeIndex.h" />
+    <ClInclude Include="Engine\Physics\Cloth\Cloth.h" />
+    <ClInclude Include="Engine\Physics\ClothGPU\ClothGPU.h" />
+    <ClInclude Include="Engine\Physics\ClothGPU\ClothGPUCollision.h" />
+    <ClInclude Include="Engine\Physics\Cloth\ClothModel.h" />
+    <ClInclude Include="Engine\Physics\Gravity\Gravity.h" />
+    <ClInclude Include="Engine\Physics\RigidBody\InertiaTensor.h" />
+    <ClInclude Include="Engine\Physics\MassPoint\MassPoint.h" />
+    <ClInclude Include="Engine\Physics\RigidBody\RigidBody.h" />
+    <ClInclude Include="Engine\Physics\Spring\Spring.h" />
+    <ClInclude Include="Engine\Physics\String\String.h" />
+    <ClInclude Include="Engine\Physics\Spring\StructuralSpring.h" />
+    <ClInclude Include="Engine\PostEffect\HSV\HSVFilter.h" />
+    <ClInclude Include="Engine\PostEffect\PostEffect.h" />
+    <ClInclude Include="Engine\PostEffect\ShockWave\ShockWaveData.h" />
+    <ClInclude Include="Engine\PostEffect\ShockWave\ShockWaveManager.h" />
+    <ClInclude Include="Engine\PostEffect\Velocity2D\Velocity2DData.h" />
+    <ClInclude Include="Engine\PostEffect\Velocity2D\Velocity2DManager.h" />
+    <ClInclude Include="Engine\SceneTransition\SceneTransitionFactory\AbstractSceneTransitionFactory.h" />
+    <ClInclude Include="Engine\SceneTransition\BaseSceneTransition\BaseSceneTransition.h" />
+    <ClInclude Include="Application\SceneTransition\SceneTransitionFactory\SceneTransitionFactory.h" />
+    <ClInclude Include="Application\Scene\ClearScene\ClearScene.h" />
+    <ClInclude Include="Engine\Scene\SceneFactory\AbstractSceneFactory.h" />
+    <ClInclude Include="Application\Scene\SceneFactory\SceneFactory.h" />
+    <ClInclude Include="Engine\Scene\SceneManager\BaseSceneManager.h" />
+    <ClInclude Include="Engine\SkyBox\SkyBox.h" />
+    <ClInclude Include="externals\imgui\imgui.h" />
+    <ClInclude Include="externals\imgui\ImGuizmo.h" />
+    <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />
+    <ClInclude Include="externals\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="externals\imgui\imgui_internal.h" />
+    <ClInclude Include="externals\imgui\imstb_rectpack.h" />
+    <ClInclude Include="externals\imgui\imstb_textedit.h" />
+    <ClInclude Include="externals\imgui\imstb_truetype.h" />
+    <ClInclude Include="Application\Scene\GameScene\GameScene.h" />
+    <ClInclude Include="Engine\Input\Input.h" />
+    <ClInclude Include="Engine\3D\Material\Material.h" />
+    <ClInclude Include="Engine\3D\Material\MaterialData.h" />
+    <ClInclude Include="Engine\Math\Matrix\Matrix4x4.h" />
+    <ClInclude Include="Engine\3D\Model\Model.h" />
+    <ClInclude Include="Engine\base\GraphicsPipelineState\GraphicsPipelineState.h" />
+    <ClInclude Include="Engine\Scene\BaseScene\BaseScene.h" />
+    <ClInclude Include="Engine\Framework\MyFramework.h" />
+    <ClInclude Include="Engine\Collider\AABB\AABB.h" />
+    <ClInclude Include="Engine\Collider\Collider.h" />
+    <ClInclude Include="Engine\Collider\OBB\OBB.h" />
+    <ClInclude Include="Engine\Collider\Triangle\Triangle.h" />
+    <ClInclude Include="Engine\Collision\Collision.h" />
+    <ClInclude Include="Engine\Collision\BaseCollisionManager.h" />
+    <ClInclude Include="Engine\Collider\Plane\Plane.h" />
+    <ClInclude Include="Application\Object\Skydome\Skydome.h" />
+    <ClInclude Include="Engine\Collider\Sphere\Sphere.h" />
+    <ClInclude Include="Engine\base\Debug\SafeDelete.h" />
+    <ClInclude Include="Engine\2D\Sprite.h" />
+    <ClInclude Include="Engine\3D\Transform\TransformationMatrix.h" />
+    <ClInclude Include="Engine\3D\Transform\TransformStructure.h" />
+    <ClInclude Include="Engine\Math\Vector\Vector2.h" />
+    <ClInclude Include="Engine\Math\Vector\Vector3.h" />
+    <ClInclude Include="Engine\Math\Vector\Vector4.h" />
+    <ClInclude Include="Engine\base\WinApp.h" />
+    <ClInclude Include="Engine\3D\Vertex\VertexData.h" />
+    <ClInclude Include="Engine\3D\Transform\WorldTransform.h" />
+    <ClInclude Include="Application\Object\Player\System\PlayerFrontChecker.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Engine\Camera\ViewProjectionMatrix.h" />
+    <ClInclude Include="Application\OutGameObject\OutGameSpriteObject.h" />
+    <ClInclude Include="Application\OutGameObject\OutGameSpriteObjectAnimation.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc" />
