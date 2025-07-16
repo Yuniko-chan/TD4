@@ -4,6 +4,7 @@
 #include "../Object/Manager/GameSceneObjectManager.h"
 #include<utility>
 #include "../Object/Car/PickupPoint/PickupPointLists.h"
+#include "../Object/Factory/ObjectFactory.h"
 
 static const size_t kCourseNum = 6;
 static const size_t kCourseFileCount = 3;
@@ -40,7 +41,7 @@ public:
 	CourseManager() {};
 	~CourseManager() {};
 
-	void Initialize(GameSceneObjectManager* objectManager);
+	void Initialize(GameSceneObjectManager* objectManager,LevelDataManager* levelDataManager);
 
 	void Update();
 
@@ -69,7 +70,7 @@ private:
 	//std::array<std::function<int(int)>,kCourseNum> placeOnce_;
 
 	//コースを一個生成
-	void CreateCourse(const std::string& fileName, CourseImportData* courseInportData,const Vector3& offset,int rotate);
+	void CreateCourse(const std::string& fileName, CourseImportData* courseInportData,const Vector3& offset,int rotate,size_t cousrseNum);
 
 	//ランダムにコースを配置する
 	void PlaceCourseRandom();
@@ -87,4 +88,9 @@ private:
 
 	std::function<void(void)> addCourseToGameScene_;
 	MeshObject* player_;
+
+	// レベルデータマネージャー
+	LevelDataManager* levelDataManager_;
+
+	ObjectFactory* objectFactory_;
 };
