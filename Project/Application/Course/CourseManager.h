@@ -67,6 +67,9 @@ private:
 	size_t createdGroup_;
 	std::vector<std::array<Course*, kCourseNum>> courseList_;
 
+	//ギミック削除用リストのポインタ
+	std::unique_ptr<std::vector<IObject*>> gimmickList_ = nullptr;
+
 	//std::array<std::function<int(int)>,kCourseNum> placeOnce_;
 
 	//コースを一個生成

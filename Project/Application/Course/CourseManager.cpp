@@ -99,12 +99,16 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 			if (gimmick) {
 				// listへ
 				objectManager_->AddObject(gimmick);
+				(gimmickList_.get())->push_back(gimmick);
 			}
 		}
 	}
 }
 
 void CourseManager::PlaceCourseRandom() {
+
+	//カスタムエリア
+	CreateCustomizeArea(nowGroup_);
 
 	//0
 	Place0();
@@ -116,9 +120,6 @@ void CourseManager::PlaceCourseRandom() {
 			CreateCourse(kCourseNameList[2], &courseDatas_[2], courseOffsets_[i],0,2);
 		}
 	}
-
-	//カスタムエリア
-	CreateCustomizeArea(nowGroup_);
 }
 
 
@@ -252,6 +253,10 @@ void CourseManager::CreateCustomizeArea(size_t group) {
 	for (size_t i = 0; i < kPickupPointCount_;i++) {
 		CreatePickUpPoint(transform.translate,i,group);
 	}
+	if (gimmickList_) {
+		object->SetGimmickList(gimmickList_);
+	}
+	gimmickList_.reset(new std::vector<IObject*>);
 }
 
 void CourseManager::CreatePickUpPoint(const Vector3& center,size_t num,size_t group) {
