@@ -1,5 +1,6 @@
 #pragma once
 #include "../../../Utility/Common/OwnerComponent.h"
+#include "../../../Engine/3D/Transform/WorldTransform.h"
 
 class Player;
 class InteractionSpot;
@@ -17,7 +18,15 @@ public:
 	/// </summary>
 	virtual void Update();
 
+	/// <summary>
+	/// リフレッシュ
+	/// </summary>
+	virtual void Refresh();
+
 protected:
 	// インタラクト用のオブジェクト
 	InteractionSpot* InteractObject_ = nullptr;
+	// 親のトランスフォーム
+	WorldTransform* parent_ = nullptr;
+
 };

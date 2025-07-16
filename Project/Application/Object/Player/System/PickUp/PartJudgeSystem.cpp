@@ -141,6 +141,8 @@ Car::IParts* PartJudgeSystem::GetCatchPart(PickupPointManager* pointManager, Con
 	if (!owner_->GetFrontChecker()->FrontCheck(toDirect)) {
 		return nullptr;
 	}
+	const float kSizeValue = 0.8f;
+	const Vector3 minSize_ = { kSizeValue,kSizeValue,kSizeValue };
 
 	// 種類ごとの処理
 	switch (data.type)
@@ -158,12 +160,13 @@ Car::IParts* PartJudgeSystem::GetCatchPart(PickupPointManager* pointManager, Con
 		result = static_cast<Car::IParts*>(data.object);
 		break;
 
-	case PartCondition::PickupPoint:	// 拾う
+	case PartCondition::PickupPoint:	// 生成→拾う
 		if (!pointManager->IsAccept(worldPosition)) {
 			return nullptr;
 		}
 		// パーツ取得
 		result = pointManager->AttemptPartAcquisition();
+		result->GetWorldTransformAdress()->transform_.scale = minSize_;
 		break;
 
 	default:

@@ -1,6 +1,7 @@
 #include "PlayerPickupManager.h"
 
 #include "../Player.h"
+#include "../State/PlayerStatesList.h"
 
 #include "../../Car/CarLists.h"
 #include "../../Car/Manager/VehiclePartsManager.h"
@@ -10,6 +11,8 @@
 #include "../../Interact/InteractionSpot.h"
 
 #include "../../../Engine/2D/ImguiManager.h"
+
+#include <typeinfo>
 
 PlayerPickupManager::PlayerPickupManager()
 {
@@ -41,17 +44,33 @@ void PlayerPickupManager::Update()
 	// インタラクト更新
 	pickupInteract_->Update();
 
+	// 車体に乗っている時は処理をスキップ
+	if (owner_->GetStateMachine()->GetCurrentState()) {
+		const std::type_info& id = typeid(*owner_->GetStateMachine()->GetCurrentState());
+		std::string stateName = id.name();
+		if (stateName == "class PlayerInVehicleState") {
+			return;
+		}
+	}
+
 	if (holdParts_) {
+		// ピックアップ場所表示
 		PickupVisualizer* pickUp = static_cast<PickupVisualizer*>(pickupInteract_.get());
 		if (pickUp->IsParent()) {
 			pickUp->SetTransform(nullptr);
+			pickUp->Refresh();
 		}
 
+		// コアがなければスキップ
+		if (!owner_->GetCore()) {
+			return;
+		}
 		// コアなら処理を行わない
 		if (holdParts_->GetClassNameString() == "VehicleCore") {
 			return;
 		}
 
+		// 設置場所表示
 		VehicleCaluclator calc;
 		std::pair<Vector2Int, Vector3> nearPoint = calc.GetEmptyToNearPoint(owner_->GetCore()->GetConstructionSystem()->GetEmptyData(),
 			owner_->GetWorldTransformAdress()->GetWorldPosition(), owner_->GetWorldTransformAdress()->direction_);
@@ -61,6 +80,7 @@ void PlayerPickupManager::Update()
 		ptr->Update(nearKey_);
 	}
 	else {
+		// ピックアップ場所表示
 		PickupVisualizer* pickUp = static_cast<PickupVisualizer*>(pickupInteract_.get());
 		// 検索処理
 		// 一番近いの検索→Stateが通常かつ歩いている場合→場所取得（解除・拾う条件式を同じく行う
@@ -166,6 +186,10 @@ void PlayerPickupManager::ReleaseAction()
 	// その場に置くかを判断（true:置くため終了,false:置かない為くっつける処理に移行）
 	if (ShouldDropPart()) {
 		// 置く処理
+		DropPart();
+		return;
+	}
+	if (!owner_->GetCore()) {
 		DropPart();
 		return;
 	}

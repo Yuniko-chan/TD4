@@ -3,14 +3,16 @@
 
 void PickupVisualizer::Update()
 {
-	// 親があれば設定
 	if (parent_) {
-		InteractObject_->GetWorldTransformAdress()->transform_.translate = parent_->GetWorldPosition();
-		InteractObject_->SetIsDraw(true);
+		InteractObject_->GetWorldTransformAdress()->SetParent(parent_);
+		//InteractObject_->GetWorldTransformAdress()->transform_.translate = parent_->GetWorldPosition();
+		//InteractObject_->GetWorldTransformAdress()->direction_ = parent_->direction_;
 	}
 	else {
-		InteractObject_->SetIsDraw(false);
+		InteractObject_->GetWorldTransformAdress()->SetParent(nullptr);
 	}
+	// リフレッシュ
+	Refresh();
 }
 
 void PickupVisualizer::SetIsDraw(bool isDraw)

@@ -18,6 +18,4 @@ public:
 	// 取得
 	bool IsParent() { return parent_; }
 
-private:
-	WorldTransform* parent_ = nullptr;
 };
