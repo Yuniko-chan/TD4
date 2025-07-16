@@ -134,28 +134,31 @@ void GameSceneObjectManager::ImGuiDraw()
 	if (ImGui::Button("プリセット生成")) {
 		VehiclePreset(buffer);
 	}
-	static Vector3 spownPoint = Vector3(0, 0, 0);
-	ImGui::DragFloat3("SpownPoint", &spownPoint.x, 0.01f);
 
-	if (ImGui::Button("タイヤ追加")) {
-		std::string name = "Tire" + std::to_string(Car::SerialNumberGenerate::sSerialTire);
-		AddObject("TireParts", name.c_str(), "Resources/Model/Tire", "Tire.obj", spownPoint);
-		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-		Car::SerialNumberGenerate::sSerialTire++;
-	}
+	if (ImGui::TreeNode("追加処理")) {
+		static Vector3 spownPoint = Vector3(0, 0, 0);
+		ImGui::DragFloat3("SpownPoint", &spownPoint.x, 0.01f);
+		if (ImGui::Button("タイヤ追加")) {
+			std::string name = "Tire" + std::to_string(Car::SerialNumberGenerate::sSerialTire);
+			AddObject("TireParts", name.c_str(), "Resources/Model/Tire", "Tire.obj", spownPoint);
+			partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+			Car::SerialNumberGenerate::sSerialTire++;
+		}
 
-	if (ImGui::Button("フレーム追加")) {
-		std::string name = "ArmorFrame" + std::to_string(Car::SerialNumberGenerate::sSerialArmor);
-		AddObject("ArmorFrameParts", name.c_str(), "Resources/Model/Frame", "Frame.obj", spownPoint);
-		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-		Car::SerialNumberGenerate::sSerialArmor++;
-	}
+		if (ImGui::Button("フレーム追加")) {
+			std::string name = "ArmorFrame" + std::to_string(Car::SerialNumberGenerate::sSerialArmor);
+			AddObject("ArmorFrameParts", name.c_str(), "Resources/Model/Frame", "Frame.obj", spownPoint);
+			partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+			Car::SerialNumberGenerate::sSerialArmor++;
+		}
 
-	if (ImGui::Button("エンジン追加")) {
-		std::string name = "Engine" + std::to_string(Car::SerialNumberGenerate::sSerialEngine);
-		AddObject("EngineParts", name.c_str(), "Resources/Model/Engine", "Engine.obj", spownPoint);
-		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-		Car::SerialNumberGenerate::sSerialEngine++;
+		if (ImGui::Button("エンジン追加")) {
+			std::string name = "Engine" + std::to_string(Car::SerialNumberGenerate::sSerialEngine);
+			AddObject("EngineParts", name.c_str(), "Resources/Model/Engine", "Engine.obj", spownPoint);
+			partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+			Car::SerialNumberGenerate::sSerialEngine++;
+		}
+		ImGui::TreePop();
 	}
 
 	ImGui::End();
