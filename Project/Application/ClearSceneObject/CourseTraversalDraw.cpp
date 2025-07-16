@@ -10,6 +10,8 @@ void CourseTraversalDraw::Initialize(int32_t courseTraversalNum)
 	const Vector2 kNumberSize = { 128.0f,128.0f };
 	// 白
 	const Vector4 kWhite = { 1.0f, 1.0f, 1.0f, 1.0f };
+	// ルーレット番号
+	const uint32_t kRouletteNum = static_cast<uint32_t>(OutGameSpriteObjectAnimation::AnimationIndex::kAnimationIndexNumberRoulette);
 
 	// 踏破数、文字列
 	traversalNumString_ = std::make_unique<OutGameSpriteObject>();
@@ -21,14 +23,14 @@ void CourseTraversalDraw::Initialize(int32_t courseTraversalNum)
 	traversalNumTenthPlace_->Initialize("Resources/Sprite/Common/number.png", 
 		Vector2{ 512.0f + 256.0f - kNumberSize.x / 2.0f, 256.0f }, kWhite, kNumberSize, kNumberTextureSize_);
 	// ルーレット
-	traversalNumTenthPlace_->GetAnimation()->doesAnimations_[0] = true;
+	traversalNumTenthPlace_->GetAnimation()->doesAnimations_[kRouletteNum] = true;
 
 	// 踏破数、数1の位
 	traversalNumOnePlace_ = std::make_unique<OutGameSpriteObject>();
 	traversalNumOnePlace_->Initialize("Resources/Sprite/Common/number.png",
 		Vector2{ 512.0f + 256.0f + kNumberSize.x / 2.0f, 256.0f }, kWhite, kNumberSize, kNumberTextureSize_);
 	// ルーレット
-	traversalNumOnePlace_->GetAnimation()->doesAnimations_[0] = true;
+	traversalNumOnePlace_->GetAnimation()->doesAnimations_[kRouletteNum] = true;
 
 	// 踏破ランク、文字列
 	traversalRankString_ = std::make_unique<OutGameSpriteObject>();
@@ -40,8 +42,7 @@ void CourseTraversalDraw::Initialize(int32_t courseTraversalNum)
 	raversalRank_->Initialize("Resources/Sprite/Result/traversalRank.png",
 		{ 512.0f + 256.0f,512.0f }, kWhite, kNumberSize, kNumberTextureSize_);
 	// ルーレット
-	//raversalRank_->GetAnimation()->doesAnimations_[0] = true;
-	raversalRank_->GetAnimation()->doesAnimations_[1] = true;
+	raversalRank_->GetAnimation()->doesAnimations_[kRouletteNum] = true;
 
 	// コース踏破数
 	courseTraversalNum_ = courseTraversalNum;
