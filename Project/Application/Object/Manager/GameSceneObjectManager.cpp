@@ -338,7 +338,7 @@ void GameSceneObjectManager::VehiclePreset(const std::string& presetName)
 	VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer(name));
 	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
 	// ペアレント＋トランスフォーム親子設定
-	core->SetPlayer(player);
+	//core->SetPlayer(player);
 	player->SetPair(core);
 	partsManager_->AddParts(core->GetName(), core);
 
