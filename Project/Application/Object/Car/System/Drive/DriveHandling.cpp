@@ -103,11 +103,26 @@ void DriveHandling::PreUpdate()
 
 	// カウントを最大値内に制限
 	consecutiveReceptions_ = (int16_t)std::clamp((int)consecutiveReceptions_, -kMaxCount, kMaxCount);
-
-	float t = (float)std::abs((int)consecutiveReceptions_) / kMaxCount;
-	const float limitDirect = 2.0f;	// 最大角度（-1~1,0,1):(-0.5|0.5,0,0.5)
 	// 前フレーム
 	preSteerDirection_ = steerDirection_;
+}
+
+void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
+{
+	// 速度に応じたハンドルの処理
+	const int kMaxCount = 45;	// 押し込み最大	
+	float t = (float)std::abs((int)consecutiveReceptions_) / kMaxCount;
+	// 最大角度（-1~1,0,1):(-0.5|0.5,0,0.5)
+	const float kMaxXDirect = 2.0f;
+	const float kMinXDirect = 1.0f;
+	const float kMinPropulsion = 5.0f;
+	const float kMaxPropulsion = 20.0f;
+	
+	// 推進力計算
+	float propulsion = std::clamp(velocity.z, kMinPropulsion, kMaxPropulsion);
+	float propulsionT = (propulsion - kMinPropulsion) / (kMaxPropulsion - kMinPropulsion);
+
+	float limitDirect = Ease::Easing(Ease::EaseName::Lerp, kMinXDirect, kMaxXDirect, propulsionT);
 	// プラス方向（右
 	if (consecutiveReceptions_ > 0) {
 		steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, limitDirect, t);
@@ -133,10 +148,6 @@ void DriveHandling::PreUpdate()
 		executeDirection_ = Vector3(0.0f, 0.0f, 1.0f);
 	}
 
-}
-
-void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
-{
 	// 速度が無く動いていなかったら
 	float length = Vector3::Length(velocity);
 	const float threshold = 0.001f;
