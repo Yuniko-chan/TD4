@@ -8,7 +8,8 @@ GameTimeSystem::GameTimeSystem()
 
 void GameTimeSystem::Initialize()
 {
-	elapsedTime_ = 0.0f;
+	const float kLimitTime = 120.0f;	// 秒数
+	remainingTime_ = kLimitTime;
 	isRunning_ = false;
 	isPause_ = false;
 }
@@ -17,15 +18,29 @@ void GameTimeSystem::Update()
 {
 	// 稼働中
 	if (isRunning_ && !isPause_) {
-		elapsedTime_ += kDeltaTime_;
-		elapsedSecond_ = static_cast<int>(elapsedTime_);
+		float reductionTime = 1.0f * kDeltaTime_;	// 減少時間（1.0 = タイムファクター）
+		remainingTime_ -= reductionTime;
+		remainingSeconds_ = static_cast<int>(remainingTime_);
+
+		// 時間切れ
+		if (remainingTime_ <= 0.0f) {
+			isRunning_ = false;
+			isEnd_ = true;
+		}
 	}
 }
 
 void GameTimeSystem::Start()
 {
 	// 初期化
-	elapsedTime_ = 0.0f;
+	remainingTime_ = 0.0f;
+	isRunning_ = true;
+	isPause_ = false;
+}
+
+void GameTimeSystem::Start(const float& limitTime)
+{
+	remainingTime_ = limitTime;
 	isRunning_ = true;
 	isPause_ = false;
 }
@@ -43,10 +58,12 @@ void GameTimeSystem::Resume()
 
 void GameTimeSystem::ImGuiDraw()
 {
-	ImGui::InputFloat("経過時間", &elapsedTime_);
-	ImGui::InputInt("経過秒数", &elapsedSecond_);
+	ImGui::InputFloat("残り時間", &remainingTime_);
+	ImGui::InputInt("残り秒数", &remainingSeconds_);
+	static float kLimit = 1.0f;
+	ImGui::InputFloat("制限時間（秒数）", &kLimit);
 	if (ImGui::Button("開始")) {
-		Start();
+		Start(kLimit);
 	}
 	if (ImGui::Button("一時停止")) {
 		Pause();
