@@ -51,6 +51,8 @@ public: // 関数
 
     void SetCourseManager(CourseManager* manager) { courseManager_ = manager; };
 
+    void SetGimmickList(std::unique_ptr<std::vector<IObject*>>& list) { gimmickList_ = std::move(list); };
+
 private: // 関数
 
     /// <summary>
@@ -67,5 +69,8 @@ private: // 変数
     bool isTouchPlayer_ = false;
 
     CourseManager* courseManager_ = nullptr;
+
+    //ギミック削除用リストのポインタ
+    std::unique_ptr<std::vector<IObject*>> gimmickList_ = nullptr;
 };
 

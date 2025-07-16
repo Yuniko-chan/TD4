@@ -33,6 +33,11 @@ void CustomArea::OnCollision(ColliderParentObject colliderPartner, const Collisi
         //チェックポイント通過処理
         isTouchPlayer_ = true;
         courseManager_->AddCourse();
+        if (gimmickList_) {
+            for (auto it : *gimmickList_) {
+                it->SetIsDead(true);
+            }
+        }
     }
 }
 

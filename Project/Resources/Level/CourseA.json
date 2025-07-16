@@ -1,0 +1,233 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "Cannon.002",
+            "transform": {
+                "translation": [
+                    -29.664796829223633,
+                    16.096546173095703,
+                    2.1283817291259766
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cannon.003",
+            "transform": {
+                "translation": [
+                    -29.664796829223633,
+                    -14.8779296875,
+                    2.1283817291259766
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cannon.004",
+            "transform": {
+                "translation": [
+                    -29.664796829223633,
+                    -37.611488342285156,
+                    2.1283817291259766
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cannon.001",
+            "transform": {
+                "translation": [
+                    -29.664796829223633,
+                    34.85173416137695,
+                    2.1283817291259766
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -1.5707964897155762
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_b",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "course_test_B",
+            "directoryPath": "Rsources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_A",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "course_test_A",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_c",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "course_B.course",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        }
+    ]
+}

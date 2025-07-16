@@ -325,7 +325,7 @@ void GameScene::CourseInitialize()
 
 	//コース生成システム
 	courseManager_ = std::make_unique<CourseManager>();
-	courseManager_->Initialize(static_cast<GameSceneObjectManager*>(objectManager_.get()));
+	courseManager_->Initialize(static_cast<GameSceneObjectManager*>(objectManager_.get()),levelDataManager_);
 	courseManager_->SetAddCourseFunction(std::bind(&GameScene::AddCourse,this));
 	courseManager_->SetPlayer(reinterpret_cast<MeshObject*>(objectManager_->GetObjectPointer("Player")));
 

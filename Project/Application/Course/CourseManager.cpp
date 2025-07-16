@@ -6,12 +6,11 @@
 #include "../Object/CustomArea/CustomArea.h"
 #include "../Object/Factory/ObjectCreate.h"
 
-void CourseManager::Initialize(GameSceneObjectManager* objectManager) {
-	//初期化
-	//placeOnce_[0] = Place0;
-
+void CourseManager::Initialize(GameSceneObjectManager* objectManager, LevelDataManager* levelDataManager) {
 	courseIndex_ = 0;
 	objectManager_ = objectManager;
+	levelDataManager_ = levelDataManager;
+	objectFactory_ = objectManager_->GetObjectFactory();
 	//全コース用データをロード
 	for (size_t i = 0; i < kCourseFileCount;i++) {
 		CourseLoader::LoadCourseFileFromManager("Resources/Course",kCourseNameList[i], courseDatas_[i]);
@@ -54,7 +53,7 @@ void CourseManager::AddCourse() {
 	addCourseToGameScene_();
 }
 
-void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* courseInportData,const Vector3& offset, int rotate) {
+void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* courseInportData,const Vector3& offset, int rotate, size_t courseNum) {
 	LevelData::MeshData objectData;
 	EulerTransform transform;
 
@@ -82,9 +81,34 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 	objectManager_->AddObject(object);
 	courseList_[nowGroup_][courseIndex_ % 6] = object;
 	courseIndex_++;
+
+	LevelData* levelData = levelDataManager_->GetLevelDatas(LevelIndex(kLevelIndexCourseA + courseNum));
+	// レベルデータのオブジェクトを走査
+	for (std::vector<LevelData::ObjectData>::iterator it = levelData->objectsData_.begin(); it != levelData->objectsData_.end(); ++it) {
+		// オブジェクトの参照
+		LevelData::ObjectData gimmickData = *it;
+		if (std::holds_alternative<LevelData::GimmickData>(gimmickData)) {
+
+			std::get<LevelData::GimmickData>(gimmickData).meshData.parentName = objectData.name;
+			std::get<LevelData::GimmickData>(gimmickData).meshData.name = std::get<LevelData::GimmickData>(gimmickData).meshData.name + std::to_string(courseIndex_);
+			// 型にあわせてInitialize
+			IObject* gimmick;
+			gimmick = objectFactory_->CreateObjectPattern(gimmickData);
+			gimmick->GetWorldTransformAdress()->parent_ = object->GetWorldTransformAdress();
+			gimmick->GetWorldTransformAdress()->UpdateMatrix();
+			if (gimmick) {
+				// listへ
+				objectManager_->AddObject(gimmick);
+				(gimmickList_.get())->push_back(gimmick);
+			}
+		}
+	}
 }
 
 void CourseManager::PlaceCourseRandom() {
+
+	//カスタムエリア
+	CreateCustomizeArea(nowGroup_);
 
 	//0
 	Place0();
@@ -93,12 +117,9 @@ void CourseManager::PlaceCourseRandom() {
 	//ダート埋め
 	for (size_t i = 0; i < kCourseNum; i++) {
 		if (!isPlaced_[i]) {
-			CreateCourse(kCourseNameList[2], &courseDatas_[2], courseOffsets_[i],0);
+			CreateCourse(kCourseNameList[2], &courseDatas_[2], courseOffsets_[i],0,2);
 		}
 	}
-
-	//カスタムエリア
-	CreateCustomizeArea(nowGroup_);
 }
 
 
@@ -106,11 +127,11 @@ int CourseManager::Place0() {
 	int next = 0;
 	isPlaced_[0] = true;
 	if(RandomEngine::GetRandom(0, 1) > 0.5f) {
-		CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[0],0);
+		CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[0],0,0);
 		next = Place1(0);
 	}
 	else {
-		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[0],0);
+		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[0],0,1);
 		next =Place3(0);
 	}
 
@@ -121,7 +142,7 @@ int CourseManager::Place1(int prev) {
 	int next = 0;
 	isPlaced_[1] = true;
 	if (prev == 0) {
-		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[1],0);
+		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[1],0,1);
 		next = Place2(1);
 	}
 	return next;
@@ -132,16 +153,16 @@ int CourseManager::Place2(int prev) {
 	isPlaced_[2] = true;
 	if (prev == 1) {
 		if (RandomEngine::GetRandom(0, 1) > 0.5f) {
-			CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[2],-1);
+			CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[2],-1,1);
 			next = Place3(2);
 		}
 		else {
-			CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[2],-1);
+			CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[2],-1,0);
 			next = Place5(2);
 		}
 	}
 	else {
-		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[2],0);
+		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[2],0,1);
 		next = Place5(2);
 	}
 
@@ -153,16 +174,16 @@ int CourseManager::Place3(int prev) {
 	isPlaced_[3] = true;
 	if (prev == 0) {
 		if (RandomEngine::GetRandom(0, 1) > 0.5f) {
-			CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[3],-2);
+			CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[3],-2,1);
 			next = Place2(3);
 		}
 		else {
-			CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[3],1);
+			CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[3],1,0);
 			next = Place4(3);
 		}
 	}
 	else {
-		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[3],1);
+		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[3],1,1);
 		next = Place4(3);
 	}
 
@@ -173,7 +194,7 @@ int CourseManager::Place4(int prev) {
 	int next = 0;
 	isPlaced_[4] = true;
 	if (prev == 3) {
-		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[4],2);
+		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[4],2,1);
 		next = Place5(4);
 	}
 
@@ -184,11 +205,11 @@ int CourseManager::Place5(int prev) {
 	int next = 6;
 	isPlaced_[5] = true;
 	if (prev == 2) {
-		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[5],-2);
+		CreateCourse(kCourseNameList[1], &courseDatas_[1], courseOffsets_[5],-2,1);
 		
 	}
 	else {
-		CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[5],0);
+		CreateCourse(kCourseNameList[0], &courseDatas_[0], courseOffsets_[5],0,0);
 	}
 
 	return next;
@@ -232,6 +253,10 @@ void CourseManager::CreateCustomizeArea(size_t group) {
 	for (size_t i = 0; i < kPickupPointCount_;i++) {
 		CreatePickUpPoint(transform.translate,i,group);
 	}
+	if (gimmickList_) {
+		object->SetGimmickList(gimmickList_);
+	}
+	gimmickList_.reset(new std::vector<IObject*>);
 }
 
 void CourseManager::CreatePickUpPoint(const Vector3& center,size_t num,size_t group) {
