@@ -208,6 +208,7 @@ void PlayerPickupManager::OnPartCatchSuccess(Car::IParts* parts)
 	holdParts_->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
 	holdParts_->GetWorldTransformAdress()->transform_.translate = localOffset;
 	holdParts_->GetWorldTransformAdress()->transform_.rotate = {};
+	holdParts_->OnDetach();
 
 	// 対象の更新
 	AttachVisualizer* visualizer = static_cast<AttachVisualizer*>(attachInteract_.get());

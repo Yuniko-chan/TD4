@@ -206,10 +206,11 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 
 	// HPのリセット処理
 	parts->GetHPHandler()->Initialize();
+	// トランスフォーム
 	// 親子関係
 	parts->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
-	// オフセット
 	parts->GetWorldTransformAdress()->transform_.translate = calculator.GetOffset(key);
+	parts->GetWorldTransformAdress()->transform_.scale = Vector3(1.0f, 1.0f, 1.0f);
 	// キー
 	parts->GetConnector()->SetKey(Vector2((float)key.x, (float)key.y));
 	// マッピング

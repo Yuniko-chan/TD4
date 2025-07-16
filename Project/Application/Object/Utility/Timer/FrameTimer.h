@@ -15,8 +15,9 @@ public:
 	/// <summary>
 	/// 開始
 	/// </summary>
-	/// <param name="endFrame"></param>
-	void Start(float endFrame = 60.0f);
+	/// <param name="endTime">終了時間</param>
+	/// <param name="isFrame">フレーム単位か</param>
+	void Start(float endTime = 60.0f, bool isFrame = true);
 	/// <summary>
 	/// 終了（強制終了）
 	/// </summary>

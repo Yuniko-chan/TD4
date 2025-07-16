@@ -2,8 +2,10 @@
 #include "../../../Engine/Object/MeshObject.h"
 #include "System/VehicleConnector.h"
 #include "System/PartHPHandler.h"
+#include "../../Utility/Timer/FrameTimer.h"
 
 #include <memory>
+#include <optional>
 
 // パーツコア
 class VehicleCore;
@@ -116,5 +118,12 @@ namespace Car
 		std::unique_ptr<VehicleConnector> connector_;
 		// HP管理クラス
 		PartHPHandler hpHandler_;
+	private:
+		// 小さくなる時間
+		//FrameTimer reductionTimer_;
+		std::optional<FrameTimer> reductionTimer_;
+		// 最小サイズ
+		const float kSizeValue = 0.8f;
+		const Vector3 minSize_ = { kSizeValue,kSizeValue,kSizeValue };
 	};
 }

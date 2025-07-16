@@ -35,7 +35,10 @@ public:
 	void HeatDamage(float damage = 1.0f);
 
 	float GetHP() { return hp_; }
-	// 爆発処理用
+	/// <summary>
+	/// IsDelete && HPがなくなった時のIsDead
+	/// </summary>
+	/// <returns></returns>
 	bool IsDead();
 private:
 	
