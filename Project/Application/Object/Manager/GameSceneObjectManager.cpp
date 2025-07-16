@@ -134,28 +134,31 @@ void GameSceneObjectManager::ImGuiDraw()
 	if (ImGui::Button("プリセット生成")) {
 		VehiclePreset(buffer);
 	}
-	static Vector3 spownPoint = Vector3(0, 0, 0);
-	ImGui::DragFloat3("SpownPoint", &spownPoint.x, 0.01f);
 
-	if (ImGui::Button("タイヤ追加")) {
-		std::string name = "Tire" + std::to_string(Car::SerialNumberGenerate::sSerialTire);
-		AddObject("TireParts", name.c_str(), "Resources/Model/Tire", "Tire.obj", spownPoint);
-		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-		Car::SerialNumberGenerate::sSerialTire++;
-	}
+	if (ImGui::TreeNode("追加処理")) {
+		static Vector3 spownPoint = Vector3(0, 0, 0);
+		ImGui::DragFloat3("SpownPoint", &spownPoint.x, 0.01f);
+		if (ImGui::Button("タイヤ追加")) {
+			std::string name = "Tire" + std::to_string(Car::SerialNumberGenerate::sSerialTire);
+			AddObject("TireParts", name.c_str(), "Resources/Model/Tire", "Tire.obj", spownPoint);
+			partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+			Car::SerialNumberGenerate::sSerialTire++;
+		}
 
-	if (ImGui::Button("フレーム追加")) {
-		std::string name = "ArmorFrame" + std::to_string(Car::SerialNumberGenerate::sSerialArmor);
-		AddObject("ArmorFrameParts", name.c_str(), "Resources/Model/Frame", "Frame.obj", spownPoint);
-		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-		Car::SerialNumberGenerate::sSerialArmor++;
-	}
+		if (ImGui::Button("フレーム追加")) {
+			std::string name = "ArmorFrame" + std::to_string(Car::SerialNumberGenerate::sSerialArmor);
+			AddObject("ArmorFrameParts", name.c_str(), "Resources/Model/Frame", "Frame.obj", spownPoint);
+			partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+			Car::SerialNumberGenerate::sSerialArmor++;
+		}
 
-	if (ImGui::Button("エンジン追加")) {
-		std::string name = "Engine" + std::to_string(Car::SerialNumberGenerate::sSerialEngine);
-		AddObject("EngineParts", name.c_str(), "Resources/Model/Engine", "Engine.obj", spownPoint);
-		partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
-		Car::SerialNumberGenerate::sSerialEngine++;
+		if (ImGui::Button("エンジン追加")) {
+			std::string name = "Engine" + std::to_string(Car::SerialNumberGenerate::sSerialEngine);
+			AddObject("EngineParts", name.c_str(), "Resources/Model/Engine", "Engine.obj", spownPoint);
+			partsManager_->AddParts(name, static_cast<Car::IParts*>(this->GetObjectPointer(name)));
+			Car::SerialNumberGenerate::sSerialEngine++;
+		}
+		ImGui::TreePop();
 	}
 
 	ImGui::End();
@@ -260,6 +263,8 @@ void GameSceneObjectManager::PlayerInitialize()
 	AddObject("InteractionSpot", "ArmorSpot", sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
 	AddObject("InteractionSpot", "EngineSpot", sVehiclePaths[VehicleDatas::kEngine].first, sVehiclePaths[VehicleDatas::kEngine].second);
 	AddObject("InteractionSpot", "TireSpot", sVehiclePaths[VehicleDatas::kTire].first, sVehiclePaths[VehicleDatas::kTire].second);
+	// 場所用のインタラクトオブジェクト
+	AddObject("InteractionSpot", "PickupSpot", sVehiclePaths[VehicleDatas::kArmor].first, sVehiclePaths[VehicleDatas::kArmor].second);
 	// パーツ
 	partsManager_ = std::make_unique<VehiclePartsManager>();
 	// ピックアップ
@@ -278,6 +283,8 @@ void GameSceneObjectManager::PlayerInitialize()
 		{static_cast<InteractionSpot*>(this->GetObjectPointer("TireSpot"))->GetName(),static_cast<InteractionSpot*>(this->GetObjectPointer("TireSpot"))}
 	};
 	player->GetPickUpManager()->SpotSetup(spots);
+	InteractionSpot* interact = static_cast<InteractionSpot*>(GetObjectPointer("PickupSpot"));
+	player->GetPickUpManager()->InteractSetup(interact);
 	//InteractionSpot* spot = static_cast<InteractionSpot*>(this->GetObjectPointer("ArmorSpot"));
 	//player->GetPickUpManager()->AddSpot(spot->GetName(), spot);
 	//spot = static_cast<InteractionSpot*>(this->GetObjectPointer("EngineSpot"));
@@ -331,7 +338,7 @@ void GameSceneObjectManager::VehiclePreset(const std::string& presetName)
 	VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer(name));
 	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
 	// ペアレント＋トランスフォーム親子設定
-	core->SetPlayer(player);
+	//core->SetPlayer(player);
 	player->SetPair(core);
 	partsManager_->AddParts(core->GetName(), core);
 

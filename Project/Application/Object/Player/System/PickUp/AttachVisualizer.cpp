@@ -61,10 +61,12 @@ void AttachVisualizer::Update(const Vector2Int& key)
 {
 	if (InteractObject_) {
 		if (key == Vector2Int(0, 0)) {
-			InteractObject_->SetIsDraw(false);
+			parent_ = nullptr;
 		}
 		else {
-			InteractObject_->SetIsDraw(true);
+			parent_ = InteractObject_->GetWorldTransformAdress();
 		}
 	}
+	// リフレッシュ
+	Refresh();
 }

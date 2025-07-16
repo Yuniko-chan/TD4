@@ -82,6 +82,12 @@ void Car::IParts::OnDetach()
 	worldTransform_.UpdateMatrix();
 	// コライダーの更新
 	ColliderUpdate();
+	// 小さくなる
+	if (!reductionTimer_.has_value() && (worldTransform_.transform_.scale != minSize_)) {
+		reductionTimer_ = FrameTimer();
+		const float kEndFrame = 2.5f;
+		reductionTimer_.value().Start(kEndFrame);
+	}
 }
 
 void Car::IParts::TransformParent()
@@ -197,17 +203,34 @@ void Car::IParts::ColliderUpdate()
 
 void Car::IParts::ChildUpdate()
 {
+	// 縮小処理
+	if (reductionTimer_.has_value()) {
+		FrameTimer* timer = &reductionTimer_.value();
+		timer->Update();
+		if (timer->IsActive()) {
+			worldTransform_.transform_.scale =
+				Ease::Easing(Ease::EaseName::Lerp,
+					Vector3(1.0f, 1.0f, 1.0f), minSize_,
+					timer->GetElapsedFrame());
+		}
+
+		if (timer->IsEnd()) {
+			reductionTimer_ = std::nullopt;
+		}
+	}
+
 	// 親があれば
 	if (IsParent()) {
 		// 親がある場合コネクターの更新を入れる
 		connector_->Update();
-		worldTransform_.transform_.scale = Vector3(1.0f, 1.0f, 1.0f);
+		//worldTransform_.transform_.scale = Vector3(1.0f, 1.0f, 1.0f);
 		return;
 	}
 	else {
 		// スケールを小さくしてる
-		worldTransform_.transform_.scale = Vector3(0.75f, 0.75f, 0.75f);
+		//worldTransform_.transform_.scale = Vector3(0.75f, 0.75f, 0.75f);
 	}
+
 	// 仮の地面処理（後で消す）
 	if (worldTransform_.GetWorldPosition().y <= 0.0f) {
 		worldTransform_.transform_.translate.y = 0.0f;

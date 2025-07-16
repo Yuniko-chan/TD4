@@ -18,6 +18,7 @@
 #include "../../System/PostEffectSystem/PostEffectSystem.h"
 #include "../../Object/KeyConfig/GameKeyconfig.h"
 #include "../../Object/GlobalParameterManager.h"
+#include "../../Object/GameTimer/GameTimeSystem.h"
 #include "../../Course/CourseCollisionSystem.h"
 #include "../../Course/Debug/CourseDebugDraw.h"
 #include "../../Course/CourseManager.h"
@@ -110,6 +111,8 @@ private:
 	GameKeyconfig* keyConfig_ = nullptr;
 	// 外部パラメータ変数をまとめておくクラス
 	GlobalParameterManager* parameterManager_ = nullptr;
+	// ゲーム内時間管理
+	std::unique_ptr<GameTimeSystem> gameTimeSystem_;
 
 	// コース衝突システム
 	std::unique_ptr<CourseCollisionSystem> courseCollisionSystem_;
