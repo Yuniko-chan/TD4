@@ -49,6 +49,7 @@ public: //関数
 	uint32_t GetSequentialNumberMax() { return sequentialNumberMax_; }
 
 	OutGameSpriteObjectAnimation* GetAnimation() { return animation_.get(); }
+	Sprite* GetSprite() { return sprite_.get(); }
 
 	// セッター
 	void SetTextureHandle(uint32_t textureHandle) { textureHandle_ = textureHandle; }

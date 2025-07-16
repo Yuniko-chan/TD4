@@ -40,7 +40,8 @@ void CourseTraversalDraw::Initialize(int32_t courseTraversalNum)
 	raversalRank_->Initialize("Resources/Sprite/Result/traversalRank.png",
 		{ 512.0f + 256.0f,512.0f }, kWhite, kNumberSize, kNumberTextureSize_);
 	// ルーレット
-	raversalRank_->GetAnimation()->doesAnimations_[0] = true;
+	//raversalRank_->GetAnimation()->doesAnimations_[0] = true;
+	raversalRank_->GetAnimation()->doesAnimations_[1] = true;
 
 	// コース踏破数
 	courseTraversalNum_ = courseTraversalNum;

@@ -2,6 +2,10 @@
 #include <cstdint>
 #include <array>
 #include <functional>
+#include <numbers>
+#include "../../Engine/Math/Ease.h"
+#include "../../Engine/Math/DeltaTime.h"
+#include "../../Engine/Math/Vector/Vector2.h"
 
 class OutGameSpriteObject;
 
@@ -13,13 +17,31 @@ class OutGameSpriteObjectAnimation
 
 public: // 静的定数
 
-	// アニメーションの数
-	static const uint32_t kAnimationNumberMax_ = 1;
+	// アニメーションの番号
+	enum AnimationIndex {
+		kAnimationIndexNumberRoulette, // 数のルーレット
+		kAnimationIndexScaling, // 拡縮
+		kAnimationIndexOfCount
+	};
 
 	// アニメーション関数
 	static const std::array<
-		std::function<void(OutGameSpriteObject*)>,
-		kAnimationNumberMax_> kFunctions_;
+		std::function<void(OutGameSpriteObject*, OutGameSpriteObjectAnimation*)>,
+		kAnimationIndexOfCount> kFunctions_;
+
+public:
+
+	/// <summary>
+	/// 拡縮
+	/// </summary>
+	struct ScalingVariable
+	{
+		float count = 0.0f; // カウント
+		Vector2 add = { 0.0f,0.0f }; // 加算分
+		Vector2 sub = { 0.0f,0.0f }; // 減算分
+		Ease::EaseName easeName = Ease::EaseName::Lerp; // イージング方法
+		float speed = 0.0f; // スピード
+	};
 
 public: // 静的関数
 
@@ -27,7 +49,15 @@ public: // 静的関数
 	/// 数のルーレット
 	/// </summary>
 	/// <param name="object">オブジェクト</param>
-	static void NumberRoulette(OutGameSpriteObject* object);
+	/// <param name="animation">アニメーション</param>
+	static void NumberRoulette(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation);
+
+	/// <summary>
+	/// 拡縮
+	/// </summary>
+	/// <param name="object">オブジェクト</param>
+	/// <param name="animation">アニメーション</param>
+	static void Scaling(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation);
 
 public: // 関数
 
@@ -45,7 +75,13 @@ public: // 関数
 public: // 変数
 
 	// アニメーションするか
-	std::array<bool, kAnimationNumberMax_> doesAnimations_ = {};
+	std::array<bool, kAnimationIndexOfCount> doesAnimations_ = {};
+
+	// 追加データ
+	ScalingVariable scalingVariable_;
+	
+	//
+
 
 };
 
