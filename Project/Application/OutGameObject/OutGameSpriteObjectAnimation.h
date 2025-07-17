@@ -21,7 +21,9 @@ public: // 静的定数
 	enum AnimationIndex {
 		kAnimationIndexNumberRoulette, // 数のルーレット
 		kAnimationIndexScaling, // 拡縮
+		kAnimationIndexScalingLoop, // 拡縮ループ
 		kAnimationIndexMoving, // 移動
+		kAnimationIndexMovingLoop, // 移動ループ
 		kAnimationIndexOfCount
 	};
 
@@ -33,21 +35,9 @@ public: // 静的定数
 public:
 
 	/// <summary>
-	/// 拡縮
+	/// アニメーション変数
 	/// </summary>
-	struct ScalingVariable
-	{
-		float t = 0.0f; // カウント
-		Vector2 add = { 0.0f,0.0f }; // 加算分
-		Vector2 sub = { 0.0f,0.0f }; // 減算分
-		Ease::EaseName easeName = Ease::EaseName::Lerp; // イージング方法
-		float speed = 0.0f; // スピード
-	};
-
-	/// <summary>
-	/// 移動
-	/// </summary>
-	struct MovingVariable
+	struct AnimationVariable
 	{
 		float t = 0.0f; // カウント
 		Vector2 start = { 0.0f,0.0f }; // 始まり
@@ -73,11 +63,25 @@ public: // 静的関数
 	static void Scaling(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation);
 
 	/// <summary>
+	/// 拡縮ループ
+	/// </summary>
+	/// <param name="object">オブジェクト</param>
+	/// <param name="animation">アニメーション</param>
+	static void ScalingLoop(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation);
+
+	/// <summary>
 	/// 移動
 	/// </summary>
 	/// <param name="object">オブジェクト</param>
 	/// <param name="animation">アニメーション</param>
 	static void Moving(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation);
+
+	/// <summary>
+	/// 移動
+	/// </summary>
+	/// <param name="object">オブジェクト</param>
+	/// <param name="animation">アニメーション</param>
+	static void MovingLoop(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation);
 
 public: // 関数
 
@@ -98,10 +102,10 @@ public: // 変数
 	std::array<bool, kAnimationIndexOfCount> doesAnimations_ = {};
 
 	// 拡縮
-	ScalingVariable scalingVariable_;
+	AnimationVariable scalingVariable_;
 	
 	// 移動
-	MovingVariable movingVariable_;
+	AnimationVariable movingVariable_;
 
 };
 
