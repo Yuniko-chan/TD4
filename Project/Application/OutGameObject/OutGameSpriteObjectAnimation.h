@@ -22,6 +22,8 @@ public: // 静的定数
 		kAnimationIndexNumberRoulette, // 数のルーレット
 		kAnimationIndexScaling, // 拡縮
 		kAnimationIndexScalingLoop, // 拡縮ループ
+		kAnimationIndexRotating, // 回転
+		kAnimationIndexRotatingLoop, // 回転ループ
 		kAnimationIndexMoving, // 移動
 		kAnimationIndexMovingLoop, // 移動ループ
 		kAnimationIndexOfCount
@@ -70,6 +72,20 @@ public: // 静的関数
 	static void ScalingLoop(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation);
 
 	/// <summary>
+	/// 回転
+	/// </summary>
+	/// <param name="object">オブジェクト</param>
+	/// <param name="animation">アニメーション</param>
+	static void Rotating(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation);
+
+	/// <summary>
+	/// 回転ループ
+	/// </summary>
+	/// <param name="object">オブジェクト</param>
+	/// <param name="animation">アニメーション</param>
+	static void RotatingLoop(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation);
+
+	/// <summary>
 	/// 移動
 	/// </summary>
 	/// <param name="object">オブジェクト</param>
@@ -103,6 +119,9 @@ public: // 変数
 
 	// 拡縮
 	AnimationVariable scalingVariable_;
+
+	// 回転
+	AnimationVariable rotatingVariable_;
 	
 	// 移動
 	AnimationVariable movingVariable_;

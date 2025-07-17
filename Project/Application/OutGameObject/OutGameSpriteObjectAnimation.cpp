@@ -9,6 +9,8 @@ const std::array<
 	OutGameSpriteObjectAnimation::NumberRoulette, // ルーレット
 	OutGameSpriteObjectAnimation::Scaling, // 拡縮
 	OutGameSpriteObjectAnimation::ScalingLoop, // 拡縮ループ
+	OutGameSpriteObjectAnimation::Rotating, // 拡縮
+	OutGameSpriteObjectAnimation::RotatingLoop, // 拡縮ループ
 	OutGameSpriteObjectAnimation::Moving, // 移動
 	OutGameSpriteObjectAnimation::MovingLoop // 移動ループ
 };
@@ -27,9 +29,7 @@ void OutGameSpriteObjectAnimation::Scaling(OutGameSpriteObject* object, OutGameS
 		return;
 	}
 
-	Vector2 size = object->GetSize();
-
-	size = Ease::Easing(animation->scalingVariable_.easeName,
+	Vector2 size = Ease::Easing(animation->scalingVariable_.easeName,
 		animation->scalingVariable_.start,
 		animation->scalingVariable_.end,
 		animation->scalingVariable_.t);
@@ -44,9 +44,7 @@ void OutGameSpriteObjectAnimation::Scaling(OutGameSpriteObject* object, OutGameS
 void OutGameSpriteObjectAnimation::ScalingLoop(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation)
 {
 
-	Vector2 size = object->GetSize();
-
-	size = Ease::Easing(animation->scalingVariable_.easeName,
+	Vector2 size = Ease::Easing(animation->scalingVariable_.easeName,
 		animation->scalingVariable_.start,
 		animation->scalingVariable_.end,
 		std::fabsf(std::sinf(animation->scalingVariable_.t)));
@@ -55,6 +53,40 @@ void OutGameSpriteObjectAnimation::ScalingLoop(OutGameSpriteObject* object, OutG
 		std::fmodf(animation->scalingVariable_.t + animation->scalingVariable_.speed, static_cast<float>(std::numbers::pi) * 2.0f);
 
 	object->GetSprite()->SetSize(size);
+
+}
+
+void OutGameSpriteObjectAnimation::Rotating(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation)
+{
+
+	if (animation->rotatingVariable_.t >= 1.0f) {
+		return;
+	}
+
+	float rotate = Ease::Easing(animation->rotatingVariable_.easeName,
+		animation->rotatingVariable_.start.x,
+		animation->rotatingVariable_.end.x,
+		animation->rotatingVariable_.t);
+
+	animation->rotatingVariable_.t =
+		std::clamp(animation->rotatingVariable_.t + animation->rotatingVariable_.speed, 0.0f, 1.0f);
+
+	object->GetSprite()->SetRotate(rotate);
+
+}
+
+void OutGameSpriteObjectAnimation::RotatingLoop(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation)
+{
+
+	float rotate = Ease::Easing(animation->rotatingVariable_.easeName,
+		animation->rotatingVariable_.start.x,
+		animation->rotatingVariable_.end.x,
+		animation->rotatingVariable_.t);
+
+	animation->rotatingVariable_.t =
+		std::fmodf(animation->rotatingVariable_.t + animation->rotatingVariable_.speed, 1.0f);
+
+	object->GetSprite()->SetRotate(rotate);
 
 }
 
@@ -109,6 +141,13 @@ void OutGameSpriteObjectAnimation::Initialize()
 	movingVariable_.end = { 600.0f,600.0f }; // 終わり
 	movingVariable_.easeName = Ease::EaseName::Lerp; // イージング方法
 	movingVariable_.speed = 0.02f; // スピード
+
+	
+	rotatingVariable_.t = 0.0f; // カウント
+	rotatingVariable_.start = { 0.0f,0.0f }; // 始まり
+	rotatingVariable_.end = { 6.28f,0.0f }; // 終わり
+	rotatingVariable_.easeName = Ease::EaseName::Lerp; // イージング方法
+	rotatingVariable_.speed = 0.02f; // スピード
 
 }
 
