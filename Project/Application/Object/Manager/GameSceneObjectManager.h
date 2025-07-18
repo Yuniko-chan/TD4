@@ -5,6 +5,8 @@
 #include "../Car/Manager/PickupPointManager.h"
 #include "../../System/Draw/GameSceneInstancingDrawing.h"
 
+#include "../Factory/ObjectFactory.h"
+
 // 前方宣言
 class Player;
 
@@ -79,6 +81,9 @@ public:
 public:
 	// パーツ用のマネージャークラス取得
 	VehiclePartsManager* GetPartsManager() { return partsManager_.get(); }
+
+	//オブジェクトファクトリー所得(コースマネージャー用)
+	ObjectFactory* GetObjectFactory() { return (static_cast<ObjectFactory*>(objectFactory_.get())); };
 
 private: // メンバ変数
 

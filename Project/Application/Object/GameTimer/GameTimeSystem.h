@@ -28,10 +28,14 @@ public:
 	/// 再開
 	/// </summary>
 	void Resume();
-
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw();
 private:
 	// 経過時間
 	float elapsedTime_ = 0.0f;
+	int elapsedSecond_ = 0;
 	// 残り時間
 	float remainingTime_ = 0.0f;
 	// 稼働中か

@@ -1,7 +1,11 @@
 #pragma once
 #include "BaseInteractionVisualizer.h"
+
 #include "../../../Utility/Math/Vector2Int.h"
+#include "../../../Engine/Math/Vector/Vector3.h"
+
 #include <map>
+#include <string>
 
 class InteractionSpot;
 
@@ -13,13 +17,11 @@ public:
 	/// </summary>
 	/// <param name="owner"></param>
 	void Initialize(Player* owner) override;
-
 	/// <summary>
-	/// スポット追加
+	/// 更新
 	/// </summary>
-	/// <param name="name"></param>
-	/// <param name="interact"></param>
-	void AddSpot(std::string name, InteractionSpot* interact);
+	/// <param name="key"></param>
+	void Update(const Vector2Int& key);
 private:
 	/// <summary>
 	/// スポット検索
@@ -28,6 +30,12 @@ private:
 	/// <returns></returns>
 	InteractionSpot* FindSpot(const std::string& name);
 public:
+	/// <summary>
+	/// スポット追加
+	/// </summary>
+	/// <param name="name"></param>
+	/// <param name="interact"></param>
+	void AddSpot(std::string name, InteractionSpot* interact);
 	/// <summary>
 	/// スポット更新
 	/// </summary>
@@ -43,12 +51,8 @@ public:
 	/// <param name="position"></param>
 	/// <param name="direction"></param>
 	void SetUp(const Vector3& position, const Vector3& direction);
-
-	void Update(const Vector2Int& key);
 private:
 	// スポット配列
 	std::map<std::string, InteractionSpot*> interactionSpots_;
-	// インタラクト用のオブジェクト
-	InteractionSpot* InteractObject_ = nullptr;
 
 };

@@ -5,6 +5,7 @@
 #include "../../Utility/Math/Vector2Int.h"
 #include "PickUp/PartJudgeSystem.h"
 #include "PickUp/AttachVisualizer.h"
+#include "PickUp/PickupVisualizer.h"
 
 #include <optional>
 
@@ -71,6 +72,8 @@ public:
 	/// <param name="spots"></param>
 	void SpotSetup(const std::vector<std::pair<std::string, InteractionSpot*>>& spots);
 
+	void InteractSetup(InteractionSpot* spot);
+
 	/// <summary>
 	/// パーツに触れる処理
 	/// </summary>
@@ -117,8 +120,10 @@ private:
 private:
 	// 
 	std::unique_ptr<PartJudgeSystem> judgeSystem_;
-	// 拾う場所の見た目系
+	// 設置対象表示
 	std::unique_ptr<BaseInteractionVisualizer> attachInteract_;
+	// 拾える対象表示
+	std::unique_ptr<BaseInteractionVisualizer> pickupInteract_;
 	// パーツのマネージャ
 	VehiclePartsManager* partsManager_ = nullptr;
 	// 拾える場所

@@ -13,5 +13,9 @@ enum LevelIndex {
 
 	kLevelIndexDebug,//テスト
 
+	kLevelIndexCourseA,//コース形状に紐づいたギミック群
+	kLevelIndexCourseB,
+	kLevelIndexCourseC,
+
 	kLevelIndexOfCount // 数を数える用
 };

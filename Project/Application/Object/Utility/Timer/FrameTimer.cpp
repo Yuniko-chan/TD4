@@ -13,12 +13,17 @@ FrameTimer::FrameTimer(float endFrame)
 	Start(endFrame);
 }
 
-void FrameTimer::Start(float endFrame)
+void FrameTimer::Start(float endTime, bool isFrame)
 {
 	// 初期化
 	StartUp();
 	// 終了フレーム設定
-	endFrame_ = endFrame;
+	if (isFrame) {
+		endFrame_ = (endTime / 60.0f);
+	}
+	else {
+		endFrame_ = endTime;
+	}
 }
 
 void FrameTimer::End()
@@ -41,7 +46,7 @@ void FrameTimer::Resume()
 
 void FrameTimer::Update(float gameFactor)
 {
-	float factor = gameFactor;
+	float factor = gameFactor * kDeltaTime_;
 	// ポーズしていない上アクティブの場合更新
 	if (isActive_ && !isPause_) {
 		// 時間が来たら終了
@@ -50,7 +55,7 @@ void FrameTimer::Update(float gameFactor)
 			return;
 		}
 		// 現在の値計算
-		elapsedFrame_ += (1.0f / (factor * endFrame_));
+		elapsedFrame_ += (1.0f / endFrame_) * factor;
 		// 範囲内にクランプ
 		elapsedFrame_ = std::clamp(elapsedFrame_, 0.0f, 1.0f);
 	}

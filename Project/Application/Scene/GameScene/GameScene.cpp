@@ -64,6 +64,10 @@ void GameScene::Initialize() {
 	keyConfig_ = GameKeyconfig::GetInstance();
 	keyConfig_->Initialize();
 
+	// タイマー
+	gameTimeSystem_ = std::make_unique<GameTimeSystem>();
+	gameTimeSystem_->Initialize();
+
 	// カメラのマネージャー
 	cameraManager_ = std::make_unique<GameCameraManager>();
 	cameraManager_->Initialize();
@@ -134,6 +138,7 @@ void GameScene::Update() {
 
 	// パラメータ
 	parameterManager_->Update();
+	gameTimeSystem_->Update();
 
 
 	courseManager_->Update();
@@ -255,6 +260,8 @@ void GameScene::ImguiDraw(){
 	ImGui::Begin("Framerate");
 	ImGui::Text("Frame rate: %6.2f fps", ImGui::GetIO().Framerate);
 	ImGui::Checkbox("DebugCamera", &isDebugCameraActive_);
+
+	gameTimeSystem_->ImGuiDraw();
 	ImGui::End();
 
 	//debugCamera_->ImGuiDraw();
@@ -318,7 +325,7 @@ void GameScene::CourseInitialize()
 
 	//コース生成システム
 	courseManager_ = std::make_unique<CourseManager>();
-	courseManager_->Initialize(static_cast<GameSceneObjectManager*>(objectManager_.get()));
+	courseManager_->Initialize(static_cast<GameSceneObjectManager*>(objectManager_.get()),levelDataManager_);
 	courseManager_->SetAddCourseFunction(std::bind(&GameScene::AddCourse,this));
 	courseManager_->SetPlayer(reinterpret_cast<MeshObject*>(objectManager_->GetObjectPointer("Player")));
 
