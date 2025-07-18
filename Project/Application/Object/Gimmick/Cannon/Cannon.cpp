@@ -174,7 +174,7 @@ void Cannon::BulletFiring()
 
     // 大砲の弾、リセット
     CannonBallData data;
-    data.direction = firingDirection_;
+    data.direction = Matrix4x4::TransformNormal(firingDirection_, worldTransform_.worldMatrix_);
     data.position = worldTransform_.GetWorldPosition();
     data.speed = firingSpeed_;
     cannonBall_->Reset(data);

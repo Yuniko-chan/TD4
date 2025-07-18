@@ -347,7 +347,7 @@ void LevelDataLoader::CannonLoad(nlohmann::json& object, LevelData::GimmickData*
 	//データ
 	gimmickData.cooltimeMax = object["cooltime"];
 	gimmickData.firingSpeed = object["firingSpeed"];
-	gimmickData.firingDirection = Matrix4x4::Transform(Vector3{0,0,1.0f},Matrix4x4::MakeRotateXYZMatrix(objectData->meshData.transform.rotate));
+	gimmickData.firingDirection = Vector3{ 0,0,1.0f };
 }
 
 void LevelDataLoader::MinigunLoad(nlohmann::json& object, LevelData::GimmickData* objectData) {
@@ -363,7 +363,7 @@ void LevelDataLoader::MinigunLoad(nlohmann::json& object, LevelData::GimmickData
 		gimmickData.direction = object["cooltime"];
 		//gimmickData.firingSpeed = object["firingSpeed"];
 	}
-	gimmickData.direction = Matrix4x4::Transform(Vector3{ 0,1.0f,0.0f }, Matrix4x4::MakeRotateXYZMatrix(objectData->meshData.transform.rotate));
+	gimmickData.direction = Vector3{ 0,1.0f,0.0f };
 }
 
 EulerTransform LevelDataLoader::TransformLoad(nlohmann::json& object)
