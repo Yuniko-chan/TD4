@@ -3,7 +3,7 @@
 #include "../../Engine/2D/ImguiManager.h"
 
 const std::array<std::string, CourseTraversalRank::kRankNumMax_> CourseTraversalRank::kRankNames_ 
-= { "A", "B", "C" };
+= { "D", "C", "B", "A", "S" };
 
 void CourseTraversalRank::Initialize(uint32_t courseTraversalNum)
 {
@@ -80,10 +80,11 @@ void CourseTraversalRank::DetermineRank(uint32_t courseTraversalNum)
 
 	rank_ = "";
 
-	for (size_t i = 0; i < kRankNumMax_; ++i) {
+	for (int32_t i = 0; i < kRankNumMax_; ++i) {
 		// ボーダーライン以上ならそのランクで決定
 		if (courseTraversalNum >= rankBorderline_[i]) {
 			rank_ = kRankNames_[i];
+			rankNum_ = i;
 			break;
 		}
 	}

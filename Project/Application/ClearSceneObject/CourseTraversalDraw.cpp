@@ -3,7 +3,10 @@
 
 const Vector2 CourseTraversalDraw::kNumberTextureSize_ = { 64.0f,64.0f };
 
-void CourseTraversalDraw::Initialize(int32_t courseTraversalNum)
+const std::array<float, CourseTraversalDraw::kFlowIndexOfCount> CourseTraversalDraw::kFlowSwitchingTime_ = 
+{ 0.0f, 5.0f, 10.0f};
+
+void CourseTraversalDraw::Initialize(int32_t courseTraversalNum, int32_t rankNum)
 {
 
 	// 数字の大きさ
@@ -46,11 +49,31 @@ void CourseTraversalDraw::Initialize(int32_t courseTraversalNum)
 
 	// コース踏破数
 	courseTraversalNum_ = courseTraversalNum;
+	// ランク数字
+	rankNum_ = rankNum;
+
+	// 流れ
+	flow_ = kFlowIndexCourseTraversal;
+	// 流れの切り替わりカウント
+	flowCount_ = 0.0f;
 
 }
 
-void CourseTraversalDraw::Update()
+void CourseTraversalDraw::Update(int32_t courseTraversalNum,int32_t rankNum)
 {
+
+	FlowCheck();
+
+#ifdef _DEMO
+	courseTraversalNum_ = courseTraversalNum;
+	rankNum_ = rankNum;
+	if (flow_ == kFlowIndexWaitingButton) {
+		traversalNumTenthPlace_->SetCurrentSequenceNumber(courseTraversalNum_ / 10);
+		traversalNumOnePlace_->SetCurrentSequenceNumber(courseTraversalNum_ % 10);
+		raversalRank_->SetCurrentSequenceNumber(rankNum_);
+	}
+#endif // _DEMO
+
 
 	// 踏破数、文字列
 	traversalNumString_->Update();
@@ -76,5 +99,46 @@ void CourseTraversalDraw::Draw()
 
 	// 踏破ランク、ランク
 	raversalRank_->Draw();
+
+}
+
+void CourseTraversalDraw::FlowCheck()
+{
+
+	// ルーレット番号
+	const uint32_t kRouletteNum = static_cast<uint32_t>(OutGameSpriteObjectAnimation::AnimationIndex::kAnimationIndexNumberRoulette);
+
+	// ボタン待ちまでいっているのでリターン
+	if (flow_ == kFlowIndexWaitingButton) {
+		return;
+	}
+
+	// カウントを増やす
+	flowCount_ += kDeltaTime_;
+	if (flowCount_ >= kFlowSwitchingTime_[flow_ + 1]) {
+		flow_++;
+
+		switch (flow_)
+		{
+		case kFlowIndexCourseTraversal:
+			break;
+		case kFlowIndexRaversalRank:
+			traversalNumTenthPlace_->GetAnimation()->doesAnimations_[kRouletteNum] = false;
+			traversalNumOnePlace_->GetAnimation()->doesAnimations_[kRouletteNum] = false;
+
+			traversalNumTenthPlace_->SetCurrentSequenceNumber(courseTraversalNum_ / 10);
+			traversalNumOnePlace_->SetCurrentSequenceNumber(courseTraversalNum_ % 10);
+
+			break;
+		case kFlowIndexWaitingButton:
+			raversalRank_->GetAnimation()->doesAnimations_[kRouletteNum] = false;
+
+			raversalRank_->SetCurrentSequenceNumber(rankNum_);
+			break;
+		default:
+			break;
+		}
+
+	}
 
 }
