@@ -1,0 +1,275 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "Gatling.001",
+            "transform": {
+                "translation": [
+                    20.28110694885254,
+                    30.9274845123291,
+                    11.188972473144531
+                ],
+                "rotation": [
+                    -0.4807063937187195,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "directoryPath": "Resources/Model/Gimick/Gatling",
+            "className": "Minigun",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "MINIGUN"
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Gatling.002",
+            "transform": {
+                "translation": [
+                    27.287952423095703,
+                    26.20636749267578,
+                    10.021486282348633
+                ],
+                "rotation": [
+                    1.4441317319869995,
+                    3.087536573410034,
+                    -0.1359168440103531
+                ],
+                "scaling": [
+                    1.000000238418579,
+                    1.0000001192092896,
+                    1.0000001192092896
+                ]
+            },
+            "directoryPath": "Resources/Model/Gimick/Gatling",
+            "className": "Minigun",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.000000476837158,
+                    2.000000238418579,
+                    2.000000238418579
+                ]
+            },
+            "gimmick": {
+                "type": "MINIGUN"
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cannon.001",
+            "transform": {
+                "translation": [
+                    17.33041000366211,
+                    -0.13885360956192017,
+                    15.610052108764648
+                ],
+                "rotation": [
+                    -1.8059208393096924,
+                    1.2062628229614347e-08,
+                    1.1384189128875732
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "className": "Cannon",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cannon.002",
+            "transform": {
+                "translation": [
+                    25.12717056274414,
+                    -13.334442138671875,
+                    13.639978408813477
+                ],
+                "rotation": [
+                    -1.8059208393096924,
+                    1.2062628229614347e-08,
+                    1.1384189128875732
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "className": "Cannon",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cannon.003",
+            "transform": {
+                "translation": [
+                    30.851045608520508,
+                    -26.220380783081055,
+                    8.525510787963867
+                ],
+                "rotation": [
+                    -1.7557373046875,
+                    0.16220703721046448,
+                    1.5441986322402954
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    0.9999999403953552
+                ]
+            },
+            "className": "Cannon",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    1.9999998807907104
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_b",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "course_test_B",
+            "directoryPath": "Rsources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_A",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "course_test_A",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "course_tset_C",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "course_test_B",
+            "directoryPath": "Rsources/Course/",
+            "className": "Course"
+        }
+    ]
+}

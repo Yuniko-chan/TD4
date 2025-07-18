@@ -1,0 +1,311 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "Gatling.001",
+            "transform": {
+                "translation": [
+                    20.28110694885254,
+                    30.9274845123291,
+                    2.20123291015625
+                ],
+                "rotation": [
+                    -1.4768357276916504,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    0.9999999403953552,
+                    0.9999999403953552
+                ]
+            },
+            "directoryPath": "Resources/Model/Gimick/Gatling",
+            "className": "Minigun",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    1.9999998807907104,
+                    1.9999998807907104
+                ]
+            },
+            "gimmick": {
+                "type": "MINIGUN"
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Gatling.002",
+            "transform": {
+                "translation": [
+                    32.2572135925293,
+                    -3.738779067993164,
+                    2.20123291015625
+                ],
+                "rotation": [
+                    -1.4768357276916504,
+                    3.8949362846096847e-08,
+                    -1.8030709028244019
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    0.9999999403953552,
+                    0.9999999403953552
+                ]
+            },
+            "directoryPath": "Resources/Model/Gimick/Gatling",
+            "className": "Minigun",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    1.9999998807907104,
+                    1.9999998807907104,
+                    1.9999998807907104
+                ]
+            },
+            "gimmick": {
+                "type": "MINIGUN"
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Gatling.003",
+            "transform": {
+                "translation": [
+                    -3.0876941680908203,
+                    30.9274845123291,
+                    2.20123291015625
+                ],
+                "rotation": [
+                    -1.4768357276916504,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    0.9999999403953552,
+                    0.9999999403953552
+                ]
+            },
+            "directoryPath": "Resources/Model/Gimick/Gatling",
+            "className": "Minigun",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    1.9999998807907104,
+                    1.9999998807907104
+                ]
+            },
+            "gimmick": {
+                "type": "MINIGUN"
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Gatling.004",
+            "transform": {
+                "translation": [
+                    -16.375709533691406,
+                    30.9274845123291,
+                    2.20123291015625
+                ],
+                "rotation": [
+                    -1.4768357276916504,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    0.9999999403953552,
+                    0.9999999403953552
+                ]
+            },
+            "directoryPath": "Resources/Model/Gimick/Gatling",
+            "className": "Minigun",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    1.9999998807907104,
+                    1.9999998807907104
+                ]
+            },
+            "gimmick": {
+                "type": "MINIGUN"
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Gatling.005",
+            "transform": {
+                "translation": [
+                    -32.20063018798828,
+                    30.9274845123291,
+                    2.20123291015625
+                ],
+                "rotation": [
+                    -1.4768357276916504,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    0.9999999403953552,
+                    0.9999999403953552
+                ]
+            },
+            "directoryPath": "Resources/Model/Gimick/Gatling",
+            "className": "Minigun",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    1.9999998807907104,
+                    1.9999998807907104
+                ]
+            },
+            "gimmick": {
+                "type": "MINIGUN"
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Gatling.006",
+            "transform": {
+                "translation": [
+                    -32.20063018798828,
+                    -31.17551612854004,
+                    2.20123291015625
+                ],
+                "rotation": [
+                    -1.4768357276916504,
+                    2.791635367316303e-08,
+                    2.285383701324463
+                ],
+                "scaling": [
+                    1.0000001192092896,
+                    1.0,
+                    1.0
+                ]
+            },
+            "directoryPath": "Resources/Model/Gimick/Gatling",
+            "className": "Minigun",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.000000238418579,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "MINIGUN"
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_b",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "course_test_B",
+            "directoryPath": "Rsources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_A",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "course_test_A",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "course_tset_C",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "course_test_B",
+            "directoryPath": "Rsources/Course/",
+            "className": "Course"
+        }
+    ]
+}

@@ -49,6 +49,8 @@ void Minigun::Initialize(LevelData::MeshData* data, const MinigunData minigunDat
     animation_ = std::make_unique<MinigunAnimation>();
     animation_->Initialize(model_);
 
+    // マテリアル
+    material_->SetEnableLighting(BlinnPhongReflection);
 }
 
 void Minigun::Update()
