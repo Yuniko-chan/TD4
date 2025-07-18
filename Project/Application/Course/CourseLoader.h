@@ -11,7 +11,7 @@
 #include <fstream>
 
 static const uint32_t kVerticesMax = 1024;
-static const uint32_t kInportFileSize = 8192;
+static const uint32_t kInportFileSize = 32768;
 static const size_t kCourseAttributeOffset = 6;
 static const size_t kHeaderOffset = sizeof(uint32_t) * 2 + sizeof(bool) * kCourseAttributeOffset;
 //コースファイル形式の頂点データ
