@@ -74,6 +74,8 @@ void CourseTraversalDraw::Update(int32_t courseTraversalNum,int32_t rankNum)
 	}
 #endif // _DEMO
 
+	courseTraversalNum;
+	rankNum;
 
 	// 踏破数、文字列
 	traversalNumString_->Update();

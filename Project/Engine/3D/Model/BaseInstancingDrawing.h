@@ -17,7 +17,7 @@ protected: //定数
 	/// <summary>
 	/// それぞれのトランスフォームデータ最大数
 	/// </summary>
-	static const size_t kTransformationMatrixMax_ = 64;
+	static const size_t kTransformationMatrixMax_ = 256;
 
 	/// <summary>
 	/// モデルのパスと名前

@@ -31,6 +31,7 @@ void CourseTraversalRank::Update(uint32_t courseTraversalNum)
 	DetermineRank(courseTraversalNum);
 	ApplyGlobalVariables();
 #endif
+	courseTraversalNum;
 
 }
 
