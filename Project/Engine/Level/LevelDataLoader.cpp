@@ -347,7 +347,7 @@ void LevelDataLoader::CannonLoad(nlohmann::json& object, LevelData::GimmickData*
 	//データ
 	gimmickData.cooltimeMax = object["cooltime"];
 	gimmickData.firingSpeed = object["firingSpeed"];
-	gimmickData.firingDirection = Vector3{ 0,0,1.0f };
+	gimmickData.firingDirection = Matrix4x4::Transform(Vector3{0,1.0f,0.0f},Matrix4x4::MakeRotateXYZMatrix(objectData->meshData.transform.rotate));
 }
 
 void LevelDataLoader::MinigunLoad(nlohmann::json& object, LevelData::GimmickData* objectData) {

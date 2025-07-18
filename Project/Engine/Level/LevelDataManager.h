@@ -43,8 +43,8 @@ private: // 定数
 		"GenerationPattern_01",
 		"courseExporterTest",
 		"CourseA",
-		"CourseA",
-		"CourseA",
+		"CourseB",
+		"CourseC",
 	};
 
 private: // 変数

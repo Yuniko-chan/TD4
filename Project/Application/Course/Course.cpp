@@ -30,6 +30,7 @@ void Course::Initialize(LevelData::MeshData* data,CourseImportData* courseData) 
 	const std::string kCourseTextureFileName = "Resources/Course/course.png";
 	courseTextureHandle_ = TextureManager::Load(kCourseTextureFileName, DirectXCommon::GetInstance());
 
+	material_->SetEnableLighting(HalfLambert);
 }
 
 
