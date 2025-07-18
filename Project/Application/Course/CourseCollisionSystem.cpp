@@ -55,6 +55,8 @@ void CourseCollisionSystem::Initialize()
 		polygons_[i].texcoord = { 0.0f,0.0f };
 	}
 
+	currentNormal_ = { 0.0f,1.0f,0.0f };
+
 }
 
 void CourseCollisionSystem::Execute()
@@ -300,7 +302,7 @@ void CourseCollisionSystem::SetGimmick(OBB* obb)
 	// ポリゴン
 	CoursePolygon polygon = {};
 	polygon.normal = { 0.0f,0.0f,1.0f };
-	polygon.texcoord = { 1.0f, 1.0f };
+	polygon.texcoord = { 0.99f, 0.99f };
 	
 	// OBB平面作成
 	Vector3 otientatuonX = obb->otientatuons_[0];
@@ -819,11 +821,14 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 	}
 
 	// コアに代入
-	vehicleCore_->GetWorldTransformAdress()->transform_.translate += extrusion;
-	//if (normalCount != 0) {
-	//	vehicleCore_->GetWorldTransformAdress()->direction_ = normal;
-	//}
-	vehicleCore_->GetWorldTransformAdress()->UpdateMatrix();
+	WorldTransform* vehicleCoreWorldTransform = vehicleCore_->GetWorldTransformAdress();
+	vehicleCoreWorldTransform->transform_.translate += extrusion;
+	if (normalCount != 0) {
+		Matrix4x4 rotateMatrix = Matrix4x4::DirectionToDirection(currentNormal_, normal);
+		currentNormal_ = normal;
+		vehicleCoreWorldTransform->direction_ = Matrix4x4::TransformNormal(vehicleCoreWorldTransform->direction_, rotateMatrix);
+	}
+	vehicleCoreWorldTransform->UpdateMatrix();
 
 }
 
