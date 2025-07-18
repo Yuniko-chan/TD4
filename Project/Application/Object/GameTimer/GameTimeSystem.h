@@ -45,6 +45,8 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	float GetDeltaTime() { return kDeltaTime_ * timeScale_; }
+	float GetTimeScale() { return timeScale_; }
+	void SetTimeScale(float scale) { timeScale_ = scale; }
 
 private:
 	// 残り時間

@@ -18,10 +18,48 @@ void DriveSystem::Initialize()
 
 	// エンジングラス
 	driveEngine_->SetOwner(owner_);
+
+	slowTimer_.End();
 }
 
 void DriveSystem::Update()
 {
+	slowTimer_.Update(1.0f / GameTimeSystem::GetInstance()->GetTimeScale());
+	if (pushCount_ != 0) {
+		isPush_ = true;
+	}
+	if (isPush_) {
+		pushVector_.second = Vector3::Normalize(pushVector_.second);
+		pushVector_.second.y = 0.0f;
+		pushVector_.first = owner_->GetWorldTransformAdress()->direction_;
+		pushVector_.first.y = 0.0f;
+		//Vector3 newPush = Matrix4x4::TransformNormal(pushPower_, Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), pushVector_.second));
+		//owner_->GetWorldTransformAdress()->transform_.translate += newPush * GameTimeSystem::GetInstance()->GetDeltaTime();
+		//pushPower_ = {};
+		isPush_ = false;
+		pushCount_ = 0;
+		// 
+		if (!slowTimer_.IsActive()) {
+			slowTimer_.Start(1.0f);
+			GameTimeSystem::GetInstance()->SetTimeScale(0.1f);
+		}
+	}
+
+	if (slowTimer_.IsActive()) {
+		//Quaternion from = Quaternion::DirectionToDirection(Vector3(0, 0, 1), GetPushDirection().first);
+		//Quaternion to = Quaternion::DirectionToDirection(Vector3(0, 0, 1), GetPushDirection().second);
+		//float t = slowTimer_.GetElapsedFrame();
+		//Quaternion slerp = Quaternion::Slerp(from, to, t);
+		//Vector3 newDirect = Quaternion::RotateVector(Vector3(0, 0, 1), slerp);
+		//owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(newDirect);
+		owner_->GetWorldTransformAdress()->direction_ = pushVector_.second;
+	}
+	if (slowTimer_.IsEnd()) {
+		GameTimeSystem::GetInstance()->SetTimeScale(1.0f);
+		velocity_ += pushPower_;
+		pushPower_ = {};
+	}
+
 	// オーバーヒートフラグ初期化
 	status_->SetIsOverheat(false);
 
@@ -85,6 +123,7 @@ void DriveSystem::ImGuiDraw()
 {
 	// 速度
 	ImGui::DragFloat3("Velocity", &velocity_.x);
+	ImGui::InputInt("PushCount", &pushCount_);
 	// ハンドル
 	handling_->ImGuiDraw();
 	// エンジン
@@ -122,8 +161,13 @@ void DriveSystem::PushPower(const Vector3& power)
 {
 	float length = Vector3::Length(power);
 	// 向きに合わせる
-	owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(power);
+	//owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(power);
 	owner_->GetWorldTransformAdress()->direction_.y = 0.0f;
 	// 速度生成
-	velocity_ += Vector3(0.0f, 0.0f, 1.0f) * length;
+	//velocity_ += Vector3(0.0f, 0.0f, 1.0f) * length;
+	if (!isPush_) {
+		pushCount_++;
+	}
+	pushPower_ += Vector3(0.0f, 0.0f, 1.0f) * length;
+	pushVector_.second += power;
 }

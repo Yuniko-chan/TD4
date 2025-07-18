@@ -185,10 +185,11 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 		}
 
 		executeDirection_ = Vector3::Normalize(executeDirection_);
-
-		float radian = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, executeDirection_);
-		radian /= 60.0f;
-		owner_->GetWorldTransformAdress()->direction_ = TransformHelper::XZRotateDirection(owner_->GetWorldTransformAdress()->direction_, radian);	
+		const float kRate = 0.01f;
+		owner_->GetWorldTransformAdress()->direction_ = Ease::Easing(Ease::EaseName::Lerp, vehicleDirection_, executeDirection_, kRate);
+		//float radian = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, executeDirection_);
+		//radian /= 60.0f;
+		//owner_->GetWorldTransformAdress()->direction_ = TransformHelper::XZRotateDirection(owner_->GetWorldTransformAdress()->direction_, radian);	
 	}
 }
 

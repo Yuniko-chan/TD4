@@ -4,7 +4,7 @@
 
 FrameTimer::FrameTimer()
 {
-	// 開始
+	// 初期化
 	Start();
 }
 
@@ -69,6 +69,7 @@ void FrameTimer::StartUp()
 {
 	// フラグ初期化
 	isEnd_ = false;
+	isPause_ = false;
 	isActive_ = true;
 	// フレーム初期化
 	elapsedFrame_ = 0.0f;

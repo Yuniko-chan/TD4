@@ -1,6 +1,7 @@
 #include "OverheatSystem.h"
 #include "../../VehicleCore.h"
 #include "../../../Engine/Math/RandomEngine.h"
+#include "../../../GameTimer/GameTimeSystem.h"
 
 void OverheatSystem::Update()
 {
@@ -23,6 +24,7 @@ void OverheatSystem::Update()
 			}
 		}
 	}
+
 	// パーツにダメージを与えるメソッド
 	DamageProcess();
 
@@ -38,7 +40,6 @@ void OverheatSystem::DamageProcess()
 	else if (!targetPart_->IsParent()) {
 		AssignRandomOverheatPart();
 	}
-
 	// 対象にダメージ
 	if (targetPart_) {
 		targetPart_->GetHPHandler()->HeatDamage(owner_->GetStatus()->GetHeatDPS());
