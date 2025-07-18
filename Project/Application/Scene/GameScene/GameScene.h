@@ -112,8 +112,8 @@ private:
 	// 外部パラメータ変数をまとめておくクラス
 	GlobalParameterManager* parameterManager_ = nullptr;
 	// ゲーム内時間管理
-	std::unique_ptr<GameTimeSystem> gameTimeSystem_;
-
+	//std::unique_ptr<GameTimeSystem> gameTimeSystem_;
+	GameTimeSystem* gameTimeSystem_ = nullptr;
 	// コース衝突システム
 	std::unique_ptr<CourseCollisionSystem> courseCollisionSystem_;
 	// コースデバッグ描画

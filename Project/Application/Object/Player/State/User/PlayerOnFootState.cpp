@@ -1,5 +1,6 @@
 #include "PlayerOnFootState.h"
 #include "../../Player.h"
+#include "../../../GameTimer/GameTimeSystem.h"
 
 #include "../../../Engine/Math/DeltaTime.h"
 #include "../../../Engine/Physics/Gravity/Gravity.h"
@@ -50,7 +51,7 @@ void PlayerOnFootState::Update()
 		return;
 	}
 
-	player_->GetWorldTransformAdress()->transform_.translate += velocityDirection * kDeltaTime_;
+	player_->GetWorldTransformAdress()->transform_.translate += velocityDirection * GameTimeSystem::GetInstance()->GetDeltaTime();
 
 }
 

@@ -55,6 +55,7 @@ public: // アクセッサ
     VehicleAnimation* GetAnimation() { return animation_.get(); }
     VehicleStatus* GetStatus() { return statusSystem_.get(); }
     bool IsDrive() { return isDrive_; }
+    bool IsPlayer() { return pairPlayer_; }
     //---セッター---//
     // プレイヤー
     void SetPlayer(Player* player) { pairPlayer_ = player; }

@@ -65,7 +65,8 @@ void GameScene::Initialize() {
 	keyConfig_->Initialize();
 
 	// タイマー
-	gameTimeSystem_ = std::make_unique<GameTimeSystem>();
+	//gameTimeSystem_ = std::make_unique<GameTimeSystem>();
+	gameTimeSystem_ = GameTimeSystem::GetInstance();
 	gameTimeSystem_->Initialize();
 
 	// カメラのマネージャー

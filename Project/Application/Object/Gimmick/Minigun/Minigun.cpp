@@ -3,6 +3,8 @@
 #include "../../../../Engine/Math/DeltaTime.h"
 #include "../../../../Engine/3D/Model/ModelDraw.h"
 
+#include "../../GameTimer/GameTimeSystem.h"
+
 // 発射間隔
 const float Minigun::kFiringInterval_ = 0.2f;
 
@@ -64,7 +66,7 @@ void Minigun::Update()
         });
 
     // 時間
-    elapsedTime_ += kDeltaTime_;
+    elapsedTime_ += GameTimeSystem::GetInstance()->GetDeltaTime();
 
     // 発射するか
     if (elapsedTime_ >= kFiringInterval_) {

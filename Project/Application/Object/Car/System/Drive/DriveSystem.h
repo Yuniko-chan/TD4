@@ -36,6 +36,7 @@ public:
 private:
 	void VelocityUpdate();
 
+	void HandleNoParent();
 private:
 	// 運転用のエンジン
 	std::unique_ptr<DriveEngine> driveEngine_;

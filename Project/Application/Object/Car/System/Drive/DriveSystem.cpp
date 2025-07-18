@@ -1,6 +1,7 @@
 #include "DriveSystem.h"
 #include "../../VehicleCore.h"
 #include "../../CarLists.h"
+#include "../../../GameTimer/GameTimeSystem.h"
 
 DriveSystem::DriveSystem()
 {
@@ -58,7 +59,12 @@ void DriveSystem::Update()
 	
 	// 座標計算
 	//VehicleCaluclator calc;
-	owner_->GetWorldTransformAdress()->transform_.translate += newDirect * kDeltaTime_;
+	owner_->GetWorldTransformAdress()->transform_.translate += newDirect * GameTimeSystem::GetInstance()->GetDeltaTime();
+
+	// 
+	if (!owner_->IsPlayer()) {
+		HandleNoParent();
+	}
 
 }
 
@@ -92,7 +98,7 @@ void DriveSystem::VelocityUpdate()
 	// 速度レートが0の場合加算しない
 	if (driveEngine_->GetCurrentSpeed() != 0) {
 		Vector3 acceleration = Vector3::FrontVector() * driveEngine_->GetCurrentSpeed();
-		velocity_ += acceleration * kDeltaTime_;
+		velocity_ += acceleration * GameTimeSystem::GetInstance()->GetDeltaTime();
 	}
 
 	const float velocityDecrement = 0.75f;	// 減速値
@@ -103,6 +109,13 @@ void DriveSystem::VelocityUpdate()
 	VehicleCaluclator calc;
 	velocity_ = calc.SnapToZero(velocity_, kEpsilon);
 
+}
+
+void DriveSystem::HandleNoParent()
+{
+	if (velocity_.z == 0.0f) {
+		handling_->SetVehicleDirection(Vector3(0.0f, 0.0f, 1.0f));
+	}
 }
 
 void DriveSystem::PushPower(const Vector3& power)

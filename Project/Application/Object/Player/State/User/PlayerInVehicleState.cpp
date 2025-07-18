@@ -12,6 +12,7 @@ void PlayerInVehicleState::Initialize()
 	player_->GetWorldTransformAdress()->direction_ = Vector3(0.0f, 0.0f, 1.0f);
 
 	player_->GetCore()->SetIsDrive(true);
+	player_->GetCore()->SetPlayer(player_);
 
 	// カメラの設定
 	UpdateCameraOffset();
@@ -39,6 +40,7 @@ void PlayerInVehicleState::Exit()
 	player_->GetWorldTransformAdress()->transform_.rotate.y = parentRotate.y;
 
 	player_->GetCore()->SetIsDrive(false);
+	player_->GetCore()->SetPlayer(nullptr);
 
 	// カメラ
 	static_cast<FollowCamera*>(player_->GetCameraManager()->FindCamera("Follow"))->SetZoomOutOffset(0.0f);

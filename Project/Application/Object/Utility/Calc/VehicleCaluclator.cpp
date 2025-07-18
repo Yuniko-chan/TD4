@@ -3,6 +3,7 @@
 #include "../../../Engine/Math/DeltaTime.h"
 #include "../../../Engine/GlobalVariables/GlobalVariables.h"
 #include "../../Car/CarLists.h"
+#include "../../GameTimer/GameTimeSystem.h"
 
 Vector3 VehicleCaluclator::VelocityCalculator()
 {
@@ -34,7 +35,7 @@ Vector3 VehicleCaluclator::RotateVector(const Vector3& velocity, const float eul
 
 Vector3 VehicleCaluclator::ExponentialInterpolate(const Vector3& current, const Vector3& end, float decay)
 {
-    float factor = (1.0f - std::exp(-decay * kDeltaTime_));
+    float factor = (1.0f - std::exp(-decay * GameTimeSystem::GetInstance()->GetDeltaTime()));
     Vector3 v1 = current;
     Vector3 v2 = end;
     return v1 + (v2 - v1) * factor;

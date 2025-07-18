@@ -18,7 +18,7 @@ void GameTimeSystem::Update()
 {
 	// 稼働中
 	if (isRunning_ && !isPause_) {
-		float reductionTime = 1.0f * kDeltaTime_;	// 減少時間（1.0 = タイムファクター）
+		float reductionTime = 1.0f * GetDeltaTime();	// 減少時間（1.0 = タイムファクター）
 		remainingTime_ -= reductionTime;
 		remainingSeconds_ = static_cast<int>(remainingTime_);
 
@@ -71,4 +71,5 @@ void GameTimeSystem::ImGuiDraw()
 	if (ImGui::Button("再開")) {
 		Resume();
 	}
+	ImGui::DragFloat("タイムスケール", &timeScale_, 0.01f);
 }

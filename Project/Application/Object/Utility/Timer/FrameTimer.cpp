@@ -1,4 +1,5 @@
 #include "FrameTimer.h"
+#include "../../GameTimer/GameTimeSystem.h"
 #include <algorithm>
 
 FrameTimer::FrameTimer()
@@ -46,7 +47,7 @@ void FrameTimer::Resume()
 
 void FrameTimer::Update(float gameFactor)
 {
-	float factor = gameFactor * kDeltaTime_;
+	float factor = gameFactor * GameTimeSystem::GetInstance()->GetDeltaTime();
 	// ポーズしていない上アクティブの場合更新
 	if (isActive_ && !isPause_) {
 		// 時間が来たら終了

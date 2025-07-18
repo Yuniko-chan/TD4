@@ -6,6 +6,7 @@
 #include "../../../Collider/CollisionConfig.h"
 #include "../../../../Engine/3D/Model/ModelManager.h"
 #include "../../../../Engine/3D/Model/ModelDraw.h"
+#include "../../GameTimer/GameTimeSystem.h"
 
 ConicalPendulumIronBall::ConicalPendulumIronBall()
 {
@@ -152,7 +153,7 @@ void ConicalPendulumIronBall::ConicalPendulumUpdate()
     // 各速度を求める
     angularVelocity_ = std::sqrtf(9.8f / (length_ * std::cosf(halfApexAngle_)));
     // 現在の角度に加算
-    angle_ += angularVelocity_ * kDeltaTime_;
+    angle_ += angularVelocity_ * GameTimeSystem::GetInstance()->GetDeltaTime();
 
     // 半径と高さを求める
     float radius = std::sinf(halfApexAngle_) * length_;

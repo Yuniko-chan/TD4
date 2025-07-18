@@ -2,6 +2,7 @@
 #include "../../../Collider/CollisionConfig.h"
 #include "../../../../Engine/Math/DeltaTime.h"
 #include "../../../../Engine/Math/Ease.h"
+#include "../../GameTimer/GameTimeSystem.h"
 
 CannonExplosion::CannonExplosion()
 {
@@ -42,7 +43,7 @@ void CannonExplosion::Update()
 {
 
     // 時間経過
-    elapsedTime_ += kDeltaTime_;
+    elapsedTime_ += GameTimeSystem::GetInstance()->GetDeltaTime();
 
     // 爆発時間チェック
     if (elapsedTime_ >= explosionTime_) {
