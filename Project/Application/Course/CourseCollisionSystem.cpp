@@ -177,6 +177,9 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 	// オブジェクト取得
 	std::list<BaseObjectManager::ObjectPair>* objects = objectManager->GetObjects();
 
+	// プレイヤーが持ってるパーツ
+	Car::IParts* partsHeldByPlayer = nullptr;
+
 	// オブジェクト
 	for (std::list<BaseObjectManager::ObjectPair>::iterator itr = objects->begin();
 		itr != objects->end(); ++itr) {
@@ -199,18 +202,27 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 					break;
 				case 1:
 					ObjectRegistrationPlayer(static_cast<Player*>(itr->second.get()));
+					partsHeldByPlayer = static_cast<Player*>(itr->second.get())->GetPickUpManager()->GetHoldParts();
 					break;
 				case 2:
-					collidingObjects_.push_back(static_cast<VehicleCore*>(itr->second.get()));
+					if (!(partsHeldByPlayer == itr->second.get())) {
+						collidingObjects_.push_back(static_cast<VehicleCore*>(itr->second.get()));
+					}
 					break;
 				case 3:
-					collidingObjects_.push_back(static_cast<TireParts*>(itr->second.get()));
+					if (!(partsHeldByPlayer == itr->second.get())) {
+						collidingObjects_.push_back(static_cast<TireParts*>(itr->second.get()));
+					}
 					break;
 				case 4:
-					collidingObjects_.push_back(static_cast<ArmorFrameParts*>(itr->second.get()));
+					if (!(partsHeldByPlayer == itr->second.get())) {
+						collidingObjects_.push_back(static_cast<ArmorFrameParts*>(itr->second.get()));
+					}
 					break;
 				case 5:
-					collidingObjects_.push_back(static_cast<EngineParts*>(itr->second.get()));
+					if (!(partsHeldByPlayer == itr->second.get())) {
+						collidingObjects_.push_back(static_cast<EngineParts*>(itr->second.get()));
+					}
 					break;
 				default:
 					break;
