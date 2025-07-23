@@ -19,6 +19,11 @@ void PlayerDropOffActionState::Initialize()
 	player_->GetCameraManager()->SetRequest(ActiveCamera::kOverhead);
 	//static_cast<OverheadCamera*>(player_->GetCameraManager()->FindCamera("Overhead"))->SetDirection(player_->GetCoreTransform()->direction_);
 	player_->GetCore()->GetAnimation()->AnimationStart();
+
+	// カメラ
+	OverheadCamera* camera = static_cast<OverheadCamera*>(player_->GetCameraManager()->FindCamera("Overhead"));
+	camera->SetCoreTransform(player_->GetCoreTransform());
+
 }
 
 void PlayerDropOffActionState::Update()
@@ -39,5 +44,7 @@ void PlayerDropOffActionState::Update()
 
 void PlayerDropOffActionState::Exit()
 {
-
+	// カメラ
+	OverheadCamera* camera = static_cast<OverheadCamera*>(player_->GetCameraManager()->FindCamera("Overhead"));
+	camera->SetCoreTransform(nullptr);
 }

@@ -124,6 +124,20 @@ public:
     /// <returns></returns>
     static Quaternion DirectionToDirection(const Vector3& v0, const Vector3& v1);
 
+public:
+	/// <summary>
+	/// 回転行列からクォータニオン
+	/// </summary>
+	/// <param name="mat"></param>
+	/// <returns></returns>
+	static Quaternion MatrixToQuaternion(const Matrix4x4& mat);
+	/// <summary>
+	/// 向きの回転行列を作成
+	/// </summary>
+	/// <param name="direction"></param>
+	/// <returns></returns>
+	static Quaternion LookRotation(const Vector3& direction);
+
 public: // オーバーロード
 
     /// <summary>

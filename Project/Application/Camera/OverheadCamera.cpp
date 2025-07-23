@@ -96,6 +96,11 @@ void OverheadCamera::ApplyGlobalVariable()
 	from_.first = globalVariables->GetVector3Value("DriveCamera", "Position");
 	from_.second = globalVariables->GetVector3Value("DriveCamera", "RotateVector");
 
+	if (core_) {
+		from_.second = Vector3(core_->direction_.x, from_.second.y, core_->direction_.z);
+		from_.second = Vector3::Normalize(from_.second);
+	}
+
 }
 
 void OverheadCamera::TransitionUpdate()
@@ -119,7 +124,9 @@ Matrix4x4 OverheadCamera::GetRotateMatrix()
 {
 	if (usedDirection_) {
 		rotateDirection_ = Vector3::Normalize(rotateDirection_);
-		return Matrix4x4::DirectionToDirection(Vector3::FrontVector(), rotateDirection_);
+		rotateQuaternion_ = Quaternion::LookRotation(rotateDirection_);
+		return Quaternion::MakeRotateMatrix(rotateQuaternion_);
+		//return Matrix4x4::DirectionToDirection(Vector3::FrontVector(), rotateDirection_);
 	}
 	// 無ければデフォルト
 	return Matrix4x4::MakeRotateXYZMatrix(transform_.rotate);

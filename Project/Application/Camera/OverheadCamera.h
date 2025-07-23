@@ -47,6 +47,7 @@ public: // アクセッサ
 	Matrix4x4 GetRotateMatrix();
 
 	void SetDirection(const Vector3& direct) { rotateDirection_ = direct; }
+	void SetCoreTransform(WorldTransform* core) { core_ = core; }
 
 private: // メンバ関数
 
@@ -59,6 +60,8 @@ private: // メンバ関数
 private: // メンバ関数
 	// 追従対象
 	const WorldTransform* target_ = nullptr;
+	WorldTransform* core_ = nullptr;
+
 	// ターゲット位置
 	Vector3 interTarget_;
 	// オフセット
@@ -67,6 +70,7 @@ private: // メンバ関数
 	bool usedDirection_ = false;
 	// 回転向きのベクトル
 	Vector3 rotateDirection_ = Vector3(0.0f, 0.0f, 1.0f);
+	Quaternion rotateQuaternion_ = Quaternion::IdentityQuaternion();
 
 	float offsetMoveRate_ = 0.0f;
 	Vector3 start_ = {};
