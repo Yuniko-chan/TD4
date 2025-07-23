@@ -109,6 +109,12 @@ public: // メンバ関数
 	/// </summary>
 	void ShakeStop();
 
+	/// <summary>
+	/// クラス名
+	/// </summary>
+	/// <returns></returns>
+	std::string GetCameraClassName() { return className_; }
+
 protected: // メンバ関数
 
 	/// <summary>
@@ -173,6 +179,9 @@ protected: // メンバ変数
 	float targetFovY_;
 	// ズームの補間係数
 	float zoomT_;
+
+	// クラス名
+	std::string className_ = "";
 
 };
 
