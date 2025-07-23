@@ -129,14 +129,22 @@ Quaternion FromMatrix(const Matrix4x4& mat) {
 	return q;
 }
 
-Quaternion LookRotation(const Vector3& forward, const Vector3& up = Vector3(0, 1, 0)) {
-	// 前方ベクトル正規化
-	Vector3 forwardNormal = Vector3::Normalize(forward);
-	// 右
-	Vector3 right = Vector3::Normalize(Vector3::Cross(up, forwardNormal));
-	// ローカル上
-	Vector3 localUp = Vector3::Cross(forwardNormal, right);
+Quaternion LookRotationToMatrix(const Vector3& direction) {
+	// 前方
+	Vector3 forward = Vector3::Normalize(direction);
+	// ワールドの上
+	Vector3 worldUp = { 0.0f, 1.0f, 0.0f };
+	// 右ベクトル
+	Vector3 right = Vector3::Normalize(Vector3::Cross(worldUp, forward));
+	// 前方とローカルの上が平行な場合右が0になるため対応する
+	if (Vector3::Length(right) < 0.0001f) {
+		worldUp = { 0.0f, 0.0f, -1.0f };
+		right = Vector3::Normalize(Vector3::Cross(worldUp, forward));
+	}
+	// 前方と右のベクトルからローカルの上軸ベクトル計算まで
+	Vector3 localUp = Vector3::Normalize(Vector3::Cross(forward, right));
 
+	// 各要素から行列を構築
 	Matrix4x4 rotationMatrix = {};
 	// 右
 	rotationMatrix.m[0][0] = right.x;
@@ -149,31 +157,13 @@ Quaternion LookRotation(const Vector3& forward, const Vector3& up = Vector3(0, 1
 	rotationMatrix.m[2][1] = localUp.z;
 	rotationMatrix.m[3][1] = 0.0f;
 	// 前
-	rotationMatrix.m[0][2] = forwardNormal.x;
-	rotationMatrix.m[1][2] = forwardNormal.y;
-	rotationMatrix.m[2][2] = forwardNormal.z;
+	rotationMatrix.m[0][2] = forward.x;
+	rotationMatrix.m[1][2] = forward.y;
+	rotationMatrix.m[2][2] = forward.z;
 	rotationMatrix.m[3][2] = 0.0f;
 
+	// 行列から回転クォータニオンの構築
 	return FromMatrix(rotationMatrix);
-}
-
-Quaternion DirectionToRotate(const Vector3& direction) {
-	// 前方
-	Vector3 forward = Vector3::Normalize(direction);
-	// ワールドの上
-	Vector3 worldUp = { 0.0f, 1.0f, 0.0f };
-	// 右ベクトル
-	Vector3 right = Vector3::Normalize(Vector3::Cross(worldUp, forward));
-	// 前方とローカルの上が平行な場合右が0になるため対応する
-	if (Vector3::Length(right) < 0.0001f) {
-		worldUp = { 0.0f, 0.0f, -1.0f };
-		right = Vector3::Normalize(Vector3::Cross(worldUp, forward));
-	}
-
-	// 前方と右のベクトルからローカルの上軸ベクトル計算まで
-	Vector3 up = Vector3::Normalize(Vector3::Cross(forward, right));
-	//up = Vector3(0, 1, 0);
-	return Quaternion(LookRotation(forward, Vector3(up)));
 }
 
 void FollowCamera::Initialize() {
@@ -318,8 +308,7 @@ Matrix4x4 FollowCamera::GetRotateMatrix()
 				quaternion_.rotate = Quaternion::Multiply(x, Quaternion::Multiply(y, z));
 			}
 			else if (quaternion_.channel == 1) {
-				// 向きベクトルからクォータニオンの取得
-				quaternion_.rotate = DirectionToRotate(rotateDirection_);
+
 			}
 			else if (quaternion_.channel == 2) {
 				quaternion_.direction = Vector3::Normalize(quaternion_.direction);
@@ -340,23 +329,15 @@ Matrix4x4 FollowCamera::GetRotateMatrix()
 		if (usedDirection_) {
 			// カートがあれば、その向きに
 			if (target_->parent_) {
-				rotateQuaternion_ = DirectionToRotate(rotateDirection_);
+				rotateQuaternion_ = LookRotationToMatrix(rotateDirection_);
 				// 自分の回転
 				Matrix4x4 from = Quaternion::MakeRotateMatrix(rotateQuaternion_);
 				// 対象の回転
 				Matrix4x4 to = target_->parent_->rotateMatrix_;
 				return Matrix4x4::Multiply(from, to);
 			}
-			//// 自分の回転
-			//Matrix4x4 from = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, Vector3::Normalize(rotateDirection_));
-			//// 対象の回転
-			//Matrix4x4 to = target_->rotateMatrix_;
-			//return Matrix4x4::Multiply(from,to);
-			//rotateDirection_ = Vector3::Normalize(rotateDirection_);
-			//return Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, this->rotateDirection_);
-			rotateQuaternion_ = DirectionToRotate(rotateDirection_);
+			rotateQuaternion_ = LookRotationToMatrix(rotateDirection_);
 			return Quaternion::MakeRotateMatrix(rotateQuaternion_);
-
 		}
 
 		return Matrix4x4::Multiply(Matrix4x4::MakeRotateXYZMatrix(transform_.rotate), target_->rotateMatrix_);
@@ -365,7 +346,7 @@ Matrix4x4 FollowCamera::GetRotateMatrix()
 		// 回転行列作成
 		// 正規化
 		rotateDirection_ = Vector3::Normalize(rotateDirection_);
-		rotateQuaternion_ = DirectionToRotate(rotateDirection_);
+		rotateQuaternion_ = LookRotationToMatrix(rotateDirection_);
 		return Quaternion::MakeRotateMatrix(rotateQuaternion_);
 		//return Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, this->rotateDirection_);
 	}
