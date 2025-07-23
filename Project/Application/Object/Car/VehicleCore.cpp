@@ -86,18 +86,18 @@ void VehicleCore::Update()
 	// メッシュの更新
 	MeshObject::Update();
 	// 子専用更新（重力の適応）
-	// 仮の地面処理（後で消す）
-	if (worldTransform_.GetWorldPosition().y <= 0.0f) {
-		worldTransform_.transform_.translate.y = 0.0f;
-		//return;
+	if (!IsParent()) {
+		// 仮の地面処理（後で消す）
+		if (worldTransform_.GetWorldPosition().y <= 0.0f) {
+			worldTransform_.transform_.translate.y = 0.0f;
+		}
+		worldTransform_.transform_.translate += Gravity::Execute();
 	}
 	// トランスフォームの更新
 	worldTransform_.direction_ = Vector3::Normalize(worldTransform_.direction_);
 	worldTransform_.UpdateMatrix();
 	// コライダーの更新
 	ColliderUpdate();
-	// 重力
-	worldTransform_.transform_.translate += Gravity::Execute();
 
 	isDelete_ = false;
 }
