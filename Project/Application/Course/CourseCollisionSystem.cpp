@@ -814,10 +814,11 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 
 	// 法線
 	if (normalCount == 0) {
-		normal = { 0.0f,1.0f, 0.0f };
+		//normal = { 0.0f,1.0f, 0.0f };
 	}
 	else {
 		normal = Vector3::Normalize(normal * (1.0f / static_cast<float>(normalCount)));
+		currentNormal_ = normal;
 	}
 	
 	// コアに代入
@@ -831,7 +832,7 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 	vehicleCoreWorldTransform->UpdateMatrix();
 */	
 	//お試し
-	Matrix4x4 rotateNormal = Matrix4x4::DirectionToDirection(currentNormal_,normal);
+	Matrix4x4 rotateNormal = Matrix4x4::DirectionToDirection({0.0f,1.0f,0.0f}, currentNormal_);
 	//vehicleCore_->posture_ = vehicleCore_->posture_ * rotateNormal;
 	vehicleCore_->atNormal_ = rotateNormal;
 }
