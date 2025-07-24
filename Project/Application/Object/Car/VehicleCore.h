@@ -60,6 +60,10 @@ public: // アクセッサ
     void SetPlayer(Player* player) { pairPlayer_ = player; }
     void SetIsDrive(bool isDrive) { isDrive_ = isDrive; }
 
+    //回転関係テスト
+    Matrix4x4 posture_ = {};//姿勢
+    Matrix4x4 atNormal_ = {};//衝突法線による補間
+
 private:
     // パーツ構築システム
     std::unique_ptr<VehicleConstructionSystem> constructionSystem_;

@@ -814,22 +814,26 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 
 	// 法線
 	if (normalCount == 0) {
-		normal = { 0.0f, 0.0f, 1.0f };
+		normal = { 0.0f,1.0f, 0.0f };
 	}
 	else {
 		normal = Vector3::Normalize(normal * (1.0f / static_cast<float>(normalCount)));
 	}
-
+	
 	// コアに代入
 	WorldTransform* vehicleCoreWorldTransform = vehicleCore_->GetWorldTransformAdress();
 	vehicleCoreWorldTransform->transform_.translate += extrusion;
-	if (normalCount != 0) {
+	/*if (normalCount != 0) {
 		Matrix4x4 rotateMatrix = Matrix4x4::DirectionToDirection(currentNormal_, normal);
 		currentNormal_ = normal;
 		vehicleCoreWorldTransform->direction_ = Matrix4x4::TransformNormal(vehicleCoreWorldTransform->direction_, rotateMatrix);
 	}
 	vehicleCoreWorldTransform->UpdateMatrix();
-
+*/	
+	//お試し
+	Matrix4x4 rotateNormal = Matrix4x4::DirectionToDirection(currentNormal_,normal);
+	//vehicleCore_->posture_ = vehicleCore_->posture_ * rotateNormal;
+	vehicleCore_->atNormal_ = rotateNormal;
 }
 
 void CourseCollisionSystem::ObjectRegistrationPlayer(Player* player)
