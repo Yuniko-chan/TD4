@@ -89,7 +89,8 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 void GameSceneObjectManager::Update()
 {
 	BaseObjectManager::Update();
-
+	// パーツのマネージャー
+	partsManager_->Update();
 	// 影
 	ShadowUpdate();
 

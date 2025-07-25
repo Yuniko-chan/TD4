@@ -35,6 +35,10 @@ void PartHPHandler::Update()
 		isDead_ = true;
 	}
 
+	if (!owner_->IsParent() && isDead_) {
+		owner_->SetIsDead(true);
+	}
+
 	// 無敵経過
 	InvisibleProgress();
 

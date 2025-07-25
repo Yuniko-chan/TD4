@@ -537,12 +537,14 @@ void VehicleConstructionSystem::BombUnRegistParts(const Vector2Int& id, Car::IPa
 			(*it)->GetConnector()->ReleaseParent(parts);
 		}
 		// 隣接を解除
-		(*it)->SetIsDelete(true);
-		// エンジンなら連鎖
-		if ((*it)->GetClassNameString() == "EngineParts") {
-			(*it)->GetHPHandler()->SetHP(0);
-			(*it)->GetHPHandler()->Update();
-		}
+		//(*it)->SetIsDelete(true);
+		(*it)->GetHPHandler()->SetHP(0);
+		(*it)->GetHPHandler()->Update();
+		//// エンジンなら連鎖
+		//if ((*it)->GetClassNameString() == "EngineParts") {
+		//	(*it)->GetHPHandler()->SetHP(0);
+		//	(*it)->GetHPHandler()->Update();
+		//}
 
 	}
 
@@ -556,8 +558,9 @@ void VehicleConstructionSystem::DetachCommon(std::map<Vector2Int, Car::IParts*>:
 	status_->ApplyPartRemove((*it).second->GetClassNameString(), (*it).first);
 	// 解除時のアクション処理
 	(*it).second->OnDetach();
-	// HPの初期化
-	(*it).second->GetHPHandler()->Initialize();
+	//// HPの初期化
+	//(*it).second->GetHPHandler()->Initialize();
+	//(*it).second->SetIsDead(true);
 	// リストから外す
 	it = partsMapping_.erase(it);
 	// マッピング関係のリフレッシュ

@@ -19,6 +19,8 @@ private:
 	Car::IParts* FindParts(const std::string& tag);
 
 public:
+	void Update();
+
 	/// <summary>
 	/// 追加処理
 	/// </summary>

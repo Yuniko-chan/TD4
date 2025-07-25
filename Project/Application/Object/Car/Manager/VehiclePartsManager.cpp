@@ -5,6 +5,17 @@
 #include <cassert>
 #include <array>
 
+void VehiclePartsManager::Update()
+{
+    for (std::unordered_map<std::string, Car::IParts*>::iterator it = partsLists_.begin(); it != partsLists_.end();) {
+        // なければ
+        if ((*it).second->GetClassNameString() == "") {
+            it = partsLists_.erase(it);
+            continue;
+        }
+        it++;
+    }
+}
 void VehiclePartsManager::AddParts(const std::string& tag, Car::IParts* parts)
 {
     Car::IParts* partsPointer = FindParts(tag);
@@ -53,7 +64,8 @@ void VehiclePartsManager::ImGuiDraw()
     };
     
     // パーツごとにリスト化
-    for (std::unordered_map<std::string, Car::IParts*>::iterator it = partsLists_.begin(); it != partsLists_.end(); ++it) {
+    for (std::unordered_map<std::string, Car::IParts*>::iterator it = partsLists_.begin(); it != partsLists_.end();) {
+        // 
         if ((*it).second->GetClassNameString() == classNames[0]) {
             parts[0].push_back((*it).second);
         }
@@ -66,6 +78,7 @@ void VehiclePartsManager::ImGuiDraw()
         else if ((*it).second->GetClassNameString() == classNames[3]) {
             parts[3].push_back((*it).second);
         }
+        it++;
     }
     // コア
     for (std::vector<Car::IParts*>::iterator it = parts[0].begin(); it != parts[0].end(); ++it) {
@@ -81,6 +94,13 @@ void VehiclePartsManager::ImGuiDraw()
 
             for (std::vector<Car::IParts*>::iterator it = parts[i].begin(); it != parts[i].end(); ++it) {
                 (*it)->ImGuiDrawParts();
+                name = (*it)->GetName();
+                if (ImGui::Button(name.c_str())) {
+                    if (partsLists_.contains(name)) {
+                        auto partIt = partsLists_.find(name)->first;
+                        partsLists_.erase(partIt);
+                    }
+                }
             }
 
             ImGui::EndChild();

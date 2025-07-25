@@ -57,6 +57,8 @@ private:
 	// スローモーション用のタイマー
 	FrameTimer slowTimer_;
 
+	Vector3 totalDirection_ = {};
+
 public:	// アクセッサ
 	//---セッター---//
 	void SetStatusManager(VehicleStatus* status) { status_ = status; }

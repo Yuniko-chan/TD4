@@ -29,6 +29,8 @@ void DriveSystem::Update()
 		isPush_ = true;
 	}
 	if (isPush_) {
+		totalDirection_ = {};
+
 		pushVector_.second = Vector3::Normalize(pushVector_.second);
 		pushVector_.second.y = 0.0f;
 		pushVector_.first = owner_->GetWorldTransformAdress()->direction_;
@@ -46,17 +48,21 @@ void DriveSystem::Update()
 	}
 
 	if (slowTimer_.IsActive()) {
-		//Quaternion from = Quaternion::DirectionToDirection(Vector3(0, 0, 1), GetPushDirection().first);
-		//Quaternion to = Quaternion::DirectionToDirection(Vector3(0, 0, 1), GetPushDirection().second);
-		//float t = slowTimer_.GetElapsedFrame();
-		//Quaternion slerp = Quaternion::Slerp(from, to, t);
-		//Vector3 newDirect = Quaternion::RotateVector(Vector3(0, 0, 1), slerp);
-		//owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(newDirect);
-		owner_->GetWorldTransformAdress()->direction_ = pushVector_.second;
+		if (Vector3::Dot(pushVector_.first, pushVector_.second) >= 0.5f) {
+			owner_->GetWorldTransformAdress()->direction_ = pushVector_.second;
+		}
+
 	}
 	if (slowTimer_.IsEnd()) {
+		//if (Vector3::Dot(pushVector_.first, pushVector_.second) <= 0.0f) {
+		//	velocity_ -= pushPower_;
+		//}
+		//else {
+		//	velocity_ += pushPower_;
+		//}
 		GameTimeSystem::GetInstance()->SetTimeScale(1.0f);
-		velocity_ += pushPower_;
+		// 押し出し
+		owner_->GetWorldTransformAdress()->transform_.translate += (Vector3::Normalize(totalDirection_) * Vector3::Length(pushPower_)) * kDeltaTime_;
 		pushPower_ = {};
 	}
 
@@ -98,7 +104,6 @@ void DriveSystem::Update()
 	// 座標計算
 	//VehicleCaluclator calc;
 	owner_->GetWorldTransformAdress()->transform_.translate += newDirect * GameTimeSystem::GetInstance()->GetDeltaTime();
-
 	// 
 	if (!owner_->IsPlayer()) {
 		HandleNoParent();
@@ -124,6 +129,20 @@ void DriveSystem::ImGuiDraw()
 	// 速度
 	ImGui::DragFloat3("Velocity", &velocity_.x);
 	ImGui::InputInt("PushCount", &pushCount_);
+
+	static Vector3 v1 = { 0,0,1 };
+	v1.y = 0;
+	v1 = Vector3::Normalize(v1);
+	static Vector3 v2 = { 0,0,1 };
+	v2.y = 0;
+	v2 = Vector3::Normalize(v2);
+
+	float dot = Vector3::Dot(v1, v2);
+
+	ImGui::DragFloat3("v1", &v1.x, 0.01f);
+	ImGui::DragFloat3("v2", &v2.x, 0.01f);
+	ImGui::InputFloat("v1Tov2:Dot", &dot);
+
 	// ハンドル
 	handling_->ImGuiDraw();
 	// エンジン
@@ -159,6 +178,30 @@ void DriveSystem::HandleNoParent()
 
 void DriveSystem::PushPower(const Vector3& power)
 {
+	// パワー向き
+	Vector3 powerDirection = Vector3(power.x, 0, power.z);
+	// 車体向き
+	Vector3 vehicleDirection = Vector3(owner_->GetWorldTransformAdress()->direction_.x, 0, owner_->GetWorldTransformAdress()->direction_.z);
+	
+	// 内積によって与える力を決めます
+	float directDot = Vector3::Dot(powerDirection, vehicleDirection);
+	// 後寄り
+	Vector3 addPower = power;
+	if (directDot <= -0.5f) {
+		addPower *= (1.0f / 8.0f);
+	}
+	else if (directDot <= -0.25f) {
+		addPower *= (1.0f / 4.0f);
+	}
+	else if (directDot <= 0.35f) {
+		addPower *= (1.0f / 2.0f);
+	}
+	else {
+		addPower *= (1.0f / 1.0f);
+	}
+	
+	totalDirection_ += addPower;
+
 	float length = Vector3::Length(power);
 	// 向きに合わせる
 	//owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(power);

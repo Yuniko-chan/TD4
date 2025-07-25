@@ -161,15 +161,13 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	if (executeDirection_ != Vector3(0, 0, 0)) {
 		owner_->GetWorldTransformAdress()->direction_ = executeDirection_;
 	}
-	return;
-
 	// タイヤの数、左右
 	int rightWheel = status->GetRightWheel();
 	int leftWheel = status->GetLeftWheel();
 	int tireCount = status->GetTire();
 	const int kMax = 5;
 	// 入力があれば向きの調整処理
-	if (IsInput()) {
+	if (IsInput() && false) {
 
 		// 右
 		if (isRight_.second && rightWheel > 0) {

@@ -51,6 +51,10 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	groupName = "DriveCamera";
 	driveCamera_.defaultData.ApplyGlobalVariables(groupName, globalVariables_);
 	driveCamera_.backTrackingDelay = globalVariables_->GetFloatValue(groupName, "BackTrackingDelay");
+	
+	// 車両
+	groupName = "Vehicle";
+	vehicle_.core.initPosition = globalVariables_->GetVector3Value(groupName, "Core_InitPosition");
 
 }
 
@@ -91,4 +95,9 @@ void GlobalParameterManager::AddItems()
 	groupName = "DriveCamera";
 	driveCamera_.defaultData.Initialize(groupName, globalVariables_);
 	globalVariables_->AddItem(groupName, "BackTrackingDelay", float(driveCamera_.backTrackingDelay));
+
+	// 車両
+	groupName = "Vehicle";
+	globalVariables_->AddItem(groupName, "Core_InitPosition", Vector3(vehicle_.core.initPosition));
+
 }
