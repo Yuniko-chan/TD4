@@ -28,6 +28,7 @@ void PlayerRideActionState::Initialize()
 	float offset = cameraHelper.CreateGridSizeOffset(grid, kGridThreshold, kOffsetRatio);
 	// オフセット設定
 	camera->SetZoomOutOffset(offset);
+	camera->SetCoreTransform(player_->GetCoreTransform());
 
 }
 
@@ -53,4 +54,7 @@ void PlayerRideActionState::Update()
 
 void PlayerRideActionState::Exit()
 {
+	// カメラ
+	FollowCamera* camera = static_cast<FollowCamera*>(player_->GetCameraManager()->FindCamera("Follow"));
+	camera->SetCoreTransform(nullptr);
 }

@@ -42,7 +42,7 @@ private:
 	void StartUp();
 public: // アクセッサ
 	// アクティブ確認
-	bool IsActive() { return isActive_; }
+	bool IsActive() { return isActive_ && !isPause_; }
 	// 終了確認
 	bool IsEnd() { return isEnd_ && !isActive_; }
 	// 一時停止確認

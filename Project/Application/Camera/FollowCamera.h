@@ -43,7 +43,7 @@ public: // アクセッサ
 	/// </summary>
 	/// <param name="offset"></param>
 	void SetZoomOutOffset(const float& offset) { zoomOutOffset_ = offset; }
-
+	void SetCoreTransform(WorldTransform* core) { core_ = core; }
 private: // メンバ関数
 
 	/// <summary>
@@ -64,6 +64,18 @@ private: // メンバ変数
 
 	//追従対象
 	const WorldTransform* target_ = nullptr;
+	WorldTransform* core_ = nullptr;
+	// 
+	struct QuaternionInfo
+	{
+		Quaternion rotate = {};
+		Vector3 euler = {};
+		Vector3 direction = {};
+		int channel = 0;	// どれを使うか
+		Matrix4x4 matrix = Matrix4x4::MakeIdentity4x4();
+	};
+	std::optional<QuaternionInfo> isRotation_;
+	QuaternionInfo quaternion_ = {};
 
 	// ターゲット位置
 	Vector3 interTarget_;
@@ -81,6 +93,8 @@ private: // メンバ変数
 	// 方向ベクトル
 	bool usedDirection_ = false;
 	Vector3 rotateDirection_ = Vector3(0.0f, 0.0f, 1.0f);
+	// 回転クォータニオン
+	Quaternion rotateQuaternion_ = Quaternion::IdentityQuaternion();
 
 	// オフセット
 	Vector3 offset_ = {};

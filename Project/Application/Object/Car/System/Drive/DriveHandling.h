@@ -49,7 +49,7 @@ private:
 	// ステア方向
 	Vector3 steerDirection_ = {};
 	Vector3 preSteerDirection_ = {};
-
+	float yaw_ = 0.0f;
 	// 適応向き
 	Vector3 executeDirection_ = {};
 	// 車体の向き

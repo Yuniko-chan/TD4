@@ -1,6 +1,7 @@
 #include "CannonBall.h"
 #include "../../../Collider/CollisionConfig.h"
 #include "../../../../Engine/Math/DeltaTime.h"
+#include "../../GameTimer/GameTimeSystem.h"
 
 // 生存時間
 const float CannonBall::kLifeTime_ = 1.0f;
@@ -57,7 +58,7 @@ void CannonBall::Update()
 		worldTransform_.UpdateMatrix();
 
 		// 生存時間
-		lifetimeElapsed_ += kDeltaTime_;
+		lifetimeElapsed_ += GameTimeSystem::GetInstance()->GetDeltaTime();
 		if (lifetimeElapsed_ >= kLifeTime_) {
 			// 動作終了
 			Explosion();

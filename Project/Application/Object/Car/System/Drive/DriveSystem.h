@@ -36,6 +36,9 @@ public:
 private:
 	void VelocityUpdate();
 
+	void HandleNoParent();
+	void BeginSlow();
+	void FinishSlow();
 private:
 	// 運転用のエンジン
 	std::unique_ptr<DriveEngine> driveEngine_;
@@ -45,6 +48,16 @@ private:
 	VehicleStatus* status_ = nullptr;
 	// 速度ベクトル
 	Vector3 velocity_ = {};
+	// 押し出した回数
+	int pushCount_ = 0;
+	bool isPush_ = false;
+	// 元のベクトル、新しいベクトル
+	std::pair<Vector3, Vector3> pushVector_;
+	Vector3 pushPower_ = {};
+	// スローモーション用のタイマー
+	FrameTimer slowTimer_;
+
+	Vector3 totalDirection_ = {};
 
 public:	// アクセッサ
 	//---セッター---//
@@ -56,4 +69,5 @@ public:	// アクセッサ
 	DriveEngine* GetDriveEngine() { return driveEngine_.get(); }
 
 	Vector3 GetVelocity() const { return velocity_; }
+	std::pair<Vector3, Vector3> GetPushDirection() const { return pushVector_; }
 };

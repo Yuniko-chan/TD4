@@ -1,6 +1,8 @@
 #pragma once
+#include "../../../Engine/Math/DeltaTime.h"
+#include "../Utility/Common/SingletonModule.h"
 
-class GameTimeSystem
+class GameTimeSystem : public SingletonModule<GameTimeSystem>
 {
 public:
 	GameTimeSystem();
@@ -21,6 +23,11 @@ public:
 	/// </summary>
 	void Start();
 	/// <summary>
+	/// 開始
+	/// </summary>
+	/// <param name="limitTime">終了時間（秒数）</param>
+	void Start(const float& limitTime);
+	/// <summary>
 	/// 一時停止
 	/// </summary>
 	void Pause();
@@ -32,14 +39,25 @@ public:
 	/// ImGui
 	/// </summary>
 	void ImGuiDraw();
+
+	/// <summary>
+	/// デルタタイム（スローが掛かるオブジェクト
+	/// </summary>
+	/// <returns></returns>
+	float GetDeltaTime() { return kDeltaTime_ * timeScale_; }
+	float GetTimeScale() { return timeScale_; }
+	void SetTimeScale(float scale) { timeScale_ = scale; }
+
 private:
-	// 経過時間
-	float elapsedTime_ = 0.0f;
-	int elapsedSecond_ = 0;
 	// 残り時間
 	float remainingTime_ = 0.0f;
+	int remainingSeconds_ = 0;
 	// 稼働中か
 	bool isRunning_ = false;
 	// 一時停止か
 	bool isPause_ = false;
+	// 終了フラグ
+	bool isEnd_ = false;
+	// 
+	float timeScale_ = 1.0f;
 };

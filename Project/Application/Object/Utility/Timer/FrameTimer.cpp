@@ -1,9 +1,10 @@
 #include "FrameTimer.h"
+#include "../../GameTimer/GameTimeSystem.h"
 #include <algorithm>
 
 FrameTimer::FrameTimer()
 {
-	// 開始
+	// 初期化
 	Start();
 }
 
@@ -46,7 +47,7 @@ void FrameTimer::Resume()
 
 void FrameTimer::Update(float gameFactor)
 {
-	float factor = gameFactor * kDeltaTime_;
+	float factor = gameFactor * GameTimeSystem::GetInstance()->GetDeltaTime();
 	// ポーズしていない上アクティブの場合更新
 	if (isActive_ && !isPause_) {
 		// 時間が来たら終了
@@ -68,6 +69,7 @@ void FrameTimer::StartUp()
 {
 	// フラグ初期化
 	isEnd_ = false;
+	isPause_ = false;
 	isActive_ = true;
 	// フレーム初期化
 	elapsedFrame_ = 0.0f;

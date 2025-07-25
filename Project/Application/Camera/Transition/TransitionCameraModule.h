@@ -20,6 +20,10 @@ public:
 	/// <param name="frame"></param>
 	void Accept(const float& frame);
 
+	void SetToDirection(const Vector3& to) { to_.second = to; }
+protected:
+	void ImGuiDraw();
+
 protected:
 
 	/// <summary>

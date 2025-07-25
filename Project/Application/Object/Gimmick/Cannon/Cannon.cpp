@@ -1,6 +1,7 @@
 #include "Cannon.h"
 #include "../../../Collider/CollisionConfig.h"
 #include "../../../../Engine/Math/DeltaTime.h"
+#include "../../GameTimer/GameTimeSystem.h"
 
 Cannon::Cannon()
 {
@@ -157,7 +158,7 @@ void Cannon::CooltimeUpdate()
     else {
         if (cooltimeElapsed_ < cooltimeMax_ && !cannonBall_->GetIsWorking()) {
             // クールタイム経過
-            cooltimeElapsed_ += kDeltaTime_;
+            cooltimeElapsed_ += GameTimeSystem::GetInstance()->GetDeltaTime();
         }
         isFiring_ = false;
     }

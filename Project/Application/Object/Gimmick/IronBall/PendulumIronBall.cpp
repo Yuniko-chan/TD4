@@ -7,6 +7,8 @@
 #include "../../../../Engine/3D/Model/ModelDraw.h"
 #include "../../../../Engine/Math/DeltaTime.h"
 
+#include "../../GameTimer/GameTimeSystem.h"
+
 PendulumIronBall::PendulumIronBall()
 {
 }
@@ -153,9 +155,9 @@ void PendulumIronBall::PendulumUpdate()
     angularAcceleration_ =
         -(9.8f / length_) * std::sinf(angle_);
     // 各速度を求める
-    angularVelocity_ += angularAcceleration_ * kDeltaTime_;
+    angularVelocity_ += angularAcceleration_ * GameTimeSystem::GetInstance()->GetDeltaTime();
     // 角度を求める
-    angle_ += angularVelocity_ * kDeltaTime_;
+    angle_ += angularVelocity_ * GameTimeSystem::GetInstance()->GetDeltaTime();
 
     // 位置更新
     worldTransform_.transform_.translate.x = anchor_.x + std::sinf(angle_) * length_;

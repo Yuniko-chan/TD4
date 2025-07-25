@@ -250,6 +250,165 @@ Quaternion Quaternion::DirectionToDirection(const Vector3& v0, const Vector3& v1
 
 }
 
+Quaternion Quaternion::MatrixToQuaternion(const Matrix4x4& mat)
+{
+	Quaternion q;
+	//Quaternion p = {};
+	//p.x = mat.m[0][0] - mat.m[1][1] - mat.m[2][2] + 1;
+	//p.y = -mat.m[0][0] + mat.m[1][1] - mat.m[2][2] + 1;
+	//p.z = -mat.m[0][0] - mat.m[1][1] + mat.m[2][2] + 1;
+	//p.w = mat.m[0][0] + mat.m[1][1] + mat.m[2][2] + 1;
+
+	//int selected = 0;
+	//float max = p.x;
+	//if (max < p.y) {
+	//	selected = 1;
+	//	max = p.y;
+	//}
+	//if (max < p.z) {
+	//	selected = 2;
+	//	max = p.z;
+	//}
+	//if (max < p.w) {
+	//	selected = 3;
+	//	max = p.w;
+	//}
+	//float d = 0.0f;
+	//// X
+	//if (selected == 0) {
+	//	const float EPSILON = 1e-6f;
+	//	d = (max > EPSILON) ? 1.0f / (4.0f * max) : 0.0f;
+	//	//d = 1 / (4 * p.x);
+
+	//	q.x = std::sqrtf(p.x) * 0.5f;
+	//	q.y = (mat.m[1][0] + mat.m[0][1]) * d;
+	//	q.z = (mat.m[0][2] + mat.m[2][0]) * d;
+	//	q.w = (mat.m[2][1] - mat.m[1][2]) * d;
+	//}
+	//// Y
+	//else if (selected == 1) {
+	//	const float EPSILON = 1e-6f;
+	//	d = (max > EPSILON) ? 1.0f / (4.0f * max) : 0.0f;
+
+	//	q.x = (mat.m[1][0] + mat.m[0][1]) * d;
+	//	q.y = std::sqrtf(p.y) * 0.5f;
+	//	q.z = (mat.m[2][1] + mat.m[1][2]) * d;
+	//	q.w = (mat.m[0][2] - mat.m[2][0]) * d;
+	//}
+	//// Z
+	//else if (selected == 2) {
+	//	const float EPSILON = 1e-6f;
+	//	d = (max > EPSILON) ? 1.0f / (4.0f * max) : 0.0f;
+
+	//	q.x = (mat.m[0][2] + mat.m[2][0]) * d;
+	//	q.y = (mat.m[2][1] + mat.m[1][2]) * d;
+	//	q.z = std::sqrtf(p.z) * 0.5f;
+	//	q.w = (mat.m[1][0] - mat.m[0][1]) * d;
+	//}
+	//// W
+	//else if (selected == 3) {
+	//	const float EPSILON = 1e-6f;
+	//	d = (max > EPSILON) ? 1.0f / (4.0f * max) : 0.0f;
+
+	//	q.x = (mat.m[2][1] - mat.m[1][2]) * d;
+	//	q.y = (mat.m[0][2] - mat.m[2][0]) * d;
+	//	q.z = (mat.m[1][0] - mat.m[0][1]) * d;
+	//	q.w = std::sqrtf(p.w) * 0.5f;
+	//}
+
+	//return Quaternion::Normalize(q);
+	// トレースの値
+	float trace = mat.m[0][0] + mat.m[1][1] + mat.m[2][2];
+
+	// W
+	if (trace > 0.0f) {
+		float fRoot = sqrtf(trace + 1.0f); // s = 2qw
+
+		q.w = 0.5f * fRoot;
+
+		fRoot = 0.5f / fRoot;	// 1 / (4 * qw)
+		q.x = (mat.m[2][1] - mat.m[1][2]) * fRoot;
+		q.y = (mat.m[0][2] - mat.m[2][0]) * fRoot;
+		q.z = (mat.m[1][0] - mat.m[0][1]) * fRoot;
+	}
+	// X
+	else if ((mat.m[0][0] > mat.m[1][1]) && (mat.m[0][0] > mat.m[2][2])) {
+		float fRoot = sqrtf(1.0f + mat.m[0][0] - mat.m[1][1] - mat.m[2][2]); // s=2qx
+
+		q.x = 0.5f * fRoot;
+
+		fRoot = 0.5f / fRoot;
+
+		q.w = (mat.m[2][1] - mat.m[1][2]) * fRoot;
+		q.y = (mat.m[0][1] + mat.m[1][0]) * fRoot;
+		q.z = (mat.m[0][2] + mat.m[2][0]) * fRoot;
+	}
+	// Y
+	else if (mat.m[1][1] > mat.m[2][2]) {
+		float fRoot = sqrtf(1.0f + mat.m[1][1] - mat.m[0][0] - mat.m[2][2]); // s=2qy
+
+		q.y = 0.5f * fRoot;
+
+		fRoot = 0.5f / fRoot;
+
+		q.w = (mat.m[0][2] - mat.m[2][0]) * fRoot;
+		q.x = (mat.m[0][1] + mat.m[1][0]) * fRoot;
+		q.z = (mat.m[1][2] + mat.m[2][1]) * fRoot;
+	}
+	// Z
+	else {
+		float fRoot = sqrtf(1.0f + mat.m[2][2] - mat.m[0][0] - mat.m[1][1]); // s=4*qz
+
+		q.z = 0.5f * fRoot;
+
+		fRoot = 0.5f / fRoot;
+
+		q.w = (mat.m[1][0] - mat.m[0][1]) * fRoot;
+		q.x = (mat.m[0][2] + mat.m[2][0]) * fRoot;
+		q.y = (mat.m[1][2] + mat.m[2][1]) * fRoot;
+	}
+
+	return Quaternion(q);
+}
+
+Quaternion Quaternion::LookRotation(const Vector3& direction)
+{
+	// 前方
+	Vector3 forward = Vector3::Normalize(direction);
+	// ワールドの上
+	Vector3 worldUp = { 0.0f, 1.0f, 0.0f };
+	// 右ベクトル
+	Vector3 right = Vector3::Normalize(Vector3::Cross(worldUp, forward));
+	// 前方とローカルの上が平行な場合右が0になるため対応する
+	if (Vector3::Length(right) < 0.0001f) {
+		worldUp = { 0.0f, 0.0f, -1.0f };
+		right = Vector3::Normalize(Vector3::Cross(worldUp, forward));
+	}
+	// 前方と右のベクトルからローカルの上軸ベクトル計算まで
+	Vector3 localUp = Vector3::Normalize(Vector3::Cross(forward, right));
+
+	// 各要素から行列を構築
+	Matrix4x4 rotationMatrix = {};
+	// 右
+	rotationMatrix.m[0][0] = right.x;
+	rotationMatrix.m[1][0] = right.y;
+	rotationMatrix.m[2][0] = right.z;
+	rotationMatrix.m[3][0] = 0.0f;
+	// 上
+	rotationMatrix.m[0][1] = localUp.x;
+	rotationMatrix.m[1][1] = localUp.y;
+	rotationMatrix.m[2][1] = localUp.z;
+	rotationMatrix.m[3][1] = 0.0f;
+	// 前
+	rotationMatrix.m[0][2] = forward.x;
+	rotationMatrix.m[1][2] = forward.y;
+	rotationMatrix.m[2][2] = forward.z;
+	rotationMatrix.m[3][2] = 0.0f;
+
+	// 行列から回転クォータニオンの構築
+	return MatrixToQuaternion(rotationMatrix);
+}
+
 Quaternion Quaternion::operator+(const Quaternion& v)
 {
 

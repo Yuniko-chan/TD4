@@ -24,6 +24,13 @@ namespace ParameterStructs {
 			float catchRange = 0.0f;	// 拾う距離
 		};
 
+		// コア
+		struct VehicleCore
+		{
+			Vector3 initPosition = {};
+		};
+
+		// ハンドル関係
 		struct VehicleHandling
 		{
 			// ハンドルの回転の最大値（X）
@@ -32,6 +39,7 @@ namespace ParameterStructs {
 			int handleInputDuration = 6;
 		};
 
+		// エンジン関係
 		struct VehicleEngine 
 		{
 			// 加算間隔
@@ -86,8 +94,12 @@ namespace ParameterStructs {
 	/// 車両関係のデータ
 	/// </summary>
 	struct VehicleData {
+		// ハンドル
 		Datas::VehicleHandling handling;
+		// エンジン
 		Datas::VehicleEngine engine;
+		// コア
+		Datas::VehicleCore core;
 	};
 
 	/// <summary>

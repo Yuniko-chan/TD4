@@ -1,5 +1,6 @@
 #include "PartHPHandler.h"
 #include "../PartsInterface.h"
+#include "../../../GameTimer/GameTimeSystem.h"
 #include "../../../Engine/Math/DeltaTime.h"
 #include "../../../Engine/Math/Ease.h"
 
@@ -34,6 +35,10 @@ void PartHPHandler::Update()
 		isDead_ = true;
 	}
 
+	if (!owner_->IsParent() && isDead_) {
+		owner_->SetIsDead(true);
+	}
+
 	// 無敵経過
 	InvisibleProgress();
 
@@ -65,7 +70,7 @@ void PartHPHandler::InvisibleProgress()
 	// 無敵か
 	if (isInvisible_) {
 		// 経過
-		invisibleCooltime_ += kDeltaTime_;
+		invisibleCooltime_ += GameTimeSystem::GetInstance()->GetDeltaTime();
 		// 無敵最大時間
 		const float kInvisibleTimeMax = 1.0f;
 		// 無敵終了か
@@ -79,7 +84,7 @@ void PartHPHandler::InvisibleProgress()
 void PartHPHandler::HeatDamage(float damage)
 {
 	//const int persent = 50;
-	hp_ -= (damage) * kDeltaTime_;
+	hp_ -= (damage) * GameTimeSystem::GetInstance()->GetDeltaTime();
 	// 0より小さい値にならないように
 	if (hp_ < 0) {
 		hp_ = 0;

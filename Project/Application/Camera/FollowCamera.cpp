@@ -8,6 +8,7 @@
 #include "../../../Engine/Input/input.h"
 #include "../../../Engine/GlobalVariables/GlobalVariables.h"
 
+#include "../Object/Player/Player.h"
 
 void FollowCamera::Initialize() {
 
@@ -28,6 +29,8 @@ void FollowCamera::Initialize() {
 	offset_ = Vector3(to_.first);
 	usedDirection_ = true;
 
+	quaternion_.rotate = Quaternion::IdentityQuaternion();
+	quaternion_.direction = { 0,0,1 };
 }
 
 void FollowCamera::Update(float elapsedTime) {
@@ -104,6 +107,29 @@ void FollowCamera::ImGuiDraw()
 	ImGui::DragFloat3("RotateVector", &rotateDirection_.x, 0.01f);
 	ImGui::DragFloat("OffsetPlus", &zoomOutOffset_);
 	ImGui::Checkbox("UseDirection", &usedDirection_);
+
+	if (ImGui::TreeNode("Quaternion")) {
+		ImGui::DragFloat4("Rotation", &quaternion_.rotate.x, 0.1f);
+		ImGui::DragFloat3("Euler", &quaternion_.euler.x, 0.01f);
+		ImGui::DragFloat3("Direction", &quaternion_.direction.x, 0.01f);
+		ImGui::InputInt("Channel", &quaternion_.channel);
+		static bool sIsQuaternion = false;
+		ImGui::Checkbox("IsQuaternion", &sIsQuaternion);
+		if (sIsQuaternion) {
+			isRotation_ = quaternion_;
+		}
+		else {
+			isRotation_ = std::nullopt;
+		}
+		ImGui::TreePop();
+	}
+
+	if (ImGui::TreeNode("Transition"))
+	{
+		TransitionCameraModule::ImGuiDraw();
+		ImGui::TreePop();
+	}
+
 }
 
 void FollowCamera::SetTarget(const WorldTransform* target)
@@ -117,24 +143,45 @@ Matrix4x4 FollowCamera::GetRotateMatrix()
 {
 	// 対象がいる場合対象の回転行列を適応
 	if (target_) {
-		// 
-		if (usedDirection_) {
-			// カートがあれば、その向きに
+		// クォータニオン
+		if (isRotation_.has_value()) {
+			if (quaternion_.channel == 0) {
+				Quaternion x = Quaternion::MakeRotateAxisAngleQuaternion(Vector3(1, 0, 0), quaternion_.euler.x);
+				Quaternion y = Quaternion::MakeRotateAxisAngleQuaternion(Vector3(0, 1, 0), quaternion_.euler.y);
+				Quaternion z = Quaternion::MakeRotateAxisAngleQuaternion(Vector3(0, 0, 1), quaternion_.euler.z);
+				quaternion_.rotate = Quaternion::Multiply(x, Quaternion::Multiply(y, z));
+			}
+			else if (quaternion_.channel == 1) {
+
+			}
+			else if (quaternion_.channel == 2) {
+				quaternion_.direction = Vector3::Normalize(quaternion_.direction);
+				Quaternion l2c = Quaternion::DirectionToDirection(Vector3(0, 0, 1), quaternion_.direction);
+				quaternion_.rotate = l2c;
+			}
 			if (target_->parent_) {
 				// 自分の回転
-				Matrix4x4 from = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, Vector3::Normalize(rotateDirection_));
+				Matrix4x4 from = Quaternion::MakeRotateMatrix(quaternion_.rotate);
 				// 対象の回転
 				Matrix4x4 to = target_->parent_->rotateMatrix_;
 				return Matrix4x4::Multiply(from, to);
 			}
-			//// 自分の回転
-			//Matrix4x4 from = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, Vector3::Normalize(rotateDirection_));
-			//// 対象の回転
-			//Matrix4x4 to = target_->rotateMatrix_;
-			//return Matrix4x4::Multiply(from,to);
-			rotateDirection_ = Vector3::Normalize(rotateDirection_);
-			return Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, this->rotateDirection_);
 
+			return Quaternion::MakeRotateMatrix(quaternion_.rotate);
+		}
+		// 
+		if (usedDirection_) {
+			// カートがあれば、その向きに
+			if (target_->parent_) {
+				rotateQuaternion_ = Quaternion::LookRotation(rotateDirection_);
+				// 自分の回転
+				Matrix4x4 from = Quaternion::MakeRotateMatrix(rotateQuaternion_);
+				// 対象の回転
+				Matrix4x4 to = target_->parent_->rotateMatrix_;
+				return Matrix4x4::Multiply(from, to);
+			}
+			rotateQuaternion_ = Quaternion::LookRotation(rotateDirection_);
+			return Quaternion::MakeRotateMatrix(rotateQuaternion_);
 		}
 
 		return Matrix4x4::Multiply(Matrix4x4::MakeRotateXYZMatrix(transform_.rotate), target_->rotateMatrix_);
@@ -143,7 +190,9 @@ Matrix4x4 FollowCamera::GetRotateMatrix()
 		// 回転行列作成
 		// 正規化
 		rotateDirection_ = Vector3::Normalize(rotateDirection_);
-		return Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, this->rotateDirection_);
+		rotateQuaternion_ = Quaternion::LookRotation(rotateDirection_);
+		return Quaternion::MakeRotateMatrix(rotateQuaternion_);
+		//return Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, this->rotateDirection_);
 	}
 	// 無ければデフォルト
 	return Matrix4x4::MakeRotateXYZMatrix(transform_.rotate);
@@ -179,6 +228,12 @@ void FollowCamera::ApplyGlobalVariables()
 	to_.first = globalVariables->GetVector3Value(groupName, "Position");
 	to_.second = globalVariables->GetVector3Value(groupName, "RotateVector");
 
+	if (core_) {
+		to_.second.x = core_->direction_.x;
+		to_.second.z = core_->direction_.z;
+		to_.second = Vector3::Normalize(to_.second);
+	}
+
 	// 開始点
 	from_.first = globalVariables->GetVector3Value("OverheadCamera", "Position");
 	from_.second = globalVariables->GetVector3Value("OverheadCamera", "RotateVector");
@@ -186,10 +241,14 @@ void FollowCamera::ApplyGlobalVariables()
 
 void FollowCamera::TransitionUpdate()
 {
-	TransitionCameraModule::TransitionUpdate();
 	// 遷移中なら向きをモジュール側の値に
 	if (transitionTimer_.IsActive()) {
 		offset_ = currentPose_.first;
 		rotateDirection_ = currentPose_.second;
 	}
+	if (transitionTimer_.IsEnd()) {
+		rotateDirection_ = GlobalVariables::GetInstance()->GetVector3Value("DriveCamera", "RotateVector");
+	}
+	TransitionCameraModule::TransitionUpdate();
+	quaternion_.direction = rotateDirection_;
 }

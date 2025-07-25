@@ -1,6 +1,7 @@
 #include "MinigunBullet.h"
 #include "../../../Collider/CollisionConfig.h"
 #include "../../../../Engine/Math/DeltaTime.h"
+#include "../../GameTimer/GameTimeSystem.h"
 
 // 生存時間
 const float MinigunBullet::kLifeTime_ = 0.5f;
@@ -56,7 +57,7 @@ void MinigunBullet::Update()
     }
     else {
         // 経過時間
-        elapsedTime_ += kDeltaTime_;
+        elapsedTime_ += GameTimeSystem::GetInstance()->GetDeltaTime();
     }
 
     worldTransform_.transform_.translate += velocity_;

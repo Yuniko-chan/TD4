@@ -125,13 +125,16 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	float limitDirect = Ease::Easing(Ease::EaseName::Lerp, kMinXDirect, kMaxXDirect, propulsionT);
 	// プラス方向（右
 	if (consecutiveReceptions_ > 0) {
+		yaw_ = 0.01f;
 		steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, limitDirect, t);
 	}
 	// マイナス方向（左
 	else if (consecutiveReceptions_ < 0) {
+		yaw_ = -0.01f;
 		steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, -limitDirect, t);
 	}
 	else {
+		yaw_ = 0.0f;
 		steerDirection_.x = 0.0f;
 	}
 	// Z設定
@@ -140,29 +143,31 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	// 正規化
 	steerDirection_ = Vector3::Normalize(steerDirection_);
 
-	// 向きの設定
-	Matrix4x4 vehicleRotate = Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), vehicleDirection_);
-	executeDirection_ = Matrix4x4::TransformNormal(steerDirection_, vehicleRotate);
+	Vector3 forward = Vector3::Normalize(vehicleDirection_);
+	Vector3 upGuess = std::fabsf(forward.y) > 0.99f ? Vector3(0, -1, 0) : Vector3(0, 1, 0);
+
+	// ワールドでの上向きベクトル取得
+	Vector3 right = Vector3::Normalize(Vector3::Cross(upGuess, forward));
+	Vector3 up = Vector3::Normalize(Vector3::Cross(forward, right));
+
+	// ワールド軸に適応させた回転
+	Quaternion rotateAxis = Quaternion::MakeRotateAxisAngleQuaternion(up, yaw_);
+	executeDirection_ = Quaternion::RotateVector(vehicleDirection_, rotateAxis);
 
 	if (executeDirection_ == Vector3(0.0f, 0.0f, 0.0f)) {
 		executeDirection_ = Vector3(0.0f, 0.0f, 1.0f);
 	}
 
-	// 速度が無く動いていなかったら
-	float length = Vector3::Length(velocity);
-	const float threshold = 0.001f;
-	// 閾値より速度ベクトルの大きさがなければ早期
-	if (std::fabsf(length) <= threshold) {
-		return;
+	if (executeDirection_ != Vector3(0, 0, 0)) {
+		owner_->GetWorldTransformAdress()->direction_ = executeDirection_;
 	}
-
 	// タイヤの数、左右
 	int rightWheel = status->GetRightWheel();
 	int leftWheel = status->GetLeftWheel();
 	int tireCount = status->GetTire();
 	const int kMax = 5;
 	// 入力があれば向きの調整処理
-	if (IsInput()) {
+	if (IsInput() && false) {
 
 		// 右
 		if (isRight_.second && rightWheel > 0) {
@@ -185,10 +190,11 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 		}
 
 		executeDirection_ = Vector3::Normalize(executeDirection_);
-
-		float radian = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, executeDirection_);
-		radian /= 60.0f;
-		owner_->GetWorldTransformAdress()->direction_ = TransformHelper::XZRotateDirection(owner_->GetWorldTransformAdress()->direction_, radian);	
+		const float kRate = 0.01f;
+		owner_->GetWorldTransformAdress()->direction_ = Ease::Easing(Ease::EaseName::Lerp, vehicleDirection_, executeDirection_, kRate);
+		//float radian = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, executeDirection_);
+		//radian /= 60.0f;
+		//owner_->GetWorldTransformAdress()->direction_ = TransformHelper::XZRotateDirection(owner_->GetWorldTransformAdress()->direction_, radian);	
 	}
 }
 

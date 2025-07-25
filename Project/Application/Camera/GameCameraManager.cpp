@@ -3,6 +3,8 @@
 #include "../../Engine/2D/ImguiManager.h"
 #include "../../Engine/GlobalVariables/GlobalVariables.h"
 
+#include <typeinfo>
+
 void GameCameraManager::Initialize()
 {
 	// 追従カメラ
@@ -35,6 +37,10 @@ void GameCameraManager::Update(float elapsedTime)
 void GameCameraManager::ImGuiDraw()
 {
 	ImGui::Begin("CameraManager");
+
+	const std::type_info& tInfo = typeid(*GetActiveCamera());
+	std::string className = tInfo.name();
+	ImGui::Text(className.c_str());
 
 	static char changeName[256];
 	ImGui::InputText("ChangeCamera", changeName, 256);
