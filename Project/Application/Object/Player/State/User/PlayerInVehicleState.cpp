@@ -10,6 +10,9 @@ void PlayerInVehicleState::Initialize()
 	// 回転角初期化
 	player_->GetWorldTransformAdress()->transform_.rotate = {};
 	player_->GetWorldTransformAdress()->direction_ = Vector3(0.0f, 0.0f, 1.0f);
+	// 位置の強制
+	player_->GetWorldTransformAdress()->transform_.translate = Vector3(0.0f, 2.0f, 0.0f);
+	player_->GetWorldTransformAdress()->UpdateMatrix();
 
 	player_->GetCore()->SetIsDrive(true);
 	player_->GetCore()->SetPlayer(player_);
