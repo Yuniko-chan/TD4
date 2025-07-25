@@ -267,47 +267,6 @@ void CourseCollisionSystem::SetCourse(Course* course)
 
 }
 
-void CourseCollisionSystem::SetCustomArea(CustomArea* customArea)
-{
-	customArea;
-	//// ポリゴン
-	//CoursePolygon polygon = {};
-	//polygon.normal = { 0.0f,1.0f,0.0f };
-	//polygon.texcoord = { 0.0f,0.0f };
-
-	//// 高さ
-	//const float kHeight = 0.25f;
-	//// 幅
-	//const float kWidth = 20.0f;
-	//
-	//polygon.position0 = { -kWidth, kHeight, -kWidth };
-	//polygon.position1 = { -kWidth, kHeight, kWidth };
-	//polygon.position2 = { kWidth, kHeight, kWidth };
-
-	//// コース中心のワールド座標をプラス
-	//polygon.position0 = Matrix4x4::Transform(polygon.position0, customArea->GetWorldTransformAdress()->worldMatrix_);
-	//polygon.position1 = Matrix4x4::Transform(polygon.position1, customArea->GetWorldTransformAdress()->worldMatrix_);
-	//polygon.position2 = Matrix4x4::Transform(polygon.position2, customArea->GetWorldTransformAdress()->worldMatrix_);
-
-	//// 登録
-	//polygons_[polygonRegistrationNumber_] = polygon;
-	//polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
-
-	//polygon.position0 = { -kWidth, kHeight, -kWidth };
-	//polygon.position1 = { kWidth, kHeight, kWidth };
-	//polygon.position2 = { kWidth, kHeight, -kWidth };
-
-	//// コース中心のワールド座標をプラス
-	//polygon.position0 = Matrix4x4::Transform(polygon.position0, customArea->GetWorldTransformAdress()->worldMatrix_);
-	//polygon.position1 = Matrix4x4::Transform(polygon.position1, customArea->GetWorldTransformAdress()->worldMatrix_);
-	//polygon.position2 = Matrix4x4::Transform(polygon.position2, customArea->GetWorldTransformAdress()->worldMatrix_);
-
-	//// 登録
-	//polygons_[polygonRegistrationNumber_] = polygon;
-	//polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
-
-}
-
 void CourseCollisionSystem::SetGimmick(OBB* obb)
 {
 
@@ -859,7 +818,9 @@ void CourseCollisionSystem::ObjectRegistrationPlayer(Player* player)
 	// 型
 	const std::type_info& t = typeid(*(player->GetStateMachine()->GetCurrentState()));
 	std::string name = t.name();
-	if (!(name == "class PlayerInVehicleState")) {
+	if (!(name == "class PlayerInVehicleState"|| 
+		name == "class PlayerDropOffActionState" || 
+		name == "class PlayerRideActionState")) {
 		collidingObjects_.push_back(player);
 	}
 
