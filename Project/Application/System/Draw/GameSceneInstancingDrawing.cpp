@@ -24,7 +24,7 @@ void GameSceneInstancingDrawing::Initialize()
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/IronBall/", "Rope.obj"}, false}); // 鉄球紐
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/Gatling/", "Gatling.gltf"}, true}); // ミニガン
 
-	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/defult", "ball.obj"}, false}); // ball
+	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/default", "Ball.obj"}, false}); // ball
 
 
 	// モデルデータの数
