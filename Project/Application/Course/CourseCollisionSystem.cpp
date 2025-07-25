@@ -830,6 +830,9 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 	}
 	else {
 		normal = Vector3::Normalize(normal * (1.0f / static_cast<float>(normalCount)));
+
+		normal = Vector3::Normalize((currentNormal_ * 5.0f + normal));
+
 		currentNormal_ = normal;
 	}
 	
