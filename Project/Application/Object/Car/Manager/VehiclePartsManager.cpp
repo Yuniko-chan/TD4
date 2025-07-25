@@ -7,13 +7,16 @@
 
 void VehiclePartsManager::Update()
 {
+    // リストの処理
     for (std::unordered_map<std::string, Car::IParts*>::iterator it = partsLists_.begin(); it != partsLists_.end();) {
-        // なければ
-        if ((*it).second->GetClassNameString() == "") {
+        // PartsManagerから削除 ＋ ObjectManagerから削除
+        if ((*it).second->GetHPHandler()->IsUnRegist()) {
+            (*it).second->SetIsDead(true);
             it = partsLists_.erase(it);
-            continue;
         }
-        it++;
+        else {
+            it++;
+        }
     }
 }
 void VehiclePartsManager::AddParts(const std::string& tag, Car::IParts* parts)
@@ -34,10 +37,6 @@ Car::IParts* VehiclePartsManager::FindParts(const std::string& tag)
     }
 
     return (*it).second;
-    //// チェック
-    //assert(it != partsLists_.end());
-    //// 返し
-    //return (*it).second;
 }
 
 void VehiclePartsManager::DeleteParts(const std::string& tag)
@@ -64,7 +63,7 @@ void VehiclePartsManager::ImGuiDraw()
     };
     
     // パーツごとにリスト化
-    for (std::unordered_map<std::string, Car::IParts*>::iterator it = partsLists_.begin(); it != partsLists_.end();) {
+    for (std::unordered_map<std::string, Car::IParts*>::iterator it = partsLists_.begin(); it != partsLists_.end(); ++it) {
         // 
         if ((*it).second->GetClassNameString() == classNames[0]) {
             parts[0].push_back((*it).second);
@@ -78,7 +77,6 @@ void VehiclePartsManager::ImGuiDraw()
         else if ((*it).second->GetClassNameString() == classNames[3]) {
             parts[3].push_back((*it).second);
         }
-        it++;
     }
     // コア
     for (std::vector<Car::IParts*>::iterator it = parts[0].begin(); it != parts[0].end(); ++it) {

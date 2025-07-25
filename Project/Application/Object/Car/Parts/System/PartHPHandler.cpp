@@ -12,7 +12,7 @@ void PartHPHandler::Initialize()
 	owner_->SetIsDelete(false);
 	owner_->SetIsDead(false);
 	isDead_ = false;
-
+	isUnregist_ = false;
 }
 
 void PartHPHandler::Update()
@@ -36,7 +36,7 @@ void PartHPHandler::Update()
 	}
 
 	if (!owner_->IsParent() && isDead_) {
-		owner_->SetIsDead(true);
+		isUnregist_ = true;
 	}
 
 	// 無敵経過

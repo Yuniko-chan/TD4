@@ -40,12 +40,19 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	bool IsDead();
+
+	/// <summary>
+	/// 解除処理（リストから
+	/// </summary>
+	/// <returns></returns>
+	bool IsUnRegist() { return isUnregist_; }
 private:
 	
 	int16_t maxHP_ = 0;
 	float hp_ = 0;
 	bool isInvisible_ = false;
 	bool isDead_ = false;
+	bool isUnregist_ = false;
 	float invisibleCooltime_ = 0.0f;
 
 };
