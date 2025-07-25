@@ -23,8 +23,7 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	material_->SetEnableLighting(HalfLambert);
 	// ベクトルで向きを決めるように
 	worldTransform_.usedDirection_ = true;
-	worldTransform_.transform_.translate.y = 0.0f;
-	worldTransform_.transform_.translate.z = 0.0f;
+	worldTransform_.transform_.translate = GlobalVariables::GetInstance()->GetVector3Value("Vehicle", "Core_InitPosition");
 	worldTransform_.direction_ = {0.0f,0.0f,1.0f};
 	worldTransform_.UpdateMatrix();
 	posture_ = Matrix4x4::DirectionToDirection({0,0,1.0f},worldTransform_.direction_);
