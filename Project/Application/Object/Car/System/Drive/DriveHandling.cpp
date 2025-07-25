@@ -109,6 +109,16 @@ void DriveHandling::PreUpdate()
 
 void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 {
+	// リセット処理
+	if (!owner_->IsPlayer() && !onReset_) {
+		onReset_ = std::bind(&DriveHandling::Reset, this);
+		onReset_.value()();
+		return;
+	}
+	else if (onReset_) {
+		onReset_ = std::nullopt;
+	}
+
 	// 速度に応じたハンドルの処理
 	const int kMaxCount = 45;	// 押し込み最大	
 	float t = (float)std::abs((int)consecutiveReceptions_) / kMaxCount;
@@ -121,22 +131,14 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	// 推進力計算
 	float propulsion = std::clamp(velocity.z, kMinPropulsion, kMaxPropulsion);
 	float propulsionT = (propulsion - kMinPropulsion) / (kMaxPropulsion - kMinPropulsion);
-
+	// 制限の向き
 	float limitDirect = Ease::Easing(Ease::EaseName::Lerp, kMinXDirect, kMaxXDirect, propulsionT);
 	// プラス方向（右
-	if (consecutiveReceptions_ > 0) {
-		yaw_ = 0.01f;
-		steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, limitDirect, t);
-	}
+	if (consecutiveReceptions_ > 0) steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, limitDirect, t);
 	// マイナス方向（左
-	else if (consecutiveReceptions_ < 0) {
-		yaw_ = -0.01f;
-		steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, -limitDirect, t);
-	}
-	else {
-		yaw_ = 0.0f;
-		steerDirection_.x = 0.0f;
-	}
+	else if (consecutiveReceptions_ < 0) steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, -limitDirect, t);
+	// なし
+	else steerDirection_.x = 0.0f;
 	// Z設定
 	steerDirection_.z = 10.0f;
 	steerDirection_.y = 0;
@@ -215,6 +217,18 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 		//radian /= 60.0f;
 		//owner_->GetWorldTransformAdress()->direction_ = TransformHelper::XZRotateDirection(owner_->GetWorldTransformAdress()->direction_, radian);	
 	}
+}
+
+void DriveHandling::Reset()
+{
+	// 向き
+	steerDirection_ = Vector3(0, 0, 1);
+	// カウント
+	consecutiveReceptions_ = 0;
+	inputCounter_ = 0;
+	// フラグ
+	isLeft_ = {};
+	isRight_ = {};
 }
 
 void DriveHandling::ImGuiDraw()

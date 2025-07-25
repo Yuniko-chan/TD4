@@ -2,6 +2,8 @@
 #include "../VehicleSystemCommons.h"
 
 #include <algorithm>
+#include <optional>
+#include <functional>
 
 class VehicleCore;
 class VehicleStatus;
@@ -38,6 +40,14 @@ public:
 	bool IsNoneInput() { return (!isRight_.second && !isLeft_.second); }
 
 	void SetVehicleDirection(const Vector3& direct) { vehicleDirection_ = direct; }
+
+private:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Reset();
+	// リセットフラグ
+	std::optional<std::function<void()>> onReset_ = std::nullopt;
 private:
 	// 入力チェック
 	InputFlag isLeft_ = {};
@@ -49,7 +59,6 @@ private:
 	// ステア方向
 	Vector3 steerDirection_ = {};
 	Vector3 preSteerDirection_ = {};
-	float yaw_ = 0.0f;
 	// 適応向き
 	Vector3 executeDirection_ = {};
 	// 車体の向き
