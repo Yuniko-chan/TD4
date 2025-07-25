@@ -15,6 +15,9 @@
 #include "../../Object/CustomArea/CustomArea.h"
 #include "../../Object/Gimmick/Cannon/Cannon.h"
 #include "../../Object/Gimmick/Minigun/Minigun.h"
+#include "../../Object/Gimmick/Obstacle/Obstacle.h"
+#include "../../Object/Gimmick/IronBall/ConicalPendulumIronBall.h"
+#include "../../Object/Gimmick/IronBall/PendulumIronBall.h"
 
 GameScene::~GameScene()
 {
@@ -370,6 +373,7 @@ void GameScene::AddCourse() {
 		}
 	}
 
+	// ミニガン
 	Minigun* minigun = nullptr;
 	for (size_t courseNum = group * 6 + 1; courseNum <= 6 * (group + 1); courseNum++) {
 		objNum = 1;
@@ -381,6 +385,69 @@ void GameScene::AddCourse() {
 				minigun->GetWorldTransformAdress()->UpdateMatrix();
 				OBB col = *reinterpret_cast<OBB*>(minigun->GetCollider());
 				col.center_ = minigun->GetWorldTransformAdress()->GetWorldPosition();
+				courseCollisionSystem_->SetGimmick(&col);
+			}
+			else {
+				break;
+			}
+			++objNum;
+		}
+	}
+
+	// 障害物
+	Obstacle* obstacle = nullptr;
+	for (size_t courseNum = group * 6 + 1; courseNum <= 6 * (group + 1); courseNum++) {
+		objNum = 1;
+		while (1) {
+			obstacle = nullptr;
+			std::string courseName = std::format("Obstacle.00{}{}", objNum, courseNum);
+			obstacle = static_cast<Obstacle*>(objectManager_->GetObjectPointer(courseName));
+			if (obstacle) {
+				obstacle->GetWorldTransformAdress()->UpdateMatrix();
+				OBB col = *reinterpret_cast<OBB*>(obstacle->GetCollider());
+				col.center_ = obstacle->GetWorldTransformAdress()->GetWorldPosition();
+				courseCollisionSystem_->SetGimmick(&col);
+			}
+			else {
+				break;
+			}
+			++objNum;
+		}
+	}
+
+	// 円錐振り子
+	ConicalPendulumIronBall* conicalPendulumIronBall = nullptr;
+	for (size_t courseNum = group * 6 + 1; courseNum <= 6 * (group + 1); courseNum++) {
+		objNum = 1;
+		while (1) {
+			conicalPendulumIronBall = nullptr;
+			std::string courseName = std::format("ConicalPendulumIronBall.00{}{}", objNum, courseNum);
+			conicalPendulumIronBall = static_cast<ConicalPendulumIronBall*>(objectManager_->GetObjectPointer(courseName));
+			if (conicalPendulumIronBall) {
+				conicalPendulumIronBall->GetWorldTransformAdress()->UpdateMatrix();
+				OBB col = *reinterpret_cast<OBB*>(conicalPendulumIronBall->GetCollider());
+				col.center_ = conicalPendulumIronBall->GetWorldTransformAdress()->GetWorldPosition();
+				courseCollisionSystem_->SetGimmick(&col);
+			}
+			else {
+				break;
+			}
+			++objNum;
+		}
+	}
+
+	// 振り子
+	PendulumIronBall* pendulumIronBall = nullptr;
+	for (size_t courseNum = group * 6 + 1; courseNum <= 6 * (group + 1); courseNum++) {
+		objNum = 1;
+		while (1) {
+			pendulumIronBall = nullptr;
+			std::string courseName = std::format("PendulumIronBall.00{}{}", objNum, courseNum);
+			pendulumIronBall = static_cast<PendulumIronBall*>(objectManager_->GetObjectPointer(courseName));
+			if (pendulumIronBall) {
+				pendulumIronBall->GetWorldTransformAdress()->UpdateMatrix();
+				OBB col = *reinterpret_cast<OBB*>(pendulumIronBall->GetCollider());
+				col.center_ = pendulumIronBall->GetWorldTransformAdress()->GetWorldPosition();
 				courseCollisionSystem_->SetGimmick(&col);
 			}
 			else {
