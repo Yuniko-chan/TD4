@@ -63,7 +63,7 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 	groupOffset.z = kCourseGroupOffset_.z* nowGroup_;
 
 	transform.rotate = { 0,0,0 };
-	transform.scale = { 1.0f,1.0f,1.0f };
+	transform.scale = { kCourseScale_,kCourseScale_,kCourseScale_ };
 	transform.translate.x = offset.x * kCourseDiameter + groupOffset.x;
 	transform.translate.y = offset.y * kCourseDiameter;
 	transform.translate.z = offset.z * kCourseDiameter + groupOffset.z;
@@ -218,7 +218,7 @@ int CourseManager::Place5(int prev) {
 void CourseManager::CreateCustomizeArea(size_t group) {
 	//-250
 	//グループでのオフセット計算
-	static Vector3 center = { 0,0,-250.0f /5.0f};
+	static Vector3 center = { 0,0,-250.0f /5.0f * kCourseScale_ };
 	static Vector3 offset;
 	offset.x = kCourseGroupOffset_.x * group;
 	offset.z = kCourseGroupOffset_.z * group + center.z;

@@ -9,9 +9,11 @@
 static const size_t kCourseNum = 6;
 static const size_t kCourseFileCount = 3;
 
+static const float kCourseScale_ = 2.0f;
+
 static const std::array<std::string, kCourseFileCount> kCourseNameList = { "course_A.course","course_B.course","dirt.course"};
 
-static const float kCourseDiameter = 100.0f * 1.0f;
+static const float kCourseDiameter = 100.0f * kCourseScale_;
 
 
 static const std::array<Vector3, kCourseNum> courseOffsets_ = { Vector3{0.0f,0.0f,0.0f},
@@ -21,7 +23,7 @@ static const std::array<Vector3, kCourseNum> courseOffsets_ = { Vector3{0.0f,0.0
 	Vector3{-2.0f,0.0f,0.0f},
 	Vector3{-2.0f,0.0f,1.0f}};
 
-static const Vector3 kCourseGroupOffset_ = {-1000.0f/5.0f,0.0f,1000.0f/5.0f};
+static const Vector3 kCourseGroupOffset_ = {-200.0f* kCourseScale_,0.0f,200.0f* kCourseScale_ };
 
 //pickup
 static const std::array<Vector3, kPickupPointCount_> kPickupPointOffset = {
