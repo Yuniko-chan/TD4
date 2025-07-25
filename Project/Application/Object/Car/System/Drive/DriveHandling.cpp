@@ -154,26 +154,12 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	Matrix4x4 vehicleRotate = Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), vehicleDirectionXZ);
 	executeDirection_ = Matrix4x4::TransformNormal(steerDirection_, vehicleRotate);
 
-	Matrix4x4 a = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, steerDirection_);
+	//左右回転のdirectionから回転行列生成
+	Matrix4x4 fromDirectionRotateMatrix = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, steerDirection_);
 
-	//Matrix4x4 b = Matrix4x4::Multiply(a, owner_->GetWorldTransformAdress()->worldMatrix_);
-
-	//Vector3 c = Matrix4x4::TransformNormal(steerDirection_, owner_->GetWorldTransformAdress()->worldMatrix_);
-
-	owner_->posture_ = a * owner_->posture_;
+	owner_->posture_ = fromDirectionRotateMatrix * owner_->posture_;
 	owner_->GetWorldTransformAdress()->direction_ = Matrix4x4::TransformNormal(steerDirection_, owner_->posture_);
 
-	Matrix4x4 d =  Matrix4x4::DirectionToDirection(Matrix4x4::TransformNormal(Vector3{ 0.0f,0.0f,1.0f }, owner_->GetWorldTransformAdress()->worldMatrix_), Matrix4x4::TransformNormal(steerDirection_, owner_->GetWorldTransformAdress()->worldMatrix_));
-	//owner_->GetWorldTransformAdress()->direction_ += Matrix4x4::TransformNormal(owner_->GetWorldTransformAdress()->direction_,d);
-	//Vector3 localDirection =
-	//if (c.z <0) {
-		//c.x *= -c.x;
-		//c.z *= -c.z;
-		//c.y = std::abs(c.y);
-	//}
-	//owner_->GetWorldTransformAdress()->direction_ += c;
-	//owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(owner_->GetWorldTransformAdress()->direction_);
-	//owner_->GetWorldTransformAdress()->direction_ = Matrix4x4::TransformNormal(owner_->GetWorldTransformAdress()->direction_,d);
 
 	if (executeDirection_ == Vector3(0.0f, 0.0f, 0.0f)) {
 		executeDirection_ = Vector3(0.0f, 0.0f, 1.0f);

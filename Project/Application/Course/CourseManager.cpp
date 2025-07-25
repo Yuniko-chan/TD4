@@ -96,6 +96,10 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 			gimmick = objectFactory_->CreateObjectPattern(gimmickData);
 			gimmick->GetWorldTransformAdress()->parent_ = object->GetWorldTransformAdress();
 			gimmick->GetWorldTransformAdress()->UpdateMatrix();
+			//スケールに影響されないWorldMatrix計算
+			Matrix4x4 localMatrix = Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->transform_.scale) * Matrix4x4::MakeRotateXYZMatrix(gimmick->GetWorldTransformAdress()->transform_.rotate) * Matrix4x4::MakeTranslateMatrix(gimmick->GetWorldTransformAdress()->transform_.translate);
+			gimmick->GetWorldTransformAdress()->worldMatrix_ = localMatrix* gimmick->GetWorldTransformAdress()->parent_->worldMatrix_;
+			gimmick->GetWorldTransformAdress()->worldMatrix_ = Matrix4x4::Inverse(Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->parent_->transform_.scale)) * gimmick->GetWorldTransformAdress()->worldMatrix_;
 			if (gimmick) {
 				// listへ
 				objectManager_->AddObject(gimmick);
@@ -228,7 +232,7 @@ void CourseManager::CreateCustomizeArea(size_t group) {
 	EulerTransform transform;
 
 	transform.rotate = { 0,0,0 };
-	transform.scale = { 1.0f,1.0f,1.0f };
+	transform.scale = { kCourseScale_,kCourseScale_,kCourseScale_ };
 	transform.translate.x = offset.x ;
 	transform.translate.y = offset.y ;
 	transform.translate.z = offset.z ;
@@ -242,7 +246,7 @@ void CourseManager::CreateCustomizeArea(size_t group) {
 	objectData.transform = transform;
 	
 	OBB obb;
-	obb.Initialize(objectData.transform.translate, Matrix4x4::MakeIdentity4x4(), {20.0f,5.0f,20.0f}, static_cast<ParentNullObject*>(nullptr));
+	obb.Initialize(objectData.transform.translate, Matrix4x4::MakeIdentity4x4(), {20.0f* kCourseScale_,5.0f,20.0f* kCourseScale_ }, static_cast<ParentNullObject*>(nullptr));
 	objectData.collider = obb;
 	CustomArea* object = new CustomArea();
 	object->Initialize(&objectData);
