@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <memory>
 #include "CourseTraversalRank.h"
+#include "CourseTraversalDraw.h"
 
 /// <summary>
 /// コース踏破システム
@@ -49,7 +50,8 @@ private: // 変数
 	// ランク
 	std::unique_ptr<CourseTraversalRank> courseTraversalRank_;
 
-
+	// 描画
+	std::unique_ptr<CourseTraversalDraw> courseTraversalDraw_;
 
 };
 

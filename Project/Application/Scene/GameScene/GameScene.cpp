@@ -265,13 +265,13 @@ void GameScene::ImguiDraw(){
 	gameTimeSystem_->ImGuiDraw();
 	ImGui::End();
 
-	debugCamera_->ImGuiDraw();
+	//debugCamera_->ImGuiDraw();
 
 	//followCamera_->ImGuiDraw();
 	cameraManager_->ImGuiDraw();
 	objectManager_->ImGuiDraw();
 
-	PostEffect::GetInstance()->ImGuiDraw();
+	//PostEffect::GetInstance()->ImGuiDraw();
 
 	uiManager_->ImGuiDraw();
 

@@ -55,6 +55,8 @@ void CourseCollisionSystem::Initialize()
 		polygons_[i].texcoord = { 0.0f,0.0f };
 	}
 
+	currentNormal_ = { 0.0f,1.0f,0.0f };
+
 }
 
 void CourseCollisionSystem::Execute()
@@ -175,6 +177,9 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 	// オブジェクト取得
 	std::list<BaseObjectManager::ObjectPair>* objects = objectManager->GetObjects();
 
+	// プレイヤーが持ってるパーツ
+	Car::IParts* partsHeldByPlayer = nullptr;
+
 	// オブジェクト
 	for (std::list<BaseObjectManager::ObjectPair>::iterator itr = objects->begin();
 		itr != objects->end(); ++itr) {
@@ -197,18 +202,27 @@ void CourseCollisionSystem::ObjectRegistration(BaseObjectManager* objectManager)
 					break;
 				case 1:
 					ObjectRegistrationPlayer(static_cast<Player*>(itr->second.get()));
+					partsHeldByPlayer = static_cast<Player*>(itr->second.get())->GetPickUpManager()->GetHoldParts();
 					break;
 				case 2:
-					collidingObjects_.push_back(static_cast<VehicleCore*>(itr->second.get()));
+					if (!(partsHeldByPlayer == itr->second.get())) {
+						collidingObjects_.push_back(static_cast<VehicleCore*>(itr->second.get()));
+					}
 					break;
 				case 3:
-					collidingObjects_.push_back(static_cast<TireParts*>(itr->second.get()));
+					if (!(partsHeldByPlayer == itr->second.get())) {
+						collidingObjects_.push_back(static_cast<TireParts*>(itr->second.get()));
+					}
 					break;
 				case 4:
-					collidingObjects_.push_back(static_cast<ArmorFrameParts*>(itr->second.get()));
+					if (!(partsHeldByPlayer == itr->second.get())) {
+						collidingObjects_.push_back(static_cast<ArmorFrameParts*>(itr->second.get()));
+					}
 					break;
 				case 5:
-					collidingObjects_.push_back(static_cast<EngineParts*>(itr->second.get()));
+					if (!(partsHeldByPlayer == itr->second.get())) {
+						collidingObjects_.push_back(static_cast<EngineParts*>(itr->second.get()));
+					}
 					break;
 				default:
 					break;
@@ -255,42 +269,42 @@ void CourseCollisionSystem::SetCourse(Course* course)
 
 void CourseCollisionSystem::SetCustomArea(CustomArea* customArea)
 {
+	customArea;
+	//// ポリゴン
+	//CoursePolygon polygon = {};
+	//polygon.normal = { 0.0f,1.0f,0.0f };
+	//polygon.texcoord = { 0.0f,0.0f };
 
-	// ポリゴン
-	CoursePolygon polygon = {};
-	polygon.normal = { 0.0f,0.0f,1.0f };
-	polygon.texcoord = { 0.0f,0.0f };
+	//// 高さ
+	//const float kHeight = 0.25f;
+	//// 幅
+	//const float kWidth = 20.0f;
+	//
+	//polygon.position0 = { -kWidth, kHeight, -kWidth };
+	//polygon.position1 = { -kWidth, kHeight, kWidth };
+	//polygon.position2 = { kWidth, kHeight, kWidth };
 
-	// 高さ
-	const float kHeight = 0.25f;
-	// 幅
-	const float kWidth = 20.0f;
-	
-	polygon.position0 = { -kWidth, kHeight, -kWidth };
-	polygon.position1 = { -kWidth, kHeight, kWidth };
-	polygon.position2 = { kWidth, kHeight, kWidth };
+	//// コース中心のワールド座標をプラス
+	//polygon.position0 = Matrix4x4::Transform(polygon.position0, customArea->GetWorldTransformAdress()->worldMatrix_);
+	//polygon.position1 = Matrix4x4::Transform(polygon.position1, customArea->GetWorldTransformAdress()->worldMatrix_);
+	//polygon.position2 = Matrix4x4::Transform(polygon.position2, customArea->GetWorldTransformAdress()->worldMatrix_);
 
-	// コース中心のワールド座標をプラス
-	polygon.position0 = Matrix4x4::Transform(polygon.position0, customArea->GetWorldTransformAdress()->worldMatrix_);
-	polygon.position1 = Matrix4x4::Transform(polygon.position1, customArea->GetWorldTransformAdress()->worldMatrix_);
-	polygon.position2 = Matrix4x4::Transform(polygon.position2, customArea->GetWorldTransformAdress()->worldMatrix_);
+	//// 登録
+	//polygons_[polygonRegistrationNumber_] = polygon;
+	//polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
 
-	// 登録
-	polygons_[polygonRegistrationNumber_] = polygon;
-	polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
+	//polygon.position0 = { -kWidth, kHeight, -kWidth };
+	//polygon.position1 = { kWidth, kHeight, kWidth };
+	//polygon.position2 = { kWidth, kHeight, -kWidth };
 
-	polygon.position0 = { -kWidth, kHeight, -kWidth };
-	polygon.position1 = { kWidth, kHeight, kWidth };
-	polygon.position2 = { kWidth, kHeight, -kWidth };
+	//// コース中心のワールド座標をプラス
+	//polygon.position0 = Matrix4x4::Transform(polygon.position0, customArea->GetWorldTransformAdress()->worldMatrix_);
+	//polygon.position1 = Matrix4x4::Transform(polygon.position1, customArea->GetWorldTransformAdress()->worldMatrix_);
+	//polygon.position2 = Matrix4x4::Transform(polygon.position2, customArea->GetWorldTransformAdress()->worldMatrix_);
 
-	// コース中心のワールド座標をプラス
-	polygon.position0 = Matrix4x4::Transform(polygon.position0, customArea->GetWorldTransformAdress()->worldMatrix_);
-	polygon.position1 = Matrix4x4::Transform(polygon.position1, customArea->GetWorldTransformAdress()->worldMatrix_);
-	polygon.position2 = Matrix4x4::Transform(polygon.position2, customArea->GetWorldTransformAdress()->worldMatrix_);
-
-	// 登録
-	polygons_[polygonRegistrationNumber_] = polygon;
-	polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
+	//// 登録
+	//polygons_[polygonRegistrationNumber_] = polygon;
+	//polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
 
 }
 
@@ -300,7 +314,7 @@ void CourseCollisionSystem::SetGimmick(OBB* obb)
 	// ポリゴン
 	CoursePolygon polygon = {};
 	polygon.normal = { 0.0f,0.0f,1.0f };
-	polygon.texcoord = { 1.0f, 1.0f };
+	polygon.texcoord = { 0.99f, 0.99f };
 	
 	// OBB平面作成
 	Vector3 otientatuonX = obb->otientatuons_[0];
@@ -812,19 +826,30 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 
 	// 法線
 	if (normalCount == 0) {
-		normal = { 0.0f, 0.0f, 1.0f };
+		//normal = { 0.0f,1.0f, 0.0f };
 	}
 	else {
 		normal = Vector3::Normalize(normal * (1.0f / static_cast<float>(normalCount)));
+
+		normal = Vector3::Normalize((currentNormal_ * 5.0f + normal));
+
+		currentNormal_ = normal;
 	}
-
+	
 	// コアに代入
-	vehicleCore_->GetWorldTransformAdress()->transform_.translate += extrusion;
-	//if (normalCount != 0) {
-	//	vehicleCore_->GetWorldTransformAdress()->direction_ = normal;
-	//}
-	vehicleCore_->GetWorldTransformAdress()->UpdateMatrix();
-
+	WorldTransform* vehicleCoreWorldTransform = vehicleCore_->GetWorldTransformAdress();
+	vehicleCoreWorldTransform->transform_.translate += extrusion;
+	/*if (normalCount != 0) {
+		Matrix4x4 rotateMatrix = Matrix4x4::DirectionToDirection(currentNormal_, normal);
+		currentNormal_ = normal;
+		vehicleCoreWorldTransform->direction_ = Matrix4x4::TransformNormal(vehicleCoreWorldTransform->direction_, rotateMatrix);
+	}
+	vehicleCoreWorldTransform->UpdateMatrix();
+*/	
+	//お試し
+	Matrix4x4 rotateNormal = Matrix4x4::DirectionToDirection({0.0f,1.0f,0.0f}, currentNormal_);
+	//vehicleCore_->posture_ = vehicleCore_->posture_ * rotateNormal;
+	vehicleCore_->atNormal_ = rotateNormal;
 }
 
 void CourseCollisionSystem::ObjectRegistrationPlayer(Player* player)

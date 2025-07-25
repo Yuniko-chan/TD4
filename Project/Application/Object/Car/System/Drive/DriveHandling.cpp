@@ -138,21 +138,40 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 		steerDirection_.x = 0.0f;
 	}
 	// Z設定
-	steerDirection_.z = 1.0f;
+	steerDirection_.z = 10.0f;
+	steerDirection_.y = 0;
 
 	// 正規化
 	steerDirection_ = Vector3::Normalize(steerDirection_);
 
-	Vector3 forward = Vector3::Normalize(vehicleDirection_);
-	Vector3 upGuess = std::fabsf(forward.y) > 0.99f ? Vector3(0, -1, 0) : Vector3(0, 1, 0);
 
-	// ワールドでの上向きベクトル取得
-	Vector3 right = Vector3::Normalize(Vector3::Cross(upGuess, forward));
-	Vector3 up = Vector3::Normalize(Vector3::Cross(forward, right));
+	// 向きの設定
+	Vector3 vehicleDirectionXZ = vehicleDirection_;
+	vehicleDirectionXZ.y = 0;
+	vehicleDirectionXZ = Vector3::Normalize(vehicleDirectionXZ);
+	Matrix4x4 vehicleRotate = Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), vehicleDirectionXZ);
+	executeDirection_ = Matrix4x4::TransformNormal(steerDirection_, vehicleRotate);
 
-	// ワールド軸に適応させた回転
-	Quaternion rotateAxis = Quaternion::MakeRotateAxisAngleQuaternion(up, yaw_);
-	executeDirection_ = Quaternion::RotateVector(vehicleDirection_, rotateAxis);
+	Matrix4x4 a = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, steerDirection_);
+
+	//Matrix4x4 b = Matrix4x4::Multiply(a, owner_->GetWorldTransformAdress()->worldMatrix_);
+
+	//Vector3 c = Matrix4x4::TransformNormal(steerDirection_, owner_->GetWorldTransformAdress()->worldMatrix_);
+
+	owner_->posture_ = a * owner_->posture_;
+	owner_->GetWorldTransformAdress()->direction_ = Matrix4x4::TransformNormal(steerDirection_, owner_->posture_);
+
+	Matrix4x4 d =  Matrix4x4::DirectionToDirection(Matrix4x4::TransformNormal(Vector3{ 0.0f,0.0f,1.0f }, owner_->GetWorldTransformAdress()->worldMatrix_), Matrix4x4::TransformNormal(steerDirection_, owner_->GetWorldTransformAdress()->worldMatrix_));
+	//owner_->GetWorldTransformAdress()->direction_ += Matrix4x4::TransformNormal(owner_->GetWorldTransformAdress()->direction_,d);
+	//Vector3 localDirection =
+	//if (c.z <0) {
+		//c.x *= -c.x;
+		//c.z *= -c.z;
+		//c.y = std::abs(c.y);
+	//}
+	//owner_->GetWorldTransformAdress()->direction_ += c;
+	//owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(owner_->GetWorldTransformAdress()->direction_);
+	//owner_->GetWorldTransformAdress()->direction_ = Matrix4x4::TransformNormal(owner_->GetWorldTransformAdress()->direction_,d);
 
 	if (executeDirection_ == Vector3(0.0f, 0.0f, 0.0f)) {
 		executeDirection_ = Vector3(0.0f, 0.0f, 1.0f);

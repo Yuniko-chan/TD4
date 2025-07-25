@@ -1,6 +1,5 @@
 #pragma once
 #include "../../../Engine/Scene/BaseScene/BaseScene.h"
-#include "../../OutGameObject/ClearBackGround/ClearBackGround.h"
 #include "../../ClearSceneObject/CourseTraversalSystem.h"
 
 /// <summary>
@@ -50,27 +49,6 @@ private: // メンバ関数
 	void TextureLoad() override;
 
 private: // メンバ変数
-
-	// ボタンスプライト
-	std::unique_ptr<Sprite> buttonSprite_;
-	// ボタンテクスチャハンドル
-	uint32_t buttonTextureHandle_;
-	// ボタン点滅用媒介変数
-	float buttonAlphaT_;
-	// ボタン点滅用媒介変数速度
-	float buttonAlphaTSpeed_;
-	// ボタン点滅用媒介変数は増えるか
-	bool buttonItIncreaseAlphaT_;
-	// ボタン色
-	Vector4 buttonColor_;
-
-	// クリアスプライト
-	std::unique_ptr<Sprite> clearSprite_;
-	// クリアテクスチャハンドル
-	uint32_t clearTextureHandle_;
-
-	// 背景
-	std::unique_ptr<ClearBackGround> clearBackGround_;
 
 	// コース踏破システム
 	std::unique_ptr<CourseTraversalSystem> courseTraversalSystem_;

@@ -42,10 +42,6 @@ void TitleScene::Initialize()
 	buttonAlphaTSpeed_ = kButtonAlphaTSpeed;
 	buttonItIncreaseAlphaT_ = true;
 
-	// タイトル背景
-	titleBackGround_ = std::make_unique<TitleBackGround>();
-	titleBackGround_->Initialize();
-
 	//「スタート」スプライト
 	const Vector2 kStartSpritePosition = { 640.0f, 540.0f };
 	startSprite_.reset(Sprite::Create(startTextureHandle_, kStartSpritePosition, { 1.0f, 1.0f, 1.0f, 1.0f }));
@@ -98,9 +94,6 @@ void TitleScene::Update()
 	buttonColor_.w = Ease::Easing(Ease::EaseName::EaseInOutQuad, 0.0f, 1.0f, buttonAlphaT_);
 	buttonSprite_->SetColor(buttonColor_);
 
-	// タイトル背景
-	titleBackGround_->Update();
-
 	ImguiDraw();
 
 }
@@ -115,9 +108,6 @@ void TitleScene::Draw()
 	//3Dオブジェクトはここ
 
 	objectManager_->Draw(camera_, drawLine_);
-
-	// タイトル背景
-	titleBackGround_->Draw(camera_);
 
 	ModelDraw::PostDraw();
 

@@ -248,6 +248,7 @@ void PlayerPickupManager::DropPart()
 {
 	// パーツの位置再設定
 	holdParts_->GetWorldTransformAdress()->transform_ = TransformHelper::DetachWithWorldTransform(holdParts_->GetWorldTransformAdress());
+	holdParts_->GetWorldTransformAdress()->transform_.translate.y += 2.0f;
 	holdParts_->GetWorldTransformAdress()->SetParent(nullptr);
 	// コアならスキップ
 	if (holdParts_->GetClassNameString() == "VehicleCore") {

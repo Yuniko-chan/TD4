@@ -12,7 +12,7 @@ class CourseTraversalRank
 public: // 定数
 
 	// ランクの数
-	static const size_t kRankNumMax_ = 3;
+	static const size_t kRankNumMax_ = 5;
 
 	// ランクの名前
 	static const std::array<std::string, kRankNumMax_> kRankNames_;
@@ -35,6 +35,12 @@ public: // 関数
 	/// ImGui描画
 	/// </summary>
 	void ImGuiDraw();
+
+	/// <summary>
+	/// ランク数字取得
+	/// </summary>
+	/// <returns></returns>
+	int32_t GetRankNum() { return rankNum_; }
 
 private: // 関数
 
@@ -61,6 +67,9 @@ private: // 変数
 
 	// ランク
 	std::string rank_;
+
+	// ランク数字
+	int32_t rankNum_;
 
 };
 

@@ -211,5 +211,8 @@ private: // メンバ変数
 
 	// 衝突用テクスチャ
 	uint32_t roadAttributeTextureHandle_;
+	
+	//現在の法線
+	Vector3 currentNormal_;
 
 };

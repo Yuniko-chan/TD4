@@ -6,6 +6,11 @@
 #include "../../Collider/CollisionConfig.h"
 #include "State/IPlayerState.h"
 #include "../Car/VehicleCore.h"
+#include "../Car/Parts/Engine/EngineParts.h"
+#include "../Car/Parts/Frame/ArmorFrameParts.h"
+#include "../Car/Parts/Tire/TireParts.h"
+
+#include "../../../Engine/Collision/Extrusion.h"
 
 Player::Player()
 {
@@ -125,7 +130,41 @@ void Player::ParticleDraw(BaseCamera& camera)
 
 void Player::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
-	colliderPartner, collisionData;
+
+	collisionData;
+	OBB pushedOut = std::get<OBB>(*collider_);
+	OBB pushOut = {};
+	Car::IParts* part = nullptr;
+
+	if (std::holds_alternative<VehicleCore*>(colliderPartner)) {
+		part = std::get<VehicleCore*>(colliderPartner);
+		pushOut = std::get<OBB>(*part->GetCollider());
+	} 
+	else if (std::holds_alternative<TireParts*>(colliderPartner)) {
+		part = std::get<TireParts*>(colliderPartner);
+		pushOut = std::get<OBB>(*part->GetCollider());
+	}
+	else if (std::holds_alternative<ArmorFrameParts*>(colliderPartner)) {
+		part = std::get<ArmorFrameParts*>(colliderPartner);
+		pushOut = std::get<OBB>(*part->GetCollider());
+	}
+	else if (std::holds_alternative<EngineParts*>(colliderPartner)) {
+		part = std::get<EngineParts*>(colliderPartner);
+		pushOut = std::get<OBB>(*part->GetCollider());
+	}
+	else {
+		return;
+	}
+
+	// 持ってるパーツの場合はreturn
+	if (pickUpManager_->GetHoldParts() == part) {
+		return;
+	}
+
+	Vector3 extrusion = Extrusion::OBBAndOBB(&pushedOut, &pushOut);
+	worldTransform_.transform_.translate += extrusion;
+	worldTransform_.UpdateMatrix();
+
 }
 
 void Player::SettingParent()
@@ -181,7 +220,14 @@ void Player::SystemUpdate()
 	pickUpManager_->Update();
 
 	// アニメーション
-	playerAnimation_->Update(0);
+	int animNumber = 0;
+	if (pickUpManager_->IsPartsHold()) {
+		animNumber = 0;
+	}
+	else {
+		animNumber = 1;
+	}
+	playerAnimation_->Update(animNumber);
 
 	// コマンド処理
 	playerCommand_->Update();

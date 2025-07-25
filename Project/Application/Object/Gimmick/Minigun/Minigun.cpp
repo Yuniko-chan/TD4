@@ -174,7 +174,7 @@ void Minigun::Fire()
     data.collider = collider;
 
     MinigunBulletData minigunBulletData;
-    minigunBulletData.direction = worldTransform_.direction_;
+    minigunBulletData.direction = Matrix4x4::TransformNormal(Vector3{ 0.0f,1.0f,0.0f }, worldTransform_.worldMatrix_);
     minigunBulletData.position = worldTransform_.GetWorldPosition();
 
     // 初期化

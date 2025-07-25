@@ -1,8 +1,6 @@
 #pragma once
 #include "../../../Engine/Scene/BaseScene/BaseScene.h"
 #include "../../../Engine/PostEffect/HSV/HSVFilter.h"
-#include "../../OutGameObject/TitleBackGround/TitleBackGround.h"
-
 /// <summary>
 /// タイトルシーン
 /// </summary>
@@ -68,9 +66,6 @@ private: // メンバ変数
 	bool buttonItIncreaseAlphaT_;
 	// ボタン色
 	Vector4 buttonColor_;
-
-	// タイトル背景
-	std::unique_ptr<TitleBackGround> titleBackGround_;
 
 	// 「スタート」スプライト
 	std::unique_ptr<Sprite> startSprite_;

@@ -25,8 +25,11 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	worldTransform_.usedDirection_ = true;
 	worldTransform_.transform_.translate.y = 0.0f;
 	worldTransform_.transform_.translate.z = 0.0f;
+	worldTransform_.direction_ = {0.0f,0.0f,1.0f};
 	worldTransform_.UpdateMatrix();
-	
+	posture_ = Matrix4x4::DirectionToDirection({0,0,1.0f},worldTransform_.direction_);
+	atNormal_ = Matrix4x4::MakeIdentity4x4();
+	worldTransform_.worldMatrix_ = Matrix4x4::MakeScaleMatrix(worldTransform_.transform_.scale) * posture_ * Matrix4x4::MakeTranslateMatrix(worldTransform_.transform_.translate);
 	// 衝突マスク
 	collisionAttribute_ = kCollisionAttributeVehicleParts_;
 	collisionMask_ -= kCollisionAttributeVehicleParts_;
@@ -87,18 +90,24 @@ void VehicleCore::Update()
 	// メッシュの更新
 	MeshObject::Update();
 	// 子専用更新（重力の適応）
-	// 仮の地面処理（後で消す）
-	if (worldTransform_.GetWorldPosition().y <= 0.0f) {
-		worldTransform_.transform_.translate.y = 0.0f;
-		//return;
+	bool isParent = IsParent();
+	if (!isParent) {
+		// 仮の地面処理（後で消す）
+		if (worldTransform_.GetWorldPosition().y <= 0.0f) {
+			worldTransform_.transform_.translate.y = 0.0f;
+		}
+		worldTransform_.transform_.translate += Gravity::Execute();
 	}
 	// トランスフォームの更新
 	worldTransform_.direction_ = Vector3::Normalize(worldTransform_.direction_);
 	worldTransform_.UpdateMatrix();
+
+	if (!isParent) {
+		worldTransform_.worldMatrix_ = Matrix4x4::MakeScaleMatrix(worldTransform_.transform_.scale) * posture_ * atNormal_ * Matrix4x4::MakeTranslateMatrix(worldTransform_.transform_.translate);
+		worldTransform_.parentMatrix_ = Matrix4x4::MakeScaleMatrix(worldTransform_.transform_.scale) * posture_ * atNormal_ * Matrix4x4::MakeTranslateMatrix(worldTransform_.transform_.translate);
+	}
 	// コライダーの更新
 	ColliderUpdate();
-	// 重力
-	worldTransform_.transform_.translate += Gravity::Execute();
 
 	isDelete_ = false;
 }
