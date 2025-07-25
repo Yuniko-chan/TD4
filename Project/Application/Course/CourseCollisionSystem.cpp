@@ -818,7 +818,9 @@ void CourseCollisionSystem::ObjectRegistrationPlayer(Player* player)
 	// 型
 	const std::type_info& t = typeid(*(player->GetStateMachine()->GetCurrentState()));
 	std::string name = t.name();
-	if (!(name == "class PlayerInVehicleState")) {
+	if (!(name == "class PlayerInVehicleState"|| 
+		name == "class PlayerDropOffActionState" || 
+		name == "class PlayerRideActionState")) {
 		collidingObjects_.push_back(player);
 	}
 
