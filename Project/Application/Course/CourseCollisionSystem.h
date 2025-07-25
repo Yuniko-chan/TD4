@@ -119,12 +119,6 @@ public: // メンバ関数
 	void SetCourse(Course* course);
 
 	/// <summary>
-	/// カスタムエリア設定
-	/// </summary>
-	/// <param name="customArea">カスタムエリア</param>
-	void SetCustomArea(CustomArea* customArea);
-
-	/// <summary>
 	/// ギミック設定
 	/// </summary>
 	/// <param name="obb">ギミックOBB</param>
