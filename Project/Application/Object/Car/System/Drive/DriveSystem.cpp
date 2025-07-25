@@ -26,9 +26,7 @@ void DriveSystem::Update()
 {
 	slowTimer_.Update(1.0f / GameTimeSystem::GetInstance()->GetTimeScale());
 	if (pushCount_ != 0) {
-		isPush_ = true;
-	}
-	if (isPush_) {
+		// 回転行列のやつから向きを取得
 		totalDirection_ = {};
 
 		pushVector_.second = Vector3::Normalize(pushVector_.second);
@@ -62,7 +60,12 @@ void DriveSystem::Update()
 		//}
 		GameTimeSystem::GetInstance()->SetTimeScale(1.0f);
 		// 押し出し
-		owner_->GetWorldTransformAdress()->transform_.translate += (Vector3::Normalize(totalDirection_) * Vector3::Length(pushPower_)) * kDeltaTime_;
+		//owner_->GetWorldTransformAdress()->transform_.translate += (Vector3::Normalize(totalDirection_) * Vector3::Length(pushPower_)) * kDeltaTime_;
+		Vector3 push = Matrix4x4::TransformNormal(Vector3(0, 0, 1), owner_->rotate_);
+		push.y = 0.0f;
+		owner_->GetWorldTransformAdress()->direction_;
+		owner_->GetDriveSystem()->velocity_ += push * Vector3::Length(pushPower_);
+		
 		pushPower_ = {};
 	}
 

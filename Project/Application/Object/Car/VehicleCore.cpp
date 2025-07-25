@@ -102,6 +102,7 @@ void VehicleCore::Update()
 	worldTransform_.UpdateMatrix();
 
 	if (!isParent) {
+		rotate_ = posture_ * atNormal_;
 		worldTransform_.worldMatrix_ = Matrix4x4::MakeScaleMatrix(worldTransform_.transform_.scale) * posture_ * atNormal_ * Matrix4x4::MakeTranslateMatrix(worldTransform_.transform_.translate);
 		worldTransform_.parentMatrix_ = Matrix4x4::MakeScaleMatrix(worldTransform_.transform_.scale) * posture_ * atNormal_ * Matrix4x4::MakeTranslateMatrix(worldTransform_.transform_.translate);
 	}

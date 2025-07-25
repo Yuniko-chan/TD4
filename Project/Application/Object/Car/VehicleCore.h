@@ -84,5 +84,6 @@ private:
 
     // 運転中か？
     bool isDrive_ = false;
-
+public:
+    Matrix4x4 rotate_ = Matrix4x4::MakeIdentity4x4();
 };
