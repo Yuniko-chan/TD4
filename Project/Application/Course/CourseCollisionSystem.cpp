@@ -827,6 +827,7 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 	// 法線
 	if (normalCount == 0) {
 		//normal = { 0.0f,1.0f, 0.0f };
+		currentNormal_ = Matrix4x4::TransformNormal({0.0f,1.0f,0.0f},vehicleCore_->GetWorldTransformAdress()->worldMatrix_);
 	}
 	else {
 		normal = Vector3::Normalize(normal * (1.0f / static_cast<float>(normalCount)));
