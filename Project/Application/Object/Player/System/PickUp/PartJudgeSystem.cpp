@@ -20,7 +20,10 @@ Car::IParts* PartJudgeSystem::GetCatchPart(VehiclePartsManager* partManager, Pic
 	Car::IParts* nearParts = partManager->FindRootNonCoreParts(worldPosition);
 	// 自分のコア
 	Car::IParts* nearCore = (partManager->FindNearCoreParts(worldPosition));
-	bool isEmpty = static_cast<VehicleCore*>(nearCore)->GetConstructionSystem()->IsEmpty();
+	bool isEmpty = false;
+	if (nearCore) {
+		isEmpty = static_cast<VehicleCore*>(nearCore)->GetConstructionSystem()->IsEmpty();
+	}
 
 	// コアに付けている中で一番近いパーツを検索
 	Car::IParts* nearDockingPart = nullptr;
