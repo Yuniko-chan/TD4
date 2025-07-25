@@ -324,89 +324,70 @@ void GameScene::CourseInitialize()
 	courseCollisionSystem_ = std::make_unique<CourseCollisionSystem>();
 	courseCollisionSystem_->Initialize();
 
+	// コースデバッグ描画
+	courseDebugDraw_ = std::make_unique<CourseDebugDraw>();
+	courseDebugDraw_->Initialize();
+
 	//コース生成システム
 	courseManager_ = std::make_unique<CourseManager>();
 	courseManager_->Initialize(static_cast<GameSceneObjectManager*>(objectManager_.get()),levelDataManager_);
 	courseManager_->SetAddCourseFunction(std::bind(&GameScene::AddCourse,this));
 	courseManager_->SetPlayer(reinterpret_cast<MeshObject*>(objectManager_->GetObjectPointer("Player")));
 
-
-	// コースデバッグ描画
-	courseDebugDraw_ = std::make_unique<CourseDebugDraw>();
-	courseDebugDraw_->Initialize();
-
-	// コース
-	size_t courseGroupNum = 1;
-	for (size_t i = 0; i < courseGroupNum; i++) {
-		auto& courseList = courseManager_->GetCourseList(i);
-		for (auto* course : courseList) {
-			courseCollisionSystem_->SetCourse(course);
-			courseDebugDraw_->SetCourse(course);
-		}
-	}
-
-	// カスタムエリア
-	CustomArea* customArea = nullptr;
-	/*std::string customAreaName = "customArea";
-	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
-	courseCollisionSystem_->SetCustomArea(customArea);
-	customAreaName = "customArea.001";
-	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
-	courseCollisionSystem_->SetCustomArea(customArea);*/
-	for (size_t i = 0; i < courseGroupNum; i++) {
-		std::string customAreaName = std::format("CustomArea{}",i);
-		customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
-		courseCollisionSystem_->SetCustomArea(customArea);
-	}
-
-
-	// 大砲
-	Cannon* cannon = nullptr;
-	size_t i = 0;
-	while (1) {
-		cannon = nullptr;
-		std::string courseName = std::format("Cannon{}", i);
-		cannon = static_cast<Cannon*>(objectManager_->GetObjectPointer(courseName));
-		if (cannon) {
-			courseCollisionSystem_->SetGimmick(reinterpret_cast<OBB*>(cannon->GetCollider()));
-		}
-		else {
-			break;
-		}
-		++i;
-	}
-
-	// ミニガン
-	Minigun* minigun = nullptr;
-	i = 0;
-	while (1) {
-		minigun = nullptr;
-		std::string courseName = std::format("Minigun{}", i);
-		minigun = static_cast<Minigun*>(objectManager_->GetObjectPointer(courseName));
-		if (minigun) {
-			courseCollisionSystem_->SetGimmick(reinterpret_cast<OBB*>(minigun->GetCollider()));
-		}
-		else {
-			break;
-		}
-		++i;
-	}
+	AddCourse();
 
 }
 
 void GameScene::AddCourse() {
-	size_t group = courseManager_->AddCourseGroup();
+
+	size_t group = courseManager_->AddCourseGroup() - 1;
 	auto& courseList = courseManager_->GetCourseList(group);
 	for (auto* course : courseList) {
 		courseCollisionSystem_->SetCourse(course);
 		courseDebugDraw_->SetCourse(course);
 	}
-	
 
-	// カスタムエリア
-	CustomArea* customArea = nullptr;
-	std::string customAreaName = std::format("CustomArea{}", group);
-	customArea = static_cast<CustomArea*>(objectManager_->GetObjectPointer(customAreaName));
-	courseCollisionSystem_->SetCustomArea(customArea);
+	size_t objNum = 1;
+
+	// 大砲
+	Cannon* cannon = nullptr;
+	for (size_t courseNum = group * 6 + 1; courseNum <= 6 * (group + 1); courseNum++) {
+		objNum = 1;
+		while (1) {
+			cannon = nullptr;
+			std::string courseName = std::format("Cannon.00{}{}", objNum, courseNum);
+			cannon = static_cast<Cannon*>(objectManager_->GetObjectPointer(courseName));
+			if (cannon) {
+				cannon->GetWorldTransformAdress()->UpdateMatrix();
+				OBB col = *reinterpret_cast<OBB*>(cannon->GetCollider());
+				col.center_ = cannon->GetWorldTransformAdress()->GetWorldPosition();
+				courseCollisionSystem_->SetGimmick(&col);
+			}
+			else {
+				break;
+			}
+			++objNum;
+		}
+	}
+
+	Minigun* minigun = nullptr;
+	for (size_t courseNum = group * 6 + 1; courseNum <= 6 * (group + 1); courseNum++) {
+		objNum = 1;
+		while (1) {
+			minigun = nullptr;
+			std::string courseName = std::format("Gatling.00{}{}", objNum, courseNum);
+			minigun = static_cast<Minigun*>(objectManager_->GetObjectPointer(courseName));
+			if (minigun) {
+				minigun->GetWorldTransformAdress()->UpdateMatrix();
+				OBB col = *reinterpret_cast<OBB*>(minigun->GetCollider());
+				col.center_ = minigun->GetWorldTransformAdress()->GetWorldPosition();
+				courseCollisionSystem_->SetGimmick(&col);
+			}
+			else {
+				break;
+			}
+			++objNum;
+		}
+	}
 	
 }
