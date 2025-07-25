@@ -6,6 +6,16 @@
 
 void DriveEngine::Update()
 {
+	// リセット呼び出し
+	if (!owner_->IsPlayer() && !onReset_) {
+		onReset_ = std::bind(&DriveEngine::Reset, this);
+		onReset_.value()();
+	}
+	// プレイヤーに乗られてなければ
+	else if (owner_->IsPlayer() && onReset_) {
+		onReset_ = std::nullopt;
+	}
+
 	// フレームカウント
 	const int timming = 10;
 	const int maxReception = 10;
@@ -47,7 +57,9 @@ void DriveEngine::Update()
 void DriveEngine::Reset()
 {
 	// 初期化
-	consecutiveReceptions_ = 0;
+	//consecutiveReceptions_ = 0;
+	isAccel_ = false;
+	isDecel_ = false;
 
 }
 

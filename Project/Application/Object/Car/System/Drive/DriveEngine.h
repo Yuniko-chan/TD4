@@ -62,6 +62,7 @@ private:
 	bool isDrive_ = false;
 
 private:
-
+	// リセットフラグ
+	std::optional<std::function<void()>> onReset_ = std::nullopt;
 
 };
