@@ -28,6 +28,7 @@ namespace ParameterStructs {
 		struct VehicleCore
 		{
 			Vector3 initPosition = {};
+			Vector3 inVehicleLocal = {};
 		};
 
 		// ハンドル関係

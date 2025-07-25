@@ -11,7 +11,7 @@ void PlayerInVehicleState::Initialize()
 	player_->GetWorldTransformAdress()->transform_.rotate = {};
 	player_->GetWorldTransformAdress()->direction_ = Vector3(0.0f, 0.0f, 1.0f);
 	// 位置の強制
-	player_->GetWorldTransformAdress()->transform_.translate = Vector3(0.0f, 2.0f, 0.0f);
+	player_->GetWorldTransformAdress()->transform_.translate = GlobalVariables::GetInstance()->GetVector3Value("Vehicle", "Core_LocalPosition");
 	player_->GetWorldTransformAdress()->UpdateMatrix();
 
 	player_->GetCore()->SetIsDrive(true);

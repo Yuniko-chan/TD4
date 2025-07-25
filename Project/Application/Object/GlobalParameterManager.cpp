@@ -55,7 +55,7 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	// 車両
 	groupName = "Vehicle";
 	vehicle_.core.initPosition = globalVariables_->GetVector3Value(groupName, "Core_InitPosition");
-
+	vehicle_.core.inVehicleLocal = globalVariables_->GetVector3Value(groupName, "Core_LocalPosition");
 }
 
 void GlobalParameterManager::AddItems()
@@ -99,5 +99,6 @@ void GlobalParameterManager::AddItems()
 	// 車両
 	groupName = "Vehicle";
 	globalVariables_->AddItem(groupName, "Core_InitPosition", Vector3(vehicle_.core.initPosition));
+	globalVariables_->AddItem(groupName, "Core_LocalPosition", Vector3(vehicle_.core.inVehicleLocal));
 
 }
