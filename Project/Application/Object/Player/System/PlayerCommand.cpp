@@ -18,13 +18,18 @@ void PlayerCommand::Initialize(Player* player)
 void PlayerCommand::Update()
 {
 	// 移動コマンド
-	MoveCommand();
+	//MoveCommand();
+	Refrash();
+}
+
+void PlayerCommand::Refrash()
+{
+	// 初期化
+	moveDirect_ = {};
 }
 
 bool PlayerCommand::MoveCommand()
 {
-	// 初期化
-	moveDirect_ = {};
 	Vector3 leftStick = { keyConfig_->GetLeftStick()->x ,0.0f,keyConfig_->GetLeftStick()->y };
 	moveDirect_.x = keyConfig_->GetLeftStick()->x;
 	moveDirect_.z = keyConfig_->GetLeftStick()->y;
@@ -68,6 +73,7 @@ void PlayerCommand::VectorRotate()
 
 void PlayerCommand::StickMoveCommand()
 {
+	MoveCommand();
 	//Vector2 rotate = Vector2::Normalize(Vector2(keyConfig_->GetLeftStick()->x, keyConfig_->GetLeftStick()->y));
 	// 向き
 	Vector3 direct = moveDirect_;

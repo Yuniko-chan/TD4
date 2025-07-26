@@ -21,7 +21,12 @@ public:
 	/// 更新
 	/// </summary>
 	void Update();
+private:
 
+	/// <summary>
+	/// リフレッシュ処理
+	/// </summary>
+	void Refrash();
 public: // 
 	/// <summary>
 	/// アクションコマンド
