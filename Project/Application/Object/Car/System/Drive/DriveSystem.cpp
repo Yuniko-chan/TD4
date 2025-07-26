@@ -47,7 +47,13 @@ void DriveSystem::Update()
 
 	if (slowTimer_.IsActive()) {
 		if (Vector3::Dot(pushVector_.first, pushVector_.second) >= 0.5f) {
-			owner_->GetWorldTransformAdress()->direction_ = pushVector_.second;
+			Vector3 pushDirect = Vector3(pushVector_.second.x, 0.0f, pushVector_.second.z);
+			pushDirect = Vector3::Normalize(pushDirect);
+			Matrix4x4 fromDirectionRotateMatrix = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, pushDirect);
+
+			owner_->posture_ = fromDirectionRotateMatrix * owner_->posture_;
+			owner_->GetWorldTransformAdress()->direction_ = Matrix4x4::TransformNormal(pushDirect, owner_->posture_);
+			//owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(owner_->GetWorldTransformAdress()->direction_);
 		}
 
 	}
@@ -63,7 +69,7 @@ void DriveSystem::Update()
 		//owner_->GetWorldTransformAdress()->transform_.translate += (Vector3::Normalize(totalDirection_) * Vector3::Length(pushPower_)) * kDeltaTime_;
 		Vector3 push = Matrix4x4::TransformNormal(Vector3(0, 0, 1), owner_->rotate_);
 		push.y = 0.0f;
-		owner_->GetWorldTransformAdress()->direction_;
+		owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(owner_->GetWorldTransformAdress()->direction_);
 		owner_->GetDriveSystem()->velocity_ += push * Vector3::Length(pushPower_);
 		
 		pushPower_ = {};

@@ -126,6 +126,11 @@ void VehicleCore::Draw(BaseCamera& camera)
 void VehicleCore::ImGuiDrawParts()
 {
 	ImGui::SeparatorText(className_.c_str());
+	if (ImGui::Button("押し出し")) {
+		Vector3 direct = worldTransform_.direction_;
+		worldTransform_.transform_.translate += direct * 10.0f;
+	}
+
 	Vector4 color = material_->GetColor();
 	ImGui::DragFloat4("Color", &color.x, 0.01f);
 	material_->SetColor(color);

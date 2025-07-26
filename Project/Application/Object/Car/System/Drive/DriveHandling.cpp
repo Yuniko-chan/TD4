@@ -148,11 +148,11 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 
 
 	// 向きの設定
-	Vector3 vehicleDirectionXZ = vehicleDirection_;
-	vehicleDirectionXZ.y = 0;
-	vehicleDirectionXZ = Vector3::Normalize(vehicleDirectionXZ);
-	Matrix4x4 vehicleRotate = Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), vehicleDirectionXZ);
-	executeDirection_ = Matrix4x4::TransformNormal(steerDirection_, vehicleRotate);
+	//Vector3 vehicleDirectionXZ = vehicleDirection_;
+	//vehicleDirectionXZ.y = 0;
+	//vehicleDirectionXZ = Vector3::Normalize(vehicleDirectionXZ);
+	//Matrix4x4 vehicleRotate = Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), vehicleDirectionXZ);
+	//executeDirection_ = Matrix4x4::TransformNormal(steerDirection_, vehicleRotate);
 
 	//左右回転のdirectionから回転行列生成
 	Matrix4x4 fromDirectionRotateMatrix = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, steerDirection_);
@@ -161,13 +161,13 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	owner_->GetWorldTransformAdress()->direction_ = Matrix4x4::TransformNormal(steerDirection_, owner_->posture_);
 
 
-	if (executeDirection_ == Vector3(0.0f, 0.0f, 0.0f)) {
-		executeDirection_ = Vector3(0.0f, 0.0f, 1.0f);
-	}
+	//if (executeDirection_ == Vector3(0.0f, 0.0f, 0.0f)) {
+	//	executeDirection_ = Vector3(0.0f, 0.0f, 1.0f);
+	//}
 
-	if (executeDirection_ != Vector3(0, 0, 0)) {
-		owner_->GetWorldTransformAdress()->direction_ = executeDirection_;
-	}
+	//if (executeDirection_ != Vector3(0, 0, 0)) {
+	//	owner_->GetWorldTransformAdress()->direction_ = executeDirection_;
+	//}
 	// タイヤの数、左右
 	int rightWheel = status->GetRightWheel();
 	int leftWheel = status->GetLeftWheel();
