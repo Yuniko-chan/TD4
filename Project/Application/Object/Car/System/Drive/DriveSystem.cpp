@@ -27,7 +27,6 @@ void DriveSystem::Update()
 	slowTimer_.Update(1.0f / GameTimeSystem::GetInstance()->GetTimeScale());
 	if (pushCount_ != 0) {
 		// 回転行列のやつから向きを取得
-		totalDirection_ = {};
 
 		pushVector_.second = Vector3::Normalize(pushVector_.second);
 		pushVector_.second.y = 0.0f;
@@ -47,32 +46,29 @@ void DriveSystem::Update()
 
 	if (slowTimer_.IsActive()) {
 		if (Vector3::Dot(pushVector_.first, pushVector_.second) >= 0.5f) {
-			Vector3 pushDirect = Vector3(pushVector_.second.x, 0.0f, pushVector_.second.z);
+			Vector3 pushDirect = Vector3(totalDirection_.x, 0.0f, totalDirection_.z);
 			pushDirect = Vector3::Normalize(pushDirect);
 			Matrix4x4 fromDirectionRotateMatrix = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, pushDirect);
 
-			owner_->posture_ = fromDirectionRotateMatrix * owner_->posture_;
+			owner_->posture_ = fromDirectionRotateMatrix/* * owner_->posture_*/;
 			owner_->GetWorldTransformAdress()->direction_ = Matrix4x4::TransformNormal(pushDirect, owner_->posture_);
 			//owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(owner_->GetWorldTransformAdress()->direction_);
 		}
 
 	}
 	if (slowTimer_.IsEnd()) {
-		//if (Vector3::Dot(pushVector_.first, pushVector_.second) <= 0.0f) {
-		//	velocity_ -= pushPower_;
-		//}
-		//else {
-		//	velocity_ += pushPower_;
-		//}
+		// タイムスケール戻す
 		GameTimeSystem::GetInstance()->SetTimeScale(1.0f);
 		// 押し出し
 		//owner_->GetWorldTransformAdress()->transform_.translate += (Vector3::Normalize(totalDirection_) * Vector3::Length(pushPower_)) * kDeltaTime_;
-		Vector3 push = Matrix4x4::TransformNormal(Vector3(0, 0, 1), owner_->rotate_);
+		//Vector3 push = Matrix4x4::TransformNormal(Vector3(0, 0, 1), owner_->rotate_);
+		Vector3 push = Vector3::Normalize(totalDirection_);
 		push.y = 0.0f;
-		owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(owner_->GetWorldTransformAdress()->direction_);
-		owner_->GetDriveSystem()->velocity_ += push * Vector3::Length(pushPower_);
+		//owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(owner_->GetWorldTransformAdress()->direction_);
+		knockBack_ += push * Vector3::Length(totalDirection_);
 		
 		pushPower_ = {};
+		totalDirection_ = {};
 	}
 
 	// オーバーヒートフラグ初期化
@@ -96,27 +92,32 @@ void DriveSystem::Update()
 	tires = owner_->GetConstructionSystem()->FindPartsByCategory(1);
 	for (std::vector<Car::IParts*>::iterator it = tires.begin(); it != tires.end(); ++it) {
 		static_cast<TireParts*>((*it))->SetSpinRate(velocity_.z);
-		static_cast<TireParts*>((*it))->SetSteerDirection(handling_->GetSteerDirection());
-		static_cast<TireParts*>((*it))->SetPreSteerDirection(handling_->GetPreSteerDirection());
+		static_cast<TireParts*>((*it))->SetSteerDirection(handling_->GetTireDirection());
+		static_cast<TireParts*>((*it))->SetPreSteerDirection(handling_->GetPreTireDirection());
 	}
 
-	// 速度が無ければ早期
-	if (velocity_ == Vector3(0.0f, 0.0f, 0.0f))
+	// 移動
+	if (velocity_ != Vector3(0.0f, 0.0f, 0.0f))
 	{
-		return;
+		// 向き
+		Vector3 newDirect = Matrix4x4::TransformNormal(velocity_, Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), owner_->GetWorldTransformAdress()->direction_));
+		// 座標計算
+		owner_->GetWorldTransformAdress()->transform_.translate += newDirect * GameTimeSystem::GetInstance()->GetDeltaTime();
 	}
 
-	// 角度
-	//float eulerY = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, Vector3::FrontVector());
-	Vector3 newDirect = Matrix4x4::TransformNormal(velocity_, Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), owner_->GetWorldTransformAdress()->direction_));
-	
-	// 座標計算
-	//VehicleCaluclator calc;
-	owner_->GetWorldTransformAdress()->transform_.translate += newDirect * GameTimeSystem::GetInstance()->GetDeltaTime();
-	// 
-	if (!owner_->IsPlayer()) {
-		HandleNoParent();
+	// ノックバック
+	if (knockBack_ != Vector3(0.0f, 0.0f, 0.0f)) {
+		knockBack_ = Ease::Easing(Ease::EaseName::Lerp, knockBack_, Vector3(0, 0, 0), 0.15f);
+		// 向き
+		//Vector3 newDirect = Matrix4x4::TransformNormal(knockBack_, Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), owner_->GetWorldTransformAdress()->direction_));
+		// 座標計算
+		owner_->GetWorldTransformAdress()->transform_.translate += knockBack_ * GameTimeSystem::GetInstance()->GetDeltaTime();
 	}
+
+	//// 
+	//if (!owner_->IsPlayer()) {
+	//	HandleNoParent();
+	//}
 
 }
 
@@ -193,21 +194,21 @@ void DriveSystem::PushPower(const Vector3& power)
 	Vector3 vehicleDirection = Vector3(owner_->GetWorldTransformAdress()->direction_.x, 0, owner_->GetWorldTransformAdress()->direction_.z);
 	
 	// 内積によって与える力を決めます
-	float directDot = Vector3::Dot(powerDirection, vehicleDirection);
+	//float directDot = Vector3::Dot(powerDirection, vehicleDirection);
 	// 後寄り
 	Vector3 addPower = power;
-	if (directDot <= -0.5f) {
-		addPower *= (1.0f / 8.0f);
-	}
-	else if (directDot <= -0.25f) {
-		addPower *= (1.0f / 4.0f);
-	}
-	else if (directDot <= 0.35f) {
-		addPower *= (1.0f / 2.0f);
-	}
-	else {
-		addPower *= (1.0f / 1.0f);
-	}
+	//if (directDot <= -0.5f) {
+	//	addPower *= (1.0f / 8.0f);
+	//}
+	//else if (directDot <= -0.25f) {
+	//	addPower *= (1.0f / 4.0f);
+	//}
+	//else if (directDot <= 0.35f) {
+	//	addPower *= (1.0f / 2.0f);
+	//}
+	//else {
+	//	addPower *= (1.0f / 1.0f);
+	//}
 	
 	totalDirection_ += addPower;
 

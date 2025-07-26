@@ -33,8 +33,8 @@ public:
 	/// </summary>
 	void ImGuiDraw();
 	// ステアの向き
-	Vector3 GetSteerDirection() { return steerDirection_; }
-	Vector3 GetPreSteerDirection() { return preSteerDirection_; }
+	Vector3 GetTireDirection() { return tireDirection_; }
+	Vector3 GetPreTireDirection() { return preTireDirection_; }
 	// 入力があるか
 	bool IsInput() { return (isRight_.second || isLeft_.second); }
 	bool IsNoneInput() { return (!isRight_.second && !isLeft_.second); }
@@ -48,6 +48,9 @@ private:
 	void Reset();
 	// リセットフラグ
 	std::optional<std::function<void()>> onReset_ = std::nullopt;
+
+	Vector3 ApplyStatusToHandling(VehicleStatus* status, const Vector3& handling);
+	void ApplyHandlingToTire();
 private:
 	// 入力チェック
 	InputFlag isLeft_ = {};
@@ -60,7 +63,8 @@ private:
 	Vector3 steerDirection_ = {};
 	Vector3 preSteerDirection_ = {};
 	// 適応向き
-	Vector3 executeDirection_ = {};
+	Vector3 tireDirection_ = {};
+	Vector3 preTireDirection_ = {};
 	// 車体の向き
 	Vector3 vehicleDirection_ = {};
 };

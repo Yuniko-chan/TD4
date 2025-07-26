@@ -48,6 +48,8 @@ private:
 	VehicleStatus* status_ = nullptr;
 	// 速度ベクトル
 	Vector3 velocity_ = {};
+	// ノックバックベクトル
+	Vector3 knockBack_ = {};
 	// 押し出した回数
 	int pushCount_ = 0;
 	bool isPush_ = false;
