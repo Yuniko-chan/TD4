@@ -12,6 +12,7 @@ void GameTimeSystem::Initialize()
 	remainingTime_ = kLimitTime;
 	isRunning_ = false;
 	isPause_ = false;
+	SetTimeScale(1.0f);
 }
 
 void GameTimeSystem::Update()
