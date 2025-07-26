@@ -38,7 +38,8 @@ void Minigun::Initialize(LevelData::MeshData* data, const MinigunData minigunDat
     elapsedTime_ = 0.0f;
 
     // 弾の初期化
-    bullets_.clear();
+    bullet_ = std::make_unique<MinigunBullet>();
+    Fire();
 
 	// 向き
 	worldTransform_.direction_ = minigunData.direction;
@@ -59,28 +60,26 @@ void Minigun::Update()
 {
 
     //デスフラグの立った弾を削除
-    bullets_.remove_if([](MinigunBullet* bullet) {
-        if (bullet->IsDead()) {
-            delete bullet;
-            return true;
-        }
-        return false;
-        });
+    //bullets_.remove_if([](MinigunBullet* bullet) {
+    //    if (bullet->IsDead()) {
+    //        delete bullet;
+    //        return true;
+    //    }
+    //    return false;
+    //    });
 
     // 時間
     elapsedTime_ += GameTimeSystem::GetInstance()->GetDeltaTime();
+    
+    // 弾の更新
+    bullet_->Update();
 
     // 発射するか
-    if (elapsedTime_ >= kFiringInterval_) {
+    bool a = (elapsedTime_ >= kFiringInterval_) && bullet_->GetIsDead();
+    if (a) {
         elapsedTime_ = 0.0f;
-    
         // 発射する
         Fire();
-    }
-
-    // 弾の更新
-    for (MinigunBullet* bullet : bullets_) {
-        bullet->Update();
     }
 
     // アニメーション
@@ -101,9 +100,7 @@ void Minigun::Draw(BaseCamera& camera)
     ModelDraw::AnimObjectDraw(desc);
 
     // 弾の描画
-    for (MinigunBullet* bullet : bullets_) {
-        bullet->Draw(camera);
-    }
+    bullet_->Draw(camera);
 
 }
 
@@ -119,9 +116,7 @@ void Minigun::CollisionListRegister(BaseCollisionManager* collisionManager)
     MeshObject::CollisionListRegister(collisionManager);
 
     // 弾
-    for (MinigunBullet* bullet : bullets_) {
-        bullet->CollisionListRegister(collisionManager);
-    }
+    bullet_->CollisionListRegister(collisionManager);
 
 }
 
@@ -132,9 +127,7 @@ void Minigun::CollisionListRegister(BaseCollisionManager* collisionManager, Coll
     MeshObject::CollisionListRegister(collisionManager, colliderDebugDraw);
 
     // 弾
-    for (MinigunBullet* bullet : bullets_) {
-        bullet->CollisionListRegister(collisionManager, colliderDebugDraw);
-    }
+    bullet_->CollisionListRegister(collisionManager, colliderDebugDraw);
 
 }
 
@@ -159,8 +152,6 @@ void Minigun::ColliderInitialize(ColliderShape collider)
 void Minigun::Fire()
 {
 
-    MinigunBullet* minigunBullet = new MinigunBullet();
-
     LevelData::MeshData data;
     data.directoryPath = "Resources/Model/Gimmick/IronBall/";
     data.flieName = "IronBall.obj";
@@ -178,9 +169,6 @@ void Minigun::Fire()
     minigunBulletData.position = worldTransform_.GetWorldPosition();
 
     // 初期化
-    minigunBullet->Initialize(&data, minigunBulletData);
-
-    // 追加
-    bullets_.push_back(minigunBullet);
+    bullet_->Initialize(&data, minigunBulletData);
 
 }

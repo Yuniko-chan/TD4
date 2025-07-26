@@ -111,9 +111,8 @@ void GameSceneInstancingDrawing::MinigunVer(MeshObject* meshObject, const Matrix
 
 	Minigun* obj = reinterpret_cast<Minigun*>(meshObject);
 
-	for (MinigunBullet* bullet : *obj->GetBullets()) {
-		RegistrationConfirmation(bullet, viewProjectionMatrix);
-	}
+	MinigunBullet* bullet = obj->GetBullet();
+	RegistrationConfirmation(bullet, viewProjectionMatrix);
 
 }
 

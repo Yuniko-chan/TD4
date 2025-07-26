@@ -77,9 +77,6 @@ private: // 変数
     // 経過時間
     float elapsedTime_;
 
-    // 死亡しているか
-    bool isDead_;
-
     // 速度
     Vector3 velocity_;
 
