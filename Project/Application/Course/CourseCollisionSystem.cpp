@@ -406,8 +406,14 @@ void CourseCollisionSystem::SetGimmick(OBB* obb)
 void CourseCollisionSystem::ClearCorse()
 {
 
-	// ポリゴンをクリアする
-	//polygons_.clear();
+	// ポリゴン
+	for (size_t i = 0; i < kCollisionPolygonMax_; ++i) {
+		polygons_[i].position0 = { 0.0f,-10000.0f,0.0f };
+		polygons_[i].position1 = { 0.0f,-10000.0f,0.0f };
+		polygons_[i].position2 = { 0.0f,-10000.0f,0.0f };
+		polygons_[i].normal = { 0.0f,0.0f,1.0f };
+		polygons_[i].texcoord = { 0.0f,0.0f };
+	}
 
 }
 
@@ -785,7 +791,6 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 
 	// 法線
 	if (normalCount == 0) {
-		//normal = { 0.0f,1.0f, 0.0f };
 		currentNormal_ = Matrix4x4::TransformNormal({0.0f,1.0f,0.0f},vehicleCore_->GetWorldTransformAdress()->worldMatrix_);
 	}
 	else {
@@ -799,16 +804,9 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 	// コアに代入
 	WorldTransform* vehicleCoreWorldTransform = vehicleCore_->GetWorldTransformAdress();
 	vehicleCoreWorldTransform->transform_.translate += extrusion;
-	/*if (normalCount != 0) {
-		Matrix4x4 rotateMatrix = Matrix4x4::DirectionToDirection(currentNormal_, normal);
-		currentNormal_ = normal;
-		vehicleCoreWorldTransform->direction_ = Matrix4x4::TransformNormal(vehicleCoreWorldTransform->direction_, rotateMatrix);
-	}
-	vehicleCoreWorldTransform->UpdateMatrix();
-*/	
+
 	//お試し
 	Matrix4x4 rotateNormal = Matrix4x4::DirectionToDirection({0.0f,1.0f,0.0f}, currentNormal_);
-	//vehicleCore_->posture_ = vehicleCore_->posture_ * rotateNormal;
 	vehicleCore_->atNormal_ = rotateNormal;
 }
 
