@@ -133,7 +133,7 @@ void GameScene::Update() {
 	}
 
 	// 中間プレイ会用処理（初期化）
-	if (input_->TriggerKey(DIK_0)) {
+	if (input_->TriggerKey(DIK_F1)) {
 		Initialize();
 	}
 	else if (input_->TriggerJoystick(JoystickButton::kJoystickButtonSTART)) {
