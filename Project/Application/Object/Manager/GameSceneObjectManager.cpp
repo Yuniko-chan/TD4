@@ -88,7 +88,40 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 
 void GameSceneObjectManager::Update()
 {
-	BaseObjectManager::Update();
+
+#ifdef _DEMO
+
+	// リストをクリア
+	colliderDebugDraw_->ListClear();
+
+#endif // _DEMO
+
+	// フラグによる死亡処理
+	objects_.remove_if([this](ObjectPair& objects) {
+		if (objects.second->GetIsDead()) {
+			objects.second.reset();
+			return true;
+		}
+		return false;
+		});
+
+	// 更新処理
+	for (std::list<ObjectPair>::iterator it = objects_.begin();
+		it != objects_.end(); ++it) {
+
+		// 位置
+		Vector3 objectWorldPosition = it->second->GetWorldTransformAdress()->GetWorldPosition();
+		Vector3 playerWorldPosition = player_->GetWorldTransformAdress()->GetWorldPosition();
+
+		// 距離
+		if (Vector3::Length(objectWorldPosition - playerWorldPosition) <= kPlayerDistance_) {
+			it->second->Update();
+		}
+	}
+
+	// インスタンシング描画
+	instancingDrawing_->Update();
+
 	// パーツのマネージャー
 	partsManager_->Update();
 	// 影
@@ -99,7 +132,33 @@ void GameSceneObjectManager::Update()
 void GameSceneObjectManager::Draw(BaseCamera& camera)
 {
 
-	BaseObjectManager::Draw(camera);
+	instancingDrawing_->Clear();
+
+	// オブジェクト走査
+	for (std::list<ObjectPair>::iterator it = objects_.begin();
+		it != objects_.end(); ++it) {
+
+		MeshObject* object = static_cast<MeshObject*>(it->second.get());
+
+		// 位置
+		Vector3 objectWorldPosition = object->GetWorldTransformAdress()->GetWorldPosition();
+		Vector3 playerWorldPosition = player_->GetWorldTransformAdress()->GetWorldPosition();
+
+		// 距離
+		if (Vector3::Length(objectWorldPosition - playerWorldPosition) <= kPlayerDistance_) {
+			// インスタンシング描画登録成功しないなら単独描画
+			if (!instancingDrawing_->RegistrationConfirmation(
+				object, camera.GetViewProjectionMatrix())) {
+
+				static_cast<MeshObject*>(it->second.get())->Draw(camera);
+
+			}
+		}
+
+	}
+
+	// インスタンシング描画
+	instancingDrawing_->Draw(camera);
 
 	// 影
 	shadowManager_->Draw(camera);
@@ -109,11 +168,10 @@ void GameSceneObjectManager::Draw(BaseCamera& camera)
 void GameSceneObjectManager::Draw(BaseCamera& camera, DrawLine* drawLine)
 {
 
-	// オブジェクトマネージャー
-	BaseObjectManager::Draw(camera, drawLine);
+	Draw(camera);
 
-	// 影
-	shadowManager_->Draw(camera);
+	// コライダーのデバッグ描画
+	colliderDebugDraw_->DrawMap(drawLine);
 
 }
 
@@ -272,9 +330,9 @@ void GameSceneObjectManager::PlayerInitialize()
 	//pickupPointManager_ = std::make_unique<PickupPointManager>();
 	//pickupPointManager_->SetObjectManager(this);
 
-	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
-	player->GetPickUpManager()->SetPartsManager(partsManager_.get());
-	player->GetPickUpManager()->SetPickupPointManager(pickupPointManager_.get());
+	player_ = static_cast<Player*>(this->GetObjectPointer("Player"));
+	player_->GetPickUpManager()->SetPartsManager(partsManager_.get());
+	player_->GetPickUpManager()->SetPickupPointManager(pickupPointManager_.get());
 	//player->GetPickUpManager()->SetInteractSpot(spot);
 
 	// 3種類登録
@@ -283,9 +341,9 @@ void GameSceneObjectManager::PlayerInitialize()
 		{static_cast<InteractionSpot*>(this->GetObjectPointer("EngineSpot"))->GetName(),static_cast<InteractionSpot*>(this->GetObjectPointer("EngineSpot"))},
 		{static_cast<InteractionSpot*>(this->GetObjectPointer("TireSpot"))->GetName(),static_cast<InteractionSpot*>(this->GetObjectPointer("TireSpot"))}
 	};
-	player->GetPickUpManager()->SpotSetup(spots);
+	player_->GetPickUpManager()->SpotSetup(spots);
 	InteractionSpot* interact = static_cast<InteractionSpot*>(GetObjectPointer("PickupSpot"));
-	player->GetPickUpManager()->InteractSetup(interact);
+	player_->GetPickUpManager()->InteractSetup(interact);
 	//InteractionSpot* spot = static_cast<InteractionSpot*>(this->GetObjectPointer("ArmorSpot"));
 	//player->GetPickUpManager()->AddSpot(spot->GetName(), spot);
 	//spot = static_cast<InteractionSpot*>(this->GetObjectPointer("EngineSpot"));
@@ -337,10 +395,10 @@ void GameSceneObjectManager::VehiclePreset(const std::string& presetName)
 	AddObject("VehicleCore", name.c_str(),
 		sVehiclePaths[VehicleDatas::kCore].first, sVehiclePaths[VehicleDatas::kCore].second);
 	VehicleCore* core = static_cast<VehicleCore*>(this->GetObjectPointer(name));
-	Player* player = static_cast<Player*>(this->GetObjectPointer("Player"));
+
 	// ペアレント＋トランスフォーム親子設定
 	//core->SetPlayer(player);
-	player->SetPair(core);
+	player_->SetPair(core);
 	partsManager_->AddParts(core->GetName(), core);
 
 

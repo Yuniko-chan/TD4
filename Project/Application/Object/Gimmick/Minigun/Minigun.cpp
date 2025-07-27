@@ -59,15 +59,6 @@ void Minigun::Initialize(LevelData::MeshData* data, const MinigunData minigunDat
 void Minigun::Update()
 {
 
-    //デスフラグの立った弾を削除
-    //bullets_.remove_if([](MinigunBullet* bullet) {
-    //    if (bullet->IsDead()) {
-    //        delete bullet;
-    //        return true;
-    //    }
-    //    return false;
-    //    });
-
     // 時間
     elapsedTime_ += GameTimeSystem::GetInstance()->GetDeltaTime();
     
@@ -75,8 +66,8 @@ void Minigun::Update()
     bullet_->Update();
 
     // 発射するか
-    bool a = (elapsedTime_ >= kFiringInterval_) && bullet_->GetIsDead();
-    if (a) {
+    bool fireIt = (elapsedTime_ >= kFiringInterval_) && bullet_->GetIsDead();
+    if (fireIt) {
         elapsedTime_ = 0.0f;
         // 発射する
         Fire();
