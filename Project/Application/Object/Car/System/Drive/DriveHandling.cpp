@@ -104,13 +104,13 @@ void DriveHandling::PreUpdate()
 	// カウントを最大値内に制限
 	consecutiveReceptions_ = (int16_t)std::clamp((int)consecutiveReceptions_, -kMaxCount, kMaxCount);
 	// 前フレーム
-	preSteerDirection_ = steerDirection_;
 	preTireDirection_ = tireDirection_;
 }
 
 void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 {
 	// リセット処理
+	// if（プレイヤーが操作している状態でないなら
 	if (!owner_->IsPlayer() && !onReset_) {
 		onReset_ = std::bind(&DriveHandling::Reset, this);
 		onReset_.value()();
@@ -124,8 +124,8 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	const int kMaxCount = 45;	// 押し込み最大	
 	float t = (float)std::abs((int)consecutiveReceptions_) / kMaxCount;
 	// 最大角度（-1~1,0,1):(-0.5|0.5,0,0.5)
-	const float kMaxXDirect = 2.0f;
-	const float kMinXDirect = 1.0f;
+	const float kMaxXDirect = 1.5f;
+	const float kMinXDirect = 0.5f;
 	const float kMinPropulsion = 5.0f;
 	const float kMaxPropulsion = 20.0f;
 
@@ -143,12 +143,12 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	// Z設定
 	steerDirection_.z = 10.0f;
 	steerDirection_.y = 0;
-	// タイヤ適応用
+	// ステータス（タイヤの数など）を適応
+	steerDirection_ = ApplyStatusToHandling(status, steerDirection_);
+	// 正規化前にタイヤ向きに適応
 	tireDirection_ = steerDirection_;
 	tireDirection_.z = 1.0f;
 	tireDirection_ = Vector3::Normalize(tireDirection_);
-
-	steerDirection_ = ApplyStatusToHandling(status, steerDirection_);
 
 	// 正規化
 	steerDirection_ = Vector3::Normalize(steerDirection_);
@@ -191,40 +191,41 @@ void DriveHandling::Reset()
 
 Vector3 DriveHandling::ApplyStatusToHandling(VehicleStatus* status ,const Vector3& handling)
 {
+	// 車体の向き
+	Vector3 vehicleDirection = owner_->GetWorldTransformAdress()->direction_;
+	// 結果
 	Vector3 result = handling;
 	// 入力があれば向きの調整処理
-	int rightWheel = status->GetRightWheel();
-	int leftWheel = status->GetLeftWheel();
-	int tireCount = status->GetTire();
+	int rightWheel = status->GetRightWheel();	// 右タイヤ
+	int leftWheel = status->GetLeftWheel();	// 左タイヤ
+	int tireCount = status->GetTire();	// タイヤの総数
 	const int kMax = 5;
-	if (IsInput() && false) {
+	if (IsInput()) {
 
-		// 右
+		// 右にタイヤあるときの右ハンドル
 		if (isRight_.second && rightWheel > 0) {
 			int value = std::min(rightWheel, kMax);
 			float ratio = Ease::Easing(Ease::EaseName::Lerp, 0.75f, 1.25f, (float)value / kMax);
-			tireDirection_.x *= ratio;
+			result.x *= ratio;
 		}
-		// 左
+		// 左にタイヤあるときの左ハンドル
 		else if (isLeft_.second && leftWheel > 0) {
 			int value = std::min(leftWheel, kMax);
 			float ratio = Ease::Easing(Ease::EaseName::Lerp, 0.75f, 1.25f, (float)value / kMax);
-			tireDirection_.x *= ratio;
+			result.x *= ratio;
 		}
+		// タイヤがあり左右にはない場合
 		else if (leftWheel == 0 && rightWheel == 0 && tireCount > 0) {
 
 		}
 
-		else if (leftWheel == 0 && rightWheel == 0 && (std::fabsf(tireDirection_.x) != 0.0f)) {
-			tireDirection_.x *= (1.0f / 30.0f);
-		}
+		//const float kRate = 0.01f;
+		//owner_->GetWorldTransformAdress()->direction_ = Ease::Easing(Ease::EaseName::Lerp, vehicleDirection, tireDirection_, kRate);
+	}
 
-		tireDirection_ = Vector3::Normalize(tireDirection_);
-		const float kRate = 0.01f;
-		owner_->GetWorldTransformAdress()->direction_ = Ease::Easing(Ease::EaseName::Lerp, vehicleDirection_, tireDirection_, kRate);
-		//float radian = TransformHelper::CalculateXZVectorToRotateRadian(owner_->GetWorldTransformAdress()->direction_, executeDirection_);
-		//radian /= 60.0f;
-		//owner_->GetWorldTransformAdress()->direction_ = TransformHelper::XZRotateDirection(owner_->GetWorldTransformAdress()->direction_, radian);	
+	// 左右にタイヤがなければ
+	if ((leftWheel == 0 && rightWheel == 0) && (std::fabsf(result.x) != 0.0f)) {
+		result.x *= (1.0f / 30.0f);
 	}
 
 	return Vector3(result);

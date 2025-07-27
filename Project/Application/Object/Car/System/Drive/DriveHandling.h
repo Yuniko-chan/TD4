@@ -39,8 +39,6 @@ public:
 	bool IsInput() { return (isRight_.second || isLeft_.second); }
 	bool IsNoneInput() { return (!isRight_.second && !isLeft_.second); }
 
-	void SetVehicleDirection(const Vector3& direct) { vehicleDirection_ = direct; }
-
 private:
 	/// <summary>
 	/// 初期化
@@ -61,10 +59,8 @@ private:
 	int16_t consecutiveReceptions_ = 0;
 	// ステア方向
 	Vector3 steerDirection_ = {};
-	Vector3 preSteerDirection_ = {};
-	// 適応向き
+
+	// タイヤ適応向き
 	Vector3 tireDirection_ = {};
 	Vector3 preTireDirection_ = {};
-	// 車体の向き
-	Vector3 vehicleDirection_ = {};
 };

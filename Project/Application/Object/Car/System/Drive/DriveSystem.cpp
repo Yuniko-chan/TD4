@@ -76,7 +76,6 @@ void DriveSystem::Update()
 
 	//---それぞれのシステム処理---//
 	// ハンドル処理
-	handling_->SetVehicleDirection(owner_->GetWorldTransformAdress()->direction_);
 	handling_->PreUpdate();
 	// エンジン処理
 	driveEngine_->Update();
@@ -182,7 +181,7 @@ void DriveSystem::VelocityUpdate()
 void DriveSystem::HandleNoParent()
 {
 	if (velocity_.z == 0.0f) {
-		handling_->SetVehicleDirection(Vector3(0.0f, 0.0f, 1.0f));
+		//handling_->SetVehicleDirection(Vector3(0.0f, 0.0f, 1.0f));
 	}
 }
 
