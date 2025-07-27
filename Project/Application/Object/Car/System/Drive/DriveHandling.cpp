@@ -2,6 +2,7 @@
 #include "../VehicleSystems.h"
 #include "../../VehicleCore.h"
 #include "../../CarLists.h"
+#include "../../../GameTimer/GameTimeSystem.h"
 
 void DriveHandling::HandleInput(const float inputX)
 {
@@ -34,18 +35,18 @@ void DriveHandling::PreUpdate()
 {
 	// カウント
 	if (IsInput() || consecutiveReceptions_ != 0) {
-		++inputCounter_;
+		inputCounter_ += GameTimeSystem::GetInstance()->GetDeltaTime();
 	}
 	// 間隔
-	const int duration = 5;	// 間隔
-	const int kDecrementDuration = 2;	// 減少間隔
+	const float kDuration = kDeltaTime_ * 5;	// 間隔
+	const float kDecrementDuration = kDeltaTime_ * 2;	// 減少間隔
 	const int kSteerReturnSensitivity = 3;	// ハンドル戻し感度
 	const int kSpDecrementThreshold = 6;	// 減少量を増やすしきい
 	const int kSpReturnSensitivity = 5;	// 減少量を増やす感度
-	const int kMaxCount = 45;	// 押し込み最大	
+	const int kMaxCount = 30;	// 押し込み最大	
 
 	// 入力増加
-	if (IsInput() && inputCounter_ % duration == 0) {
+	if (IsInput() && inputCounter_ >= kDuration) {
 		// 左
 		if (isLeft_.second) {
 			// 特殊処理
@@ -80,7 +81,7 @@ void DriveHandling::PreUpdate()
 
 	}
 	// 非入力での減少処理
-	else if (IsNoneInput() && inputCounter_ % kDecrementDuration == 0) {
+	else if (IsNoneInput() && inputCounter_ >= kDecrementDuration) {
 		int16_t decreValue = 1;
 		// 減少量の変化
 		float lim = (float)kMaxCount / 3.0f;
@@ -121,11 +122,11 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	}
 
 	// 速度に応じたハンドルの処理
-	const int kMaxCount = 45;	// 押し込み最大	
+	const int kMaxCount = 30;	// 押し込み最大	
 	float t = (float)std::abs((int)consecutiveReceptions_) / kMaxCount;
 	// 最大角度（-1~1,0,1):(-0.5|0.5,0,0.5)
-	const float kMaxXDirect = 1.5f;
-	const float kMinXDirect = 0.5f;
+	const float kMaxXDirect = 1.0f;
+	const float kMinXDirect = 0.25f;
 	const float kMinPropulsion = 5.0f;
 	const float kMaxPropulsion = 20.0f;
 
@@ -145,10 +146,16 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	steerDirection_.y = 0;
 	// ステータス（タイヤの数など）を適応
 	steerDirection_ = ApplyStatusToHandling(status, steerDirection_);
+
 	// 正規化前にタイヤ向きに適応
 	tireDirection_ = steerDirection_;
+	tireDirection_.x *= 2.0f;
 	tireDirection_.z = 1.0f;
 	tireDirection_ = Vector3::Normalize(tireDirection_);
+
+	if (std::fabsf(velocity.z) <= kMinPropulsion) {
+		steerDirection_.x *= 0.15f;
+	}
 
 	// 正規化
 	steerDirection_ = Vector3::Normalize(steerDirection_);
@@ -174,7 +181,6 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	//if (executeDirection_ != Vector3(0, 0, 0)) {
 	//	owner_->GetWorldTransformAdress()->direction_ = executeDirection_;
 	//}
-	// タイヤの数、左右
 }
 
 void DriveHandling::Reset()
@@ -200,6 +206,7 @@ Vector3 DriveHandling::ApplyStatusToHandling(VehicleStatus* status ,const Vector
 	int leftWheel = status->GetLeftWheel();	// 左タイヤ
 	int tireCount = status->GetTire();	// タイヤの総数
 	const int kMax = 5;
+	// 入力があるか
 	if (IsInput()) {
 
 		// 右にタイヤあるときの右ハンドル

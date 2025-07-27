@@ -54,7 +54,7 @@ private:
 	InputFlag isLeft_ = {};
 	InputFlag isRight_ = {};
 	// 入力カウント
-	int16_t inputCounter_ = 0;
+	float inputCounter_ = 0;
 	// 受付
 	int16_t consecutiveReceptions_ = 0;
 	// ステア方向
