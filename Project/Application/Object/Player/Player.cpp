@@ -160,7 +160,13 @@ void Player::OnCollision(ColliderParentObject colliderPartner, const CollisionDa
 	if (pickUpManager_->GetHoldParts() == part) {
 		return;
 	}
-
+	if (GetStateMachine()->GetCurrentState()) {
+		const std::type_info& id = typeid(*GetStateMachine()->GetCurrentState());
+		std::string stateName = id.name();
+		if (stateName == "class PlayerInVehicleState" /*|| stateName == "class PlayerRideActionState"*/) {
+			return;
+		}
+	}
 	Vector3 extrusion = Extrusion::OBBAndOBB(&pushedOut, &pushOut);
 	worldTransform_.transform_.translate += extrusion;
 	worldTransform_.UpdateMatrix();
