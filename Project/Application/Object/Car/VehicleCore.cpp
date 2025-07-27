@@ -126,43 +126,38 @@ void VehicleCore::Draw(BaseCamera& camera)
 void VehicleCore::ImGuiDrawParts()
 {
 	ImGui::SeparatorText(className_.c_str());
+
+	if (ImGui::TreeNode("基本情報")) {
+		Vector4 color = material_->GetColor();
+		ImGui::DragFloat4("Color", &color.x, 0.01f);
+		material_->SetColor(color);
+		ImGui::BeginChild("Tab", ImVec2(400, 300), true, ImGuiWindowFlags_None);
+		// トランスフォームに移動
+		ImGuiTransform(0.1f);
+
+		ImGui::Checkbox("IsDelete", &isDelete_);
+		ImGui::EndChild();
+
+		ImGui::TreePop();
+	}
+	// 試し
 	if (ImGui::Button("押し出し")) {
 		Vector3 direct = worldTransform_.direction_;
 		worldTransform_.transform_.translate += direct * 10.0f;
 	}
 
-	Vector4 color = material_->GetColor();
-	ImGui::DragFloat4("Color", &color.x, 0.01f);
-	material_->SetColor(color);
-	ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 0.75f));
-	ImGui::BeginChild("SystemBlock", ImVec2(400, 200), true);
-	if (ImGui::TreeNode("Status"))
-	{
-		// ステータス
-		statusSystem_->ImGuiDraw();
-
-		ImGui::TreePop();
-	}
-	ImGui::EndChild();
-	ImGui::PopStyleColor();
-
-	ImGui::BeginChild("Tab", ImVec2(400, 300), true, ImGuiWindowFlags_None);
-	// トランスフォームに移動
-	ImGuiTransform(0.1f);
-
-	ImGui::Checkbox("IsDelete", &isDelete_);
 
 	ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 0.75f));
-	ImGui::BeginChild("SystemBlock", ImVec2(300, 200), true);
+	ImGui::BeginChild("SystemBlock", ImVec2(400, 350), true);
 	if (ImGui::BeginTabBar("System")) {
-		if (ImGui::BeginTabItem("Animation")) {
-			animation_->ImGuiDraw();
+		// エンジン
+		if (ImGui::BeginTabItem("エンジン処理")) {
+			this->driveSystem_->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
-
-		// ステート
-		if (ImGui::BeginTabItem("Engine")) {
-			this->driveSystem_->ImGuiDraw();
+		// アニメーション
+		if (ImGui::BeginTabItem("アニメーション")) {
+			animation_->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		// パーツ管理
@@ -174,10 +169,16 @@ void VehicleCore::ImGuiDrawParts()
 
 		ImGui::EndTabBar();
 	}
+	ImGui::PopStyleColor();
+	ImGui::EndChild();	
+
+	// ステータス
+	ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 0.75f));
+	ImGui::BeginChild("StatusBlock", ImVec2(400, 200), true);
+	statusSystem_->ImGuiDraw();
 	ImGui::EndChild();
 	ImGui::PopStyleColor();
 
-	ImGui::EndChild();
 
 
 	//if (ImGui::Button("Release")) {
