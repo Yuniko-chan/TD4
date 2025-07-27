@@ -4,6 +4,25 @@
 #include "../../CarLists.h"
 #include "../../../GameTimer/GameTimeSystem.h"
 
+// ハンドル入力関係
+static float sDuration = 5;	// 間隔
+static float sDecrementDuration = 2;	// 減少間隔
+static int sSteerReturnSensitivity = 3;	// ハンドル戻し感度
+static int sSpDecrementThreshold = 6;	// 減少量を増やすしきい
+static int sSpReturnSensitivity = 5;	// 減少量を増やす感度
+static int sMaxCount = 30;	// 押し込み最大	
+
+// 回転減衰
+static float sLowSpeedSteerAttenuation = 0.15f;	// 最低減衰値（n ~ 1.0f)
+static float sLowSpeedLimit = 10.0f;	// 減衰が掛かる最大値
+
+// 回転の向き
+static float sMaxXDirect = 1.0f;
+static float sMinXDirect = 0.25f;
+// 推進力
+static float sMinPropulsion = 5.0f;
+static float sMaxPropulsion = 20.0f;
+
 void DriveHandling::HandleInput(const float inputX)
 {
 	// 前の入力保存
@@ -38,12 +57,12 @@ void DriveHandling::PreUpdate()
 		inputCounter_ += GameTimeSystem::GetInstance()->GetDeltaTime();
 	}
 	// 間隔
-	const float kDuration = kDeltaTime_ * 5;	// 間隔
-	const float kDecrementDuration = kDeltaTime_ * 2;	// 減少間隔
-	const int kSteerReturnSensitivity = 3;	// ハンドル戻し感度
-	const int kSpDecrementThreshold = 6;	// 減少量を増やすしきい
-	const int kSpReturnSensitivity = 5;	// 減少量を増やす感度
-	const int kMaxCount = 30;	// 押し込み最大	
+	float kDuration = kDeltaTime_ * sDuration;	// 間隔
+	float kDecrementDuration = kDeltaTime_ * sDecrementDuration;	// 減少間隔
+	int kSteerReturnSensitivity = sSteerReturnSensitivity;	// ハンドル戻し感度
+	int kSpDecrementThreshold = sSpDecrementThreshold;	// 減少量を増やすしきい
+	int kSpReturnSensitivity = sSpReturnSensitivity;	// 減少量を増やす感度
+	int kMaxCount = sMaxCount;	// 押し込み最大	
 
 	// 入力増加
 	if (IsInput() && inputCounter_ >= kDuration) {
@@ -122,19 +141,19 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	}
 
 	// 速度に応じたハンドルの処理
-	const int kMaxCount = 30;	// 押し込み最大	
+	const int kMaxCount = sMaxCount;	// 押し込み最大	
 	float t = (float)std::abs((int)consecutiveReceptions_) / kMaxCount;
 	// 最大角度（-1~1,0,1):(-0.5|0.5,0,0.5)
-	const float kMaxXDirect = 1.0f;
-	const float kMinXDirect = 0.25f;
-	const float kMinPropulsion = 5.0f;
-	const float kMaxPropulsion = 20.0f;
+	float maxXDirect = sMaxXDirect;
+	float minXDirect = sMinXDirect;
+	float minPropulsion = sMinPropulsion;
+	float maxPropulsion = sMaxPropulsion;
 
 	// 推進力計算
-	float propulsion = std::clamp(velocity.z, kMinPropulsion, kMaxPropulsion);
-	float propulsionT = (propulsion - kMinPropulsion) / (kMaxPropulsion - kMinPropulsion);
+	float propulsion = std::clamp(velocity.z, minPropulsion, maxPropulsion);
+	float propulsionT = (propulsion - minPropulsion) / (maxPropulsion - minPropulsion);
 	// 制限の向き
-	float limitDirect = Ease::Easing(Ease::EaseName::Lerp, kMinXDirect, kMaxXDirect, propulsionT);
+	float limitDirect = Ease::Easing(Ease::EaseName::Lerp, minXDirect, maxXDirect, propulsionT);
 	// プラス方向（右
 	if (consecutiveReceptions_ > 0) steerDirection_.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, limitDirect, t);
 	// マイナス方向（左
@@ -148,13 +167,18 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	steerDirection_ = ApplyStatusToHandling(status, steerDirection_);
 
 	// 正規化前にタイヤ向きに適応
-	tireDirection_ = steerDirection_;
-	tireDirection_.x *= 2.0f;
-	tireDirection_.z = 1.0f;
-	tireDirection_ = Vector3::Normalize(tireDirection_);
+	ApplyHandlingToTire();
 
-	if (std::fabsf(velocity.z) <= kMinPropulsion) {
-		steerDirection_.x *= 0.15f;
+	// 低速時の減衰値
+	float lowSpeedSteerAttenuation = sLowSpeedSteerAttenuation;	// 最低減衰値（n ~ 1.0f)
+	float speedSteerAttenuation = 0.0f;	// 速度に応じたステア減衰値
+	float lowSpeedLimit = sLowSpeedLimit;	// 減衰が掛かる最大値
+
+	if (std::fabsf(velocity.z) <= minXDirect) {
+		float attenuationT = (std::fabsf(velocity.z) - 1.0f) / (lowSpeedLimit - 1.0f);
+		attenuationT = std::clamp(attenuationT, 0.0f, 1.0f);
+		speedSteerAttenuation = Ease::Easing(Ease::EaseName::Lerp, lowSpeedSteerAttenuation, 1.0f, attenuationT);
+		steerDirection_.x *= speedSteerAttenuation;
 	}
 
 	// 正規化
@@ -230,9 +254,10 @@ Vector3 DriveHandling::ApplyStatusToHandling(VehicleStatus* status ,const Vector
 		//owner_->GetWorldTransformAdress()->direction_ = Ease::Easing(Ease::EaseName::Lerp, vehicleDirection, tireDirection_, kRate);
 	}
 
-	// 左右にタイヤがなければ
+	// 左右にタイヤがなければ減少させる
 	if ((leftWheel == 0 && rightWheel == 0) && (std::fabsf(result.x) != 0.0f)) {
-		result.x *= (1.0f / 30.0f);
+		const float kMinimalFactor = (1.0f / 30.0f);
+		result.x *= kMinimalFactor;
 	}
 
 	return Vector3(result);
@@ -240,10 +265,40 @@ Vector3 DriveHandling::ApplyStatusToHandling(VehicleStatus* status ,const Vector
 
 void DriveHandling::ApplyHandlingToTire()
 {
-
+	tireDirection_ = steerDirection_;
+	float tireDirectionFactor = 1.85f;
+	tireDirection_.x *= tireDirectionFactor;
+	tireDirection_.z = 1.0f;
+	tireDirection_ = Vector3::Normalize(tireDirection_);
 }
 
 void DriveHandling::ImGuiDraw()
 {
+	ImGui::SeparatorText("ドライブハンドル");
 	ImGui::DragFloat3("Steer", &steerDirection_.x);
+
+	ImGui::DragFloat("間隔", &sDuration, 0.01f);
+
+	ImGui::SeparatorText("入力関係");
+	ImGui::DragFloat("減少間隔", &sDecrementDuration, 0.01f);
+	ImGui::InputInt("ハンドル戻す感度", &sSteerReturnSensitivity);
+	ImGui::InputInt("減少量を増やす閾", &sSpDecrementThreshold);
+	ImGui::InputInt("減少量を増やす感度", &sSpReturnSensitivity);
+	ImGui::InputInt("押し込み最大", &sMaxCount);
+
+	ImGui::SeparatorText("減衰関係");
+	ImGui::InputFloat("ステア最大減衰値", &sLowSpeedSteerAttenuation, 0.1f);
+	ImGui::InputFloat("減衰最大", &sLowSpeedLimit, 0.1f);
+	//// 回転の向き
+	//static float sMaxXDirect = 1.0f;
+	//static float sMinXDirect = 0.25f;
+	//// 推進力
+	//static float sMinPropulsion = 5.0f;
+	//static float sMaxPropulsion = 20.0f;
+	ImGui::SeparatorText("向き関係");
+	ImGui::InputFloat("最大X向き", &sMaxXDirect, 0.1f);
+	ImGui::InputFloat("最小X向き", &sMinXDirect, 0.1f);
+	ImGui::InputFloat("最大推進力", &sMaxPropulsion, 0.1f);
+	ImGui::InputFloat("最小推進力", &sMinPropulsion, 0.1f);
+
 }

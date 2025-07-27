@@ -135,27 +135,15 @@ void DriveSystem::InputAccept(GameKeyconfig* keyConfig)
 
 void DriveSystem::ImGuiDraw()
 {
-	// 速度
-	ImGui::DragFloat3("Velocity", &velocity_.x);
-	ImGui::InputInt("PushCount", &pushCount_);
-
-	static Vector3 v1 = { 0,0,1 };
-	v1.y = 0;
-	v1 = Vector3::Normalize(v1);
-	static Vector3 v2 = { 0,0,1 };
-	v2.y = 0;
-	v2 = Vector3::Normalize(v2);
-
-	float dot = Vector3::Dot(v1, v2);
-
-	ImGui::DragFloat3("v1", &v1.x, 0.01f);
-	ImGui::DragFloat3("v2", &v2.x, 0.01f);
-	ImGui::InputFloat("v1Tov2:Dot", &dot);
-
 	// ハンドル
 	handling_->ImGuiDraw();
 	// エンジン
 	driveEngine_->ImGuiDraw();
+
+	// 速度
+	ImGui::DragFloat3("Velocity", &velocity_.x);
+	ImGui::InputInt("PushCount", &pushCount_);
+
 }
 
 void DriveSystem::VelocityUpdate()

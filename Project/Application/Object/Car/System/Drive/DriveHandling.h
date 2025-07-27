@@ -48,6 +48,7 @@ private:
 	std::optional<std::function<void()>> onReset_ = std::nullopt;
 
 	Vector3 ApplyStatusToHandling(VehicleStatus* status, const Vector3& handling);
+	//Vector3 ApplyHandlingToTire();
 	void ApplyHandlingToTire();
 private:
 	// 入力チェック
@@ -56,7 +57,7 @@ private:
 	// 入力カウント
 	float inputCounter_ = 0;
 	// 受付
-	int16_t consecutiveReceptions_ = 0;
+	int consecutiveReceptions_ = 0;
 	// ステア方向
 	Vector3 steerDirection_ = {};
 

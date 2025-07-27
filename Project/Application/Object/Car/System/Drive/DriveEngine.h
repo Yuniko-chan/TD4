@@ -40,7 +40,6 @@ private:
 
 public: // アクセッサ
 	//---ゲッター---//
-	float GetSpeedRate() const { return speedRate_; }
 	float GetCurrentSpeed() const { return currentSpeed_; }
 	float GetEuler() { return eulerY_; }
 
@@ -52,9 +51,8 @@ private:
 	// 減速入力
 	bool isDecel_ = false;
 	// 入力カウント
-	int32_t inputCounter_ = 0;
+	float inputCounter_ = 0;
 	// 速度
-	float speedRate_ = 0.0f;
 	float currentSpeed_ = 0.0f;
 	// オイラー
 	float eulerY_ = 0.0f;
