@@ -158,6 +158,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\AudioManager\GameAudioManager.cpp" />
     <ClCompile Include="Application\Camera\GameCameraManager.cpp" />
     <ClCompile Include="Application\Camera\OverheadCamera.cpp" />
     <ClCompile Include="Application\Camera\Transition\TransitionCameraModule.cpp" />
@@ -407,6 +408,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\AudioManager\GameAudioManager.h" />
     <ClInclude Include="Application\Camera\Animation\FollowCameraAnimation.h" />
     <ClInclude Include="Application\Camera\CameraLists.h" />
     <ClInclude Include="Application\Camera\GameCameraManager.h" />
