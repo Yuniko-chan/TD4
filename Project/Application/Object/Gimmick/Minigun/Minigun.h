@@ -99,8 +99,5 @@ private: // 変数
     // 経過時間
     float elapsedTime_;
 
-    // アニメーション
-    std::unique_ptr<MinigunAnimation> animation_;
-
 };
 

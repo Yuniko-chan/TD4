@@ -47,11 +47,6 @@ void Minigun::Initialize(LevelData::MeshData* data, const MinigunData minigunDat
 
     worldTransform_.UpdateMatrix();
 
-
-    // アニメーション
-    animation_ = std::make_unique<MinigunAnimation>();
-    animation_->Initialize(model_);
-
     // マテリアル
     material_->SetEnableLighting(BlinnPhongReflection);
 }
@@ -73,24 +68,14 @@ void Minigun::Update()
         Fire();
     }
 
-    // アニメーション
-    animation_->Update(0);
-
 }
 
 void Minigun::Draw(BaseCamera& camera)
 {
-
     // 本体
-    ModelDraw::AnimObjectDesc desc;
-    desc.camera = &camera;
-    desc.localMatrixManager = animation_->GetLocalMatrixManager();
-    desc.material = material_.get();
-    desc.model = model_;
-    desc.worldTransform = &worldTransform_;
-    ModelDraw::AnimObjectDraw(desc);
+    MeshObject::Draw(camera);
 
-    // 弾の描画
+    // 弾
     bullet_->Draw(camera);
 
 }
