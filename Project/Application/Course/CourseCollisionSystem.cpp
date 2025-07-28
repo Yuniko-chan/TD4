@@ -808,6 +808,7 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 	//お試し
 	Matrix4x4 rotateNormal = Matrix4x4::DirectionToDirection({0.0f,1.0f,0.0f}, currentNormal_);
 	vehicleCore_->atNormal_ = rotateNormal;
+	vehicleCore_->drivingLocation_ = drivingLocation;
 }
 
 void CourseCollisionSystem::ObjectRegistrationPlayer(Player* player)
