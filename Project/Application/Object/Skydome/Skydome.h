@@ -1,6 +1,9 @@
 #pragma once
 #include "../../../Engine/Object/MeshObject.h"
 
+// 前方宣言
+class Player;
+
 /// <summary>
 /// スカイドーム
 /// </summary>
@@ -20,6 +23,12 @@ public: // メンバ関数
 	/// 更新
 	/// </summary>
 	void Update();
+
+	/// <summary>
+	/// 親設定
+	/// </summary>
+	/// <param name="worldTransform"></param>
+	void SetParent(WorldTransform* worldTransform) { worldTransform_.parent_ = worldTransform; }
 
 private: // メンバ変数
 

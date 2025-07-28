@@ -5,6 +5,7 @@
 #include "../Car/Preset/VehiclePaths.h"
 
 #include "../../../Engine/2D/ImguiManager.h"
+#include "../Skydome/Skydome.h"
 
 void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager* levelDataManager)
 {
@@ -350,6 +351,10 @@ void GameSceneObjectManager::PlayerInitialize()
 	//player->GetPickUpManager()->AddSpot(spot->GetName(), spot);
 	//spot = static_cast<InteractionSpot*>(this->GetObjectPointer("TireSpot"));
 	//player->GetPickUpManager()->AddSpot(spot->GetName(), spot);
+
+	// スカイドームにプレイヤーを設定
+	static_cast<Skydome*>(this->GetObjectPointer("skydome"))->SetParent(player_->GetWorldTransformAdress());
+
 }
 
 void GameSceneObjectManager::OptionProcess()
