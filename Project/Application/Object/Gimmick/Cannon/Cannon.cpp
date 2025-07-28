@@ -187,8 +187,8 @@ void Cannon::CannonBallInitialize()
 
     cannonBall_ = std::make_unique<CannonBall>();
     LevelData::MeshData data;
-    data.directoryPath = "Resources/default/";
-    data.flieName = "ball.obj";
+    data.directoryPath = "Resources/Model/Gimmick/CannonBall/";
+    data.flieName = "CannonBall.obj";
     data.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
     data.transform.translate = worldTransform_.GetWorldPosition();
     data.className = "CannonBall";
