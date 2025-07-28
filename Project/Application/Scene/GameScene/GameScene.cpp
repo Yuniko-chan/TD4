@@ -358,7 +358,7 @@ void GameScene::AddCourse() {
 		objNum = 1;
 		while (1) {
 			cannon = nullptr;
-			std::string courseName = std::format("Cannon.00{}{}", objNum, courseNum);
+			std::string courseName = std::format("Cannon.{:03}{}", objNum, courseNum);
 			cannon = static_cast<Cannon*>(objectManager_->GetObjectPointer(courseName));
 			if (cannon) {
 				cannon->GetWorldTransformAdress()->UpdateMatrix();
@@ -379,7 +379,7 @@ void GameScene::AddCourse() {
 		objNum = 1;
 		while (1) {
 			minigun = nullptr;
-			std::string courseName = std::format("Gatling.00{}{}", objNum, courseNum);
+			std::string courseName = std::format("Gatling.{:03}{}", objNum, courseNum);
 			minigun = static_cast<Minigun*>(objectManager_->GetObjectPointer(courseName));
 			if (minigun) {
 				minigun->GetWorldTransformAdress()->UpdateMatrix();
@@ -400,7 +400,7 @@ void GameScene::AddCourse() {
 		objNum = 1;
 		while (1) {
 			obstacle = nullptr;
-			std::string courseName = std::format("Obstacle.00{}{}", objNum, courseNum);
+			std::string courseName = std::format("Obstacle.{:03}{}", objNum, courseNum);
 			obstacle = static_cast<Obstacle*>(objectManager_->GetObjectPointer(courseName));
 			if (obstacle) {
 				obstacle->GetWorldTransformAdress()->UpdateMatrix();
@@ -421,7 +421,7 @@ void GameScene::AddCourse() {
 		objNum = 1;
 		while (1) {
 			conicalPendulumIronBall = nullptr;
-			std::string courseName = std::format("ConicalPendulumIronBall.00{}{}", objNum, courseNum);
+			std::string courseName = std::format("ConicalPendulumIronBall.{:03}{}", objNum, courseNum);
 			conicalPendulumIronBall = static_cast<ConicalPendulumIronBall*>(objectManager_->GetObjectPointer(courseName));
 			if (conicalPendulumIronBall) {
 				conicalPendulumIronBall->GetWorldTransformAdress()->UpdateMatrix();
@@ -442,7 +442,7 @@ void GameScene::AddCourse() {
 		objNum = 1;
 		while (1) {
 			pendulumIronBall = nullptr;
-			std::string courseName = std::format("PendulumIronBall.00{}{}", objNum, courseNum);
+			std::string courseName = std::format("PendulumIronBall.{:03}{}", objNum, courseNum);
 			pendulumIronBall = static_cast<PendulumIronBall*>(objectManager_->GetObjectPointer(courseName));
 			if (pendulumIronBall) {
 				pendulumIronBall->GetWorldTransformAdress()->UpdateMatrix();
