@@ -100,6 +100,7 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 			Matrix4x4 localMatrix = Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->transform_.scale) * Matrix4x4::MakeRotateXYZMatrix(gimmick->GetWorldTransformAdress()->transform_.rotate) * Matrix4x4::MakeTranslateMatrix(gimmick->GetWorldTransformAdress()->transform_.translate);
 			gimmick->GetWorldTransformAdress()->worldMatrix_ = localMatrix* gimmick->GetWorldTransformAdress()->parent_->worldMatrix_;
 			gimmick->GetWorldTransformAdress()->worldMatrix_ = Matrix4x4::Inverse(Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->parent_->transform_.scale)) * gimmick->GetWorldTransformAdress()->worldMatrix_;
+			
 			if (gimmick) {
 				// listへ
 				objectManager_->AddObject(gimmick);
