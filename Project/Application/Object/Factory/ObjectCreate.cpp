@@ -153,6 +153,14 @@ IObject* ObjectCreate::CreateObjectMinigun(LevelData::ObjectData& objectData)
 	return object;
 }
 
+IObject* ObjectCreate::CreateObjectObstacle(LevelData::ObjectData& objectData)
+{
+	IObject* object = new Obstacle();
+
+	static_cast<Obstacle*>(object)->Initialize(&std::get<LevelData::MeshData>(objectData));
+	return object;
+}
+
 IObject* ObjectCreate::CreateObjectInteract(LevelData::ObjectData& objectData)
 {
 	IObject* object = new InteractionSpot();

@@ -26,4 +26,5 @@ const std::array<std::string, CreateObjectIndex::kCreateObjectIndexOfCount> kCre
 	"PendulumIronBall",
 	"Cannon",
 	"Minigun",
+	"Obstacle",
 };
