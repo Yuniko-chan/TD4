@@ -126,6 +126,8 @@ void VehicleCore::Draw(BaseCamera& camera)
 void VehicleCore::ImGuiDrawParts()
 {
 	ImGui::SeparatorText(className_.c_str());
+	ImGui::InputInt("道数", &roadCount_);
+	ImGui::InputInt("ダート数", &dirtCount_);
 	if (drivingLocation_ == CoursePolygonType::kCoursePolygonTypeRoad) {
 		ImGui::Text("道");
 	}

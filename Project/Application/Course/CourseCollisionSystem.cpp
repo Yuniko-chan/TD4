@@ -744,6 +744,9 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 	// 走行場所
 	CoursePolygonType drivingLocation = CoursePolygonType::kCoursePolygonTypeRoad;
 
+	int roadCount = 0;
+	int dirtCount = 0;
+
 	// カートに属しているパーツ&&衝突しているパーツの番号分回す
 	for (std::list<uint32_t>::iterator itr = belongsToCartPartsNumbers_.begin();
 		itr != belongsToCartPartsNumbers_.end(); ++itr) {
@@ -767,6 +770,13 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 					// 走行場所
 					if (drivingLocation < static_cast<CoursePolygonType>(outputData.drivingLocation)) {
 						drivingLocation = static_cast<CoursePolygonType>(outputData.drivingLocation);
+					}
+
+					if (drivingLocation == CoursePolygonType::kCoursePolygonTypeDirt) {
+						dirtCount++;
+					}
+					if (drivingLocation == CoursePolygonType::kCoursePolygonTypeRoad) {
+						roadCount++;
 					}
 
 				}
@@ -809,6 +819,9 @@ void CourseCollisionSystem::CartExtrusionCalculation()
 	Matrix4x4 rotateNormal = Matrix4x4::DirectionToDirection({0.0f,1.0f,0.0f}, currentNormal_);
 	vehicleCore_->atNormal_ = rotateNormal;
 	vehicleCore_->drivingLocation_ = drivingLocation;
+
+	vehicleCore_->dirtCount_ = dirtCount;
+	vehicleCore_->roadCount_ = roadCount;
 }
 
 void CourseCollisionSystem::ObjectRegistrationPlayer(Player* player)
