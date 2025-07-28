@@ -15,6 +15,9 @@ void Obstacle::Initialize(LevelData::MeshData* data)
 	// 初期化
 	MeshObject::Initialize(data);
 
+    material_->SetEnableLighting(BlinnPhongReflection);
+    material_->SetEnvironmentCoefficient(0.01f);
+
 }
 
 void Obstacle::Initialize(LevelData::MeshData* data, const ObstacleData obstacleData)
