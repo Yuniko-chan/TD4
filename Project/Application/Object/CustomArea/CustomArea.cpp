@@ -3,7 +3,7 @@
 #include "../../../Engine/Math/DeltaTime.h"
 #include "../../Course/CourseManager.h"
 #include "../Car/VehicleCore.h"
-
+#include "../GameTimer/GameTimeSystem.h"
 
 CustomArea::CustomArea()
 {
@@ -33,6 +33,8 @@ void CustomArea::OnCollision(ColliderParentObject colliderPartner, const Collisi
         //チェックポイント通過処理
         isTouchPlayer_ = true;
         courseManager_->AddCourse();
+        // 時間への影響
+        GameTimeSystem::GetInstance()->CheckpointTimeAffect();
         if (gimmickList_) {
             for (auto it : *gimmickList_) {
                 it->SetIsDead(true);

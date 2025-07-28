@@ -74,3 +74,9 @@ void GameTimeSystem::ImGuiDraw()
 	}
 	ImGui::DragFloat("タイムスケール", &timeScale_, 0.01f);
 }
+
+void GameTimeSystem::CheckpointTimeAffect()
+{
+	// チェックポイント通過時のやつ
+
+}

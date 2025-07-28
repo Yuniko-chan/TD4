@@ -41,6 +41,11 @@ public:
 	void ImGuiDraw();
 
 	/// <summary>
+	/// チェックポイント通過時に影響を起こす
+	/// </summary>
+	void CheckpointTimeAffect();
+
+	/// <summary>
 	/// デルタタイム（スローが掛かるオブジェクト
 	/// </summary>
 	/// <returns></returns>
