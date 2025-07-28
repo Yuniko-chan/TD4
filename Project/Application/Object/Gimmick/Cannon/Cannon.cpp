@@ -39,6 +39,7 @@ void Cannon::Initialize(LevelData::MeshData* data, const CannonData& cannonData)
 
     // マテリアル
     material_->SetEnableLighting(BlinnPhongReflection);
+    material_->SetEnvironmentCoefficient(0.01f);
 
 }
 

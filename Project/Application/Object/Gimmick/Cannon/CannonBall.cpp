@@ -33,6 +33,9 @@ void CannonBall::Initialize(LevelData::MeshData* data, const CannonBallData& can
 
 	// メッシュオブジェクト
 	MeshObject::Initialize(data);
+	// マテリアル
+	material_->SetEnableLighting(BlinnPhongReflection);
+	material_->SetEnvironmentCoefficient(0.01f);
 
 	// リセット
 	Reset(cannonBallData);

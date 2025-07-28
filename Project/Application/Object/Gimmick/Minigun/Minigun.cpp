@@ -49,6 +49,8 @@ void Minigun::Initialize(LevelData::MeshData* data, const MinigunData minigunDat
 
     // マテリアル
     material_->SetEnableLighting(BlinnPhongReflection);
+    material_->SetEnvironmentCoefficient(0.01f);
+
 }
 
 void Minigun::Update()

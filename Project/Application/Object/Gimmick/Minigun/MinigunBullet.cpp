@@ -32,6 +32,9 @@ void MinigunBullet::Initialize(LevelData::MeshData* data, const MinigunBulletDat
 
     // メッシュオブジェクト
     MeshObject::Initialize(data);
+    // マテリアル
+    material_->SetEnableLighting(BlinnPhongReflection);
+    material_->SetEnvironmentCoefficient(0.01f);
 
     // 経過時間
     elapsedTime_ = 0.0f;
