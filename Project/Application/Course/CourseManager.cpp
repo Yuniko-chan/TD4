@@ -106,6 +106,26 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 				(gimmickList_.get())->push_back(gimmick);
 			}
 		}
+		//障害物の時用
+		if (std::holds_alternative<LevelData::MeshData>(gimmickData) && std::get<LevelData::MeshData>(gimmickData).className == "Obstacle") {
+
+			std::get<LevelData::MeshData>(gimmickData).parentName = objectData.name;
+			std::get<LevelData::MeshData>(gimmickData).name = std::get<LevelData::MeshData>(gimmickData).name + std::to_string(courseIndex_);
+			// 型にあわせてInitialize
+			IObject* gimmick;
+			gimmick = objectFactory_->CreateObjectPattern(gimmickData);
+			gimmick->GetWorldTransformAdress()->parent_ = object->GetWorldTransformAdress();
+			gimmick->GetWorldTransformAdress()->UpdateMatrix();
+			//スケールに影響されないWorldMatrix計算
+			Matrix4x4 localMatrix = Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->transform_.scale) * Matrix4x4::MakeRotateXYZMatrix(gimmick->GetWorldTransformAdress()->transform_.rotate) * Matrix4x4::MakeTranslateMatrix(gimmick->GetWorldTransformAdress()->transform_.translate);
+			gimmick->GetWorldTransformAdress()->worldMatrix_ = localMatrix * gimmick->GetWorldTransformAdress()->parent_->worldMatrix_;
+			gimmick->GetWorldTransformAdress()->worldMatrix_ = Matrix4x4::Inverse(Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->parent_->transform_.scale)) * gimmick->GetWorldTransformAdress()->worldMatrix_;
+			if (gimmick) {
+				// listへ
+				objectManager_->AddObject(gimmick);
+				(gimmickList_.get())->push_back(gimmick);
+			}
+		}
 	}
 }
 

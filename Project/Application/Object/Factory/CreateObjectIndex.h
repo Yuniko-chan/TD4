@@ -29,6 +29,7 @@ enum CreateObjectIndex {
 	kCreateObjectIndexIronBall,
 	kCreateObjectIndexCannon,
 	kCreateObjectIndexMinigun,
+	kCreateObjectIndexObstacle,
 
 
 	kCreateObjectIndexOfCount, // 数数える用

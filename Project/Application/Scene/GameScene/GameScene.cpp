@@ -361,7 +361,7 @@ void GameScene::AddCourse() {
 			std::string courseName = std::format("Cannon.{:03}{}", objNum, courseNum);
 			cannon = static_cast<Cannon*>(objectManager_->GetObjectPointer(courseName));
 			if (cannon) {
-				cannon->GetWorldTransformAdress()->UpdateMatrix();
+				//cannon->GetWorldTransformAdress()->UpdateMatrix();
 				OBB col = *reinterpret_cast<OBB*>(cannon->GetCollider());
 				col.center_ = cannon->GetWorldTransformAdress()->GetWorldPosition();
 				courseCollisionSystem_->SetGimmick(&col);
@@ -382,7 +382,7 @@ void GameScene::AddCourse() {
 			std::string courseName = std::format("Gatling.{:03}{}", objNum, courseNum);
 			minigun = static_cast<Minigun*>(objectManager_->GetObjectPointer(courseName));
 			if (minigun) {
-				minigun->GetWorldTransformAdress()->UpdateMatrix();
+				//minigun->GetWorldTransformAdress()->UpdateMatrix();
 				OBB col = *reinterpret_cast<OBB*>(minigun->GetCollider());
 				col.center_ = minigun->GetWorldTransformAdress()->GetWorldPosition();
 				courseCollisionSystem_->SetGimmick(&col);
