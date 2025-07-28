@@ -76,7 +76,7 @@ public: // 関数
     /// 弾取得
     /// </summary>
     /// <returns></returns>
-    std::list<MinigunBullet*>* GetBullets() { return &bullets_; }
+    MinigunBullet* GetBullet() { return bullet_.get(); }
 
 private: // 関数
 
@@ -93,14 +93,11 @@ private: // 関数
 
 private: // 変数
 
-    // 弾（リスト）
-    std::list<MinigunBullet*> bullets_;
+    // 弾
+    std::unique_ptr<MinigunBullet> bullet_;
 
     // 経過時間
     float elapsedTime_;
-
-    // アニメーション
-    std::unique_ptr<MinigunAnimation> animation_;
 
 };
 

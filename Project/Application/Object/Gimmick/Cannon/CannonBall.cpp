@@ -33,6 +33,9 @@ void CannonBall::Initialize(LevelData::MeshData* data, const CannonBallData& can
 
 	// メッシュオブジェクト
 	MeshObject::Initialize(data);
+	// マテリアル
+	material_->SetEnableLighting(BlinnPhongReflection);
+	material_->SetEnvironmentCoefficient(0.01f);
 
 	// リセット
 	Reset(cannonBallData);
@@ -183,7 +186,7 @@ void CannonBall::Explosion()
 
 	// 大砲の弾、リセット
 	CannonExplosionData cannonExplosionData;
-	cannonExplosionData.explosionRadiusMax = 1.0f;
+	cannonExplosionData.explosionRadiusMax = 3.0f;
 	cannonExplosionData.explosionTime_ = 1.0f;
 	cannonExplosionData.timeToReachRadiusMax = 0.5f;
 	cannonExplosionData.position = worldTransform_.GetWorldPosition();
@@ -197,8 +200,8 @@ void CannonBall::ExplosionInitialize()
 
 	cannonExplosion_ = std::make_unique<CannonExplosion>();
 	LevelData::MeshData data;
-	data.directoryPath = "Resources/default/";
-	data.flieName = "ball.obj";
+	data.directoryPath = "Resources/Model/Gimmick/CannonExplosion/";
+	data.flieName = "CannonExplosion.obj";
 	data.transform = { 1.0f,1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
 	data.transform.translate = worldTransform_.GetWorldPosition();
 	data.className = "CannonExplosion";

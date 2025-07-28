@@ -95,6 +95,12 @@ private: // メンバ変数
 	// レベルデータマネージャー
 	LevelDataManager* levelDataManager_;
 
+	// プレイヤー
+	Player* player_;
+
+	// プレイヤーとの距離
+	const float kPlayerDistance_ = 600.0f;
+
 private: // USER
 	// パーツマネージャー
 	std::unique_ptr<VehiclePartsManager> partsManager_;

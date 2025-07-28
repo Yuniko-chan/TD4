@@ -46,6 +46,9 @@ void PendulumIronBall::Initialize(LevelData::MeshData* data, const PendulumIronB
 
     // 紐初期化
     StringInitialize();
+    // マテリアル
+    material_->SetEnableLighting(BlinnPhongReflection);
+    material_->SetEnvironmentCoefficient(0.01f);
 
 }
 
