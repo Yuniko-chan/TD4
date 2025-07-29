@@ -2,6 +2,7 @@
 #include "../../VehicleCore.h"
 #include "../../CarLists.h"
 #include "../../../GameTimer/GameTimeSystem.h"
+#include "../../../Engine/GlobalVariables/GlobalVariables.h"
 
 DriveSystem::DriveSystem()
 {
@@ -156,6 +157,13 @@ void DriveSystem::VelocityUpdate()
 	//const float velocityDecrement = 0.7f;	// 減速値
 	const float kEpsilon = 0.001f;	// 切り捨て値
 	float friction = 0.9f;
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	if (owner_->drivingLocation_ == CoursePolygonType::kCoursePolygonTypeDirt) {
+		friction = global->GetFloatValue("VehicleEngine", "DirtFriction");
+	}
+	else {
+		friction = global->GetFloatValue("VehicleEngine", "RoadFriction");
+	}
 	// 減速
 	velocity_ = velocity_ * (friction);
 	//if (std::fabsf(Vector3::Length(velocity_)) > 0) {

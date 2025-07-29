@@ -114,43 +114,41 @@ void DriveEngine::SpeedCalculation()
 {
 	GlobalVariables* global = GlobalVariables::GetInstance();
 	// スピード用のレシオ計算
-	const float kMaxRate = 10.0f;	// 最大
-	const float kMinRate = 1.0f;	// 最小
-	int32_t maxEffective = global->GetIntValue("VehicleEngine", "MaxEffectiveCount");	// エンジンの最大数
+	const char* groupName = "VehicleEngine";
+	float maxEngineCountAccelFactor = global->GetFloatValue(groupName, "MaxEngineCountAccelFactor");	// 最大
+	float minEngineCountAccelFactor = global->GetFloatValue(groupName, "MinEngineCountAccelFactor");	// 最小
+	int32_t maxEffective = global->GetIntValue(groupName, "MaxEffectiveCount");	// エンジンの最大数
+	float rideSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue(groupName, "AccelerationMultiplier");
 	// レート
 	float engineCount = (float)owner_->GetStatus()->GetEngine();
-	float t = (std::clamp(engineCount, 0.0f, 9.0f) + 1.0f) / (float)maxEffective;
+	engineCount = std::clamp(engineCount, 1.0f, (float)maxEffective);
+	float t = engineCount / (float)maxEffective;
 	// 乗算レート
-	float plusRate = Ease::Easing(Ease::EaseName::Lerp, kMinRate, kMaxRate, t);
-	// エンジンが回転している場合
+	float engineCountEffectiveFactor = Ease::Easing(Ease::EaseName::Lerp, minEngineCountAccelFactor, maxEngineCountAccelFactor, t);
+	
+	// 加速処理
 	if (consecutiveReceptions_ != 0) {
-		// 加速度の計算
-		const float rideSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue("Player", "RideSpeed");
 		// 速度計算
-		currentSpeed_ = (float)consecutiveReceptions_ * plusRate * rideSpeedFactor;
+		currentSpeed_ = (float)consecutiveReceptions_ * engineCountEffectiveFactor * rideSpeedFactor;
 
 		// 全体への影響（速度レートが一定を越えている場合オーバーヒート的な何か）
 		OverheatProcess(t);
 
 	}
-	// エンジンが回転していない場合
-	else {
-		// 速度が残っている場合
-		if (currentSpeed_ != 0.0f) {
-			const float decreValue = 0.05f;
-			currentSpeed_ = Ease::Easing(Ease::EaseName::Lerp, currentSpeed_, 0.0f, decreValue);
-		}
-	}
 
-	// 運転されていなければ
-	if (!owner_->IsDrive()) {
-		// 速度が残っている場合
-		if (currentSpeed_ != 0.0f) {
-			const float decreValue = 0.1f;
-			currentSpeed_ = Ease::Easing(Ease::EaseName::Lerp, currentSpeed_, 0.0f, decreValue);
+	// 減速処理
+	if (currentSpeed_ != 0.0f) {
+		float decelerationFactor = 0.0f;
+		if (owner_->IsDrive() && consecutiveReceptions_ == 0) {
+			decelerationFactor = global->GetFloatValue(groupName, "IdleDecelerationFactor");
+			currentSpeed_ = Ease::Easing(Ease::EaseName::Lerp, currentSpeed_, 0.0f, decelerationFactor);
 		}
-	}
+		else if (!owner_->IsDrive()){
+			decelerationFactor = global->GetFloatValue(groupName, "StopDecelerationFactor");
+			currentSpeed_ = Ease::Easing(Ease::EaseName::Lerp, currentSpeed_, 0.0f, decelerationFactor);
+		}
 
+	}
 
 	// 切り捨て
 	const float discard = 0.75f;

@@ -66,6 +66,14 @@ namespace ParameterStructs {
 			float roadFriction = 0.75f;
 			// 影響の出る最大値
 			int maxEffectiveCount = 10;
+
+			// 加速度
+			float maxEngineCountAccelFactor = 10.0f;
+			float minEngineCountAccelFactor = 1.0f;
+			float accelerationMultiplier = 1.0f;	// デフォルト乗算係数
+
+			float idleDecelerationFactor = 0.05f;
+			float stopDecelerationRate = 0.1f;
 			// オーバーヒートするかのエンジン数閾値
 			int overheatEngineThreshold = 0;
 		};
