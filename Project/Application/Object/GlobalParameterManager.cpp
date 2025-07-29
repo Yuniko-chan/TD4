@@ -56,6 +56,17 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	groupName = "Vehicle";
 	vehicle_.core.initPosition = globalVariables_->GetVector3Value(groupName, "Core_InitPosition");
 	vehicle_.core.inVehicleLocal = globalVariables_->GetVector3Value(groupName, "Core_LocalPosition");
+
+	vehicle_.overheat.maxDPS = globalVariables_->GetFloatValue(groupName, "OverheatMaxDamage");
+	vehicle_.overheat.minDPS = globalVariables_->GetFloatValue(groupName, "OverheatMinDamage");
+
+	// エンジン関係
+	groupName = "VehicleEngine";
+	vehicle_.engine.roadFriction = globalVariables_->GetFloatValue(groupName, "RoadFriction");
+	vehicle_.engine.dirtFriction = globalVariables_->GetFloatValue(groupName, "DirtFriction");
+	vehicle_.engine.maxEffectiveCount = globalVariables_->GetIntValue(groupName, "MaxEffectiveCount");
+
+
 }
 
 void GlobalParameterManager::AddItems()
@@ -82,12 +93,6 @@ void GlobalParameterManager::AddItems()
 
 	//---カメラ---//
 	globalVariables_->AddItem(groupName, "CameraRotateSpeed", float(player_.cameraRotateSpeed));
-	// 共通
-	//groupName = "CameraCommon";
-	//globalVariables_->AddItem(groupName, "InVehicleOffset", Vector3(cameraCommon_.inVehicle.first));
-	//globalVariables_->AddItem(groupName, "InVehicleRotation", Vector3(cameraCommon_.inVehicle.second));
-	//globalVariables_->AddItem(groupName, "OnFootOffset", Vector3(cameraCommon_.onFoot.first));
-	//globalVariables_->AddItem(groupName, "OnFootRotation", Vector3(cameraCommon_.onFoot.second));
 	// 俯瞰
 	groupName = "OverheadCamera";
 	overheadCamera_.defaultData.Initialize(groupName, globalVariables_);
@@ -100,5 +105,22 @@ void GlobalParameterManager::AddItems()
 	groupName = "Vehicle";
 	globalVariables_->AddItem(groupName, "Core_InitPosition", Vector3(vehicle_.core.initPosition));
 	globalVariables_->AddItem(groupName, "Core_LocalPosition", Vector3(vehicle_.core.inVehicleLocal));
+	// オーバーヒート
+	globalVariables_->AddItem(groupName, "OverheatMaxDamage", float(vehicle_.overheat.maxDPS));
+	globalVariables_->AddItem(groupName, "OverheatMinDamage", float(vehicle_.overheat.minDPS));
 
+	// 
+	groupName = "VehicleEngine";
+	globalVariables_->AddItem(groupName, "RoadFriction", float(vehicle_.engine.roadFriction));
+	globalVariables_->AddItem(groupName, "DirtFriction", float(vehicle_.engine.dirtFriction));
+	globalVariables_->AddItem(groupName, "MaxEffectiveCount", int32_t(vehicle_.engine.maxEffectiveCount));
+	globalVariables_->AddItem(groupName, "OverheatEngineCountThreshold", int32_t(vehicle_.engine.overheatEngineThreshold));
+
+	groupName = "VehicleHandling";
+	globalVariables_->AddItem(groupName, "SteerMaxAngle", float(vehicle_.handling.steerMaxAngle));
+	globalVariables_->AddItem(groupName, "SteerMinAngle", float(vehicle_.handling.steerMinAngle));
+	globalVariables_->AddItem(groupName, "MaxSteerInputCount", int32_t(vehicle_.handling.maxSteerInputCount));
+	
+	globalVariables_->AddItem(groupName, "InputInterval", float(vehicle_.handling.inputInterval));
+	globalVariables_->AddItem(groupName, "InputDecrementInterval", float(vehicle_.handling.inputDecrementInterval));
 }

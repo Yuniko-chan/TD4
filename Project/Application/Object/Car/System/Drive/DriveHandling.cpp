@@ -23,6 +23,8 @@ static float sMinXDirect = 0.25f;
 static float sMinPropulsion = 5.0f;
 static float sMaxPropulsion = 20.0f;
 
+static float sInputDiscardThreshold = 0.25f;
+
 void DriveHandling::HandleInput(const float inputX)
 {
 	// 前の入力保存
@@ -33,7 +35,7 @@ void DriveHandling::HandleInput(const float inputX)
 	isLeft_.second = false;
 
 	// 切り捨て閾値
-	const float kDiscardThreshold = 0.25f;
+	float kDiscardThreshold = sInputDiscardThreshold;
 
 	// 閾値以下なら早期
 	if (std::fabsf(inputX) < kDiscardThreshold) {
@@ -59,9 +61,9 @@ void DriveHandling::PreUpdate()
 	// 間隔
 	float kDuration = kDeltaTime_ * sDuration;	// 間隔
 	float kDecrementDuration = kDeltaTime_ * sDecrementDuration;	// 減少間隔
-	int kSteerReturnSensitivity = sSteerReturnSensitivity;	// ハンドル戻し感度
-	int kSpDecrementThreshold = sSpDecrementThreshold;	// 減少量を増やすしきい
-	int kSpReturnSensitivity = sSpReturnSensitivity;	// 減少量を増やす感度
+	int kSteerReturnSensitivity = sSteerReturnSensitivity;	// 切り返しの感度
+	int steerReturnAccelThreshold = sSpDecrementThreshold;	// より大きいかを判断する閾値
+	int highInputReturnSensitivity = sSpReturnSensitivity;	// 切り返しの際により大きいときの感度
 	int kMaxCount = sMaxCount;	// 押し込み最大	
 
 	// 入力増加
@@ -69,8 +71,8 @@ void DriveHandling::PreUpdate()
 		// 左
 		if (isLeft_.second) {
 			// 特殊処理
-			if (consecutiveReceptions_ > kSpDecrementThreshold) {
-				consecutiveReceptions_ -= kSpReturnSensitivity;
+			if (consecutiveReceptions_ > steerReturnAccelThreshold) {
+				consecutiveReceptions_ -= highInputReturnSensitivity;
 			}
 			// 切り返しの通常処理
 			else if (consecutiveReceptions_ > 0) {
@@ -84,8 +86,8 @@ void DriveHandling::PreUpdate()
 		// 右
 		else if (isRight_.second) {
 			// 特殊処理
-			if (consecutiveReceptions_ < -kSpDecrementThreshold) {
-				consecutiveReceptions_ += kSpReturnSensitivity;
+			if (consecutiveReceptions_ < -steerReturnAccelThreshold) {
+				consecutiveReceptions_ += highInputReturnSensitivity;
 			}
 			// 切り返しの通常処理
 			else if (consecutiveReceptions_ < 0) {
@@ -278,27 +280,29 @@ void DriveHandling::ImGuiDraw()
 	ImGui::DragFloat3("Steer", &steerDirection_.x);
 
 	ImGui::DragFloat("間隔", &sDuration, 0.01f);
+	if (ImGui::TreeNode("外部出しするデータ")) {
+		ImGui::SeparatorText("入力関係");
+		ImGui::DragFloat("減少間隔", &sDecrementDuration, 0.01f);
+		ImGui::InputInt("ハンドル戻す感度", &sSteerReturnSensitivity);
+		ImGui::InputInt("減少量を増やす閾", &sSpDecrementThreshold);
+		ImGui::InputInt("減少量を増やす感度", &sSpReturnSensitivity);
+		ImGui::InputInt("押し込み最大", &sMaxCount);
 
-	ImGui::SeparatorText("入力関係");
-	ImGui::DragFloat("減少間隔", &sDecrementDuration, 0.01f);
-	ImGui::InputInt("ハンドル戻す感度", &sSteerReturnSensitivity);
-	ImGui::InputInt("減少量を増やす閾", &sSpDecrementThreshold);
-	ImGui::InputInt("減少量を増やす感度", &sSpReturnSensitivity);
-	ImGui::InputInt("押し込み最大", &sMaxCount);
-
-	ImGui::SeparatorText("減衰関係");
-	ImGui::InputFloat("ステア最大減衰値", &sLowSpeedSteerAttenuation, 0.1f);
-	ImGui::InputFloat("減衰最大", &sLowSpeedLimit, 0.1f);
-	//// 回転の向き
-	//static float sMaxXDirect = 1.0f;
-	//static float sMinXDirect = 0.25f;
-	//// 推進力
-	//static float sMinPropulsion = 5.0f;
-	//static float sMaxPropulsion = 20.0f;
-	ImGui::SeparatorText("向き関係");
-	ImGui::InputFloat("最大X向き", &sMaxXDirect, 0.1f);
-	ImGui::InputFloat("最小X向き", &sMinXDirect, 0.1f);
-	ImGui::InputFloat("最大推進力", &sMaxPropulsion, 0.1f);
-	ImGui::InputFloat("最小推進力", &sMinPropulsion, 0.1f);
+		ImGui::SeparatorText("減衰関係");
+		ImGui::InputFloat("ステア最大減衰値", &sLowSpeedSteerAttenuation, 0.1f);
+		ImGui::InputFloat("減衰最大", &sLowSpeedLimit, 0.1f);
+		//// 回転の向き
+		//static float sMaxXDirect = 1.0f;
+		//static float sMinXDirect = 0.25f;
+		//// 推進力
+		//static float sMinPropulsion = 5.0f;
+		//static float sMaxPropulsion = 20.0f;
+		ImGui::SeparatorText("向き関係");
+		ImGui::InputFloat("最大X向き", &sMaxXDirect, 0.1f);
+		ImGui::InputFloat("最小X向き", &sMinXDirect, 0.1f);
+		ImGui::InputFloat("最大推進力", &sMaxPropulsion, 0.1f);
+		ImGui::InputFloat("最小推進力", &sMinPropulsion, 0.1f);
+		ImGui::TreePop();
+	}
 
 }

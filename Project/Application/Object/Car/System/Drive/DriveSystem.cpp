@@ -32,15 +32,14 @@ void DriveSystem::Update()
 		pushVector_.second.y = 0.0f;
 		pushVector_.first = owner_->GetWorldTransformAdress()->direction_;
 		pushVector_.first.y = 0.0f;
-		//Vector3 newPush = Matrix4x4::TransformNormal(pushPower_, Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), pushVector_.second));
-		//owner_->GetWorldTransformAdress()->transform_.translate += newPush * GameTimeSystem::GetInstance()->GetDeltaTime();
-		//pushPower_ = {};
+
 		isPush_ = false;
 		pushCount_ = 0;
 		// 
 		if (!slowTimer_.IsActive()) {
 			slowTimer_.Start(1.0f);
-			GameTimeSystem::GetInstance()->SetTimeScale(0.1f);
+			const float kRotateSlowScale = 0.1f;
+			GameTimeSystem::GetInstance()->SetTimeScale(kRotateSlowScale);
 		}
 	}
 
@@ -60,11 +59,8 @@ void DriveSystem::Update()
 		// タイムスケール戻す
 		GameTimeSystem::GetInstance()->SetTimeScale(1.0f);
 		// 押し出し
-		//owner_->GetWorldTransformAdress()->transform_.translate += (Vector3::Normalize(totalDirection_) * Vector3::Length(pushPower_)) * kDeltaTime_;
-		//Vector3 push = Matrix4x4::TransformNormal(Vector3(0, 0, 1), owner_->rotate_);
 		Vector3 push = Vector3::Normalize(totalDirection_);
 		push.y = 0.0f;
-		//owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(owner_->GetWorldTransformAdress()->direction_);
 		knockBack_ += push * Vector3::Length(totalDirection_);
 		
 		pushPower_ = {};
@@ -106,7 +102,8 @@ void DriveSystem::Update()
 
 	// ノックバック
 	if (knockBack_ != Vector3(0.0f, 0.0f, 0.0f)) {
-		knockBack_ = Ease::Easing(Ease::EaseName::Lerp, knockBack_, Vector3(0, 0, 0), 0.15f);
+		float knockBackDecayFactor = 0.15f;
+		knockBack_ = Ease::Easing(Ease::EaseName::Lerp, knockBack_, Vector3(0, 0, 0), knockBackDecayFactor);
 		// 向き
 		//Vector3 newDirect = Matrix4x4::TransformNormal(knockBack_, Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), owner_->GetWorldTransformAdress()->direction_));
 		// 座標計算
@@ -152,14 +149,19 @@ void DriveSystem::VelocityUpdate()
 	// 速度の計算
 	// 速度レートが0の場合加算しない
 	if (driveEngine_->GetCurrentSpeed() != 0) {
-		Vector3 acceleration = Vector3::FrontVector() * driveEngine_->GetCurrentSpeed();
+		Vector3 acceleration = Vector3(0.0f,0.0f,1.0f) * driveEngine_->GetCurrentSpeed();
 		velocity_ += acceleration * GameTimeSystem::GetInstance()->GetDeltaTime();
 	}
 
-	const float velocityDecrement = 0.75f;	// 減速値
+	//const float velocityDecrement = 0.7f;	// 減速値
 	const float kEpsilon = 0.001f;	// 切り捨て値
+	float friction = 0.9f;
 	// 減速
-	velocity_ = velocity_ * velocityDecrement;
+	velocity_ = velocity_ * (friction);
+	//if (std::fabsf(Vector3::Length(velocity_)) > 0) {
+	//	Vector3 invDirect = (Vector3::Normalize(velocity_) * -1.0f) * friction * frictionScale;
+	//	velocity_ += invDirect * GameTimeSystem::GetInstance()->GetDeltaTime();
+	//}
 	// 0に調節
 	VehicleCaluclator calc;
 	velocity_ = calc.SnapToZero(velocity_, kEpsilon);
@@ -181,21 +183,24 @@ void DriveSystem::PushPower(const Vector3& power)
 	Vector3 vehicleDirection = Vector3(owner_->GetWorldTransformAdress()->direction_.x, 0, owner_->GetWorldTransformAdress()->direction_.z);
 	
 	// 内積によって与える力を決めます
-	//float directDot = Vector3::Dot(powerDirection, vehicleDirection);
+	float directDot = Vector3::Dot(powerDirection, vehicleDirection);
 	// 後寄り
 	Vector3 addPower = power;
-	//if (directDot <= -0.5f) {
-	//	addPower *= (1.0f / 8.0f);
-	//}
-	//else if (directDot <= -0.25f) {
-	//	addPower *= (1.0f / 4.0f);
-	//}
-	//else if (directDot <= 0.35f) {
-	//	addPower *= (1.0f / 2.0f);
-	//}
-	//else {
-	//	addPower *= (1.0f / 1.0f);
-	//}
+	if (directDot <= -0.5f) {
+		addPower *= (1.0f / 16.0f);
+	}
+	else if (directDot <= -0.25f) {
+		addPower *= (1.0f / 8.0f);
+	}
+	else if (directDot <= 0.35f) {
+		addPower *= (1.0f / 4.0f);
+	}
+	else if (directDot <= 0.65f) {
+		addPower *= (1.0f / 2.0f);
+	}
+	else {
+		addPower *= (1.0f / 1.0f);
+	}
 	
 	totalDirection_ += addPower;
 

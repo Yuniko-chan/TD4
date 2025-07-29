@@ -1,0 +1,7 @@
+{
+    "VehicleEngine": {
+        "DirtFriction": 0.550000011920929,
+        "MaxEffectiveCount": 10,
+        "RoadFriction": 0.75
+    }
+}

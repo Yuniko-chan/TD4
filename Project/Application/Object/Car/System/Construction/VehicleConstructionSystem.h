@@ -103,7 +103,7 @@ private: // 検索
 
 public:
 	/// <summary>
-	/// パーツごとの検索（リスト化）
+	/// パーツごとの検索（０：エンジン、１：タイヤ、２：アーマー
 	/// </summary>
 	/// <param name="typeID"></param>
 	/// <returns></returns>

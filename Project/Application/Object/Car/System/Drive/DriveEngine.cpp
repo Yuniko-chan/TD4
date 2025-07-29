@@ -12,8 +12,8 @@ static float sMaxRate = 10.0f;	// 最大
 static float sMinRate = 1.0f;	// 最小
 static float sEngineMax = 10.0f;	// エンジンの最大数
 
-static float sMinDPS = 1.0f;
-static float sMaxDPS = 7.5f;
+static float sMinDPS = 1.0f;	// 最小ダメージ
+static float sMaxDPS = 7.5f;	// 最大ダメージ
 
 void DriveEngine::Update()
 {
@@ -112,13 +112,14 @@ void DriveEngine::ImGuiDraw()
 
 void DriveEngine::SpeedCalculation()
 {
+	GlobalVariables* global = GlobalVariables::GetInstance();
 	// スピード用のレシオ計算
 	const float kMaxRate = 10.0f;	// 最大
 	const float kMinRate = 1.0f;	// 最小
-	const float kEngineMax = 10.0f;	// エンジンの最大数
+	int32_t maxEffective = global->GetIntValue("VehicleEngine", "MaxEffectiveCount");	// エンジンの最大数
 	// レート
 	float engineCount = (float)owner_->GetStatus()->GetEngine();
-	float t = (std::clamp(engineCount, 0.0f, 9.0f) + 1.0f) / kEngineMax;
+	float t = (std::clamp(engineCount, 0.0f, 9.0f) + 1.0f) / (float)maxEffective;
 	// 乗算レート
 	float plusRate = Ease::Easing(Ease::EaseName::Lerp, kMinRate, kMaxRate, t);
 	// エンジンが回転している場合
@@ -153,6 +154,7 @@ void DriveEngine::SpeedCalculation()
 
 	// 切り捨て
 	const float discard = 0.75f;
+	//currentSpeed_ *= GameTimeSystem::GetInstance()->GetDeltaTime();
 	if (std::fabsf(currentSpeed_) <= discard) {
 		currentSpeed_ = 0.0f;
 	}
@@ -167,15 +169,18 @@ void DriveEngine::OverheatProcess(const float& SpeedPercentage)
 	if (SpeedPercentage >= speedLimit &&
 		std::abs(consecutiveReceptions_) >= receptionLimit) {
 		this->owner_->GetStatus()->SetIsOverheat(true);
-		float minDPS = sMinDPS;
-		float maxDPS = sMaxDPS;
+		GlobalVariables* global = GlobalVariables::GetInstance();
+		//float minDPS = 0;
+		//float maxDPS = 0;
+		float minDPS = global->GetFloatValue("Vehicle", "OverheatMinDamage");
+		float maxDPS = global->GetFloatValue("Vehicle", "OverheatMaxDamage");
 		// スピード用のレシオ計算
 		const float kMaxRate = sMaxRate;	// 最大
 		const float kMinRate = sMinRate;	// 最小
-		const float kEngineMax = sEngineMax;	// エンジンの最大数
+		int32_t maxEffective = global->GetIntValue("VehicleEngine", "MaxEffectiveCount");	// エンジンの最大数
 		// レート
 		float engineCount = (float)owner_->GetStatus()->GetEngine();
-		float t = (std::clamp(engineCount, 0.0f, 9.0f) + 1.0f) / kEngineMax;
+		float t = (std::clamp(engineCount, 0.0f, 9.0f) + 1.0f) / (float)maxEffective;
 		// 加速度の計算
 		const float rideSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue("Player", "RideSpeed");
 		// 乗算レート
