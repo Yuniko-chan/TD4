@@ -54,12 +54,12 @@ namespace ParameterStructs {
 		// エンジン関係
 		struct VehicleEngine 
 		{
-			// 加算間隔
-			int addDuration = 10;
-			// 最大受付数
-			int maxReception = 15;
-			// 受付数に対する倍率
-			float receptionRatio = 3.0f;
+			// 入力間隔
+			float inputInterval = 5.0f;
+			// 減少の間隔
+			float inputDecrementInterval = 2.0f;
+			// 受付の最大値
+			int32_t maxInputCount = 0;
 
 			// 摩擦
 			float dirtFriction = 0.55f;

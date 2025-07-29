@@ -62,6 +62,9 @@ void GlobalParameterManager::ApplyGlobalVariables()
 
 	//---エンジン関係---//
 	groupName = "VehicleEngine";
+	vehicle_.engine.inputInterval = globalVariables_->GetFloatValue(groupName, "InputInterval");
+	vehicle_.engine.inputDecrementInterval = globalVariables_->GetFloatValue(groupName, "InputDecrementInterval");
+	vehicle_.engine.maxInputCount = globalVariables_->GetIntValue(groupName, "InputMaxCount");
 	// 摩擦
 	vehicle_.engine.roadFriction = globalVariables_->GetFloatValue(groupName, "RoadFriction");
 	vehicle_.engine.dirtFriction = globalVariables_->GetFloatValue(groupName, "DirtFriction");
@@ -128,6 +131,11 @@ void GlobalParameterManager::AddItems()
 
 	// 
 	groupName = "VehicleEngine";
+	// 入力
+	globalVariables_->AddItem(groupName, "InputInterval", float(vehicle_.engine.inputInterval));
+	globalVariables_->AddItem(groupName, "InputDecrementInterval", float(vehicle_.engine.inputDecrementInterval));
+	globalVariables_->AddItem(groupName, "InputMaxCount", int32_t(vehicle_.engine.maxInputCount));
+
 	// 摩擦
 	globalVariables_->AddItem(groupName, "RoadFriction", float(vehicle_.engine.roadFriction));
 	globalVariables_->AddItem(groupName, "DirtFriction", float(vehicle_.engine.dirtFriction));
@@ -135,7 +143,7 @@ void GlobalParameterManager::AddItems()
 	// 加速度
 	globalVariables_->AddItem(groupName, "MaxEngineCountAccelFactor", float(vehicle_.engine.maxEngineCountAccelFactor));
 	globalVariables_->AddItem(groupName, "MinEngineCountAccelFactor", float(vehicle_.engine.minEngineCountAccelFactor));
-	globalVariables_->AddItem(groupName, "AccelerationMultiplier", vehicle_.engine.accelerationMultiplier);
+	globalVariables_->AddItem(groupName, "AccelerationMultiplier", float(vehicle_.engine.accelerationMultiplier));
 	globalVariables_->AddItem(groupName, "IdleDecelerationFactor", float(vehicle_.engine.idleDecelerationFactor));
 	globalVariables_->AddItem(groupName, "StopDecelerationFactor", float(vehicle_.engine.stopDecelerationRate));
 

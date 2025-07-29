@@ -26,11 +26,14 @@ void DriveEngine::Update()
 	else if (owner_->IsPlayer() && onReset_) {
 		onReset_ = std::nullopt;
 	}
-
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	std::string groupName = "VehicleEngine";
 	// フレームカウント（時間を基に）
-	float timming = sTimming * kDeltaTime_;
-	float decrementTimming = (sTimming / 2.0f) * kDeltaTime_;
-	int maxReception = sMaxReception;
+	float interval = global->GetFloatValue(groupName, "InputInterval");
+	float timming = interval * kDeltaTime_;
+	interval = global->GetFloatValue(groupName, "InputDecrementInterval");
+	float decrementTimming = (interval) * kDeltaTime_;
+	int maxReception = (int)global->GetIntValue(groupName, "InputMaxCount");
 
 	// アクセルキーか受付連続値があれば
 	if ((isAccel_ || isDecel_) || consecutiveReceptions_ != 0) {
