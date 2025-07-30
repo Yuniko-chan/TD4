@@ -22,6 +22,7 @@
 #include "../../Course/CourseCollisionSystem.h"
 #include "../../Course/Debug/CourseDebugDraw.h"
 #include "../../Course/CourseManager.h"
+#include "../../AudioManager/GameAudioManager.h"
 
 /// <summary>
 /// ゲームシーン
@@ -121,5 +122,8 @@ private:
 
 	//コースの生成などを行うクラス
 	std::unique_ptr<CourseManager> courseManager_;
+
+	// オーディオマネージャー
+	std::unique_ptr<GameAudioManager> audioManager_;
 
 };

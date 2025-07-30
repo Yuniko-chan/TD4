@@ -48,7 +48,7 @@ private: // メンバ変数
 	// ファイル名
 	std::array<const std::string, GameAudioNameIndex::kGameAudioNameIndexOfCount> audioNames_ =
 	{
-		"Sound/BGM/BGM.mp3",
+		"default/Alarm01.mp3",
 	};
 
 };

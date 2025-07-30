@@ -33,6 +33,19 @@ void GameScene::Initialize() {
 	ModelCreate();
 	TextureLoad();
 
+	// オーディオマネージャー
+	audioManager_ = std::make_unique<GameAudioManager>();
+	audioManager_->StaticInitialize();
+	audioManager_->Initialize();
+
+	// 一度鳴らして止める
+	for (uint32_t i = 0; i < GameAudioNameIndex::kGameAudioNameIndexOfCount; ++i) {
+		audioManager_->PlayWave(i);
+	}
+	for (uint32_t i = 0; i < audioManager_->kMaxPlayingSoundData; ++i) {
+		audioManager_->StopWave(i);
+	}
+
 	// パラメータマネージャ
 	parameterManager_ = GlobalParameterManager::GetInstance();
 	parameterManager_->Initialize();
