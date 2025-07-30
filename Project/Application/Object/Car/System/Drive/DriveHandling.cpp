@@ -184,6 +184,8 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	float speedSteerAttenuation = 0.0f;	// 速度に応じたステア減衰値
 	float lowSpeedLimit = sLowSpeedLimit;	// 減衰が掛かる最大値
 
+
+	// 遅すぎるときの減少処理
 	if (std::fabsf(velocity.z) <= lowSpeedLimit) {
 		float attenuationT = std::fabsf(velocity.z) / lowSpeedLimit;
 		attenuationT = std::clamp(attenuationT, 0.0f, 1.0f);
@@ -231,6 +233,8 @@ void DriveHandling::Reset()
 
 Vector3 DriveHandling::ApplyStatusToHandling(VehicleStatus* status , const float& angle)
 {
+	GlobalVariables* global = GlobalVariables::GetInstance();
+
 	// 車体の向き
 	Vector3 vehicleDirection = owner_->GetWorldTransformAdress()->direction_;
 	// 結果
@@ -239,15 +243,15 @@ Vector3 DriveHandling::ApplyStatusToHandling(VehicleStatus* status , const float
 	int rightWheel = status->GetRightWheel();	// 右タイヤ
 	int leftWheel = status->GetLeftWheel();	// 左タイヤ
 	//int tireCount = status->GetTire();	// タイヤの総数
-	const int kMax = 5;
+	const int kMaxEffectiveTire = global->GetIntValue("VehicleHandling", "MaxEffectiveCount");
 	// 入力があるか
 	int applyValue = 0;
 	// 右にタイヤあるときの右ハンドル
-	if (isRight_.second && rightWheel > 0) { applyValue = std::min(rightWheel, kMax); }
+	if (isRight_.second && rightWheel > 0) { applyValue = std::min(rightWheel, kMaxEffectiveTire); }
 	// 左にタイヤあるときの左ハンドル
-	else if (isLeft_.second && leftWheel > 0) { applyValue = std::min(leftWheel, kMax); }
+	else if (isLeft_.second && leftWheel > 0) { applyValue = std::min(leftWheel, kMaxEffectiveTire); }
 
-	float tireT = (float)applyValue / (float)kMax;
+	float tireT = (float)applyValue / (float)kMaxEffectiveTire;
 	float handleT = Ease::Easing(Ease::EaseName::Lerp, 0.1f, 0.75f, tireT);
 	result.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, angle, handleT);
 

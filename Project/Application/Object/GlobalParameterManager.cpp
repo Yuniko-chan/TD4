@@ -87,6 +87,7 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	vehicle_.handling.inputInterval = globalVariables_->GetFloatValue(groupName, "InputInterval");
 	vehicle_.handling.inputDecrementInterval = globalVariables_->GetFloatValue(groupName, "InputDecrementInterval");
 	vehicle_.handling.maxSteerInputCount = globalVariables_->GetIntValue(groupName, "InputMaxCount");
+	vehicle_.handling.maxEffectiveCount = globalVariables_->GetIntValue(groupName, "MaxEffectiveCount");
 
 }
 
@@ -159,4 +160,6 @@ void GlobalParameterManager::AddItems()
 	globalVariables_->AddItem(groupName, "InputInterval", float(vehicle_.handling.inputInterval));
 	globalVariables_->AddItem(groupName, "InputDecrementInterval", float(vehicle_.handling.inputDecrementInterval));
 	globalVariables_->AddItem(groupName, "InputMaxCount", int32_t(vehicle_.handling.maxSteerInputCount));
+	globalVariables_->AddItem(groupName, "MaxEffectiveCount", int32_t(vehicle_.handling.maxEffectiveCount));
+
 }

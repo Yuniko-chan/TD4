@@ -12,7 +12,7 @@ public:
 
 	//---アクセッサ---//
 	// 設定
-	void SetSpot(InteractionSpot* spot) { this->InteractObject_ = spot; }
+	void SetSpot(InteractionSpot* spot) { this->interactObject_ = spot; }
 	void SetTransform(WorldTransform* parent) { parent_ = parent; }
 	void SetIsDraw(bool isDraw);
 	// 取得

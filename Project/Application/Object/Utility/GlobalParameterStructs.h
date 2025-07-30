@@ -49,6 +49,9 @@ namespace ParameterStructs {
 			int highInputReturnSensitivity = 0;
 			// ハンドル入力の最大値
 			int32_t maxSteerInputCount = 0;
+
+			// 影響の出る最大値
+			int maxEffectiveCount = 10;
 		};
 
 		// エンジン関係
