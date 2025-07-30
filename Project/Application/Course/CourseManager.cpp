@@ -136,6 +136,9 @@ void CourseManager::PlaceCourseRandom() {
 	//カスタムエリア
 	CreateCustomizeArea(nowGroup_);
 
+	//壁
+	CreateWall();
+
 	//0
 	Place0();
 
@@ -338,4 +341,37 @@ size_t CourseManager::AddCourseGroup() {
 
 void CourseManager::SetAddCourseFunction(std::function<void(void)> function) {
 	addCourseToGameScene_ = function;
+}
+
+void CourseManager::CreateWall() {
+	std::vector<CoursePolygon> course;
+
+	CoursePolygon cData;
+
+	//データ格納
+	for (uint32_t i = 0; i < kWallVerticesNum2; i++) {
+
+		//coursepolygone
+		if (i % 3 == 0) {
+			cData.position0 = { kWallOffset[i].x+ kCourseGroupOffset_.x * nowGroup_, kWallOffset[i].y, kWallOffset[i].z + kCourseGroupOffset_.z * nowGroup_ };
+		}
+		else if (i % 3 == 1) {
+			cData.position1 = { kWallOffset[i].x + kCourseGroupOffset_.x * nowGroup_, kWallOffset[i].y, kWallOffset[i].z + kCourseGroupOffset_.z * nowGroup_ };
+		}
+		else {
+			cData.position2 = { kWallOffset[i].x + kCourseGroupOffset_.x * nowGroup_, kWallOffset[i].y, kWallOffset[i].z + kCourseGroupOffset_.z * nowGroup_ };
+		}
+
+		//cData.normal += {0.0f,1.0f,0.0f};
+		if (i % 3 == 2) {
+			cData.normal = kWallNormals[i];
+			// texcoordのｙがマイナスになっているため
+			cData.texcoord = {0.98f,0.0f};
+			course.push_back(cData);
+			//cData.normal = { 0,0,0 };
+			cData.texcoord = { 0,0 };
+		}
+
+	}
+	courseCollisionSystem_->SetCourse(&course);
 }
