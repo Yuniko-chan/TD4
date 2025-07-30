@@ -21,6 +21,13 @@
 
 GameScene::~GameScene()
 {
+
+	if (stopAudio_) {
+		for (uint32_t i = 0; i < audioManager_->kMaxPlayingSoundData; ++i) {
+			audioManager_->StopWave(i);
+		}
+	}
+
 }
 
 /// <summary>
@@ -74,6 +81,7 @@ void GameScene::Initialize() {
 
 	// オブジェクトマネージャー
 	objectManager_ = std::make_unique<GameSceneObjectManager>();
+	static_cast<GameSceneObjectManager*>(objectManager_.get())->SetAudioManager(audioManager_.get());
 	objectManager_->Initialize(kLevelIndexDebug, levelDataManager_);
 
 	// キーコンフィグ
@@ -110,6 +118,9 @@ void GameScene::Initialize() {
 
 	// コース
 	CourseInitialize();
+
+	//BGM
+	audioManager_->PlayWave(kGameAudioNameIndexBGM);
 
 	// モデル描画
 	ModelDraw::PreDrawParameters preDrawParameters;

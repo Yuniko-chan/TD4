@@ -5,8 +5,8 @@
 /// タイトルオーディオ名前群
 /// </summary>
 enum TitleAudioNameIndex {
-	kTitleBGM, // BGM
-	kTitlePushButton, // ボタンを押したとき
+	kTitleAudioNameIndexBGM, // BGM
+	kTitleAudioNameIndexPushButton, // ボタンを押したとき
 	kTitleAudioNameIndexOfCount // 数
 };
 
@@ -46,8 +46,8 @@ private: // メンバ変数
 	// ファイル名
 	std::array<const std::string, TitleAudioNameIndex::kTitleAudioNameIndexOfCount> audioNames_ =
 	{
-		"BGM/SampleBGM.mp3",
-		"Soundeffect/PressButton.mp3",
+		"BGM/titleBGM.mp3",
+		"Soundeffect/PressButton_SE.mp3",
 	};
 
 };

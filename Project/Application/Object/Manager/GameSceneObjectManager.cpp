@@ -334,6 +334,7 @@ void GameSceneObjectManager::PlayerInitialize()
 	player_ = static_cast<Player*>(this->GetObjectPointer("Player"));
 	player_->GetPickUpManager()->SetPartsManager(partsManager_.get());
 	player_->GetPickUpManager()->SetPickupPointManager(pickupPointManager_.get());
+	player_->SetAudioManager(audioManager_);
 	//player->GetPickUpManager()->SetInteractSpot(spot);
 
 	// 3種類登録

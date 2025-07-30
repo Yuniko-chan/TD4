@@ -95,6 +95,8 @@ public: // アクセッサ（プレイヤーシステム以外）
     //---セッター---//
     void SetPair(VehicleCore* pair) { pairCore_ = pair; }
     void SetCameraManager(GameCameraManager* cameraManager) { cameraManager_ = cameraManager; }
+
+    void SetAudioManager(GameAudioManager* audioManager) { pickUpManager_->SetAudioManager(audioManager); }
 private:
     // システムクラス
     std::unique_ptr<PlayerAnimation> playerAnimation_;

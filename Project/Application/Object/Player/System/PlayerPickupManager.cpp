@@ -187,14 +187,17 @@ void PlayerPickupManager::ReleaseAction()
 	if (ShouldDropPart()) {
 		// 置く処理
 		DropPart();
+		audioManager_->PlayWave(kGameAudioNameIndexGrab);
 		return;
 	}
 	if (!owner_->GetCore()) {
 		DropPart();
+		audioManager_->PlayWave(kGameAudioNameIndexGrab);
 		return;
 	}
 	if (!owner_->GetCore()->GetConstructionSystem()->IsAttach(holdParts_, nearKey_)) {
 		DropPart();
+		audioManager_->PlayWave(kGameAudioNameIndexGrab);
 		return;
 	}
 	//// くっつけられるか（false:できなかったためその場に置く
@@ -219,6 +222,7 @@ void PlayerPickupManager::CatchAction()
 	// パーツが見つかれば
 	if (interactPart) {
 		OnPartCatchSuccess(interactPart);
+		audioManager_->PlayWave(kGameAudioNameIndexGrab);
 	}
 
 }

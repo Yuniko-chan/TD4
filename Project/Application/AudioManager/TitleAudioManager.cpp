@@ -18,8 +18,8 @@ void TitleAudioManager::Initialize()
 	}
 
 	// 個別設定
-	audioDatas_[kTitleBGM].isLoop_ = true;
-	audioDatas_[kTitleBGM].isBGM_ = true;
+	audioDatas_[kTitleAudioNameIndexBGM].isLoop_ = true;
+	audioDatas_[kTitleAudioNameIndexBGM].isBGM_ = true;
 
 }
 
