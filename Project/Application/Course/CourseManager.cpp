@@ -11,6 +11,7 @@ void CourseManager::Initialize(GameSceneObjectManager* objectManager, LevelDataM
 	objectManager_ = objectManager;
 	levelDataManager_ = levelDataManager;
 	objectFactory_ = objectManager_->GetObjectFactory();
+	courseTraversalNum_ = 0;
 	//全コース用データをロード
 	for (size_t i = 0; i < kCourseFileCount;i++) {
 		CourseLoader::LoadCourseFileFromManager("Resources/Course",kCourseNameList[i], courseDatas_[i]);
@@ -97,9 +98,10 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 			gimmick->GetWorldTransformAdress()->parent_ = object->GetWorldTransformAdress();
 			gimmick->GetWorldTransformAdress()->UpdateMatrix();
 			//スケールに影響されないWorldMatrix計算
-			Matrix4x4 localMatrix = Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->transform_.scale) * Matrix4x4::MakeRotateXYZMatrix(gimmick->GetWorldTransformAdress()->transform_.rotate) * Matrix4x4::MakeTranslateMatrix(gimmick->GetWorldTransformAdress()->transform_.translate);
-			gimmick->GetWorldTransformAdress()->worldMatrix_ = localMatrix* gimmick->GetWorldTransformAdress()->parent_->worldMatrix_;
-			gimmick->GetWorldTransformAdress()->worldMatrix_ = Matrix4x4::Inverse(Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->parent_->transform_.scale)) * gimmick->GetWorldTransformAdress()->worldMatrix_;
+			//Matrix4x4 localMatrix = Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->transform_.scale) * Matrix4x4::MakeRotateXYZMatrix(gimmick->GetWorldTransformAdress()->transform_.rotate) * Matrix4x4::MakeTranslateMatrix(gimmick->GetWorldTransformAdress()->transform_.translate);
+			//gimmick->GetWorldTransformAdress()->worldMatrix_ = localMatrix* gimmick->GetWorldTransformAdress()->parent_->worldMatrix_;
+			//gimmick->GetWorldTransformAdress()->worldMatrix_ = Matrix4x4::Inverse(Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->parent_->transform_.scale)) * gimmick->GetWorldTransformAdress()->worldMatrix_;
+			
 			if (gimmick) {
 				// listへ
 				objectManager_->AddObject(gimmick);
@@ -117,9 +119,9 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 			gimmick->GetWorldTransformAdress()->parent_ = object->GetWorldTransformAdress();
 			gimmick->GetWorldTransformAdress()->UpdateMatrix();
 			//スケールに影響されないWorldMatrix計算
-			Matrix4x4 localMatrix = Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->transform_.scale) * Matrix4x4::MakeRotateXYZMatrix(gimmick->GetWorldTransformAdress()->transform_.rotate) * Matrix4x4::MakeTranslateMatrix(gimmick->GetWorldTransformAdress()->transform_.translate);
-			gimmick->GetWorldTransformAdress()->worldMatrix_ = localMatrix * gimmick->GetWorldTransformAdress()->parent_->worldMatrix_;
-			gimmick->GetWorldTransformAdress()->worldMatrix_ = Matrix4x4::Inverse(Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->parent_->transform_.scale)) * gimmick->GetWorldTransformAdress()->worldMatrix_;
+			//Matrix4x4 localMatrix = Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->transform_.scale) * Matrix4x4::MakeRotateXYZMatrix(gimmick->GetWorldTransformAdress()->transform_.rotate) * Matrix4x4::MakeTranslateMatrix(gimmick->GetWorldTransformAdress()->transform_.translate);
+			//gimmick->GetWorldTransformAdress()->worldMatrix_ = localMatrix * gimmick->GetWorldTransformAdress()->parent_->worldMatrix_;
+			//gimmick->GetWorldTransformAdress()->worldMatrix_ = Matrix4x4::Inverse(Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->parent_->transform_.scale)) * gimmick->GetWorldTransformAdress()->worldMatrix_;
 			if (gimmick) {
 				// listへ
 				objectManager_->AddObject(gimmick);
@@ -273,6 +275,9 @@ void CourseManager::CreateCustomizeArea(size_t group) {
 	objectManager_->AddObject(object);
 
 	object->SetCourseManager(this);
+	if (group != 0) {
+		object->SetCourseTraversalNum(&courseTraversalNum_);
+	}
 	//各ピックアップポイント
 	for (size_t i = 0; i < kPickupPointCount_;i++) {
 		CreatePickUpPoint(transform.translate,i,group);

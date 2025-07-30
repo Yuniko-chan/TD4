@@ -33,6 +33,9 @@ void CustomArea::OnCollision(ColliderParentObject colliderPartner, const Collisi
         //チェックポイント通過処理
         isTouchPlayer_ = true;
         courseManager_->AddCourse();
+        if (courseTraversalNum_) {
+            (*courseTraversalNum_)++;
+        }
         // 時間への影響
         GameTimeSystem::GetInstance()->CheckpointTimeAffect();
         if (gimmickList_) {
