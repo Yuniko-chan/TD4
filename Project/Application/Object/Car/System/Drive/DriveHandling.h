@@ -47,7 +47,7 @@ private:
 	// リセットフラグ
 	std::optional<std::function<void()>> onReset_ = std::nullopt;
 
-	Vector3 ApplyStatusToHandling(VehicleStatus* status, const Vector3& handling);
+	Vector3 ApplyStatusToHandling(VehicleStatus* status, const float& angle);
 	//Vector3 ApplyHandlingToTire();
 	void ApplyHandlingToTire();
 private:

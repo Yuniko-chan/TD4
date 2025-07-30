@@ -5,16 +5,6 @@
 #include "../../../Player/DebugData/PlayerDebugData.h"
 #include "../../../GameTimer/GameTimeSystem.h"
 
-static int sTimming = 10;	// 入力が加算されるタイミング
-static int sMaxReception = 10;	// 受付最大数
-
-static float sMaxRate = 10.0f;	// 最大
-static float sMinRate = 1.0f;	// 最小
-static float sEngineMax = 10.0f;	// エンジンの最大数
-
-static float sMinDPS = 1.0f;	// 最小ダメージ
-static float sMaxDPS = 7.5f;	// 最大ダメージ
-
 void DriveEngine::Update()
 {
 	// リセット呼び出し
@@ -118,8 +108,8 @@ void DriveEngine::SpeedCalculation()
 	GlobalVariables* global = GlobalVariables::GetInstance();
 	// スピード用のレシオ計算
 	const char* groupName = "VehicleEngine";
-	float maxEngineCountAccelFactor = global->GetFloatValue(groupName, "MaxEngineCountAccelFactor");	// 最大
-	float minEngineCountAccelFactor = global->GetFloatValue(groupName, "MinEngineCountAccelFactor");	// 最小
+	const float kMaxEngineCountAccelFactor = global->GetFloatValue(groupName, "MaxEngineCountAccelFactor");	// 最大
+	const float kMinEngineCountAccelFactor = global->GetFloatValue(groupName, "MinEngineCountAccelFactor");	// 最小
 	int32_t maxEffective = global->GetIntValue(groupName, "MaxEffectiveCount");	// エンジンの最大数
 	float rideSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue(groupName, "AccelerationMultiplier");
 	// レート
@@ -127,12 +117,12 @@ void DriveEngine::SpeedCalculation()
 	engineCount = std::clamp(engineCount, 1.0f, (float)maxEffective);
 	float t = engineCount / (float)maxEffective;
 	// 乗算レート
-	float engineCountEffectiveFactor = Ease::Easing(Ease::EaseName::Lerp, minEngineCountAccelFactor, maxEngineCountAccelFactor, t);
+	float engineCountEffectiveFactor = Ease::Easing(Ease::EaseName::Lerp, kMinEngineCountAccelFactor, kMaxEngineCountAccelFactor, t);
 	
 	// 加速処理
 	if (consecutiveReceptions_ != 0) {
 		// 速度計算
-		accumulatedAccel_ = (float)consecutiveReceptions_ * engineCountEffectiveFactor * rideSpeedFactor;
+		accumulatedAccel_ = ((float)consecutiveReceptions_ * rideSpeedFactor) * engineCountEffectiveFactor;
 
 		// 全体への影響（速度レートが一定を越えている場合オーバーヒート的な何か）
 		OverheatProcess(t);
@@ -188,7 +178,7 @@ void DriveEngine::OverheatProcess(const float& SpeedPercentage)
 		// 乗算レート
 		float engineCountEffectiveFactor = Ease::Easing(Ease::EaseName::Lerp, minEngineCountAccelFactor, maxEngineCountAccelFactor, t);
 		// 加速度の最大値
-		float accelLimit = maxReception * engineCountEffectiveFactor * rideSpeedFactor;
+		float accelLimit = (maxReception * rideSpeedFactor) * engineCountEffectiveFactor;
 		t = std::fabsf(accumulatedAccel_) / accelLimit;
 
 		// 加速度の割合からダメージを計算
