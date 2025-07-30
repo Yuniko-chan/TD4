@@ -81,6 +81,9 @@ void ObjectFactory::Initialize(BaseObjectManager* objectManager)
 
 	createObjectFunctions_[kCreateObjectIndexMinigun].first = kCreateObjectNames_[kCreateObjectIndexMinigun];
 	createObjectFunctions_[kCreateObjectIndexMinigun].second = ObjectCreate::CreateObjectMinigun;
+
+	createObjectFunctions_[kCreateObjectIndexObstacle].first = kCreateObjectNames_[kCreateObjectIndexObstacle];
+	createObjectFunctions_[kCreateObjectIndexObstacle].second = ObjectCreate::CreateObjectObstacle;
 }
 
 IObject* ObjectFactory::CreateObject(LevelData::ObjectData& objectData)
