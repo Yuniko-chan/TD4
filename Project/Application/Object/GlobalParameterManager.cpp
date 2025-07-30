@@ -78,6 +78,7 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	vehicle_.engine.stopDecelerationRate = globalVariables_->GetFloatValue(groupName, "StopDecelerationFactor");
 	// 最大
 	vehicle_.engine.maxEffectiveCount = (int)globalVariables_->GetIntValue(groupName, "MaxEffectiveCount");
+	vehicle_.engine.overheatEngineThreshold = (int)globalVariables_->GetIntValue(groupName, "OverheatEngineCountThreshold");
 
 	groupName = "VehicleHandling";
 	vehicle_.handling.steerMaxAngle = globalVariables_->GetFloatValue(groupName, "SteerMaxAngle");

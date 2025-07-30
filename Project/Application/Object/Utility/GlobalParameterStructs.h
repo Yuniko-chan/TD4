@@ -137,6 +137,10 @@ namespace ParameterStructs {
 		Datas::VehicleCore core;
 		// オーバーヒート関係
 		Datas::Overheat overheat;
+
+		// 加速度の丸める値
+		float accelDiscard = 0.75f;
+
 	};
 
 	/// <summary>

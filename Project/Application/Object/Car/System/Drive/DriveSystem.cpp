@@ -149,14 +149,14 @@ void DriveSystem::VelocityUpdate()
 	//---速度の設定---//
 	// 速度の計算
 	// 速度レートが0の場合加算しない
-	if (driveEngine_->GetCurrentSpeed() != 0) {
-		Vector3 acceleration = Vector3(0.0f,0.0f,1.0f) * driveEngine_->GetCurrentSpeed();
+	if (driveEngine_->GetAccumulatedAccel_() != 0) {
+		Vector3 acceleration = Vector3(0.0f,0.0f,1.0f) * driveEngine_->GetAccumulatedAccel_();
 		velocity_ += acceleration * GameTimeSystem::GetInstance()->GetDeltaTime();
 	}
 
 	//const float velocityDecrement = 0.7f;	// 減速値
 	const float kEpsilon = 0.001f;	// 切り捨て値
-	float friction = 0.9f;
+	float friction = 1.0f;
 	GlobalVariables* global = GlobalVariables::GetInstance();
 	if (owner_->drivingLocation_ == CoursePolygonType::kCoursePolygonTypeDirt) {
 		friction = global->GetFloatValue("VehicleEngine", "DirtFriction");
