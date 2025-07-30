@@ -265,6 +265,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\System\PostEffectSystem\PostEffectSystem.cpp" />
     <ClCompile Include="Application\System\Shadow\Shadow.cpp" />
     <ClCompile Include="Application\System\Shadow\ShadowManager.cpp" />
+    <ClCompile Include="Application\TitleSceneObject\TitleSpriteObjects.cpp" />
     <ClCompile Include="Application\UI\BaseUI.cpp" />
     <ClCompile Include="Application\UI\ManualUI.cpp" />
     <ClCompile Include="Application\UI\UIManager.cpp" />
@@ -554,6 +555,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\System\PostEffectSystem\PostEffectSystem.h" />
     <ClInclude Include="Application\System\Shadow\Shadow.h" />
     <ClInclude Include="Application\System\Shadow\ShadowManager.h" />
+    <ClInclude Include="Application\TitleSceneObject\TitleSpriteObjects.h" />
     <ClInclude Include="Application\UI\BaseUI.h" />
     <ClInclude Include="Application\UI\ManualUI.h" />
     <ClInclude Include="Application\UI\UIManager.h" />

@@ -224,6 +224,7 @@ public: // アクセッサ(マテリアル)
 
 	// 色
 	void SetColor(const Vector4& color);
+	Vector4 GetColor() { return color_; }
 
 	// ライティング
 	void SetEnableLighting(int enableLighting);

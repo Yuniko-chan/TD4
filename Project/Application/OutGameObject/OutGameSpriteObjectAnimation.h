@@ -26,6 +26,8 @@ public: // 静的定数
 		kAnimationIndexRotatingLoop, // 回転ループ
 		kAnimationIndexMoving, // 移動
 		kAnimationIndexMovingLoop, // 移動ループ
+		kAnimationIndexTransparencyChange, // 透明度変更
+		kAnimationIndexTransparencyChangeLoop, // 透明度変更ループ
 		kAnimationIndexOfCount
 	};
 
@@ -93,11 +95,25 @@ public: // 静的関数
 	static void Moving(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation);
 
 	/// <summary>
-	/// 移動
+	/// 移動ループ
 	/// </summary>
 	/// <param name="object">オブジェクト</param>
 	/// <param name="animation">アニメーション</param>
 	static void MovingLoop(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation);
+
+	/// <summary>
+	/// 透明度変更
+	/// </summary>
+	/// <param name="object">オブジェクト</param>
+	/// <param name="animation">アニメーション</param>
+	static void TransparencyChange(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation);
+
+	/// <summary>
+	/// 透明度変更ループ
+	/// </summary>
+	/// <param name="object">オブジェクト</param>
+	/// <param name="animation">アニメーション</param>
+	static void TransparencyChangeLoop(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation);
 
 public: // 関数
 
@@ -125,6 +141,9 @@ public: // 変数
 	
 	// 移動
 	AnimationVariable movingVariable_;
+
+	// 透明度変更
+	AnimationVariable transparencyChangeVariable_;
 
 };
 

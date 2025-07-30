@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Engine/Scene/BaseScene/BaseScene.h"
 #include "../../../Engine/PostEffect/HSV/HSVFilter.h"
+#include "../../TitleSceneObject/TitleSpriteObjects.h"
 /// <summary>
 /// タイトルシーン
 /// </summary>
@@ -54,27 +55,7 @@ private: // メンバ関数
 
 private: // メンバ変数
 
-	// ボタンスプライト
-	std::unique_ptr<Sprite> buttonSprite_;
-	// ボタンテクスチャハンドル
-	uint32_t buttonTextureHandle_;
-	// ボタン点滅用媒介変数
-	float buttonAlphaT_;
-	// ボタン点滅用媒介変数速度
-	float buttonAlphaTSpeed_;
-	// ボタン点滅用媒介変数は増えるか
-	bool buttonItIncreaseAlphaT_;
-	// ボタン色
-	Vector4 buttonColor_;
-
-	// 「スタート」スプライト
-	std::unique_ptr<Sprite> startSprite_;
-	// 「スタート」テクスチャハンドル
-	uint32_t startTextureHandle_;
-
-	// ロゴスプライト
-	std::unique_ptr<Sprite> logoSprite_;
-	// ロゴテクスチャハンドル
-	uint32_t logoTextureHandle_;
+	// タイトルスプライトオブジェクト
+	std::unique_ptr<TitleSpriteObjects> titleSpriteObjects_;
 
 };

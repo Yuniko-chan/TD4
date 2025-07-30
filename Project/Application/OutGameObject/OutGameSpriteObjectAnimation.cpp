@@ -12,7 +12,9 @@ const std::array<
 	OutGameSpriteObjectAnimation::Rotating, // 拡縮
 	OutGameSpriteObjectAnimation::RotatingLoop, // 拡縮ループ
 	OutGameSpriteObjectAnimation::Moving, // 移動
-	OutGameSpriteObjectAnimation::MovingLoop // 移動ループ
+	OutGameSpriteObjectAnimation::MovingLoop, // 移動ループ
+	OutGameSpriteObjectAnimation::TransparencyChange, // 透明度変更
+	OutGameSpriteObjectAnimation::TransparencyChangeLoop, // 透明度変更ループ
 };
 
 void OutGameSpriteObjectAnimation::NumberRoulette(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation)
@@ -124,6 +126,44 @@ void OutGameSpriteObjectAnimation::MovingLoop(OutGameSpriteObject* object, OutGa
 
 }
 
+void OutGameSpriteObjectAnimation::TransparencyChange(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation)
+{
+
+	if (animation->transparencyChangeVariable_.t >= 1.0f) {
+		return;
+	}
+
+	float alpha = Ease::Easing(animation->transparencyChangeVariable_.easeName,
+		animation->transparencyChangeVariable_.start.x,
+		animation->transparencyChangeVariable_.end.x,
+		animation->transparencyChangeVariable_.t);
+
+	animation->transparencyChangeVariable_.t =
+		std::clamp(animation->transparencyChangeVariable_.t + animation->transparencyChangeVariable_.speed, 0.0f, 1.0f);
+
+	Vector4 color = object->GetSprite()->GetColor();
+	color.w = alpha;
+	object->GetSprite()->SetColor(color);
+
+}
+
+void OutGameSpriteObjectAnimation::TransparencyChangeLoop(OutGameSpriteObject* object, OutGameSpriteObjectAnimation* animation)
+{
+
+	float alpha = Ease::Easing(animation->transparencyChangeVariable_.easeName,
+		animation->transparencyChangeVariable_.start.x,
+		animation->transparencyChangeVariable_.end.x,
+		std::fabsf(std::cosf(animation->transparencyChangeVariable_.t)));
+
+	animation->transparencyChangeVariable_.t =
+		std::fmodf(animation->transparencyChangeVariable_.t + animation->transparencyChangeVariable_.speed, static_cast<float>(std::numbers::pi) * 2.0f);
+
+	Vector4 color = object->GetSprite()->GetColor();
+	color.w = alpha;
+	object->GetSprite()->SetColor(color);
+
+}
+
 void OutGameSpriteObjectAnimation::Initialize()
 {
 	for (uint32_t i = 0; i < kAnimationIndexOfCount; ++i) {
@@ -148,6 +188,12 @@ void OutGameSpriteObjectAnimation::Initialize()
 	rotatingVariable_.end = { 6.28f,0.0f }; // 終わり
 	rotatingVariable_.easeName = Ease::EaseName::Lerp; // イージング方法
 	rotatingVariable_.speed = 0.02f; // スピード
+
+	transparencyChangeVariable_.t = 0.0f;
+	transparencyChangeVariable_.start = { 1.0f,0.0f }; // 始まり
+	transparencyChangeVariable_.end = { 0.0f,0.0f }; // 終わり
+	transparencyChangeVariable_.easeName = Ease::EaseName::Lerp; // イージング方法
+	transparencyChangeVariable_.speed = 0.02f; // スピード
 
 }
 

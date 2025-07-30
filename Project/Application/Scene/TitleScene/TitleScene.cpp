@@ -32,23 +32,8 @@ void TitleScene::Initialize()
 	camera_.SetTransform(cameraTransform);
 	camera_.Update();
 
-	// ボタンスプライト位置
-	const Vector2 kButtonSpritePosition = { 400.0f, 540.0f };
-	buttonColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
-	buttonSprite_.reset(Sprite::Create(buttonTextureHandle_, kButtonSpritePosition, buttonColor_));
-	buttonAlphaT_ = 0.0f;
-	// α値変更速度
-	const float kButtonAlphaTSpeed = 0.01f;
-	buttonAlphaTSpeed_ = kButtonAlphaTSpeed;
-	buttonItIncreaseAlphaT_ = true;
-
-	//「スタート」スプライト
-	const Vector2 kStartSpritePosition = { 640.0f, 540.0f };
-	startSprite_.reset(Sprite::Create(startTextureHandle_, kStartSpritePosition, { 1.0f, 1.0f, 1.0f, 1.0f }));
-
-	// ロゴスプライト
-	const Vector2 kLogoSpritePosition = { 640.0f, 200.0f };
-	logoSprite_.reset(Sprite::Create(logoTextureHandle_, kLogoSpritePosition, { 1.0f, 1.0f, 1.0f, 1.0f }));
+	titleSpriteObjects_ = std::make_unique<TitleSpriteObjects>();
+	titleSpriteObjects_->Initialize();
 
 	// モデル描画
 	ModelDraw::PreDrawParameters preDrawParameters;
@@ -73,26 +58,10 @@ void TitleScene::Update()
 
 	objectManager_->Update();
 
+	titleSpriteObjects_->Update();
+
 	// デバッグカメラ
 	DebugCameraUpdate();
-
-	// ボタンスプライト
-	if (buttonItIncreaseAlphaT_) {
-		buttonAlphaT_ += buttonAlphaTSpeed_;
-		if (buttonAlphaT_ >= 1.0f) {
-			buttonAlphaT_ = 1.0f;
-			buttonItIncreaseAlphaT_ = false;
-		}
-	}
-	else {
-		buttonAlphaT_ -= buttonAlphaTSpeed_;
-		if (buttonAlphaT_ <= 0.0f) {
-			buttonAlphaT_ = 0.0f;
-			buttonItIncreaseAlphaT_ = true;
-		}
-	}
-	buttonColor_.w = Ease::Easing(Ease::EaseName::EaseInOutQuad, 0.0f, 1.0f, buttonAlphaT_);
-	buttonSprite_->SetColor(buttonColor_);
 
 	ImguiDraw();
 
@@ -119,14 +88,7 @@ void TitleScene::Draw()
 	// スプライト描画前処理
 	Sprite::PreDraw(dxCommon_->GetCommadList());
 
-	// ボタン
-	buttonSprite_->Draw();
-
-	// 「スタート」
-	startSprite_->Draw();
-
-	// ロゴ
-	logoSprite_->Draw();
+	titleSpriteObjects_->Draw();
 
 	// 前景スプライト描画後処理
 	Sprite::PostDraw();
@@ -182,9 +144,5 @@ void TitleScene::ModelCreate()
 
 void TitleScene::TextureLoad()
 {
-
-	buttonTextureHandle_ = TextureManager::Load("Resources/UI/ButtonA.png", dxCommon_);
-	startTextureHandle_ = TextureManager::Load("Resources/OutGame/Start.png", dxCommon_);
-	logoTextureHandle_ = TextureManager::Load("Resources/OutGame/TitleLogo.png", dxCommon_);
 
 }

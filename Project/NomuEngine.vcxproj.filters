@@ -1071,6 +1071,7 @@
     <ClCompile Include="Application\OutGameObject\OutGameSpriteObjectAnimation.cpp" />
     <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp" />
     <ClCompile Include="Application\AudioManager\GameAudioManager.cpp" />
+    <ClCompile Include="Application\TitleSceneObject\TitleSpriteObjects.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Camera\CameraLists.h" />
@@ -1709,6 +1710,7 @@
     <ClInclude Include="Application\OutGameObject\OutGameSpriteObjectAnimation.h" />
     <ClInclude Include="Engine\ContactRecord\ContactRecord.h" />
     <ClInclude Include="Application\AudioManager\GameAudioManager.h" />
+    <ClInclude Include="Application\TitleSceneObject\TitleSpriteObjects.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc" />
