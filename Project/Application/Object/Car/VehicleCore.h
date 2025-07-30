@@ -2,6 +2,8 @@
 #include "../../../Engine/Object/MeshObject.h"
 #include "../../../Engine/Animation/Animation.h"
 
+#include "../../Course/CoursePolygonType.h"
+
 #include "Parts/PartsInterface.h"
 #include "System/VehicleSystems.h"
 
@@ -64,7 +66,9 @@ public: // アクセッサ
     //回転関係テスト
     Matrix4x4 posture_ = {};//姿勢
     Matrix4x4 atNormal_ = {};//衝突法線による補間
-
+    CoursePolygonType drivingLocation_ = CoursePolygonType::kCoursePolygonTypeRoad;
+    int roadCount_ = 0;
+    int dirtCount_ = 0;
 private:
     // パーツ構築システム
     std::unique_ptr<VehicleConstructionSystem> constructionSystem_;

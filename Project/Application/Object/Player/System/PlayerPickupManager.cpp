@@ -78,6 +78,7 @@ void PlayerPickupManager::Update()
 		AttachVisualizer* ptr = static_cast<AttachVisualizer*>(attachInteract_.get());
 		ptr->SetUp(nearPoint.second, owner_->GetCore()->GetWorldTransformAdress()->direction_);
 		ptr->Update(nearKey_);
+		
 	}
 	else {
 		// ピックアップ場所表示
@@ -97,7 +98,14 @@ void PlayerPickupManager::Update()
 void PlayerPickupManager::ImGuiDraw()
 {
 	ImGui::Text(nearPartsName_.c_str());
-
+	if (attachInteract_->GetInteract()) {
+		Vector3 localA = attachInteract_->GetInteract()->GetWorldTransformAdress()->GetWorldPosition();
+		ImGui::DragFloat3("アタッチ位置", &localA.x);
+	}
+	if (pickupInteract_->GetInteract()) {
+		Vector3 localP = pickupInteract_->GetInteract()->GetWorldTransformAdress()->GetWorldPosition();
+		ImGui::DragFloat3("ピック位置", &localP.x);
+	}
 	if (ImGui::Button("FindNearPart")) {
 		Car::IParts* nearParts = partsManager_->FindNearParts(owner_->GetWorldTransformAdress()->GetWorldPosition());
 		if (nearParts) {

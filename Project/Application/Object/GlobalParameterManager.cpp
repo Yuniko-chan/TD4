@@ -56,6 +56,39 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	groupName = "Vehicle";
 	vehicle_.core.initPosition = globalVariables_->GetVector3Value(groupName, "Core_InitPosition");
 	vehicle_.core.inVehicleLocal = globalVariables_->GetVector3Value(groupName, "Core_LocalPosition");
+
+	vehicle_.overheat.maxDPS = globalVariables_->GetFloatValue(groupName, "OverheatMaxDamage");
+	vehicle_.overheat.minDPS = globalVariables_->GetFloatValue(groupName, "OverheatMinDamage");
+
+	//---エンジン関係---//
+	groupName = "VehicleEngine";
+	vehicle_.engine.inputInterval = globalVariables_->GetFloatValue(groupName, "InputInterval");
+	vehicle_.engine.inputDecrementInterval = globalVariables_->GetFloatValue(groupName, "InputDecrementInterval");
+	vehicle_.engine.maxInputCount = globalVariables_->GetIntValue(groupName, "InputMaxCount");
+	// 摩擦
+	vehicle_.engine.roadFriction = globalVariables_->GetFloatValue(groupName, "RoadFriction");
+	vehicle_.engine.dirtFriction = globalVariables_->GetFloatValue(groupName, "DirtFriction");
+	// 加速
+	vehicle_.engine.maxEngineCountAccelFactor = globalVariables_->GetFloatValue(groupName, "MaxEngineCountAccelFactor");
+	vehicle_.engine.minEngineCountAccelFactor = globalVariables_->GetFloatValue(groupName, "MinEngineCountAccelFactor");
+	vehicle_.engine.accelerationMultiplier = globalVariables_->GetFloatValue(groupName, "AccelerationMultiplier");
+	
+	// 減速
+	vehicle_.engine.idleDecelerationFactor = globalVariables_->GetFloatValue(groupName, "IdleDecelerationFactor");
+	vehicle_.engine.stopDecelerationRate = globalVariables_->GetFloatValue(groupName, "StopDecelerationFactor");
+	// 最大
+	vehicle_.engine.maxEffectiveCount = (int)globalVariables_->GetIntValue(groupName, "MaxEffectiveCount");
+	vehicle_.engine.overheatEngineThreshold = (int)globalVariables_->GetIntValue(groupName, "OverheatEngineCountThreshold");
+
+	groupName = "VehicleHandling";
+	vehicle_.handling.steerMaxAngle = globalVariables_->GetFloatValue(groupName, "SteerMaxAngle");
+	vehicle_.handling.steerMinAngle = globalVariables_->GetFloatValue(groupName, "SteerMinAngle");
+
+	vehicle_.handling.inputInterval = globalVariables_->GetFloatValue(groupName, "InputInterval");
+	vehicle_.handling.inputDecrementInterval = globalVariables_->GetFloatValue(groupName, "InputDecrementInterval");
+	vehicle_.handling.maxSteerInputCount = globalVariables_->GetIntValue(groupName, "InputMaxCount");
+	vehicle_.handling.maxEffectiveCount = globalVariables_->GetIntValue(groupName, "MaxEffectiveCount");
+
 }
 
 void GlobalParameterManager::AddItems()
@@ -82,12 +115,6 @@ void GlobalParameterManager::AddItems()
 
 	//---カメラ---//
 	globalVariables_->AddItem(groupName, "CameraRotateSpeed", float(player_.cameraRotateSpeed));
-	// 共通
-	//groupName = "CameraCommon";
-	//globalVariables_->AddItem(groupName, "InVehicleOffset", Vector3(cameraCommon_.inVehicle.first));
-	//globalVariables_->AddItem(groupName, "InVehicleRotation", Vector3(cameraCommon_.inVehicle.second));
-	//globalVariables_->AddItem(groupName, "OnFootOffset", Vector3(cameraCommon_.onFoot.first));
-	//globalVariables_->AddItem(groupName, "OnFootRotation", Vector3(cameraCommon_.onFoot.second));
 	// 俯瞰
 	groupName = "OverheadCamera";
 	overheadCamera_.defaultData.Initialize(groupName, globalVariables_);
@@ -100,5 +127,39 @@ void GlobalParameterManager::AddItems()
 	groupName = "Vehicle";
 	globalVariables_->AddItem(groupName, "Core_InitPosition", Vector3(vehicle_.core.initPosition));
 	globalVariables_->AddItem(groupName, "Core_LocalPosition", Vector3(vehicle_.core.inVehicleLocal));
+	// オーバーヒート
+	globalVariables_->AddItem(groupName, "OverheatMaxDamage", float(vehicle_.overheat.maxDPS));
+	globalVariables_->AddItem(groupName, "OverheatMinDamage", float(vehicle_.overheat.minDPS));
+
+	// 
+	groupName = "VehicleEngine";
+	// 入力
+	globalVariables_->AddItem(groupName, "InputInterval", float(vehicle_.engine.inputInterval));
+	globalVariables_->AddItem(groupName, "InputDecrementInterval", float(vehicle_.engine.inputDecrementInterval));
+	globalVariables_->AddItem(groupName, "InputMaxCount", int32_t(vehicle_.engine.maxInputCount));
+
+	// 摩擦
+	globalVariables_->AddItem(groupName, "RoadFriction", float(vehicle_.engine.roadFriction));
+	globalVariables_->AddItem(groupName, "DirtFriction", float(vehicle_.engine.dirtFriction));
+	
+	// 加速度
+	globalVariables_->AddItem(groupName, "MaxEngineCountAccelFactor", float(vehicle_.engine.maxEngineCountAccelFactor));
+	globalVariables_->AddItem(groupName, "MinEngineCountAccelFactor", float(vehicle_.engine.minEngineCountAccelFactor));
+	globalVariables_->AddItem(groupName, "AccelerationMultiplier", float(vehicle_.engine.accelerationMultiplier));
+	globalVariables_->AddItem(groupName, "IdleDecelerationFactor", float(vehicle_.engine.idleDecelerationFactor));
+	globalVariables_->AddItem(groupName, "StopDecelerationFactor", float(vehicle_.engine.stopDecelerationRate));
+
+	// 数・閾値
+	globalVariables_->AddItem(groupName, "MaxEffectiveCount", int32_t(vehicle_.engine.maxEffectiveCount));
+	globalVariables_->AddItem(groupName, "OverheatEngineCountThreshold", int32_t(vehicle_.engine.overheatEngineThreshold));
+
+	groupName = "VehicleHandling";
+	globalVariables_->AddItem(groupName, "SteerMaxAngle", float(vehicle_.handling.steerMaxAngle));
+	globalVariables_->AddItem(groupName, "SteerMinAngle", float(vehicle_.handling.steerMinAngle));
+	
+	globalVariables_->AddItem(groupName, "InputInterval", float(vehicle_.handling.inputInterval));
+	globalVariables_->AddItem(groupName, "InputDecrementInterval", float(vehicle_.handling.inputDecrementInterval));
+	globalVariables_->AddItem(groupName, "InputMaxCount", int32_t(vehicle_.handling.maxSteerInputCount));
+	globalVariables_->AddItem(groupName, "MaxEffectiveCount", int32_t(vehicle_.handling.maxEffectiveCount));
 
 }

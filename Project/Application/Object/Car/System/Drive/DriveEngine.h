@@ -40,8 +40,7 @@ private:
 
 public: // アクセッサ
 	//---ゲッター---//
-	float GetCurrentSpeed() const { return currentSpeed_; }
-	float GetEuler() { return eulerY_; }
+	float GetAccumulatedAccel_() const { return accumulatedAccel_; }
 
 private:
 	// 受付連続回数
@@ -53,11 +52,7 @@ private:
 	// 入力カウント
 	float inputCounter_ = 0;
 	// 速度
-	float currentSpeed_ = 0.0f;
-	// オイラー
-	float eulerY_ = 0.0f;
-	// 運転中か？
-	bool isDrive_ = false;
+	float accumulatedAccel_ = 0.0f;
 
 private:
 	// リセットフラグ

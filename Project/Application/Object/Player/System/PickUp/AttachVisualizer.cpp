@@ -32,40 +32,37 @@ void AttachVisualizer::RefrashSpot(const std::string& name)
 {
 	// タイヤ
 	if (name == "TireParts") {
-		InteractObject_ = FindSpot("TireSpot");
+		interactObject_ = FindSpot("TireSpot");
 	}
 	// アーマー
 	else if (name == "ArmorFrameParts") {
-		InteractObject_ = FindSpot("ArmorSpot");
+		interactObject_ = FindSpot("ArmorSpot");
 	}
 	// エンジン
 	else if (name == "EngineParts") {
-		InteractObject_ = FindSpot("EngineSpot");
+		interactObject_ = FindSpot("EngineSpot");
 	}
 }
 
 void AttachVisualizer::Reset()
 {
 	// 終了処理
-	InteractObject_->SetIsDraw(false);
-	InteractObject_ = nullptr;
+	interactObject_->SetIsDraw(false);
+	interactObject_ = nullptr;
 }
 
 void AttachVisualizer::SetUp(const Vector3& position, const Vector3& direction)
 {
-	InteractObject_->GetWorldTransformAdress()->transform_.translate = position;
-	InteractObject_->GetWorldTransformAdress()->direction_ = direction;
+	interactObject_->GetWorldTransformAdress()->transform_.translate = position;
+	interactObject_->GetWorldTransformAdress()->direction_ = direction;
 }
 
 void AttachVisualizer::Update(const Vector2Int& key)
 {
-	if (InteractObject_) {
-		if (key == Vector2Int(0, 0)) {
-			parent_ = nullptr;
-		}
-		else {
-			parent_ = InteractObject_->GetWorldTransformAdress();
-		}
+	if (interactObject_) {
+		// キーが初期じゃなければ
+		if (key == Vector2Int(0, 0)) { parent_ = nullptr; }
+		else { parent_ = interactObject_->GetWorldTransformAdress(); }
 	}
 	// リフレッシュ
 	Refresh();

@@ -15,11 +15,14 @@ void BaseInteractionVisualizer::Update()
 
 void BaseInteractionVisualizer::Refresh()
 {
-	// 親があれば設定
-	if (parent_) {
-		InteractObject_->SetIsDraw(true);
-	}
-	else {
-		InteractObject_->SetIsDraw(false);
+	if (interactObject_) {
+		// 親があれば設定
+		if (parent_) {
+			interactObject_->SetIsDraw(true);
+		}
+		else {
+			interactObject_->SetIsDraw(false);
+		}
+		interactObject_->Update();
 	}
 }

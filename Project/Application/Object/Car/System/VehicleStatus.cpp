@@ -84,8 +84,8 @@ void VehicleStatus::ApplyPartAdd(std::string name, Vector2Int key)
 	if (name == "TireParts") {
 		partsTypes_.tire++;
 		// 左右のチェック
-		if (key.x > 0) wheelDirectCount_.x++;
-		else if (key.x < 0) wheelDirectCount_.y++;
+		if (key.x < 0) wheelDirectCount_.x++;
+		else if (key.x > 0) wheelDirectCount_.y++;
 		else if (key.y > 0) wheelDirectCount_.z++;
 		else if (key.y < 0) wheelDirectCount_.w++;
 	}

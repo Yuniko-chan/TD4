@@ -23,9 +23,11 @@ public:
 	/// </summary>
 	virtual void Refresh();
 
+	InteractionSpot* GetInteract() { return interactObject_; }
+
 protected:
 	// インタラクト用のオブジェクト
-	InteractionSpot* InteractObject_ = nullptr;
+	InteractionSpot* interactObject_ = nullptr;
 	// 親のトランスフォーム
 	WorldTransform* parent_ = nullptr;
 

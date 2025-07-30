@@ -34,21 +34,58 @@ namespace ParameterStructs {
 		// ハンドル関係
 		struct VehicleHandling
 		{
-			// ハンドルの回転の最大値（X）
-			float steerMaxDirect = 2.0f;
-			// ハンドル入力の間隔
-			int handleInputDuration = 6;
+			// ハンドルの最大角度
+			float steerMaxAngle = 2.0f;
+			// ハンドルの最小角度
+			float steerMinAngle = 0.1f;
+			// 入力間隔
+			float inputInterval = 5.0f;
+			// 減少の間隔
+			float inputDecrementInterval = 2.0f;
+
+			// ステアの切り返しの大きいかを判定する閾値
+			int steerReturnAccelThreshold = 0;
+			// 切り返しの大きい際のセンシ
+			int highInputReturnSensitivity = 0;
+			// ハンドル入力の最大値
+			int32_t maxSteerInputCount = 0;
+
+			// 影響の出る最大値
+			int maxEffectiveCount = 10;
 		};
 
 		// エンジン関係
 		struct VehicleEngine 
 		{
-			// 加算間隔
-			int addDuration = 10;
-			// 最大受付数
-			int maxReception = 15;
-			// 受付数に対する倍率
-			float receptionRatio = 3.0f;
+			// 入力間隔
+			float inputInterval = 5.0f;
+			// 減少の間隔
+			float inputDecrementInterval = 2.0f;
+			// 受付の最大値
+			int32_t maxInputCount = 0;
+
+			// 摩擦
+			float dirtFriction = 0.55f;
+			float roadFriction = 0.75f;
+			// 影響の出る最大値
+			int maxEffectiveCount = 10;
+
+			// 加速度
+			float maxEngineCountAccelFactor = 10.0f;
+			float minEngineCountAccelFactor = 1.0f;
+			float accelerationMultiplier = 1.0f;	// デフォルト乗算係数
+
+			float idleDecelerationFactor = 0.05f;
+			float stopDecelerationRate = 0.1f;
+			// オーバーヒートするかのエンジン数閾値
+			int overheatEngineThreshold = 0;
+		};
+
+		// オーバーヒート
+		struct Overheat
+		{
+			float maxDPS = 7.0f;	// 最小
+			float minDPS = 1.0f;	// 最大
 		};
 
 		struct CameraDefault {
@@ -101,6 +138,12 @@ namespace ParameterStructs {
 		Datas::VehicleEngine engine;
 		// コア
 		Datas::VehicleCore core;
+		// オーバーヒート関係
+		Datas::Overheat overheat;
+
+		// 加速度の丸める値
+		float accelDiscard = 0.75f;
+
 	};
 
 	/// <summary>
