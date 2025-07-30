@@ -20,7 +20,6 @@ void GlobalParameterManager::ApplyGlobalVariables()
 {
 
 	const char* groupName = "Player";
-	player_.rideSpeedFactor = globalVariables_->GetFloatValue(groupName, "RideSpeed");
 	player_.walkSpeedFactor = globalVariables_->GetFloatValue(groupName, "WalkSpeed");
 
 	player_.ride.jumpHeight = globalVariables_->GetFloatValue(groupName, "RideHeight");
@@ -110,7 +109,6 @@ void GlobalParameterManager::AddItems()
 	globalVariables_->AddItem(groupName, "HoldOffset", Vector3(player_.holdOffset));
 
 	// 移動量
-	globalVariables_->AddItem(groupName, "RideSpeed", float(player_.rideSpeedFactor));
 	globalVariables_->AddItem(groupName, "WalkSpeed", float(player_.walkSpeedFactor));
 
 	//---カメラ---//
