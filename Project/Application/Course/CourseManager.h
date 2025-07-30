@@ -5,6 +5,7 @@
 #include<utility>
 #include "../Object/Car/PickupPoint/PickupPointLists.h"
 #include "../Object/Factory/ObjectFactory.h"
+#include "../ClearSceneObject/CourseTraversalSystem.h"
 
 static const size_t kCourseNum = 6;
 static const size_t kCourseFileCount = 3;
@@ -58,6 +59,9 @@ public:
 	void SetAddCourseFunction(std::function<void(void)> function);
 	void SetPlayer(MeshObject* object) { player_ = object; };
 
+	//コース踏破数を送る
+	void AdaptCourseTraversalNum() { CourseTraversalSystem::SetCourseTraversalNum(courseTraversalNum_); };
+
 private:
 	std::array<CourseImportData, kCourseFileCount> courseDatas_;
 	GameSceneObjectManager* objectManager_;
@@ -98,4 +102,7 @@ private:
 	LevelDataManager* levelDataManager_;
 
 	ObjectFactory* objectFactory_;
+
+	//コース踏破数
+	int32_t courseTraversalNum_ = 0;
 };

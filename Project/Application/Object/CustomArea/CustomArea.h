@@ -53,6 +53,8 @@ public: // 関数
 
     void SetGimmickList(std::unique_ptr<std::vector<IObject*>>& list) { gimmickList_ = std::move(list); };
 
+    void SetCourseTraversalNum(int32_t* num) { courseTraversalNum_ = num; };
+
 private: // 関数
 
     /// <summary>
@@ -72,5 +74,8 @@ private: // 変数
 
     //ギミック削除用リストのポインタ
     std::unique_ptr<std::vector<IObject*>> gimmickList_ = nullptr;
+
+    //コース踏破数
+    int32_t* courseTraversalNum_ = nullptr;
 };
 

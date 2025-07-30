@@ -125,6 +125,9 @@ void GameScene::Update() {
 	if (input_->TriggerKey(DIK_P)) {
 		AddCourse();
 	}
+	if (input_->TriggerKey(DIK_F2)) {
+		courseManager_->AdaptCourseTraversalNum();
+	}
 #endif
 
 	if (requestSceneNo_ == kClear || requestSceneNo_ == kTitle || isBeingReset_) {

@@ -11,6 +11,7 @@ void CourseManager::Initialize(GameSceneObjectManager* objectManager, LevelDataM
 	objectManager_ = objectManager;
 	levelDataManager_ = levelDataManager;
 	objectFactory_ = objectManager_->GetObjectFactory();
+	courseTraversalNum_ = 0;
 	//全コース用データをロード
 	for (size_t i = 0; i < kCourseFileCount;i++) {
 		CourseLoader::LoadCourseFileFromManager("Resources/Course",kCourseNameList[i], courseDatas_[i]);
@@ -274,6 +275,9 @@ void CourseManager::CreateCustomizeArea(size_t group) {
 	objectManager_->AddObject(object);
 
 	object->SetCourseManager(this);
+	if (group != 0) {
+		object->SetCourseTraversalNum(&courseTraversalNum_);
+	}
 	//各ピックアップポイント
 	for (size_t i = 0; i < kPickupPointCount_;i++) {
 		CreatePickUpPoint(transform.translate,i,group);
