@@ -2,17 +2,15 @@
 #include "../../Engine/Audio/AudioManager.h"
 
 /// <summary>
-/// ゲームオーディオ名前群
+/// タイトルオーディオ名前群
 /// </summary>
-enum GameAudioNameIndex {
-	kGameBGM, // BGM
-	kGameAudioNameIndexOfCount // 数
+enum TitleAudioNameIndex {
+	kTitleBGM, // BGM
+	kTitlePushButton, // ボタンを押したとき
+	kTitleAudioNameIndexOfCount // 数
 };
 
-/// <summary>
-/// ゲームオーディオマネージャー
-/// </summary>
-class GameAudioManager :
+class TitleAudioManager :
     public AudioManager
 {
 
@@ -21,7 +19,7 @@ public: // メンバ関数
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~GameAudioManager();
+	~TitleAudioManager();
 
 	/// <summary>
 	/// 初期化
@@ -43,12 +41,13 @@ public: // メンバ関数
 private: // メンバ変数
 
 	// データ
-	std::array<AudioData, GameAudioNameIndex::kGameAudioNameIndexOfCount> audioDatas_;
+	std::array<AudioData, TitleAudioNameIndex::kTitleAudioNameIndexOfCount> audioDatas_;
 
 	// ファイル名
-	std::array<const std::string, GameAudioNameIndex::kGameAudioNameIndexOfCount> audioNames_ =
+	std::array<const std::string, TitleAudioNameIndex::kTitleAudioNameIndexOfCount> audioNames_ =
 	{
-		"default/Alarm01.mp3",
+		"BGM/SampleBGM.mp3",
+		"Soundeffect/PressButton.mp3",
 	};
 
 };

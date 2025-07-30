@@ -1072,6 +1072,7 @@
     <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp" />
     <ClCompile Include="Application\AudioManager\GameAudioManager.cpp" />
     <ClCompile Include="Application\TitleSceneObject\TitleSpriteObjects.cpp" />
+    <ClCompile Include="Application\AudioManager\TitleAudioManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Camera\CameraLists.h" />
@@ -1711,6 +1712,7 @@
     <ClInclude Include="Engine\ContactRecord\ContactRecord.h" />
     <ClInclude Include="Application\AudioManager\GameAudioManager.h" />
     <ClInclude Include="Application\TitleSceneObject\TitleSpriteObjects.h" />
+    <ClInclude Include="Application\AudioManager\TitleAudioManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc" />

@@ -1,16 +1,16 @@
-#include "GameAudioManager.h"
+#include "TitleAudioManager.h"
 
-GameAudioManager::~GameAudioManager()
+TitleAudioManager::~TitleAudioManager()
 {
 }
 
-void GameAudioManager::Initialize()
+void TitleAudioManager::Initialize()
 {
 
 	AudioManager::Initialize();
 
 	// 全体の初期設定
-	for (uint32_t i = 0; i < GameAudioNameIndex::kGameAudioNameIndexOfCount; ++i) {
+	for (uint32_t i = 0; i < TitleAudioNameIndex::kTitleAudioNameIndexOfCount; ++i) {
 		audioDatas_[i].handle_ = audio_->LoadAudio(audioNames_[i]);
 		audioDatas_[i].isLoop_ = false;
 		audioDatas_[i].volume_ = 1.0f;
@@ -18,15 +18,16 @@ void GameAudioManager::Initialize()
 	}
 
 	// 個別設定
-
+	audioDatas_[kTitleBGM].isLoop_ = true;
+	audioDatas_[kTitleBGM].isBGM_ = true;
 
 }
 
-void GameAudioManager::Update()
+void TitleAudioManager::Update()
 {
 }
 
-void GameAudioManager::PlayWave(uint32_t audioIndex)
+void TitleAudioManager::PlayWave(uint32_t audioIndex)
 {
 
 	float volume = 0.0f;

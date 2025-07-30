@@ -2,6 +2,7 @@
 #include "../../../Engine/Scene/BaseScene/BaseScene.h"
 #include "../../../Engine/PostEffect/HSV/HSVFilter.h"
 #include "../../TitleSceneObject/TitleSpriteObjects.h"
+#include "../../AudioManager/TitleAudioManager.h"
 /// <summary>
 /// タイトルシーン
 /// </summary>
@@ -57,5 +58,8 @@ private: // メンバ変数
 
 	// タイトルスプライトオブジェクト
 	std::unique_ptr<TitleSpriteObjects> titleSpriteObjects_;
+
+	// オーディオマネージャー
+	std::unique_ptr<TitleAudioManager> audioManager_;
 
 };

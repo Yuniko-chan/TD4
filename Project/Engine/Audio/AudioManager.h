@@ -109,6 +109,9 @@ protected: // メンバ変数
 	// オーディオクラス
 	static Audio* audio_;
 
+	// 初期化した？
+	static bool didYouInitializeIt_;
+
 public: // アクセッサ
 
 	/// <summary>

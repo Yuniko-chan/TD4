@@ -10,6 +10,12 @@
 TitleScene::~TitleScene()
 {
 
+	if (stopAudio_) {
+		for (uint32_t i = 0; i < audioManager_->kMaxPlayingSoundData; ++i) {
+			audioManager_->StopWave(i);
+		}
+	}
+
 }
 
 void TitleScene::Initialize()
@@ -19,6 +25,19 @@ void TitleScene::Initialize()
 
 	ModelCreate();
 	TextureLoad();
+
+	// オーディオマネージャー
+	audioManager_ = std::make_unique<TitleAudioManager>();
+	audioManager_->StaticInitialize();
+	audioManager_->Initialize();
+
+	// 一度鳴らして止める
+	for (uint32_t i = 0; i < TitleAudioNameIndex::kTitleAudioNameIndexOfCount; ++i) {
+		audioManager_->PlayWave(i);
+	}
+	for (uint32_t i = 0; i < audioManager_->kMaxPlayingSoundData; ++i) {
+		audioManager_->StopWave(i);
+	}
 
 	// オブジェクトマネージャー
 	objectManager_ = std::make_unique<TitleSceneObjectManager>();
@@ -34,6 +53,9 @@ void TitleScene::Initialize()
 
 	titleSpriteObjects_ = std::make_unique<TitleSpriteObjects>();
 	titleSpriteObjects_->Initialize();
+
+
+	audioManager_->PlayWave(kTitleBGM);
 
 	// モデル描画
 	ModelDraw::PreDrawParameters preDrawParameters;
@@ -54,6 +76,7 @@ void TitleScene::Update()
 	if (input_->TriggerJoystick(JoystickButton::kJoystickButtonA)) {
 		// 行きたいシーンへ
 		requestSceneNo_ = kGame;
+		audioManager_->PlayWave(kTitlePushButton);
 	}
 
 	objectManager_->Update();

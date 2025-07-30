@@ -13,8 +13,16 @@ float AudioManager::SEVolume_ = 0.0f;
 // オーディオクラス
 Audio* AudioManager::audio_ = nullptr;
 
+// 初期化した？
+bool AudioManager::didYouInitializeIt_ = false;
+
 void AudioManager::StaticInitialize()
 {
+
+	if (didYouInitializeIt_) {
+		return;
+	}
+
 	// マスター
 	masterVolume_ = 0.1f;
 	// BGM
@@ -23,6 +31,8 @@ void AudioManager::StaticInitialize()
 	SEVolume_ = 1.0f;
 	// オーディオクラス
 	audio_ = Audio::GetInstance();
+	// 初期化した？
+	didYouInitializeIt_ = true;
 
 }
 
@@ -74,17 +84,6 @@ void AudioManager::StopWave(uint32_t playingSoundDataHandle)
 	playingSoundDatas_[playingSoundDataHandle].pSourceVoice_ = nullptr;
 
 }
-
-//bool AudioManager::IsPlayAudio(uint32_t playingSoundDataHandle)
-//{
-//
-//	if (playingSoundDatas_[playingSoundDataHandle].pSourceVoice_) {
-//		return false;
-//	}
-//
-//	return true;
-//
-//}
 
 void AudioManager::SetVolume(uint32_t playingSoundDataHandle, float volume)
 {
