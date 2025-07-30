@@ -6,6 +6,7 @@
 #include "../Object/Car/PickupPoint/PickupPointLists.h"
 #include "../Object/Factory/ObjectFactory.h"
 #include "../ClearSceneObject/CourseTraversalSystem.h"
+#include "CourseCollisionSystem.h"
 
 static const size_t kCourseNum = 6;
 static const size_t kCourseFileCount = 3;
@@ -38,6 +39,163 @@ static const std::array<std::string, kPickupPointCount_> kPickupPointFileList = 
 
 static const float kAddCourseBorder = 200;
 
+static const size_t kWallVerticesNum = 20*3;
+static const size_t kWallVerticesNum2 = 20*3;
+
+//時計回りの面を表とする
+
+static const float kCustomAreaWallWidth = 2.0f;
+
+static const std::array<Vector3, kWallVerticesNum> kWallOffset{
+	//右側面
+	Vector3{kCourseDiameter / 2.0f,0.0f,-kCourseDiameter / 2},
+	Vector3{kCourseDiameter / 2.0f,0.0f,kCourseDiameter +kCourseDiameter / 2},
+	Vector3{kCourseDiameter / 2.0f,50.0f,-kCourseDiameter / 2},
+
+	Vector3{kCourseDiameter / 2.0f,50.0f,-kCourseDiameter / 2},
+	Vector3{kCourseDiameter / 2.0f,0.0f,kCourseDiameter + kCourseDiameter / 2},
+	Vector3{kCourseDiameter / 2.0f,50.0f,kCourseDiameter + kCourseDiameter / 2},
+
+	//左側面
+	Vector3{-kCourseDiameter * 2.5f,0.0f,-kCourseDiameter / 2},
+	Vector3{-kCourseDiameter * 2.5f,50.0f,-kCourseDiameter / 2},
+	Vector3{-kCourseDiameter * 2.5f,0.0f,kCourseDiameter + kCourseDiameter / 2},
+
+	Vector3{-kCourseDiameter * 2.5f,50.0f,-kCourseDiameter / 2},
+	Vector3{-kCourseDiameter * 2.5f,50.0f,kCourseDiameter + kCourseDiameter / 2},
+	Vector3{-kCourseDiameter * 2.5f,0.0f,kCourseDiameter + kCourseDiameter / 2},
+
+
+	//奥面 左
+	Vector3{-kCourseDiameter * 2.5f,0.0f,kCourseDiameter * 1.5f},
+	Vector3{-kCourseDiameter * 2.5f,50.0f,kCourseDiameter * 1.5f},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) ,0.0f,kCourseDiameter * 1.5f},
+
+	Vector3{-kCourseDiameter * 2.5f,50.0f,kCourseDiameter * 1.5f},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter/2.0f - 22.5f * kCourseScale_)  ,50.0f,kCourseDiameter * 1.5f},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_)  , 0.0f,kCourseDiameter * 1.5f},
+
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_), 0.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_),50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_), 0.0f,kCourseDiameter * 1.5f},
+
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) + (kCustomAreaWallWidth *kCourseScale_),50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_),50.0f,kCourseDiameter * 1.5f},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_), 0.0f,kCourseDiameter * 1.5f},
+
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) , 0.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) , 0.0f,kCourseDiameter * 1.5f},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) ,50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) ,50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) , 0.0f,kCourseDiameter * 1.5f},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) ,50.0f,kCourseDiameter * 1.5f},
+
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) , 0.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) , 50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_),0.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) , 50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_),50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f - 22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_),0.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+
+
+	//奥 右
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_),0.0f,kCourseDiameter * 1.5f},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_),50.0f,kCourseDiameter * 1.5f},
+	Vector3{kCourseDiameter * 0.5f,0.0f,kCourseDiameter * 1.5f},
+
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_),50.0f,kCourseDiameter * 1.5f},
+	Vector3{kCourseDiameter * 0.5f,50.0f,kCourseDiameter * 1.5f},
+	Vector3{kCourseDiameter * 0.5f, 0.0f,kCourseDiameter * 1.5f},
+
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) , 0.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) ,50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) , 0.0f,kCourseDiameter * 1.5f},
+
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) ,50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) ,50.0f,kCourseDiameter * 1.5f},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) , 0.0f,kCourseDiameter * 1.5f},
+
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_), 0.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_), 0.0f,kCourseDiameter * 1.5f},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_),50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_),50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_), 0.0f,kCourseDiameter * 1.5f},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_),50.0f,kCourseDiameter * 1.5f},
+
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_), 0.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_), 50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) ,0.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_), 50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) ,50.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+	Vector3{-kCourseDiameter * 2.5f + (kCourseDiameter / 2.0f + 22.5f * kCourseScale_) ,0.0f,kCourseDiameter * 1.5f - (22.5f * kCourseScale_)},
+};
+
+static const std::array<Vector3, kWallVerticesNum> kWallNormals{
+	//右
+	Vector3{-1.0f,0.0f,0.0f},
+	Vector3{-1.0f,0.0f,0.0f},
+	Vector3{-1.0f,0.0f,0.0f},
+
+	Vector3{-1.0f,0.0f,0.0f},
+	Vector3{-1.0f,0.0f,0.0f},
+	Vector3{-1.0f,0.0f,0.0f},
+
+	//左
+	Vector3{1.0f,0.0f,0.0f},
+	Vector3{1.0f,0.0f,0.0f},
+	Vector3{1.0f,0.0f,0.0f},
+
+	Vector3{1.0f,0.0f,0.0f},
+	Vector3{1.0f,0.0f,0.0f},
+	Vector3{1.0f,0.0f,0.0f},
+
+	//奥 左
+	Vector3{0.0f,0.0f,-1.0f},
+	Vector3{0.0f,0.0f,-1.0f},
+	Vector3{0.0f,0.0f,-1.0f},
+
+	Vector3{0.0f,0.0f,-1.0f},
+	Vector3{0.0f,0.0f,-1.0f},
+	Vector3{0.0f,0.0f,-1.0f},
+
+	Vector3{1.0f,0.0f,0.0f},
+	Vector3{1.0f,0.0f,0.0f},
+	Vector3{1.0f,0.0f,0.0f},
+
+	Vector3{1.0f,0.0f,0.0f},
+	Vector3{1.0f,0.0f,0.0f},
+	Vector3{1.0f,0.0f,0.0f},
+
+	Vector3{-1.0f,0.0f,0.0f},
+	Vector3{-1.0f,0.0f,0.0f},
+	Vector3{-1.0f,0.0f,0.0f},
+
+	Vector3{-1.0f,0.0f,0.0f},
+	Vector3{-1.0f,0.0f,0.0f},
+	Vector3{-1.0f,0.0f,0.0f},
+
+	Vector3{0.0f,0.0f,-1.0f},
+	Vector3{0.0f,0.0f,-1.0f},
+	Vector3{0.0f,0.0f,-1.0f},
+
+	Vector3{0.0f,0.0f,-1.0f},
+	Vector3{0.0f,0.0f,-1.0f},
+	Vector3{0.0f,0.0f,-1.0f},
+
+	//奥 右
+	Vector3{0.0f,0.0f,-1.0f},
+	Vector3{0.0f,0.0f,-1.0f},
+	Vector3{0.0f,0.0f,-1.0f},
+
+	Vector3{0.0f,0.0f,-1.0f},
+	Vector3{0.0f,0.0f,-1.0f},
+	Vector3{0.0f,0.0f,-1.0f},
+};
+
 class CourseManager
 {
 public:
@@ -61,6 +219,11 @@ public:
 
 	//コース踏破数を送る
 	void AdaptCourseTraversalNum() { CourseTraversalSystem::SetCourseTraversalNum(courseTraversalNum_); };
+
+	//壁生成
+	void CreateWall();
+
+	void SetCourseCollisionSystem(CourseCollisionSystem* courseCollisionSystem) { courseCollisionSystem_ = courseCollisionSystem; };
 
 private:
 	std::array<CourseImportData, kCourseFileCount> courseDatas_;
@@ -105,4 +268,6 @@ private:
 
 	//コース踏破数
 	int32_t courseTraversalNum_ = 0;
+
+	CourseCollisionSystem* courseCollisionSystem_ = nullptr;
 };
