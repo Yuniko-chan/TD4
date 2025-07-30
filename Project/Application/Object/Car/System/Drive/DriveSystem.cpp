@@ -155,22 +155,39 @@ void DriveSystem::VelocityUpdate()
 	}
 
 	//const float velocityDecrement = 0.7f;	// 減速値
-	const float kEpsilon = 0.001f;	// 切り捨て値
 	float friction = 1.0f;
 	GlobalVariables* global = GlobalVariables::GetInstance();
+	const float kDirtFriction = global->GetFloatValue("VehicleEngine", "DirtFriction");
+	const float kRoadFriction = global->GetFloatValue("VehicleEngine", "RoadFriction");
 	if (owner_->drivingLocation_ == CoursePolygonType::kCoursePolygonTypeDirt) {
-		friction = global->GetFloatValue("VehicleEngine", "DirtFriction");
+		// ダートの方が大きい
+		if (owner_->dirtCount_ > owner_->roadCount_) {
+			// ダートのみ
+			if (owner_->roadCount_ == 0) {
+				friction = kDirtFriction;
+			}
+			else {
+				friction = Ease::Easing(Ease::EaseName::Lerp, kRoadFriction, kDirtFriction, 0.75f);
+			}
+		}
+		// 同じ
+		else if (owner_->dirtCount_ == owner_->roadCount_) {
+			friction = Ease::Easing(Ease::EaseName::Lerp, kRoadFriction, kDirtFriction, 0.5f);
+		}
+		// 道の方が大きい
+		else {
+			friction = Ease::Easing(Ease::EaseName::Lerp, kRoadFriction, kDirtFriction, 0.25f);
+		}
 	}
 	else {
-		friction = global->GetFloatValue("VehicleEngine", "RoadFriction");
+		friction = kRoadFriction;
 	}
-	// 減速
+	// 摩擦減速
 	velocity_ = velocity_ * (friction);
-	//if (std::fabsf(Vector3::Length(velocity_)) > 0) {
-	//	Vector3 invDirect = (Vector3::Normalize(velocity_) * -1.0f) * friction * frictionScale;
-	//	velocity_ += invDirect * GameTimeSystem::GetInstance()->GetDeltaTime();
-	//}
-	// 0に調節
+
+
+	// 0スナップ
+	const float kEpsilon = 0.001f;	// 切り捨て値
 	VehicleCaluclator calc;
 	velocity_ = calc.SnapToZero(velocity_, kEpsilon);
 
