@@ -2,7 +2,7 @@
     "VehicleHandling": {
         "InputDecrementInterval": 2.0,
         "InputInterval": 5.0,
-        "MaxSteerInputCount": 30,
+        "InputMaxCount": 30,
         "SteerMaxAngle": 1.0,
         "SteerMinAngle": 0.10000000149011612
     }
