@@ -86,7 +86,7 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 	// オプション関数（ハードコード
 	OptionProcess();
 
-
+	// コア
 	VehicleCore* vehicleCore = static_cast<VehicleCore*>(this->GetObjectPointer("initCore"));
 	vehicleCore->SetAudioManager(audioManager_);
 

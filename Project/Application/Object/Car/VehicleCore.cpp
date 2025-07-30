@@ -113,19 +113,8 @@ void VehicleCore::Update()
 
 	isDelete_ = false;
 
-	if (isDrive_) {
-		if (timeCountEngineSE_ <= kTimeCountEngineSEMax_) {
-			timeCountEngineSE_ += kDeltaTime_;
-		}
-		else {
-			audioManager_->PlayWave(kGameAudioNameIndexEngine);
-			timeCountEngineSE_ = 0.0f;
-		}
-	}
-	else {
-		audioManager_->StopWave(kGameAudioNameIndexEngine);
-		timeCountEngineSE_ = kTimeCountEngineSEMax_;
-	}
+	EngineSERinging();
+
 }
 
 void VehicleCore::Draw(BaseCamera& camera)
@@ -202,4 +191,31 @@ void VehicleCore::ImGuiDrawParts()
 	//}
 
 	ImGui::Text("\n");
+}
+
+void VehicleCore::EngineSERinging()
+{
+
+	if (isDrive_) {
+		if (timeCountEngineSE_ <= kTimeCountEngineSEMax_) {
+			timeCountEngineSE_ += kDeltaTime_;
+		}
+		else {
+			audioManager_->PlayWave(kGameAudioNameIndexEngine);
+			timeCountEngineSE_ = 0.0f;
+		}
+	}
+	else {
+		audioManager_->StopWave(kGameAudioNameIndexEngine);
+		timeCountEngineSE_ = kTimeCountEngineSEMax_;
+	}
+
+}
+
+void VehicleCore::SetAudioManager(GameAudioManager* audioManager)
+{
+
+	audioManager_ = audioManager;
+	constructionSystem_->SetAudioManager(audioManager_);
+
 }

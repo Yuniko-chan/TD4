@@ -7,7 +7,7 @@
 enum GameAudioNameIndex {
 	kGameAudioNameIndexBGM, // BGM
 	kGameAudioNameIndexAttachment, // パーツをくっつける音
-	kGameAudioNameIndexEngine, // エンジンの音
+	kGameAudioNameIndexEngine, // エンジンの音（VehicleCore）
 	kGameAudioNameIndexExplosion, // 爆発の音
 	kGameAudioNameIndexGrab, // もち上げる音 （PlayerPickupManager）
 	kGameAudioNameIndexOfCount // 数
