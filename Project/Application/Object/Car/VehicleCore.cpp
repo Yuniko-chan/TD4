@@ -72,6 +72,8 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 
 	// コライダー更新
 	ColliderUpdate();
+
+	timeCountEngineSE_ = kTimeCountEngineSEMax_;
 }
 
 void VehicleCore::Update()
@@ -110,6 +112,20 @@ void VehicleCore::Update()
 	ColliderUpdate();
 
 	isDelete_ = false;
+
+	if (isDrive_) {
+		if (timeCountEngineSE_ <= kTimeCountEngineSEMax_) {
+			timeCountEngineSE_ += kDeltaTime_;
+		}
+		else {
+			audioManager_->PlayWave(kGameAudioNameIndexEngine);
+			timeCountEngineSE_ = 0.0f;
+		}
+	}
+	else {
+		audioManager_->StopWave(kGameAudioNameIndexEngine);
+		timeCountEngineSE_ = kTimeCountEngineSEMax_;
+	}
 }
 
 void VehicleCore::Draw(BaseCamera& camera)
