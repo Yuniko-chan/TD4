@@ -4,6 +4,7 @@
 void EngineParts::Initialize(LevelData::MeshData* data)
 {
 	Car::IParts::Initialize(data);
+	hpHandler_.Setup(10);
 
 	worldTransform_.transform_.translate = Vector3(0.0f, 2.0f, 0.0f);
 
@@ -36,6 +37,9 @@ void EngineParts::ImGuiDrawParts()
 	ImGui::DragFloat("SlideValue", &moveValue, 0.01f);
 	// トランスフォーム用
 	ImGuiTransform(moveValue);
+	float hp = hpHandler_.GetHP();
+	ImGui::InputFloat("体力", &hp);
+
 	ImGui::Text("\n");
 }
 

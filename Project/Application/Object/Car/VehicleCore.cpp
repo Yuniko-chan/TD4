@@ -68,7 +68,7 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	
 	// HP
 	hpHandler_.SetOwner(this);
-	hpHandler_.Initialize();
+	hpHandler_.Setup();
 
 	// コライダー更新
 	ColliderUpdate();

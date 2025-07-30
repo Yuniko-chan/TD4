@@ -6,7 +6,7 @@
 
 void PartHPHandler::Initialize()
 {
-	maxHP_ = 20;
+	//maxHP_ = 20;
 	hp_ = maxHP_;
 	// 死亡・解除状態をリセット
 	owner_->SetIsDelete(false);
@@ -62,6 +62,14 @@ void PartHPHandler::OnHit(float damage)
 		hp_ = 0;
 	}
 
+}
+
+void PartHPHandler::Setup(int16_t maxHP)
+{
+	// 最大HP設定
+	maxHP_ = maxHP;
+	// 初期化
+	Initialize();
 }
 
 void PartHPHandler::InvisibleProgress()
