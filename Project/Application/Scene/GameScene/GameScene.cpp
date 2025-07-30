@@ -140,6 +140,7 @@ void GameScene::Update() {
 	}
 	if (input_->TriggerKey(DIK_F2)) {
 		courseManager_->AdaptCourseTraversalNum();
+		requestSceneNo_ = kClear;
 	}
 #endif
 

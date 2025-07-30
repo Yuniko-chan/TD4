@@ -4,7 +4,7 @@
 const Vector2 CourseTraversalDraw::kNumberTextureSize_ = { 64.0f,64.0f };
 
 const std::array<float, CourseTraversalDraw::kFlowIndexOfCount> CourseTraversalDraw::kFlowSwitchingTime_ = 
-{ 0.0f, 5.0f, 10.0f};
+{ 0.0f, 2.0f, 4.0f};
 
 void CourseTraversalDraw::Initialize(int32_t courseTraversalNum, int32_t rankNum)
 {
