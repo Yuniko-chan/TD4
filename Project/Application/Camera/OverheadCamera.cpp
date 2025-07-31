@@ -13,7 +13,8 @@ void OverheadCamera::Initialize()
 	BaseCamera::Update();
 
 	usedDirection_ = true;
-
+	// 初回起動時にカメラ遷移が行われない対策
+	Accept(60.0f);
 	// Globalの取得更新
 	ApplyGlobalVariable();
 }

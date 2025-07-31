@@ -9,6 +9,9 @@
 #include "Drive/DriveHandling.h"
 // 運転関係をまとめるシステム
 #include "Drive/DriveSystem.h"
+// オーバーブースト処理管理
+#include "Drive/KnockbackReactionController.h"
+
 // アニメーションシステム
 #include "../Animation/VehicleAnimation.h"
 // 構築システム

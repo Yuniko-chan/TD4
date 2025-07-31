@@ -5,7 +5,7 @@
 FrameTimer::FrameTimer()
 {
 	// 初期化
-	Start();
+	//Start();
 }
 
 FrameTimer::FrameTimer(float endFrame)
