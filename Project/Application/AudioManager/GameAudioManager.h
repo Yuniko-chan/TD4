@@ -5,7 +5,11 @@
 /// ゲームオーディオ名前群
 /// </summary>
 enum GameAudioNameIndex {
-	kGameBGM, // BGM
+	kGameAudioNameIndexBGM, // BGM
+	kGameAudioNameIndexAttachment, // パーツをくっつける音（VehicleConstructionSystem）
+	kGameAudioNameIndexEngine, // エンジンの音（VehicleCore）
+	kGameAudioNameIndexExplosion, // 爆発の音（VehicleConstructionSystem）
+	kGameAudioNameIndexGrab, // もち上げる音 （PlayerPickupManager）
 	kGameAudioNameIndexOfCount // 数
 };
 
@@ -48,7 +52,11 @@ private: // メンバ変数
 	// ファイル名
 	std::array<const std::string, GameAudioNameIndex::kGameAudioNameIndexOfCount> audioNames_ =
 	{
-		"default/Alarm01.mp3",
+		"BGM/gameBGM.mp3",
+		"Soundeffect/Attachment_SE.mp3",
+		"Soundeffect/engine_SE.mp3",
+		"Soundeffect/explosion_SE.mp3",
+		"Soundeffect/grab_SE.mp3",
 	};
 
 };

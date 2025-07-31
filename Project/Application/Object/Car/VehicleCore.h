@@ -6,6 +6,7 @@
 
 #include "Parts/PartsInterface.h"
 #include "System/VehicleSystems.h"
+#include "../../AudioManager/GameAudioManager.h"
 
 class Player;
 
@@ -48,6 +49,13 @@ public: // メンバ関数
     /// </summary>
     void ImGuiDrawParts() override;
 
+private: 
+
+    /// <summary>
+    /// エンジン鳴らす
+    /// </summary>
+    void EngineSERinging();
+
 public: // アクセッサ
     //---ゲッター---//
     // パーツ構築システム
@@ -62,6 +70,10 @@ public: // アクセッサ
     // プレイヤー
     void SetPlayer(Player* player) { pairPlayer_ = player; }
     void SetIsDrive(bool isDrive) { isDrive_ = isDrive; }
+
+
+    // オーディオマネージャー設定
+    void SetAudioManager(GameAudioManager* audioManager);
 
     //回転関係テスト
     Matrix4x4 posture_ = {};//姿勢
@@ -88,6 +100,13 @@ private:
 
     // 運転中か？
     bool isDrive_ = false;
+
+    // オーディオマネージャー
+    GameAudioManager* audioManager_;
+    float timeCountEngineSE_;
+    const float kTimeCountEngineSEMax_ = 10.0f;
+
+
 public:
     Matrix4x4 rotate_ = Matrix4x4::MakeIdentity4x4();
 };

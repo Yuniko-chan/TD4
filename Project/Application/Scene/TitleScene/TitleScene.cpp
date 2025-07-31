@@ -55,7 +55,7 @@ void TitleScene::Initialize()
 	titleSpriteObjects_->Initialize();
 
 
-	audioManager_->PlayWave(kTitleBGM);
+	audioManager_->PlayWave(kTitleAudioNameIndexBGM);
 
 	// モデル描画
 	ModelDraw::PreDrawParameters preDrawParameters;
@@ -73,10 +73,15 @@ void TitleScene::Initialize()
 void TitleScene::Update()
 {
 
+	if (requestSceneNo_ == kGame || isBeingReset_) {
+		resetScene_ = false;
+		return;
+	}
+
 	if (input_->TriggerJoystick(JoystickButton::kJoystickButtonA)) {
 		// 行きたいシーンへ
 		requestSceneNo_ = kGame;
-		audioManager_->PlayWave(kTitlePushButton);
+		audioManager_->PlayWave(kTitleAudioNameIndexPushButton);
 	}
 
 	objectManager_->Update();

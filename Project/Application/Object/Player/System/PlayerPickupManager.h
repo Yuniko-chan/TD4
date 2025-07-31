@@ -8,6 +8,7 @@
 #include "PickUp/PickupVisualizer.h"
 
 #include <optional>
+#include "../../../AudioManager/GameAudioManager.h"
 
 // パーツの基底（全ての基）
 namespace Car
@@ -60,6 +61,8 @@ public:
 	/// <param name="manager"></param>
 	void SetPartsManager(VehiclePartsManager* manager) { partsManager_ = manager; }
 	void SetPickupPointManager(PickupPointManager* manager) { pickupPointManager_ = manager; }
+	// オーディオマネージャー設定
+	void SetAudioManager(GameAudioManager* audioManager) { audioManager_ = audioManager; }
 
 	/// <summary>
 	/// げったー
@@ -137,4 +140,8 @@ private:
 	std::string nearPartsName_ = "None";
 	// 間隔タイマー
 	std::optional<FrameTimer> interactDuration_;
+
+	// オーディオマネージャー
+	GameAudioManager* audioManager_;
+
 };

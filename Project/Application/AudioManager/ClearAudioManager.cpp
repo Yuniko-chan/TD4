@@ -1,16 +1,16 @@
-#include "TitleAudioManager.h"
+#include "ClearAudioManager.h"
 
-TitleAudioManager::~TitleAudioManager()
+ClearAudioManager::~ClearAudioManager()
 {
 }
 
-void TitleAudioManager::Initialize()
+void ClearAudioManager::Initialize()
 {
 
 	AudioManager::Initialize();
 
 	// 全体の初期設定
-	for (uint32_t i = 0; i < TitleAudioNameIndex::kTitleAudioNameIndexOfCount; ++i) {
+	for (uint32_t i = 0; i < ClearAudioNameIndex::kClearAudioNameIndexOfCount; ++i) {
 		audioDatas_[i].handle_ = audio_->LoadAudio(audioNames_[i]);
 		audioDatas_[i].isLoop_ = false;
 		audioDatas_[i].volume_ = 1.0f;
@@ -18,16 +18,16 @@ void TitleAudioManager::Initialize()
 	}
 
 	// 個別設定
-	audioDatas_[kTitleAudioNameIndexBGM].isLoop_ = true;
-	audioDatas_[kTitleAudioNameIndexBGM].isBGM_ = true;
+	audioDatas_[kClearAudioNameIndexBGM].isLoop_ = true;
+	audioDatas_[kClearAudioNameIndexBGM].isBGM_ = true;
 
 }
 
-void TitleAudioManager::Update()
+void ClearAudioManager::Update()
 {
 }
 
-void TitleAudioManager::PlayWave(uint32_t audioIndex)
+void ClearAudioManager::PlayWave(uint32_t audioIndex)
 {
 
 	float volume = 0.0f;

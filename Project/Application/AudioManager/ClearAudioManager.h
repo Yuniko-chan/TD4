@@ -2,24 +2,28 @@
 #include "../../Engine/Audio/AudioManager.h"
 
 /// <summary>
-/// タイトルオーディオ名前群
+/// クリアオーディオ名前群
 /// </summary>
-enum TitleAudioNameIndex {
-	kTitleAudioNameIndexBGM, // BGM
-	kTitleAudioNameIndexPushButton, // ボタンを押したとき
-	kTitleAudioNameIndexOfCount // 数
+enum ClearAudioNameIndex {
+	kClearAudioNameIndexBGM, // BGM
+	kClearAudioNameIndexPushButton, // ボタンを押したとき
+	kClearAudioNameIndexOfCount // 数
 };
 
-class TitleAudioManager :
+/// <summary>
+/// クリアオーディオマネージャー
+/// </summary>
+class ClearAudioManager :
     public AudioManager
 {
+
 
 public: // メンバ関数
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	~TitleAudioManager();
+	~ClearAudioManager();
 
 	/// <summary>
 	/// 初期化
@@ -41,12 +45,12 @@ public: // メンバ関数
 private: // メンバ変数
 
 	// データ
-	std::array<AudioData, TitleAudioNameIndex::kTitleAudioNameIndexOfCount> audioDatas_;
+	std::array<AudioData, ClearAudioNameIndex::kClearAudioNameIndexOfCount> audioDatas_;
 
 	// ファイル名
-	std::array<const std::string, TitleAudioNameIndex::kTitleAudioNameIndexOfCount> audioNames_ =
+	std::array<const std::string, ClearAudioNameIndex::kClearAudioNameIndexOfCount> audioNames_ =
 	{
-		"BGM/titleBGM.mp3",
+		"BGM/resultBGM.mp3",
 		"Soundeffect/PressButton_SE.mp3",
 	};
 

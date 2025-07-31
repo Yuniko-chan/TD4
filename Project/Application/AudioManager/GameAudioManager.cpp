@@ -18,6 +18,11 @@ void GameAudioManager::Initialize()
 	}
 
 	// 個別設定
+	// 個別設定
+	audioDatas_[kGameAudioNameIndexBGM].isLoop_ = true;
+	audioDatas_[kGameAudioNameIndexBGM].isBGM_ = true;
+
+	audioDatas_[kGameAudioNameIndexExplosion].volume_ = 1.5f;
 
 
 }

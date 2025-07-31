@@ -221,6 +221,12 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 
 	// グリッドのリフレッシュ
 	RefrashGridSize();
+
+	// SE
+	if (audioManager_) {
+		audioManager_->PlayWave(kGameAudioNameIndexAttachment);
+	}
+
 }
 
 void VehicleConstructionSystem::Detach(std::map<Vector2Int, Car::IParts*>::iterator it)
@@ -547,6 +553,9 @@ void VehicleConstructionSystem::BombUnRegistParts(const Vector2Int& id, Car::IPa
 		//}
 
 	}
+
+	// SE
+	audioManager_->PlayWave(kGameAudioNameIndexExplosion);
 
 }
 

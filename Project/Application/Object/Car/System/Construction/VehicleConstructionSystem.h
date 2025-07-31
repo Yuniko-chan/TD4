@@ -1,5 +1,6 @@
 #pragma once
 #include "../VehicleSystemCommons.h"
+#include "../../../../AudioManager/GameAudioManager.h"
 #include <map>
 #include <utility>
 #include <algorithm>
@@ -165,8 +166,13 @@ private:
 	// グリッドの最大サイズ
 	GridSize maxGridSize_ = {};
 
+	// オーディオマネージャー
+	GameAudioManager* audioManager_;
+
 public: // アクセッサ
 	void SetStatusManager(VehicleStatus* status) { status_ = status; }
 
 	bool IsEmpty() { return partsMapping_.size() <= 1; }
+
+	void SetAudioManager(GameAudioManager* audioManager) { audioManager_ = audioManager; }
 };

@@ -6,6 +6,7 @@
 #include "../../System/Draw/GameSceneInstancingDrawing.h"
 
 #include "../Factory/ObjectFactory.h"
+#include "../../AudioManager/GameAudioManager.h"
 
 // 前方宣言
 class Player;
@@ -85,6 +86,9 @@ public:
 	//オブジェクトファクトリー所得(コースマネージャー用)
 	ObjectFactory* GetObjectFactory() { return (static_cast<ObjectFactory*>(objectFactory_.get())); };
 
+	// オーディオマネージャー設定
+	void SetAudioManager(GameAudioManager* audioManager) { audioManager_ = audioManager; }
+
 private: // メンバ変数
 
 	// 影マネージャー
@@ -100,6 +104,9 @@ private: // メンバ変数
 
 	// プレイヤーとの距離
 	const float kPlayerDistance_ = 600.0f;
+
+	// オーディオマネージャー
+	GameAudioManager* audioManager_;
 
 private: // USER
 	// パーツマネージャー

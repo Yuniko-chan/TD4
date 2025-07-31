@@ -85,6 +85,11 @@ void GameSceneObjectManager::Initialize(LevelIndex levelIndex, LevelDataManager*
 
 	// オプション関数（ハードコード
 	OptionProcess();
+
+	// コア
+	VehicleCore* vehicleCore = static_cast<VehicleCore*>(this->GetObjectPointer("initCore"));
+	vehicleCore->SetAudioManager(audioManager_);
+
 }
 
 void GameSceneObjectManager::Update()
@@ -334,6 +339,7 @@ void GameSceneObjectManager::PlayerInitialize()
 	player_ = static_cast<Player*>(this->GetObjectPointer("Player"));
 	player_->GetPickUpManager()->SetPartsManager(partsManager_.get());
 	player_->GetPickUpManager()->SetPickupPointManager(pickupPointManager_.get());
+	player_->SetAudioManager(audioManager_);
 	//player->GetPickUpManager()->SetInteractSpot(spot);
 
 	// 3種類登録
