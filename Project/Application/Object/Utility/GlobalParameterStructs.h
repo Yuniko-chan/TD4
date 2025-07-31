@@ -89,6 +89,7 @@ namespace ParameterStructs {
 
 			float pushAngleThreshold = 0.0f;
 			float pushForcePerEngine = 0.0f;
+			float knockbackDecayFactor = 0.15f;
 		};
 
 		struct CameraDefault {

@@ -65,7 +65,7 @@ void KnockbackReactionController::UpdateDirectionAdjustment()
 	}
 }
 
-void KnockbackReactionController::OnEngineBroken(const Vector3& direction)
+void KnockbackReactionController::PowerUniform(const Vector3& direction)
 {
 	GlobalVariables* global = GlobalVariables::GetInstance();
 	float powerFactor = global->GetFloatValue("Vehicle", "PushForcePerEngine");;
@@ -98,27 +98,48 @@ void KnockbackReactionController::OnEngineBroken(const Vector3& direction)
 	// 合計のパワー
 	totalPower_ += addPower;
 
-	//float length = Vector3::Length(power);
-	// 入力カウント
-	acceptCount_++;
-	//velocity_ += Vector3(0.0f, 0.0f, 1.0f) * length;
-	//if (!isPush_) {
-	//	pushCount_++;
-	//}
-	//pushPower_ += Vector3(0.0f, 0.0f, 1.0f) * length;
-	//pushVector_.second += power;
+}
 
-	//direction;
+void KnockbackReactionController::PowerEaseOut(const Vector3& direction)
+{
+	direction;
+}
+
+void KnockbackReactionController::PowerEaseIn(const Vector3& direction)
+{
+	direction;
+}
+
+void KnockbackReactionController::OnEngineBroken(const Vector3& direction)
+{
+	// 入力カウント（これに応じた処理分け）
+	acceptCount_++;
+
+	switch (powerType_)
+	{
+	case KnockbackReactionController::kUniform:
+		// 均一処理
+		PowerUniform(direction);
+		break;
+	case KnockbackReactionController::kEaseIn:
+		PowerEaseIn(direction);
+		break;
+	case KnockbackReactionController::kEaseOut:
+		PowerEaseOut(direction);
+		break;
+	default:
+		break;
+	}
 }
 
 Vector3 KnockbackReactionController::Execute()
 {
 	Vector3 result = owner_->GetWorldTransformAdress()->transform_.translate;
 	if (knockback_ != Vector3(0.0f, 0.0f, 0.0f)) {
-		
-		float knockBackDecayFactor = 0.15f;
+		GlobalVariables* global = GlobalVariables::GetInstance();
+		float knockbackDecayFactor = global->GetFloatValue("Vehicle", "KnockbackDecayFactor");;
 		// ノックバックパワー計算
-		knockback_ = Ease::Easing(Ease::EaseName::Lerp, knockback_, Vector3(0, 0, 0), knockBackDecayFactor);
+		knockback_ = Ease::Easing(Ease::EaseName::Lerp, knockback_, Vector3(0, 0, 0), knockbackDecayFactor);
 		// 座標計算
 		result += knockback_ * GameTimeSystem::GetInstance()->GetDeltaTime();
 	}

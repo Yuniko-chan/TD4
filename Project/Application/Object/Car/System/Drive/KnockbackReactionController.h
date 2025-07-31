@@ -34,6 +34,22 @@ private: // 内部関数
 	/// 向きの変更処理
 	/// </summary>
 	void UpdateDirectionAdjustment();
+
+	void PowerUniform(const Vector3& direction);
+	void PowerEaseOut(const Vector3& direction);
+	void PowerEaseIn(const Vector3& direction);
+private:
+	// 壊れた時の処理種類
+	enum PowerType
+	{
+		kUniform,	// 均一
+		kEaseIn,	// 徐々に強くなる
+		kEaseOut,	// 徐々に弱くなる
+	};
+
+	// 壊れた時の計算種類
+	PowerType powerType_ = kUniform;
+
 private:
 	// スローエフェクト用
 	FrameTimer slowTimer_;

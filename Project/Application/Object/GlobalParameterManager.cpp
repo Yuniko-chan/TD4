@@ -60,6 +60,7 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	vehicle_.overheat.minDPS = globalVariables_->GetFloatValue(groupName, "OverheatMinDamage");
 	vehicle_.overheat.pushAngleThreshold = globalVariables_->GetFloatValue(groupName, "PushAngleThreshold");
 	vehicle_.overheat.pushForcePerEngine = globalVariables_->GetFloatValue(groupName, "PushForcePerEngine");
+	vehicle_.overheat.knockbackDecayFactor = globalVariables_->GetFloatValue(groupName, "KnockbackDecayFactor");
 
 
 	//---エンジン関係---//
@@ -133,6 +134,7 @@ void GlobalParameterManager::AddItems()
 	globalVariables_->AddItem(groupName, "OverheatMinDamage", float(vehicle_.overheat.minDPS));
 	globalVariables_->AddItem(groupName, "PushAngleThreshold", float(vehicle_.overheat.pushAngleThreshold));
 	globalVariables_->AddItem(groupName, "PushForcePerEngine", float(vehicle_.overheat.pushForcePerEngine));
+	globalVariables_->AddItem(groupName, "KnockbackDecayFactor", float(vehicle_.overheat.knockbackDecayFactor));
 
 	// 
 	groupName = "VehicleEngine";
