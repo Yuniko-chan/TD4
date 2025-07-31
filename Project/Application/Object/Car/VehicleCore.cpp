@@ -68,7 +68,7 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	
 	// HP
 	hpHandler_.SetOwner(this);
-	hpHandler_.Initialize();
+	hpHandler_.Setup();
 
 	// コライダー更新
 	ColliderUpdate();
@@ -107,6 +107,9 @@ void VehicleCore::Update()
 		rotate_ = posture_ * atNormal_;
 		worldTransform_.worldMatrix_ = Matrix4x4::MakeScaleMatrix(worldTransform_.transform_.scale) * posture_ * atNormal_ * Matrix4x4::MakeTranslateMatrix(worldTransform_.transform_.translate);
 		worldTransform_.parentMatrix_ = Matrix4x4::MakeScaleMatrix(worldTransform_.transform_.scale) * posture_ * atNormal_ * Matrix4x4::MakeTranslateMatrix(worldTransform_.transform_.translate);
+	}
+	else {
+		worldTransform_.UpdateMatrix(Matrix4x4::DirectionToDirection(Vector3(0, 0, 1), Vector3(0, 0, 1)));
 	}
 	// コライダーの更新
 	ColliderUpdate();

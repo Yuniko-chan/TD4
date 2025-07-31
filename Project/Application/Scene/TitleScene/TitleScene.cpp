@@ -83,6 +83,11 @@ void TitleScene::Update()
 		requestSceneNo_ = kGame;
 		audioManager_->PlayWave(kTitleAudioNameIndexPushButton);
 	}
+	if (input_->TriggerKey(DIK_F2)) {
+		// 行きたいシーンへ
+		requestSceneNo_ = kGame;
+		audioManager_->PlayWave(kTitleAudioNameIndexPushButton);
+	}
 
 	objectManager_->Update();
 

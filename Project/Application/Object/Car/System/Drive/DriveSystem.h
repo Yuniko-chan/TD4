@@ -1,9 +1,12 @@
 #pragma once
 #include "../VehicleSystemCommons.h"
-#include "../../System/VehicleSystems.h"
 
 class VehicleCore;
 class VehicleStatus;
+
+class DriveEngine;
+class DriveHandling;
+class KnockbackReactionController;
 
 class DriveSystem : public OwnerComponent<VehicleCore>
 {
@@ -34,16 +37,18 @@ public:
 	/// </summary>
 	void ImGuiDraw();
 private:
+	/// <summary>
+	/// 速度更新
+	/// </summary>
 	void VelocityUpdate();
-
-	void HandleNoParent();
-	void BeginSlow();
-	void FinishSlow();
 private:
 	// 運転用のエンジン
 	std::unique_ptr<DriveEngine> driveEngine_;
 	// ハンドルシステム
 	std::unique_ptr<DriveHandling> handling_;
+	// ブーストリアクション
+	std::unique_ptr<KnockbackReactionController> knockbackReactionController_;
+
 	// ステータス情報
 	VehicleStatus* status_ = nullptr;
 	// 速度ベクトル
@@ -65,7 +70,7 @@ public:	// アクセッサ
 	//---セッター---//
 	void SetStatusManager(VehicleStatus* status) { status_ = status; }
 
-	void PushPower(const Vector3& power);
+	void PushPower(const Vector3& direction);
 
 	//---ゲッター---//
 	DriveEngine* GetDriveEngine() { return driveEngine_.get(); }

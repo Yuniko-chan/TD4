@@ -264,7 +264,12 @@ void PlayerPickupManager::DropPart()
 	holdParts_->GetWorldTransformAdress()->SetParent(nullptr);
 	// コアならスキップ
 	if (holdParts_->GetClassNameString() == "VehicleCore") {
+		VehicleCore* core = static_cast<VehicleCore*>(holdParts_);
+		core->posture_ = owner_->GetWorldTransformAdress()->rotateMatrix_;
+		//core->atNormal_ = Matrix4x4::MakeIdentity4x4();
+		//core->GetWorldTransformAdress()->direction_ =owner_->GetWorldTransformAdress()->direction_;
 		holdParts_ = nullptr;
+
 		return;
 	}
 	// 所持パーツから解除

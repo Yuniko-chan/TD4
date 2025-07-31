@@ -1,7 +1,7 @@
 {
     "VehicleEngine": {
         "AccelerationMultiplier": 20.0,
-        "DirtFriction": 0.550000011920929,
+        "DirtFriction": 0.6499999761581421,
         "IdleDecelerationFactor": 0.05000000074505806,
         "InputDecrementInterval": 4.0,
         "InputInterval": 8.0,

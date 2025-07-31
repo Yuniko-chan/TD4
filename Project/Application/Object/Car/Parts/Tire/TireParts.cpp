@@ -6,6 +6,7 @@
 void TireParts::Initialize(LevelData::MeshData* data)
 {
 	Car::IParts::Initialize(data);
+	hpHandler_.Setup(15);
 
 	// コライダー
 	OBB obb = std::get<OBB>(*collider_.get());
@@ -78,6 +79,8 @@ void TireParts::ImGuiDrawParts()
 	ImGui::DragFloat("SlideValue", &moveValue, 0.01f);
 	// トランスフォーム用
 	ImGuiTransform(moveValue);
+	float hp = hpHandler_.GetHP();
+	ImGui::InputFloat("体力", &hp);
 	// コネクター
 	if (connector_->IsParent()) {
 		ImGui::Text("Parent");

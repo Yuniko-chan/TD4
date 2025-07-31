@@ -502,8 +502,7 @@ void VehicleConstructionSystem::UnRegistParts(const Vector2Int& id, Car::IParts*
 void VehicleConstructionSystem::BombUnRegistParts(const Vector2Int& id, Car::IParts* parts)
 {
 	Vector3 direct = owner_->GetWorldTransformAdress()->GetWorldPosition() - parts->GetWorldTransformAdress()->GetWorldPosition();
-	const float kPusher = 150.0f;
-	owner_->GetDriveSystem()->PushPower(Vector3::Normalize(direct) * kPusher);
+	owner_->GetDriveSystem()->PushPower(Vector3::Normalize(direct));
 
 	// 隣接を検索
 	std::list<Car::IParts*> adjoinParts;

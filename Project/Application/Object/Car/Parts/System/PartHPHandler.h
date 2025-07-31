@@ -24,6 +24,8 @@ public:
 	/// <param name="damage"></param>
 	void OnHit(float damage);
 
+	void Setup(int16_t maxHP = 20);
+
 public:
 	void SetHP(int16_t hp) { hp_ = (float)hp; }
 
