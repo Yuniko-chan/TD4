@@ -554,6 +554,9 @@ void VehicleConstructionSystem::BombUnRegistParts(const Vector2Int& id, Car::IPa
 
 	}
 
+	// SE
+	audioManager_->PlayWave(kGameAudioNameIndexExplosion);
+
 }
 
 void VehicleConstructionSystem::DetachCommon(std::map<Vector2Int, Car::IParts*>::iterator it)

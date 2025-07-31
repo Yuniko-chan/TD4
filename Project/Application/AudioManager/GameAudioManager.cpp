@@ -22,6 +22,8 @@ void GameAudioManager::Initialize()
 	audioDatas_[kGameAudioNameIndexBGM].isLoop_ = true;
 	audioDatas_[kGameAudioNameIndexBGM].isBGM_ = true;
 
+	audioDatas_[kGameAudioNameIndexExplosion].volume_ = 1.5f;
+
 
 }
 
