@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Engine/Scene/BaseScene/BaseScene.h"
 #include "../../ClearSceneObject/CourseTraversalSystem.h"
+#include "../../AudioManager/ClearAudioManager.h"
 
 /// <summary>
 /// クリアシーン
@@ -52,6 +53,9 @@ private: // メンバ変数
 
 	// コース踏破システム
 	std::unique_ptr<CourseTraversalSystem> courseTraversalSystem_;
+
+	// オーディオマネージャー
+	std::unique_ptr<ClearAudioManager> audioManager_;
 
 };
 

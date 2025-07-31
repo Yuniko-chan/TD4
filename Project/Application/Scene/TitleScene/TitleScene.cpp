@@ -73,6 +73,11 @@ void TitleScene::Initialize()
 void TitleScene::Update()
 {
 
+	if (requestSceneNo_ == kGame || isBeingReset_) {
+		resetScene_ = false;
+		return;
+	}
+
 	if (input_->TriggerJoystick(JoystickButton::kJoystickButtonA)) {
 		// 行きたいシーンへ
 		requestSceneNo_ = kGame;

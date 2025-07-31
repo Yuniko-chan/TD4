@@ -7,6 +7,12 @@
 ClearScene::~ClearScene()
 {
 
+	if (stopAudio_) {
+		for (uint32_t i = 0; i < audioManager_->kMaxPlayingSoundData; ++i) {
+			audioManager_->StopWave(i);
+		}
+	}
+
 }
 
 void ClearScene::Initialize()
@@ -16,6 +22,19 @@ void ClearScene::Initialize()
 
 	ModelCreate();
 	TextureLoad();
+
+	// オーディオマネージャー
+	audioManager_ = std::make_unique<ClearAudioManager>();
+	audioManager_->StaticInitialize();
+	audioManager_->Initialize();
+
+	// 一度鳴らして止める
+	for (uint32_t i = 0; i < ClearAudioNameIndex::kClearAudioNameIndexOfCount; ++i) {
+		audioManager_->PlayWave(i);
+	}
+	for (uint32_t i = 0; i < audioManager_->kMaxPlayingSoundData; ++i) {
+		audioManager_->StopWave(i);
+	}
 
 	const EulerTransform cameraTransform = {
 	1.0f,1.0f,1.0f,
@@ -38,14 +57,22 @@ void ClearScene::Initialize()
 	courseTraversalSystem_ = std::make_unique<CourseTraversalSystem>();
 	courseTraversalSystem_->Initialize();
 
+	audioManager_->PlayWave(kClearAudioNameIndexBGM);
+
 }
 
 void ClearScene::Update()
 {
 
+	if (requestSceneNo_ == kTitle || isBeingReset_) {
+		resetScene_ = false;
+		return;
+	}
+
 	if (input_->TriggerJoystick(JoystickButton::kJoystickButtonA)) {
 		// 行きたいシーンへ
 		requestSceneNo_ = kTitle;
+		audioManager_->PlayWave(kClearAudioNameIndexPushButton);
 	}
 
 	courseTraversalSystem_->Update();
