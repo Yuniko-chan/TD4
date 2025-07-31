@@ -1,16 +1,18 @@
 {
-  "Vehicle": {
-    "Core_InitPosition": [
-      0.0,
-      5.0,
-      -75.0
-    ],
-    "Core_LocalPosition": [
-      0.0,
-      2.0,
-      0.0
-    ],
-    "OverheatMaxDamage": 7.0,
-    "OverheatMinDamage": 1.0
-  }
+    "Vehicle": {
+        "Core_InitPosition": [
+            0.0,
+            5.0,
+            -75.0
+        ],
+        "Core_LocalPosition": [
+            0.0,
+            2.0,
+            0.0
+        ],
+        "OverheatMaxDamage": 7.0,
+        "OverheatMinDamage": 1.0,
+        "PushAngleThreshold": 0.5,
+        "PushForcePerEngine": 150.0
+    }
 }

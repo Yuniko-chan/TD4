@@ -11,9 +11,6 @@ void KnockbackReactionController::Update()
 	if (acceptCount_ != 0)
 	{
 		acceptCount_ = 0;
-		// 押し出し向き
-		pushDirection_ = Vector3::Normalize(Vector3(totalPower_.x, 0.0f, totalPower_.z));
-
 		// 向きの変更
 		BeginDirectionAdjustment();
 
@@ -52,24 +49,26 @@ void KnockbackReactionController::EndDirectionAdjustment()
 	knockback_ += push * Vector3::Length(totalPower_);
 
 	totalPower_ = {};
-	pushDirection_ = {};
 }
 
 void KnockbackReactionController::UpdateDirectionAdjustment()
-{
+{		
+	Vector3 pushDirect = Vector3::Normalize(Vector3(totalPower_.x, 0.0f, totalPower_.z));
 	Vector3 ownerDirection = owner_->GetWorldTransformAdress()->direction_;
-	float dotAngle = 0.5f;
-	if (Vector3::Dot(ownerDirection, pushDirection_) >= dotAngle) {
-		Matrix4x4 fromDirectionRotateMatrix = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, pushDirection_);
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	float dotAngle = global->GetFloatValue("Vehicle", "PushAngleThreshold");
+	if (Vector3::Dot(ownerDirection, pushDirect) >= dotAngle) {
+		Matrix4x4 fromDirectionRotateMatrix = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, pushDirect);
 
 		owner_->posture_ = fromDirectionRotateMatrix/* * owner_->posture_*/;
-		owner_->GetWorldTransformAdress()->direction_ = Matrix4x4::TransformNormal(pushDirection_, owner_->posture_);
+		owner_->GetWorldTransformAdress()->direction_ = Matrix4x4::TransformNormal(pushDirect, owner_->posture_);
 	}
 }
 
 void KnockbackReactionController::OnEngineBroken(const Vector3& direction)
 {
-	float powerFactor = 150.0f;
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	float powerFactor = global->GetFloatValue("Vehicle", "PushForcePerEngine");;
 	Vector3 power = direction;
 	power *= powerFactor;
 	// パワー向き

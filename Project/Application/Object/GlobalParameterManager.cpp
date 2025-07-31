@@ -58,6 +58,9 @@ void GlobalParameterManager::ApplyGlobalVariables()
 
 	vehicle_.overheat.maxDPS = globalVariables_->GetFloatValue(groupName, "OverheatMaxDamage");
 	vehicle_.overheat.minDPS = globalVariables_->GetFloatValue(groupName, "OverheatMinDamage");
+	vehicle_.overheat.pushAngleThreshold = globalVariables_->GetFloatValue(groupName, "PushAngleThreshold");
+	vehicle_.overheat.pushForcePerEngine = globalVariables_->GetFloatValue(groupName, "PushForcePerEngine");
+
 
 	//---エンジン関係---//
 	groupName = "VehicleEngine";
@@ -128,6 +131,8 @@ void GlobalParameterManager::AddItems()
 	// オーバーヒート
 	globalVariables_->AddItem(groupName, "OverheatMaxDamage", float(vehicle_.overheat.maxDPS));
 	globalVariables_->AddItem(groupName, "OverheatMinDamage", float(vehicle_.overheat.minDPS));
+	globalVariables_->AddItem(groupName, "PushAngleThreshold", float(vehicle_.overheat.pushAngleThreshold));
+	globalVariables_->AddItem(groupName, "PushForcePerEngine", float(vehicle_.overheat.pushForcePerEngine));
 
 	// 
 	groupName = "VehicleEngine";

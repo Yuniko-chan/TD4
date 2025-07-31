@@ -86,6 +86,9 @@ namespace ParameterStructs {
 		{
 			float maxDPS = 7.0f;	// 最小
 			float minDPS = 1.0f;	// 最大
+
+			float pushAngleThreshold = 0.0f;
+			float pushForcePerEngine = 0.0f;
 		};
 
 		struct CameraDefault {
