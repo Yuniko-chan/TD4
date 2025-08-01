@@ -16,6 +16,7 @@ enum LevelIndex {
 	kLevelIndexCourseA,//コース形状に紐づいたギミック群
 	kLevelIndexCourseB,
 	kLevelIndexCourseC,
+	kLevelIndexCustomAreaObstacle,//カスタムエリア横の障害物
 
 	kLevelIndexOfCount // 数を数える用
 };
