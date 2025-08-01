@@ -1,5 +1,6 @@
 #include "PickupVisualizer.h"
 #include "../../../Interact/InteractionSpot.h"
+#include "../../../../../Engine/GlobalVariables/GlobalVariables.h"
 
 void PickupVisualizer::Update()
 {
@@ -41,7 +42,10 @@ void PickupVisualizer::RefrashSpot(const std::string& name)
 		{
 			interactObject_ = FindSpot("PickTireSpot");
 		}
-		interactObject_->GetWorldTransformAdress()->transform_.scale = Vector3(2.0f, 2.0f, 2.0f);
+		// スケールの初期化
+		Vector3 scale = GlobalVariables::GetInstance()->GetVector3Value("VehiclePartsInfo", "PickupPointScale");
+
+		interactObject_->GetWorldTransformAdress()->transform_.scale = scale;
 	}
 	//---パーツ系---//
 	else {
@@ -61,13 +65,23 @@ void PickupVisualizer::RefrashSpot(const std::string& name)
 		else if (name == "VehicleCore") {
 			interactObject_ = FindSpot("PickArmorSpot");
 		}
-		interactObject_->GetWorldTransformAdress()->transform_.scale = Vector3(1.5f, 1.5f, 1.5f);
+		// スケールの初期化
+		Vector3 scale = GlobalVariables::GetInstance()->GetVector3Value("VehiclePartsInfo", "PickupScale");
+
+		interactObject_->GetWorldTransformAdress()->transform_.scale = scale;
 	}
 
 	// 共通処理
 	if (interactObject_) {
+		// 色の設定
+		Vector3 color = GlobalVariables::GetInstance()->GetVector3Value("VehiclePartsInfo", "PickupColor");
+		float alpha = GlobalVariables::GetInstance()->GetFloatValue("VehiclePartsInfo", "PickupAlpha");
+		interactObject_->SetColor(color);
+		interactObject_->SetAlpha(alpha);
+
 		interactObject_->GetWorldTransformAdress()->transform_.translate = Vector3(0.0f, 0.0f, 0.0f);
 		interactObject_->GetWorldTransformAdress()->direction_ = Vector3(0.0f, 0.0f, 1.0f);
+		
 		interactObject_->SetIsDraw(true);
 	}
 }

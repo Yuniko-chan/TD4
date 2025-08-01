@@ -16,8 +16,10 @@ public:
 
 public:	// アクセッサ
 	void SetIsDraw(bool isDraw) { isDraw_ = isDraw; }
-
+	void SetColor(const Vector3& color) { color_ = color; }
+	void SetAlpha(float alpha) { alpha_ = alpha; }
 private:
 	bool isDraw_ = false;
-
+	Vector3 color_ = Vector3(1, 1, 1);
+	float alpha_ = 1.0f;
 };

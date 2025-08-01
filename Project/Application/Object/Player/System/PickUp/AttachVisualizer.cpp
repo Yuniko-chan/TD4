@@ -1,5 +1,6 @@
 #include "AttachVisualizer.h"
 #include "../../../Interact/InteractionSpot.h"
+#include "../../../../../Engine/GlobalVariables/GlobalVariables.h"
 
 void AttachVisualizer::Initialize(Player* owner)
 {
@@ -14,9 +15,15 @@ void AttachVisualizer::Update(const Vector2Int& key)
 		else { 
 			parent_ = interactObject_->GetWorldTransformAdress();
 		}
+		// 色変更
+		Vector3 color = GlobalVariables::GetInstance()->GetVector3Value("VehiclePartsInfo", "AttachColor");
+		float alpha = GlobalVariables::GetInstance()->GetFloatValue("VehiclePartsInfo", "AttachAlpha");
+		interactObject_->SetColor(color);
+		interactObject_->SetAlpha(alpha);
 		// スケールの初期化
-		if (interactObject_->GetWorldTransformAdress()->transform_.scale != Vector3(1.0f, 1.0f, 1.0f)) {
-			interactObject_->GetWorldTransformAdress()->transform_.scale = { 1.0f,1.0f,1.0f };
+		Vector3 scale = GlobalVariables::GetInstance()->GetVector3Value("VehiclePartsInfo", "AttachScale");
+		if (interactObject_->GetWorldTransformAdress()->transform_.scale != Vector3(scale)) {
+			interactObject_->GetWorldTransformAdress()->transform_.scale = scale;
 		}
 
 		interactObject_->SetIsDraw(true);

@@ -41,6 +41,7 @@ namespace ParameterStructs {
 			Vector3 pickupPredictionScale = {};	// サイズ
 			Vector3 pickupColor = {};	// 色
 			float pickupAlpha = 0.0f;	// アルファ値
+			Vector3 pickupPointPredictionScale = {};	// ピックアップポイント用のサイズ
 
 			// アタッチ
 			Vector3 attachPredictionScale = {};	// サイズ

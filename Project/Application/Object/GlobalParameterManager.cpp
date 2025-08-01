@@ -68,6 +68,10 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	vehicle_.parts.engineHP = globalVariables_->GetIntValue(groupName, "EngineHP");
 	vehicle_.parts.armorHP = globalVariables_->GetIntValue(groupName, "ArmorHP");
 
+	vehicle_.parts.attachPredictionScale = globalVariables_->GetVector3Value(groupName, "AttachScale");
+	vehicle_.parts.pickupPointPredictionScale = globalVariables_->GetVector3Value(groupName, "PickupPointScale");
+	vehicle_.parts.pickupPredictionScale = globalVariables_->GetVector3Value(groupName, "PickupScale");
+
 	//---エンジン関係---//
 	groupName = "VehicleEngine";
 	vehicle_.engine.inputInterval = globalVariables_->GetFloatValue(groupName, "InputInterval");
@@ -150,6 +154,14 @@ void GlobalParameterManager::AddItems()
 	globalVariables_->AddItem(groupName, "TireHP", int32_t(vehicle_.parts.tireHP));
 	globalVariables_->AddItem(groupName, "EngineHP", int32_t(vehicle_.parts.engineHP));
 	globalVariables_->AddItem(groupName, "ArmorHP", int32_t(vehicle_.parts.armorHP));
+
+	globalVariables_->AddItem(groupName, "AttachScale", Vector3(vehicle_.parts.attachPredictionScale));
+	globalVariables_->AddItem(groupName, "AttachAlpha", float(vehicle_.parts.attachAlpha));
+	globalVariables_->AddItem(groupName, "AttachColor", Vector3(vehicle_.parts.attachColor));
+	globalVariables_->AddItem(groupName, "PickupScale", Vector3(vehicle_.parts.pickupPredictionScale));
+	globalVariables_->AddItem(groupName, "PickupAlpha", float(vehicle_.parts.pickupAlpha));
+	globalVariables_->AddItem(groupName, "PickupColor", Vector3(vehicle_.parts.pickupColor));
+	globalVariables_->AddItem(groupName, "PickupPointScale", Vector3(vehicle_.parts.pickupPointPredictionScale));
 
 	// 
 	groupName = "VehicleEngine";

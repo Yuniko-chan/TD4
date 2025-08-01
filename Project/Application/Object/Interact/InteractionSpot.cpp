@@ -16,13 +16,11 @@ void InteractionSpot::Update()
 {
 	// フラグがfalseなら表示しない
 	if (!isDraw_) {
-		Vector4 color = material_->GetColor();
-		color.w = 0.0f;
+		Vector4 color = Vector4(color_.x, color_.y, color_.z, 0.0f);
 		material_->SetColor(color);
 	}
 	else {
-		Vector4 color = material_->GetColor();
-		color.w = 0.5f;
+		Vector4 color = Vector4(color_.x, color_.y, color_.z, alpha_);
 		material_->SetColor(color);
 	}
 
