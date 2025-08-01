@@ -1,7 +1,7 @@
 #include "CourseTraversalDraw.h"
 #include "../../Engine/base/Texture/TextureManager.h"
 
-const Vector2 CourseTraversalDraw::kNumberTextureSize_ = { 64.0f,64.0f };
+const Vector2 CourseTraversalDraw::kNumberTextureSize_ = { 512.0f,512.0f };
 
 const std::array<float, CourseTraversalDraw::kFlowIndexOfCount> CourseTraversalDraw::kFlowSwitchingTime_ = 
 { 0.0f, 2.0f, 4.0f};
@@ -15,42 +15,50 @@ void CourseTraversalDraw::Initialize(int32_t courseTraversalNum, int32_t rankNum
 	const Vector4 kWhite = { 1.0f, 1.0f, 1.0f, 1.0f };
 	// ルーレット番号
 	const uint32_t kRouletteNum = static_cast<uint32_t>(OutGameSpriteObjectAnimation::AnimationIndex::kAnimationIndexNumberRoulette);
+	// 透明度
+	const uint32_t kTransparencyChangeNum = static_cast<uint32_t>(OutGameSpriteObjectAnimation::AnimationIndex::kAnimationIndexTransparencyChangeLoop);
+	// 中心位置
+	const Vector2 kCenter = { 640.0f, 360.0f };
+	// 踏破数位置追加
+	const Vector2 kTraversalNumAdd = { 250.0f, -100.0f };
 
 	// 踏破数、文字列
 	traversalNumString_ = std::make_unique<OutGameSpriteObject>();
 	traversalNumString_->Initialize("Resources/Sprite/Result/traversalNumString.png", 
-		Vector2{ 256.0f, 256.0f }, kWhite);
+		Vector2{ kCenter.x - kTraversalNumAdd.x, kCenter.y + kTraversalNumAdd.y }, kWhite);
 
 	// 踏破数、数10の位
 	traversalNumTenthPlace_ = std::make_unique<OutGameSpriteObject>();
 	traversalNumTenthPlace_->Initialize("Resources/Sprite/Common/number.png", 
-		Vector2{ 512.0f + 256.0f - kNumberSize.x / 2.0f, 256.0f }, kWhite, kNumberSize, kNumberTextureSize_);
+		Vector2{ kCenter.x + kTraversalNumAdd.x - kNumberSize.x / 2.0f, kCenter.y + kTraversalNumAdd.y }, kWhite, kNumberSize, kNumberTextureSize_);
 	// ルーレット
 	traversalNumTenthPlace_->GetAnimation()->doesAnimations_[kRouletteNum] = true;
 
 	// 踏破数、数1の位
 	traversalNumOnePlace_ = std::make_unique<OutGameSpriteObject>();
 	traversalNumOnePlace_->Initialize("Resources/Sprite/Common/number.png",
-		Vector2{ 512.0f + 256.0f + kNumberSize.x / 2.0f, 256.0f }, kWhite, kNumberSize, kNumberTextureSize_);
+		Vector2{ kCenter.x + kTraversalNumAdd.x + kNumberSize.x / 2.0f, kCenter.y + kTraversalNumAdd.y }, kWhite, kNumberSize, kNumberTextureSize_);
 	// ルーレット
 	traversalNumOnePlace_->GetAnimation()->doesAnimations_[kRouletteNum] = true;
-
-	// 踏破ランク、文字列
-	traversalRankString_ = std::make_unique<OutGameSpriteObject>();
-	traversalRankString_->Initialize("Resources/Sprite/Result/traversalRankString.png",
-		Vector2{ 256.0f,512.0f }, kWhite);
 
 	// 踏破ランク、ランク
 	raversalRank_ = std::make_unique<OutGameSpriteObject>();
 	raversalRank_->Initialize("Resources/Sprite/Result/traversalRank.png",
-		{ 512.0f + 256.0f,512.0f }, kWhite, kNumberSize, kNumberTextureSize_);
+		{ kCenter.x , kCenter.y + 100.0f }, kWhite, kNumberSize, kNumberTextureSize_);
 	// ルーレット
 	raversalRank_->GetAnimation()->doesAnimations_[kRouletteNum] = true;
+
+	// ボタンをおしてください
+	pleasePressTheButton_ = std::make_unique<OutGameSpriteObject>();
+	pleasePressTheButton_->Initialize("Resources/Sprite/Result/traversalNumString.png",
+		Vector2{ kCenter.x, kCenter.y + 250.0f }, kWhite);
+	// 透明度
+	pleasePressTheButton_->GetAnimation()->doesAnimations_[kTransparencyChangeNum] = true;
 
 	// コース踏破数
 	courseTraversalNum_ = courseTraversalNum;
 	// ランク数字
-	rankNum_ = rankNum;
+	rankNum_ = 4 - rankNum;
 
 	// 流れ
 	flow_ = kFlowIndexCourseTraversal;
@@ -66,7 +74,7 @@ void CourseTraversalDraw::Update(int32_t courseTraversalNum,int32_t rankNum)
 
 #ifdef _DEMO
 	courseTraversalNum_ = courseTraversalNum;
-	rankNum_ = rankNum;
+	rankNum_ = 4 - rankNum;
 	if (flow_ == kFlowIndexWaitingButton) {
 		traversalNumTenthPlace_->SetCurrentSequenceNumber(courseTraversalNum_ / 10);
 		traversalNumOnePlace_->SetCurrentSequenceNumber(courseTraversalNum_ % 10);
@@ -81,8 +89,8 @@ void CourseTraversalDraw::Update(int32_t courseTraversalNum,int32_t rankNum)
 	traversalNumString_->Update();
 	traversalNumTenthPlace_->Update();
 	traversalNumOnePlace_->Update();
-	traversalRankString_->Update();
 	raversalRank_->Update();
+	pleasePressTheButton_->Update();
 
 }
 
@@ -95,12 +103,10 @@ void CourseTraversalDraw::Draw()
 	traversalNumTenthPlace_->Draw();
 	// 踏破数、数1の位
 	traversalNumOnePlace_->Draw();
-
-	// 踏破ランク、文字列
-	traversalRankString_->Draw();
-
 	// 踏破ランク、ランク
 	raversalRank_->Draw();
+	// ボタンをおしてください
+	pleasePressTheButton_->Draw();
 
 }
 
