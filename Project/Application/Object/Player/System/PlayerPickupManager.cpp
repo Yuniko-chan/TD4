@@ -94,7 +94,8 @@ void PlayerPickupManager::Update()
 		if (interactObject) {
 			pickUp->SetTransform(interactObject->GetWorldTransformAdress());
 			pickUp->RefrashSpot(interactObject->GetClassNameString());
-			pickupInteract_->SetIsDraw(true);
+			pickUp->SetIsDraw(true);
+			pickUp->Update();
 		}
 		else {
 			pickUp->SetTransform(nullptr);

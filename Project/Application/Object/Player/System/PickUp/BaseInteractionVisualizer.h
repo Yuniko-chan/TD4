@@ -30,6 +30,37 @@ public:
 	virtual void SetIsDraw(bool isDraw);
 
 	InteractionSpot* GetInteract() { return interactObject_; }
+public:
+	/// <summary>
+	/// スポット追加
+	/// </summary>
+	/// <param name="name"></param>
+	/// <param name="interact"></param>
+	void AddSpot(std::string name, InteractionSpot* interact);
+	/// <summary>
+	/// スポット更新
+	/// </summary>
+	/// <param name="name"></param>
+	virtual void RefrashSpot(const std::string& name);
+	/// <summary>
+	/// リセット
+	/// </summary>
+	void Reset();
+	/// <summary>
+	/// セットアップ
+	/// </summary>
+	/// <param name="position"></param>
+	/// <param name="direction"></param>
+	void SetUp(const Vector3& position, const Vector3& direction);
+protected:
+	/// <summary>
+	/// スポット検索
+	/// </summary>
+	/// <param name="name"></param>
+	/// <returns></returns>
+	InteractionSpot* FindSpot(const std::string& name);
+	// スポット配列
+	std::map<std::string, InteractionSpot*> interactionSpots_;
 
 protected:
 	// インタラクト用のオブジェクト

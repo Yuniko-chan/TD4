@@ -209,8 +209,8 @@ void VehicleCore::ImGuiDrawParts()
 
 void VehicleCore::EngineSERinging()
 {
+	if (statusSystem_->GetEngine() != 0) {
 
-	if (isDrive_) {
 		if (timeCountEngineSE_ <= kTimeCountEngineSEMax_) {
 			timeCountEngineSE_ += kDeltaTime_;
 		}

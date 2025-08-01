@@ -19,30 +19,9 @@ public: //---アクセッサ---//
 
 public: // メンバ関数
 	/// <summary>
-	/// スポット検索
-	/// </summary>
-	/// <param name="name"></param>
-	/// <returns></returns>
-	InteractionSpot* FindSpot(const std::string& name);
-	/// <summary>
-	/// スポット追加
-	/// </summary>
-	/// <param name="name"></param>
-	/// <param name="interact"></param>
-	void AddSpot(std::string name, InteractionSpot* interact);
-	/// <summary>
 	/// スポット更新
 	/// </summary>
 	/// <param name="name"></param>
-	void RefrashSpot(const std::string& name);
-	/// <summary>
-	/// セットアップ
-	/// </summary>
-	/// <param name="position"></param>
-	/// <param name="direction"></param>
-	void SetUp(const Vector3& position, const Vector3& direction);
-private:
-	// スポット配列
-	std::map<std::string, InteractionSpot*> interactionSpots_;
+	void RefrashSpot(const std::string& name) override;
 
 };

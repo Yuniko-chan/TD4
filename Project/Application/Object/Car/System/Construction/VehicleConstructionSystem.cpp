@@ -239,6 +239,9 @@ void VehicleConstructionSystem::Detach(std::map<Vector2Int, Car::IParts*>::itera
 		if ((*it).second->GetHPHandler()->IsDead()) {
 			// 爆破解除
 			BombUnRegistParts((*it).first, (*it).second);
+			///
+			/// TODO:爆発パーティクル
+			/// (*it).second->GetWorldTransformAdress()->GetWorldPosition()：座標
 		}
 		else {
 			// 解除処理

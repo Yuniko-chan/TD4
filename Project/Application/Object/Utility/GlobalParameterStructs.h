@@ -36,6 +36,16 @@ namespace ParameterStructs {
 			int engineHP = 10;
 			int tireHP = 10;
 			int armorHP = 10;
+
+			// ピックアップ
+			Vector3 pickupPredictionScale = {};	// サイズ
+			Vector3 pickupColor = {};	// 色
+			float pickupAlpha = 0.0f;	// アルファ値
+
+			// アタッチ
+			Vector3 attachPredictionScale = {};	// サイズ
+			Vector3 attachColor = {};	// 色
+			float attachAlpha = 0.0f;	// アルファ値
 		};
 
 		// ハンドル関係
