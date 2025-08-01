@@ -31,6 +31,13 @@ namespace ParameterStructs {
 			Vector3 inVehicleLocal = {};
 		};
 
+		struct VehicleParts
+		{
+			int engineHP = 10;
+			int tireHP = 10;
+			int armorHP = 10;
+		};
+
 		// ハンドル関係
 		struct VehicleHandling
 		{
@@ -144,6 +151,8 @@ namespace ParameterStructs {
 		Datas::VehicleCore core;
 		// オーバーヒート関係
 		Datas::Overheat overheat;
+		// パーツごと
+		Datas::VehicleParts parts;
 
 		// 加速度の丸める値
 		float accelDiscard = 0.75f;

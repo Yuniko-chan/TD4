@@ -1,10 +1,12 @@
 #include "EngineParts.h"
 #include "../../../Engine/2D/ImguiManager.h"
+#include "../../../../../Engine/GlobalVariables/GlobalVariables.h"
 
 void EngineParts::Initialize(LevelData::MeshData* data)
 {
 	Car::IParts::Initialize(data);
-	hpHandler_.Setup(10);
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	hpHandler_.Setup((int16_t)global->GetIntValue("VehiclePartsInfo", "EngineHP"));
 
 	worldTransform_.transform_.translate = Vector3(0.0f, 2.0f, 0.0f);
 

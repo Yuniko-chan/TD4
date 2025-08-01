@@ -1,10 +1,12 @@
 #include "ArmorFrameParts.h"
 #include "../../../Engine/2D/ImguiManager.h"
+#include "../../../../../Engine/GlobalVariables/GlobalVariables.h"
 
 void ArmorFrameParts::Initialize(LevelData::MeshData* data)
 {
 	Car::IParts::Initialize(data);
-	hpHandler_.Setup(20);
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	hpHandler_.Setup((int16_t)global->GetIntValue("VehiclePartsInfo", "ArmorHP"));
 
 	worldTransform_.transform_.translate = Vector3(0.0f, -2.0f, 0.0f);
 

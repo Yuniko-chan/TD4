@@ -2,11 +2,13 @@
 #include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Utility/Calc/TransformHelper.h"
 #include "../../../Engine/Math/Ease.h"
+#include "../../../../../Engine/GlobalVariables/GlobalVariables.h"
 
 void TireParts::Initialize(LevelData::MeshData* data)
 {
 	Car::IParts::Initialize(data);
-	hpHandler_.Setup(15);
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	hpHandler_.Setup((int16_t)global->GetIntValue("VehiclePartsInfo", "TireHP"));
 
 	// コライダー
 	OBB obb = std::get<OBB>(*collider_.get());

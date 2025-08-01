@@ -61,7 +61,12 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	vehicle_.overheat.pushAngleThreshold = globalVariables_->GetFloatValue(groupName, "PushAngleThreshold");
 	vehicle_.overheat.pushForcePerEngine = globalVariables_->GetFloatValue(groupName, "PushForcePerEngine");
 	vehicle_.overheat.knockbackDecayFactor = globalVariables_->GetFloatValue(groupName, "KnockbackDecayFactor");
-
+	
+	// パーツ
+	groupName = "VehiclePartsInfo";
+	vehicle_.parts.tireHP = globalVariables_->GetIntValue(groupName, "TireHP");
+	vehicle_.parts.engineHP = globalVariables_->GetIntValue(groupName, "EngineHP");
+	vehicle_.parts.armorHP = globalVariables_->GetIntValue(groupName, "ArmorHP");
 
 	//---エンジン関係---//
 	groupName = "VehicleEngine";
@@ -139,6 +144,12 @@ void GlobalParameterManager::AddItems()
 	globalVariables_->AddItem(groupName, "PushAngleThreshold", float(vehicle_.overheat.pushAngleThreshold));
 	globalVariables_->AddItem(groupName, "PushForcePerEngine", float(vehicle_.overheat.pushForcePerEngine));
 	globalVariables_->AddItem(groupName, "KnockbackDecayFactor", float(vehicle_.overheat.knockbackDecayFactor));
+
+	// パーツ
+	groupName = "VehiclePartsInfo";
+	globalVariables_->AddItem(groupName, "TireHP", int32_t(vehicle_.parts.tireHP));
+	globalVariables_->AddItem(groupName, "EngineHP", int32_t(vehicle_.parts.engineHP));
+	globalVariables_->AddItem(groupName, "ArmorHP", int32_t(vehicle_.parts.armorHP));
 
 	// 
 	groupName = "VehicleEngine";
