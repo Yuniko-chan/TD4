@@ -17,6 +17,7 @@ public: // サブクラス
 	enum TextureIndex {
 		manual,
 		num,
+		clock,
 		kTextureIndexOfCount
 	};
 
@@ -26,6 +27,7 @@ public: // サブクラス
 		timeOneHundred,
 		timeTen,
 		timeOne,
+		clockUIindex,
 		kUIIndexOfCount
 	};
 
@@ -52,7 +54,8 @@ private: // 定数
 	const std::array<std::string, TextureIndex::kTextureIndexOfCount> kTextureFileNames_ =
 	{
 		"UI/manual.png",
-		"Sprite/Common/number.png"
+		"Sprite/Common/number.png",
+		"UI/clock.png"
 	};
 
 	// UIネーム
@@ -62,6 +65,7 @@ private: // 定数
 		"timeOneHundred",
 		"timeTen",
 		"timeOne",
+		"clock",
 	};
 
 	// UI作成データ
@@ -70,9 +74,11 @@ private: // 定数
 		UICreateData{ manual, manualUIClass, {1050.0f,150.0f}, {320.0f,240.0f} },
 
 
-		UICreateData{ num, timeUIClass, {640.0f - 128.0f,150.0f}, {128.0f,128.0f} },
-		UICreateData{ num, timeUIClass, {640.0f,150.0f}, {128.0f,128.0f} },
-		UICreateData{ num, timeUIClass, {640.0f + 128.0f,150.0f}, {128.0f,128.0f} },
+		UICreateData{ num, timeUIClass, {640.0f - 96.0f,60.0f}, {96.0f,96.0f} },
+		UICreateData{ num, timeUIClass, {640.0f,60.0f}, {96.0f,96.0f} },
+		UICreateData{ num, timeUIClass, {640.0f + 96.0f,60.0f}, {96.0f,96.0f} },
+
+		UICreateData{ clock, kClassIndexBase, {640.0f - 96.0f - 96.0f,60.0f}, {96.0f,96.0f} },
 	};
 
 public: // メンバ関数
