@@ -18,6 +18,8 @@ void AttachVisualizer::Update(const Vector2Int& key)
 		if (interactObject_->GetWorldTransformAdress()->transform_.scale != Vector3(1.0f, 1.0f, 1.0f)) {
 			interactObject_->GetWorldTransformAdress()->transform_.scale = { 1.0f,1.0f,1.0f };
 		}
+
+		interactObject_->SetIsDraw(true);
 	}
 	// リフレッシュ
 	Refresh();

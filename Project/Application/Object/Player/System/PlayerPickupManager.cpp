@@ -41,7 +41,6 @@ void PlayerPickupManager::Update()
 			interactDuration_ = std::nullopt;
 		}
 	}
-	// インタラクト更新
 	pickupInteract_->Update();
 
 	// 車体に乗っている時は処理をスキップ
@@ -62,6 +61,7 @@ void PlayerPickupManager::Update()
 		PickupVisualizer* pickUp = static_cast<PickupVisualizer*>(pickupInteract_.get());
 		if (pickUp->IsParent()) {
 			pickUp->SetTransform(nullptr);
+			pickUp->SetIsDraw(false);
 			pickUp->Refresh();
 		}
 
@@ -95,11 +95,13 @@ void PlayerPickupManager::Update()
 			pickUp->SetTransform(interactObject->GetWorldTransformAdress());
 			pickUp->RefrashSpot(interactObject->GetClassNameString());
 			pickUp->SetIsDraw(true);
-			pickUp->Update();
 		}
 		else {
+			pickUp->SetIsDraw(false);
 			pickUp->SetTransform(nullptr);
 		}
+
+		pickUp->Update();
 	}
 }
 
@@ -159,14 +161,18 @@ void PlayerPickupManager::DetachUpdate()
 {
 }
 
-void PlayerPickupManager::SpotSetup(const std::vector<std::pair<std::string, InteractionSpot*>>& spots)
+void PlayerPickupManager::SpotSetup(const std::vector<std::pair<std::string, InteractionSpot*>>& spots,
+	const std::vector<std::pair<std::string, InteractionSpot*>>& pickSpots)
 {
 	AttachVisualizer* attachPtr = static_cast<AttachVisualizer*>(attachInteract_.get());
 	PickupVisualizer* pickupPtr = static_cast<PickupVisualizer*>(pickupInteract_.get());
 	// 初期化
 	for (auto it = spots.begin(); it != spots.end(); ++it) {
 		attachPtr->AddSpot((*it).first, (*it).second);
-		pickupPtr->AddSpot((*it).first, (*it).second);
+	}
+
+	for (auto itP = pickSpots.begin(); itP != pickSpots.end(); ++itP) {
+		pickupPtr->AddSpot((*itP).first, (*itP).second);
 	}
 }
 

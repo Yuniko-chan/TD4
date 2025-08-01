@@ -16,7 +16,7 @@ void BaseInteractionVisualizer::Update()
 void BaseInteractionVisualizer::Refresh()
 {
 	if (interactObject_) {
-		interactObject_->SetIsDraw(isDraw_);
+		//interactObject_->SetIsDraw(isDraw_);
 		interactObject_->Update();
 	}
 }
