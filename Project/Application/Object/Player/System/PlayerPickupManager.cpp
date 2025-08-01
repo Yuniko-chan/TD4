@@ -48,11 +48,15 @@ void PlayerPickupManager::Update()
 	if (owner_->GetStateMachine()->GetCurrentState()) {
 		const std::type_info& id = typeid(*owner_->GetStateMachine()->GetCurrentState());
 		std::string stateName = id.name();
+		if (stateName != "class PlayerOnFootState") {
+			attachInteract_->SetIsDraw(false);
+			pickupInteract_->SetIsDraw(false);
+		}
 		if (stateName == "class PlayerInVehicleState") {
 			return;
 		}
 	}
-
+	// パーツを持ってる場合（アタッチ
 	if (holdParts_) {
 		// ピックアップ場所表示
 		PickupVisualizer* pickUp = static_cast<PickupVisualizer*>(pickupInteract_.get());
@@ -78,8 +82,9 @@ void PlayerPickupManager::Update()
 		AttachVisualizer* ptr = static_cast<AttachVisualizer*>(attachInteract_.get());
 		ptr->SetUp(nearPoint.second, owner_->GetCore()->GetWorldTransformAdress()->direction_);
 		ptr->Update(nearKey_);
-		
+		attachInteract_->SetIsDraw(true);
 	}
+	// 持ってない場合（ピックアップ
 	else {
 		// ピックアップ場所表示
 		PickupVisualizer* pickUp = static_cast<PickupVisualizer*>(pickupInteract_.get());
@@ -88,6 +93,8 @@ void PlayerPickupManager::Update()
 		MeshObject* interactObject = judgeSystem_->GetNearObject(partsManager_, pickupPointManager_);
 		if (interactObject) {
 			pickUp->SetTransform(interactObject->GetWorldTransformAdress());
+			pickUp->RefrashSpot(interactObject->GetClassNameString());
+			pickupInteract_->SetIsDraw(true);
 		}
 		else {
 			pickUp->SetTransform(nullptr);
@@ -153,10 +160,12 @@ void PlayerPickupManager::DetachUpdate()
 
 void PlayerPickupManager::SpotSetup(const std::vector<std::pair<std::string, InteractionSpot*>>& spots)
 {
-	AttachVisualizer* ptr = static_cast<AttachVisualizer*>(attachInteract_.get());
+	AttachVisualizer* attachPtr = static_cast<AttachVisualizer*>(attachInteract_.get());
+	PickupVisualizer* pickupPtr = static_cast<PickupVisualizer*>(pickupInteract_.get());
 	// 初期化
 	for (auto it = spots.begin(); it != spots.end(); ++it) {
-		ptr->AddSpot((*it).first, (*it).second);
+		attachPtr->AddSpot((*it).first, (*it).second);
+		pickupPtr->AddSpot((*it).first, (*it).second);
 	}
 }
 

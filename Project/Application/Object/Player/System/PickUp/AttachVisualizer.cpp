@@ -30,6 +30,9 @@ InteractionSpot* AttachVisualizer::FindSpot(const std::string& name)
 
 void AttachVisualizer::RefrashSpot(const std::string& name)
 {
+	for (auto it = interactionSpots_.begin(); it != interactionSpots_.end(); ++it) {
+		(*it).second->SetIsDraw(false);
+	}
 	// タイヤ
 	if (name == "TireParts") {
 		interactObject_ = FindSpot("TireSpot");
@@ -62,7 +65,13 @@ void AttachVisualizer::Update(const Vector2Int& key)
 	if (interactObject_) {
 		// キーが初期じゃなければ
 		if (key == Vector2Int(0, 0)) { parent_ = nullptr; }
-		else { parent_ = interactObject_->GetWorldTransformAdress(); }
+		else { 
+			parent_ = interactObject_->GetWorldTransformAdress();
+		}
+		// スケールの初期化
+		if (interactObject_->GetWorldTransformAdress()->transform_.scale != Vector3(1.0f, 1.0f, 1.0f)) {
+			interactObject_->GetWorldTransformAdress()->transform_.scale = { 1.0f,1.0f,1.0f };
+		}
 	}
 	// リフレッシュ
 	Refresh();

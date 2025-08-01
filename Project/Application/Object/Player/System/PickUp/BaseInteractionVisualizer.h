@@ -23,6 +23,12 @@ public:
 	/// </summary>
 	virtual void Refresh();
 
+	/// <summary>
+	/// 描画フラグ
+	/// </summary>
+	/// <param name="isDraw"></param>
+	virtual void SetIsDraw(bool isDraw);
+
 	InteractionSpot* GetInteract() { return interactObject_; }
 
 protected:
@@ -30,5 +36,6 @@ protected:
 	InteractionSpot* interactObject_ = nullptr;
 	// 親のトランスフォーム
 	WorldTransform* parent_ = nullptr;
-
+	// 描画
+	bool isDraw_ = false;
 };
