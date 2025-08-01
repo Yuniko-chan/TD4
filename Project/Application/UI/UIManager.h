@@ -71,7 +71,7 @@ private: // 定数
 	// UI作成データ
 	const std::array<UICreateData, UIIndex::kUIIndexOfCount> kUICreateDatas_ =
 	{
-		UICreateData{ manual, manualUIClass, {1050.0f,150.0f}, {320.0f,240.0f} },
+		UICreateData{ manual, manualUIClass, {1100.0f, 570.0f}, {320.0f,240.0f} },
 
 
 		UICreateData{ num, timeUIClass, {640.0f - 96.0f,60.0f}, {96.0f,96.0f} },
