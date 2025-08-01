@@ -51,6 +51,7 @@ public:
 	/// <returns></returns>
 	float GetDeltaTime() { return kDeltaTime_ * timeScale_; }
 	float GetTimeScale() { return timeScale_; }
+	int GetRemainingSeconds() { return remainingSeconds_; }
 	void SetTimeScale(float scale) { timeScale_ = scale; }
 
 private:

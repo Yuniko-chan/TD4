@@ -3,6 +3,7 @@
 #include "../../Engine/Math/Vector/Vector2.h"
 #include "BaseUI.h"
 #include "ManualUI.h"
+#include "TimeUI.h"
 
 /// <summary>
 /// UIマネージャー
@@ -15,12 +16,16 @@ public: // サブクラス
 	// テクスチャ一覧
 	enum TextureIndex {
 		manual,
+		num,
 		kTextureIndexOfCount
 	};
 
 	// UI一覧
 	enum UIIndex {
 		manualUIindex,
+		timeOneHundred,
+		timeTen,
+		timeOne,
 		kUIIndexOfCount
 	};
 
@@ -28,6 +33,7 @@ public: // サブクラス
 	enum ClassIndex {
 		kClassIndexBase, // ベース
 		manualUIClass,
+		timeUIClass,
 		kClassIndexOfCount
 	};
 
@@ -42,22 +48,31 @@ public: // サブクラス
 
 private: // 定数
 
-	// テクスチャファイルネーム(Resouce/UI/の次から)
+	// テクスチャファイルネーム(Resouce/の次から)
 	const std::array<std::string, TextureIndex::kTextureIndexOfCount> kTextureFileNames_ =
 	{
-		"manual.png"
+		"UI/manual.png",
+		"Sprite/Common/number.png"
 	};
 
 	// UIネーム
 	const std::array<std::string, UIIndex::kUIIndexOfCount> kUINames_ =
 	{
 		"manual",
+		"timeOneHundred",
+		"timeTen",
+		"timeOne",
 	};
 
 	// UI作成データ
 	const std::array<UICreateData, UIIndex::kUIIndexOfCount> kUICreateDatas_ =
 	{
 		UICreateData{ manual, manualUIClass, {1050.0f,150.0f}, {320.0f,240.0f} },
+
+
+		UICreateData{ num, timeUIClass, {640.0f - 128.0f,150.0f}, {128.0f,128.0f} },
+		UICreateData{ num, timeUIClass, {640.0f,150.0f}, {128.0f,128.0f} },
+		UICreateData{ num, timeUIClass, {640.0f + 128.0f,150.0f}, {128.0f,128.0f} },
 	};
 
 public: // メンバ関数

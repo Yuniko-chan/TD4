@@ -271,6 +271,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\TitleSceneObject\TitleSpriteObjects.cpp" />
     <ClCompile Include="Application\UI\BaseUI.cpp" />
     <ClCompile Include="Application\UI\ManualUI.cpp" />
+    <ClCompile Include="Application\UI\TimeUI.cpp" />
     <ClCompile Include="Application\UI\UIManager.cpp" />
     <ClCompile Include="Engine\2D\ImGuiManager.cpp" />
     <ClCompile Include="Engine\3D\Line\DrawLine.cpp" />
@@ -564,6 +565,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\TitleSceneObject\TitleSpriteObjects.h" />
     <ClInclude Include="Application\UI\BaseUI.h" />
     <ClInclude Include="Application\UI\ManualUI.h" />
+    <ClInclude Include="Application\UI\TimeUI.h" />
     <ClInclude Include="Application\UI\UIManager.h" />
     <ClInclude Include="Application\Course\CourseLoader.h" />
     <ClInclude Include="Engine\2D\ImGuiManager.h" />

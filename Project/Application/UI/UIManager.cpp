@@ -9,7 +9,7 @@ void UIManager::Initialize()
 	// DirectXCommon
 	DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
 	// ファイルパス
-	const std::string filePath = "Resources/UI/";
+	const std::string filePath = "Resources/";
 	for (uint32_t i = 0; i < TextureIndex::kTextureIndexOfCount; ++i) {
 		textureHandles_[i] = TextureManager::Load(filePath + kTextureFileNames_[i], dxCommon_);
 	}
@@ -22,6 +22,10 @@ void UIManager::Initialize()
 
 	// ImGuiモード
 	imGuiMode_ = 0;
+
+	static_cast<TimeUI*>(uis_[timeOneHundred].get())->SetDigitIndex(TimeUI::DigitIndex::kDigitIndexOneHundred);
+	static_cast<TimeUI*>(uis_[timeTen].get())->SetDigitIndex(TimeUI::DigitIndex::kDigitIndexTen);
+	static_cast<TimeUI*>(uis_[timeOne].get())->SetDigitIndex(TimeUI::DigitIndex::kDigitIndexOne);
 
 }
 
@@ -78,6 +82,9 @@ BaseUI* UIManager::CreateUI(ClassIndex index)
 		break;
 	case UIManager::manualUIClass:
 		result = new ManualUI();
+		break;
+	case UIManager::timeUIClass:
+		result = new TimeUI();
 		break;
 	case UIManager::kClassIndexOfCount:
 	default:
