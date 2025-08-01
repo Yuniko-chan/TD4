@@ -10,6 +10,7 @@ void VehicleConstructionSystem::Initialize()
 
 void VehicleConstructionSystem::Update()
 {
+	// 削除ループなのでイテレータの初期に戻るため削除用ループ
 	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end();) {
 		// 見つかった場合抜ける
 		if ((*it).second->GetIsDelete()) {
@@ -21,7 +22,21 @@ void VehicleConstructionSystem::Update()
 			it++;
 		}
 	}
+	// 参照用のループ
+	for (std::map<Vector2Int, Car::IParts*>::iterator it = partsMapping_.begin(); it != partsMapping_.end();) {
+		// TODO:砂ぼこりパーティクル
+		// WorldPosition:対象パーツのワールド座標
+		// それぞれのif文はタイヤかエンジンの方で使う用
+		// 砂ぼこりならTirePartsの方で
+		//Vector3 worldPosition = it->second->GetWorldTransformAdress()->GetWorldPosition();
+		//if (it->second->GetClassNameString() == "TireParts") {
 
+		//}
+		//if (it->second->GetClassNameString() == "EngineParts") {
+
+		//}
+		++it;
+	}
 	// 初期化
 	emptyDatas_.clear();
 	// データ作成
