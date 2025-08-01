@@ -13,6 +13,8 @@ void PartHPHandler::Initialize()
 	owner_->SetIsDead(false);
 	isDead_ = false;
 	isUnregist_ = false;
+	defaultColor_ = owner_->GetMaterial()->GetColor();
+	damageColor_ = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void PartHPHandler::Update()
@@ -27,7 +29,8 @@ void PartHPHandler::Update()
 	color.y = g;
 	color.z = b;
 	color.w = a;
-	owner_->SetMaterialColor(color);
+	defaultColor_ = color;
+	//owner_->SetMaterialColor(defaultColor_);
 	// HPチェック
 	if (hp_ <= 0) {
 		// 解除フラグ
@@ -81,12 +84,16 @@ void PartHPHandler::InvisibleProgress()
 		invisibleCooltime_ += GameTimeSystem::GetInstance()->GetDeltaTime();
 		// 無敵最大時間
 		const float kInvisibleTimeMax = 1.0f;
+		// ダメージ用カラー
+		owner_->GetMaterial()->SetColor(damageColor_);
 		// 無敵終了か
 		if (invisibleCooltime_ >= kInvisibleTimeMax) {
 			isInvisible_ = false;
 		}
 	}
-
+	else {
+		owner_->GetMaterial()->SetColor(defaultColor_);
+	}
 }
 
 void PartHPHandler::HeatDamage(float damage)

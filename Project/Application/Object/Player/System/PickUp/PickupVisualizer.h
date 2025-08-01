@@ -10,12 +10,18 @@ public:
 	/// </summary>
 	void Update() override;
 
-	//---アクセッサ---//
+public: //---アクセッサ---//
 	// 設定
 	void SetSpot(InteractionSpot* spot) { this->interactObject_ = spot; }
 	void SetTransform(WorldTransform* parent) { parent_ = parent; }
-	void SetIsDraw(bool isDraw);
 	// 取得
 	bool IsParent() { return parent_; }
+
+public: // メンバ関数
+	/// <summary>
+	/// スポット更新
+	/// </summary>
+	/// <param name="name"></param>
+	void RefrashSpot(const std::string& name) override;
 
 };
