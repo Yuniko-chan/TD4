@@ -79,6 +79,7 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 	objectData.transform = transform;
 	Course* object = new Course();
 	object->Initialize(&objectData,courseInportData);
+	object->GetWorldTransformAdress()->UpdateMatrix();
 	objectManager_->AddObject(object);
 	courseList_[nowGroup_][courseIndex_ % 6] = object;
 	courseIndex_++;
