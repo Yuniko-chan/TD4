@@ -1,0 +1,508 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "Obstacle.001",
+            "transform": {
+                "translation": [
+                    -302.6548156738281,
+                    300.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_A.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    200.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "fileName": "course_test_A",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_A.002",
+            "transform": {
+                "translation": [
+                    -200.0,
+                    200.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "fileName": "course_test_A",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_A.003",
+            "transform": {
+                "translation": [
+                    -400.0,
+                    200.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "fileName": "course_test_A",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.002",
+            "transform": {
+                "translation": [
+                    -456.3236083984375,
+                    300.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.003",
+            "transform": {
+                "translation": [
+                    -464.9163818359375,
+                    300.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.004",
+            "transform": {
+                "translation": [
+                    -474.0487976074219,
+                    300.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -1.75,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    45.88999938964844,
+                    4.010000228881836,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.005",
+            "transform": {
+                "translation": [
+                    -483.3282165527344,
+                    300.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.006",
+            "transform": {
+                "translation": [
+                    -492.5771484375,
+                    300.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.007",
+            "transform": {
+                "translation": [
+                    -344.29840087890625,
+                    300.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.008",
+            "transform": {
+                "translation": [
+                    -336.04998779296875,
+                    300.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.009",
+            "transform": {
+                "translation": [
+                    -327.2445983886719,
+                    300.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.010",
+            "transform": {
+                "translation": [
+                    -318.949462890625,
+                    300.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    -4.690000057220459,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    47.779998779296875,
+                    4.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.011",
+            "transform": {
+                "translation": [
+                    -310.3554992675781,
+                    300.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "course_test_A",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "fileName": "course_test_A",
+            "directoryPath": "Resources/Course/",
+            "className": "Course"
+        }
+    ]
+}

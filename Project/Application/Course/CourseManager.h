@@ -136,12 +136,12 @@ static const std::array<Vector3, kWallVerticesNum> kWallOffset{
 
 	//手前 左
 	Vector3{-kCourseDiameter * 2.5f,0.0f,-kCourseDiameter * 0.5f},
-	Vector3{(- 22.5f * kCourseScale_) ,0.0f,-kCourseDiameter * 0.5f},
+	Vector3{(- 45.0f * kCourseScale_) ,0.0f,-kCourseDiameter * 0.5f},
 	Vector3{-kCourseDiameter * 2.5f,50.0f,-kCourseDiameter * 0.5f},
 
 	Vector3{-kCourseDiameter * 2.5f,50.0f,-kCourseDiameter * 0.5f},
-	Vector3{(- 22.5f * kCourseScale_)  , 0.0f,-kCourseDiameter * 0.5f},
-	Vector3{(- 22.5f * kCourseScale_)  ,50.0f,-kCourseDiameter * 0.5f},
+	Vector3{(- 45.0f * kCourseScale_)  , 0.0f,-kCourseDiameter * 0.5f},
+	Vector3{(- 45.0f * kCourseScale_)  ,50.0f,-kCourseDiameter * 0.5f},
 
 	//
 	Vector3{ (- 22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_), 0.0f,-kCourseDiameter * 0.5f},

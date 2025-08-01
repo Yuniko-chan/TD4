@@ -139,6 +139,8 @@ void CourseManager::PlaceCourseRandom() {
 	//壁
 	CreateWall();
 
+
+
 	//0
 	Place0();
 
@@ -374,4 +376,34 @@ void CourseManager::CreateWall() {
 
 	}
 	courseCollisionSystem_->SetCourse(&course);
+
+	LevelData* levelData = levelDataManager_->GetLevelDatas(LevelIndex(kLevelIndexCustomAreaObstacle));
+	// レベルデータのオブジェクトを走査
+	for (std::vector<LevelData::ObjectData>::iterator it = levelData->objectsData_.begin(); it != levelData->objectsData_.end(); ++it) {
+		// オブジェクトの参照
+		LevelData::ObjectData gimmickData = *it;
+		//障害物の時用
+		if (std::holds_alternative<LevelData::MeshData>(gimmickData) && std::get<LevelData::MeshData>(gimmickData).className == "Obstacle") {
+
+			//std::get<LevelData::MeshData>(gimmickData).parentName = objectData.name;
+			std::get<LevelData::MeshData>(gimmickData).name = std::get<LevelData::MeshData>(gimmickData).name + std::to_string(courseIndex_);
+			std::get<LevelData::MeshData>(gimmickData).transform.translate.x += kCourseGroupOffset_.x * nowGroup_;
+			//std::get<LevelData::MeshData>(gimmickData).transform.translate.y += kCourseGroupOffset_.y * nowGroup_;
+			std::get<LevelData::MeshData>(gimmickData).transform.translate.z += kCourseGroupOffset_.z * nowGroup_;
+			// 型にあわせてInitialize
+			IObject* gimmick;
+			gimmick = objectFactory_->CreateObjectPattern(gimmickData);
+			//gimmick->GetWorldTransformAdress()->parent_ = object->GetWorldTransformAdress();
+			gimmick->GetWorldTransformAdress()->UpdateMatrix();
+			//スケールに影響されないWorldMatrix計算
+			//Matrix4x4 localMatrix = Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->transform_.scale) * Matrix4x4::MakeRotateXYZMatrix(gimmick->GetWorldTransformAdress()->transform_.rotate) * Matrix4x4::MakeTranslateMatrix(gimmick->GetWorldTransformAdress()->transform_.translate);
+			//gimmick->GetWorldTransformAdress()->worldMatrix_ = localMatrix * gimmick->GetWorldTransformAdress()->parent_->worldMatrix_;
+			//gimmick->GetWorldTransformAdress()->worldMatrix_ = Matrix4x4::Inverse(Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->parent_->transform_.scale)) * gimmick->GetWorldTransformAdress()->worldMatrix_;
+			if (gimmick) {
+				// listへ
+				objectManager_->AddObject(gimmick);
+				(gimmickList_.get())->push_back(gimmick);
+			}
+		}
+	}
 }

@@ -45,6 +45,7 @@ private: // 定数
 		"CourseA",
 		"CourseB",
 		"CourseC",
+		"CustomAreaObstacle",
 	};
 
 private: // 変数
