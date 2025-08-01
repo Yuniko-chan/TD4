@@ -66,7 +66,8 @@ void PickupVisualizer::RefrashSpot(const std::string& name)
 
 	// 共通処理
 	if (interactObject_) {
-		interactObject_->GetWorldTransformAdress()->transform_.translate = Vector3(0, 0, 0);
+		interactObject_->GetWorldTransformAdress()->transform_.translate = Vector3(0.0f, 0.0f, 0.0f);
+		interactObject_->GetWorldTransformAdress()->direction_ = Vector3(0.0f, 0.0f, 1.0f);
 		interactObject_->SetIsDraw(true);
 	}
 }

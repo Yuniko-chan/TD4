@@ -30,6 +30,8 @@ public:
 	virtual void SetIsDraw(bool isDraw);
 
 	InteractionSpot* GetInteract() { return interactObject_; }
+
+	void DisableAttachPickupIndicators();
 public:
 	/// <summary>
 	/// スポット追加

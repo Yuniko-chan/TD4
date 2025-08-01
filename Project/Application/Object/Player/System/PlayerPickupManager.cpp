@@ -41,20 +41,20 @@ void PlayerPickupManager::Update()
 			interactDuration_ = std::nullopt;
 		}
 	}
-	pickupInteract_->Update();
 
-	// 車体に乗っている時は処理をスキップ
+	// 地上にいない間はスキップ
 	if (owner_->GetStateMachine()->GetCurrentState()) {
 		const std::type_info& id = typeid(*owner_->GetStateMachine()->GetCurrentState());
 		std::string stateName = id.name();
 		if (stateName != "class PlayerOnFootState") {
-			attachInteract_->SetIsDraw(false);
-			pickupInteract_->SetIsDraw(false);
-		}
-		if (stateName == "class PlayerInVehicleState") {
+			attachInteract_->DisableAttachPickupIndicators();
+			pickupInteract_->DisableAttachPickupIndicators();
 			return;
 		}
 	}
+
+	pickupInteract_->Update();
+
 	// パーツを持ってる場合（アタッチ
 	if (holdParts_) {
 		// ピックアップ場所表示

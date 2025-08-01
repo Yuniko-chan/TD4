@@ -25,6 +25,20 @@ void BaseInteractionVisualizer::SetIsDraw(bool isDraw) {
 	isDraw_ = isDraw;
 }
 
+void BaseInteractionVisualizer::DisableAttachPickupIndicators()
+{
+	for (auto it = interactionSpots_.begin(); it != interactionSpots_.end();
+		++it) {
+		it->second->SetIsDraw(false);
+	}
+	isDraw_ = false;
+	//if (interactObject_) {
+	//	interactObject_->SetIsDraw(isDraw_);
+	//	interactObject_->Update();
+	//}
+
+}
+
 void BaseInteractionVisualizer::AddSpot(std::string name, InteractionSpot* interact)
 {
 	// 既にあればスキップ
