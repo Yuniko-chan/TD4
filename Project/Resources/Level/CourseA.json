@@ -11,9 +11,9 @@
                     1.7428765296936035
                 ],
                 "rotation": [
-                    -0.7853982448577881,
-                    3.893860878179112e-08,
-                    1.5707963705062866
+                    -0.7853983044624329,
+                    0.0,
+                    1.5707964897155762
                 ],
                 "scaling": [
                     1.0,
@@ -121,7 +121,7 @@
                 "translation": [
                     0.0,
                     35.26073455810547,
-                    32.0
+                    35.0
                 ],
                 "rotation": [
                     -0.0,
@@ -135,22 +135,18 @@
                 ]
             },
             "collider": {
-                "type": "BOX",
+                "type": "SPHERE",
                 "center": [
                     0.0,
                     0.0,
                     0.0
                 ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
+                "radius": 2
             },
             "gimmick": {
                 "type": "IRONBALL",
                 "length": 32.0,
-                "angle": 60.0
+                "angle": 40.0
             }
         },
         {
@@ -348,9 +344,9 @@
                     1.7428765296936035
                 ],
                 "rotation": [
-                    0.7853981852531433,
-                    -7.119641054487147e-08,
-                    1.5707963705062866
+                    0.7853983640670776,
+                    -3.225780531579403e-08,
+                    1.5707964897155762
                 ],
                 "scaling": [
                     1.0,
@@ -419,8 +415,8 @@
             "name": "Obstacle.006",
             "transform": {
                 "translation": [
-                    -32.72224044799805,
-                    82.12869262695312,
+                    -20.804182052612305,
+                    22.29010772705078,
                     0.0
                 ],
                 "rotation": [
@@ -456,8 +452,156 @@
             "name": "Obstacle.007",
             "transform": {
                 "translation": [
-                    37.0213623046875,
-                    81.201416015625,
+                    26.096473693847656,
+                    45.44723892211914,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.008",
+            "transform": {
+                "translation": [
+                    -38.06951904296875,
+                    -66.80350494384766,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.009",
+            "transform": {
+                "translation": [
+                    24.740459442138672,
+                    -51.904632568359375,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.010",
+            "transform": {
+                "translation": [
+                    -29.514842987060547,
+                    -17.546600341796875,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.011",
+            "transform": {
+                "translation": [
+                    -20.804182052612305,
+                    58.87114334106445,
                     0.0
                 ],
                 "rotation": [
