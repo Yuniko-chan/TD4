@@ -4,7 +4,7 @@
 
 void UIManager::Initialize()
 {
-	
+
 	// テクスチャ読み込み
 	// DirectXCommon
 	DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
@@ -26,6 +26,8 @@ void UIManager::Initialize()
 	static_cast<TimeUI*>(uis_[timeOneHundred].get())->SetDigitIndex(TimeUI::DigitIndex::kDigitIndexOneHundred);
 	static_cast<TimeUI*>(uis_[timeTen].get())->SetDigitIndex(TimeUI::DigitIndex::kDigitIndexTen);
 	static_cast<TimeUI*>(uis_[timeOne].get())->SetDigitIndex(TimeUI::DigitIndex::kDigitIndexOne);
+
+	uis_[clockUIindex]->GetSprite()->SetColor(Vector4{ 0.0f,0.0f,0.0f,1.0f });
 
 }
 

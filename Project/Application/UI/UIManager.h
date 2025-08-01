@@ -75,7 +75,7 @@ private: // 定数
 
 
 		UICreateData{ num, timeUIClass, {640.0f - 96.0f,60.0f}, {96.0f,96.0f} },
-		UICreateData{ num, timeUIClass, {640.0f,60.0f}, {96.0f,96.0f} },
+		UICreateData{ num, timeUIClass, {640.0f, 60.0f}, {96.0f,96.0f} },
 		UICreateData{ num, timeUIClass, {640.0f + 96.0f,60.0f}, {96.0f,96.0f} },
 
 		UICreateData{ clock, kClassIndexBase, {640.0f - 96.0f - 96.0f,60.0f}, {96.0f,96.0f} },

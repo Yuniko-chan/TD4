@@ -8,6 +8,7 @@ void TimeUI::Initialize(uint32_t textureHandle, const Vector2& position, const V
 
 	textureSize_ = Vector2{ 512.0f,512.0f };
 	sprite_->SetTextureSize(textureSize_);
+	sprite_->SetColor(Vector4{ 0.0f,0.0f,0.0f,1.0f });
 
 }
 

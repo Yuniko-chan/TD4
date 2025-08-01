@@ -92,6 +92,8 @@ void GameScene::Initialize() {
 	//gameTimeSystem_ = std::make_unique<GameTimeSystem>();
 	gameTimeSystem_ = GameTimeSystem::GetInstance();
 	gameTimeSystem_->Initialize();
+	const float kTitleStart = 120.0f;
+	gameTimeSystem_->Start(kTitleStart);
 
 	// カメラのマネージャー
 	cameraManager_ = std::make_unique<GameCameraManager>();
@@ -216,6 +218,9 @@ void GameScene::Update() {
 	postEffectSystem_->Update();
 
 	// ゲームが終了するか
+	if (gameTimeSystem_->GetRemainingSeconds() <= 0) {
+		requestSceneNo_ = kClear;
+	}
 
 }
 
