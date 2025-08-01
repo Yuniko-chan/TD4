@@ -13,6 +13,7 @@ void ParticleManager::Update()
 	}
 }
 
+
 void ParticleManager::Draw(BaseCamera& camera)
 {
 	for (uint32_t i = 0; i < ParticleIndex::kUIIndexOfCount; ++i) {
@@ -27,6 +28,19 @@ void ParticleManager::StopEmission(std::string particleName)
 	if (it != particleInfo_.end()) {
 		particleInfo_[particleName].active = false;
 		particles_[particleInfo_[particleName].indexNumber]->ChangeEmission(false);
+	}
+	else {
+		std::cout << particleName << " は見つかりませんでした。" << std::endl;
+	}
+}
+
+void ParticleManager::StertEmission(std::string particleName)
+{
+	// キーが存在するかを確認してからアクセスする
+	auto it = particleInfo_.find(particleName);
+	if (it != particleInfo_.end()) {
+		particleInfo_[particleName].active = true;
+		particles_[particleInfo_[particleName].indexNumber]->ChangeEmission(true);
 	}
 	else {
 		std::cout << particleName << " は見つかりませんでした。" << std::endl;

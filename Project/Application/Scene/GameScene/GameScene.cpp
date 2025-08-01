@@ -87,6 +87,16 @@ void GameScene::Initialize() {
 	uiManager_ = std::make_unique<UIManager>();
 	uiManager_->Initialize();
 
+	//パーティクル
+	ParticleManager_ = std::make_unique<ParticleManager>();
+	ParticleManager_->Initialize();
+
+	ParticleManager_->CreateParticle<RunDustParticle>("RunDust",
+		{
+				
+		}
+	);
+
 	// ポストエフェクト
 	postEffectSystem_ = std::make_unique<PostEffectSystem>();
 	postEffectSystem_->Initialize();
@@ -182,6 +192,8 @@ void GameScene::Update() {
 	DebugCameraUpdate();
 	// エフェクトマネージャー
 	effectManager_->Update(camera_);
+	//パーティクルマネージャー
+	ParticleManager_->Update();
 	// UIマネージャー
 	uiManager_->Update();
 	// ポストエフェクト
@@ -216,10 +228,10 @@ void GameScene::Draw() {
 
 	//3Dオブジェクトはここ
 
-	objectManager_->Draw(camera_, drawLine_);
+	//objectManager_->Draw(camera_, drawLine_);
 
 	// エフェクトマネージャー
-	effectManager_->Draw(camera_);
+	//effectManager_->Draw(camera_);
 
 	ModelDraw::PostDraw();
 
@@ -227,19 +239,21 @@ void GameScene::Draw() {
 
 #pragma region 線描画
 
-	drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
+	//drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
 
 #pragma endregion
 
 #pragma region パーティクル描画
 
 	// パーティクル描画
-	objectManager_->ParticleDraw(camera_);
+	//objectManager_->ParticleDraw(camera_);
+
+	ParticleManager_->Draw(camera_);
 
 #pragma endregion
 
 	// ポストエフェクト
-	postEffectSystem_->Execute();
+	//postEffectSystem_->Execute();
 
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理
@@ -250,7 +264,7 @@ void GameScene::Draw() {
 	//前景スプライト描画
 
 	// UI
-	uiManager_->Draw();
+	//uiManager_->Draw();
 
 	// 前景スプライト描画後処理
 	Sprite::PostDraw();

@@ -3,6 +3,7 @@
 #include "../../../Engine/Scene/BaseScene/BaseScene.h"
 
 #include "../Particle/RunDustParticle/RunDustParticle.h"
+#include "../Particle/Explode/ExplodeParticle.h"
 class ParticleManager {
 public:
 	struct ParticleData {
@@ -17,7 +18,7 @@ public:
 	// パーティクル一覧
 	enum ParticleIndex {
 		RunDust,
-		GPU,
+		//GPU,
 		kUIIndexOfCount
 	};
 
@@ -41,6 +42,11 @@ public:
 	/// </summary>
 	/// <param name="particleName">生成時に付けた名前</param>
 	void StopEmission(std::string particleName);
+	/// <summary>
+	/// パーティクルの生成を止める
+	/// </summary>
+	/// <param name="particleName">生成時に付けた名前</param>
+	void StertEmission(std::string particleName);
 
 	/// <summary>
 	/// Imgui描画
@@ -48,17 +54,21 @@ public:
 	void ImGuiDraw();
 	template <typename T>
 	void CreateParticle(std::string particleName, 
-		EmitterCS kEmitter =
-		{
-			{ 0.0f,0.0f,0.0f},	// 位置
-			1.0f,				// 射出半径
-			10,					// 射出数
-			0.1f,				// 射出間隔
-			0.0f,				// 射出間隔調整時間
-			true				// 射出許可
-		}) 
+		GPUParticle3D::EmitBlendNormalCS kEmitter)
 {
-		GPUParticle* result = new T;
+		kEmitter.count = 30;
+		kEmitter.frequency = 1.0f;
+		kEmitter.radius = 1.0f;
+		kEmitter.num = 10;
+
+		kEmitter.frequencyTime = 1.0f;
+		kEmitter.translate0 = {0.0f,0.0f,1.0f};
+		kEmitter.translate1 = {0.0f,0.0f,1.0f};
+		kEmitter.translate2 = {0.0f,0.0f,1.0f};
+		kEmitter.translate3 = {0.0f,0.0f,1.0f};
+		kEmitter.emit = true;
+
+		GPUParticle3D* result = new T;
 
 		// DirectXCommon
 		DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
@@ -69,14 +79,14 @@ public:
 		particles_[particleInfo_[particleName].indexNumber]->Initialize(
 			dxCommon_->GetDevice(),
 			dxCommon_->GetCommadListLoad(),
-			GraphicsPipelineState::sRootSignature_[GraphicsPipelineState::kPipelineStateIndexGPUParticle].Get(),
-			GraphicsPipelineState::sPipelineState_[GraphicsPipelineState::kPipelineStateIndexGPUParticle].Get(), particleName);
+			GraphicsPipelineState::sRootSignature_[GraphicsPipelineState::kPipelineStateIndexGPUParticleBlendNormal].Get(),
+			GraphicsPipelineState::sPipelineState_[GraphicsPipelineState::kPipelineStateIndexGPUParticleBlendNormal].Get(), particleName);
 		particles_[particleInfo_[particleName].indexNumber]->SetEmitter(kEmitter,true);
 
 		number++;
 	}
 private:
-	std::array<std::unique_ptr<GPUParticle>, ParticleIndex::kUIIndexOfCount> particles_;
+	std::array<std::unique_ptr<GPUParticle3D>, ParticleIndex::kUIIndexOfCount> particles_;
 
 	std::unordered_map<std::string, ParticleData> particleInfo_;
 	int number = 0;

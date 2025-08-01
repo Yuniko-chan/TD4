@@ -2,13 +2,10 @@
 #include "../../../Application/Particle/GPUParticle3D/GPUParticle3D.h"
 
 /// <summary>
-/// 走る、ダッシュの時のエフェクト
+/// エンジンの爆発エフェクト
 /// </summary>
-class RunDustParticle :
-	public GPUParticle3D
-{
-
-public:
+class ExplodeParticle :
+    public GPUParticle3D {
 
 	/// <summary>
 	/// 初期化

@@ -19,6 +19,7 @@
 #include "../../../Engine/GPUParticle/GPUParticle.h"
 #include "../../ParticleManager/ParticleManager.h"
 #include "../../UI/UIManager.h"
+#include "../../Particle/EggManager/EggManager.h"
 
 /// <summary>
 /// デバッグシーン
@@ -85,7 +86,7 @@ private: // メンバ変数
 	// クロスシミュレーションデモ
 	//std::unique_ptr<ClothDemo> clothDemo_;
 
-	std::unique_ptr<ParticleManager> ParticleManager_;
+	std::unique_ptr<EggManager> ParticleManager_;
 	std::unique_ptr<UIManager> UIManager_;
 
 };

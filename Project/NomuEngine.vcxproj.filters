@@ -84,6 +84,9 @@
     <FxCompile Include="Resources\shaders\Sprite\Sprite.VS.hlsl" />
     <FxCompile Include="Resources\shaders\WindowSprite\WindowSprite.PS.hlsl" />
     <FxCompile Include="Resources\shaders\WindowSprite\WindowSprite.VS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\ExplodeParticle\ExplodeEmit.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\ExplodeParticle\ExplodeInitialize.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\ExplodeParticle\ExplodeUpdate.CS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Camera\GameCameraManager.cpp" />
@@ -1004,9 +1007,6 @@
     <ClCompile Include="Engine\3D\Model\ModelLoaderFromCourseEX.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\3D\Model\BaseInstancingDrawing.cpp">
       <Filter>Engine\3D\Model</Filter>
     </ClCompile>
@@ -1072,11 +1072,13 @@
     <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp" />
     <ClCompile Include="Application\OutGameObject\OutGameSpriteObject.cpp" />
     <ClCompile Include="Application\OutGameObject\OutGameSpriteObjectAnimation.cpp" />
+    <ClCompile Include="Application\Object\Player\System\PlayerFrontChecker.cpp" />
+    <ClCompile Include="Application\Particle\Explode\ExplodeParticle.cpp" />
+    <ClCompile Include="Application\Particle\GPUParticle3D\GPUParticle3D.cpp" />
+    <ClCompile Include="Application\Particle\EggManager\EggManager.cpp" />
+    <ClCompile Include="Application\Particle\Egg\Egg.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\ContactRecord\ContactRecord.h">
-      <Filter>Engine\Contactrecord</Filter>
-    </ClInclude>
     <ClInclude Include="Application\Camera\CameraLists.h" />
     <ClInclude Include="Application\Camera\GameCameraManager.h" />
     <ClInclude Include="Application\Camera\OverheadCamera.h" />
@@ -1711,6 +1713,11 @@
     <ClInclude Include="Engine\Camera\ViewProjectionMatrix.h" />
     <ClInclude Include="Application\OutGameObject\OutGameSpriteObject.h" />
     <ClInclude Include="Application\OutGameObject\OutGameSpriteObjectAnimation.h" />
+    <ClInclude Include="Engine\ContactRecord\ContactRecord.h" />
+    <ClInclude Include="Application\Particle\Explode\ExplodeParticle.h" />
+    <ClInclude Include="Application\Particle\GPUParticle3D\GPUParticle3D.h" />
+    <ClInclude Include="Application\Particle\EggManager\EggManager.h" />
+    <ClInclude Include="Application\Particle\Egg\Egg.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc" />
@@ -1739,6 +1746,7 @@
     <None Include="Resources\shaders\Skybox\Skybox.hlsli" />
     <None Include="Resources\shaders\Sprite\Sprite.hlsli" />
     <None Include="Resources\shaders\WindowSprite\WindowSprite.hlsli" />
+    <None Include="Resources\Shaders\GPUParticle\ExplodeParticle\Explode.CS.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />

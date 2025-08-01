@@ -8,7 +8,7 @@ void RunDustParticle::Initialize(
 	const std::string& name)
 {
 	// テクスチャ名前
-	const std::string kTextureFilename = "Note_1.png";
+	const std::string kTextureFilename = "circle.png";
 	textureFilename_ = kTextureFilename;
 
 	// 初期化

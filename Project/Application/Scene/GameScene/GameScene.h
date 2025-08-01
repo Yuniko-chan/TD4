@@ -14,7 +14,6 @@
 #include "../../Camera/GameCameraManager.h"
 #include "../../Effect/EffectManager.h"
 #include "../../Collision/GameSceneCollisionManager.h"
-#include "../../UI/UIManager.h"
 #include "../../System/PostEffectSystem/PostEffectSystem.h"
 #include "../../Object/KeyConfig/GameKeyconfig.h"
 #include "../../Object/GlobalParameterManager.h"
@@ -22,6 +21,8 @@
 #include "../../Course/CourseCollisionSystem.h"
 #include "../../Course/Debug/CourseDebugDraw.h"
 #include "../../Course/CourseManager.h"
+#include "../../ParticleManager/ParticleManager.h"
+#include "../../UI/UIManager.h"
 
 /// <summary>
 /// ゲームシーン
@@ -103,6 +104,7 @@ private:
 
 	// UIマネージャー
 	std::unique_ptr<UIManager> uiManager_ = nullptr;
+	std::unique_ptr<ParticleManager> ParticleManager_ = nullptr;
 
 	// ポストエフェクトシステム
 	std::unique_ptr<PostEffectSystem> postEffectSystem_ = nullptr;
