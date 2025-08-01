@@ -92,6 +92,10 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	vehicle_.handling.maxSteerInputCount = globalVariables_->GetIntValue(groupName, "InputMaxCount");
 	vehicle_.handling.maxEffectiveCount = globalVariables_->GetIntValue(groupName, "MaxEffectiveCount");
 
+	groupName = "GameSystem";
+	gameSystem_.limitSecond = globalVariables_->GetFloatValue(groupName, "LimitSecond");
+	gameSystem_.checkpointAddSecond = globalVariables_->GetFloatValue(groupName, "CheckpointAddSecond");
+
 }
 
 void GlobalParameterManager::AddItems()
@@ -166,5 +170,9 @@ void GlobalParameterManager::AddItems()
 	globalVariables_->AddItem(groupName, "InputDecrementInterval", float(vehicle_.handling.inputDecrementInterval));
 	globalVariables_->AddItem(groupName, "InputMaxCount", int32_t(vehicle_.handling.maxSteerInputCount));
 	globalVariables_->AddItem(groupName, "MaxEffectiveCount", int32_t(vehicle_.handling.maxEffectiveCount));
+
+	groupName = "GameSystem";
+	globalVariables_->AddItem(groupName, "LimitSecond", float(gameSystem_.limitSecond));
+	globalVariables_->AddItem(groupName, "CheckpointAddSecond", float(gameSystem_.checkpointAddSecond));
 
 }

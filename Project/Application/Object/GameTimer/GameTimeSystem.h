@@ -19,9 +19,10 @@ public:
 
 public:
 	/// <summary>
-	/// 開始
+	/// ゲーム開始
 	/// </summary>
-	void Start();
+	void GameStart();
+
 	/// <summary>
 	/// 開始
 	/// </summary>

@@ -173,4 +173,14 @@ namespace ParameterStructs {
 		std::pair<Vector3, Vector3> onFoot;
 	};
 
+	/// <summary>
+	/// ゲームのシステムデータ
+	/// </summary>
+	struct GameSystemData {
+		// 制限時間
+		float limitSecond = 300.0f;
+		// 追加秒数
+		float checkpointAddSecond = 15.0f;
+	};
+
 }
