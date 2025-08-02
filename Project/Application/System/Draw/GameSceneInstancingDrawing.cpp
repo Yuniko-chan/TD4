@@ -27,6 +27,8 @@ void GameSceneInstancingDrawing::Initialize()
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/CannonExplosion/", "CannonExplosion.obj"}, false}); // 大砲爆発
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/CannonBall/", "CannonBall.obj"}, false}); // 大砲の弾
 
+	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/Model/Gimmick/Obstacles/", "Obstacles.obj"}, false}); // 障害物
+
 	modelDatas_.push_back(std::pair<ModelPathAndName, bool>{{"Resources/default", "Ball.obj"}, false}); // ball
 
 
