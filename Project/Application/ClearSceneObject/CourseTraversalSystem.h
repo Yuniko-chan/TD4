@@ -18,6 +18,11 @@ public: // 静的関数
 	/// <param name="courseTraversalNum"></param>
 	static void SetCourseTraversalNum(int32_t courseTraversalNum) { courseTraversalNum_ = courseTraversalNum; }
 
+	/// <summary>
+	/// コース踏破回数取得
+	/// </summary>
+	static int32_t GetCourseTraversalNum() { return courseTraversalNum_; }
+
 private: //  静的変数
 
 	// コース踏破回数

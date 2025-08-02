@@ -2,6 +2,7 @@
 #include "../../../Engine/Math/DeltaTime.h"
 #include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Engine/GlobalVariables/GlobalVariables.h"
+#include "../Tutorial/Tutorial.h"
 
 GameTimeSystem::GameTimeSystem()
 {
@@ -14,10 +15,41 @@ void GameTimeSystem::Initialize()
 	isRunning_ = false;
 	isPause_ = false;
 	SetTimeScale(1.0f);
+
+	tutorialFinished_ = false;
+	startAnimationEnds_ = false;
+	remainingSeconds_ = 1;
+
+	animationTime_ = 2.0f;
+
 }
 
 void GameTimeSystem::Update()
 {
+
+	// チュートリアル
+	if (!tutorialFinished_) {
+		tutorialFinished_ = Tutorial::GetInstance()->GetIsEnd();
+		if (tutorialFinished_) {
+			// アニメーションスタート
+			remainingTime_ = animationTime_;
+		}
+		return;
+	}
+
+	// スタートしたか
+	if (!startAnimationEnds_) {
+		float reductionTime = 1.0f * GetDeltaTime();	// 減少時間（1.0 = タイムファクター）
+		remainingTime_ -= reductionTime;
+		if (remainingTime_ <= 0.0f) {
+			startAnimationEnds_ = true;
+			GameStart();
+		}
+		else {
+			return;
+		}
+	}
+
 	// 稼働中
 	if (isRunning_ && !isPause_) {
 		float reductionTime = 1.0f * GetDeltaTime();	// 減少時間（1.0 = タイムファクター）

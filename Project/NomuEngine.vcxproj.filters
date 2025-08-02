@@ -1075,6 +1075,13 @@
     <ClCompile Include="Application\AudioManager\TitleAudioManager.cpp" />
     <ClCompile Include="Application\AudioManager\ClearAudioManager.cpp" />
     <ClCompile Include="Application\Object\Car\System\Drive\KnockbackReactionController.cpp" />
+    <ClCompile Include="Application\UI\TimeUI.cpp" />
+    <ClCompile Include="Application\UI\TutorialUI.cpp" />
+    <ClCompile Include="Application\Object\Tutorial\Tutorial.cpp" />
+    <ClCompile Include="Application\UI\TutorialCheckUI.cpp" />
+    <ClCompile Include="Application\UI\ClockUI.cpp" />
+    <ClCompile Include="Application\UI\SpecUI.cpp" />
+    <ClCompile Include="Application\UI\SpecGaugeUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Camera\CameraLists.h" />
@@ -1717,6 +1724,13 @@
     <ClInclude Include="Application\AudioManager\TitleAudioManager.h" />
     <ClInclude Include="Application\AudioManager\ClearAudioManager.h" />
     <ClInclude Include="Application\Object\Car\System\Drive\KnockbackReactionController.h" />
+    <ClInclude Include="Application\UI\TimeUI.h" />
+    <ClInclude Include="Application\UI\TutorialUI.h" />
+    <ClInclude Include="Application\Object\Tutorial\Tutorial.h" />
+    <ClInclude Include="Application\UI\TutorialCheckUI.h" />
+    <ClInclude Include="Application\UI\ClockUI.h" />
+    <ClInclude Include="Application\UI\SpecUI.h" />
+    <ClInclude Include="Application\UI\SpecGaugeUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc" />

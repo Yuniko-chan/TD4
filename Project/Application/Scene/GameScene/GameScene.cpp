@@ -92,6 +92,8 @@ void GameScene::Initialize() {
 	//gameTimeSystem_ = std::make_unique<GameTimeSystem>();
 	gameTimeSystem_ = GameTimeSystem::GetInstance();
 	gameTimeSystem_->Initialize();
+	const float kTitleStart = 120.0f;
+	gameTimeSystem_->Start(kTitleStart);
 
 	// カメラのマネージャー
 	cameraManager_ = std::make_unique<GameCameraManager>();
@@ -107,6 +109,7 @@ void GameScene::Initialize() {
 	// UIマネージャー
 	uiManager_ = std::make_unique<UIManager>();
 	uiManager_->Initialize();
+	uiManager_->SetVehicleCore(reinterpret_cast<VehicleCore*>(objectManager_->GetObjectPointer("initCore")));
 
 	// ポストエフェクト
 	postEffectSystem_ = std::make_unique<PostEffectSystem>();
@@ -118,6 +121,12 @@ void GameScene::Initialize() {
 
 	// コース
 	CourseInitialize();
+
+	// チュートリアル
+	tutorial_ = Tutorial::GetInstance();
+	tutorial_->Initialize();
+	tutorial_->SetVehicleCore(reinterpret_cast<VehicleCore*>(objectManager_->GetObjectPointer("initCore")));
+	tutorial_->SetCourseTraversalNum(courseManager_->GetCourseTraversalNumAdrres());
 
 	//BGM
 	audioManager_->PlayWave(kGameAudioNameIndexBGM);
@@ -193,6 +202,9 @@ void GameScene::Update() {
 	// オブジェクトマネージャー
 	objectManager_->Update();
 
+	// チュートリアル
+	tutorial_->Update();
+
 	// あたり判定
 	collisionManager_->ListClear();
 
@@ -216,6 +228,9 @@ void GameScene::Update() {
 	postEffectSystem_->Update();
 
 	// ゲームが終了するか
+	if (gameTimeSystem_->GetRemainingSeconds() <= 0) {
+		requestSceneNo_ = kClear;
+	}
 
 }
 
