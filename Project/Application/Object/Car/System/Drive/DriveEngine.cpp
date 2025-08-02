@@ -7,6 +7,9 @@
 
 void DriveEngine::Update()
 {
+	// UI用の速度計算
+	GetUISpeed();
+
 	// リセット呼び出し
 	if (!owner_->IsPlayer() && !onReset_) {
 		onReset_ = std::bind(&DriveEngine::Reset, this);
@@ -88,6 +91,8 @@ void DriveEngine::ImGuiDraw()
 {
 	ImGui::SeparatorText("ドライブエンジン");
 
+	ImGui::DragFloat("全体の最大", &maxLimitAccel_);
+	ImGui::DragFloat("現在の最大", &currentLimitAccel_);
 
 
 	if (ImGui::TreeNode("詳細データ")) {
@@ -187,4 +192,28 @@ void DriveEngine::OverheatProcess(const float& SpeedPercentage)
 	}
 
 
+}
+
+void DriveEngine::GetUISpeed()
+{
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	// スピード用のレシオ計算
+	const char* groupName = "VehicleEngine";
+	const float kMaxEngineCountAccelFactor = global->GetFloatValue(groupName, "MaxEngineCountAccelFactor");	// 最大
+	const float kMinEngineCountAccelFactor = global->GetFloatValue(groupName, "MinEngineCountAccelFactor");	// 最小
+	int32_t maxEffective = global->GetIntValue(groupName, "MaxEffectiveCount");	// エンジンの最大数
+	float rideSpeedFactor = GlobalVariables::GetInstance()->GetFloatValue(groupName, "AccelerationMultiplier");
+	int maxReception = (int)global->GetIntValue(groupName, "InputMaxCount");	// 受付最大
+	// レート
+	float engineCount = (float)owner_->GetStatus()->GetEngine();
+	engineCount = std::clamp(engineCount, 1.0f, (float)maxEffective);
+	float t = engineCount / (float)maxEffective;
+	// 乗算レート
+	float engineCountEffectiveFactor = Ease::Easing(Ease::EaseName::Lerp, kMinEngineCountAccelFactor, kMaxEngineCountAccelFactor, t);
+
+	maxLimitAccel_ = (maxReception * rideSpeedFactor) * kMaxEngineCountAccelFactor;
+	maxLimitAccel_ = maxLimitAccel_ * GameTimeSystem::GetInstance()->GetDeltaTime();
+
+	currentLimitAccel_ = (maxReception * rideSpeedFactor) * engineCountEffectiveFactor;
+	currentLimitAccel_ *= GameTimeSystem::GetInstance()->GetDeltaTime();
 }

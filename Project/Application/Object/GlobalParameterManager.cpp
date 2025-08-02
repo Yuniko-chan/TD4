@@ -96,6 +96,9 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	vehicle_.handling.steerMaxAngle = globalVariables_->GetFloatValue(groupName, "SteerMaxAngle");
 	vehicle_.handling.steerMinAngle = globalVariables_->GetFloatValue(groupName, "SteerMinAngle");
 
+	vehicle_.handling.tireLerpMin = globalVariables_->GetFloatValue(groupName, "TireLerpMin");
+	vehicle_.handling.tireLerpMax = globalVariables_->GetFloatValue(groupName, "TireLerpMax");
+
 	vehicle_.handling.inputInterval = globalVariables_->GetFloatValue(groupName, "InputInterval");
 	vehicle_.handling.inputDecrementInterval = globalVariables_->GetFloatValue(groupName, "InputDecrementInterval");
 	vehicle_.handling.maxSteerInputCount = globalVariables_->GetIntValue(groupName, "InputMaxCount");
@@ -189,6 +192,9 @@ void GlobalParameterManager::AddItems()
 	globalVariables_->AddItem(groupName, "SteerMaxAngle", float(vehicle_.handling.steerMaxAngle));
 	globalVariables_->AddItem(groupName, "SteerMinAngle", float(vehicle_.handling.steerMinAngle));
 	
+	globalVariables_->AddItem(groupName, "TireLerpMin", float(vehicle_.handling.tireLerpMin));
+	globalVariables_->AddItem(groupName, "TireLerpMax", float(vehicle_.handling.tireLerpMax));
+
 	globalVariables_->AddItem(groupName, "InputInterval", float(vehicle_.handling.inputInterval));
 	globalVariables_->AddItem(groupName, "InputDecrementInterval", float(vehicle_.handling.inputDecrementInterval));
 	globalVariables_->AddItem(groupName, "InputMaxCount", int32_t(vehicle_.handling.maxSteerInputCount));
