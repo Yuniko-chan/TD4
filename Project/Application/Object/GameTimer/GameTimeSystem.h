@@ -67,4 +67,11 @@ private:
 	bool isEnd_ = false;
 	// 
 	float timeScale_ = 1.0f;
+
+	// チュートリアル終了フラグ
+	bool tutorialFinished_;
+
+	// スタートアニメーション終了フラグ
+	bool startAnimationEnds_;
+
 };
