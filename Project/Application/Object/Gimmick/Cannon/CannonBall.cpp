@@ -78,15 +78,7 @@ void CannonBall::Update()
 
 void CannonBall::Draw(BaseCamera& camera)
 {
-
-	// 動作中表示
-	if (isWorking_) {
-		MeshObject::Draw(camera);
-	}
-
-	// 爆発
-	cannonExplosion_->Draw(camera);
-
+	camera;
 }
 
 void CannonBall::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)

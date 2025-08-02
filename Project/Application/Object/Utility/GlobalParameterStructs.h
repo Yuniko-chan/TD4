@@ -61,6 +61,9 @@ namespace ParameterStructs {
 			// 減少の間隔
 			float inputDecrementInterval = 2.0f;
 
+			float tireLerpMin = 0.01f;
+			float tireLerpMax = 1.0f;
+
 			// ステアの切り返しの大きいかを判定する閾値
 			int steerReturnAccelThreshold = 0;
 			// 切り返しの大きい際のセンシ

@@ -71,6 +71,11 @@ void MinigunBullet::Update()
 
 }
 
+void MinigunBullet::Draw(BaseCamera& camera)
+{
+    camera;
+}
+
 void MinigunBullet::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
     colliderPartner, collisionData;

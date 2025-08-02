@@ -7,6 +7,9 @@
 
 void DriveEngine::Update()
 {
+	// UI用の速度計算
+	GetUISpeed();
+
 	// リセット呼び出し
 	if (!owner_->IsPlayer() && !onReset_) {
 		onReset_ = std::bind(&DriveEngine::Reset, this);
@@ -88,7 +91,7 @@ void DriveEngine::ImGuiDraw()
 {
 	ImGui::SeparatorText("ドライブエンジン");
 
-
+	ImGui::DragFloat("エンジン数の割合", &currentEngine_);
 
 	if (ImGui::TreeNode("詳細データ")) {
 		ImGui::Checkbox("IsAccel", &isAccel_);
@@ -187,4 +190,17 @@ void DriveEngine::OverheatProcess(const float& SpeedPercentage)
 	}
 
 
+}
+
+void DriveEngine::GetUISpeed()
+{
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	// スピード用のレシオ計算
+	const char* groupName = "VehicleEngine";
+	int32_t maxEffective = global->GetIntValue(groupName, "MaxEffectiveCount");	// エンジンの最大数
+	// レート
+	float engineCount = (float)owner_->GetStatus()->GetEngine();
+	engineCount = std::clamp(engineCount, 1.0f, (float)maxEffective);
+
+	currentEngine_ = std::clamp(float(engineCount / maxEffective), 0.0f, 1.0f);
 }

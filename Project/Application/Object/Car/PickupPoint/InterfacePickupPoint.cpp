@@ -25,3 +25,8 @@ void IPickupPoint::Update()
 	// 座標更新
 	worldTransform_.UpdateMatrix();
 }
+
+void IPickupPoint::Draw(BaseCamera& camera)
+{
+	camera;
+}

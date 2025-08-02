@@ -33,6 +33,12 @@ void Obstacle::Initialize(LevelData::MeshData* data, const ObstacleData obstacle
 
 void Obstacle::Update()
 {
+    ColliderUpdate();
+}
+
+void Obstacle::Draw(BaseCamera& camera)
+{
+    camera;
 }
 
 void Obstacle::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
@@ -66,4 +72,16 @@ void Obstacle::ColliderInitialize(ColliderShape collider)
     *colliderShape = obb;
     collider_.reset(colliderShape);
 
+}
+
+void Obstacle::ColliderUpdate()
+{
+    // コライダーの更新
+    OBB obb = std::get<OBB>(*collider_);
+    obb.center_ = worldTransform_.GetWorldPosition();
+    obb.SetOtientatuons(worldTransform_.rotateMatrix_);
+    // コライダーを設定しなおす
+    ColliderShape* shape = new ColliderShape();
+    *shape = obb;
+    collider_.reset(shape);
 }

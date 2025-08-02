@@ -74,6 +74,7 @@ public:	// アクセッサ
 
 	//---ゲッター---//
 	DriveEngine* GetDriveEngine() { return driveEngine_.get(); }
+	DriveHandling* GetDriveHandling() { return handling_.get(); }
 
 	Vector3 GetVelocity() const { return velocity_; }
 	std::pair<Vector3, Vector3> GetPushDirection() const { return pushVector_; }

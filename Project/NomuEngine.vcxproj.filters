@@ -1082,6 +1082,7 @@
     <ClCompile Include="Application\UI\ClockUI.cpp" />
     <ClCompile Include="Application\UI\SpecUI.cpp" />
     <ClCompile Include="Application\UI\SpecGaugeUI.cpp" />
+    <ClCompile Include="Application\Object\OnHitCheck\OnHitCheck.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Camera\CameraLists.h" />
@@ -1731,6 +1732,7 @@
     <ClInclude Include="Application\UI\ClockUI.h" />
     <ClInclude Include="Application\UI\SpecUI.h" />
     <ClInclude Include="Application\UI\SpecGaugeUI.h" />
+    <ClInclude Include="Application\Object\OnHitCheck\OnHitCheck.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc" />

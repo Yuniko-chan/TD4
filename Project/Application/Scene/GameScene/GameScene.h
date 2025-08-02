@@ -24,6 +24,7 @@
 #include "../../Course/CourseManager.h"
 #include "../../AudioManager/GameAudioManager.h"
 #include "../../Object/Tutorial/Tutorial.h"
+#include"../../Object/OnHitCheck/OnHitCheck.h"
 
 /// <summary>
 /// ゲームシーン
@@ -129,5 +130,8 @@ private:
 	
 	// チュートリアル
 	Tutorial* tutorial_ = nullptr;
+
+	// ダメージ確認
+	OnHitCheck* onHitCheck_ = nullptr;
 
 };

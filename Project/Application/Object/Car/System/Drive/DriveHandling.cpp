@@ -135,6 +135,9 @@ void DriveHandling::PreUpdate()
 
 void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 {
+	// ハンドルのデータ処理
+	GetUIHandlingData((float)status->GetLeftWheel(), (float)status->GetRightWheel());
+
 	// リセット処理
 	// if（プレイヤーが操作している状態でないなら
 	if (!owner_->IsPlayer() && !onReset_) {
@@ -171,7 +174,7 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 
 	// ステータス（タイヤの数など）を適応
 	steerDirection_ = ApplyStatusToHandling(status, limitAngle);
-	status;
+
 	if (consecutiveReceptions_ == 0) {
 		steerDirection_.x = 0.0f;
 	}
@@ -251,9 +254,16 @@ Vector3 DriveHandling::ApplyStatusToHandling(VehicleStatus* status , const float
 	// 左にタイヤあるときの左ハンドル
 	else if (isLeft_.second && leftWheel > 0) { applyValue = std::min(leftWheel, kMaxEffectiveTire); }
 
+	Vector3 lim = Vector3::Normalize(Vector3(angle, 0.0f, 10.0f));
+
 	float tireT = (float)applyValue / (float)kMaxEffectiveTire;
-	float handleT = Ease::Easing(Ease::EaseName::Lerp, 0.1f, 0.75f, tireT);
-	result.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, angle, handleT);
+	float minLerp = global->GetFloatValue("VehicleHandling", "TireLerpMin");
+	float maxLerp = global->GetFloatValue("VehicleHandling", "TireLerpMax");
+	float handleT = Ease::Easing(Ease::EaseName::Lerp, minLerp, maxLerp, tireT);
+	result.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, lim.x, handleT);
+
+	//float decre = Ease::Easing(Ease::EaseName::Lerp, (1.0f / 10.0f), (1.0f / 1.0f), tireT);
+	//result.x *= (decre);
 
 	// 左右にタイヤがなければ減少させる
 	if ((leftWheel == 0 && rightWheel == 0) && (std::fabsf(result.x) != 0.0f)) {
@@ -273,11 +283,24 @@ void DriveHandling::ApplyHandlingToTire()
 	tireDirection_ = Vector3::Normalize(tireDirection_);
 }
 
+void DriveHandling::GetUIHandlingData(const float& leftTire, const float& rightTire)
+{
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	const int kMaxEffectiveTire = global->GetIntValue("VehicleHandling", "MaxEffectiveCount");
+
+	// タイヤごとの現在の状態
+	currentLeftTire_ = std::clamp(float(leftTire / kMaxEffectiveTire), 0.0f, 1.0f);
+	currentRightTire_ = std::clamp(float(rightTire / kMaxEffectiveTire), 0.0f, 1.0f);
+}
+
 void DriveHandling::ImGuiDraw()
 {
 	ImGui::SeparatorText("ドライブハンドル");
-	ImGui::DragFloat3("Steer", &steerDirection_.x);
 
+	ImGui::DragFloat("左タイヤの割合", &currentLeftTire_);
+	ImGui::DragFloat("右タイヤの割合", &currentRightTire_);
+
+	ImGui::DragFloat3("Steer", &steerDirection_.x);
 	ImGui::DragFloat("間隔", &sDuration, 0.01f);
 	if (ImGui::TreeNode("外部出しするデータ")) {
 		ImGui::SeparatorText("入力関係");
@@ -290,12 +313,7 @@ void DriveHandling::ImGuiDraw()
 		ImGui::SeparatorText("減衰関係");
 		ImGui::InputFloat("ステア最大減衰値", &sLowSpeedSteerAttenuation, 0.1f);
 		ImGui::InputFloat("減衰最大", &sLowSpeedLimit, 0.1f);
-		//// 回転の向き
-		//static float sMaxXDirect = 1.0f;
-		//static float sMinXDirect = 0.25f;
-		//// 推進力
-		//static float sMinPropulsion = 5.0f;
-		//static float sMaxPropulsion = 20.0f;
+
 		ImGui::SeparatorText("向き関係");
 		ImGui::InputFloat("最大X向き", &sMaxXDirect, 0.1f);
 		ImGui::InputFloat("最小X向き", &sMinXDirect, 0.1f);

@@ -38,7 +38,9 @@ public:
 	// 入力があるか
 	bool IsInput() { return (isRight_.second || isLeft_.second); }
 	bool IsNoneInput() { return (!isRight_.second && !isLeft_.second); }
-
+	// タイヤの割合
+	float GetCurrentLeftTire() { return currentLeftTire_; }
+	float GetCurrentRightTire() { return currentRightTire_; }
 private:
 	/// <summary>
 	/// 初期化
@@ -50,6 +52,12 @@ private:
 	Vector3 ApplyStatusToHandling(VehicleStatus* status, const float& angle);
 	//Vector3 ApplyHandlingToTire();
 	void ApplyHandlingToTire();
+
+	/// <summary>
+	/// UI用のハンドルの値取得
+	/// </summary>
+	void GetUIHandlingData(const float& leftTire, const float& rightTire);
+
 private:
 	// 入力チェック
 	InputFlag isLeft_ = {};
@@ -64,4 +72,8 @@ private:
 	// タイヤ適応向き
 	Vector3 tireDirection_ = {};
 	Vector3 preTireDirection_ = {};
+
+	float currentLeftTire_;
+	float currentRightTire_;
+
 };

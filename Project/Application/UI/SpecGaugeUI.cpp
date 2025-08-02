@@ -25,13 +25,13 @@ void SpecGaugeUI::Update()
 	switch (gaugeIndex_)
 	{
 	case SpecGaugeUI::kGaugeIndexSpeed:
-		textureSizeRatio = 0.3f;
+		textureSizeRatio = vehicleCore_->GetDriveSystem()->GetDriveEngine()->GetCurrentEngine();
 		break;
 	case SpecGaugeUI::kGaugeIndexRightTurn:
-		textureSizeRatio = 0.5f;
+		textureSizeRatio = vehicleCore_->GetDriveSystem()->GetDriveHandling()->GetCurrentRightTire();
 		break;
 	case SpecGaugeUI::kGaugeIndexLeftTurn:
-		textureSizeRatio = 0.7f;
+		textureSizeRatio = vehicleCore_->GetDriveSystem()->GetDriveHandling()->GetCurrentLeftTire();
 		break;
 	case SpecGaugeUI::kkGaugeIndexOfCount:
 	default:

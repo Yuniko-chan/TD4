@@ -128,6 +128,11 @@ void GameScene::Initialize() {
 	tutorial_->SetVehicleCore(reinterpret_cast<VehicleCore*>(objectManager_->GetObjectPointer("initCore")));
 	tutorial_->SetCourseTraversalNum(courseManager_->GetCourseTraversalNumAdrres());
 
+	// ダメージ確認
+	onHitCheck_ = OnHitCheck::GetInstance();
+	onHitCheck_->Initialize();
+	onHitCheck_->SetAudioManager(audioManager_.get());
+
 	//BGM
 	audioManager_->PlayWave(kGameAudioNameIndexBGM);
 
@@ -204,6 +209,9 @@ void GameScene::Update() {
 
 	// チュートリアル
 	tutorial_->Update();
+
+	// ダメージ確認
+	onHitCheck_->Update();
 
 	// あたり判定
 	collisionManager_->ListClear();
@@ -381,7 +389,25 @@ void GameScene::CourseInitialize()
 	courseManager_->SetAddCourseFunction(std::bind(&GameScene::AddCourse,this));
 	courseManager_->SetPlayer(reinterpret_cast<MeshObject*>(objectManager_->GetObjectPointer("Player")));
 
-	AddCourse();
+	//AddCourse();
+	// スタートの障害物
+	Obstacle* obstacle = nullptr;
+	size_t objNum = 1;
+	while (1) {
+		obstacle = nullptr;
+		std::string courseName = std::format("Obstacle.{:03}0", objNum);
+		obstacle = static_cast<Obstacle*>(objectManager_->GetObjectPointer(courseName));
+		if (obstacle) {
+			//obstacle->GetWorldTransformAdress()->UpdateMatrix();
+			OBB col = *reinterpret_cast<OBB*>(obstacle->GetCollider());
+			col.center_ = obstacle->GetWorldTransformAdress()->GetWorldPosition();
+			courseCollisionSystem_->SetGimmick(&col);
+		}
+		else {
+			break;
+		}
+		++objNum;
+	}
 
 }
 
@@ -396,9 +422,12 @@ void GameScene::AddCourse() {
 
 	size_t objNum = 1;
 
+	const size_t kInit = group * 6 + 1;
+	const size_t kMax = 6 * (group + 1) + 1;
+
 	// 大砲
 	Cannon* cannon = nullptr;
-	for (size_t courseNum = group * 6 + 1; courseNum <= 6 * (group + 1); courseNum++) {
+	for (size_t courseNum = kInit; courseNum < kMax; courseNum++) {
 		objNum = 1;
 		while (1) {
 			cannon = nullptr;
@@ -419,7 +448,7 @@ void GameScene::AddCourse() {
 
 	// ミニガン
 	Minigun* minigun = nullptr;
-	for (size_t courseNum = group * 6 + 1; courseNum <= 6 * (group + 1); courseNum++) {
+	for (size_t courseNum = kInit; courseNum < kMax; courseNum++) {
 		objNum = 1;
 		while (1) {
 			minigun = nullptr;
@@ -440,14 +469,14 @@ void GameScene::AddCourse() {
 
 	// 障害物
 	Obstacle* obstacle = nullptr;
-	for (size_t courseNum = group * 6 + 1; courseNum <= 6 * (group + 1); courseNum++) {
+	for (size_t courseNum = kInit; courseNum < kMax; courseNum++) {
 		objNum = 1;
 		while (1) {
 			obstacle = nullptr;
 			std::string courseName = std::format("Obstacle.{:03}{}", objNum, courseNum);
 			obstacle = static_cast<Obstacle*>(objectManager_->GetObjectPointer(courseName));
 			if (obstacle) {
-				obstacle->GetWorldTransformAdress()->UpdateMatrix();
+				//obstacle->GetWorldTransformAdress()->UpdateMatrix();
 				OBB col = *reinterpret_cast<OBB*>(obstacle->GetCollider());
 				col.center_ = obstacle->GetWorldTransformAdress()->GetWorldPosition();
 				courseCollisionSystem_->SetGimmick(&col);
@@ -461,7 +490,7 @@ void GameScene::AddCourse() {
 
 	// 円錐振り子
 	ConicalPendulumIronBall* conicalPendulumIronBall = nullptr;
-	for (size_t courseNum = group * 6 + 1; courseNum <= 6 * (group + 1); courseNum++) {
+	for (size_t courseNum = kInit; courseNum < kMax; courseNum++) {
 		objNum = 1;
 		while (1) {
 			conicalPendulumIronBall = nullptr;
@@ -482,7 +511,7 @@ void GameScene::AddCourse() {
 
 	// 振り子
 	PendulumIronBall* pendulumIronBall = nullptr;
-	for (size_t courseNum = group * 6 + 1; courseNum <= 6 * (group + 1); courseNum++) {
+	for (size_t courseNum = kInit; courseNum < kMax; courseNum++) {
 		objNum = 1;
 		while (1) {
 			pendulumIronBall = nullptr;

@@ -130,6 +130,7 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 			}
 		}
 	}
+	//courseIndex_++;
 }
 
 void CourseManager::PlaceCourseRandom() {

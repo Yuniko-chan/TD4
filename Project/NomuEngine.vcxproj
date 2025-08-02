@@ -207,6 +207,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Object\Car\System\Drive\DriveSystem.cpp" />
     <ClCompile Include="Application\Object\CustomArea\CustomArea.cpp" />
     <ClCompile Include="Application\Object\Gimmick\Minigun\MinigunAnimation.cpp" />
+    <ClCompile Include="Application\Object\OnHitCheck\OnHitCheck.cpp" />
     <ClCompile Include="Application\Object\Player\Animation\PlayerAnimation.cpp" />
     <ClCompile Include="Application\Object\Player\System\PickUp\BaseInteractionVisualizer.cpp" />
     <ClCompile Include="Application\Object\Player\System\PickUp\PartJudgeSystem.cpp" />
@@ -477,6 +478,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Object\CustomArea\CustomArea.h" />
     <ClInclude Include="Application\Object\Gimmick\Minigun\MinigunAnimation.h" />
     <ClInclude Include="Application\Object\Interact\Manager\InteractionManager.h" />
+    <ClInclude Include="Application\Object\OnHitCheck\OnHitCheck.h" />
     <ClInclude Include="Application\Object\Player\System\PickUp\BaseInteractionVisualizer.h" />
     <ClInclude Include="Application\Object\Player\System\PickUp\AttachVisualizer.h" />
     <ClInclude Include="Application\Object\Player\System\PickUp\PartJudgeSystem.h" />

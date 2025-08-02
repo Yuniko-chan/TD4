@@ -40,6 +40,12 @@ public: // 関数
     void Update() override;
 
     /// <summary>
+    /// 描画
+    /// </summary>
+    /// <param name="camera">カメラ</param>
+    void Draw(BaseCamera& camera) override;
+
+    /// <summary>
     /// 衝突処理
     /// </summary>
     /// <param name="colliderPartner"></param>
@@ -66,5 +72,10 @@ private: // 関数
     /// </summary>
     /// <param name="collider">コライダー</param>
     void ColliderInitialize(ColliderShape collider) override;
+
+    /// <summary>
+    /// コライダーの更新
+    /// </summary>
+    void ColliderUpdate();
 
 };
