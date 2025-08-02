@@ -10,6 +10,7 @@ enum GameAudioNameIndex {
 	kGameAudioNameIndexEngine, // エンジンの音（VehicleCore）
 	kGameAudioNameIndexExplosion, // 爆発の音（VehicleConstructionSystem）
 	kGameAudioNameIndexGrab, // もち上げる音 （PlayerPickupManager）
+	kGameAudioNameIndexDamage, // ダメージ （）
 	kGameAudioNameIndexOfCount // 数
 };
 
@@ -57,6 +58,7 @@ private: // メンバ変数
 		"Soundeffect/engine_SE.mp3",
 		"Soundeffect/explosion_SE.mp3",
 		"Soundeffect/grab_SE.mp3",
+		"Soundeffect/damage_SE.mp3",
 	};
 
 };

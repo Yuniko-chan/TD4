@@ -42,6 +42,11 @@ namespace Car
 		/// 更新
 		/// </summary>
 		void Update() override;
+		/// <summary>
+		/// 描画
+		/// </summary>
+		/// <param name="camera">カメラ</param>
+		void Draw(BaseCamera& camera) override;
 		// 親があるか
 		bool IsParent() { return worldTransform_.parent_ ? true : false; }
 		// ワールドトランスフォームの親設定

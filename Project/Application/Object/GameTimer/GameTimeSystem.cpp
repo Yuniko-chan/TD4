@@ -18,7 +18,8 @@ void GameTimeSystem::Initialize()
 
 	tutorialFinished_ = false;
 	startAnimationEnds_ = false;
-	remainingSeconds_ = 1;
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	remainingSeconds_ = static_cast<int>(global->GetFloatValue("GameSystem", "LimitSecond"));
 
 	animationTime_ = 2.0f;
 

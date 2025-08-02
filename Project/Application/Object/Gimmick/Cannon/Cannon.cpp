@@ -56,13 +56,7 @@ void Cannon::Update()
 
 void Cannon::Draw(BaseCamera& camera)
 {
-
-	// 本体
-	MeshObject::Draw(camera);
-
-    // 大砲の弾
-    cannonBall_->Draw(camera);
-
+    camera;
 }
 
 void Cannon::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)

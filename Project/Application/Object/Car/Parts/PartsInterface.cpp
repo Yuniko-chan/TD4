@@ -90,6 +90,11 @@ void Car::IParts::OnDetach()
 	}
 }
 
+void Car::IParts::Draw(BaseCamera& camera)
+{
+	camera;
+}
+
 void Car::IParts::TransformParent()
 {
 	// 親コアがあれば
