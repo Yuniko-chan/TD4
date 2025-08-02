@@ -6,6 +6,7 @@
 #include "TimeUI.h"
 #include "TutorialUI.h"
 #include "TutorialCheckUI.h"
+#include "ClockUI.h"
 
 /// <summary>
 /// UIマネージャー
@@ -44,6 +45,7 @@ public: // サブクラス
 		kClassIndexBase, // ベース
 		kClassIndexManual,
 		kClassIndexTime,
+		kClassIndexTimeClock,
 		kClassIndexTutorial,
 		kClassIndexTutorialCheck,
 		kClassIndexOfCount
@@ -91,7 +93,7 @@ private: // 定数
 		UICreateData{ kTextureIndexNum, kClassIndexTime, {640.0f - 96.0f,60.0f}, {96.0f,96.0f} },
 		UICreateData{ kTextureIndexNum, kClassIndexTime, {640.0f, 60.0f}, {96.0f,96.0f} },
 		UICreateData{ kTextureIndexNum, kClassIndexTime, {640.0f + 96.0f,60.0f}, {96.0f,96.0f} },
-		UICreateData{ kTextureIndexClock, kClassIndexBase, {640.0f - 96.0f - 96.0f,60.0f}, {96.0f,96.0f} },
+		UICreateData{ kTextureIndexClock, kClassIndexTimeClock, {640.0f - 96.0f - 96.0f,60.0f}, {96.0f,96.0f} },
 		UICreateData{ kTextureIndexTutorial, kClassIndexTutorial, {192.0f + 20.0f , 360.0f}, {384.0f,512.0f} },
 		UICreateData{ kTextureIndexTutorialCheck, kClassIndexTutorialCheck, {365.0f , 240.0f}, {100.0f,100.0f}},
 		UICreateData{ kTextureIndexTutorialCheck, kClassIndexTutorialCheck, {365.0f , 380.0f}, {100.0f,100.0f} },

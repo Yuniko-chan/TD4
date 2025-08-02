@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseUI.h"
+#include "../Object/GameTimer/GameTimeSystem.h"
 
 /// <summary>
 /// 時間のUI
@@ -47,10 +48,25 @@ public: // メンバ関数
 	/// <param name="digitIndex"></param>
 	void SetDigitIndex(DigitIndex digitIndex) { digitIndex_ = digitIndex; }
 
+private: // 関数
+
+	/// <summary>
+	/// 移動更新
+	/// </summary>
+	void MoveUpdate();
+
+	/// <summary>
+	/// 時間更新
+	/// </summary>
+	void TimerUpdate();
+
 private: // メンバ変数
 
 	// 桁
 	DigitIndex digitIndex_;
+
+	// タイマーシステム
+	GameTimeSystem* timerSystem_;
 
 };
 

@@ -1079,6 +1079,7 @@
     <ClCompile Include="Application\UI\TutorialUI.cpp" />
     <ClCompile Include="Application\Object\Tutorial\Tutorial.cpp" />
     <ClCompile Include="Application\UI\TutorialCheckUI.cpp" />
+    <ClCompile Include="Application\UI\ClockUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Camera\CameraLists.h" />
@@ -1725,6 +1726,7 @@
     <ClInclude Include="Application\UI\TutorialUI.h" />
     <ClInclude Include="Application\Object\Tutorial\Tutorial.h" />
     <ClInclude Include="Application\UI\TutorialCheckUI.h" />
+    <ClInclude Include="Application\UI\ClockUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc" />

@@ -92,6 +92,9 @@ BaseUI* UIManager::CreateUI(ClassIndex index)
 	case UIManager::kClassIndexTime:
 		result = new TimeUI();
 		break;
+	case UIManager::kClassIndexTimeClock:
+		result = new ClockUI();
+		break;
 	case UIManager::kClassIndexTutorial:
 		result = new TutorialUI();
 		break;

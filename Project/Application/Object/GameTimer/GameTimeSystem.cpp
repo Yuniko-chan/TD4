@@ -20,6 +20,8 @@ void GameTimeSystem::Initialize()
 	startAnimationEnds_ = false;
 	remainingSeconds_ = 1;
 
+	animationTime_ = 2.0f;
+
 }
 
 void GameTimeSystem::Update()
@@ -30,8 +32,7 @@ void GameTimeSystem::Update()
 		tutorialFinished_ = Tutorial::GetInstance()->GetIsEnd();
 		if (tutorialFinished_) {
 			// アニメーションスタート
-			const float kAnimationTime = 2.0f;	// 秒数
-			remainingTime_ = kAnimationTime;
+			remainingTime_ = animationTime_;
 		}
 		return;
 	}

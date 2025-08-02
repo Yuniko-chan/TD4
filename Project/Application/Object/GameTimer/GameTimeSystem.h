@@ -53,6 +53,10 @@ public:
 	float GetDeltaTime() { return kDeltaTime_ * timeScale_; }
 	float GetTimeScale() { return timeScale_; }
 	int GetRemainingSeconds() { return remainingSeconds_; }
+	float GetRemainingTime() { return remainingTime_; }
+	bool GetTutorialFinished() { return tutorialFinished_; }
+	bool GetStartAnimationEnds() { return startAnimationEnds_; }
+	float GetAnimationTime() { return animationTime_; }
 	void SetTimeScale(float scale) { timeScale_ = scale; }
 
 private:
@@ -70,8 +74,9 @@ private:
 
 	// チュートリアル終了フラグ
 	bool tutorialFinished_;
-
 	// スタートアニメーション終了フラグ
 	bool startAnimationEnds_;
+	// アニメーション時間
+	float animationTime_;
 
 };
