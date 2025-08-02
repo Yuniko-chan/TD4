@@ -38,6 +38,11 @@ public: // メンバ関数
 	/// </summary>
 	virtual void ImGuiDraw();
 
+	/// <summary>
+	/// スプライト取得
+	/// </summary>
+	Sprite* GetSprite() { return sprite_.get(); }
+
 protected: // メンバ変数
 
 	// スプライト

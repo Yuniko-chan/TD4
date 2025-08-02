@@ -4,7 +4,7 @@
 #include "../../GameTimer/GameTimeSystem.h"
 
 // 生存時間
-const float CannonBall::kLifeTime_ = 1.0f;
+const float CannonBall::kLifeTime_ = 1.6f;
 
 // 落下加速度
 const float CannonBall::kFallingAcceleration_ = -0.01f;
@@ -78,15 +78,7 @@ void CannonBall::Update()
 
 void CannonBall::Draw(BaseCamera& camera)
 {
-
-	// 動作中表示
-	if (isWorking_) {
-		MeshObject::Draw(camera);
-	}
-
-	// 爆発
-	cannonExplosion_->Draw(camera);
-
+	camera;
 }
 
 void CannonBall::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)

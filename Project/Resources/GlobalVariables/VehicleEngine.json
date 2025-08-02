@@ -9,7 +9,7 @@
         "MaxEffectiveCount": 10,
         "MaxEngineCountAccelFactor": 10.0,
         "MinEngineCountAccelFactor": 1.0,
-        "OverheatEngineCountThreshold": 6,
+        "OverheatEngineCountThreshold": 3,
         "RoadFriction": 0.75,
         "StopDecelerationFactor": 0.10000000149011612
     }

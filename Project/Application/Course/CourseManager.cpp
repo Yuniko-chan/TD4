@@ -82,7 +82,7 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 	object->GetWorldTransformAdress()->UpdateMatrix();
 	objectManager_->AddObject(object);
 	courseList_[nowGroup_][courseIndex_ % 6] = object;
-	courseIndex_++;
+	//courseIndex_++;
 
 	LevelData* levelData = levelDataManager_->GetLevelDatas(LevelIndex(kLevelIndexCourseA + courseNum));
 	// レベルデータのオブジェクトを走査
@@ -130,6 +130,7 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 			}
 		}
 	}
+	courseIndex_++;
 }
 
 void CourseManager::PlaceCourseRandom() {

@@ -4,12 +4,12 @@
 
 void UIManager::Initialize()
 {
-	
+
 	// テクスチャ読み込み
 	// DirectXCommon
 	DirectXCommon* dxCommon_ = DirectXCommon::GetInstance();
 	// ファイルパス
-	const std::string filePath = "Resources/UI/";
+	const std::string filePath = "Resources/";
 	for (uint32_t i = 0; i < TextureIndex::kTextureIndexOfCount; ++i) {
 		textureHandles_[i] = TextureManager::Load(filePath + kTextureFileNames_[i], dxCommon_);
 	}
@@ -22,6 +22,20 @@ void UIManager::Initialize()
 
 	// ImGuiモード
 	imGuiMode_ = 0;
+
+	static_cast<TimeUI*>(uis_[kUIIndexTimeOneHundred].get())->SetDigitIndex(TimeUI::DigitIndex::kDigitIndexOneHundred);
+	static_cast<TimeUI*>(uis_[kUIIndexTimeTen].get())->SetDigitIndex(TimeUI::DigitIndex::kDigitIndexTen);
+	static_cast<TimeUI*>(uis_[kUIIndexTimeOne].get())->SetDigitIndex(TimeUI::DigitIndex::kDigitIndexOne);
+
+	uis_[kUIIndexClock]->GetSprite()->SetColor(Vector4{ 0.0f,0.0f,0.0f,1.0f });
+
+	static_cast<TutorialCheckUI*>(uis_[kUIIndexTutorialCheckEngine].get())->SetTutorialIndex(TutorialCheckUI::TutorialIndex::kTutorialIndexEngine);
+	static_cast<TutorialCheckUI*>(uis_[kUIIndexTutorialCheckTire].get())->SetTutorialIndex(TutorialCheckUI::TutorialIndex::kTutorialIndexTire);
+	static_cast<TutorialCheckUI*>(uis_[kUIIndexTutorialCheckFrame].get())->SetTutorialIndex(TutorialCheckUI::TutorialIndex::kTutorialIndexFrame);
+
+	static_cast<SpecGaugeUI*>(uis_[kUIIndexSpecGaugeSpeed].get())->SetGaugeIndex(SpecGaugeUI::GaugeIndex::kGaugeIndexSpeed);
+	static_cast<SpecGaugeUI*>(uis_[kUIIndexSpecGaugeRightTurn].get())->SetGaugeIndex(SpecGaugeUI::GaugeIndex::kGaugeIndexRightTurn);
+	static_cast<SpecGaugeUI*>(uis_[kUIIndexSpecGaugeLeftTurn].get())->SetGaugeIndex(SpecGaugeUI::GaugeIndex::kGaugeIndexLeftTurn);
 
 }
 
@@ -65,6 +79,16 @@ void UIManager::ImGuiDraw()
 
 }
 
+void UIManager::SetVehicleCore(VehicleCore* vehicleCore)
+{
+
+	static_cast<SpecUI*>(uis_[kUIIndexSpec].get())->SetVehicleCore(vehicleCore);
+	static_cast<SpecGaugeUI*>(uis_[kUIIndexSpecGaugeSpeed].get())->SetVehicleCore(vehicleCore);
+	static_cast<SpecGaugeUI*>(uis_[kUIIndexSpecGaugeRightTurn].get())->SetVehicleCore(vehicleCore);
+	static_cast<SpecGaugeUI*>(uis_[kUIIndexSpecGaugeLeftTurn].get())->SetVehicleCore(vehicleCore);
+
+}
+
 BaseUI* UIManager::CreateUI(ClassIndex index)
 {
 
@@ -76,8 +100,26 @@ BaseUI* UIManager::CreateUI(ClassIndex index)
 	case UIManager::kClassIndexBase:
 		result = new BaseUI();
 		break;
-	case UIManager::manualUIClass:
+	case UIManager::kClassIndexManual:
 		result = new ManualUI();
+		break;
+	case UIManager::kClassIndexTime:
+		result = new TimeUI();
+		break;
+	case UIManager::kClassIndexTimeClock:
+		result = new ClockUI();
+		break;
+	case UIManager::kClassIndexTutorial:
+		result = new TutorialUI();
+		break;
+	case UIManager::kClassIndexTutorialCheck:
+		result = new TutorialCheckUI();
+		break;
+	case UIManager::kClassIndexSpec:
+		result = new SpecUI();
+		break;
+	case UIManager::kClassIndexSpecGauge:
+		result = new SpecGaugeUI();
 		break;
 	case UIManager::kClassIndexOfCount:
 	default:

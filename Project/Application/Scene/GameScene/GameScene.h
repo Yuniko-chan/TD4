@@ -23,6 +23,8 @@
 #include "../../Course/Debug/CourseDebugDraw.h"
 #include "../../Course/CourseManager.h"
 #include "../../AudioManager/GameAudioManager.h"
+#include "../../Object/Tutorial/Tutorial.h"
+#include"../../Object/OnHitCheck/OnHitCheck.h"
 
 /// <summary>
 /// ゲームシーン
@@ -125,5 +127,11 @@ private:
 
 	// オーディオマネージャー
 	std::unique_ptr<GameAudioManager> audioManager_;
+	
+	// チュートリアル
+	Tutorial* tutorial_ = nullptr;
+
+	// ダメージ確認
+	OnHitCheck* onHitCheck_ = nullptr;
 
 };

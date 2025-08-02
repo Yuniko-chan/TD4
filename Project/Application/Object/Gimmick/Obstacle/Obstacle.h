@@ -40,6 +40,12 @@ public: // 関数
     void Update() override;
 
     /// <summary>
+    /// 描画
+    /// </summary>
+    /// <param name="camera">カメラ</param>
+    void Draw(BaseCamera& camera) override;
+
+    /// <summary>
     /// 衝突処理
     /// </summary>
     /// <param name="colliderPartner"></param>

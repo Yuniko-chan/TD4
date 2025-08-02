@@ -35,6 +35,11 @@ void Obstacle::Update()
 {
 }
 
+void Obstacle::Draw(BaseCamera& camera)
+{
+    camera;
+}
+
 void Obstacle::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
 	colliderPartner, collisionData;

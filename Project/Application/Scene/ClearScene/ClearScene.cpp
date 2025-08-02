@@ -74,6 +74,11 @@ void ClearScene::Update()
 		requestSceneNo_ = kTitle;
 		audioManager_->PlayWave(kClearAudioNameIndexPushButton);
 	}
+	if (input_->TriggerKey(DIK_F2)) {
+		// 行きたいシーンへ
+		requestSceneNo_ = kTitle;
+		audioManager_->PlayWave(kClearAudioNameIndexPushButton);
+	}
 
 	courseTraversalSystem_->Update();
 

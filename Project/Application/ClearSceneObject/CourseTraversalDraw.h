@@ -61,10 +61,10 @@ private: // 変数
 	std::unique_ptr<OutGameSpriteObject> traversalNumTenthPlace_;
 	// 踏破数、数1の位
 	std::unique_ptr<OutGameSpriteObject> traversalNumOnePlace_;
-	// 踏破ランク、文字列
-	std::unique_ptr<OutGameSpriteObject> traversalRankString_;
 	// 踏破ランク、ランク
 	std::unique_ptr<OutGameSpriteObject> raversalRank_;
+	// ボタンをおしてください
+	std::unique_ptr<OutGameSpriteObject> pleasePressTheButton_;
 
 	// コース踏破数
 	int32_t courseTraversalNum_;

@@ -56,6 +56,8 @@ public:	// アクセッサ
 	int GetTire() const { return partsTypes_.tire; }
 	// エンジン数
 	int GetEngine() const { return partsTypes_.engine; }
+	// フレーム数
+	int GetFrame() const { return partsTypes_.armor; }
 	// オーバーヒートのチェック
 	bool GetIsOverheat() const { return isOverheat_; }
 	float GetHeatDPS() const { return damagePerSecond_; }

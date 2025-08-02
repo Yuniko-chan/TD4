@@ -12,7 +12,7 @@ void TitleSpriteObjects::Initialize()
 
 	// タイトルロゴ
 	titleLogo_ = std::make_unique<OutGameSpriteObject>();
-	titleLogo_->Initialize("Resources/Sprite/Result/traversalNumString.png",
+	titleLogo_->Initialize("Resources/Sprite/Common/title.png",
 		Vector2{ 640.0f, 200.0f }, kWhite);
 
 	titleLogo_->GetAnimation()->doesAnimations_[kScalingLoopNum] = true;
@@ -22,7 +22,7 @@ void TitleSpriteObjects::Initialize()
 
 	// ボタンをおしてください
 	pleasePressTheButton_ = std::make_unique<OutGameSpriteObject>();
-	pleasePressTheButton_->Initialize("Resources/Sprite/Result/traversalNumString.png",
+	pleasePressTheButton_->Initialize("Resources/Sprite/Common/pressA.png",
 		Vector2{ 640.0f, 600.0f }, kWhite);
 
 	pleasePressTheButton_->GetAnimation()->doesAnimations_[kTransparencyChangeLoopNum] = true;
