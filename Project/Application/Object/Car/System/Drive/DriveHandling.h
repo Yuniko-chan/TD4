@@ -50,6 +50,13 @@ private:
 	Vector3 ApplyStatusToHandling(VehicleStatus* status, const float& angle);
 	//Vector3 ApplyHandlingToTire();
 	void ApplyHandlingToTire();
+
+	/// <summary>
+	/// UI用のハンドルの値取得
+	/// </summary>
+	void GetUIHandlingData();
+	float minLerpRatio_ = 0.01f;
+	float maxLerpRatio_ = 1.0f;
 private:
 	// 入力チェック
 	InputFlag isLeft_ = {};
@@ -64,4 +71,9 @@ private:
 	// タイヤ適応向き
 	Vector3 tireDirection_ = {};
 	Vector3 preTireDirection_ = {};
+
+	int maxTire_ = 0;
+	int currentLeftTire_;
+	int currentRightTire_;
+
 };

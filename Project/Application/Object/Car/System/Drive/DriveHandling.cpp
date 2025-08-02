@@ -251,9 +251,16 @@ Vector3 DriveHandling::ApplyStatusToHandling(VehicleStatus* status , const float
 	// 左にタイヤあるときの左ハンドル
 	else if (isLeft_.second && leftWheel > 0) { applyValue = std::min(leftWheel, kMaxEffectiveTire); }
 
+	Vector3 lim = Vector3::Normalize(Vector3(angle, 0.0f, 10.0f));
+
 	float tireT = (float)applyValue / (float)kMaxEffectiveTire;
-	float handleT = Ease::Easing(Ease::EaseName::Lerp, 0.1f, 0.75f, tireT);
-	result.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, angle, handleT);
+	float minLerp = global->GetFloatValue("VehicleHandling", "TireLerpMin");
+	float maxLerp = global->GetFloatValue("VehicleHandling", "TireLerpMax");
+	float handleT = Ease::Easing(Ease::EaseName::Lerp, minLerp, maxLerp, tireT);
+	result.x = Ease::Easing(Ease::EaseName::Lerp, steerDirection_.x, lim.x, handleT);
+
+	//float decre = Ease::Easing(Ease::EaseName::Lerp, (1.0f / 10.0f), (1.0f / 1.0f), tireT);
+	//result.x *= (decre);
 
 	// 左右にタイヤがなければ減少させる
 	if ((leftWheel == 0 && rightWheel == 0) && (std::fabsf(result.x) != 0.0f)) {
@@ -273,11 +280,18 @@ void DriveHandling::ApplyHandlingToTire()
 	tireDirection_ = Vector3::Normalize(tireDirection_);
 }
 
+void DriveHandling::GetUIHandlingData()
+{
+
+	
+}
+
 void DriveHandling::ImGuiDraw()
 {
 	ImGui::SeparatorText("ドライブハンドル");
 	ImGui::DragFloat3("Steer", &steerDirection_.x);
-
+	ImGui::DragFloat("最低", &minLerpRatio_, 0.01f);
+	ImGui::DragFloat("最大", &maxLerpRatio_, 0.01f);
 	ImGui::DragFloat("間隔", &sDuration, 0.01f);
 	if (ImGui::TreeNode("外部出しするデータ")) {
 		ImGui::SeparatorText("入力関係");
