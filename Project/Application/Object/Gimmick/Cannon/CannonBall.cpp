@@ -4,7 +4,7 @@
 #include "../../GameTimer/GameTimeSystem.h"
 
 // 生存時間
-const float CannonBall::kLifeTime_ = 1.0f;
+const float CannonBall::kLifeTime_ = 1.6f;
 
 // 落下加速度
 const float CannonBall::kFallingAcceleration_ = -0.01f;

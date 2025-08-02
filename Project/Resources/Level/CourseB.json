@@ -3,15 +3,54 @@
     "objects": [
         {
             "type": "MESH",
+            "name": "Cannon.001",
+            "transform": {
+                "translation": [
+                    -93.47999572753906,
+                    -53.52385330200195,
+                    1.7428765296936035
+                ],
+                "rotation": [
+                    -1.0471975803375244,
+                    7.86470906177783e-08,
+                    1.5707963705062866
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
             "name": "Gatling.001",
             "transform": {
                 "translation": [
-                    20.28110694885254,
-                    30.9274845123291,
-                    2.20123291015625
+                    -73.39654541015625,
+                    56.41300964355469,
+                    2.211606740951538
                 ],
                 "rotation": [
-                    -1.4768357276916504,
+                    -1.5707964897155762,
                     0.0,
                     0.0
                 ],
@@ -21,8 +60,6 @@
                     0.9999999403953552
                 ]
             },
-            "directoryPath": "Resources/Model/Gimick/Gatling",
-            "className": "Minigun",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -38,6 +75,156 @@
             },
             "gimmick": {
                 "type": "MINIGUN"
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.001",
+            "transform": {
+                "translation": [
+                    -22.409793853759766,
+                    -57.809566497802734,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -6.357302595461078e-08
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "IronBall.001",
+            "transform": {
+                "translation": [
+                    -0.9750347137451172,
+                    1.0814399719238281,
+                    23.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -6.357302595461078e-08
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "SPHERE",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "radius": 2
+            },
+            "gimmick": {
+                "type": "IRONBALL",
+                "length": 20.0,
+                "angle": 20.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cannon.002",
+            "transform": {
+                "translation": [
+                    18.498403549194336,
+                    58.22857666015625,
+                    1.7428765296936035
+                ],
+                "rotation": [
+                    -1.0471975803375244,
+                    3.225779821036667e-08,
+                    4.924231332818795e-16
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Cannon.003",
+            "transform": {
+                "translation": [
+                    -21.856979370117188,
+                    58.22857666015625,
+                    1.7428765296936035
+                ],
+                "rotation": [
+                    -1.0471975803375244,
+                    3.225779821036667e-08,
+                    4.924231332818795e-16
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "gimmick": {
+                "type": "CANNON",
+                "cooltime": 3.0,
+                "firingSpeed": 1.0
             }
         },
         {
@@ -45,194 +232,365 @@
             "name": "Gatling.002",
             "transform": {
                 "translation": [
-                    32.2572135925293,
-                    -3.738779067993164,
-                    2.20123291015625
+                    38.6563720703125,
+                    37.26239013671875,
+                    2.200000047683716
                 ],
                 "rotation": [
-                    -1.4768357276916504,
-                    3.8949362846096847e-08,
-                    -1.8030709028244019
-                ],
-                "scaling": [
-                    0.9999999403953552,
-                    0.9999999403953552,
-                    0.9999999403953552
-                ]
-            },
-            "directoryPath": "Resources/Model/Gimick/Gatling",
-            "className": "Minigun",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    1.9999998807907104,
-                    1.9999998807907104,
-                    1.9999998807907104
-                ]
-            },
-            "gimmick": {
-                "type": "MINIGUN"
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "Gatling.003",
-            "transform": {
-                "translation": [
-                    -3.0876941680908203,
-                    30.9274845123291,
-                    2.20123291015625
-                ],
-                "rotation": [
-                    -1.4768357276916504,
-                    0.0,
-                    0.0
+                    -1.5707964897155762,
+                    3.893860878179112e-08,
+                    -0.7853982448577881
                 ],
                 "scaling": [
                     1.0,
-                    0.9999999403953552,
-                    0.9999999403953552
-                ]
-            },
-            "directoryPath": "Resources/Model/Gimick/Gatling",
-            "className": "Minigun",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    1.9999998807907104,
-                    1.9999998807907104
-                ]
-            },
-            "gimmick": {
-                "type": "MINIGUN"
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "Gatling.004",
-            "transform": {
-                "translation": [
-                    -16.375709533691406,
-                    30.9274845123291,
-                    2.20123291015625
-                ],
-                "rotation": [
-                    -1.4768357276916504,
-                    0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    0.9999999403953552,
-                    0.9999999403953552
-                ]
-            },
-            "directoryPath": "Resources/Model/Gimick/Gatling",
-            "className": "Minigun",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    1.9999998807907104,
-                    1.9999998807907104
-                ]
-            },
-            "gimmick": {
-                "type": "MINIGUN"
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "Gatling.005",
-            "transform": {
-                "translation": [
-                    -32.20063018798828,
-                    30.9274845123291,
-                    2.20123291015625
-                ],
-                "rotation": [
-                    -1.4768357276916504,
-                    0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    0.9999999403953552,
-                    0.9999999403953552
-                ]
-            },
-            "directoryPath": "Resources/Model/Gimick/Gatling",
-            "className": "Minigun",
-            "collider": {
-                "type": "BOX",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    1.9999998807907104,
-                    1.9999998807907104
-                ]
-            },
-            "gimmick": {
-                "type": "MINIGUN"
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "Gatling.006",
-            "transform": {
-                "translation": [
-                    -32.20063018798828,
-                    -31.17551612854004,
-                    2.20123291015625
-                ],
-                "rotation": [
-                    -1.4768357276916504,
-                    2.791635367316303e-08,
-                    2.285383701324463
-                ],
-                "scaling": [
                     1.0000001192092896,
+                    1.0000001192092896
+                ]
+            },
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.000000238418579,
+                    2.000000238418579
+                ]
+            },
+            "gimmick": {
+                "type": "MINIGUN"
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.002",
+            "transform": {
+                "translation": [
+                    -33.09382629394531,
+                    -46.9239501953125,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -6.357302595461078e-08
+                ],
+                "scaling": [
+                    1.0,
                     1.0,
                     1.0
                 ]
             },
-            "directoryPath": "Resources/Model/Gimick/Gatling",
-            "className": "Minigun",
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
             "collider": {
                 "type": "BOX",
                 "center": [
                     0.0,
                     0.0,
-                    0.0
+                    3.5
                 ],
                 "size": [
-                    2.000000238418579,
                     2.0,
-                    2.0
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.003",
+            "transform": {
+                "translation": [
+                    -47.406394958496094,
+                    -38.86052703857422,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -6.357302595461078e-08
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.004",
+            "transform": {
+                "translation": [
+                    27.98657989501953,
+                    -48.13346481323242,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -6.357302595461078e-08
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.005",
+            "transform": {
+                "translation": [
+                    39.476951599121094,
+                    -24.346378326416016,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -6.357302595461078e-08
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.006",
+            "transform": {
+                "translation": [
+                    39.67853546142578,
+                    -3.179901123046875,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -6.357302595461078e-08
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "IronBall.002",
+            "transform": {
+                "translation": [
+                    -49.96031188964844,
+                    30.31133460998535,
+                    23.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -6.357302595461078e-08
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "SPHERE",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "radius": 2
+            },
             "gimmick": {
-                "type": "MINIGUN"
+                "type": "IRONBALL",
+                "length": 20.0,
+                "angle": 20.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "IronBall.003",
+            "transform": {
+                "translation": [
+                    -49.96031188964844,
+                    -20.2866268157959,
+                    23.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -6.357302595461078e-08
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "collider": {
+                "type": "SPHERE",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "radius": 2
+            },
+            "gimmick": {
+                "type": "IRONBALL",
+                "length": 20.0,
+                "angle": 20.0
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.007",
+            "transform": {
+                "translation": [
+                    14.868875503540039,
+                    38.00753402709961,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -6.357302595461078e-08
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Obstacle.008",
+            "transform": {
+                "translation": [
+                    -16.208045959472656,
+                    38.00753402709961,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -6.357302595461078e-08
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "fileName": "Obstacles.obj",
+            "directoryPath": "Resources/Model/Gimmick/Obstacles",
+            "className": "Obstacle",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    3.5
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    7.0
+                ]
             }
         },
         {
@@ -250,9 +608,9 @@
                     0.0
                 ],
                 "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
+                    2.0,
+                    2.0,
+                    2.0
                 ]
             },
             "fileName": "course_test_B",
@@ -274,9 +632,9 @@
                     0.0
                 ],
                 "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
+                    2.0,
+                    2.0,
+                    2.0
                 ]
             },
             "fileName": "course_test_A",
@@ -285,7 +643,7 @@
         },
         {
             "type": "MESH",
-            "name": "course_tset_C",
+            "name": "course_test_C",
             "transform": {
                 "translation": [
                     0.0,
@@ -298,12 +656,12 @@
                     0.0
                 ],
                 "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
+                    2.0,
+                    2.0,
+                    2.0
                 ]
             },
-            "fileName": "course_test_B",
+            "fileName": "dirt.course",
             "directoryPath": "Rsources/Course/",
             "className": "Course"
         }
