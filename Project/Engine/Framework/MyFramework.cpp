@@ -8,7 +8,7 @@ void MyFramework::Initialize()
 
 	//ゲームウィンドウの作成
 	win = WinApp::GetInstance();
-	win->CreateGameWindow(L"NomuEngine");
+	win->CreateGameWindow(L"リビルドサーキット");
 
 	//DirectX初期化
 	dxCommon = DirectXCommon::GetInstance();
