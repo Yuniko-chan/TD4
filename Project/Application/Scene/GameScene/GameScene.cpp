@@ -128,6 +128,11 @@ void GameScene::Initialize() {
 	tutorial_->SetVehicleCore(reinterpret_cast<VehicleCore*>(objectManager_->GetObjectPointer("initCore")));
 	tutorial_->SetCourseTraversalNum(courseManager_->GetCourseTraversalNumAdrres());
 
+	// ダメージ確認
+	onHitCheck_ = OnHitCheck::GetInstance();
+	onHitCheck_->Initialize();
+	onHitCheck_->SetAudioManager(audioManager_.get());
+
 	//BGM
 	audioManager_->PlayWave(kGameAudioNameIndexBGM);
 
@@ -204,6 +209,9 @@ void GameScene::Update() {
 
 	// チュートリアル
 	tutorial_->Update();
+
+	// ダメージ確認
+	onHitCheck_->Update();
 
 	// あたり判定
 	collisionManager_->ListClear();

@@ -3,6 +3,7 @@
 #include "../../../GameTimer/GameTimeSystem.h"
 #include "../../../Engine/Math/DeltaTime.h"
 #include "../../../Engine/Math/Ease.h"
+#include "../../../OnHitCheck/OnHitCheck.h"
 
 void PartHPHandler::Initialize()
 {
@@ -65,6 +66,8 @@ void PartHPHandler::OnHit(float damage)
 		hp_ = 0;
 	}
 
+	OnHitCheck::GetInstance()->Hit();
+
 }
 
 void PartHPHandler::Setup(int16_t maxHP)
@@ -104,6 +107,7 @@ void PartHPHandler::HeatDamage(float damage)
 	if (hp_ < 0) {
 		hp_ = 0;
 	}
+	OnHitCheck::GetInstance()->Hit();
 }
 
 bool PartHPHandler::IsDead()
