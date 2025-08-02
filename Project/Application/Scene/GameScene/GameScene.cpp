@@ -390,6 +390,24 @@ void GameScene::CourseInitialize()
 	courseManager_->SetPlayer(reinterpret_cast<MeshObject*>(objectManager_->GetObjectPointer("Player")));
 
 	//AddCourse();
+	// スタートの障害物
+	Obstacle* obstacle = nullptr;
+	size_t objNum = 1;
+	while (1) {
+		obstacle = nullptr;
+		std::string courseName = std::format("Obstacle.{:03}0", objNum);
+		obstacle = static_cast<Obstacle*>(objectManager_->GetObjectPointer(courseName));
+		if (obstacle) {
+			//obstacle->GetWorldTransformAdress()->UpdateMatrix();
+			OBB col = *reinterpret_cast<OBB*>(obstacle->GetCollider());
+			col.center_ = obstacle->GetWorldTransformAdress()->GetWorldPosition();
+			courseCollisionSystem_->SetGimmick(&col);
+		}
+		else {
+			break;
+		}
+		++objNum;
+	}
 
 }
 
@@ -404,8 +422,8 @@ void GameScene::AddCourse() {
 
 	size_t objNum = 1;
 
-	const size_t kInit = group * 6;
-	const size_t kMax = 6 * (group + 1);
+	const size_t kInit = group * 6 + 1;
+	const size_t kMax = 6 * (group + 1) + 1;
 
 	// 大砲
 	Cannon* cannon = nullptr;
