@@ -61,5 +61,6 @@ private: // メンバ変数
 	// テクスチャX最大
 	float textureSizeMaxX_;
 
+
 };
 
