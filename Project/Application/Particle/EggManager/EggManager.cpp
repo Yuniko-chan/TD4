@@ -47,12 +47,12 @@ void EggManager::Update()
 		emitter.translate1 = emitPositions_[1];
 		emitter.translate2 = emitPositions_[2];
 		emitter.translate3 = emitPositions_[3];
-		emitter.emit = 1;
+		emitter.emit = 0;
 
 		eggBreakParticle_->SetEmitter(emitter, true);
-		eggBreakParticle_->Update();
-	}
 
+	}
+		eggBreakParticle_->Update();
 }
 
 void EggManager::Draw(BaseCamera& camera)
