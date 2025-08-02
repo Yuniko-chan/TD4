@@ -381,7 +381,7 @@ void GameScene::CourseInitialize()
 	courseManager_->SetAddCourseFunction(std::bind(&GameScene::AddCourse,this));
 	courseManager_->SetPlayer(reinterpret_cast<MeshObject*>(objectManager_->GetObjectPointer("Player")));
 
-	AddCourse();
+	//AddCourse();
 
 }
 
