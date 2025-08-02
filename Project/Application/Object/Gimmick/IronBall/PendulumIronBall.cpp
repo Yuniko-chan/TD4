@@ -74,22 +74,7 @@ void PendulumIronBall::Update()
 
 void PendulumIronBall::Draw(BaseCamera& camera)
 {
-
-    MeshObject::Draw(camera);
-
-    if (stringMaterial_->GetMaterialMap()->color.w == 0.0f) {
-        return;
-    }
-
-    ModelDraw::NormalObjectDesc desc;
-
-    desc.model = stringModel_;
-    desc.material = stringMaterial_.get();
-    desc.camera = &camera;
-    desc.worldTransform = &stringWorldTransform_;
-
-    ModelDraw::NormalObjectDraw(desc);
-
+    camera;
 }
 
 void PendulumIronBall::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)

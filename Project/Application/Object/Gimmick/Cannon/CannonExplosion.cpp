@@ -67,12 +67,7 @@ void CannonExplosion::Update()
 
 void CannonExplosion::Draw(BaseCamera& camera)
 {
-
-	// 爆発してるなら描画
-	if (isExploding_) {
-		MeshObject::Draw(camera);
-	}
-
+    camera;
 }
 
 void CannonExplosion::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)

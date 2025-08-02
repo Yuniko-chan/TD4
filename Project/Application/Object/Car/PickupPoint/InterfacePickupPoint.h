@@ -21,7 +21,11 @@ public:
 	/// 更新
 	/// </summary>
 	void Update() override;
-
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name="camera">カメラ</param>
+	void Draw(BaseCamera& camera) override;
 	// アクセッサ
 	int32_t GetType() { return type_; }
 

@@ -74,12 +74,7 @@ void Minigun::Update()
 
 void Minigun::Draw(BaseCamera& camera)
 {
-    // 本体
-    MeshObject::Draw(camera);
-
-    // 弾
-    bullet_->Draw(camera);
-
+    camera;
 }
 
 void Minigun::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
