@@ -1080,6 +1080,8 @@
     <ClCompile Include="Application\Object\Tutorial\Tutorial.cpp" />
     <ClCompile Include="Application\UI\TutorialCheckUI.cpp" />
     <ClCompile Include="Application\UI\ClockUI.cpp" />
+    <ClCompile Include="Application\UI\SpecUI.cpp" />
+    <ClCompile Include="Application\UI\SpecGaugeUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Camera\CameraLists.h" />
@@ -1727,6 +1729,8 @@
     <ClInclude Include="Application\Object\Tutorial\Tutorial.h" />
     <ClInclude Include="Application\UI\TutorialCheckUI.h" />
     <ClInclude Include="Application\UI\ClockUI.h" />
+    <ClInclude Include="Application\UI\SpecUI.h" />
+    <ClInclude Include="Application\UI\SpecGaugeUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc" />

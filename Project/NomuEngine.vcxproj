@@ -273,6 +273,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\UI\BaseUI.cpp" />
     <ClCompile Include="Application\UI\ClockUI.cpp" />
     <ClCompile Include="Application\UI\ManualUI.cpp" />
+    <ClCompile Include="Application\UI\SpecGaugeUI.cpp" />
+    <ClCompile Include="Application\UI\SpecUI.cpp" />
     <ClCompile Include="Application\UI\TimeUI.cpp" />
     <ClCompile Include="Application\UI\TutorialCheckUI.cpp" />
     <ClCompile Include="Application\UI\TutorialUI.cpp" />
@@ -571,6 +573,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\UI\BaseUI.h" />
     <ClInclude Include="Application\UI\ClockUI.h" />
     <ClInclude Include="Application\UI\ManualUI.h" />
+    <ClInclude Include="Application\UI\SpecGaugeUI.h" />
+    <ClInclude Include="Application\UI\SpecUI.h" />
     <ClInclude Include="Application\UI\TimeUI.h" />
     <ClInclude Include="Application\UI\TutorialCheckUI.h" />
     <ClInclude Include="Application\UI\TutorialUI.h" />

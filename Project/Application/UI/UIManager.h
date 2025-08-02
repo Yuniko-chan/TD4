@@ -7,6 +7,8 @@
 #include "TutorialUI.h"
 #include "TutorialCheckUI.h"
 #include "ClockUI.h"
+#include "SpecUI.h"
+#include "SpecGaugeUI.h"
 
 /// <summary>
 /// UIマネージャー
@@ -23,6 +25,8 @@ public: // サブクラス
 		kTextureIndexClock,
 		kTextureIndexTutorial,
 		kTextureIndexTutorialCheck,
+		kTextureIndexSpec,
+		kTextureIndexSpecGauge,
 		kTextureIndexOfCount
 	};
 
@@ -37,6 +41,10 @@ public: // サブクラス
 		kUIIndexTutorialCheckEngine,
 		kUIIndexTutorialCheckTire,
 		kUIIndexTutorialCheckFrame,
+		kUIIndexSpec,
+		kUIIndexSpecGaugeSpeed,
+		kUIIndexSpecGaugeRightTurn,
+		kUIIndexSpecGaugeLeftTurn,
 		kUIIndexOfCount
 	};
 
@@ -48,6 +56,8 @@ public: // サブクラス
 		kClassIndexTimeClock,
 		kClassIndexTutorial,
 		kClassIndexTutorialCheck,
+		kClassIndexSpec,
+		kClassIndexSpecGauge,
 		kClassIndexOfCount
 	};
 
@@ -70,6 +80,8 @@ private: // 定数
 		"UI/clock.png",
 		"UI/tutorial.png",
 		"UI/check.png",
+		"UI/spec.png",
+		"UI/gauge.png",
 	};
 
 	// UIネーム
@@ -84,6 +96,10 @@ private: // 定数
 		"tutorialCheckEngine",
 		"tutorialCheckTire",
 		"tutorialCheckFrame",
+		"spec",
+		"specGaugeSpeed",
+		"specGaugeRightTurn",
+		"specGaugeLeftTurn",
 	};
 
 	// UI作成データ
@@ -98,6 +114,12 @@ private: // 定数
 		UICreateData{ kTextureIndexTutorialCheck, kClassIndexTutorialCheck, {365.0f , 240.0f}, {100.0f,100.0f}},
 		UICreateData{ kTextureIndexTutorialCheck, kClassIndexTutorialCheck, {365.0f , 380.0f}, {100.0f,100.0f} },
 		UICreateData{ kTextureIndexTutorialCheck, kClassIndexTutorialCheck, {365.0f , 505.0f}, {100.0f,100.0f} },
+		UICreateData{ kTextureIndexSpec, kClassIndexSpec, {1068.0f, 113.750f}, {384.0f,187.5f} },
+
+
+		UICreateData{ kTextureIndexSpecGauge, kClassIndexSpecGauge, {1112.0f , 80.0f}, {262.5f, 37.5f}},
+		UICreateData{ kTextureIndexSpecGauge, kClassIndexSpecGauge, {1112.0f , 128.0f}, {262.5f, 37.5f} },
+		UICreateData{ kTextureIndexSpecGauge, kClassIndexSpecGauge, {1112.0f , 175.0f}, {262.5f, 37.5f} },
 	};
 
 public: // メンバ関数
@@ -122,7 +144,12 @@ public: // メンバ関数
 	/// </summary>
 	void ImGuiDraw();
 
-	void DisEnable();
+	/// <summary>
+	/// コア設定
+	/// </summary>
+	/// <param name="vehicleCore"></param>
+	void SetVehicleCore(VehicleCore* vehicleCore);
+
 private: // メンバ関数
 
 	/// <summary>

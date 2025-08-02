@@ -33,6 +33,10 @@ void UIManager::Initialize()
 	static_cast<TutorialCheckUI*>(uis_[kUIIndexTutorialCheckTire].get())->SetTutorialIndex(TutorialCheckUI::TutorialIndex::kTutorialIndexTire);
 	static_cast<TutorialCheckUI*>(uis_[kUIIndexTutorialCheckFrame].get())->SetTutorialIndex(TutorialCheckUI::TutorialIndex::kTutorialIndexFrame);
 
+	static_cast<SpecGaugeUI*>(uis_[kUIIndexSpecGaugeSpeed].get())->SetGaugeIndex(SpecGaugeUI::GaugeIndex::kGaugeIndexSpeed);
+	static_cast<SpecGaugeUI*>(uis_[kUIIndexSpecGaugeRightTurn].get())->SetGaugeIndex(SpecGaugeUI::GaugeIndex::kGaugeIndexRightTurn);
+	static_cast<SpecGaugeUI*>(uis_[kUIIndexSpecGaugeLeftTurn].get())->SetGaugeIndex(SpecGaugeUI::GaugeIndex::kGaugeIndexLeftTurn);
+
 }
 
 void UIManager::Update()
@@ -75,6 +79,16 @@ void UIManager::ImGuiDraw()
 
 }
 
+void UIManager::SetVehicleCore(VehicleCore* vehicleCore)
+{
+
+	static_cast<SpecUI*>(uis_[kUIIndexSpec].get())->SetVehicleCore(vehicleCore);
+	static_cast<SpecGaugeUI*>(uis_[kUIIndexSpecGaugeSpeed].get())->SetVehicleCore(vehicleCore);
+	static_cast<SpecGaugeUI*>(uis_[kUIIndexSpecGaugeRightTurn].get())->SetVehicleCore(vehicleCore);
+	static_cast<SpecGaugeUI*>(uis_[kUIIndexSpecGaugeLeftTurn].get())->SetVehicleCore(vehicleCore);
+
+}
+
 BaseUI* UIManager::CreateUI(ClassIndex index)
 {
 
@@ -100,6 +114,12 @@ BaseUI* UIManager::CreateUI(ClassIndex index)
 		break;
 	case UIManager::kClassIndexTutorialCheck:
 		result = new TutorialCheckUI();
+		break;
+	case UIManager::kClassIndexSpec:
+		result = new SpecUI();
+		break;
+	case UIManager::kClassIndexSpecGauge:
+		result = new SpecGaugeUI();
 		break;
 	case UIManager::kClassIndexOfCount:
 	default:

@@ -109,6 +109,7 @@ void GameScene::Initialize() {
 	// UIマネージャー
 	uiManager_ = std::make_unique<UIManager>();
 	uiManager_->Initialize();
+	uiManager_->SetVehicleCore(reinterpret_cast<VehicleCore*>(objectManager_->GetObjectPointer("initCore")));
 
 	// ポストエフェクト
 	postEffectSystem_ = std::make_unique<PostEffectSystem>();
