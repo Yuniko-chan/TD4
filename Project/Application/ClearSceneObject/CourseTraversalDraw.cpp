@@ -20,7 +20,7 @@ void CourseTraversalDraw::Initialize(int32_t courseTraversalNum, int32_t rankNum
 	// 中心位置
 	const Vector2 kCenter = { 640.0f, 360.0f };
 	// 踏破数位置追加
-	const Vector2 kTraversalNumAdd = { 250.0f, -100.0f };
+	const Vector2 kTraversalNumAdd = { 250.0f, -200.0f };
 
 	// 踏破数、文字列
 	traversalNumString_ = std::make_unique<OutGameSpriteObject>();
@@ -44,13 +44,13 @@ void CourseTraversalDraw::Initialize(int32_t courseTraversalNum, int32_t rankNum
 	// 踏破ランク、ランク
 	raversalRank_ = std::make_unique<OutGameSpriteObject>();
 	raversalRank_->Initialize("Resources/Sprite/Result/traversalRank.png",
-		{ kCenter.x , kCenter.y + 100.0f }, kWhite, kNumberSize, kNumberTextureSize_);
+		{ kCenter.x , kCenter.y }, kWhite, kNumberSize, kNumberTextureSize_);
 	// ルーレット
 	raversalRank_->GetAnimation()->doesAnimations_[kRouletteNum] = true;
 
 	// ボタンをおしてください
 	pleasePressTheButton_ = std::make_unique<OutGameSpriteObject>();
-	pleasePressTheButton_->Initialize("Resources/Sprite/Result/traversalNumString.png",
+	pleasePressTheButton_->Initialize("Resources/Sprite/Common/pressA.png",
 		Vector2{ kCenter.x, kCenter.y + 250.0f }, kWhite);
 	// 透明度
 	pleasePressTheButton_->GetAnimation()->doesAnimations_[kTransparencyChangeNum] = true;
