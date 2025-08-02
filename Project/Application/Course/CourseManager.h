@@ -260,6 +260,8 @@ public:
 
 	void SetCourseCollisionSystem(CourseCollisionSystem* courseCollisionSystem) { courseCollisionSystem_ = courseCollisionSystem; };
 
+	int32_t* GetCourseTraversalNumAdrres() { return &courseTraversalNum_; };
+
 private:
 	std::array<CourseImportData, kCourseFileCount> courseDatas_;
 	GameSceneObjectManager* objectManager_;

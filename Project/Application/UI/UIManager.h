@@ -4,6 +4,8 @@
 #include "BaseUI.h"
 #include "ManualUI.h"
 #include "TimeUI.h"
+#include "TutorialUI.h"
+#include "TutorialCheckUI.h"
 
 /// <summary>
 /// UIマネージャー
@@ -15,27 +17,35 @@ public: // サブクラス
 
 	// テクスチャ一覧
 	enum TextureIndex {
-		manual,
-		num,
-		clock,
+		kTextureIndexManual,
+		kTextureIndexNum,
+		kTextureIndexClock,
+		kTextureIndexTutorial,
+		kTextureIndexTutorialCheck,
 		kTextureIndexOfCount
 	};
 
 	// UI一覧
 	enum UIIndex {
-		manualUIindex,
-		timeOneHundred,
-		timeTen,
-		timeOne,
-		clockUIindex,
+		kUIIndexManual,
+		kUIIndexTimeOneHundred,
+		kUIIndexTimeTen,
+		kUIIndexTimeOne,
+		kUIIndexClock,
+		kUIIndexTutorial,
+		kUIIndexTutorialCheckEngine,
+		kUIIndexTutorialCheckTire,
+		kUIIndexTutorialCheckFrame,
 		kUIIndexOfCount
 	};
 
 	// クラス一覧
 	enum ClassIndex {
 		kClassIndexBase, // ベース
-		manualUIClass,
-		timeUIClass,
+		kClassIndexManual,
+		kClassIndexTime,
+		kClassIndexTutorial,
+		kClassIndexTutorialCheck,
 		kClassIndexOfCount
 	};
 
@@ -55,7 +65,9 @@ private: // 定数
 	{
 		"UI/manual.png",
 		"Sprite/Common/number.png",
-		"UI/clock.png"
+		"UI/clock.png",
+		"UI/tutorial.png",
+		"UI/check.png",
 	};
 
 	// UIネーム
@@ -66,19 +78,24 @@ private: // 定数
 		"timeTen",
 		"timeOne",
 		"clock",
+		"tutorial",
+		"tutorialCheckEngine",
+		"tutorialCheckTire",
+		"tutorialCheckFrame",
 	};
 
 	// UI作成データ
 	const std::array<UICreateData, UIIndex::kUIIndexOfCount> kUICreateDatas_ =
 	{
-		UICreateData{ manual, manualUIClass, {1100.0f, 570.0f}, {320.0f,240.0f} },
-
-
-		UICreateData{ num, timeUIClass, {640.0f - 96.0f,60.0f}, {96.0f,96.0f} },
-		UICreateData{ num, timeUIClass, {640.0f, 60.0f}, {96.0f,96.0f} },
-		UICreateData{ num, timeUIClass, {640.0f + 96.0f,60.0f}, {96.0f,96.0f} },
-
-		UICreateData{ clock, kClassIndexBase, {640.0f - 96.0f - 96.0f,60.0f}, {96.0f,96.0f} },
+		UICreateData{ kTextureIndexManual, kClassIndexManual, {1100.0f, 570.0f}, {320.0f,240.0f} },
+		UICreateData{ kTextureIndexNum, kClassIndexTime, {640.0f - 96.0f,60.0f}, {96.0f,96.0f} },
+		UICreateData{ kTextureIndexNum, kClassIndexTime, {640.0f, 60.0f}, {96.0f,96.0f} },
+		UICreateData{ kTextureIndexNum, kClassIndexTime, {640.0f + 96.0f,60.0f}, {96.0f,96.0f} },
+		UICreateData{ kTextureIndexClock, kClassIndexBase, {640.0f - 96.0f - 96.0f,60.0f}, {96.0f,96.0f} },
+		UICreateData{ kTextureIndexTutorial, kClassIndexTutorial, {192.0f + 20.0f , 360.0f}, {384.0f,512.0f} },
+		UICreateData{ kTextureIndexTutorialCheck, kClassIndexTutorialCheck, {365.0f , 240.0f}, {100.0f,100.0f}},
+		UICreateData{ kTextureIndexTutorialCheck, kClassIndexTutorialCheck, {365.0f , 380.0f}, {100.0f,100.0f} },
+		UICreateData{ kTextureIndexTutorialCheck, kClassIndexTutorialCheck, {365.0f , 505.0f}, {100.0f,100.0f} },
 	};
 
 public: // メンバ関数
@@ -125,4 +142,3 @@ private: // メンバ変数
 	int imGuiMode_;
 
 };
-

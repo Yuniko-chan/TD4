@@ -9,8 +9,6 @@ void ManualUI::Initialize(uint32_t textureHandle, const Vector2& position, const
 
 void ManualUI::Update()
 {
-
-	BaseUI::Update();
 }
 
 void ManualUI::ImGuiDraw()

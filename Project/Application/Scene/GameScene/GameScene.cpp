@@ -121,6 +121,12 @@ void GameScene::Initialize() {
 	// コース
 	CourseInitialize();
 
+	// チュートリアル
+	tutorial_ = Tutorial::GetInstance();
+	tutorial_->Initialize();
+	tutorial_->SetVehicleCore(reinterpret_cast<VehicleCore*>(objectManager_->GetObjectPointer("initCore")));
+	tutorial_->SetCourseTraversalNum(courseManager_->GetCourseTraversalNumAdrres());
+
 	//BGM
 	audioManager_->PlayWave(kGameAudioNameIndexBGM);
 
@@ -194,6 +200,9 @@ void GameScene::Update() {
 
 	// オブジェクトマネージャー
 	objectManager_->Update();
+
+	// チュートリアル
+	tutorial_->Update();
 
 	// あたり判定
 	collisionManager_->ListClear();
