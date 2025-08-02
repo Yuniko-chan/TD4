@@ -31,55 +31,12 @@ void DriveSystem::Initialize()
 
 void DriveSystem::Update()
 {
-	knockbackReactionController_->Update();
-
-	//slowTimer_.Update(1.0f / GameTimeSystem::GetInstance()->GetTimeScale());
-	//if (pushCount_ != 0) {
-	//	// 回転行列のやつから向きを取得
-
-	//	pushVector_.second = Vector3::Normalize(totalDirection_);
-	//	pushVector_.second.y = 0.0f;
-	//	pushVector_.first = owner_->GetWorldTransformAdress()->direction_;
-	//	pushVector_.first.y = 0.0f;
-
-	//	isPush_ = false;
-	//	pushCount_ = 0;
-	//	// 
-	//	if (!slowTimer_.IsActive()) {
-	//		slowTimer_.Start(1.0f);
-	//		const float kRotateSlowScale = 0.1f;
-	//		GameTimeSystem::GetInstance()->SetTimeScale(kRotateSlowScale);
-	//	}
-	//}
-
-	//if (slowTimer_.IsActive()) {
-	//	if (Vector3::Dot(pushVector_.first, pushVector_.second) >= 0.5f) {
-	//		Vector3 pushDirect = Vector3(totalDirection_.x, 0.0f, totalDirection_.z);
-	//		pushDirect = Vector3::Normalize(pushDirect);
-	//		Matrix4x4 fromDirectionRotateMatrix = Matrix4x4::DirectionToDirection(Vector3{ 0.0f,0.0f,1.0f }, pushDirect);
-
-	//		owner_->posture_ = fromDirectionRotateMatrix/* * owner_->posture_*/;
-	//		owner_->GetWorldTransformAdress()->direction_ = Matrix4x4::TransformNormal(pushDirect, owner_->posture_);
-	//		//owner_->GetWorldTransformAdress()->direction_ = Vector3::Normalize(owner_->GetWorldTransformAdress()->direction_);
-	//	}
-
-	//}
-	//if (slowTimer_.IsEnd()) {
-	//	// タイムスケール戻す
-	//	GameTimeSystem::GetInstance()->SetTimeScale(1.0f);
-	//	// 押し出し
-	//	Vector3 push = Vector3::Normalize(totalDirection_);
-	//	push.y = 0.0f;
-	//	knockBack_ += push * Vector3::Length(totalDirection_);
-	//	
-	//	pushPower_ = {};
-	//	totalDirection_ = {};
-	//}
-
 	// オーバーヒートフラグ初期化
 	status_->SetIsOverheat(false);
 
 	//---それぞれのシステム処理---//
+	// ノックバック関係
+	knockbackReactionController_->Update();
 	// ハンドル処理
 	handling_->PreUpdate();
 	// エンジン処理
@@ -109,16 +66,8 @@ void DriveSystem::Update()
 		owner_->GetWorldTransformAdress()->transform_.translate += newDirect * GameTimeSystem::GetInstance()->GetDeltaTime();
 	}
 
+	// ノックバック処理
 	owner_->GetWorldTransformAdress()->transform_.translate = knockbackReactionController_->Execute();
-	//// ノックバック
-	//if (knockBack_ != Vector3(0.0f, 0.0f, 0.0f)) {
-	//	float knockBackDecayFactor = 0.15f;
-	//	knockBack_ = Ease::Easing(Ease::EaseName::Lerp, knockBack_, Vector3(0, 0, 0), knockBackDecayFactor);
-	//	// 向き
-	//	//Vector3 newDirect = Matrix4x4::TransformNormal(knockBack_, Matrix4x4::DirectionToDirection(Vector3(0.0f, 0.0f, 1.0f), owner_->GetWorldTransformAdress()->direction_));
-	//	// 座標計算
-	//	owner_->GetWorldTransformAdress()->transform_.translate += knockBack_ * GameTimeSystem::GetInstance()->GetDeltaTime();
-	//}
 }
 
 void DriveSystem::PreUpdate()

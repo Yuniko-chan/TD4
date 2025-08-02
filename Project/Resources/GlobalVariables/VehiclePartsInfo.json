@@ -1,0 +1,34 @@
+{
+    "VehiclePartsInfo": {
+        "ArmorHP": 10,
+        "AttachAlpha": 0.6499999761581421,
+        "AttachColor": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "AttachScale": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "EngineHP": 10,
+        "PickupAlpha": 0.3499999940395355,
+        "PickupColor": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "PickupPointScale": [
+            2.5,
+            2.5,
+            2.5
+        ],
+        "PickupScale": [
+            1.25,
+            1.25,
+            1.25
+        ],
+        "TireHP": 10
+    }
+}

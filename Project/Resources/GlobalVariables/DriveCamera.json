@@ -1,6 +1,6 @@
 {
     "DriveCamera": {
-        "BackTrackingDelay": 0.15000000596046448,
+        "BackTrackingDelay": 0.25,
         "Position": [
             0.0,
             0.0,
@@ -11,6 +11,6 @@
             -0.20000000298023224,
             0.9800000190734863
         ],
-        "TrackingDelay": 0.07000000029802322
+        "TrackingDelay": 0.15000000596046448
     }
 }

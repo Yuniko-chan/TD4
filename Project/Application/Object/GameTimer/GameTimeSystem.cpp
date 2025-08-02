@@ -1,6 +1,7 @@
 #include "GameTimeSystem.h"
 #include "../../../Engine/Math/DeltaTime.h"
 #include "../../../Engine/2D/ImguiManager.h"
+#include "../../../Engine/GlobalVariables/GlobalVariables.h"
 
 GameTimeSystem::GameTimeSystem()
 {
@@ -31,12 +32,11 @@ void GameTimeSystem::Update()
 	}
 }
 
-void GameTimeSystem::Start()
+void GameTimeSystem::GameStart()
 {
-	// 初期化
-	remainingTime_ = 0.0f;
-	isRunning_ = true;
-	isPause_ = false;
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	const float kLimitSecond = global->GetFloatValue("GameSystem","LimitSecond");
+	Start(kLimitSecond);
 }
 
 void GameTimeSystem::Start(const float& limitTime)
@@ -61,10 +61,11 @@ void GameTimeSystem::ImGuiDraw()
 {
 	ImGui::InputFloat("残り時間", &remainingTime_);
 	ImGui::InputInt("残り秒数", &remainingSeconds_);
-	static float kLimit = 1.0f;
-	ImGui::InputFloat("制限時間（秒数）", &kLimit);
-	if (ImGui::Button("開始")) {
-		Start(kLimit);
+	if (ImGui::Button("ゲーム開始")) {
+		GameStart();
+	}
+	if (ImGui::Button("チェックポイント通過")) {
+		CheckpointTimeAffect();
 	}
 	if (ImGui::Button("一時停止")) {
 		Pause();
@@ -78,5 +79,7 @@ void GameTimeSystem::ImGuiDraw()
 void GameTimeSystem::CheckpointTimeAffect()
 {
 	// チェックポイント通過時のやつ
-
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	const float kCheckpointAddSecond = global->GetFloatValue("GameSystem", "CheckpointAddSecond");
+	remainingTime_ += kCheckpointAddSecond;
 }

@@ -31,6 +31,24 @@ namespace ParameterStructs {
 			Vector3 inVehicleLocal = {};
 		};
 
+		struct VehicleParts
+		{
+			int engineHP = 10;
+			int tireHP = 10;
+			int armorHP = 10;
+
+			// ピックアップ
+			Vector3 pickupPredictionScale = {};	// サイズ
+			Vector3 pickupColor = {};	// 色
+			float pickupAlpha = 0.0f;	// アルファ値
+			Vector3 pickupPointPredictionScale = {};	// ピックアップポイント用のサイズ
+
+			// アタッチ
+			Vector3 attachPredictionScale = {};	// サイズ
+			Vector3 attachColor = {};	// 色
+			float attachAlpha = 0.0f;	// アルファ値
+		};
+
 		// ハンドル関係
 		struct VehicleHandling
 		{
@@ -86,6 +104,10 @@ namespace ParameterStructs {
 		{
 			float maxDPS = 7.0f;	// 最小
 			float minDPS = 1.0f;	// 最大
+
+			float pushAngleThreshold = 0.0f;
+			float pushForcePerEngine = 0.0f;
+			float knockbackDecayFactor = 0.15f;
 		};
 
 		struct CameraDefault {
@@ -140,6 +162,8 @@ namespace ParameterStructs {
 		Datas::VehicleCore core;
 		// オーバーヒート関係
 		Datas::Overheat overheat;
+		// パーツごと
+		Datas::VehicleParts parts;
 
 		// 加速度の丸める値
 		float accelDiscard = 0.75f;
@@ -167,6 +191,16 @@ namespace ParameterStructs {
 		// Pair<Offset,Rotation>
 		std::pair<Vector3, Vector3> inVehicle;
 		std::pair<Vector3, Vector3> onFoot;
+	};
+
+	/// <summary>
+	/// ゲームのシステムデータ
+	/// </summary>
+	struct GameSystemData {
+		// 制限時間
+		float limitSecond = 300.0f;
+		// 追加秒数
+		float checkpointAddSecond = 15.0f;
 	};
 
 }

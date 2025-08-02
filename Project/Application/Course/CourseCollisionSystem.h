@@ -119,6 +119,12 @@ public: // メンバ関数
 	void SetCourse(Course* course);
 
 	/// <summary>
+	/// コース設定
+	/// </summary>
+	/// <param name="polygons">ポリゴン群</param>
+	void SetCourse(std::vector<CoursePolygon>* polygons);
+
+	/// <summary>
 	/// ギミック設定
 	/// </summary>
 	/// <param name="obb">ギミックOBB</param>

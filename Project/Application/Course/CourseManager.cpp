@@ -79,6 +79,7 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 	objectData.transform = transform;
 	Course* object = new Course();
 	object->Initialize(&objectData,courseInportData);
+	object->GetWorldTransformAdress()->UpdateMatrix();
 	objectManager_->AddObject(object);
 	courseList_[nowGroup_][courseIndex_ % 6] = object;
 	courseIndex_++;
@@ -135,6 +136,11 @@ void CourseManager::PlaceCourseRandom() {
 
 	//カスタムエリア
 	CreateCustomizeArea(nowGroup_);
+
+	//壁
+	CreateWall();
+
+
 
 	//0
 	Place0();
@@ -338,4 +344,67 @@ size_t CourseManager::AddCourseGroup() {
 
 void CourseManager::SetAddCourseFunction(std::function<void(void)> function) {
 	addCourseToGameScene_ = function;
+}
+
+void CourseManager::CreateWall() {
+	std::vector<CoursePolygon> course;
+
+	CoursePolygon cData;
+
+	//データ格納
+	for (uint32_t i = 0; i < kWallVerticesNum2; i++) {
+
+		//coursepolygone
+		if (i % 3 == 0) {
+			cData.position0 = { kWallOffset[i].x+ kCourseGroupOffset_.x * nowGroup_, kWallOffset[i].y, kWallOffset[i].z + kCourseGroupOffset_.z * nowGroup_ };
+		}
+		else if (i % 3 == 1) {
+			cData.position1 = { kWallOffset[i].x + kCourseGroupOffset_.x * nowGroup_, kWallOffset[i].y, kWallOffset[i].z + kCourseGroupOffset_.z * nowGroup_ };
+		}
+		else {
+			cData.position2 = { kWallOffset[i].x + kCourseGroupOffset_.x * nowGroup_, kWallOffset[i].y, kWallOffset[i].z + kCourseGroupOffset_.z * nowGroup_ };
+		}
+
+		//cData.normal += {0.0f,1.0f,0.0f};
+		if (i % 3 == 2) {
+			cData.normal = kWallNormals[i];
+			// texcoordのｙがマイナスになっているため
+			cData.texcoord = {0.98f,0.0f};
+			course.push_back(cData);
+			//cData.normal = { 0,0,0 };
+			cData.texcoord = { 0,0 };
+		}
+
+	}
+	courseCollisionSystem_->SetCourse(&course);
+
+	LevelData* levelData = levelDataManager_->GetLevelDatas(LevelIndex(kLevelIndexCustomAreaObstacle));
+	// レベルデータのオブジェクトを走査
+	for (std::vector<LevelData::ObjectData>::iterator it = levelData->objectsData_.begin(); it != levelData->objectsData_.end(); ++it) {
+		// オブジェクトの参照
+		LevelData::ObjectData gimmickData = *it;
+		//障害物の時用
+		if (std::holds_alternative<LevelData::MeshData>(gimmickData) && std::get<LevelData::MeshData>(gimmickData).className == "Obstacle") {
+
+			//std::get<LevelData::MeshData>(gimmickData).parentName = objectData.name;
+			std::get<LevelData::MeshData>(gimmickData).name = std::get<LevelData::MeshData>(gimmickData).name + std::to_string(courseIndex_);
+			std::get<LevelData::MeshData>(gimmickData).transform.translate.x += kCourseGroupOffset_.x * nowGroup_;
+			//std::get<LevelData::MeshData>(gimmickData).transform.translate.y += kCourseGroupOffset_.y * nowGroup_;
+			std::get<LevelData::MeshData>(gimmickData).transform.translate.z += kCourseGroupOffset_.z * nowGroup_;
+			// 型にあわせてInitialize
+			IObject* gimmick;
+			gimmick = objectFactory_->CreateObjectPattern(gimmickData);
+			//gimmick->GetWorldTransformAdress()->parent_ = object->GetWorldTransformAdress();
+			gimmick->GetWorldTransformAdress()->UpdateMatrix();
+			//スケールに影響されないWorldMatrix計算
+			//Matrix4x4 localMatrix = Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->transform_.scale) * Matrix4x4::MakeRotateXYZMatrix(gimmick->GetWorldTransformAdress()->transform_.rotate) * Matrix4x4::MakeTranslateMatrix(gimmick->GetWorldTransformAdress()->transform_.translate);
+			//gimmick->GetWorldTransformAdress()->worldMatrix_ = localMatrix * gimmick->GetWorldTransformAdress()->parent_->worldMatrix_;
+			//gimmick->GetWorldTransformAdress()->worldMatrix_ = Matrix4x4::Inverse(Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->parent_->transform_.scale)) * gimmick->GetWorldTransformAdress()->worldMatrix_;
+			if (gimmick) {
+				// listへ
+				objectManager_->AddObject(gimmick);
+				(gimmickList_.get())->push_back(gimmick);
+			}
+		}
+	}
 }

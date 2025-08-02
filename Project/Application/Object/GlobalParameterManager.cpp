@@ -58,6 +58,19 @@ void GlobalParameterManager::ApplyGlobalVariables()
 
 	vehicle_.overheat.maxDPS = globalVariables_->GetFloatValue(groupName, "OverheatMaxDamage");
 	vehicle_.overheat.minDPS = globalVariables_->GetFloatValue(groupName, "OverheatMinDamage");
+	vehicle_.overheat.pushAngleThreshold = globalVariables_->GetFloatValue(groupName, "PushAngleThreshold");
+	vehicle_.overheat.pushForcePerEngine = globalVariables_->GetFloatValue(groupName, "PushForcePerEngine");
+	vehicle_.overheat.knockbackDecayFactor = globalVariables_->GetFloatValue(groupName, "KnockbackDecayFactor");
+	
+	// パーツ
+	groupName = "VehiclePartsInfo";
+	vehicle_.parts.tireHP = globalVariables_->GetIntValue(groupName, "TireHP");
+	vehicle_.parts.engineHP = globalVariables_->GetIntValue(groupName, "EngineHP");
+	vehicle_.parts.armorHP = globalVariables_->GetIntValue(groupName, "ArmorHP");
+
+	vehicle_.parts.attachPredictionScale = globalVariables_->GetVector3Value(groupName, "AttachScale");
+	vehicle_.parts.pickupPointPredictionScale = globalVariables_->GetVector3Value(groupName, "PickupPointScale");
+	vehicle_.parts.pickupPredictionScale = globalVariables_->GetVector3Value(groupName, "PickupScale");
 
 	//---エンジン関係---//
 	groupName = "VehicleEngine";
@@ -87,6 +100,10 @@ void GlobalParameterManager::ApplyGlobalVariables()
 	vehicle_.handling.inputDecrementInterval = globalVariables_->GetFloatValue(groupName, "InputDecrementInterval");
 	vehicle_.handling.maxSteerInputCount = globalVariables_->GetIntValue(groupName, "InputMaxCount");
 	vehicle_.handling.maxEffectiveCount = globalVariables_->GetIntValue(groupName, "MaxEffectiveCount");
+
+	groupName = "GameSystem";
+	gameSystem_.limitSecond = globalVariables_->GetFloatValue(groupName, "LimitSecond");
+	gameSystem_.checkpointAddSecond = globalVariables_->GetFloatValue(groupName, "CheckpointAddSecond");
 
 }
 
@@ -128,6 +145,23 @@ void GlobalParameterManager::AddItems()
 	// オーバーヒート
 	globalVariables_->AddItem(groupName, "OverheatMaxDamage", float(vehicle_.overheat.maxDPS));
 	globalVariables_->AddItem(groupName, "OverheatMinDamage", float(vehicle_.overheat.minDPS));
+	globalVariables_->AddItem(groupName, "PushAngleThreshold", float(vehicle_.overheat.pushAngleThreshold));
+	globalVariables_->AddItem(groupName, "PushForcePerEngine", float(vehicle_.overheat.pushForcePerEngine));
+	globalVariables_->AddItem(groupName, "KnockbackDecayFactor", float(vehicle_.overheat.knockbackDecayFactor));
+
+	// パーツ
+	groupName = "VehiclePartsInfo";
+	globalVariables_->AddItem(groupName, "TireHP", int32_t(vehicle_.parts.tireHP));
+	globalVariables_->AddItem(groupName, "EngineHP", int32_t(vehicle_.parts.engineHP));
+	globalVariables_->AddItem(groupName, "ArmorHP", int32_t(vehicle_.parts.armorHP));
+
+	globalVariables_->AddItem(groupName, "AttachScale", Vector3(vehicle_.parts.attachPredictionScale));
+	globalVariables_->AddItem(groupName, "AttachAlpha", float(vehicle_.parts.attachAlpha));
+	globalVariables_->AddItem(groupName, "AttachColor", Vector3(vehicle_.parts.attachColor));
+	globalVariables_->AddItem(groupName, "PickupScale", Vector3(vehicle_.parts.pickupPredictionScale));
+	globalVariables_->AddItem(groupName, "PickupAlpha", float(vehicle_.parts.pickupAlpha));
+	globalVariables_->AddItem(groupName, "PickupColor", Vector3(vehicle_.parts.pickupColor));
+	globalVariables_->AddItem(groupName, "PickupPointScale", Vector3(vehicle_.parts.pickupPointPredictionScale));
 
 	// 
 	groupName = "VehicleEngine";
@@ -159,5 +193,9 @@ void GlobalParameterManager::AddItems()
 	globalVariables_->AddItem(groupName, "InputDecrementInterval", float(vehicle_.handling.inputDecrementInterval));
 	globalVariables_->AddItem(groupName, "InputMaxCount", int32_t(vehicle_.handling.maxSteerInputCount));
 	globalVariables_->AddItem(groupName, "MaxEffectiveCount", int32_t(vehicle_.handling.maxEffectiveCount));
+
+	groupName = "GameSystem";
+	globalVariables_->AddItem(groupName, "LimitSecond", float(gameSystem_.limitSecond));
+	globalVariables_->AddItem(groupName, "CheckpointAddSecond", float(gameSystem_.checkpointAddSecond));
 
 }

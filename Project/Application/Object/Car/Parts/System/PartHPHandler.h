@@ -1,5 +1,6 @@
 #pragma once
 #include "../../../Utility/Common/OwnerComponent.h"
+#include "../../../../../Engine/Math/Vector/Vector4.h"
 
 #include <cstdint>
 
@@ -49,7 +50,8 @@ public:
 	/// <returns></returns>
 	bool IsUnRegist() { return isUnregist_; }
 private:
-	
+	Vector4 defaultColor_ = Vector4();
+	Vector4 damageColor_ = Vector4();
 	int16_t maxHP_ = 0;
 	float hp_ = 0;
 	bool isInvisible_ = false;

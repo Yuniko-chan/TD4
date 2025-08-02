@@ -41,23 +41,27 @@ void PlayerPickupManager::Update()
 			interactDuration_ = std::nullopt;
 		}
 	}
-	// インタラクト更新
-	pickupInteract_->Update();
 
-	// 車体に乗っている時は処理をスキップ
+	// 地上にいない間はスキップ
 	if (owner_->GetStateMachine()->GetCurrentState()) {
 		const std::type_info& id = typeid(*owner_->GetStateMachine()->GetCurrentState());
 		std::string stateName = id.name();
-		if (stateName == "class PlayerInVehicleState") {
+		if (stateName != "class PlayerOnFootState") {
+			attachInteract_->DisableAttachPickupIndicators();
+			pickupInteract_->DisableAttachPickupIndicators();
 			return;
 		}
 	}
 
+	pickupInteract_->Update();
+
+	// パーツを持ってる場合（アタッチ
 	if (holdParts_) {
 		// ピックアップ場所表示
 		PickupVisualizer* pickUp = static_cast<PickupVisualizer*>(pickupInteract_.get());
 		if (pickUp->IsParent()) {
 			pickUp->SetTransform(nullptr);
+			pickUp->SetIsDraw(false);
 			pickUp->Refresh();
 		}
 
@@ -78,8 +82,9 @@ void PlayerPickupManager::Update()
 		AttachVisualizer* ptr = static_cast<AttachVisualizer*>(attachInteract_.get());
 		ptr->SetUp(nearPoint.second, owner_->GetCore()->GetWorldTransformAdress()->direction_);
 		ptr->Update(nearKey_);
-		
+		attachInteract_->SetIsDraw(true);
 	}
+	// 持ってない場合（ピックアップ
 	else {
 		// ピックアップ場所表示
 		PickupVisualizer* pickUp = static_cast<PickupVisualizer*>(pickupInteract_.get());
@@ -88,10 +93,15 @@ void PlayerPickupManager::Update()
 		MeshObject* interactObject = judgeSystem_->GetNearObject(partsManager_, pickupPointManager_);
 		if (interactObject) {
 			pickUp->SetTransform(interactObject->GetWorldTransformAdress());
+			pickUp->RefrashSpot(interactObject->GetClassNameString());
+			pickUp->SetIsDraw(true);
 		}
 		else {
+			pickUp->SetIsDraw(false);
 			pickUp->SetTransform(nullptr);
 		}
+
+		pickUp->Update();
 	}
 }
 
@@ -151,12 +161,18 @@ void PlayerPickupManager::DetachUpdate()
 {
 }
 
-void PlayerPickupManager::SpotSetup(const std::vector<std::pair<std::string, InteractionSpot*>>& spots)
+void PlayerPickupManager::SpotSetup(const std::vector<std::pair<std::string, InteractionSpot*>>& spots,
+	const std::vector<std::pair<std::string, InteractionSpot*>>& pickSpots)
 {
-	AttachVisualizer* ptr = static_cast<AttachVisualizer*>(attachInteract_.get());
+	AttachVisualizer* attachPtr = static_cast<AttachVisualizer*>(attachInteract_.get());
+	PickupVisualizer* pickupPtr = static_cast<PickupVisualizer*>(pickupInteract_.get());
 	// 初期化
 	for (auto it = spots.begin(); it != spots.end(); ++it) {
-		ptr->AddSpot((*it).first, (*it).second);
+		attachPtr->AddSpot((*it).first, (*it).second);
+	}
+
+	for (auto itP = pickSpots.begin(); itP != pickSpots.end(); ++itP) {
+		pickupPtr->AddSpot((*itP).first, (*itP).second);
 	}
 }
 

@@ -73,7 +73,8 @@ public:
 	/// スポットの初期化
 	/// </summary>
 	/// <param name="spots"></param>
-	void SpotSetup(const std::vector<std::pair<std::string, InteractionSpot*>>& spots);
+	void SpotSetup(const std::vector<std::pair<std::string, InteractionSpot*>>& spots,
+		const std::vector<std::pair<std::string, InteractionSpot*>>& pickSpots);
 
 	void InteractSetup(InteractionSpot* spot);
 

@@ -11,8 +11,17 @@ public:
 	/// 状態の更新
 	/// </summary>
 	void Update();
+	/// <summary>
+	/// エンジンが壊れた
+	/// </summary>
+	void OnEngineBroken(const Vector3& direction);
+	/// <summary>
+	/// ノックバックを適応した座標を出す
+	/// </summary>
+	/// <returns></returns>
+	Vector3 Execute();
 
-private:
+private: // 内部関数
 	/// <summary>
 	/// 向きの変更開始
 	/// </summary>
@@ -25,22 +34,30 @@ private:
 	/// 向きの変更処理
 	/// </summary>
 	void UpdateDirectionAdjustment();
-public:
-	/// <summary>
-	/// エンジンが壊れた
-	/// </summary>
-	void OnEngineBroken(const Vector3& direction);
-	Vector3 Execute();
+
+	void PowerUniform(const Vector3& direction);
+	void PowerEaseOut(const Vector3& direction);
+	void PowerEaseIn(const Vector3& direction);
 private:
-	// 壊れた数（1フレーム内で）
-	int breakCount_ = 0;
+	// 壊れた時の処理種類
+	enum PowerType
+	{
+		kUniform,	// 均一
+		kEaseIn,	// 徐々に強くなる
+		kEaseOut,	// 徐々に弱くなる
+	};
+
+	// 壊れた時の計算種類
+	PowerType powerType_ = kUniform;
+
+private:
 	// スローエフェクト用
 	FrameTimer slowTimer_;
-
 	// 受け付けた回数（1フレームごとにリセット
 	int acceptCount_ = 0;
 
+	// ノックバックの速度ベクトル
 	Vector3 knockback_ = {};
+	// 押し出す力
 	Vector3 totalPower_ = {};
-	Vector3 pushDirection_ = {};
 };

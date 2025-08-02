@@ -267,6 +267,28 @@ void CourseCollisionSystem::SetCourse(Course* course)
 
 }
 
+void CourseCollisionSystem::SetCourse(std::vector<CoursePolygon>* polygons)
+{
+
+	// コースメッシュ分回す
+	for (uint32_t i = 0; i < polygons->size(); ++i) {
+
+		// ポリゴン
+		CoursePolygon polygon = (*polygons)[i];
+
+		// コース中心のワールド座標をプラス
+		//polygon.position0 = Matrix4x4::Transform(polygon.position0, course->GetWorldTransformAdress()->worldMatrix_);
+		//polygon.position1 = Matrix4x4::Transform(polygon.position1, course->GetWorldTransformAdress()->worldMatrix_);
+		//polygon.position2 = Matrix4x4::Transform(polygon.position2, course->GetWorldTransformAdress()->worldMatrix_);
+
+		// 登録
+		polygons_[polygonRegistrationNumber_] = polygon;
+		polygonRegistrationNumber_ = (polygonRegistrationNumber_ + 1) % kCollisionPolygonMax_;
+
+	}
+
+}
+
 void CourseCollisionSystem::SetGimmick(OBB* obb)
 {
 
