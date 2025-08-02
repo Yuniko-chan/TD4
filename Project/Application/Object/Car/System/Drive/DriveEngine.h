@@ -43,6 +43,8 @@ private:
 public: // アクセッサ
 	//---ゲッター---//
 	float GetAccumulatedAccel_() const { return accumulatedAccel_; }
+
+	float GetCurrentEngine() const { return currentEngine_; }
 private:
 	// 受付連続回数
 	int16_t consecutiveReceptions_ = 0;
@@ -57,6 +59,8 @@ private:
 
 	float maxLimitAccel_ = 0.0f;
 	float currentLimitAccel_ = 0.0f;
+
+	float currentEngine_ = 0.0f;
 
 private:
 	// リセットフラグ

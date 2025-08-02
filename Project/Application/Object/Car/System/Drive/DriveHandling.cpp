@@ -135,6 +135,9 @@ void DriveHandling::PreUpdate()
 
 void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 {
+	// ハンドルのデータ処理
+	GetUIHandlingData((float)status->GetLeftWheel(), (float)status->GetRightWheel());
+
 	// リセット処理
 	// if（プレイヤーが操作している状態でないなら
 	if (!owner_->IsPlayer() && !onReset_) {
@@ -171,7 +174,7 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 
 	// ステータス（タイヤの数など）を適応
 	steerDirection_ = ApplyStatusToHandling(status, limitAngle);
-	status;
+
 	if (consecutiveReceptions_ == 0) {
 		steerDirection_.x = 0.0f;
 	}
@@ -280,18 +283,24 @@ void DriveHandling::ApplyHandlingToTire()
 	tireDirection_ = Vector3::Normalize(tireDirection_);
 }
 
-void DriveHandling::GetUIHandlingData()
+void DriveHandling::GetUIHandlingData(const float& leftTire, const float& rightTire)
 {
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	const int kMaxEffectiveTire = global->GetIntValue("VehicleHandling", "MaxEffectiveCount");
 
-	
+	// タイヤごとの現在の状態
+	currentLeftTire_ = std::clamp(float(leftTire / kMaxEffectiveTire), 0.0f, 1.0f);
+	currentRightTire_ = std::clamp(float(rightTire / kMaxEffectiveTire), 0.0f, 1.0f);
 }
 
 void DriveHandling::ImGuiDraw()
 {
 	ImGui::SeparatorText("ドライブハンドル");
+
+	ImGui::DragFloat("左タイヤの割合", &currentLeftTire_);
+	ImGui::DragFloat("右タイヤの割合", &currentRightTire_);
+
 	ImGui::DragFloat3("Steer", &steerDirection_.x);
-	ImGui::DragFloat("最低", &minLerpRatio_, 0.01f);
-	ImGui::DragFloat("最大", &maxLerpRatio_, 0.01f);
 	ImGui::DragFloat("間隔", &sDuration, 0.01f);
 	if (ImGui::TreeNode("外部出しするデータ")) {
 		ImGui::SeparatorText("入力関係");
@@ -304,12 +313,7 @@ void DriveHandling::ImGuiDraw()
 		ImGui::SeparatorText("減衰関係");
 		ImGui::InputFloat("ステア最大減衰値", &sLowSpeedSteerAttenuation, 0.1f);
 		ImGui::InputFloat("減衰最大", &sLowSpeedLimit, 0.1f);
-		//// 回転の向き
-		//static float sMaxXDirect = 1.0f;
-		//static float sMinXDirect = 0.25f;
-		//// 推進力
-		//static float sMinPropulsion = 5.0f;
-		//static float sMaxPropulsion = 20.0f;
+
 		ImGui::SeparatorText("向き関係");
 		ImGui::InputFloat("最大X向き", &sMaxXDirect, 0.1f);
 		ImGui::InputFloat("最小X向き", &sMinXDirect, 0.1f);

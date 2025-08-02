@@ -38,7 +38,9 @@ public:
 	// 入力があるか
 	bool IsInput() { return (isRight_.second || isLeft_.second); }
 	bool IsNoneInput() { return (!isRight_.second && !isLeft_.second); }
-
+	// タイヤの割合
+	float GetCurrentLeftTire() { return currentLeftTire_; }
+	float GetCurrentRightTire() { return currentRightTire_; }
 private:
 	/// <summary>
 	/// 初期化
@@ -54,9 +56,8 @@ private:
 	/// <summary>
 	/// UI用のハンドルの値取得
 	/// </summary>
-	void GetUIHandlingData();
-	float minLerpRatio_ = 0.01f;
-	float maxLerpRatio_ = 1.0f;
+	void GetUIHandlingData(const float& leftTire, const float& rightTire);
+
 private:
 	// 入力チェック
 	InputFlag isLeft_ = {};
@@ -72,8 +73,7 @@ private:
 	Vector3 tireDirection_ = {};
 	Vector3 preTireDirection_ = {};
 
-	int maxTire_ = 0;
-	int currentLeftTire_;
-	int currentRightTire_;
+	float currentLeftTire_;
+	float currentRightTire_;
 
 };
