@@ -32,6 +32,14 @@ public:
 	/// </summary>
 	void PositionClear();
 
+/// <summary>
+/// 
+/// </summary>
+	void StopEmit() {
+		
+		emitNum_ = 0;
+	}
+
 private:
 
 	static const uint32_t kEmitNumMax = 4;

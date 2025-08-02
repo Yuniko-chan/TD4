@@ -149,6 +149,10 @@ void DebugScene::Update()
 		ParticleManager_->PositionRegister(Vector3{0.0f,0.0f,0.0f});
 		
 	}
+	if (ImGui::Button("AAAButton")) {
+		ParticleManager_->StopEmit();
+		
+	}
 	ImGui::End();
 
 }

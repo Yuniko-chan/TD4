@@ -70,7 +70,7 @@ void main( uint32_t3 DTid : SV_DispatchThreadID )
                     float32_t size = generator.Generate1d() + 0.1f;
                     gParticles[particleIndex].scale = float32_t3(size, size, size);
 
-                    gParticles[particleIndex].translate = generator.Generate3d() * gEmitter.radius * 2.0f - gEmitter.radius + pos[i];
+                    gParticles[particleIndex].translate = generator.Generate3d() * gEmitter.radius * 2.0f - gEmitter.radius;
 
                     gParticles[particleIndex].color.rgb = float32_t3(0.5f, 0.5f, 0.5f);
                     gParticles[particleIndex].color.a = 1.0f;
