@@ -3,7 +3,7 @@
         "InputDecrementInterval": 2.0,
         "InputInterval": 5.0,
         "InputMaxCount": 30,
-        "MaxEffectiveCount": 10,
+        "MaxEffectiveCount": 50,
         "SteerMaxAngle": 1.0,
         "SteerMinAngle": 0.10000000149011612
     }
