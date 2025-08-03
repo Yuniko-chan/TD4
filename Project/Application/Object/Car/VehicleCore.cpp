@@ -74,6 +74,29 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	ColliderUpdate();
 
 	timeCountEngineSE_ = kTimeCountEngineSEMax_;
+
+	// パーティクル
+	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	// エミッタ設定
+	const EmitterCS kEmitter =
+	{
+			worldTransform_.GetWorldPosition(), // 位置
+			1.0f, // 射出半径
+			10, // 射出数
+			0.1f, // 射出間隔
+			0.0f, // 射出間隔調整時間
+			0 // 射出許可
+	};
+
+	// 通常状態のエフェクト
+	dustParticle_ = std::make_unique<DustParticle>();
+	dustParticle_->Initialize(
+		dxCommon->GetDevice(),
+		dxCommon->GetCommadListLoad(),
+		GraphicsPipelineState::sRootSignature_[GraphicsPipelineState::kPipelineStateIndexGPUParticleBlendNormal].Get(),
+		GraphicsPipelineState::sPipelineState_[GraphicsPipelineState::kPipelineStateIndexGPUParticleBlendNormal].Get());
+	dustParticle_->SetEmitter(kEmitter);
+
 }
 
 void VehicleCore::Update()
@@ -117,6 +140,23 @@ void VehicleCore::Update()
 	isDelete_ = false;
 
 	EngineSERinging();
+
+	const EmitterCS kRunDustEmitter =
+	{
+			worldTransform_.GetWorldPosition(), // 位置
+			1.0f, // 射出半径
+			2, // 射出数
+			0.1f, // 射出間隔
+			0.0f, // 射出間隔調整時間
+			0 // 射出許可
+	};
+	if (isDrive_) {
+		dustParticle_->SetEmitter(kRunDustEmitter, false);
+	}
+	else {
+		dustParticle_->SetEmitter(kRunDustEmitter, true);
+	}
+	dustParticle_->Update();
 
 }
 
@@ -205,6 +245,11 @@ void VehicleCore::ImGuiDrawParts()
 	//}
 
 	ImGui::Text("\n");
+}
+
+void VehicleCore::ParticleDraw(BaseCamera& camera)
+{
+	dustParticle_->Draw(DirectXCommon::GetInstance()->GetCommadList(), camera);
 }
 
 void VehicleCore::EngineSERinging()
