@@ -75,7 +75,7 @@
         },
         {
             "type": "MESH",
-            "name": "Cannon.003",
+            "name": "Cannon.001",
             "transform": {
                 "translation": [
                     -21.856979370117188,
@@ -299,7 +299,7 @@
         },
         {
             "type": "MESH",
-            "name": "Obstacle.007",
+            "name": "Obstacle.004",
             "transform": {
                 "translation": [
                     14.868875503540039,
@@ -336,7 +336,7 @@
         },
         {
             "type": "MESH",
-            "name": "Obstacle.008",
+            "name": "Obstacle.001",
             "transform": {
                 "translation": [
                     -16.208045959472656,
