@@ -1,13 +1,13 @@
 {
     "VehicleEngine": {
-        "AccelerationMultiplier": 20.0,
+        "AccelerationMultiplier": 25.0,
         "DirtFriction": 0.6499999761581421,
         "IdleDecelerationFactor": 0.05000000074505806,
         "InputDecrementInterval": 4.0,
         "InputInterval": 8.0,
         "InputMaxCount": 10,
         "MaxEffectiveCount": 10,
-        "MaxEngineCountAccelFactor": 25.0,
+        "MaxEngineCountAccelFactor": 30.0,
         "MinEngineCountAccelFactor": 1.0,
         "OverheatEngineCountThreshold": 3,
         "RoadFriction": 0.75,

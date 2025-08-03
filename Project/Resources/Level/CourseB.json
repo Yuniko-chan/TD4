@@ -334,41 +334,6 @@
         },
         {
             "type": "MESH",
-            "name": "IronBall.003",
-            "transform": {
-                "translation": [
-                    -49.96031188964844,
-                    -20.2866268157959,
-                    23.0
-                ],
-                "rotation": [
-                    -0.0,
-                    -0.0,
-                    -6.357302595461078e-08
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "collider": {
-                "type": "SPHERE",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "radius": 2
-            },
-            "gimmick": {
-                "type": "IRONBALL",
-                "length": 20.0,
-                "angle": 20.0
-            }
-        },
-        {
-            "type": "MESH",
             "name": "Obstacle.007",
             "transform": {
                 "translation": [
