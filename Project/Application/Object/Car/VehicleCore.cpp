@@ -117,8 +117,8 @@ void VehicleCore::Update()
 	bool isParent = IsParent();
 	if (!isParent) {
 		// 仮の地面処理（後で消す）
-		if (worldTransform_.GetWorldPosition().y <= 0.95f) {
-			worldTransform_.transform_.translate.y = 0.95f;
+		if (worldTransform_.GetWorldPosition().y <= 0.0f) {
+			worldTransform_.transform_.translate.y = 0.0f;
 		}
 		worldTransform_.transform_.translate += Gravity::Execute();
 	}
