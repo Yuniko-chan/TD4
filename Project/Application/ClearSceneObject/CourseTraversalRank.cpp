@@ -82,8 +82,8 @@ void CourseTraversalRank::DetermineRank(uint32_t courseTraversalNum)
 	rank_ = "";
 
 	for (int32_t i = 0; i < kRankNumMax_; ++i) {
-		// ボーダーライン以上ならそのランクで決定
-		if (courseTraversalNum >= rankBorderline_[i]) {
+		// ボーダーライン以下ならそのランクで決定
+		if (courseTraversalNum <= rankBorderline_[i]) {
 			rank_ = kRankNames_[i];
 			rankNum_ = i;
 			break;
