@@ -1,6 +1,6 @@
 #pragma once
 #include "../../../Application/Particle/GPUParticle3D/GPUParticle3D.h"
-#pragma once
+
 #include "../../../Engine/GPUParticle/GPUParticle.h"
 #include "../../../Engine/Math/DeltaTime.h"
 #include "../../../Engine/3D/Model/ModelManager.h"
@@ -11,7 +11,7 @@
 #include "../../../Engine/base/CompileShader.h"
 #include "../../../Engine/base/DxCommon/Log.h"
 #include "../../../Engine/Particle/BillBoardMatrix.h"
-class RunDustParticle :
+class ExplodeParticle :
 	public GPUParticle
 {
 
@@ -151,5 +151,4 @@ private:
 	EmitBlendNormalCS* emitBlendNormalMap_;
 
 };
-
 

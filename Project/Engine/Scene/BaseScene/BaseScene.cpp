@@ -1,5 +1,5 @@
 #include "BaseScene.h"
-
+//TODO:kGameに変更
 //タイトルシーンで初期化
 int BaseScene::sceneNo_ = kTitle;
 int BaseScene::requestSceneNo_ = kTitle;
