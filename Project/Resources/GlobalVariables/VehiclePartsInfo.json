@@ -12,7 +12,7 @@
             1.0,
             1.0
         ],
-        "EngineHP": 4,
+        "EngineHP": 5,
         "PickupAlpha": 0.3499999940395355,
         "PickupColor": [
             1.0,
@@ -29,6 +29,6 @@
             1.25,
             1.25
         ],
-        "TireHP": 2
+        "TireHP": 3
     }
 }

@@ -8,7 +8,7 @@
 // 発射間隔
 const float Minigun::kFiringInterval_ = 0.2f;
 // 弾の大きさ
-const float Minigun::kBulletSize_ = 0.5f;
+const float Minigun::kBulletSize_ = 0.6f;
 
 Minigun::Minigun()
 {
