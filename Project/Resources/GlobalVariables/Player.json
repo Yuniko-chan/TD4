@@ -8,7 +8,7 @@
             2.0,
             0.0
         ],
-        "FrontCatchRange": 50.0,
+        "FrontCatchRange": 75.0,
         "FrontThreshold": 0.800000011920929,
         "HoldOffset": [
             0.0,
@@ -22,6 +22,6 @@
             1.9500000476837158,
             0.0
         ],
-        "WalkSpeed": 13.0
+        "WalkSpeed": 10.0
     }
 }
