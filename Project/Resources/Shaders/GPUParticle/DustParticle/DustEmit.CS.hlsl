@@ -1,4 +1,4 @@
-#include "RunDust.CS.hlsli"
+#include "Dust.CS.hlsli"
 #include "../../RandomGenerator/RandomGenerator.hlsli"
 
 struct Emitter {

@@ -184,6 +184,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Effect\BillboardEffect.cpp" />
     <ClCompile Include="Application\Effect\EffectManager.cpp" />
     <ClCompile Include="Application\Camera\FollowCamera.cpp" />
+    <ClCompile Include="Application\GPUParticle\DustParticle\DustParticle.cpp" />
     <ClCompile Include="Application\Object\BaseCharacter\BaseCharacterAnimation.cpp" />
     <ClCompile Include="Application\Object\Car\Animation\VehicleAnimation.cpp" />
     <ClCompile Include="Application\Object\Car\System\Drive\KnockbackReactionController.cpp" />
@@ -451,6 +452,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Camera\FollowCamera.h" />
     <ClInclude Include="Application\Collider\ColliderParentObject.h" />
     <ClInclude Include="Application\Collider\CollisionConfig.h" />
+    <ClInclude Include="Application\GPUParticle\DustParticle\DustParticle.h" />
     <ClInclude Include="Application\Object\BaseCharacter\BaseCharacterAnimation.h" />
     <ClInclude Include="Application\Object\Car\Animation\VehicleAnimation.h" />
     <ClInclude Include="Application\Object\Car\System\Drive\KnockbackReactionController.h" />
@@ -815,7 +817,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDust.CS.hlsli">
+    <None Include="Resources\Shaders\GPUParticle\DustParticle\Dust.CS.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -1077,17 +1079,17 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDustEmit.CS.hlsl">
+    <FxCompile Include="Resources\Shaders\GPUParticle\DustParticle\DustEmit.CS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDustInitialize.CS.hlsl">
+    <FxCompile Include="Resources\Shaders\GPUParticle\DustParticle\DustInitialize.CS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDustUpdate.CS.hlsl">
+    <FxCompile Include="Resources\Shaders\GPUParticle\DustParticle\DustUpdate.CS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

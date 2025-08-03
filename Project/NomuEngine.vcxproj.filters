@@ -29,9 +29,9 @@
     <FxCompile Include="Resources\Shaders\GPUParticle\PassThroughClothParticle\PassThroughClothEmit.CS.hlsl" />
     <FxCompile Include="Resources\Shaders\GPUParticle\PassThroughClothParticle\PassThroughClothInitialize.CS.hlsl" />
     <FxCompile Include="Resources\Shaders\GPUParticle\PassThroughClothParticle\PassThroughClothUpdate.CS.hlsl" />
-    <FxCompile Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDustEmit.CS.hlsl" />
-    <FxCompile Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDustInitialize.CS.hlsl" />
-    <FxCompile Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDustUpdate.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\DustParticle\DustEmit.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\DustParticle\DustInitialize.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\DustParticle\DustUpdate.CS.hlsl" />
     <FxCompile Include="Resources\Shaders\GPUParticle\particle\Emit.CS.hlsl" />
     <FxCompile Include="Resources\Shaders\GPUParticle\particle\Initialize.CS.hlsl" />
     <FxCompile Include="Resources\Shaders\GPUParticle\particle\Update.CS.hlsl" />
@@ -1083,6 +1083,7 @@
     <ClCompile Include="Application\UI\SpecUI.cpp" />
     <ClCompile Include="Application\UI\SpecGaugeUI.cpp" />
     <ClCompile Include="Application\Object\OnHitCheck\OnHitCheck.cpp" />
+    <ClCompile Include="Application\GPUParticle\DustParticle\DustParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Camera\CameraLists.h" />
@@ -1733,6 +1734,7 @@
     <ClInclude Include="Application\UI\SpecUI.h" />
     <ClInclude Include="Application\UI\SpecGaugeUI.h" />
     <ClInclude Include="Application\Object\OnHitCheck\OnHitCheck.h" />
+    <ClInclude Include="Application\GPUParticle\DustParticle\DustParticle.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc" />
@@ -1749,7 +1751,7 @@
     <None Include="Resources\Shaders\GPUParticle\JumpLandingParticle\JumpLanding.CS.hlsli" />
     <None Include="Resources\Shaders\GPUParticle\MissParticle\Miss.CS.hlsli" />
     <None Include="Resources\Shaders\GPUParticle\PassThroughClothParticle\PassThroughCloth.CS.hlsli" />
-    <None Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDust.CS.hlsli" />
+    <None Include="Resources\Shaders\GPUParticle\DustParticle\Dust.CS.hlsli" />
     <None Include="Resources\Shaders\GPUParticle\particle\CS.hlsli" />
     <None Include="Resources\shaders\Line\Line.hlsli" />
     <None Include="Resources\shaders\Model\ManyModels.hlsli" />
