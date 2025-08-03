@@ -30,9 +30,18 @@ void PlayerCommand::Refrash()
 
 bool PlayerCommand::MoveCommand()
 {
-	Vector3 leftStick = { keyConfig_->GetLeftStick()->x ,0.0f,keyConfig_->GetLeftStick()->y };
-	moveDirect_.x = keyConfig_->GetLeftStick()->x;
-	moveDirect_.z = keyConfig_->GetLeftStick()->y;
+	Vector3 leftStick = { keyConfig_->GetLeftStick()->x / SHRT_MAX ,0.0f,keyConfig_->GetLeftStick()->y / SHRT_MAX };
+	
+	const float kInputDiscard = 0.25f;
+
+	if (std::fabsf(leftStick.x) <= kInputDiscard) {
+		leftStick.x = 0.0f;
+	}
+	if (std::fabsf(leftStick.z) <= kInputDiscard) {
+		leftStick.z = 0.0f;
+	}
+
+	moveDirect_ = leftStick;
 	// 正規化
 	moveDirect_ = Vector3::Normalize(moveDirect_);
 	// 方向入力があればtrue

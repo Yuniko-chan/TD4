@@ -7,6 +7,7 @@
 #include "Parts/PartsInterface.h"
 #include "System/VehicleSystems.h"
 #include "../../AudioManager/GameAudioManager.h"
+#include "../../GPUParticle/DustParticle/DustParticle.h"
 
 class Player;
 
@@ -48,6 +49,12 @@ public: // メンバ関数
     /// ImGuiパーツ用
     /// </summary>
     void ImGuiDrawParts() override;
+
+    /// <summary>
+    /// パーティクル描画
+    /// </summary>
+    /// <param name="camera">カメラ</param>
+    virtual void ParticleDraw(BaseCamera& camera);
 
 private: 
 
@@ -105,6 +112,9 @@ private:
     GameAudioManager* audioManager_;
     float timeCountEngineSE_;
     const float kTimeCountEngineSEMax_ = 10.0f;
+
+    // パーティクル
+    std::unique_ptr<DustParticle> dustParticle_;
 
 
 public:

@@ -5,27 +5,6 @@
 #include "../../../GameTimer/GameTimeSystem.h"
 #include "../../../Engine/GlobalVariables/GlobalVariables.h"
 
-// ハンドル入力関係
-static float sDuration = 5;	// 間隔
-static float sDecrementDuration = 2;	// 減少間隔
-static int sSteerReturnSensitivity = 3;	// ハンドル戻し感度
-static int sSpDecrementThreshold = 6;	// 減少量を増やすしきい
-static int sSpReturnSensitivity = 5;	// 減少量を増やす感度
-static int sMaxCount = 30;	// 押し込み最大	
-
-// 回転減衰
-static float sLowSpeedSteerAttenuation = 0.15f;	// 最低減衰値（n ~ 1.0f)
-static float sLowSpeedLimit = 10.0f;	// 減衰が掛かる最大値
-
-// 回転の向き
-static float sMaxXDirect = 1.0f;
-static float sMinXDirect = 0.25f;
-// 推進力
-static float sMinPropulsion = 5.0f;
-static float sMaxPropulsion = 20.0f;
-
-static float sInputDiscardThreshold = 0.25f;
-
 void DriveHandling::HandleInput(const float inputX)
 {
 	// 前の入力保存
@@ -35,11 +14,8 @@ void DriveHandling::HandleInput(const float inputX)
 	isRight_.second = false;
 	isLeft_.second = false;
 
-	// 切り捨て閾値
-	float kDiscardThreshold = sInputDiscardThreshold;
-
 	// 閾値以下なら早期
-	if (std::fabsf(inputX) < kDiscardThreshold) {
+	if (std::fabsf(inputX) < kInputDiscardThreshold) {
 		return;
 	}
 
@@ -65,10 +41,10 @@ void DriveHandling::PreUpdate()
 	// 間隔
 	float interval = kDeltaTime_ * global->GetFloatValue(groupName, "InputInterval");	// 間隔
 	float decrementInterval = kDeltaTime_ * global->GetFloatValue(groupName, "InputDecrementInterval");
-	int kSteerReturnSensitivity = sSteerReturnSensitivity;	// 切り返しの感度
-	int steerReturnAccelThreshold = sSpDecrementThreshold;	// より大きいかを判断する閾値
-	int highInputReturnSensitivity = sSpReturnSensitivity;	// 切り返しの際により大きいときの感度
-	int kMaxCount = sMaxCount;	// 押し込み最大	
+	int steerReturnSensitivity = kSteerReturnSensitivity;	// 切り返しの感度
+	int steerReturnAccelThreshold = kSpDecrementThreshold;	// より大きいかを判断する閾値
+	int highInputReturnSensitivity = kSpReturnSensitivity;	// 切り返しの際により大きいときの感度
+	int maxCount = kMaxPressCount;	// 押し込み最大	
 
 	// 入力増加
 	if (IsInput() && inputCounter_ >= interval) {
@@ -80,7 +56,7 @@ void DriveHandling::PreUpdate()
 			}
 			// 切り返しの通常処理
 			else if (consecutiveReceptions_ > 0) {
-				consecutiveReceptions_ -= kSteerReturnSensitivity;
+				consecutiveReceptions_ -= steerReturnSensitivity;
 			}
 			// 通常処理
 			else {
@@ -95,7 +71,7 @@ void DriveHandling::PreUpdate()
 			}
 			// 切り返しの通常処理
 			else if (consecutiveReceptions_ < 0) {
-				consecutiveReceptions_ += kSteerReturnSensitivity;
+				consecutiveReceptions_ += steerReturnSensitivity;
 			}
 			// 通常処理
 			else {
@@ -109,11 +85,11 @@ void DriveHandling::PreUpdate()
 	else if (IsNoneInput() && inputCounter_ >= decrementInterval) {
 		int16_t decreValue = 1;
 		// 減少量の変化
-		float lim = (float)kMaxCount / 3.0f;
+		float lim = (float)maxCount / 3.0f;
 		if (std::fabsf((float)consecutiveReceptions_) > (lim)) {
 			decreValue = 4;
 		}
-		else if (std::fabsf((float)consecutiveReceptions_) > ((float)kMaxCount / 5.0f)) {
+		else if (std::fabsf((float)consecutiveReceptions_) > ((float)maxCount / 5.0f)) {
 			decreValue = 2;
 		}
 
@@ -128,7 +104,7 @@ void DriveHandling::PreUpdate()
 	}
 
 	// カウントを最大値内に制限
-	consecutiveReceptions_ = (int16_t)std::clamp((int)consecutiveReceptions_, -kMaxCount, kMaxCount);
+	consecutiveReceptions_ = (int16_t)std::clamp((int)consecutiveReceptions_, -maxCount, maxCount);
 	// 前フレーム
 	preTireDirection_ = tireDirection_;
 }
@@ -155,8 +131,7 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	static bool isDebug = false;
 
 	// 速度に応じたハンドルの処理
-	const int kMaxCount = sMaxCount;	// 押し込み最大	
-	float t = (float)std::abs((int)consecutiveReceptions_) / kMaxCount;
+	float t = (float)std::abs((int)consecutiveReceptions_) / kMaxPressCount;
 	// 最大角度（-1~1,0,1):(-0.5|0.5,0,0.5)
 	float maxAngle = global->GetFloatValue(groupName, "SteerMaxAngle");
 	float minAngle = global->GetFloatValue(groupName, "SteerMinAngle");
@@ -183,9 +158,9 @@ void DriveHandling::PostUpdate(const Vector3& velocity, VehicleStatus* status)
 	ApplyHandlingToTire();
 
 	// 低速時の減衰値
-	float lowSpeedSteerAttenuation = sLowSpeedSteerAttenuation;	// 最低減衰値（n ~ 1.0f)
+	float lowSpeedSteerAttenuation = kLowSpeedSteerAttenuation;	// 最低減衰値（n ~ 1.0f)
 	float speedSteerAttenuation = 0.0f;	// 速度に応じたステア減衰値
-	float lowSpeedLimit = sLowSpeedLimit;	// 減衰が掛かる最大値
+	float lowSpeedLimit = kLowSpeedLimit;	// 減衰が掛かる最大値
 
 
 	// 遅すぎるときの減少処理
@@ -301,25 +276,4 @@ void DriveHandling::ImGuiDraw()
 	ImGui::DragFloat("右タイヤの割合", &currentRightTire_);
 
 	ImGui::DragFloat3("Steer", &steerDirection_.x);
-	ImGui::DragFloat("間隔", &sDuration, 0.01f);
-	if (ImGui::TreeNode("外部出しするデータ")) {
-		ImGui::SeparatorText("入力関係");
-		ImGui::DragFloat("減少間隔", &sDecrementDuration, 0.01f);
-		ImGui::InputInt("ハンドル戻す感度", &sSteerReturnSensitivity);
-		ImGui::InputInt("減少量を増やす閾", &sSpDecrementThreshold);
-		ImGui::InputInt("減少量を増やす感度", &sSpReturnSensitivity);
-		ImGui::InputInt("押し込み最大", &sMaxCount);
-
-		ImGui::SeparatorText("減衰関係");
-		ImGui::InputFloat("ステア最大減衰値", &sLowSpeedSteerAttenuation, 0.1f);
-		ImGui::InputFloat("減衰最大", &sLowSpeedLimit, 0.1f);
-
-		ImGui::SeparatorText("向き関係");
-		ImGui::InputFloat("最大X向き", &sMaxXDirect, 0.1f);
-		ImGui::InputFloat("最小X向き", &sMinXDirect, 0.1f);
-		ImGui::InputFloat("最大推進力", &sMaxPropulsion, 0.1f);
-		ImGui::InputFloat("最小推進力", &sMinPropulsion, 0.1f);
-		ImGui::TreePop();
-	}
-
 }

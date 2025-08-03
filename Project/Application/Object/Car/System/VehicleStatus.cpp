@@ -101,8 +101,8 @@ void VehicleStatus::ApplyPartRemove(std::string name, Vector2Int key)
 	if (name == "TireParts") {
 		partsTypes_.tire--;
 		// 左右
-		if (key.x > 0) wheelDirectCount_.x--;
-		else if (key.x < 0) wheelDirectCount_.y--;
+		if (key.x < 0) wheelDirectCount_.x--;
+		else if (key.x > 0) wheelDirectCount_.y--;
 		// 前後
 		else if (key.y > 0) wheelDirectCount_.z--;
 		else if (key.y < 0) wheelDirectCount_.w--;

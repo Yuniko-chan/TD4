@@ -25,21 +25,14 @@ void DebugScene::Initialize()
 	//clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
 
 	//パーティクル
-	ParticleManager_ = std::make_unique<ParticleManager>();
-	ParticleManager_->Initialize();
+	explodeManager_ = std::make_unique<ExplodeManager>();
+	explodeManager_->Initialize();
 
-	ParticleManager_->CreateParticle<RunDustParticle>("RunDust",
-		{
-				Vector3{0.0f, 0.0f, 0.0f}, // 位置
-				1.0f, // 射出半径
-				10, // 射出数
-				0.1f, // 射出間隔
-				0.0f, // 射出間隔調整時間
-				true // 射出許可
-		}
-	);
-	
-	ParticleManager_->CreateParticle<GPUParticle>("");
+	//runDustManager_ = std::make_unique<RunDustManager>();
+	//runDustManager_->Initialize();
+
+#pragma region 
+	//ParticleManager_->CreateParticle<GPUParticle>("");
 	//UI
 	UIManager_ = std::make_unique<UIManager>();
 	UIManager_->Initialize();
@@ -106,7 +99,7 @@ void DebugScene::Initialize()
 	objG_->Initialize(&objData);
 
 	BaseScene::InitilaizeCheck();
-
+#pragma endregion 邪魔なもの
 }
 
 void DebugScene::Update()
@@ -120,7 +113,8 @@ void DebugScene::Update()
 
 	//clothDemo_->Update();
 
-	ParticleManager_->Update();
+	explodeManager_->Update();
+	//runDustManager_->Update();
 
 	UIManager_->Update();
 	// オブジェクトマネージャー
@@ -136,12 +130,28 @@ void DebugScene::Update()
 
 	ImguiDraw();
 
-	ImGui::Begin("ParticleManagerStopEmissionTest");
+	ImGui::Begin("ParticleExplode");
 	if (ImGui::Button("Button")) {
+		explodeManager_->PositionRegister(Vector3{0.0f,0.0f,0.0f});
+		
+	}
+	if (ImGui::Button("AAAButton")) {
+		explodeManager_->StopEmit();
 		
 	}
 	ImGui::End();
-ParticleManager_->StopEmission("RunDust");
+
+	//ImGui::Begin("ParticleRunDust");
+	//if (ImGui::Button("Button")) {
+	//	//runDustManager_->PositionRegister(Vector3{0.0f,0.0f,0.0f});
+	//	
+	//}
+	//if (ImGui::Button("AAAButton")) {
+	//	runDustManager_->StopEmit();
+	//	
+	//}
+	//ImGui::End();
+
 }
 
 void DebugScene::Draw()
@@ -150,9 +160,9 @@ void DebugScene::Draw()
 	ModelDraw::PreDraw(dxCommon_->GetCommadList());
 
 	// スカイドーム
-	skydome_->Draw(camera_);
+	//skydome_->Draw(camera_);
 
-	objectManager_->Draw(camera_, drawLine_);
+	//objectManager_->Draw(camera_, drawLine_);
 
 	//コース表示
 	//course_->Draw(camera_);
@@ -160,13 +170,13 @@ void DebugScene::Draw()
 	// コースデモ
 	//courseDemoObject_->Draw(camera_);
 
-	objG_->Draw(camera_);
+	//objG_->Draw(camera_);
 
 	ModelDraw::PostDraw();
 
 #pragma region 線描画
 
-	drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
+	//drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
 
 	//drawLine_->Draw(dxCommon_->GetCommadList(), camera_);
 
@@ -174,7 +184,8 @@ void DebugScene::Draw()
 
 #pragma endregion
 
-	ParticleManager_->Draw(camera_);
+	explodeManager_->Draw(camera_);
+	//runDustManager_->Draw(camera_);
 
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理
@@ -184,7 +195,7 @@ void DebugScene::Draw()
 	//前景スプライト描画
 
 	// UI
-	UIManager_->Draw();
+	//UIManager_->Draw();
 
 	// 前景スプライト描画後処理
 	Sprite::PostDraw();
@@ -198,7 +209,7 @@ void DebugScene::ImguiDraw()
 
 	debugCamera_->ImGuiDraw();
 
-	course_->ImGuiDraw();
+	//course_->ImGuiDraw();
 	//clothDemo_->ImGuiDraw(camera_);
 
 	//courseCollisionSystem_->ImGuiDraw();

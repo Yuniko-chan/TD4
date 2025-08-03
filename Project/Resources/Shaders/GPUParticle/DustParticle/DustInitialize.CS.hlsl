@@ -1,4 +1,4 @@
-#include "RunDust.CS.hlsli"
+#include "Dust.CS.hlsli"
 
 RWStructuredBuffer<Particle> gParticles : register(u0);
 

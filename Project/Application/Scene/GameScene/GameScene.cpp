@@ -488,47 +488,5 @@ void GameScene::AddCourse() {
 			++objNum;
 		}
 	}
-
-	// 円錐振り子
-	ConicalPendulumIronBall* conicalPendulumIronBall = nullptr;
-	for (size_t courseNum = kInit; courseNum < kMax; courseNum++) {
-		objNum = 1;
-		while (1) {
-			conicalPendulumIronBall = nullptr;
-			std::string courseName = std::format("ConicalPendulumIronBall.{:03}{}", objNum, courseNum);
-			conicalPendulumIronBall = static_cast<ConicalPendulumIronBall*>(objectManager_->GetObjectPointer(courseName));
-			if (conicalPendulumIronBall) {
-				conicalPendulumIronBall->GetWorldTransformAdress()->UpdateMatrix();
-				OBB col = *reinterpret_cast<OBB*>(conicalPendulumIronBall->GetCollider());
-				col.center_ = conicalPendulumIronBall->GetWorldTransformAdress()->GetWorldPosition();
-				courseCollisionSystem_->SetGimmick(&col);
-			}
-			else {
-				break;
-			}
-			++objNum;
-		}
-	}
-
-	// 振り子
-	PendulumIronBall* pendulumIronBall = nullptr;
-	for (size_t courseNum = kInit; courseNum < kMax; courseNum++) {
-		objNum = 1;
-		while (1) {
-			pendulumIronBall = nullptr;
-			std::string courseName = std::format("PendulumIronBall.{:03}{}", objNum, courseNum);
-			pendulumIronBall = static_cast<PendulumIronBall*>(objectManager_->GetObjectPointer(courseName));
-			if (pendulumIronBall) {
-				pendulumIronBall->GetWorldTransformAdress()->UpdateMatrix();
-				OBB col = *reinterpret_cast<OBB*>(pendulumIronBall->GetCollider());
-				col.center_ = pendulumIronBall->GetWorldTransformAdress()->GetWorldPosition();
-				courseCollisionSystem_->SetGimmick(&col);
-			}
-			else {
-				break;
-			}
-			++objNum;
-		}
-	}
 	
 }

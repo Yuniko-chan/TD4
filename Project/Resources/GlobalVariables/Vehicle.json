@@ -11,7 +11,7 @@
             0.0
         ],
         "KnockbackDecayFactor": 0.15000000596046448,
-        "OverheatMaxDamage": 7.0,
+        "OverheatMaxDamage": 2.0,
         "OverheatMinDamage": 1.0,
         "PushAngleThreshold": 1.0,
         "PushForcePerEngine": 150.0

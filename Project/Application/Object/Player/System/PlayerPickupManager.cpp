@@ -90,7 +90,7 @@ void PlayerPickupManager::Update()
 		PickupVisualizer* pickUp = static_cast<PickupVisualizer*>(pickupInteract_.get());
 		// 検索処理
 		// 一番近いの検索→Stateが通常かつ歩いている場合→場所取得（解除・拾う条件式を同じく行う
-		MeshObject* interactObject = judgeSystem_->GetNearObject(partsManager_, pickupPointManager_);
+		MeshObject* interactObject = judgeSystem_->GetNearInteractObject(partsManager_, pickupPointManager_);
 		if (interactObject) {
 			pickUp->SetTransform(interactObject->GetWorldTransformAdress());
 			pickUp->RefrashSpot(interactObject->GetClassNameString());

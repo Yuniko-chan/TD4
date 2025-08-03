@@ -4,9 +4,9 @@
 #include "../../GameTimer/GameTimeSystem.h"
 
 // 生存時間
-const float MinigunBullet::kLifeTime_ = 0.1f;
+const float MinigunBullet::kLifeTime_ = 1.0f;
 // 速度
-const float MinigunBullet::kSpeed_ = 3.0f;
+const float MinigunBullet::kSpeed_ = 1.0f;
 
 MinigunBullet::MinigunBullet()
 {
