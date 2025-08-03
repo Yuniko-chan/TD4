@@ -1,0 +1,9 @@
+{
+    "CourseTraversal": {
+        "rankBorderline0": 10,
+        "rankBorderline1": 25,
+        "rankBorderline2": 50,
+        "rankBorderline3": 75,
+        "rankBorderline4": 100
+    }
+}
