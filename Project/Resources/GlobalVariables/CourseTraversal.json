@@ -1,9 +1,9 @@
 {
     "CourseTraversal": {
-        "rankBorderline0": 3,
-        "rankBorderline1": 5,
-        "rankBorderline2": 8,
-        "rankBorderline3": 12,
+        "rankBorderline0": 1,
+        "rankBorderline1": 3,
+        "rankBorderline2": 6,
+        "rankBorderline3": 9,
         "rankBorderline4": 100
     }
 }

@@ -75,7 +75,7 @@
         },
         {
             "type": "MESH",
-            "name": "Cannon.003",
+            "name": "Cannon.001",
             "transform": {
                 "translation": [
                     -21.856979370117188,
@@ -299,77 +299,7 @@
         },
         {
             "type": "MESH",
-            "name": "IronBall.002",
-            "transform": {
-                "translation": [
-                    -49.96031188964844,
-                    30.31133460998535,
-                    23.0
-                ],
-                "rotation": [
-                    -0.0,
-                    -0.0,
-                    -6.357302595461078e-08
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "collider": {
-                "type": "SPHERE",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "radius": 2
-            },
-            "gimmick": {
-                "type": "IRONBALL",
-                "length": 20.0,
-                "angle": 20.0
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "IronBall.003",
-            "transform": {
-                "translation": [
-                    -49.96031188964844,
-                    -20.2866268157959,
-                    23.0
-                ],
-                "rotation": [
-                    -0.0,
-                    -0.0,
-                    -6.357302595461078e-08
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "collider": {
-                "type": "SPHERE",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "radius": 2
-            },
-            "gimmick": {
-                "type": "IRONBALL",
-                "length": 20.0,
-                "angle": 20.0
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "Obstacle.007",
+            "name": "Obstacle.004",
             "transform": {
                 "translation": [
                     14.868875503540039,
@@ -406,7 +336,7 @@
         },
         {
             "type": "MESH",
-            "name": "Obstacle.008",
+            "name": "Obstacle.001",
             "transform": {
                 "translation": [
                     -16.208045959472656,

@@ -29,9 +29,9 @@
     <FxCompile Include="Resources\Shaders\GPUParticle\PassThroughClothParticle\PassThroughClothEmit.CS.hlsl" />
     <FxCompile Include="Resources\Shaders\GPUParticle\PassThroughClothParticle\PassThroughClothInitialize.CS.hlsl" />
     <FxCompile Include="Resources\Shaders\GPUParticle\PassThroughClothParticle\PassThroughClothUpdate.CS.hlsl" />
-    <FxCompile Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDustEmit.CS.hlsl" />
-    <FxCompile Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDustInitialize.CS.hlsl" />
-    <FxCompile Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDustUpdate.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\DustParticle\DustEmit.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\DustParticle\DustInitialize.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\DustParticle\DustUpdate.CS.hlsl" />
     <FxCompile Include="Resources\Shaders\GPUParticle\particle\Emit.CS.hlsl" />
     <FxCompile Include="Resources\Shaders\GPUParticle\particle\Initialize.CS.hlsl" />
     <FxCompile Include="Resources\Shaders\GPUParticle\particle\Update.CS.hlsl" />
@@ -84,6 +84,9 @@
     <FxCompile Include="Resources\shaders\Sprite\Sprite.VS.hlsl" />
     <FxCompile Include="Resources\shaders\WindowSprite\WindowSprite.PS.hlsl" />
     <FxCompile Include="Resources\shaders\WindowSprite\WindowSprite.VS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\ExplodeParticle\ExplodeEmit.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\ExplodeParticle\ExplodeInitialize.CS.hlsl" />
+    <FxCompile Include="Resources\Shaders\GPUParticle\ExplodeParticle\ExplodeUpdate.CS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Camera\GameCameraManager.cpp" />
@@ -177,7 +180,6 @@
     <ClCompile Include="Application\Object\Utility\Timer\FrameTimer.cpp" />
     <ClCompile Include="Application\Object\Wall\Wall.cpp" />
     <ClCompile Include="Application\OutGameObject\Curtain\Curtain.cpp" />
-    <ClCompile Include="Application\ParticleManager\ParticleManager.cpp" />
     <ClCompile Include="Application\Particle\RunDustParticle\RunDustParticle.cpp" />
     <ClCompile Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.cpp" />
     <ClCompile Include="Application\Scene\DebugScene\DebugScene.cpp" />
@@ -815,9 +817,6 @@
     <ClCompile Include="Application\Object\Wall\Wall.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ParticleManager\ParticleManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Application\Particle\RunDustParticle\RunDustParticle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -1083,6 +1082,7 @@
     <ClCompile Include="Application\UI\SpecUI.cpp" />
     <ClCompile Include="Application\UI\SpecGaugeUI.cpp" />
     <ClCompile Include="Application\Object\OnHitCheck\OnHitCheck.cpp" />
+    <ClCompile Include="Application\GPUParticle\DustParticle\DustParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Camera\CameraLists.h" />
@@ -1212,7 +1212,6 @@
     <ClInclude Include="Application\Object\Utility\Timer\FrameTimer.h" />
     <ClInclude Include="Application\Object\Wall\Wall.h" />
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />
-    <ClInclude Include="Application\ParticleManager\ParticleManager.h" />
     <ClInclude Include="Application\Particle\RunDustParticle\RunDustParticle.h" />
     <ClInclude Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.h" />
     <ClInclude Include="Application\Scene\DebugScene\DebugScene.h" />
@@ -1527,7 +1526,6 @@
     <ClInclude Include="Application\Object\Utility\Timer\FrameTimer.h" />
     <ClInclude Include="Application\Object\Wall\Wall.h" />
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />
-    <ClInclude Include="Application\ParticleManager\ParticleManager.h" />
     <ClInclude Include="Application\Particle\RunDustParticle\RunDustParticle.h" />
     <ClInclude Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.h" />
     <ClInclude Include="Application\Scene\DebugScene\DebugScene.h" />
@@ -1733,6 +1731,7 @@
     <ClInclude Include="Application\UI\SpecUI.h" />
     <ClInclude Include="Application\UI\SpecGaugeUI.h" />
     <ClInclude Include="Application\Object\OnHitCheck\OnHitCheck.h" />
+    <ClInclude Include="Application\GPUParticle\DustParticle\DustParticle.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc" />
@@ -1749,7 +1748,7 @@
     <None Include="Resources\Shaders\GPUParticle\JumpLandingParticle\JumpLanding.CS.hlsli" />
     <None Include="Resources\Shaders\GPUParticle\MissParticle\Miss.CS.hlsli" />
     <None Include="Resources\Shaders\GPUParticle\PassThroughClothParticle\PassThroughCloth.CS.hlsli" />
-    <None Include="Resources\Shaders\GPUParticle\RunDustParticle\RunDust.CS.hlsli" />
+    <None Include="Resources\Shaders\GPUParticle\DustParticle\Dust.CS.hlsli" />
     <None Include="Resources\Shaders\GPUParticle\particle\CS.hlsli" />
     <None Include="Resources\shaders\Line\Line.hlsli" />
     <None Include="Resources\shaders\Model\ManyModels.hlsli" />
@@ -1761,6 +1760,7 @@
     <None Include="Resources\shaders\Skybox\Skybox.hlsli" />
     <None Include="Resources\shaders\Sprite\Sprite.hlsli" />
     <None Include="Resources\shaders\WindowSprite\WindowSprite.hlsli" />
+    <None Include="Resources\Shaders\GPUParticle\ExplodeParticle\Explode.CS.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />

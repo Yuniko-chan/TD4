@@ -1,39 +1,27 @@
-#include "RunDustParticle.h"
+#include "GPUParticle3D.h"
 
-void RunDustParticle::Initialize(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, ID3D12RootSignature* rootSignature, ID3D12PipelineState* pipelineState,
-	const std::string& name)
-{
-	name;
-	textureFilename_ = "circle.png";
-
-	GPUParticle::Initialize(device, commandList, rootSignature, pipelineState);
-
-	eggModel_ = ModelManager::GetInstance()->GetModel("Resources/Model/Box/", "Box.obj");
-
-}
-
-void RunDustParticle::Update()
+void GPUParticle3D::Update()
 {
 
 	// 時間加算
 	emitBlendNormalMap_->frequencyTime += kDeltaTime_;
 
-	// 射出間隔を上回ったら射出許可を出して時間を調整
+	//// 射出間隔を上回ったら射出許可を出して時間を調整
 	if (emitBlendNormalMap_->frequency <= emitBlendNormalMap_->frequencyTime) {
 		emitBlendNormalMap_->frequencyTime -= emitBlendNormalMap_->frequency;
 		emitBlendNormalMap_->emit = 1;
 	}
-	// 射出間隔を上回っていないので、射出許可は出ない
-	else {
-		emitBlendNormalMap_->emit = 0;
-	}
+	//// 射出間隔を上回っていないので、射出許可は出ない
+	//else {
+	//	emitBlendNormalMap_->emit = 0;
+	//}
 
 	// 時間経過
 	perFrameMap_->time_ += perFrameMap_->deltaTime_;
 
 }
 
-void RunDustParticle::Draw(ID3D12GraphicsCommandList* commandList, BaseCamera& camera)
+void GPUParticle3D::Draw(ID3D12GraphicsCommandList* commandList, BaseCamera& camera)
 {
 
 	assert(commandList);
@@ -66,7 +54,7 @@ void RunDustParticle::Draw(ID3D12GraphicsCommandList* commandList, BaseCamera& c
 	commandList->SetGraphicsRootSignature(rootSignature_);
 
 	// 頂点データ
-	commandList->IASetVertexBuffers(0, 1, eggModel_->GetMesh()->GetVbView());
+	commandList->IASetVertexBuffers(0, 1, Model_->GetMesh()->GetVbView());
 
 	// GPUパーティクル用
 	commandList->SetGraphicsRootDescriptorTable(0, srvHandleGPU_);
@@ -76,24 +64,24 @@ void RunDustParticle::Draw(ID3D12GraphicsCommandList* commandList, BaseCamera& c
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		commandList,
 		2,
-		eggModel_->GetTextureHandles()[0]);
+		Model_->GetTextureHandles()[0]);
 	// マテリアル
 	commandList->SetGraphicsRootConstantBufferView(3, material_->GetMaterialBuff()->GetGPUVirtualAddress());
 
 	// 描画
-	commandList->DrawInstanced(UINT(eggModel_->GetModelData().vertices.size()), GPUParticle::kParticleMax_, 0, 0);
+	commandList->DrawInstanced(UINT(Model_->GetModelData().vertices.size()), kParticleMax_, 0, 0);
 
 	// リソースバリア
 	ResouseBarrierToUnorderedAccess(commandList);
 
 }
 
-void RunDustParticle::UAVBufferInitialize(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+void GPUParticle3D::UAVBufferInitialize(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
 {
 
 
 	// バッファ
-	buff_ = BufferResource::CreateBufferResourceUAV(device, ((sizeof(ParticleBlendNormalCS) + 0xff) & ~0xff) * GPUParticle::kParticleMax_);
+	buff_ = BufferResource::CreateBufferResourceUAV(device, ((sizeof(ParticleBlendNormalCS) + 0xff) & ~0xff) * kParticleMax_);
 
 	/// UAV
 
@@ -102,7 +90,7 @@ void RunDustParticle::UAVBufferInitialize(ID3D12Device* device, ID3D12GraphicsCo
 	uavDesc.Format = DXGI_FORMAT_UNKNOWN;
 	uavDesc.ViewDimension = D3D12_UAV_DIMENSION_BUFFER;
 	uavDesc.Buffer.FirstElement = 0;
-	uavDesc.Buffer.NumElements = GPUParticle::kParticleMax_;
+	uavDesc.Buffer.NumElements = kParticleMax_;
 	uavDesc.Buffer.CounterOffsetInBytes = 0;
 	uavDesc.Buffer.Flags = D3D12_BUFFER_UAV_FLAG_NONE;
 	uavDesc.Buffer.StructureByteStride = sizeof(ParticleBlendNormalCS);
@@ -183,7 +171,7 @@ void RunDustParticle::UAVBufferInitialize(ID3D12Device* device, ID3D12GraphicsCo
 
 }
 
-void RunDustParticle::ConstantBufferInitialzie(ID3D12Device* device)
+void GPUParticle3D::ConstantBufferInitialzie(ID3D12Device* device)
 {
 
 	//GPUParticleViewを作る
@@ -204,13 +192,13 @@ void RunDustParticle::ConstantBufferInitialzie(ID3D12Device* device)
 	emitBlendNormalMap_->count = 10;
 	emitBlendNormalMap_->frequency = 0.5f;
 	emitBlendNormalMap_->frequencyTime = 0.0f;
-	emitBlendNormalMap_->translate0 = Vector3(0.0f, 0.0f, 0.0f);
+	emitBlendNormalMap_->translate0 = Vector3(1.0f, 0.0f, 0.0f);
 	emitBlendNormalMap_->translate1 = Vector3(0.0f, 0.0f, 0.0f);
 	emitBlendNormalMap_->translate2 = Vector3(0.0f, 0.0f, 0.0f);
 	emitBlendNormalMap_->translate3 = Vector3(0.0f, 0.0f, 0.0f);
 	emitBlendNormalMap_->num = 0;
 	emitBlendNormalMap_->radius = 1.0f;
-	emitBlendNormalMap_->emit = 0;
+	emitBlendNormalMap_->emit = true;
 
 	// 時間バッファ
 	perFrameBuff_ = BufferResource::CreateBufferResource(device, (sizeof(PerFrame) + 0xff) & ~0xff);
@@ -223,7 +211,7 @@ void RunDustParticle::ConstantBufferInitialzie(ID3D12Device* device)
 
 }
 
-void RunDustParticle::InitialzieCS(ID3D12GraphicsCommandList* commandList)
+void GPUParticle3D::InitialzieCS(ID3D12GraphicsCommandList* commandList)
 {
 
 	// SRV
@@ -243,7 +231,7 @@ void RunDustParticle::InitialzieCS(ID3D12GraphicsCommandList* commandList)
 
 }
 
-void RunDustParticle::Emit(ID3D12GraphicsCommandList* commandList)
+void GPUParticle3D::Emit(ID3D12GraphicsCommandList* commandList)
 {
 
 	// SRV
@@ -267,7 +255,7 @@ void RunDustParticle::Emit(ID3D12GraphicsCommandList* commandList)
 
 }
 
-void RunDustParticle::UpdateCS(ID3D12GraphicsCommandList* commandList)
+void GPUParticle3D::UpdateCS(ID3D12GraphicsCommandList* commandList)
 {
 
 	// SRV
@@ -289,7 +277,7 @@ void RunDustParticle::UpdateCS(ID3D12GraphicsCommandList* commandList)
 
 }
 
-void RunDustParticle::SetEmitter(const EmitBlendNormalCS& emitter, bool isEmitSet)
+void GPUParticle3D::SetEmitter(const EmitBlendNormalCS& emitter, bool isEmitSet)
 {
 
 	// マッピング
@@ -313,7 +301,7 @@ void RunDustParticle::SetEmitter(const EmitBlendNormalCS& emitter, bool isEmitSe
 
 }
 
-void RunDustParticle::PipelineStateCSInitializeForInitialize(ID3D12Device* device)
+void GPUParticle3D::PipelineStateCSInitializeForInitialize(ID3D12Device* device)
 {
 
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootsignature{};
@@ -391,8 +379,9 @@ void RunDustParticle::PipelineStateCSInitializeForInitialize(ID3D12Device* devic
 	assert(SUCCEEDED(hr));
 
 	// シェーダコンパイル
+	const std::wstring kFilePath = Log::ConvertString(kShaderDirectoryPath_ + particleName_ + "Particle/" + particleName_ + "Initialize.CS.hlsl");
 	IDxcBlob* shader = CompileShader::Compile(
-		L"Resources/shaders/GPUParticle/RunDustParticle/RunDustInitialize.CS.hlsl",
+		kFilePath,
 		L"cs_6_0",
 		L"main");
 
@@ -409,7 +398,7 @@ void RunDustParticle::PipelineStateCSInitializeForInitialize(ID3D12Device* devic
 
 }
 
-void RunDustParticle::PipelineStateCSInitializeForEmit(ID3D12Device* device)
+void GPUParticle3D::PipelineStateCSInitializeForEmit(ID3D12Device* device)
 {
 
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootsignature{};
@@ -495,8 +484,9 @@ void RunDustParticle::PipelineStateCSInitializeForEmit(ID3D12Device* device)
 	assert(SUCCEEDED(hr));
 
 	// シェーダコンパイル
+	const std::wstring kFilePath = Log::ConvertString(kShaderDirectoryPath_ + particleName_ + "Particle/" + particleName_ + "Initialize.CS.hlsl");
 	IDxcBlob* shader = CompileShader::Compile(
-		L"Resources/shaders/GPUParticle/RunDustParticle/RunDustEmit.CS.hlsl",
+		kFilePath,
 		L"cs_6_0",
 		L"main");
 
@@ -513,7 +503,7 @@ void RunDustParticle::PipelineStateCSInitializeForEmit(ID3D12Device* device)
 
 }
 
-void RunDustParticle::PipelineStateCSInitializeForUpdate(ID3D12Device* device)
+void GPUParticle3D::PipelineStateCSInitializeForUpdate(ID3D12Device* device)
 {
 
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootsignature{};
@@ -595,8 +585,9 @@ void RunDustParticle::PipelineStateCSInitializeForUpdate(ID3D12Device* device)
 	assert(SUCCEEDED(hr));
 
 	// シェーダコンパイル
+	const std::wstring kFilePath = Log::ConvertString(kShaderDirectoryPath_ + particleName_ + "Particle/" + particleName_ + "Update.CS.hlsl");
 	IDxcBlob* shader = CompileShader::Compile(
-		L"Resources/shaders/GPUParticle/RunDustParticle/RunDustUpdate.CS.hlsl",
+		kFilePath,
 		L"cs_6_0",
 		L"main");
 
@@ -612,4 +603,3 @@ void RunDustParticle::PipelineStateCSInitializeForUpdate(ID3D12Device* device)
 	assert(SUCCEEDED(hr));
 
 }
-
