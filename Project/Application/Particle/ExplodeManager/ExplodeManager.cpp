@@ -1,13 +1,13 @@
-#include "EggManager.h"
+#include "ExplodeManager.h"
 
-void EggManager::Initialize()
+void ExplodeManager::Initialize()
 {
 
 	dxCommon_ = DirectXCommon::GetInstance();
 
 	// パーティクル
-	eggBreakParticle_ = std::make_unique<EggParticle>();
-	eggBreakParticle_->Initialize(
+	ExplodeParticle_ = std::make_unique<ExplodeParticle>();
+	ExplodeParticle_->Initialize(
 		dxCommon_->GetDevice(),
 		dxCommon_->GetCommadListLoad(),
 		GraphicsPipelineState::sRootSignature_[GraphicsPipelineState::kPipelineStateIndexGPUParticleBlendNormal].Get(),
@@ -21,14 +21,11 @@ void EggManager::Initialize()
 
 }
 
-void EggManager::Update()
+void ExplodeManager::Update()
 {
 
-	EggParticle::EmitBlendNormalCS emitter;
-	emitter.count = 30;
-	emitter.frequency = 1.0f;
-	emitter.radius = 1.0f;
-	emitter.num = emitNum_;
+	ExplodeParticle::EmitBlendNormalCS emitter;
+
 
 	// 生成しない
 	if (emitNum_ == 0) {
@@ -38,10 +35,20 @@ void EggManager::Update()
 		emitter.translate2 = { 0.0f,0.0f,0.0f };
 		emitter.translate3 = { 0.0f,0.0f,0.0f };
 
+		emitter.count = 0;
+		emitter.frequency = 1.0f;
+		emitter.radius = 1.0f;
+		emitter.num = emitNum_;
+
 		emitter.emit = 0;
-		eggBreakParticle_->SetEmitter(emitter, true);
+		ExplodeParticle_->SetEmitter(emitter, true);
 	}
 	else {
+		emitter.count = 30;
+		emitter.frequency = 1.0f;
+		emitter.radius = 1.0f;
+		emitter.num = emitNum_;
+
 		emitter.frequencyTime = 1.0f;
 		emitter.translate0 = emitPositions_[0];
 		emitter.translate1 = emitPositions_[1];
@@ -49,20 +56,22 @@ void EggManager::Update()
 		emitter.translate3 = emitPositions_[3];
 		emitter.emit = 0;
 
-		eggBreakParticle_->SetEmitter(emitter, true);
+		ExplodeParticle_->SetEmitter(emitter, true);
 
 	}
-		eggBreakParticle_->Update();
+
+	ExplodeParticle_->Update();
+
 }
 
-void EggManager::Draw(BaseCamera& camera)
+void ExplodeManager::Draw(BaseCamera& camera)
 {
 
-	eggBreakParticle_->Draw(dxCommon_->GetCommadList(), camera);
+	ExplodeParticle_->Draw(dxCommon_->GetCommadList(), camera);
 
 }
 
-void EggManager::PositionRegister(const Vector3& position)
+void ExplodeManager::PositionRegister(const Vector3& position)
 {
 
 	if (emitNum_ == kEmitNumMax) {
@@ -77,7 +86,7 @@ void EggManager::PositionRegister(const Vector3& position)
 
 }
 
-void EggManager::PositionClear()
+void ExplodeManager::PositionClear()
 {
 
 	for (uint32_t i = 0; i < kEmitNumMax; ++i) {

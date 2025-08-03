@@ -1,7 +1,7 @@
 #pragma once
 #include "../GPUParticle3D/GPUParticle3D.h"
-#include "../Egg/Egg.h"
-class EggManager
+#include "../RunDustParticle/RunDustParticle.h"
+class RunDustManager
 {
 
 public:
@@ -32,11 +32,11 @@ public:
 	/// </summary>
 	void PositionClear();
 
-/// <summary>
-/// 
-/// </summary>
+	/// <summary>
+	/// 
+	/// </summary>
 	void StopEmit() {
-		
+
 		emitNum_ = 0;
 	}
 
@@ -45,7 +45,7 @@ private:
 	static const uint32_t kEmitNumMax = 4;
 
 	// パーティクル
-	std::unique_ptr<EggParticle> eggBreakParticle_;
+	std::unique_ptr<RunDustParticle> runDustParticle_;
 
 	// 発生位置
 	std::array<Vector3, kEmitNumMax> emitPositions_;

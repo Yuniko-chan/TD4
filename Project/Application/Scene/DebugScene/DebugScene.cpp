@@ -25,26 +25,11 @@ void DebugScene::Initialize()
 	//clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
 
 	//パーティクル
-	ParticleManager_ = std::make_unique<EggManager>();
-	ParticleManager_->Initialize();
+	explodeManager_ = std::make_unique<ExplodeManager>();
+	explodeManager_->Initialize();
 
-	/*ParticleManager_->CreateParticle<ExplodeParticle>("Explode",
-		{
-				Vector3 {0.0f,0.0f,1.0f},
-				0.0f,
-				Vector3 {0.0f,0.0f,1.0f},
-				0.0f,
-				Vector3 {0.0f,0.0f,1.0f},
-				0.0f,
-				Vector3 {0.0f,0.0f,1.0f},
-				10,
-				5,
-				10,
-				1,
-				1.0f,
-				false
-		}
-	);*/
+	runDustManager_ = std::make_unique<RunDustManager>();
+	runDustManager_->Initialize();
 
 #pragma region 
 	//ParticleManager_->CreateParticle<GPUParticle>("");
@@ -128,7 +113,8 @@ void DebugScene::Update()
 
 	//clothDemo_->Update();
 
-	ParticleManager_->Update();
+	explodeManager_->Update();
+	runDustManager_->Update();
 
 	UIManager_->Update();
 	// オブジェクトマネージャー
@@ -144,13 +130,24 @@ void DebugScene::Update()
 
 	ImguiDraw();
 
-	ImGui::Begin("ParticleManagerStopEmissionTest");
+	ImGui::Begin("ParticleExplode");
 	if (ImGui::Button("Button")) {
-		ParticleManager_->PositionRegister(Vector3{0.0f,0.0f,0.0f});
+		explodeManager_->PositionRegister(Vector3{0.0f,0.0f,0.0f});
 		
 	}
 	if (ImGui::Button("AAAButton")) {
-		ParticleManager_->StopEmit();
+		explodeManager_->StopEmit();
+		
+	}
+	ImGui::End();
+
+	ImGui::Begin("ParticleRunDust");
+	if (ImGui::Button("Button")) {
+		runDustManager_->PositionRegister(Vector3{0.0f,0.0f,0.0f});
+		
+	}
+	if (ImGui::Button("AAAButton")) {
+		runDustManager_->StopEmit();
 		
 	}
 	ImGui::End();
@@ -187,7 +184,8 @@ void DebugScene::Draw()
 
 #pragma endregion
 
-	ParticleManager_->Draw(camera_);
+	explodeManager_->Draw(camera_);
+	runDustManager_->Draw(camera_);
 
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理

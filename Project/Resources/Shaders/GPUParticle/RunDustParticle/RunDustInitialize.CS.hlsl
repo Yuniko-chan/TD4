@@ -10,15 +10,17 @@ RWStructuredBuffer<uint32_t> gFreeList : register(u2);
 void main(uint32_t3 DTid : SV_DispatchThreadID )
 {
 
-	uint32_t particleIndex = DTid.x;
+    uint32_t particleIndex = DTid.x;
 
-	if (particleIndex == 0) {
-		gFreeListIndex[0] = kMaxParticles - 1;
-	}
+    if (particleIndex == 0)
+    {
+        gFreeListIndex[0] = kMaxParticles - 1;
+    }
 
-	if (particleIndex < kMaxParticles) {
-		gParticles[particleIndex] = (Particle)0;
-		gFreeList[particleIndex] = particleIndex;
-	}
+    if (particleIndex < kMaxParticles)
+    {
+        gParticles[particleIndex] = (Particle) 0;
+        gFreeList[particleIndex] = particleIndex;
+    }
 
 }

@@ -88,14 +88,13 @@ void GameScene::Initialize() {
 	uiManager_->Initialize();
 
 	//パーティクル
-	ParticleManager_ = std::make_unique<ParticleManager>();
-	ParticleManager_->Initialize();
 
-	ParticleManager_->CreateParticle<RunDustParticle>("RunDust",
+
+	/*ParticleManager_->CreateParticle<RunDustParticle>("RunDust",
 		{
 				
 		}
-	);
+	);*/
 
 	// ポストエフェクト
 	postEffectSystem_ = std::make_unique<PostEffectSystem>();
@@ -193,7 +192,7 @@ void GameScene::Update() {
 	// エフェクトマネージャー
 	effectManager_->Update(camera_);
 	//パーティクルマネージャー
-	ParticleManager_->Update();
+
 	// UIマネージャー
 	uiManager_->Update();
 	// ポストエフェクト
@@ -248,7 +247,7 @@ void GameScene::Draw() {
 	// パーティクル描画
 	//objectManager_->ParticleDraw(camera_);
 
-	ParticleManager_->Draw(camera_);
+	//ParticleManager_->Draw(camera_);
 
 #pragma endregion
 

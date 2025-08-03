@@ -21,7 +21,6 @@
 #include "../../Course/CourseCollisionSystem.h"
 #include "../../Course/Debug/CourseDebugDraw.h"
 #include "../../Course/CourseManager.h"
-#include "../../ParticleManager/ParticleManager.h"
 #include "../../UI/UIManager.h"
 
 /// <summary>
@@ -104,7 +103,6 @@ private:
 
 	// UIマネージャー
 	std::unique_ptr<UIManager> uiManager_ = nullptr;
-	std::unique_ptr<ParticleManager> ParticleManager_ = nullptr;
 
 	// ポストエフェクトシステム
 	std::unique_ptr<PostEffectSystem> postEffectSystem_ = nullptr;

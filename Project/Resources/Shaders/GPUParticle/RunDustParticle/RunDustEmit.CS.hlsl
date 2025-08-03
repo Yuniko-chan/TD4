@@ -24,45 +24,89 @@ RWStructuredBuffer<uint32_t> gFreeList : register(u2);
 void main( uint32_t3 DTid : SV_DispatchThreadID )
 {
 
-	// 射出許可がでた
-	if (gEmitter.emit != 0) {
+    if (gEmitter.emit != 0)
+    {
 
-		RandomGenerator generator;
+        RandomGenerator generator;
 
-		generator.seed = (DTid + gPerFrame.time) * gPerFrame.time;
+        generator.seed = (DTid + gPerFrame.time) * gPerFrame.time;
 
-		for (uint32_t conutIndex = 0; conutIndex < gEmitter.count; ++conutIndex) {
-			// カウント分
-			
-			int32_t freeListIndex;
+        float32_t3 pos[4];
+        pos[0] = gEmitter.translate0;
+        pos[1] = gEmitter.translate1;
+        pos[2] = gEmitter.translate2;
+        pos[3] = gEmitter.translate3;
 
-			InterlockedAdd(gFreeListIndex[0], -1, freeListIndex);
+        for (uint32_t i = 0; i < gEmitter.num; ++i)
+        {
 
-			if (0 <= freeListIndex && freeListIndex < kMaxParticles) {
-				
-				int32_t particleIndex = gFreeList[freeListIndex];
+            for (uint32_t conutIndex = 0; conutIndex < gEmitter.count; ++conutIndex)
+            {
 
-                gParticles[particleIndex].scale = float32_t3(1.0f, 1.0f, 1.0f) * generator.Generate1d() * 0.5f;
-				gParticles[particleIndex].translate = gEmitter.translate;
-				gParticles[particleIndex].translate.x += generator.Generate1d() * 2.0f * gEmitter.radius - gEmitter.radius;
-				gParticles[particleIndex].translate.z += generator.Generate1d() * 2.0f * gEmitter.radius - gEmitter.radius;
-				gParticles[particleIndex].color.rgb = float32_t3(1.0f, 1.0f, 1.0f);
-				gParticles[particleIndex].color.a = 1.0f;
-				gParticles[particleIndex].lifeTime = 1.0f;
-				float32_t speed = 0.1f;
-				gParticles[particleIndex].velocity.x = generator.Generate1d() * speed * 2.0f - speed;
-				gParticles[particleIndex].velocity.y = generator.Generate1d() * speed;
-				gParticles[particleIndex].velocity.z = 0.0f;
-				gParticles[particleIndex].currentTime = 0.0f;
-			}
-			else {
+                int32_t freeListIndex;
 
-				InterlockedAdd(gFreeListIndex[0], 1);
-				break;
+                InterlockedAdd(gFreeListIndex[0], -1, freeListIndex);
 
-			}
-		
-		}
-	}
+                if (0 <= freeListIndex && freeListIndex < kMaxParticles)
+                {
+
+                    int32_t particleIndex = gFreeList[freeListIndex];
+
+                    float32_t size = generator.Generate1d() + 0.1f;
+                    gParticles[particleIndex].scale = float32_t3(size, size, size);
+
+                    gParticles[particleIndex].translate = generator.Generate3d() * gEmitter.radius * 2.0f - gEmitter.radius;
+
+                    gParticles[particleIndex].color.rgb = float32_t3(0.5f, 0.5f, 0.5f);
+                    gParticles[particleIndex].color.a = 1.0f;
+                    gParticles[particleIndex].lifeTime = generator.Generate1d() * 0.2f + 0.2f;
+
+                    float32_t velocityMax = 1.6f;
+
+                    gParticles[particleIndex].velocity =
+						float32_t3(
+							generator.Generate1d() * velocityMax - velocityMax * 0.5f,
+							generator.Generate1d() * velocityMax * 0.5f,
+							generator.Generate1d() * velocityMax - velocityMax * 0.5f);
+
+                    gParticles[particleIndex].velocity *= 0.5f;
+
+                    gParticles[particleIndex].currentTime = 0.0f;
+
+                    gParticles[particleIndex].rotate = generator.Generate3d() * 6.28f - 3.14f;
+                    gParticles[particleIndex].rotateVelocity = float32_t3(0.0f, 0.0f, 0.0f);
+
+                    gParticles[particleIndex].rotateMatrix[0][0] = 1.0f;
+                    gParticles[particleIndex].rotateMatrix[0][1] = 0.0f;
+                    gParticles[particleIndex].rotateMatrix[0][2] = 0.0f;
+                    gParticles[particleIndex].rotateMatrix[0][3] = 0.0f;
+
+                    gParticles[particleIndex].rotateMatrix[1][0] = 0.0f;
+                    gParticles[particleIndex].rotateMatrix[1][1] = 1.0f;
+                    gParticles[particleIndex].rotateMatrix[1][2] = 0.0f;
+                    gParticles[particleIndex].rotateMatrix[1][3] = 0.0f;
+
+                    gParticles[particleIndex].rotateMatrix[2][0] = 0.0f;
+                    gParticles[particleIndex].rotateMatrix[2][1] = 0.0f;
+                    gParticles[particleIndex].rotateMatrix[2][2] = 1.0f;
+                    gParticles[particleIndex].rotateMatrix[2][3] = 0.0f;
+
+                    gParticles[particleIndex].rotateMatrix[3][0] = 0.0f;
+                    gParticles[particleIndex].rotateMatrix[3][1] = 0.0f;
+                    gParticles[particleIndex].rotateMatrix[3][2] = 0.0f;
+                    gParticles[particleIndex].rotateMatrix[3][3] = 1.0f;
+
+                }
+                else
+                {
+
+                    InterlockedAdd(gFreeListIndex[0], 1);
+                    break;
+
+                }
+
+            }
+        }
+    }
 
 }
