@@ -9,7 +9,7 @@
             0.0
         ],
         "FrontCatchRange": 75.0,
-        "FrontThreshold": 0.800000011920929,
+        "FrontThreshold": 0.5,
         "HoldOffset": [
             0.0,
             0.0,
