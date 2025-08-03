@@ -123,28 +123,6 @@ void DebugScene::Update()
 
 	ImguiDraw();
 
-	ImGui::Begin("ParticleExplode");
-	if (ImGui::Button("Button")) {
-		explodeManager_->PositionRegister(Vector3{0.0f,0.0f,0.0f});
-		
-	}
-	if (ImGui::Button("AAAButton")) {
-		explodeManager_->StopEmit();
-		
-	}
-	ImGui::End();
-
-	//ImGui::Begin("ParticleRunDust");
-	//if (ImGui::Button("Button")) {
-	//	//runDustManager_->PositionRegister(Vector3{0.0f,0.0f,0.0f});
-	//	
-	//}
-	//if (ImGui::Button("AAAButton")) {
-	//	runDustManager_->StopEmit();
-	//	
-	//}
-	//ImGui::End();
-
 }
 
 void DebugScene::Draw()
