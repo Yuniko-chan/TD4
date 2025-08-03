@@ -55,6 +55,8 @@ void PartHPHandler::Update()
 	// 無敵経過
 	InvisibleProgress();
 
+	beingHeld_ = false;
+
 }
 
 void PartHPHandler::OnHit(float damage)
@@ -97,7 +99,12 @@ void PartHPHandler::InvisibleProgress()
 		// 無敵最大時間
 		const float kInvisibleTimeMax = 1.0f;
 		// ダメージ用カラー
-		owner_->GetMaterial()->SetColor(damageColor_);
+		if (beingHeld_) {
+			owner_->GetMaterial()->SetColor(defaultColor_);
+		}
+		else {
+			owner_->GetMaterial()->SetColor(damageColor_);
+		}
 		// 無敵終了か
 		if (invisibleCooltime_ >= kInvisibleTimeMax) {
 			isInvisible_ = false;
@@ -122,4 +129,13 @@ void PartHPHandler::HeatDamage(float damage)
 bool PartHPHandler::IsDead()
 {
 	return owner_->GetIsDelete() && isDead_;
+}
+
+void PartHPHandler::BeingHeld()
+{
+	isInvisible_ = true;
+	// 無敵最大時間
+	const float kInvisibleTimeMax = 1.0f;
+	invisibleCooltime_ = kInvisibleTimeMax - GameTimeSystem::GetInstance()->GetDeltaTime() * 2.0f;
+	beingHeld_ = true;
 }

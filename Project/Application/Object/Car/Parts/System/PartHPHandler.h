@@ -50,6 +50,12 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	bool IsUnRegist() { return isUnregist_; }
+
+	/// <summary>
+	/// 持たれてる
+	/// </summary>
+	void BeingHeld();
+
 private:
 	Vector4 defaultColor_ = Vector4();
 	Vector4 damageColor_ = Vector4();
@@ -59,5 +65,7 @@ private:
 	bool isDead_ = false;
 	bool isUnregist_ = false;
 	float invisibleCooltime_ = 0.0f;
+
+	bool beingHeld_ = false;
 
 };

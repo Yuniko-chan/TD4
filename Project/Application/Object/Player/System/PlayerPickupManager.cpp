@@ -57,6 +57,9 @@ void PlayerPickupManager::Update()
 
 	// パーツを持ってる場合（アタッチ
 	if (holdParts_) {
+
+		holdParts_->GetHPHandler()->BeingHeld();
+
 		// ピックアップ場所表示
 		PickupVisualizer* pickUp = static_cast<PickupVisualizer*>(pickupInteract_.get());
 		if (pickUp->IsParent()) {
