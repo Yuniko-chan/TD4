@@ -28,8 +28,8 @@ void DebugScene::Initialize()
 	explodeManager_ = std::make_unique<ExplodeManager>();
 	explodeManager_->Initialize();
 
-	runDustManager_ = std::make_unique<RunDustManager>();
-	runDustManager_->Initialize();
+	//runDustManager_ = std::make_unique<RunDustManager>();
+	//runDustManager_->Initialize();
 
 #pragma region 
 	//ParticleManager_->CreateParticle<GPUParticle>("");
@@ -114,7 +114,7 @@ void DebugScene::Update()
 	//clothDemo_->Update();
 
 	explodeManager_->Update();
-	runDustManager_->Update();
+	//runDustManager_->Update();
 
 	UIManager_->Update();
 	// オブジェクトマネージャー
@@ -141,16 +141,16 @@ void DebugScene::Update()
 	}
 	ImGui::End();
 
-	ImGui::Begin("ParticleRunDust");
-	if (ImGui::Button("Button")) {
-		runDustManager_->PositionRegister(Vector3{0.0f,0.0f,0.0f});
-		
-	}
-	if (ImGui::Button("AAAButton")) {
-		runDustManager_->StopEmit();
-		
-	}
-	ImGui::End();
+	//ImGui::Begin("ParticleRunDust");
+	//if (ImGui::Button("Button")) {
+	//	//runDustManager_->PositionRegister(Vector3{0.0f,0.0f,0.0f});
+	//	
+	//}
+	//if (ImGui::Button("AAAButton")) {
+	//	runDustManager_->StopEmit();
+	//	
+	//}
+	//ImGui::End();
 
 }
 
@@ -185,7 +185,7 @@ void DebugScene::Draw()
 #pragma endregion
 
 	explodeManager_->Draw(camera_);
-	runDustManager_->Draw(camera_);
+	//runDustManager_->Draw(camera_);
 
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理

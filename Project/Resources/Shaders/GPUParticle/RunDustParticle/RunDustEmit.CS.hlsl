@@ -1,13 +1,28 @@
 #include "RunDust.CS.hlsli"
 #include "../../RandomGenerator/RandomGenerator.hlsli"
 
-struct Emitter {
-	float32_t3 translate; // 位置
-	float32_t radius; // 射出半径
-	uint32_t count; // 射出数
-	float32_t frequency; // 射出間隔
-	float32_t frequencyTime; // 射出間隔調整時間
-	uint32_t emit; // 射出許可
+//struct Emitter {
+//	float32_t3 translate; // 位置
+//	float32_t radius; // 射出半径
+//	uint32_t count; // 射出数
+//	float32_t frequency; // 射出間隔
+//	float32_t frequencyTime; // 射出間隔調整時間
+//	uint32_t emit; // 射出許可
+//};
+struct Emitter
+{
+
+    float32_t3 translate0; // 位置
+    float32_t3 translate1; // 位置
+    float32_t3 translate2; // 位置
+    float32_t3 translate3; // 位置
+
+    uint32_t num;
+    float32_t radius; // 射出半径
+    uint32_t count; // 射出数
+    float32_t frequency; // 射出間隔
+    float32_t frequencyTime; // 射出間隔調整時間
+    uint32_t emit; // 射出許可
 };
 
 ConstantBuffer<Emitter> gEmitter : register(b0);
@@ -21,7 +36,7 @@ RWStructuredBuffer<int32_t> gFreeListIndex : register(u1);
 RWStructuredBuffer<uint32_t> gFreeList : register(u2);
 
 [numthreads(1, 1, 1)]
-void main( uint32_t3 DTid : SV_DispatchThreadID )
+void main(uint32_t3 DTid : SV_DispatchThreadID)
 {
 
     if (gEmitter.emit != 0)
