@@ -258,8 +258,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\OutGameObject\Curtain\Curtain.cpp" />
     <ClCompile Include="Application\OutGameObject\OutGameSpriteObject.cpp" />
     <ClCompile Include="Application\OutGameObject\OutGameSpriteObjectAnimation.cpp" />
-    <ClCompile Include="Application\Particle\ExplodeManager\ExplodeManager.cpp" />
-    <ClCompile Include="Application\Particle\Explode\ExplodeParticle.cpp" />
     <ClCompile Include="Application\Particle\GPUParticle3D\GPUParticle3D.cpp" />
     <ClCompile Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.cpp" />
     <ClCompile Include="Application\Scene\DebugScene\DebugScene.cpp" />
@@ -559,8 +557,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\OutGameObject\Curtain\Curtain.h" />
     <ClInclude Include="Application\OutGameObject\OutGameSpriteObject.h" />
     <ClInclude Include="Application\OutGameObject\OutGameSpriteObjectAnimation.h" />
-    <ClInclude Include="Application\Particle\ExplodeManager\ExplodeManager.h" />
-    <ClInclude Include="Application\Particle\Explode\ExplodeParticle.h" />
     <ClInclude Include="Application\Particle\GPUParticle3D\GPUParticle3D.h" />
     <ClInclude Include="Application\SceneTransition\SceneTransitionCurtain\SceneTransitionCurtain.h" />
     <ClInclude Include="Application\Scene\DebugScene\DebugScene.h" />
