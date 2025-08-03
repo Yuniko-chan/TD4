@@ -238,6 +238,7 @@ void GameScene::Update() {
 	// ゲームが終了するか
 	if (gameTimeSystem_->GetRemainingSeconds() <= 0) {
 		requestSceneNo_ = kClear;
+		courseManager_->AdaptCourseTraversalNum();
 	}
 
 }
