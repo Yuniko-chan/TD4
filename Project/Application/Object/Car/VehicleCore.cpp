@@ -81,9 +81,9 @@ void VehicleCore::Initialize(LevelData::MeshData* data)
 	const EmitterCS kEmitter =
 	{
 			worldTransform_.GetWorldPosition(), // 位置
-			1.0f, // 射出半径
-			10, // 射出数
-			0.1f, // 射出間隔
+			0.5f, // 射出半径
+			30, // 射出数
+			0.05f, // 射出間隔
 			0.0f, // 射出間隔調整時間
 			0 // 射出許可
 	};
@@ -144,13 +144,13 @@ void VehicleCore::Update()
 	const EmitterCS kRunDustEmitter =
 	{
 			worldTransform_.GetWorldPosition(), // 位置
-			1.0f, // 射出半径
-			2, // 射出数
-			0.1f, // 射出間隔
+			0.5f, // 射出半径
+			30, // 射出数
+			0.05f, // 射出間隔
 			0.0f, // 射出間隔調整時間
 			0 // 射出許可
 	};
-	if (isDrive_) {
+	if (Vector3::Length(driveSystem_->GetVelocity()) > 0.0f ) {
 		dustParticle_->SetEmitter(kRunDustEmitter, false);
 	}
 	else {

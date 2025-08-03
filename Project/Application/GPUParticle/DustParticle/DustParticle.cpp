@@ -10,7 +10,7 @@ void DustParticle::Initialize(ID3D12Device* device, ID3D12GraphicsCommandList* c
 	}
 
 	// テクスチャ名前
-	const std::string kTextureFilename = "Bonfire.png";
+	const std::string kTextureFilename = "Dust0.png";
 	textureFilename_ = kTextureFilename;
 
 	// 初期化
@@ -21,9 +21,9 @@ void DustParticle::Initialize(ID3D12Device* device, ID3D12GraphicsCommandList* c
 	const EmitterCS kEmitter =
 	{
 			Vector3{0.0f, 3.0f, 0.0f}, // 位置
-			1.0f, // 射出半径
-			10, // 射出数
-			0.1f, // 射出間隔
+			0.5f, // 射出半径
+			30, // 射出数
+			0.05f, // 射出間隔
 			0.0f, // 射出間隔調整時間
 			0 // 射出許可
 	};
