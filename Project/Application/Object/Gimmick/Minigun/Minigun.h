@@ -15,6 +15,8 @@ private: // 定数
 
     // 発射間隔
     static const float kFiringInterval_;
+    // 弾の大きさ
+    static const float kBulletSize_;
 
 public: // 関数
 

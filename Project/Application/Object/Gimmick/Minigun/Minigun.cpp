@@ -7,6 +7,8 @@
 
 // 発射間隔
 const float Minigun::kFiringInterval_ = 0.2f;
+// 弾の大きさ
+const float Minigun::kBulletSize_ = 0.5f;
 
 Minigun::Minigun()
 {
@@ -128,13 +130,13 @@ void Minigun::Fire()
     LevelData::MeshData data;
     data.directoryPath = "Resources/Model/Gimmick/IronBall/";
     data.flieName = "IronBall.obj";
-    data.transform = { 0.1f,0.1f,0.1f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
+    data.transform = { kBulletSize_,kBulletSize_,kBulletSize_,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f };
     data.className = "MinigunBullet";
     data.name = "";
     data.parentName = "";
     Sphere collider;
     collider.center_ = { 0.0f,0.0f,0.0f };
-    collider.radius_ = 0.1f;
+    collider.radius_ = kBulletSize_;
     data.collider = collider;
 
     MinigunBulletData minigunBulletData;
