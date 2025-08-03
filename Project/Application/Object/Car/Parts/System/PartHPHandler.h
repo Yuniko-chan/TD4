@@ -14,6 +14,7 @@ public:
 	/// 初期化
 	/// </summary>
 	void Initialize();
+	void OnAttach();
 	/// <summary>
 	/// 更新
 	/// </summary>

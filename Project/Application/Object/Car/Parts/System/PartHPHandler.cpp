@@ -18,6 +18,15 @@ void PartHPHandler::Initialize()
 	damageColor_ = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
 }
 
+void PartHPHandler::OnAttach()
+{
+	// 死亡・解除状態をリセット
+	owner_->SetIsDelete(false);
+	owner_->SetIsDead(false);
+	isDead_ = false;
+	isUnregist_ = false;
+}
+
 void PartHPHandler::Update()
 {
 	float t = hp_ / (float)maxHP_;

@@ -1,6 +1,6 @@
 {
     "GameSystem": {
-        "CheckpointAddSecond": 5.0,
+        "CheckpointAddSecond": 8.0,
         "LimitSecond": 120.0
     }
 }

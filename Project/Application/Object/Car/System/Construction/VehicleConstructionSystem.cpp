@@ -220,7 +220,8 @@ void VehicleConstructionSystem::Attach(Car::IParts* parts, const Vector2Int& key
 	PartsOffsetCalculator calculator;
 
 	// HPのリセット処理
-	parts->GetHPHandler()->Initialize();
+	//parts->GetHPHandler()->Initialize();
+	parts->GetHPHandler()->OnAttach();
 	// トランスフォーム
 	// 親子関係
 	parts->GetWorldTransformAdress()->SetParent(owner_->GetWorldTransformAdress());
