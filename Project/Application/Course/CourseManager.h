@@ -39,7 +39,7 @@ static const std::array<std::string, kPickupPointCount_> kPickupPointFileList = 
 
 static const float kAddCourseBorder = 200;
 
-static const size_t kWallVerticesNum = 36*3;
+static const size_t kWallVerticesNum = 42*3;
 static const size_t kWallVerticesNum2 = 34*3;
 
 //時計回りの面を表とする
@@ -194,6 +194,41 @@ static const std::array<Vector3, kWallVerticesNum> kWallOffset{
 	Vector3{ (22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_), 50.0f,-kCourseDiameter * 0.5f + (22.5f * kCourseScale_) },
 	Vector3{ (22.5f * kCourseScale_),0.0f,-kCourseDiameter * 0.5f + (22.5f * kCourseScale_) },
 	Vector3{ (22.5f * kCourseScale_),50.0f,-kCourseDiameter * 0.5f + (22.5f * kCourseScale_) },
+
+	//カスタムエリア(最初だけ)
+	Vector3{ -kCourseDiameter * 0.5f, 0.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+	Vector3{  kCourseDiameter * 0.5f, 0.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+	Vector3{ -kCourseDiameter * 0.5f,50.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+
+	Vector3{ -kCourseDiameter * 0.5f,50.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+	Vector3{  kCourseDiameter * 0.5f, 0.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+	Vector3{  kCourseDiameter * 0.5f,50.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+
+	Vector3{ (-22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_), 0.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+	Vector3{ (-22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_),50.0f,-kCourseDiameter * 0.5f },
+	Vector3{ (-22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_), 0.0f,-kCourseDiameter * 0.5f },
+
+	Vector3{ (-22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_),50.0f,-kCourseDiameter * 0.5f },
+	Vector3{ (-22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_),50.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+	Vector3{ (-22.5f * kCourseScale_) + (kCustomAreaWallWidth * kCourseScale_), 0.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+
+
+	Vector3{ (22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_), 0.0f,-kCourseDiameter * 0.5f },
+	Vector3{ (22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_),50.0f,-kCourseDiameter * 0.5f },
+	Vector3{ (22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_), 0.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+
+	Vector3{ (22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_),50.0f,-kCourseDiameter * 0.5f },
+	Vector3{ (22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_),50.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+	Vector3{ (22.5f * kCourseScale_) - (kCustomAreaWallWidth * kCourseScale_), 0.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+
+	//床
+	Vector3{ (-22.5f * kCourseScale_), 1.0f,-kCourseDiameter * 0.5f + (22.5f * kCourseScale_) },
+	Vector3{ (+22.5f * kCourseScale_), 1.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+	Vector3{ (-22.5f * kCourseScale_), 1.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
+
+	Vector3{ (-22.5f * kCourseScale_), 1.0f,-kCourseDiameter * 0.5f + (22.5f * kCourseScale_) },
+	Vector3{ (+22.5f * kCourseScale_), 1.0f,-kCourseDiameter * 0.5f + (22.5f * kCourseScale_) },
+	Vector3{ (+22.5f * kCourseScale_), 1.0f,-kCourseDiameter * 0.5f - (22.5f * kCourseScale_) },
 };
 
 static const std::array<Vector3, kWallVerticesNum> kWallNormals{
