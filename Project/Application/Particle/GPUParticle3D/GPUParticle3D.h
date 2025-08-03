@@ -1,6 +1,4 @@
 #pragma once
-#include "../../../Application/Particle/GPUParticle3D/GPUParticle3D.h"
-#pragma once
 #include "../../../Engine/GPUParticle/GPUParticle.h"
 #include "../../../Engine/Math/DeltaTime.h"
 #include "../../../Engine/3D/Model/ModelManager.h"
@@ -11,7 +9,8 @@
 #include "../../../Engine/base/CompileShader.h"
 #include "../../../Engine/base/DxCommon/Log.h"
 #include "../../../Engine/Particle/BillBoardMatrix.h"
-class RunDustParticle :
+
+class GPUParticle3D :
 	public GPUParticle
 {
 
@@ -53,21 +52,6 @@ public:
 	};
 
 public:
-
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	/// <param name="device">デバイス</param>
-	/// <param name="commandList">コマンドリスト</param>
-	/// <param name="rootSignature">ルートシグネチャ</param>
-	/// <param name="pipelineState">パイプラインステート</param>
-	void Initialize(
-		ID3D12Device* device,
-		ID3D12GraphicsCommandList* commandList,
-		ID3D12RootSignature* rootSignature,
-		ID3D12PipelineState* pipelineState,
-		const std::string& name = "Particle") override;
-
 	/// <summary>
 	/// 
 	/// </summary>
@@ -141,15 +125,12 @@ private: // パイプラインステートの初期化CS
 	/// </summary>
 	/// <param name="device"></param>
 	void PipelineStateCSInitializeForUpdate(ID3D12Device* device) override;
-
+	
+protected:
+	// モデル
+	Model* Model_;
 private:
-
-	// 卵モデル
-	Model* eggModel_;
-
 	// 
 	EmitBlendNormalCS* emitBlendNormalMap_;
 
 };
-
-

@@ -1,6 +1,6 @@
-#include "RunDustParticle.h"
+#include "ExplodeParticle.h"
 
-void RunDustParticle::Initialize(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, ID3D12RootSignature* rootSignature, ID3D12PipelineState* pipelineState,
+void ExplodeParticle::Initialize(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, ID3D12RootSignature* rootSignature, ID3D12PipelineState* pipelineState,
 	const std::string& name)
 {
 	name;
@@ -12,7 +12,7 @@ void RunDustParticle::Initialize(ID3D12Device* device, ID3D12GraphicsCommandList
 
 }
 
-void RunDustParticle::Update()
+void ExplodeParticle::Update()
 {
 
 	// 時間加算
@@ -33,7 +33,7 @@ void RunDustParticle::Update()
 
 }
 
-void RunDustParticle::Draw(ID3D12GraphicsCommandList* commandList, BaseCamera& camera)
+void ExplodeParticle::Draw(ID3D12GraphicsCommandList* commandList, BaseCamera& camera)
 {
 
 	assert(commandList);
@@ -88,7 +88,7 @@ void RunDustParticle::Draw(ID3D12GraphicsCommandList* commandList, BaseCamera& c
 
 }
 
-void RunDustParticle::UAVBufferInitialize(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+void ExplodeParticle::UAVBufferInitialize(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
 {
 
 
@@ -183,7 +183,7 @@ void RunDustParticle::UAVBufferInitialize(ID3D12Device* device, ID3D12GraphicsCo
 
 }
 
-void RunDustParticle::ConstantBufferInitialzie(ID3D12Device* device)
+void ExplodeParticle::ConstantBufferInitialzie(ID3D12Device* device)
 {
 
 	//GPUParticleViewを作る
@@ -223,7 +223,7 @@ void RunDustParticle::ConstantBufferInitialzie(ID3D12Device* device)
 
 }
 
-void RunDustParticle::InitialzieCS(ID3D12GraphicsCommandList* commandList)
+void ExplodeParticle::InitialzieCS(ID3D12GraphicsCommandList* commandList)
 {
 
 	// SRV
@@ -243,7 +243,7 @@ void RunDustParticle::InitialzieCS(ID3D12GraphicsCommandList* commandList)
 
 }
 
-void RunDustParticle::Emit(ID3D12GraphicsCommandList* commandList)
+void ExplodeParticle::Emit(ID3D12GraphicsCommandList* commandList)
 {
 
 	// SRV
@@ -267,7 +267,7 @@ void RunDustParticle::Emit(ID3D12GraphicsCommandList* commandList)
 
 }
 
-void RunDustParticle::UpdateCS(ID3D12GraphicsCommandList* commandList)
+void ExplodeParticle::UpdateCS(ID3D12GraphicsCommandList* commandList)
 {
 
 	// SRV
@@ -289,7 +289,7 @@ void RunDustParticle::UpdateCS(ID3D12GraphicsCommandList* commandList)
 
 }
 
-void RunDustParticle::SetEmitter(const EmitBlendNormalCS& emitter, bool isEmitSet)
+void ExplodeParticle::SetEmitter(const EmitBlendNormalCS& emitter, bool isEmitSet)
 {
 
 	// マッピング
@@ -313,7 +313,7 @@ void RunDustParticle::SetEmitter(const EmitBlendNormalCS& emitter, bool isEmitSe
 
 }
 
-void RunDustParticle::PipelineStateCSInitializeForInitialize(ID3D12Device* device)
+void ExplodeParticle::PipelineStateCSInitializeForInitialize(ID3D12Device* device)
 {
 
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootsignature{};
@@ -392,7 +392,7 @@ void RunDustParticle::PipelineStateCSInitializeForInitialize(ID3D12Device* devic
 
 	// シェーダコンパイル
 	IDxcBlob* shader = CompileShader::Compile(
-		L"Resources/shaders/GPUParticle/RunDustParticle/RunDustInitialize.CS.hlsl",
+		L"Resources/shaders/GPUParticle/ExplodeParticle/ExplodeInitialize.CS.hlsl",
 		L"cs_6_0",
 		L"main");
 
@@ -409,7 +409,7 @@ void RunDustParticle::PipelineStateCSInitializeForInitialize(ID3D12Device* devic
 
 }
 
-void RunDustParticle::PipelineStateCSInitializeForEmit(ID3D12Device* device)
+void ExplodeParticle::PipelineStateCSInitializeForEmit(ID3D12Device* device)
 {
 
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootsignature{};
@@ -496,7 +496,7 @@ void RunDustParticle::PipelineStateCSInitializeForEmit(ID3D12Device* device)
 
 	// シェーダコンパイル
 	IDxcBlob* shader = CompileShader::Compile(
-		L"Resources/shaders/GPUParticle/RunDustParticle/RunDustEmit.CS.hlsl",
+		L"Resources/shaders/GPUParticle/ExplodeParticle/ExplodeEmit.CS.hlsl",
 		L"cs_6_0",
 		L"main");
 
@@ -513,7 +513,7 @@ void RunDustParticle::PipelineStateCSInitializeForEmit(ID3D12Device* device)
 
 }
 
-void RunDustParticle::PipelineStateCSInitializeForUpdate(ID3D12Device* device)
+void ExplodeParticle::PipelineStateCSInitializeForUpdate(ID3D12Device* device)
 {
 
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootsignature{};
@@ -596,7 +596,7 @@ void RunDustParticle::PipelineStateCSInitializeForUpdate(ID3D12Device* device)
 
 	// シェーダコンパイル
 	IDxcBlob* shader = CompileShader::Compile(
-		L"Resources/shaders/GPUParticle/RunDustParticle/RunDustUpdate.CS.hlsl",
+		L"Resources/shaders/GPUParticle/ExplodeParticle/ExplodeUpdate.CS.hlsl",
 		L"cs_6_0",
 		L"main");
 
@@ -612,4 +612,3 @@ void RunDustParticle::PipelineStateCSInitializeForUpdate(ID3D12Device* device)
 	assert(SUCCEEDED(hr));
 
 }
-

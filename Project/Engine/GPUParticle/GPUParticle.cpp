@@ -143,7 +143,6 @@ void GPUParticle::Draw(
 
 void GPUParticle::SetEmitter(const EmitterCS& emitter, bool isEmitSet)
 {
-
 	// マッピング
 	emitterMap_->count = emitter.count;
 	emitterMap_->frequency = emitter.frequency;
