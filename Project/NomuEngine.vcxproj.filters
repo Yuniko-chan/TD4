@@ -991,9 +991,6 @@
     <ClCompile Include="Application\Object\Wall\Wall.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ParticleManager\ParticleManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Application\Particle\RunDustParticle\RunDustParticle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -1083,6 +1080,11 @@
     <ClCompile Include="Application\UI\SpecGaugeUI.cpp" />
     <ClCompile Include="Application\Object\OnHitCheck\OnHitCheck.cpp" />
     <ClCompile Include="Application\GPUParticle\DustParticle\DustParticle.cpp" />
+    <ClCompile Include="Application\Particle\ExplodeManager\ExplodeManager.cpp" />
+    <ClCompile Include="Application\Particle\Explode\ExplodeParticle.cpp" />
+    <ClCompile Include="Application\Particle\GPUParticle3D\GPUParticle3D.cpp" />
+    <ClCompile Include="Application\Particle\RundustManager\RundustManager.cpp" />
+    <ClCompile Include="Application\GPUParticle\ExplodeParticle\ExplodeParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Camera\CameraLists.h" />
@@ -1732,6 +1734,11 @@
     <ClInclude Include="Application\UI\SpecGaugeUI.h" />
     <ClInclude Include="Application\Object\OnHitCheck\OnHitCheck.h" />
     <ClInclude Include="Application\GPUParticle\DustParticle\DustParticle.h" />
+    <ClInclude Include="Application\Particle\ExplodeManager\ExplodeManager.h" />
+    <ClInclude Include="Application\Particle\Explode\ExplodeParticle.h" />
+    <ClInclude Include="Application\Particle\RundustManager\RundustManager.h" />
+    <ClInclude Include="Application\Particle\GPUParticle3D\GPUParticle3D.h" />
+    <ClInclude Include="Application\GPUParticle\ExplodeParticle\ExplodeParticle.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc" />

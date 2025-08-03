@@ -25,11 +25,7 @@ void DebugScene::Initialize()
 	//clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
 
 	//パーティクル
-	explodeManager_ = std::make_unique<ExplodeManager>();
-	explodeManager_->Initialize();
 
-	//runDustManager_ = std::make_unique<RunDustManager>();
-	//runDustManager_->Initialize();
 
 #pragma region 
 	//ParticleManager_->CreateParticle<GPUParticle>("");
@@ -113,9 +109,6 @@ void DebugScene::Update()
 
 	//clothDemo_->Update();
 
-	explodeManager_->Update();
-	//runDustManager_->Update();
-
 	UIManager_->Update();
 	// オブジェクトマネージャー
 	objectManager_->Update();
@@ -184,8 +177,6 @@ void DebugScene::Draw()
 
 #pragma endregion
 
-	explodeManager_->Draw(camera_);
-	//runDustManager_->Draw(camera_);
 
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理

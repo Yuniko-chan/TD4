@@ -18,8 +18,6 @@
 
 #include "../../../Engine/GPUParticle/GPUParticle.h"
 #include "../../UI/UIManager.h"
-#include "../../Particle/ExplodeManager/ExplodeManager.h"
-#include "../../Particle/RunDustManager/RunDustManager.h"
 
 /// <summary>
 /// デバッグシーン
@@ -85,9 +83,6 @@ private: // メンバ変数
 	std::unique_ptr<Model> objModel_;
 	// クロスシミュレーションデモ
 	//std::unique_ptr<ClothDemo> clothDemo_;
-
-	std::unique_ptr<ExplodeManager> explodeManager_;
-	std::unique_ptr<RunDustManager> runDustManager_;
 
 	std::unique_ptr<UIManager> UIManager_;
 
