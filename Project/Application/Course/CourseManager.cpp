@@ -351,9 +351,12 @@ void CourseManager::CreateWall() {
 	std::vector<CoursePolygon> course;
 
 	CoursePolygon cData;
-
+	size_t max = kWallVerticesNum2;
+	if (nowGroup_==0) {
+		max = kWallVerticesNum;
+	}
 	//データ格納
-	for (uint32_t i = 0; i < kWallVerticesNum2; i++) {
+	for (uint32_t i = 0; i < max; i++) {
 
 		//coursepolygone
 		if (i % 3 == 0) {
