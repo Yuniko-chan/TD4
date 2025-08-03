@@ -150,7 +150,9 @@ void VehicleCore::Update()
 			0.0f, // 射出間隔調整時間
 			0 // 射出許可
 	};
-	if (Vector3::Length(driveSystem_->GetVelocity()) > 0.0f ) {
+
+	const float kSpeedCheck = 3.0f;
+	if (Vector3::Length(driveSystem_->GetVelocity()) > kSpeedCheck) {
 		dustParticle_->SetEmitter(kRunDustEmitter, false);
 	}
 	else {
