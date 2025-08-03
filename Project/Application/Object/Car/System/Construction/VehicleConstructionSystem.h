@@ -4,6 +4,7 @@
 #include <map>
 #include <utility>
 #include <algorithm>
+#include "../../../../GPUParticle/ExplodeParticle/ExplodeParticle.h"
 
 namespace Car { class IParts; }
 class VehicleCore;
@@ -168,6 +169,12 @@ private:
 
 	// オーディオマネージャー
 	GameAudioManager* audioManager_;
+
+
+	// パーティクル
+	std::unique_ptr<ExplodeParticle> explodeParticle_;
+	EmitterCS kRunDustEmitter;
+	Vector3 translate;
 
 public: // アクセッサ
 	void SetStatusManager(VehicleStatus* status) { status_ = status; }

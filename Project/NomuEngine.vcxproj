@@ -185,6 +185,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Effect\EffectManager.cpp" />
     <ClCompile Include="Application\Camera\FollowCamera.cpp" />
     <ClCompile Include="Application\GPUParticle\DustParticle\DustParticle.cpp" />
+    <ClCompile Include="Application\GPUParticle\ExplodeParticle\ExplodeParticle.cpp" />
     <ClCompile Include="Application\Object\BaseCharacter\BaseCharacterAnimation.cpp" />
     <ClCompile Include="Application\Object\Car\Animation\VehicleAnimation.cpp" />
     <ClCompile Include="Application\Object\Car\System\Drive\KnockbackReactionController.cpp" />
@@ -452,6 +453,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Collider\ColliderParentObject.h" />
     <ClInclude Include="Application\Collider\CollisionConfig.h" />
     <ClInclude Include="Application\GPUParticle\DustParticle\DustParticle.h" />
+    <ClInclude Include="Application\GPUParticle\ExplodeParticle\ExplodeParticle.h" />
     <ClInclude Include="Application\Object\BaseCharacter\BaseCharacterAnimation.h" />
     <ClInclude Include="Application\Object\Car\Animation\VehicleAnimation.h" />
     <ClInclude Include="Application\Object\Car\System\Drive\KnockbackReactionController.h" />

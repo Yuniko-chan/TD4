@@ -18,6 +18,7 @@
 
 #include "../../../Engine/GPUParticle/GPUParticle.h"
 #include "../../UI/UIManager.h"
+#include "../../GPUParticle/ExplodeParticle/ExplodeParticle.h"
 
 /// <summary>
 /// デバッグシーン
@@ -86,5 +87,8 @@ private: // メンバ変数
 
 	std::unique_ptr<UIManager> UIManager_;
 
+	std::unique_ptr<ExplodeParticle> explodeParticle_;
+
+	EmitterCS kRunDustEmitter;
 };
 

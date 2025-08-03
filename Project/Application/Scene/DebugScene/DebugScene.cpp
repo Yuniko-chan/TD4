@@ -25,7 +25,27 @@ void DebugScene::Initialize()
 	//clothDemo_->Initilalize(directionalLight_.get(), pointLightManager_.get(), spotLightManager_.get());
 
 	//パーティクル
+	// パーティクル
+	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	// エミッタ設定
+	const EmitterCS kEmitter =
+	{
+			{0.0f,0.0f,0.0f}, // 位置
+			0.5f, // 射出半径
+			30, // 射出数
+			0.05f, // 射出間隔
+			0.0f, // 射出間隔調整時間
+			0 // 射出許可
+	};
 
+	// 通常状態のエフェクト
+	explodeParticle_ = std::make_unique<ExplodeParticle>();
+	explodeParticle_->Initialize(
+		dxCommon->GetDevice(),
+		dxCommon->GetCommadListLoad(),
+		GraphicsPipelineState::sRootSignature_[GraphicsPipelineState::kPipelineStateIndexGPUParticleBlendNormal].Get(),
+		GraphicsPipelineState::sPipelineState_[GraphicsPipelineState::kPipelineStateIndexGPUParticleBlendNormal].Get());
+	explodeParticle_->SetEmitter(kEmitter);
 
 #pragma region 
 	//ParticleManager_->CreateParticle<GPUParticle>("");

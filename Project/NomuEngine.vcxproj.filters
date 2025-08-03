@@ -1074,6 +1074,7 @@
     <ClCompile Include="Application\Object\OnHitCheck\OnHitCheck.cpp" />
     <ClCompile Include="Application\GPUParticle\DustParticle\DustParticle.cpp" />
     <ClCompile Include="Application\Particle\GPUParticle3D\GPUParticle3D.cpp" />
+    <ClCompile Include="Application\GPUParticle\ExplodeParticle\ExplodeParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Camera\CameraLists.h" />
@@ -1722,6 +1723,7 @@
     <ClInclude Include="Application\Object\OnHitCheck\OnHitCheck.h" />
     <ClInclude Include="Application\GPUParticle\DustParticle\DustParticle.h" />
     <ClInclude Include="Application\Particle\GPUParticle3D\GPUParticle3D.h" />
+    <ClInclude Include="Application\GPUParticle\ExplodeParticle\ExplodeParticle.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NomuEngine.rc" />

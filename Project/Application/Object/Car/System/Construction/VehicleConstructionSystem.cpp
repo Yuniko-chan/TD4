@@ -6,6 +6,39 @@
 void VehicleConstructionSystem::Initialize()
 {
 	partsMapping_.emplace(Vector2Int(0, 0), owner_);
+
+	// パーティクル
+	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	// エミッタ設定
+	const EmitterCS kEmitter =
+	{
+			{0.0f,0.0f,0.0f}, // 位置
+			0.5f, // 射出半径
+			30, // 射出数
+			0.05f, // 射出間隔
+			0.0f, // 射出間隔調整時間
+			0 // 射出許可
+	};
+
+	// 通常状態のエフェクト
+	explodeParticle_ = std::make_unique<ExplodeParticle>();
+	explodeParticle_->Initialize(
+		dxCommon->GetDevice(),
+		dxCommon->GetCommadListLoad(),
+		GraphicsPipelineState::sRootSignature_[GraphicsPipelineState::kPipelineStateIndexGPUParticleBlendNormal].Get(),
+		GraphicsPipelineState::sPipelineState_[GraphicsPipelineState::kPipelineStateIndexGPUParticleBlendNormal].Get());
+	explodeParticle_->SetEmitter(kEmitter);
+
+	kRunDustEmitter =
+	{
+			{0.0f,0.0f,0.0f}, // 位置
+			0.5f, // 射出半径
+			30, // 射出数
+			0.05f, // 射出間隔
+			0.0f, // 射出間隔調整時間
+			0 // 射出許可
+	};
+	translate = { 0.0f,0.0f,0.0f };
 }
 
 void VehicleConstructionSystem::Update()
@@ -49,6 +82,21 @@ void VehicleConstructionSystem::Update()
 
 	// マップから
 	status_->StatusUpdate(&partsMapping_);
+
+	kRunDustEmitter =
+	{
+			translate, // 位置
+			0.5f, // 射出半径
+			30, // 射出数
+			0.05f, // 射出間隔
+			0.0f, // 射出間隔調整時間
+			true // 射出許可
+	};
+
+	explodeParticle_->SetEmitter(kRunDustEmitter, true);
+
+	//パーティクル
+	explodeParticle_->Update();
 }
 
 void VehicleConstructionSystem::ImGuiDraw()
@@ -254,9 +302,11 @@ void VehicleConstructionSystem::Detach(std::map<Vector2Int, Car::IParts*>::itera
 		if ((*it).second->GetHPHandler()->IsDead()) {
 			// 爆破解除
 			BombUnRegistParts((*it).first, (*it).second);
-			///
-			/// TODO:爆発パーティクル
-			/// (*it).second->GetWorldTransformAdress()->GetWorldPosition()：座標
+
+			translate = (*it).second->GetWorldTransformAdress()->GetWorldPosition();
+
+			explodeParticle_->SetEmitter(kRunDustEmitter, true);
+
 		}
 		else {
 			// 解除処理
