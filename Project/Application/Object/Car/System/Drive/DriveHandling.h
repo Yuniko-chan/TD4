@@ -76,4 +76,15 @@ private:
 	float currentLeftTire_;
 	float currentRightTire_;
 
+	const int kMaxPressCount = 30;
+	const int kSteerReturnSensitivity = 3;	// ハンドル戻し感度
+	const int kSpDecrementThreshold = 6;	// 減少量を増やすしきい
+	const int kSpReturnSensitivity = 5;	// 減少量を増やす感度
+
+	// 回転減衰
+	const float kLowSpeedSteerAttenuation = 0.15f;	// 最低減衰値（n ~ 1.0f)
+	const float kLowSpeedLimit = 10.0f;	// 減衰が掛かる最大値
+
+	const float kInputDiscardThreshold = 0.25f;
+
 };
