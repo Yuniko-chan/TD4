@@ -65,6 +65,11 @@ public: // 関数
     /// <returns></returns>
     Material* GetStringMaterial() { return stringMaterial_.get(); }
 
+    /// <summary>
+    /// アンカーポイントに親設定
+    /// </summary>
+    void AnchorSetParent();
+
 private: // 関数
 
     /// <summary>

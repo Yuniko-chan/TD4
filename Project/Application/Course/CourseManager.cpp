@@ -5,6 +5,7 @@
 #include "../../Engine/Math/RandomEngine.h"
 #include "../Object/CustomArea/CustomArea.h"
 #include "../Object/Factory/ObjectCreate.h"
+#include "../Object/Gimmick/IronBall/PendulumIronBall.h"
 
 void CourseManager::Initialize(GameSceneObjectManager* objectManager, LevelDataManager* levelDataManager) {
 	courseIndex_ = 0;
@@ -98,6 +99,10 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 			gimmick = objectFactory_->CreateObjectPattern(gimmickData);
 			gimmick->GetWorldTransformAdress()->parent_ = object->GetWorldTransformAdress();
 			gimmick->GetWorldTransformAdress()->UpdateMatrix();
+			if (std::get<LevelData::GimmickData>(gimmickData).meshData.className =="PendulumIronBall") {
+				reinterpret_cast<PendulumIronBall*>(gimmick)->GetStringWorldTransformAddress()->parent_ = object->GetWorldTransformAdress();
+				reinterpret_cast<PendulumIronBall*>(gimmick)->GetStringWorldTransformAddress()->UpdateMatrix();
+			}
 			//スケールに影響されないWorldMatrix計算
 			//Matrix4x4 localMatrix = Matrix4x4::MakeScaleMatrix(gimmick->GetWorldTransformAdress()->transform_.scale) * Matrix4x4::MakeRotateXYZMatrix(gimmick->GetWorldTransformAdress()->transform_.rotate) * Matrix4x4::MakeTranslateMatrix(gimmick->GetWorldTransformAdress()->transform_.translate);
 			//gimmick->GetWorldTransformAdress()->worldMatrix_ = localMatrix* gimmick->GetWorldTransformAdress()->parent_->worldMatrix_;
@@ -129,6 +134,7 @@ void CourseManager::CreateCourse(const std::string& fileName, CourseImportData* 
 				(gimmickList_.get())->push_back(gimmick);
 			}
 		}
+
 	}
 	//courseIndex_++;
 }

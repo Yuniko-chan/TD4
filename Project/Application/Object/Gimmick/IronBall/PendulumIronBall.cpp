@@ -82,6 +82,12 @@ void PendulumIronBall::OnCollision(ColliderParentObject colliderPartner, const C
     colliderPartner, collisionData;
 }
 
+void PendulumIronBall::AnchorSetParent()
+{
+
+
+}
+
 void PendulumIronBall::ColliderInitialize(ColliderShape collider)
 {
 
@@ -176,8 +182,12 @@ void PendulumIronBall::StringInitialize()
 void PendulumIronBall::StringUpdate()
 {
 
+    if (!worldTransform_.parent_) {
+        return;
+    }
+
     // 向きを更新
-    stringWorldTransform_.direction_ = Vector3::Normalize(worldTransform_.GetWorldPosition() - anchor_);
+    stringWorldTransform_.direction_ = Vector3::Normalize(worldTransform_.transform_.translate - anchor_);
     stringWorldTransform_.UpdateMatrix();
 
 }

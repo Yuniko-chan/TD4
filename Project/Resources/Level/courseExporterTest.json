@@ -40,41 +40,6 @@
         },
         {
             "type": "MESH",
-            "name": "ironball",
-            "transform": {
-                "translation": [
-                    -43.27725601196289,
-                    37.39787292480469,
-                    15.200000762939453
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    1.099568486213684
-                ],
-                "scaling": [
-                    0.9999999403953552,
-                    0.9999999403953552,
-                    1.0
-                ]
-            },
-            "collider": {
-                "type": "SPHERE",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "radius": 2
-            },
-            "gimmick": {
-                "type": "IRONBALL",
-                "length": 9.940000534057617,
-                "angle": 2.380000114440918
-            }
-        },
-        {
-            "type": "MESH",
             "name": "skydome",
             "transform": {
                 "translation": [
