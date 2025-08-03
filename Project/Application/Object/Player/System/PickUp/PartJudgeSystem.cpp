@@ -75,7 +75,7 @@ Car::IParts* PartJudgeSystem::GetCatchPart(VehiclePartsManager* partManager, Pic
 	}
 
 	// 一番近いものを取得
-	data = NearSort();
+	data = NearSort(true);
 
 	// 返し
 	return GetCatchPart(pointManager, data);
@@ -130,6 +130,10 @@ PartJudgeSystem::ConditionData PartJudgeSystem::NearSort(bool isDirection)
 
 Car::IParts* PartJudgeSystem::GetCatchPart(PickupPointManager* pointManager, ConditionData data)
 {	
+	if (!data.object) {
+		return nullptr;
+	}
+
 	// 返しの値
 	Car::IParts* result = nullptr;
 	// プレイヤーのワールド
@@ -180,7 +184,7 @@ Car::IParts* PartJudgeSystem::GetCatchPart(PickupPointManager* pointManager, Con
 	return result;
 }
 
-MeshObject* PartJudgeSystem::GetNearObject(VehiclePartsManager* partManager, PickupPointManager* pointManager)
+MeshObject* PartJudgeSystem::GetNearInteractObject(VehiclePartsManager* partManager, PickupPointManager* pointManager)
 {
 	// リストの初期化
 	objects_.clear();
@@ -246,6 +250,23 @@ MeshObject* PartJudgeSystem::GetNearObject(VehiclePartsManager* partManager, Pic
 
 	// 一番近いものを取得
 	data = NearSort(true);
+
+	// 対象オブジェクトのワールド
+	if (data.object) {
+		Vector3 objectWorld = data.object->GetWorldTransformAdress()->GetWorldPosition();
+		// 向き
+		Vector3 toDirect = Vector3(objectWorld.x, 0, objectWorld.z) - Vector3(worldPosition.x, 0, worldPosition.z);
+		toDirect = Vector3::Normalize(toDirect);
+
+		// 前方でなければnull
+		if (!owner_->GetFrontChecker()->FrontCheck(toDirect)) {
+			return nullptr;
+		}
+	}
+	else {
+		return nullptr;
+	}
+
 	// 返り値
 	return data.object;
 }
