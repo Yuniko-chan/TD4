@@ -46,7 +46,7 @@ public:
 	/// <param name="partManager"></param>
 	/// <param name="pointManager"></param>
 	/// <returns></returns>
-	MeshObject* GetNearObject(VehiclePartsManager* partManager, PickupPointManager* pointManager);
+	MeshObject* GetNearInteractObject(VehiclePartsManager* partManager, PickupPointManager* pointManager);
 
 private:
 	/// <summary>
