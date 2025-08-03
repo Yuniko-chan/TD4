@@ -176,10 +176,12 @@ void GameScene::Update() {
 
 	// 中間プレイ会用処理（初期化）
 	if (input_->TriggerKey(DIK_F1)) {
-		Initialize();
+		resetScene_ = true;
+		isBeingReset_ = true;
 	}
 	else if (input_->TriggerJoystick(JoystickButton::kJoystickButtonSTART)) {
-		Initialize();
+		resetScene_ = true;
+		isBeingReset_ = true;
 	}
 
 	// パラメータ
